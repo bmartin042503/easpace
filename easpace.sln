@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "easpace", "easpace\easpace.csproj", "{F72D0057-3949-40EA-87C5-7F78DAB26805}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F72D0057-3949-40EA-87C5-7F78DAB26805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72D0057-3949-40EA-87C5-7F78DAB26805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72D0057-3949-40EA-87C5-7F78DAB26805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72D0057-3949-40EA-87C5-7F78DAB26805}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
