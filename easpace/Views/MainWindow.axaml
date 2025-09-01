@@ -3,20 +3,40 @@
         xmlns:vm="using:easpace.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:constants="clr-namespace:easpace.Constants"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="easpace">
-
-    <Design.DataContext>
-        <vm:MainViewModel/>
-    </Design.DataContext>
+        Title="easpace"
+        MinHeight="450"
+        MinWidth="650">
     
-    <ContentControl
-        x:Name="PageContent"
-        Content="{Binding CurrentPageViewModel}"
-        Width="{Binding Width, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-        Height="{Binding Height, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+    <Grid ColumnDefinitions="Auto,*">
+        <!-- sidebar -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,*,Auto"
+              IsVisible="{Binding IsSidebarVisible}">
+            <Button Grid.Row="0" 
+                    Content="MENU_ITEM_MOOD" 
+                    Command="{Binding SetPage}"
+                    CommandParameter="{x:Static constants:ApplicationPage.Mood}"/>
+            <Button Grid.Row="1" 
+                    Content="MENU_ITEM_JOURNAL" 
+                    Command="{Binding SetPage}"
+                    CommandParameter="{x:Static constants:ApplicationPage.Journal}"/>
+            <Button Grid.Row="2" 
+                    Content="MENU_ITEM_MEDITATION" 
+                    Command="{Binding SetPage}"
+                    CommandParameter="{x:Static constants:ApplicationPage.Meditation}"/>
+            <Button Grid.Row="4" 
+                    Content="MENU_ITEM_SETTINGS" 
+                    Command="{Binding SetPage}"
+                    CommandParameter="{x:Static constants:ApplicationPage.Settings}"/>
+        </Grid>
+        
+        <ContentControl Grid.Column="1"
+                        x:Name="PageContent"
+                        Content="{Binding CurrentPageViewModel}"/>
+    </Grid>
 
 </Window>

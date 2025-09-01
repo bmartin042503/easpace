@@ -5,6 +5,15 @@
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+     <Application.Resources>
+         <ResourceDictionary>
+             <ResourceDictionary.MergedDictionaries>
+                 <MergeResourceInclude Source="/Styles/AppColors.axaml" />
+             </ResourceDictionary.MergedDictionaries>
+         </ResourceDictionary>
+         <FontFamily x:Key="Poppins">avares://easpace/Assets/Fonts#Poppins</FontFamily>
+     </Application.Resources>         
+    
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>

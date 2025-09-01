@@ -1,0 +1,38 @@
+using Avalonia;
+using Avalonia.Media;
+using Avalonia.Media.Immutable;
+using Avalonia.Styling;
+using easpace.Constants;
+
+namespace easpace.Utilities;
+
+public static class ColorProvider
+{
+    public static ImmutableSolidColorBrush GetColor(AppColor appColor)
+    {
+        var defaultColorBrush = new ImmutableSolidColorBrush(Colors.Black);
+        
+        object? color = defaultColorBrush;
+        var themes = Application.Current?.Resources.ThemeDictionaries;
+        if (themes is null) return defaultColorBrush;
+
+        themes.TryGetValue(
+            Application.Current?.ActualThemeVariant ?? ThemeVariant.Default,
+            out var theme
+        );
+        
+        theme?.TryGetResource(
+            appColor.ToString(),
+            Application.Current?.ActualThemeVariant ?? ThemeVariant.Default,
+            out color
+        );
+
+        if (color is Color extractedColor)
+        {
+            return new ImmutableSolidColorBrush(extractedColor);
+        }
+        
+        return color as ImmutableSolidColorBrush ?? defaultColorBrush;
+            
+    }
+}
