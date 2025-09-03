@@ -5,7 +5,8 @@
              xmlns:vm="clr-namespace:easpace.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Views.IntroView"
-             x:DataType="vm:IntroViewModel">
+             x:DataType="vm:IntroViewModel"
+             Background="{DynamicResource PrimaryDiagonalGradient}">
     <Grid RowDefinitions="*,Auto,*" Margin="20">
         <Button Grid.Row="0" Content="INTRO_SKIP_BUTTON" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"

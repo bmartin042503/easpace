@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using easpace.Extensions;
 using easpace.ViewModels;
 using easpace.Views;
@@ -22,6 +23,8 @@ public partial class App : Application
         var collection = new ServiceCollection();
         collection.AddCommonServices();
         var services = collection.BuildServiceProvider();
+        
+        RequestedThemeVariant = ThemeVariant.Light;
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

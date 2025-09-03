@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace easpace.Views;
 
-public partial class MeditationView : UserControl
+public partial class GrowthView : UserControl
 {
-    public MeditationView()
+    public GrowthView()
     {
         InitializeComponent();
     }

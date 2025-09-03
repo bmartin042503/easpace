@@ -8,7 +8,7 @@ namespace easpace.Utilities;
 
 public static class ColorProvider
 {
-    public static ImmutableSolidColorBrush GetColor(AppColor appColor)
+    public static IBrush GetColor(AppColor appColor)
     {
         var defaultColorBrush = new ImmutableSolidColorBrush(Colors.Black);
         
@@ -27,12 +27,11 @@ public static class ColorProvider
             out color
         );
 
-        if (color is Color extractedColor)
+        return color switch
         {
-            return new ImmutableSolidColorBrush(extractedColor);
-        }
-        
-        return color as ImmutableSolidColorBrush ?? defaultColorBrush;
-            
+            Color extractedColor => new ImmutableSolidColorBrush(extractedColor),
+            LinearGradientBrush linearGradientBrush => linearGradientBrush,
+            _ => color as ImmutableSolidColorBrush ?? defaultColorBrush
+        };
     }
 }

@@ -1,8 +1,38 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.ThemeDictionaries>
+        
         <ResourceDictionary x:Key="Light">
             
+            <LinearGradientBrush x:Key="PrimaryHorizontalGradient"
+                                 StartPoint="0%,0%" EndPoint="100%,0%">
+                <GradientStop Color="#B2D1C3" Offset="0"/>
+                <GradientStop Color="#5FABBF" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="PrimaryVerticalGradient"
+                                 StartPoint="0%,0%" EndPoint="0%,100%">
+                <GradientStop Color="#5FABBF" Offset="0"/>
+                <GradientStop Color="#B2D1C3" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="PrimaryDiagonalGradient"
+                                 StartPoint="0%,100%" EndPoint="100%,0%">
+                <GradientStop Color="#B2D1C3" Offset="0"/>
+                <GradientStop Color="#5FABBF" Offset="1"/>
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="ContainerDiagonalGradient"
+                                 StartPoint="0%,100%" EndPoint="100%,0%">
+                <GradientStop Color="#CCF0DF" Offset="0"/>
+                <GradientStop Color="#A2DBEA" Offset="1"/>
+            </LinearGradientBrush>
+            
+            <SolidColorBrush x:Key="PrimaryElement">#FFFFFF</SolidColorBrush>
+            <SolidColorBrush x:Key="SecondaryElement">#6EB1BF</SolidColorBrush>
+            <SolidColorBrush x:Key="Placeholder">#898D8E</SolidColorBrush>
+            <SolidColorBrush x:Key="OnContainer">#6EB1BF</SolidColorBrush>
+            
         </ResourceDictionary>
+        
+        <!-- TODO: dark theme -->
+        
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
