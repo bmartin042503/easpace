@@ -2,34 +2,47 @@
 using CommunityToolkit.Mvvm.Input;
 using easpace.Constants;
 using easpace.Factories;
+using easpace.Services;
 
 namespace easpace.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
     private readonly PageFactory _pageFactory;
-    
+    private readonly PreferencesService _preferencesService;
+    private readonly bool _isNewUser;
+
     [ObservableProperty] private PageViewModel? _currentPageViewModel;
     [ObservableProperty] private bool _isSidebarVisible = true;
     
     public MainViewModel(
-        PageFactory pageFactory
+        PageFactory pageFactory,
+        PreferencesService preferencesService
     )
     {
         _pageFactory = pageFactory;
-        CurrentPageViewModel = pageFactory.GetPageViewModel(ApplicationPage.Intro);
-    }
+        _preferencesService = preferencesService;
 
-    [RelayCommand]
-    public void GoHome()
-    {
-        IsSidebarVisible = true;
-        CurrentPageViewModel = _pageFactory.GetPageViewModel(ApplicationPage.Mood);
+        _isNewUser = _preferencesService.ReadPreference<bool>(PreferenceKey.NewUser);
+        SetPage(_isNewUser ? ApplicationPage.Intro : ApplicationPage.Journal);
     }
 
     [RelayCommand]
     public void SetPage(ApplicationPage page)
     {
+        if (page != ApplicationPage.Intro)
+        {
+            if (_isNewUser)
+            {
+                _preferencesService.SavePreference(PreferenceKey.NewUser, "False");
+            }
+
+            IsSidebarVisible = true;
+        }
+        else
+        {
+            IsSidebarVisible = false;
+        }
         CurrentPageViewModel = _pageFactory.GetPageViewModel(page);
     }
 }

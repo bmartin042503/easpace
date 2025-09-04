@@ -27,9 +27,8 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
         <PackageReference Include="Svg.Controls.Avalonia" Version="11.3.0.4" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.8" />
     </ItemGroup>
 
     <ItemGroup>
