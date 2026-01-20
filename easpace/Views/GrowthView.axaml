@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:easpace.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:GrowthViewModel"
-             x:Class="easpace.Views.GrowthView">
-    Welcome to GrowthView!
+             x:Class="easpace.Views.GrowthView"
+             Padding="20">
+    GrowthView
 </UserControl>

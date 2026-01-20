@@ -10,8 +10,6 @@
 
     <ItemGroup>
         <Folder Include="Assets\Fonts\" />
-        <Folder Include="Assets\Images\" />
-        <Folder Include="Assets\Icons\" />
         <Folder Include="Models\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>

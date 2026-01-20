@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:easpace.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Views.JournalView"
-             x:DataType="vm:JournalViewModel">
-    Welcome to JournalView!
+             x:DataType="vm:JournalViewModel"
+             Padding="20">
+    JournalView
 </UserControl>

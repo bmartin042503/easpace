@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:easpace.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Views.MoodView"
-             x:DataType="vm:MoodViewModel">
-    Welcome to MoodView!
+             x:DataType="vm:MoodViewModel"
+             Padding="20">
+    MoodView
 </UserControl>

@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:easpace.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Views.SettingsView"
-             x:DataType="vm:SettingsViewModel">
-    Welcome to SettingsView!
+             x:DataType="vm:SettingsViewModel"
+             Padding="20">
+    SettingsView
 </UserControl>

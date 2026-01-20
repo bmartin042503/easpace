@@ -14,44 +14,80 @@
 
     <Grid ColumnDefinitions="Auto,*">
         <!-- sidebar -->
-        <Border Grid.Column="0" Background="{DynamicResource PrimaryVerticalGradient}">
+        <Border Grid.Column="0" Background="WhiteSmoke" BorderThickness="0,0,1,0"
+                BorderBrush="LightGray">
             <Border.Padding>
                 <OnPlatform>
-                    <OnPlatform.Default>14,14,14,14</OnPlatform.Default>
-                    <OnPlatform.macOS>14,42,14,14</OnPlatform.macOS>
+                    <OnPlatform.Default>14,14,14,28</OnPlatform.Default>
+                    <OnPlatform.macOS>14,42,14,28</OnPlatform.macOS>
                 </OnPlatform>
             </Border.Padding>
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
                   RowSpacing="20"
                   IsVisible="{Binding IsSidebarVisible}">
                 <Button Grid.Row="0"
-                        Content="MENU_ITEM_MOOD"
                         HorizontalAlignment="Center"
                         Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Mood}" />
+                        CommandParameter="{x:Static constants:ApplicationPage.Mood}"
+                        Background="Transparent">
+                    <Viewbox Width="22" Height="22">
+                        <Path Data="{StaticResource NavMoodIcon}"
+                              Fill="LightSlateGray"
+                              Stretch="Uniform"/>
+                    </Viewbox>
+                </Button>
                 <Button Grid.Row="1"
-                        Content="MENU_ITEM_JOURNAL"
                         HorizontalAlignment="Center"
                         Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Journal}" />
+                        CommandParameter="{x:Static constants:ApplicationPage.Journal}"
+                        Background="Transparent">
+                    <Viewbox Width="18" Height="18">
+                        <Path Data="{StaticResource NavJournalIcon}"
+                              Fill="LightSlateGray"
+                              Stretch="Uniform"/>
+                    </Viewbox>
+                </Button>
                 <Button Grid.Row="2"
-                        Content="MENU_ITEM_GROWTH"
                         HorizontalAlignment="Center"
                         Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Growth}" />
+                        CommandParameter="{x:Static constants:ApplicationPage.Growth}"
+                        Background="Transparent">
+                    <Viewbox Width="20" Height="20">
+                        <Path Data="{StaticResource NavGrowthIcon}"
+                              Fill="LightSlateGray"
+                              Stretch="Uniform"/>
+                    </Viewbox>
+                </Button>
                 <Button Grid.Row="3"
-                        Content="MENU_ITEM_WELLNESS"
                         HorizontalAlignment="Center"
                         Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Wellness}" />
+                        CommandParameter="{x:Static constants:ApplicationPage.Wellness}"
+                        Background="Transparent">
+                    <Viewbox Width="22" Height="22">
+                        <Path Data="{StaticResource NavWellnessIcon}"
+                              Fill="LightSlateGray"
+                              Stretch="Uniform"/>
+                    </Viewbox>
+                </Button>
                 <Button Grid.Row="5"
-                        Content="MENU_ITEM_SETTINGS"
                         HorizontalAlignment="Center"
                         Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Settings}" />
+                        CommandParameter="{x:Static constants:ApplicationPage.Settings}"
+                        Background="Transparent">
+                    <Viewbox Width="18" Height="18">
+                        <Path Data="{StaticResource NavSettingsIcon}"
+                              Fill="LightSlateGray"
+                              Stretch="Uniform" />
+                    </Viewbox>
+                </Button>
                 <TextBlock Grid.Row="6"
+                           Padding="-10,0"
                            Text="easpace"
-                           HorizontalAlignment="Center" />
+                           FontWeight="Medium"
+                           Foreground="LightSlateGray"
+                           HorizontalAlignment="Center"
+                           ClipToBounds="False"
+                           FontSize="10"/>
             </Grid>
         </Border>
 
