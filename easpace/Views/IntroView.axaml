@@ -8,13 +8,17 @@
              x:DataType="vm:IntroViewModel"
              Background="{DynamicResource PrimaryDiagonalGradient}">
     <Grid RowDefinitions="*,Auto,*" Margin="20">
-        <Button Grid.Row="0" Content="INTRO_SKIP_BUTTON" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Button Grid.Row="0" 
+                Content="INTRO_SKIP_BUTTON" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"
+                Command="{Binding Skip}"/>
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Spacing="20">
-            <TextBlock Text="INTRO_TITLE" TextAlignment="Center" FontSize="26"/>
-            <TextBlock Text="INTRO_DESC" TextAlignment="Center" FontSize="22"/>
+            <TextBlock Text="INTRO_TITLE" TextAlignment="Center" FontSize="26" />
+            <TextBlock Text="INTRO_DESC" TextAlignment="Center" FontSize="22" />
         </StackPanel>
         <Button Grid.Row="2" Content="INTRO_CONTINUE_BUTTON" Margin="0,30,0,0"
-                HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </UserControl>

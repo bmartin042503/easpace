@@ -3,12 +3,12 @@
              x:Class="easpace.App"
              xmlns:local="using:easpace"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+    <!-- Resource settings (app colors and font) -->
      <Application.Resources>
          <ResourceDictionary>
              <ResourceDictionary.MergedDictionaries>
-                 <MergeResourceInclude Source="/Styles/AppColors.axaml" />
+                 <MergeResourceInclude Source="/Styles/ApplicationColors.axaml" />
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
          <FontFamily x:Key="Poppins">avares://easpace/Assets/Fonts#Poppins</FontFamily>
@@ -19,6 +19,9 @@
     </Application.DataTemplates>
   
     <Application.Styles>
+        <!-- Styles to use globally -->
+        <StyleInclude Source="Styles/Global.axaml"/>
+        
         <FluentTheme />
     </Application.Styles>
 </Application>

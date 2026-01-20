@@ -28,15 +28,18 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        if (Avalonia.Controls.Design.IsDesignMode)
+        {
+            base.OnFrameworkInitializationCompleted();
+            return;
+        }
+        
         if (_services == null)
         {
             throw new InvalidOperationException("Services are not initialized.");
         }
         
         RequestedThemeVariant = ThemeVariant.Light;
-        var preferencesService = _services.GetRequiredService<PreferencesService>();
-        
-        preferencesService.SavePreference("sajt", true);
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

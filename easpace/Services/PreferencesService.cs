@@ -8,14 +8,14 @@ namespace easpace.Services;
 
 public static class PreferenceKey
 {
-    public const string NewUser = "new-user";
+    public const string Boarded = "boarded";
     public const string Language = "language";
     public const string ColorScheme = "color-scheme";
 }
 
 public interface IPreferencesService
 {
-    T ReadPreference<T>(string key);
+    T ReadPreference<T>(string key, T defaultValue);
     void SavePreference<T>(string key, T value);
 }
 
@@ -28,30 +28,10 @@ public class PreferencesService : IPreferencesService
 
     public PreferencesService()
     {
-        _preferencesPath = GetPreferencesPath("easpace");
+        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "easpace");
+        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+        _preferencesPath = Path.Combine(folder, "preferences.json");
         LoadPreferences();
-    }
-
-    private static string GetPreferencesPath(string appName)
-    {
-        string folder;
-        if (OperatingSystem.IsWindows())
-        {
-            folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appName);
-        }
-        else if (OperatingSystem.IsMacOS())
-        {
-            folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Library", "Application Support", appName);
-        }
-        else
-        {
-            folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ".config", appName);
-        }
-
-        if (!Directory.Exists(folder))
-            Directory.CreateDirectory(folder);
-        
-        return Path.Combine(folder, "user-preferences.json");
     }
 
     private void LoadPreferences()
@@ -77,18 +57,18 @@ public class PreferencesService : IPreferencesService
         }
     }
 
-    public T ReadPreference<T>(string key)
+    public T ReadPreference<T>(string key, T defaultValue = default!)
     {
         lock (_lock)
         {
-            if (!_preferences.TryGetValue(key, out var element)) return default!;
+            if (!_preferences.TryGetValue(key, out var element)) return defaultValue;
             try
             {
-                return element.Deserialize<T>()!;
+                return element.Deserialize<T>() ?? defaultValue;
             }
             catch
             {
-                return default!;
+                return defaultValue;
             }
         }
     }

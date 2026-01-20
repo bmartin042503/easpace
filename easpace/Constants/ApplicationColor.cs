@@ -1,6 +1,6 @@
 namespace easpace.Constants;
 
-public enum AppColor
+public enum ApplicationColor
 {
     PrimaryHorizontalGradient,
     PrimaryVerticalGradient,

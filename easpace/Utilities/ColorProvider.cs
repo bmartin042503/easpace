@@ -8,7 +8,7 @@ namespace easpace.Utilities;
 
 public static class ColorProvider
 {
-    public static IBrush GetColor(AppColor appColor)
+    public static IBrush GetColor(ApplicationColor applicationColor)
     {
         var defaultColorBrush = new ImmutableSolidColorBrush(Colors.Black);
         
@@ -22,7 +22,7 @@ public static class ColorProvider
         );
         
         theme?.TryGetResource(
-            appColor.ToString(),
+            applicationColor.ToString(),
             Application.Current?.ActualThemeVariant ?? ThemeVariant.Default,
             out color
         );
