@@ -13,7 +13,7 @@
         MinWidth="650">
 
     <Grid ColumnDefinitions="Auto,*">
-        <!-- sidebar -->
+        <!-- Sidebar -->
         <Border Grid.Column="0" Background="WhiteSmoke" BorderThickness="0,0,1,0"
                 BorderBrush="LightGray">
             <Border.Padding>
@@ -22,8 +22,8 @@
                     <OnPlatform.macOS>14,42,14,28</OnPlatform.macOS>
                 </OnPlatform>
             </Border.Padding>
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto,Auto"
-                  RowSpacing="20"
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                  RowSpacing="32"
                   IsVisible="{Binding IsSidebarVisible}">
                 <Button Grid.Row="0"
                         HorizontalAlignment="Center"
@@ -31,7 +31,7 @@
                         CommandParameter="{x:Static constants:ApplicationPage.Mood}"
                         Background="Transparent">
                     <Viewbox Width="22" Height="22">
-                        <Path Data="{StaticResource NavMoodIcon}"
+                        <Path Data="{StaticResource BrainIcon}"
                               Fill="LightSlateGray"
                               Stretch="Uniform"/>
                     </Viewbox>
@@ -42,7 +42,7 @@
                         CommandParameter="{x:Static constants:ApplicationPage.Journal}"
                         Background="Transparent">
                     <Viewbox Width="18" Height="18">
-                        <Path Data="{StaticResource NavJournalIcon}"
+                        <Path Data="{StaticResource NotebookIcon}"
                               Fill="LightSlateGray"
                               Stretch="Uniform"/>
                     </Viewbox>
@@ -53,7 +53,7 @@
                         CommandParameter="{x:Static constants:ApplicationPage.Growth}"
                         Background="Transparent">
                     <Viewbox Width="20" Height="20">
-                        <Path Data="{StaticResource NavGrowthIcon}"
+                        <Path Data="{StaticResource TargetIcon}"
                               Fill="LightSlateGray"
                               Stretch="Uniform"/>
                     </Viewbox>
@@ -64,7 +64,7 @@
                         CommandParameter="{x:Static constants:ApplicationPage.Wellness}"
                         Background="Transparent">
                     <Viewbox Width="22" Height="22">
-                        <Path Data="{StaticResource NavWellnessIcon}"
+                        <Path Data="{StaticResource FlowerLotusIcon}"
                               Fill="LightSlateGray"
                               Stretch="Uniform"/>
                     </Viewbox>
@@ -75,19 +75,11 @@
                         CommandParameter="{x:Static constants:ApplicationPage.Settings}"
                         Background="Transparent">
                     <Viewbox Width="18" Height="18">
-                        <Path Data="{StaticResource NavSettingsIcon}"
+                        <Path Data="{StaticResource GearIcon}"
                               Fill="LightSlateGray"
                               Stretch="Uniform" />
                     </Viewbox>
                 </Button>
-                <TextBlock Grid.Row="6"
-                           Padding="-10,0"
-                           Text="easpace"
-                           FontWeight="Medium"
-                           Foreground="LightSlateGray"
-                           HorizontalAlignment="Center"
-                           ClipToBounds="False"
-                           FontSize="10"/>
             </Grid>
         </Border>
 
