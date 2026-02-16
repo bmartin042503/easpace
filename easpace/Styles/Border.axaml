@@ -1,0 +1,52 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Background="{DynamicResource Neutral100}">
+                <StackPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Padding="40,60"
+                        Classes="primaryGradientSideBar"/>
+                    <StackPanel Orientation="Vertical" Spacing="20" Margin="20">
+                        <Border
+                            Padding="120,40"
+                            Classes="primaryCard"/>
+                        <Border
+                            Padding="120,40"
+                            Classes="primaryGradientCard"/>
+                        <Border
+                            Padding="120,40"
+                            Classes="secondaryCard"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="Border.primaryCard">
+        <Setter Property="Background" Value="{DynamicResource Clear100%}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+        <Setter Property="BorderThickness" Value="0.75"/>
+        <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+    
+    <Style Selector="Border.primaryGradientCard">
+        <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+        <Setter Property="BorderThickness" Value="0.75"/>
+        <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+    
+    <Style Selector="Border.secondaryCard">
+        <Setter Property="Background" Value="{DynamicResource Clear75%}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+        <Setter Property="BorderThickness" Value="0.75"/>
+        <Setter Property="CornerRadius" Value="12"/>
+    </Style>
+    
+    <Style Selector="Border.primaryGradientSideBar">
+        <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+        <Setter Property="BorderThickness" Value="0,0,0.75,0"/>
+    </Style>
+</Styles>

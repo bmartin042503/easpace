@@ -24,6 +24,10 @@
         <!-- Global styles -->
         <StyleInclude Source="Styles/Global.axaml"/>
         
+        <!-- AXAML styles -->
+        <StyleInclude Source="Styles/TextBlock.axaml"/>
+        <StyleInclude Source="Styles/Border.axaml"/>
+        
         <FluentTheme />
     </Application.Styles>
 </Application>

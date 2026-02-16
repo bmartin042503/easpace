@@ -14,8 +14,7 @@
 
     <Grid ColumnDefinitions="Auto,*">
         <!-- Sidebar -->
-        <Border Grid.Column="0" Background="WhiteSmoke" BorderThickness="0,0,1,0"
-                BorderBrush="LightGray">
+        <Border Grid.Column="0" Classes="primaryGradientSideBar">
             <Border.Padding>
                 <OnPlatform>
                     <OnPlatform.Default>14,14,14,28</OnPlatform.Default>
