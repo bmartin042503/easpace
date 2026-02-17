@@ -3,55 +3,94 @@
     <Design.PreviewWith>
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
-                <StackPanel Orientation="Vertical" Spacing="24">
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="24" Height="24">
-                            <Path Data="{StaticResource BrainIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource NotebookIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton selected">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource TargetIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="24" Height="24">
-                            <Path Data="{StaticResource FlowerLotusIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource GearIcon}" />
-                        </Viewbox>
-                    </Button>
+                <StackPanel Orientation="Horizontal" Spacing="24">
+                    <StackPanel Orientation="Vertical" Spacing="24">
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="{StaticResource BrainIcon}" />
+                            </Viewbox>
+                        </Button>
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource NotebookIcon}" />
+                            </Viewbox>
+                        </Button>
+                        <Button Classes="sidebarIconButton selected">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource TargetIcon}" />
+                            </Viewbox>
+                        </Button>
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="{StaticResource FlowerLotusIcon}" />
+                            </Viewbox>
+                        </Button>
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource GearIcon}" />
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Button Classes="primaryButton">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0"
+                                           Text="Edit"/>
+                                <Viewbox Grid.Column="1" Width="10" Height="10">
+                                    <Path Data="{StaticResource PencilFillIcon}" />
+                                </Viewbox>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
-
-    <!-- Sidebar icon button styles -->
-    <Style Selector="Button.sidebarIconButton">
-
+    
+    <!-- Button styles -->
+    <Style Selector="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
+    </Style>
 
-        <Style Selector="^ Path">
-            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
-            <Setter Property="Stretch" Value="Uniform" />
-        </Style>
-
+    <!-- Primary button styles -->
+    <Style Selector="Button.primaryButton">
+        <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="Padding" Value="10,4"/>
+        <Setter Property="BorderThickness" Value="0.5"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Primary600}"/>
+        
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource Primary600}"/>
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        </Style>
+        
+        <Style Selector="^ TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Clear100%}"/>
+            <Setter Property="FontWeight" Value="500"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Clear100%}"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+        </Style>
+    </Style>
+
+    <!-- Sidebar icon button styles -->
+    <Style Selector="Button.sidebarIconButton">
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
+            <Setter Property="Stretch" Value="Uniform" />
         </Style>
 
         <Style Selector="^.selected Path">
@@ -61,5 +100,14 @@
         <Style Selector="^.selected">
             <Setter Property="Effect" Value="{DynamicResource PrimaryDropShadowEffect}" />
         </Style>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
     </Style>
+    
 </Styles>
