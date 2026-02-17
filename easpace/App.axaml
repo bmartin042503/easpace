@@ -8,8 +8,8 @@
      <Application.Resources>
          <ResourceDictionary>
              <ResourceDictionary.MergedDictionaries>
-                 <MergeResourceInclude Source="/Styles/Colors/LightColors.axaml" />
-                 <MergeResourceInclude Source="/Styles/Colors/DarkColors.axaml" />
+                 <MergeResourceInclude Source="/Styles/Themes/LightTheme.axaml" />
+                 <MergeResourceInclude Source="/Styles/Themes/DarkTheme.axaml" />
                  <MergeResourceInclude Source="/Styles/Icons.axaml" />
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
@@ -23,6 +23,11 @@
     <Application.Styles>
         <!-- Global styles -->
         <StyleInclude Source="Styles/Global.axaml"/>
+        
+        <!-- AXAML styles -->
+        <StyleInclude Source="Styles/TextBlock.axaml"/>
+        <StyleInclude Source="Styles/Button.axaml"/>
+        <StyleInclude Source="Styles/Border.axaml"/>
         
         <FluentTheme />
     </Application.Styles>

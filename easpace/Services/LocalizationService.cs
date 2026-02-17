@@ -28,7 +28,7 @@ public class LocalizationService : MarkupExtension
     
     public static string GetString(string key)
     {
-        return ResourceManager.GetString(key, _resourceCulture) ?? "[UNDEFINED_LOCALIZATION_KEY]";
+        return ResourceManager.GetString(key, _resourceCulture) ?? $"[{key}]";
     }
     
     public string Key { get; set; } = string.Empty;

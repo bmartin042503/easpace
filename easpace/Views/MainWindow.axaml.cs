@@ -1,10 +1,12 @@
 using System.Runtime.InteropServices;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace easpace.Views;
 
 public partial class MainWindow : Window
 {
+    private Button _previousSelectedButton;
     public MainWindow()
     {
         InitializeComponent();
@@ -28,5 +30,19 @@ public partial class MainWindow : Window
         {
             
         }
+
+        // sets Mood button as selected by default
+        _previousSelectedButton = MoodButton;
+        _previousSelectedButton.Classes.Add("selected");
+    }
+    
+    private void SidebarButton_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Button clickedButton) return;
+        
+        // add and remove 'selected' button styles
+        _previousSelectedButton.Classes.Remove("selected");
+        clickedButton.Classes.Add("selected");
+        _previousSelectedButton = clickedButton;
     }
 }

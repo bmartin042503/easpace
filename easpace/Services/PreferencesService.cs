@@ -6,16 +6,9 @@ using System.Threading;
 
 namespace easpace.Services;
 
-public static class PreferenceKey
-{
-    public const string Boarded = "boarded";
-    public const string Language = "language";
-    public const string ColorScheme = "color-scheme";
-}
-
 public interface IPreferencesService
 {
-    T ReadPreference<T>(string key, T defaultValue);
+    T ReadPreference<T>(string key, T defaultValue = default!);
     void SavePreference<T>(string key, T value);
 }
 

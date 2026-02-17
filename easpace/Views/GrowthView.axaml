@@ -3,9 +3,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.ViewModels"
+             xmlns:services="clr-namespace:easpace.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:GrowthViewModel"
              x:Class="easpace.Views.GrowthView"
-             Padding="20">
-    GrowthView
+             Background="{DynamicResource Neutral100}">
+    
+    <Grid RowDefinitions="Auto,Auto,*" Margin="26">
+        
+        <!-- Main title -->
+        <TextBlock Grid.Row="0"
+                   Text="{services:LocalizationService Key='GROWTH_TITLE'}"
+                   Classes="pageTitle"/>
+        
+        <!-- Subtitle -->
+        <TextBlock Grid.Row="1"
+                   Text="{services:LocalizationService Key='GROWTH_SUBTITLE'}"
+                   Classes="pageSubTitle"/>
+        
+    </Grid>
 </UserControl>

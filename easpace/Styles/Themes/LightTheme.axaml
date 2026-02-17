@@ -1,0 +1,92 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+
+            <!-- Primary -->
+            <Color x:Key="Primary100">#EBFBFF</Color>
+            <Color x:Key="Primary200">#C5EAF4</Color>
+            <Color x:Key="Primary300">#A3E1F3</Color>
+            <Color x:Key="Primary400">#67D0EE</Color>
+            <Color x:Key="Primary500">#2AAED3</Color>
+            <Color x:Key="Primary600">#1591B3</Color>
+            <Color x:Key="Primary700">#08637D</Color>
+            <Color x:Key="Primary800">#034355</Color>
+            <Color x:Key="Primary900">#00303D</Color>
+
+            <!-- Success -->
+            <Color x:Key="Success100">#ECFFEB</Color>
+            <Color x:Key="Success200">#CAF5C6</Color>
+            <Color x:Key="Success300">#A8F2A2</Color>
+            <Color x:Key="Success400">#76E66D</Color>
+            <Color x:Key="Success500">#40D335</Color>
+            <Color x:Key="Success600">#21B315</Color>
+            <Color x:Key="Success700">#117D09</Color>
+            <Color x:Key="Success800">#074F02</Color>
+            <Color x:Key="Success900">#043D00</Color>
+
+            <!-- Warning -->
+            <Color x:Key="Warning100">#FFFFE6</Color>
+            <Color x:Key="Warning200">#F7F7B1</Color>
+            <Color x:Key="Warning300">#F4F479</Color>
+            <Color x:Key="Warning400">#EAEA52</Color>
+            <Color x:Key="Warning500">#D8D82B</Color>
+            <Color x:Key="Warning600">#C0C01B</Color>
+            <Color x:Key="Warning700">#90850A</Color>
+            <Color x:Key="Warning800">#5F5004</Color>
+            <Color x:Key="Warning900">#3D2E00</Color>
+
+            <!-- Danger -->
+            <Color x:Key="Danger100">#FFEBEB</Color>
+            <Color x:Key="Danger200">#F6C1C1</Color>
+            <Color x:Key="Danger300">#F79B9B</Color>
+            <Color x:Key="Danger400">#ED6666</Color>
+            <Color x:Key="Danger500">#D42A2A</Color>
+            <Color x:Key="Danger600">#B31515</Color>
+            <Color x:Key="Danger700">#7D0909</Color>
+            <Color x:Key="Danger800">#4F0303</Color>
+            <Color x:Key="Danger900">#3D0000</Color>
+
+            <!-- Info -->
+            <Color x:Key="Info100">#EBEFFF</Color>
+            <Color x:Key="Info200">#C6D1F5</Color>
+            <Color x:Key="Info300">#A2B4F2</Color>
+            <Color x:Key="Info400">#6684ED</Color>
+            <Color x:Key="Info500">#2A50D4</Color>
+            <Color x:Key="Info600">#1538B3</Color>
+            <Color x:Key="Info700">#09247D</Color>
+            <Color x:Key="Info800">#02144F</Color>
+            <Color x:Key="Info900">#000E3D</Color>
+
+            <!-- Neutral -->
+            <Color x:Key="Neutral100">#EDEFF0</Color>
+            <Color x:Key="Neutral200">#CFD6D8</Color>
+            <Color x:Key="Neutral300">#A9B6BA</Color>
+            <Color x:Key="Neutral400">#879AA0</Color>
+            <Color x:Key="Neutral500">#5E7379</Color>
+            <Color x:Key="Neutral600">#41585E</Color>
+            <Color x:Key="Neutral700">#253A40</Color>
+            <Color x:Key="Neutral800">#15262A</Color>
+            <Color x:Key="Neutral900">#040F12</Color>
+
+            <!-- Clear -->
+            <Color x:Key="Clear100%">#FFFFFF</Color>
+            <Color x:Key="Clear75%">#BFFFFFFF</Color>
+
+            <!-- Primary Card Gradient -->
+            <LinearGradientBrush x:Key="PrimaryCardGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="#FFFFFF" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Primary100}" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <!-- Primary Drop Shadow Effect -->
+            <DropShadowEffect x:Key="PrimaryDropShadowEffect"
+                              Color="{DynamicResource Primary600}"
+                              BlurRadius="18"
+                              Opacity="0.4"
+                              OffsetX="0"
+                              OffsetY="0" />
+
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>
