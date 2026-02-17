@@ -14,6 +14,7 @@ namespace easpace;
 
 public partial class App : Application
 {
+    public const string Version = "0.1.0";
     private static IServiceProvider? _services;
 
     public static void ConfigureServices(IServiceProvider services)

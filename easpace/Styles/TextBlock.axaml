@@ -11,16 +11,19 @@
         </ThemeVariantScope>
     </Design.PreviewWith>
     
+    <!-- TextBlock styles -->
     <Style Selector="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
     </Style>
 
+    <!-- Page title styles -->
     <Style Selector="TextBlock.pageTitle">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="FontWeight" Value="500"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
     
+    <!-- Page subtitle styles -->
     <Style Selector="TextBlock.pageSubTitle">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral500}"/>

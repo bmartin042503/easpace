@@ -1,0 +1,65 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <StackPanel Orientation="Vertical" Spacing="24">
+                    <Button Classes="sidebarIconButton">
+                        <Viewbox Width="24" Height="24">
+                            <Path Data="{StaticResource BrainIcon}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Classes="sidebarIconButton">
+                        <Viewbox Width="20" Height="20">
+                            <Path Data="{StaticResource NotebookIcon}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Classes="sidebarIconButton selected">
+                        <Viewbox Width="20" Height="20">
+                            <Path Data="{StaticResource TargetIcon}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Classes="sidebarIconButton">
+                        <Viewbox Width="24" Height="24">
+                            <Path Data="{StaticResource FlowerLotusIcon}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Classes="sidebarIconButton">
+                        <Viewbox Width="20" Height="20">
+                            <Path Data="{StaticResource GearIcon}" />
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Sidebar icon button styles -->
+    <Style Selector="Button.sidebarIconButton">
+
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^.selected Path">
+            <Setter Property="Fill" Value="{DynamicResource Primary600}" />
+        </Style>
+
+        <Style Selector="^.selected">
+            <Setter Property="Effect" Value="{DynamicResource PrimaryDropShadowEffect}" />
+        </Style>
+    </Style>
+</Styles>

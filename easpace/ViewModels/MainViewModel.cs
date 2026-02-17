@@ -1,8 +1,8 @@
-﻿using Avalonia;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Constants;
+using easpace.Constants.Keys;
 using easpace.Factories;
 using easpace.Services;
 
@@ -11,7 +11,7 @@ namespace easpace.ViewModels;
 public partial class MainViewModel : ViewModelBase
 {
     private readonly PageFactory _pageFactory;
-    private readonly PreferencesService _preferencesService;
+    private readonly IPreferencesService _preferencesService;
     private readonly IMessenger _messenger;
     private readonly bool _isBoarded;
 
@@ -20,7 +20,7 @@ public partial class MainViewModel : ViewModelBase
     
     public MainViewModel(
         PageFactory pageFactory,
-        PreferencesService preferencesService,
+        IPreferencesService preferencesService,
         IMessenger messenger
     )
     {
@@ -34,7 +34,7 @@ public partial class MainViewModel : ViewModelBase
         });
 
         _isBoarded = _preferencesService.ReadPreference<bool>(PreferenceKey.Boarded);
-        SetPage(_isBoarded ? ApplicationPage.Journal : ApplicationPage.Intro);
+        SetPage(_isBoarded ? ApplicationPage.Mood : ApplicationPage.Intro);
     }
 
     [RelayCommand]

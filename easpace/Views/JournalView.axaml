@@ -8,7 +8,9 @@
              x:Class="easpace.Views.JournalView"
              x:DataType="vm:JournalViewModel"
              Background="{DynamicResource Neutral100}">
+    
     <Grid RowDefinitions="Auto,Auto,*" Margin="26">
+        
         <!-- Main title -->
         <TextBlock Grid.Row="0"
             Text="{services:LocalizationService Key='JOURNAL_TITLE'}"

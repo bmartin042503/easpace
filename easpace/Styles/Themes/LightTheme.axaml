@@ -68,16 +68,24 @@
             <Color x:Key="Neutral700">#253A40</Color>
             <Color x:Key="Neutral800">#15262A</Color>
             <Color x:Key="Neutral900">#040F12</Color>
-            
-            <!-- Other -->
+
+            <!-- Clear -->
             <Color x:Key="Clear100%">#FFFFFF</Color>
             <Color x:Key="Clear75%">#BFFFFFFF</Color>
-            
+
             <!-- Primary Card Gradient -->
             <LinearGradientBrush x:Key="PrimaryCardGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
-                <GradientStop Color="#FFFFFF" Offset="0.0"/>
-                <GradientStop Color="{DynamicResource Primary100}" Offset="1.0"/>
+                <GradientStop Color="#FFFFFF" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Primary100}" Offset="1.0" />
             </LinearGradientBrush>
+
+            <!-- Primary Drop Shadow Effect -->
+            <DropShadowEffect x:Key="PrimaryDropShadowEffect"
+                              Color="{DynamicResource Primary600}"
+                              BlurRadius="18"
+                              Opacity="0.4"
+                              OffsetX="0"
+                              OffsetY="0" />
 
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>

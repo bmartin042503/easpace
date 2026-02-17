@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
             
             collection.AddSingleton<PreferencesService>();
+            collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
         
             collection.AddSingleton<PageFactory>();
         
