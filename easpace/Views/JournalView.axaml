@@ -25,6 +25,32 @@
         <Border Grid.Row="2" Classes="primaryGradientCard"
                 Margin="0,20,0,0">
             
+            <Grid ColumnDefinitions="Auto,*">
+                
+                <!-- Journal sidebar -->
+                <Grid Margin="12" RowDefinitions="Auto,*" Grid.Column="0">
+                    
+                    <!-- SearchBox and 'Add' button -->
+                    <StackPanel Spacing="14" Grid.Row="0" Orientation="Horizontal">
+                        <TextBox Classes="searchBox"
+                                 Watermark="{services:LocalizationService Key='SEARCH'}">
+                            <TextBox.InnerRightContent>
+                                <Viewbox Width="14" Height="14">
+                                    <Path Data="{StaticResource MagnifyingGlassBoldIcon}"/>
+                                </Viewbox>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        
+                        <Button Classes="addPlusButton" HorizontalAlignment="Left">
+                            <Viewbox Width="26" Height="26">
+                                <Path Data="{StaticResource PlusCircleFillIcon}"/>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                    
+                </Grid>
+            </Grid>
+            
         </Border>
     </Grid>
 </UserControl>

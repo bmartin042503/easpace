@@ -59,6 +59,7 @@
             <Color x:Key="Info900">#000E3D</Color>
 
             <!-- Neutral colors -->
+            <Color x:Key="Neutral50">#F7F7F7</Color>
             <Color x:Key="Neutral100">#EDEFF0</Color>
             <Color x:Key="Neutral200">#CFD6D8</Color>
             <Color x:Key="Neutral300">#A9B6BA</Color>
@@ -69,9 +70,8 @@
             <Color x:Key="Neutral800">#15262A</Color>
             <Color x:Key="Neutral900">#040F12</Color>
 
-            <!-- Clear colors -->
-            <Color x:Key="Clear100%">#FFFFFF</Color>
-            <Color x:Key="Clear75%">#BFFFFFFF</Color>
+            <!-- Clear -->
+            <Color x:Key="Clear">#FFFFFF</Color>
 
             <!-- Primary card gradient brush -->
             <LinearGradientBrush x:Key="PrimaryCardGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
@@ -83,6 +83,12 @@
             <LinearGradientBrush x:Key="PrimaryButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
                 <GradientStop Color="{DynamicResource Primary400}" Offset="0.0" />
                 <GradientStop Color="{DynamicResource Primary500}" Offset="1.0" />
+            </LinearGradientBrush>
+            
+            <!-- Delete button gradient brush -->
+            <LinearGradientBrush x:Key="DeleteButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="{DynamicResource Danger400}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Danger500}" Offset="1.0" />
             </LinearGradientBrush>
 
             <!-- Primary drop shadow effect -->
