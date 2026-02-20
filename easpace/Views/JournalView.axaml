@@ -4,27 +4,89 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.ViewModels"
              xmlns:services="clr-namespace:easpace.Services"
+             xmlns:models="clr-namespace:easpace.Models"
+             xmlns:templatedControls="clr-namespace:easpace.Styles.TemplatedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Views.JournalView"
              x:DataType="vm:JournalViewModel"
              Background="{DynamicResource Neutral100}">
-    
+
     <Grid RowDefinitions="Auto,Auto,*" Margin="26">
-        
+
         <!-- Main title -->
         <TextBlock Grid.Row="0"
-            Text="{services:LocalizationService Key='JOURNAL_TITLE'}"
-            Classes="pageTitle"/>
-        
+                   Text="{services:LocalizationService Key='JOURNAL_TITLE'}"
+                   Classes="pageTitle" />
+
         <!-- Subtitle -->
         <TextBlock Grid.Row="1"
-            Text="{services:LocalizationService Key='JOURNAL_SUBTITLE'}"
-            Classes="pageSubTitle"/>
-        
+                   Text="{services:LocalizationService Key='JOURNAL_SUBTITLE'}"
+                   Classes="pageSubTitle" />
+
         <!-- Main content -->
         <Border Grid.Row="2" Classes="primaryGradientCard"
                 Margin="0,20,0,0">
-            
+
+            <Grid ColumnDefinitions="Auto,*">
+
+                <!-- Journal sidebar -->
+                <Grid Margin="18" RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="20">
+
+                    <StackPanel Spacing="14" Grid.Row="0" Orientation="Horizontal">
+
+                        <!-- Search box -->
+                        <TextBox Classes="searchBox"
+                                 Watermark="{services:LocalizationService Key='SEARCH'}">
+                            <TextBox.InnerRightContent>
+                                <Viewbox Width="14" Height="14">
+                                    <Path Data="{StaticResource MagnifyingGlassBoldIcon}" />
+                                </Viewbox>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+
+                        <!-- Add (plus) button -->
+                        <Button Classes="addPlusButton" HorizontalAlignment="Left">
+                            <Viewbox Width="26" Height="26">
+                                <Path Data="{StaticResource PlusCircleFillIcon}" />
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Journal entries -->
+                    <ScrollViewer Grid.Row="1">
+                        <ItemsControl ItemsSource="{Binding JournalEntries}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" Spacing="20" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.DataTemplates>
+
+                                <!-- Template for a single Journal entry -->
+                                <DataTemplate DataType="models:JournalEntry">
+                                    <templatedControls:JournalEntry
+                                        HorizontalAlignment="Left"
+                                        Title="{Binding Title}"
+                                        Id="{Binding Id}"
+                                        SelectedId="{Binding 
+                                            RelativeSource={RelativeSource AncestorType=UserControl}, 
+                                            Path=((vm:JournalViewModel)DataContext).SelectedJournalEntry.Id}"
+                                        SelectCommand="{Binding 
+                                            RelativeSource={RelativeSource AncestorType=UserControl}, 
+                                            Path=((vm:JournalViewModel)DataContext).SelectJournalEntryCommand}"/>
+                                    
+                                </DataTemplate>
+
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                </Grid>
+
+
+            </Grid>
+
         </Border>
     </Grid>
 </UserControl>

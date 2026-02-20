@@ -1,57 +1,178 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
-                <StackPanel Orientation="Vertical" Spacing="24">
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="24" Height="24">
-                            <Path Data="{StaticResource BrainIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource NotebookIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton selected">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource TargetIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="24" Height="24">
-                            <Path Data="{StaticResource FlowerLotusIcon}" />
-                        </Viewbox>
-                    </Button>
-                    <Button Classes="sidebarIconButton">
-                        <Viewbox Width="20" Height="20">
-                            <Path Data="{StaticResource GearIcon}" />
-                        </Viewbox>
-                    </Button>
+
+                <!-- Sample buttons -->
+                <StackPanel Orientation="Horizontal" Spacing="24">
+                    <StackPanel Orientation="Vertical" Spacing="24">
+
+                        <!-- Sample sidebar icon button - Mood -->
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="{StaticResource BrainIcon}" />
+                            </Viewbox>
+                        </Button>
+
+                        <!-- Sample sidebar icon button - Journal -->
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource NotebookIcon}" />
+                            </Viewbox>
+                        </Button>
+
+                        <!-- Sample sidebar icon button - Growth (selected) -->
+                        <Button Classes="sidebarIconButton selected">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource TargetIcon}" />
+                            </Viewbox>
+                        </Button>
+
+                        <!-- Sample sidebar icon button - Wellness -->
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="24" Height="24">
+                                <Path Data="{StaticResource FlowerLotusIcon}" />
+                            </Viewbox>
+                        </Button>
+
+                        <!-- Sample sidebar icon button - Settings -->
+                        <Button Classes="sidebarIconButton">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource GearIcon}" />
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Spacing="12">
+
+                        <!-- Sample interaction button - Edit -->
+                        <Button Classes="editButton" HorizontalAlignment="Left">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0"
+                                           Text="Edit" />
+                                <Viewbox Grid.Column="1" Width="10" Height="10">
+                                    <Path Data="{StaticResource PencilFillIcon}" />
+                                </Viewbox>
+                            </Grid>
+                        </Button>
+
+                        <!-- Sample interaction button - Delete -->
+                        <Button Classes="deleteButton" HorizontalAlignment="Left">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0"
+                                           Text="Delete" />
+                                <Viewbox Grid.Column="1" Width="10" Height="10">
+                                    <Path Data="{StaticResource TrashFillIcon}" />
+                                </Viewbox>
+                            </Grid>
+                        </Button>
+
+                        <!-- Sample interaction button - Add (plus) -->
+                        <Button Classes="addPlusButton" HorizontalAlignment="Left">
+                            <Viewbox Width="26" Height="26">
+                                <Path Data="{StaticResource PlusCircleFillIcon}" />
+                            </Viewbox>
+                        </Button>
+
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
-    <!-- Sidebar icon button styles -->
-    <Style Selector="Button.sidebarIconButton">
-
+    <!-- Button styles -->
+    <Style Selector="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
+    </Style>
+
+    <!-- Edit button styles -->
+    <Style Selector="Button.editButton">
+        <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="BorderThickness" Value="0.5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        </Style>
+
+        <Style Selector="^ TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Clear}" />
+            <Setter Property="FontWeight" Value="500" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
 
         <Style Selector="^ Path">
-            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
-            <Setter Property="Stretch" Value="Uniform" />
+            <Setter Property="Fill" Value="{DynamicResource Clear}" />
         </Style>
+    </Style>
+
+    <!-- Add (plus) button styles -->
+    <Style Selector="Button.addPlusButton">
+        <Setter Property="CornerRadius" Value="64" />
+        <Setter Property="BorderThickness" Value="0.5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+        <Setter Property="Padding" Value="0" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        </Style>
+    </Style>
+
+    <!-- Delete button styles -->
+    <Style Selector="Button.deleteButton">
+        <Setter Property="Background" Value="{DynamicResource DeleteButtonGradientBrush}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="BorderThickness" Value="0.5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Danger600}" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DeleteButtonGradientBrush}" />
+            <Setter Property="BorderThickness" Value="0.5" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Danger600}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DeleteButtonGradientBrush}" />
+        </Style>
+
+        <Style Selector="^ TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Clear}" />
+            <Setter Property="FontWeight" Value="500" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Clear}" />
+        </Style>
+    </Style>
+
+    <!-- Sidebar icon button styles -->
+    <Style Selector="Button.sidebarIconButton">
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
         </Style>
 
         <Style Selector="^.selected Path">
@@ -61,5 +182,14 @@
         <Style Selector="^.selected">
             <Setter Property="Effect" Value="{DynamicResource PrimaryDropShadowEffect}" />
         </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
     </Style>
+
 </Styles>

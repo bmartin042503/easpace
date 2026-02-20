@@ -3,7 +3,7 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
 
-            <!-- Primary -->
+            <!-- Primary colors -->
             <Color x:Key="Primary100">#EBFBFF</Color>
             <Color x:Key="Primary200">#C5EAF4</Color>
             <Color x:Key="Primary300">#A3E1F3</Color>
@@ -14,7 +14,7 @@
             <Color x:Key="Primary800">#034355</Color>
             <Color x:Key="Primary900">#00303D</Color>
 
-            <!-- Success -->
+            <!-- Success colors -->
             <Color x:Key="Success100">#ECFFEB</Color>
             <Color x:Key="Success200">#CAF5C6</Color>
             <Color x:Key="Success300">#A8F2A2</Color>
@@ -25,7 +25,7 @@
             <Color x:Key="Success800">#074F02</Color>
             <Color x:Key="Success900">#043D00</Color>
 
-            <!-- Warning -->
+            <!-- Warning colors -->
             <Color x:Key="Warning100">#FFFFE6</Color>
             <Color x:Key="Warning200">#F7F7B1</Color>
             <Color x:Key="Warning300">#F4F479</Color>
@@ -36,7 +36,7 @@
             <Color x:Key="Warning800">#5F5004</Color>
             <Color x:Key="Warning900">#3D2E00</Color>
 
-            <!-- Danger -->
+            <!-- Danger colors -->
             <Color x:Key="Danger100">#FFEBEB</Color>
             <Color x:Key="Danger200">#F6C1C1</Color>
             <Color x:Key="Danger300">#F79B9B</Color>
@@ -47,7 +47,7 @@
             <Color x:Key="Danger800">#4F0303</Color>
             <Color x:Key="Danger900">#3D0000</Color>
 
-            <!-- Info -->
+            <!-- Info colors -->
             <Color x:Key="Info100">#EBEFFF</Color>
             <Color x:Key="Info200">#C6D1F5</Color>
             <Color x:Key="Info300">#A2B4F2</Color>
@@ -58,7 +58,8 @@
             <Color x:Key="Info800">#02144F</Color>
             <Color x:Key="Info900">#000E3D</Color>
 
-            <!-- Neutral -->
+            <!-- Neutral colors -->
+            <Color x:Key="Neutral50">#F7F7F7</Color>
             <Color x:Key="Neutral100">#EDEFF0</Color>
             <Color x:Key="Neutral200">#CFD6D8</Color>
             <Color x:Key="Neutral300">#A9B6BA</Color>
@@ -70,16 +71,27 @@
             <Color x:Key="Neutral900">#040F12</Color>
 
             <!-- Clear -->
-            <Color x:Key="Clear100%">#FFFFFF</Color>
-            <Color x:Key="Clear75%">#BFFFFFFF</Color>
+            <Color x:Key="Clear">#FFFFFF</Color>
 
-            <!-- Primary Card Gradient -->
+            <!-- Primary card gradient brush -->
             <LinearGradientBrush x:Key="PrimaryCardGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
                 <GradientStop Color="#FFFFFF" Offset="0.0" />
                 <GradientStop Color="{DynamicResource Primary100}" Offset="1.0" />
             </LinearGradientBrush>
+            
+            <!-- Primary button gradient brush -->
+            <LinearGradientBrush x:Key="PrimaryButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="{DynamicResource Primary400}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Primary500}" Offset="1.0" />
+            </LinearGradientBrush>
+            
+            <!-- Delete button gradient brush -->
+            <LinearGradientBrush x:Key="DeleteButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+                <GradientStop Color="{DynamicResource Danger400}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Danger500}" Offset="1.0" />
+            </LinearGradientBrush>
 
-            <!-- Primary Drop Shadow Effect -->
+            <!-- Primary drop shadow effect -->
             <DropShadowEffect x:Key="PrimaryDropShadowEffect"
                               Color="{DynamicResource Primary600}"
                               BlurRadius="18"

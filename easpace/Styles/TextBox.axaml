@@ -1,0 +1,66 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <Border
+                    Padding="40"
+                    Classes="primaryCard">
+                    <StackPanel Orientation="Vertical">
+                        <TextBox Watermark="Search" Classes="searchBox">
+                            <TextBox.InnerRightContent>
+                                <Viewbox Width="14" Height="14">
+                                    <Path Data="{StaticResource MagnifyingGlassBoldIcon}"/>
+                                </Viewbox>
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                    </StackPanel>
+                </Border>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+    
+    <!-- TODO: center text in SearchBox vertically somehow -->
+    
+    <!-- Text box styles -->
+    <Style Selector="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="BorderThickness" Value="0.75" />
+    </Style>
+    
+    <!-- Search box styles -->
+    <Style Selector="TextBox.searchBox">
+        <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
+        <Setter Property="Foreground" Value="{DynamicResource Neutral800}"/>
+        <Setter Property="TextAlignment" Value="Start"/>
+        <Setter Property="MinWidth" Value="160"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="12,6,0,8" />
+        <Setter Property="MaxLines" Value="1"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                <Setter Property="Foreground" Value="{DynamicResource Neutral800}" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+                <Setter Property="BorderThickness" Value="0.75" />
+            </Style>
+        </Style>
+        
+        <Style Selector="^ Viewbox">
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+        
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral400}" />
+        </Style>
+    </Style>
+    
+</Styles>
