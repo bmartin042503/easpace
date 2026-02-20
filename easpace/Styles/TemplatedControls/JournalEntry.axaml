@@ -1,0 +1,61 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:templatedControls="using:easpace.Styles.TemplatedControls">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <StackPanel Orientation="Vertical" Spacing="12">
+                    
+                    <!-- Sample journal entry item 1 -->
+                    <templatedControls:JournalEntry Title="Journal Entry 1"/>
+                    
+                    <!-- Sample journal entry item 2 -->
+                    <templatedControls:JournalEntry Title="Journal Entry 2"/>
+                    
+                    <!-- Sample journal entry item 3 -->
+                    <templatedControls:JournalEntry Title="Journal Entry 3"/>
+                    
+                    <!-- Sample journal entry item 4 (selected) -->
+                    <templatedControls:JournalEntry Title="Journal Entry 4" Classes="selected"/>
+                    
+                    <!-- Sample journal entry item 5 -->
+                    <templatedControls:JournalEntry Title="Journal Entry 5"/>
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Journal entry build -->
+    <Style Selector="templatedControls|JournalEntry">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button Content="{TemplateBinding Title}"
+                        Command="{TemplateBinding SelectCommand}"
+                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^ /template/ Button">
+            <Setter Property="Padding" Value="0"/>
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+
+            <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
+        </Style>
+        
+        <Style Selector="^.selected /template/ Button">
+            <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
+            <Style Selector="^:pointerover /template/ ContentPresenter">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
+            </Style>
+        </Style>
+    </Style>
+    
+</Styles>
