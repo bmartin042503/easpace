@@ -26,6 +26,8 @@ public partial class JournalViewModel : PageViewModel
             new JournalEntry { Title = "Journal Entry 4", Id = Guid.NewGuid()  },
             new JournalEntry { Title = "Journal Entry 5", Id = Guid.NewGuid()  }
         ]);
+
+        SelectedJournalEntry = JournalEntries[0];
     }
 
     [RelayCommand]

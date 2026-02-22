@@ -34,6 +34,7 @@
         
         <!-- Templated controls -->
         <StyleInclude Source="Styles/TemplatedControls/JournalEntry.axaml"/>
+        <StyleInclude Source="Styles/TemplatedControls/MoodEntry.axaml"/>
         
         <FluentTheme />
     </Application.Styles>
