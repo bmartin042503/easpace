@@ -14,4 +14,22 @@
     <data name="CONTINUE" xml:space="preserve">
         <value>Tovább</value>
     </data>
+    <data name="DELETE" xml:space="preserve">
+        <value>Törlés</value>
+    </data>
+    <data name="EDIT" xml:space="preserve">
+        <value>Szerkesztés</value>
+    </data>
+    <data name="SAVE" xml:space="preserve">
+        <value>Mentés</value>
+    </data>
+    <data name="SEARCH" xml:space="preserve">
+        <value>Keresés</value>
+    </data>
+    <data name="JOURNAL_TITLE" xml:space="preserve">
+        <value>Napló</value>
+    </data>
+    <data name="JOURNAL_SUBTITLE" xml:space="preserve">
+        <value>Rögzítsd és kövesd nyomon a bejegyzéseid</value>
+    </data>
 </root>

@@ -30,6 +30,7 @@
         <StyleInclude Source="Styles/Button.axaml"/>
         <StyleInclude Source="Styles/Border.axaml"/>
         <StyleInclude Source="Styles/Path.axaml"/>
+        <StyleInclude Source="Styles/GridSplitter.axaml"/>
         
         <!-- Templated controls -->
         <StyleInclude Source="Styles/TemplatedControls/JournalEntry.axaml"/>

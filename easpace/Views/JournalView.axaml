@@ -27,15 +27,21 @@
         <Border Grid.Row="2" Classes="primaryGradientCard"
                 Margin="0,20,0,0">
 
-            <Grid ColumnDefinitions="Auto,*">
+            <Grid>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" MinWidth="200" MaxWidth="350"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
                 <!-- Journal sidebar -->
                 <Grid Margin="18" RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="20">
 
-                    <StackPanel Spacing="14" Grid.Row="0" Orientation="Horizontal">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="14">
 
                         <!-- Search box -->
-                        <TextBox Classes="searchBox"
+                        <TextBox Grid.Column="0" Classes="searchBox"
                                  Watermark="{services:LocalizationService Key='SEARCH'}">
                             <TextBox.InnerRightContent>
                                 <Viewbox Width="14" Height="14">
@@ -45,12 +51,12 @@
                         </TextBox>
 
                         <!-- Add (plus) button -->
-                        <Button Classes="addPlusButton" HorizontalAlignment="Left">
+                        <Button Grid.Column="1" Classes="addPlusButton" HorizontalAlignment="Left">
                             <Viewbox Width="26" Height="26">
                                 <Path Data="{StaticResource PlusCircleFillIcon}" />
                             </Viewbox>
                         </Button>
-                    </StackPanel>
+                    </Grid>
 
                     <!-- Journal entries -->
                     <ScrollViewer Grid.Row="1">
@@ -74,8 +80,8 @@
                                             Path=((vm:JournalViewModel)DataContext).SelectedJournalEntry.Id}"
                                         SelectCommand="{Binding 
                                             RelativeSource={RelativeSource AncestorType=UserControl}, 
-                                            Path=((vm:JournalViewModel)DataContext).SelectJournalEntryCommand}"/>
-                                    
+                                            Path=((vm:JournalViewModel)DataContext).SelectJournalEntryCommand}" />
+
                                 </DataTemplate>
 
                             </ItemsControl.DataTemplates>
@@ -83,9 +89,36 @@
                     </ScrollViewer>
 
                 </Grid>
+                
+                <GridSplitter Classes="horizontalSplitter" 
+                              Grid.Column="1" ResizeDirection="Columns"
+                              Margin="0,20" />
 
-
+                <Grid Grid.Column="2" RowDefinitions="Auto,*" ColumnDefinitions="*,Auto"
+                      Margin="18" RowSpacing="20">
+                    <TextBlock Classes="journalTitle" Text="Journal Title" Grid.Column="0" Grid.Row="0"/>
+                    
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <Button Classes="editButton">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <TextBlock Grid.Column="0"
+                                           Text="{services:LocalizationService Key='EDIT'}" />
+                                <Viewbox Grid.Column="1" Width="10" Height="10">
+                                    <Path Data="{StaticResource PencilFillIcon}" />
+                                </Viewbox>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                               TextWrapping="Wrap"
+                               Text="Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet. "/>
+                </Grid>
+                
             </Grid>
+            
+            
 
         </Border>
     </Grid>

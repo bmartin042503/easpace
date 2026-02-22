@@ -21,4 +21,22 @@
     <data name="CONTINUE" xml:space="preserve">
         <value>Continue</value>
     </data>
+    <data name="JOURNAL_TITLE" xml:space="preserve">
+        <value>Journal</value>
+    </data>
+    <data name="JOURNAL_SUBTITLE" xml:space="preserve">
+        <value>Note down your thoughts</value>
+    </data>
+    <data name="EDIT" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="DELETE" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="SEARCH" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="SAVE" xml:space="preserve">
+        <value>Save</value>
+    </data>
 </root>
