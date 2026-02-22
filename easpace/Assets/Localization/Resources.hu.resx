@@ -32,4 +32,43 @@
     <data name="JOURNAL_SUBTITLE" xml:space="preserve">
         <value>Rögzítsd és kövesd nyomon a bejegyzéseid</value>
     </data>
+    <data name="DAYS_AGO" xml:space="preserve">
+        <value>{0} napja</value>
+    </data>
+    <data name="HOURS_AGO" xml:space="preserve">
+        <value>{0} órája</value>
+    </data>
+    <data name="JUST_NOW" xml:space="preserve">
+        <value>épp most</value>
+    </data>
+    <data name="MINUTES_AGO" xml:space="preserve">
+        <value>{0} perce</value>
+    </data>
+    <data name="MONTHS_AGO" xml:space="preserve">
+        <value>{0} hónapja</value>
+    </data>
+    <data name="SECONDS_AGO" xml:space="preserve">
+        <value>{0} másodperce</value>
+    </data>
+    <data name="WEEKS_AGO" xml:space="preserve">
+        <value>{0} hete</value>
+    </data>
+    <data name="YEARS_AGO" xml:space="preserve">
+        <value>{0} éve</value>
+    </data>
+    <data name="NEUTRAL" xml:space="preserve">
+        <value>Semleges</value>
+    </data>
+    <data name="SLIGHTLY_PLEASANT" xml:space="preserve">
+        <value>Kissé kellemes</value>
+    </data>
+    <data name="VERY_PLEASANT" xml:space="preserve">
+        <value>Nagyon kellemes</value>
+    </data>
+    <data name="SLIGHTLY_UNPLEASANT" xml:space="preserve">
+        <value>Kissé kellemetlen</value>
+    </data>
+    <data name="VERY_UNPLEASANT" xml:space="preserve">
+        <value>Nagyon kellemetlen</value>
+    </data>
 </root>

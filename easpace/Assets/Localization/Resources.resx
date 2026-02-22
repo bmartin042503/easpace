@@ -39,4 +39,43 @@
     <data name="SAVE" xml:space="preserve">
         <value>Save</value>
     </data>
+    <data name="JUST_NOW" xml:space="preserve">
+        <value>just now</value>
+    </data>
+    <data name="MINUTES_AGO" xml:space="preserve">
+        <value>{0} minute(s) ago</value>
+    </data>
+    <data name="SECONDS_AGO" xml:space="preserve">
+        <value>{0} second(s) ago</value>
+    </data>
+    <data name="HOURS_AGO" xml:space="preserve">
+        <value>{0} hour(s) ago</value>
+    </data>
+    <data name="DAYS_AGO" xml:space="preserve">
+        <value>{0} day(s) ago</value>
+    </data>
+    <data name="WEEKS_AGO" xml:space="preserve">
+        <value>{0} week(s) ago</value>
+    </data>
+    <data name="MONTHS_AGO" xml:space="preserve">
+        <value>{0} month(s) ago</value>
+    </data>
+    <data name="YEARS_AGO" xml:space="preserve">
+        <value>{0} year(s) ago</value>
+    </data>
+    <data name="NEUTRAL" xml:space="preserve">
+        <value>Neutral</value>
+    </data>
+    <data name="SLIGHTLY_PLEASANT" xml:space="preserve">
+        <value>Slightly pleasant</value>
+    </data>
+    <data name="VERY_PLEASANT" xml:space="preserve">
+        <value>Very pleasant</value>
+    </data>
+    <data name="SLIGHTLY_UNPLEASANT" xml:space="preserve">
+        <value>Slightly unpleasant</value>
+    </data>
+    <data name="VERY_UNPLEASANT" xml:space="preserve">
+        <value>Very unpleasant</value>
+    </data>
 </root>

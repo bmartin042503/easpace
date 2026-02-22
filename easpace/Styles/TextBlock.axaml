@@ -19,6 +19,7 @@
                     
                     <!-- Sample textblock - Journal title -->
                     <TextBlock Text="Journal title" Classes="journalTitle"/>
+                    
                 </StackPanel>
             </Border>
         </ThemeVariantScope>

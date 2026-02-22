@@ -1,0 +1,195 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:templatedControls="using:easpace.Styles.TemplatedControls"
+        xmlns:converters="using:easpace.Converters"
+        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+
+                <!-- TODO: remove unnecessary margins from items that are not visible -->
+                
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <templatedControls:MoodEntry
+                        Description="Woke up feeling incredibly refreshed and ready to tackle the day."
+                        MoodSliderValue="0.9"
+                        Date="2026-02-22T22:25:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Energetic</x:String>
+                                <x:String>Rested</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+
+                    <templatedControls:MoodEntry
+                        Description="A bit stressed about the upcoming deadline, but managing."
+                        MoodSliderValue="0.4"
+                        Date="2026-02-22T22:10:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Anxious</x:String>
+                                <x:String>Focused</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+
+                    <templatedControls:MoodEntry
+                        Description="Had a really nice meal with an old friend."
+                        MoodSliderValue="0.8"
+                        Date="2026-02-22T18:00:00" />
+                    <templatedControls:MoodEntry
+                        MoodSliderValue="0.5"
+                        Date="2026-02-21T10:00:00" />
+                    <templatedControls:MoodEntry
+                        MoodSliderValue="0.7"
+                        Date="2026-02-18T14:30:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Peaceful</x:String>
+                                <x:String>Nature</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+
+                    <templatedControls:MoodEntry
+                        Description="Just feeling really tired today, nothing specific happened."
+                        MoodSliderValue="0.2"
+                        Date="2026-02-01T09:00:00" />
+                    <templatedControls:MoodEntry
+                        MoodSliderValue="0.6"
+                        Date="2025-12-10T11:00:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Okay</x:String>
+                                <x:String>Routine</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+
+                    <templatedControls:MoodEntry
+                        MoodSliderValue="1.0"
+                        Date="2025-08-05T16:20:00" />
+                    <templatedControls:MoodEntry
+                        Description="Received some disappointing news regarding a project."
+                        MoodSliderValue="0.1"
+                        Date="2025-01-15T08:00:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Sad</x:String>
+                                <x:String>Disappointed</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+
+                    <templatedControls:MoodEntry
+                        Description="Watched a great comedy, laughed a lot."
+                        MoodSliderValue="0.85"
+                        Date="2023-11-20T20:00:00">
+                        <templatedControls:MoodEntry.Labels>
+                            <generic:List x:TypeArguments="x:String">
+                                <x:String>Happy</x:String>
+                                <x:String>Amused</x:String>
+                                <x:String>Relaxed</x:String>
+                            </generic:List>
+                        </templatedControls:MoodEntry.Labels>
+                    </templatedControls:MoodEntry>
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Build of Mood entry -->
+    <Style Selector="templatedControls|MoodEntry">
+        <Style.Resources>
+            <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
+            <converters:DateTimeConverter x:Key="DateTimeConverter" />
+        </Style.Resources>
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Classes="secondaryCard" Padding="20">
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+
+                        <!-- Mood text -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   x:Name="MoodTextBlock"
+                                   Text="{Binding 
+                            Path=MoodSliderValue, 
+                            Converter={StaticResource MoodSliderValueConverter}, 
+                            RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <!-- TODO: implement context menu with dot button -->
+
+                        <!-- Relative date time -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   x:Name="MoodDateTextBlock"
+                                   Text="{Binding 
+                                Path=Date, 
+                                Converter={StaticResource DateTimeConverter}, 
+                                RelativeSource={RelativeSource TemplatedParent}}" />
+
+                        <!-- Description -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                   x:Name="MoodDescriptionTextBlock"
+                                   Margin="0,20,0,0"
+                                   Text="{TemplateBinding Description}" />
+
+                        <!-- Labels -->
+                        <ItemsControl Grid.Row="3"
+                                      Grid.Column="0"
+                                      Margin="0,20,0,0"
+                                      ItemsSource="{TemplateBinding Labels}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" ItemSpacing="10" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate x:DataType="x:String">
+
+                                    <!-- Label item -->
+                                    <Border Classes="primaryCard">
+                                        <TextBlock x:Name="LabelTextBlock" Text="{Binding .}" />
+                                    </Border>
+
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </Grid>
+
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- MoodEntry styles -->
+        <Style Selector="^ /template/ TextBlock#MoodTextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />
+        </Style>
+
+        <Style Selector="^ /template/ TextBlock#MoodDateTextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Neutral400}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="^ /template/ TextBlock#MoodDescriptionTextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style Selector="^ TextBlock#LabelTextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+
+        <Style Selector="^ Border.primaryCard">
+            <Setter Property="Padding" Value="10,4" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+    </Style>
+</Styles>
