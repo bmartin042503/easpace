@@ -16,6 +16,9 @@
                         <TextBlock Text="Page subtitle" Classes="pageSubTitle"/>
                         
                     </StackPanel>
+                    
+                    <!-- Sample textblock - Journal title -->
+                    <TextBlock Text="Journal title" Classes="journalTitle"/>
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
@@ -37,5 +40,11 @@
     <Style Selector="TextBlock.pageSubTitle">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral500}"/>
+    </Style>
+    
+    <!-- Journal title styles -->
+    <Style Selector="TextBlock.journalTitle">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
 </Styles>
