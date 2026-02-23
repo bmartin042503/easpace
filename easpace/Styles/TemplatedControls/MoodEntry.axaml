@@ -2,14 +2,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:templatedControls="using:easpace.Styles.TemplatedControls"
         xmlns:converters="using:easpace.Converters"
-        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections">
+        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+        xmlns:controls="clr-namespace:easpace.Controls"
+        xmlns:services="clr-namespace:easpace.Services">
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
 
                 <StackPanel Orientation="Vertical" Spacing="20">
-                    
+
                     <!-- Sample MoodEntry item 1 - with description, labels -->
                     <templatedControls:MoodEntry
                         Description="Woke up feeling incredibly refreshed and ready to tackle the day."
@@ -41,12 +43,12 @@
                         Description="Had a really nice meal with an old friend."
                         MoodSliderValue="0.8"
                         Date="2026-02-22T18:00:00" />
-                    
+
                     <!-- Sample MoodEntry item 4 -->
                     <templatedControls:MoodEntry
                         MoodSliderValue="0.5"
                         Date="2026-02-21T10:00:00" />
-                    
+
                     <!-- Sample MoodEntry item 5 - with labels -->
                     <templatedControls:MoodEntry
                         MoodSliderValue="0.7"
@@ -64,7 +66,7 @@
                         Description="Just feeling really tired today, nothing specific happened."
                         MoodSliderValue="0.2"
                         Date="2026-02-01T09:00:00" />
-                    
+
                     <!-- Sample MoodEntry item 7 - with labels -->
                     <templatedControls:MoodEntry
                         MoodSliderValue="0.6"
@@ -81,11 +83,11 @@
                     <templatedControls:MoodEntry
                         MoodSliderValue="1.0"
                         Date="2025-08-05T16:20:00" />
-                    
+
                     <!-- Sample MoodEntry item 9 -->
                     <templatedControls:MoodEntry
                         MoodSliderValue="0.1"
-                        Date="2025-01-15T08:00:00"/>
+                        Date="2025-01-15T08:00:00" />
 
                     <!-- Sample MoodEntry item 10 - with description, labels -->
                     <templatedControls:MoodEntry
@@ -100,7 +102,7 @@
                             </generic:List>
                         </templatedControls:MoodEntry.Labels>
                     </templatedControls:MoodEntry>
-                    
+
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
@@ -123,11 +125,29 @@
                         <TextBlock Grid.Row="0" Grid.Column="0"
                                    x:Name="MoodTextBlock"
                                    Text="{Binding 
-                            Path=MoodSliderValue, 
-                            Converter={StaticResource MoodSliderValueConverter}, 
-                            RelativeSource={RelativeSource TemplatedParent}}" />
+                                        Path=MoodSliderValue, 
+                                        Converter={StaticResource MoodSliderValueConverter}, 
+                                        RelativeSource={RelativeSource TemplatedParent}}" />
 
-                        <!-- TODO: implement context menu with dot button -->
+                        <!-- Context menu button (dots) -->
+                        <Button Grid.Row="0" Grid.Column="1"
+                                Classes="moodEntryContextButton">
+                            
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource DotsThreeIcon}"/>
+                            </Viewbox>
+                            
+                            <Button.Flyout>
+                                <controls:MoodEntryFlyout>
+                                    <Border Classes="primaryCard" Padding="0" CornerRadius="6">
+                                        <Button
+                                            Classes="contextMenuButton"
+                                            Content="{services:LocalizationService Key='DELETE'}"/>
+                                    </Border>
+                                </controls:MoodEntryFlyout>
+                            </Button.Flyout>
+                            
+                        </Button>
 
                         <!-- Relative date time -->
                         <TextBlock Grid.Row="1" Grid.Column="0"

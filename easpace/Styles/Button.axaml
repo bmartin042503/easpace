@@ -1,5 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Controls"
+        xmlns:services="clr-namespace:easpace.Services">
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
@@ -73,6 +75,25 @@
                             <Viewbox Width="26" Height="26">
                                 <Path Data="{StaticResource PlusCircleFillIcon}" />
                             </Viewbox>
+                        </Button>
+                        
+                        <!-- Sample interaction button item 4 - MoodEntry context menu (dots) -->
+                        
+                        <Button Classes="moodEntryContextButton" HorizontalAlignment="Left">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource DotsThreeIcon}" />
+                            </Viewbox>
+                            
+                            <Button.Flyout>
+                                <controls:MoodEntryFlyout>
+                                    <Border Classes="primaryCard">
+                                        <Button
+                                            Classes="contextMenuButton"
+                                            Content="{services:LocalizationService Key='DELETE'}"/>
+                                    </Border>
+                                </controls:MoodEntryFlyout>
+                            </Button.Flyout>
+                            
                         </Button>
 
                     </StackPanel>
@@ -189,6 +210,44 @@
         <Style Selector="^ Path">
             <Setter Property="Fill" Value="{DynamicResource Clear}" />
         </Style>
+    </Style>
+    
+    <!-- MoodEntry context button styling -->
+    <Style Selector="Button.moodEntryContextButton">
+        
+        <Setter Property="Padding" Value="0"/>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral400}" />
+        </Style>
+        
+    </Style>
+    
+    <!-- Context menu button styling -->
+    <Style Selector="Button.contextMenuButton">
+        
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+        </Style>
+        
     </Style>
 
 </Styles>
