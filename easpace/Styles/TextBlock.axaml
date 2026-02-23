@@ -5,19 +5,18 @@
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 
-                <!-- Sample textblocks -->
                 <StackPanel Orientation="Vertical" Spacing="20">
                     <StackPanel Orientation="Vertical">
                         
-                        <!-- Sample textblock - Page title -->
+                        <!-- Sample textblock item 1 - page title -->
                         <TextBlock Text="Page title" Classes="pageTitle"/>
                         
-                        <!-- Sample textblock - Page subtitle -->
+                        <!-- Sample textblock item 2 - page subtitle -->
                         <TextBlock Text="Page subtitle" Classes="pageSubTitle"/>
                         
                     </StackPanel>
                     
-                    <!-- Sample textblock - Journal title -->
+                    <!-- Sample textblock item 3 - Journal title -->
                     <TextBlock Text="Journal title" Classes="journalTitle"/>
                     
                 </StackPanel>
@@ -25,27 +24,28 @@
         </ThemeVariantScope>
     </Design.PreviewWith>
     
-    <!-- TextBlock styles -->
+    <!-- TextBlock styling -->
     <Style Selector="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
     </Style>
 
-    <!-- Page title styles -->
+    <!-- Page title styling -->
     <Style Selector="TextBlock.pageTitle">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="FontWeight" Value="500"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
     
-    <!-- Page subtitle styles -->
+    <!-- Page subtitle styling -->
     <Style Selector="TextBlock.pageSubTitle">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral500}"/>
     </Style>
     
-    <!-- Journal title styles -->
+    <!-- Journal title styling -->
     <Style Selector="TextBlock.journalTitle">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
+    
 </Styles>

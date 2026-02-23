@@ -1,22 +1,30 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
+                
+                <!-- Sample grid splitter item 1 - horizontal splitter -->
                 <Grid ColumnDefinitions="*,Auto,*" Height="300">
                     <GridSplitter Grid.Column="1" Classes="horizontalSplitter"/>
                 </Grid>
+                
             </Border>
         </ThemeVariantScope>
+        
     </Design.PreviewWith>
 
+    <!-- GridSplitter template & styling -->
     <Style Selector="GridSplitter.horizontalSplitter">
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
         
         <Setter Property="Template">
             <ControlTemplate>
                 <Rectangle Fill="{DynamicResource Neutral200}" Width="1.75"/>
             </ControlTemplate>
         </Setter>
+        
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        
     </Style>
 </Styles>

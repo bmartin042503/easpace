@@ -21,10 +21,8 @@
     </Application.DataTemplates>
   
     <Application.Styles>
-        <!-- Global styles -->
-        <StyleInclude Source="Styles/Global.axaml"/>
         
-        <!-- AXAML styles -->
+        <!-- AXAML styling -->
         <StyleInclude Source="Styles/TextBlock.axaml"/>
         <StyleInclude Source="Styles/TextBox.axaml"/>
         <StyleInclude Source="Styles/Button.axaml"/>

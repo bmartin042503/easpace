@@ -1,19 +1,23 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 <Border
                     Padding="40"
                     Classes="primaryCard">
                     <StackPanel Orientation="Vertical">
-                        <TextBox Watermark="Search" Classes="searchBox">
+                        
+                        <!-- Sample textbox item 1 - search box -->
+                        <TextBox Watermark="Search" Classes="searchBox" MinWidth="160">
                             <TextBox.InnerRightContent>
                                 <Viewbox Width="14" Height="14">
                                     <Path Data="{StaticResource MagnifyingGlassBoldIcon}"/>
                                 </Viewbox>
                             </TextBox.InnerRightContent>
                         </TextBox>
+                        
                     </StackPanel>
                 </Border>
             </Border>
@@ -22,7 +26,7 @@
     
     <!-- TODO: center text in SearchBox vertically somehow -->
     
-    <!-- Text box styles -->
+    <!-- TextBox styling -->
     <Style Selector="TextBox">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -31,7 +35,7 @@
         <Setter Property="BorderThickness" Value="0.75" />
     </Style>
     
-    <!-- Search box styles -->
+    <!-- Search box styling -->
     <Style Selector="TextBox.searchBox">
         <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
