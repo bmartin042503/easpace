@@ -19,6 +19,12 @@
                     <!-- Sample textblock item 3 - Journal title -->
                     <TextBlock Text="Journal title" Classes="journalTitle"/>
                     
+                    <!-- Sample textblock item 4 - New mood entry title -->
+                    <TextBlock Text="How are you feeling?" Classes="newMoodEntryTitle"/>
+                    
+                    <!-- Sample textblock item 5 - Mood state -->
+                    <TextBlock Text="Neutral" Classes="moodStateText"/>
+                    
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
@@ -48,4 +54,19 @@
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
     
+    <!-- New mood entry title styling -->
+    <Style Selector="TextBlock.newMoodEntryTitle">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    
+    <!-- Mood state styling -->
+    <Style Selector="TextBlock.moodStateText">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource Primary800}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
 </Styles>

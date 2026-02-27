@@ -4,11 +4,13 @@
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
-                <Slider Classes="moodSlider" Minimum="0" Maximum="1" Width="200" Value="0.5" />
+                <Slider Classes="moodSlider" Minimum="0" Maximum="1" Width="275" Value="0.5" />
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
+    <!-- TODO: make track bar clickable so the user can change value without tumb as well -->
+    
     <!-- Mood slider styling -->
     <Style Selector="Slider.moodSlider">
         <Setter Property="Background" Value="{DynamicResource Primary600}" />
@@ -34,7 +36,7 @@
 
                                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                         Classes="primaryCard" VerticalAlignment="Center"
-                                        Height="12">
+                                        Height="16">
                                 </Border>
 
                                 <Track
@@ -66,8 +68,8 @@
 
                                     <Thumb
                                         Name="thumb"
-                                        Width="20"
-                                        Height="20"
+                                        Width="24"
+                                        Height="24"
                                         Margin="0"
                                         Padding="0"
                                         Background="{DynamicResource PrimaryButtonGradientBrush}"

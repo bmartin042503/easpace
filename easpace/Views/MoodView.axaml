@@ -11,8 +11,7 @@
              x:DataType="vm:MoodViewModel"
              Background="{DynamicResource Neutral100}">
 
-    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="3*,*,3*,*" Margin="26"
-          ColumnSpacing="">
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="3*,*,3*,Auto" Margin="26">
 
         <!-- Main title -->
         <TextBlock Grid.Column="0" Grid.Row="0"
@@ -36,77 +35,75 @@
 
                 <ItemsControl.DataTemplates>
                     <DataTemplate DataType="models:MoodEntry">
-                        
+
                         <!-- Build of a single mood entry item -->
                         <templatedControls:MoodEntry
                             MoodSliderValue="{Binding MoodSliderValue}"
                             Date="{Binding Date}"
                             Description="{Binding Description}"
                             Labels="{Binding Labels}" />
-                        
+
                     </DataTemplate>
                 </ItemsControl.DataTemplates>
             </ItemsControl>
         </ScrollViewer>
 
         <!-- New mood entry -->
-        <Grid Grid.Row="2" Grid.Column="2" RowDefinitions="Auto,Auto,*,Auto,*">
-            
+        <StackPanel Grid.Row="2" Grid.Column="2" Spacing="40" VerticalAlignment="Center">
+
             <!-- Mood entry title -->
-            <TextBlock Grid.Row="0"
-                       Text="{services:LocalizationService Key='NEW_MOOD_ENTRY_TITLE'}" />
-            
-            <StackPanel Grid.Row="1" Orientation="Vertical">
-                
+            <TextBlock Classes="newMoodEntryTitle" Text="{services:LocalizationService Key='NEW_MOOD_ENTRY_TITLE'}" />
+
+            <StackPanel Orientation="Vertical">
+
                 <!-- Mood state -->
-                <TextBlock Text="MOOD STATE" />
-                
+                <TextBlock Classes="moodStateText" Text="{Binding MoodStateText}" />
+
                 <!-- Mood slider -->
-                <Slider Classes="moodSlider" Minimum="0" Maximum="1" MaxWidth="160" HorizontalAlignment="Center" />
-                
+                <Slider Classes="moodSlider" Minimum="0" Maximum="1" MaxWidth="250" Value="{Binding MoodSliderValue}"/>
+
             </StackPanel>
-            
-            <Border Grid.Row="3" Classes="secondaryCard" Padding="20">
+
+            <Border Classes="secondaryCard" Padding="20">
                 <StackPanel Orientation="Vertical" Spacing="20">
-                    
+
+                    <!-- TODO: fix scrollviewer height sizing to be responsive -->
                     <!-- Mood label items -->
-                    <ScrollViewer MaxHeight="175">
+                    <ScrollViewer MaxHeight="140">
                         <ItemsControl ItemsSource="{Binding MoodLabels}">
 
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" />
+                                    <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.DataTemplates>
                                 <DataTemplate DataType="models:MoodLabel">
-                                    
+
                                     <!-- Build of a single mood label item -->
                                     <ToggleButton IsChecked="{Binding IsChecked}"
                                                   Classes="moodLabelToggleButton">
                                         <TextBlock Text="{Binding Name}" />
                                     </ToggleButton>
-                                    
+
                                 </DataTemplate>
                             </ItemsControl.DataTemplates>
                         </ItemsControl>
                     </ScrollViewer>
-                    
+
                     <TextBox
                         Height="75"
                         AcceptsReturn="True"
                         Watermark="{services:LocalizationService Key='OTHER'}"
-                        Classes="largeTextBox"
-                        />
+                        Classes="largeTextBox" />
                     
-                    <!-- Sample interaction button item 1 - Edit -->
                     <Button Classes="saveButton" HorizontalAlignment="Center">
                         <TextBlock Text="{services:LocalizationService Key='SAVE'}" />
                     </Button>
                 </StackPanel>
             </Border>
-        </Grid>
+        </StackPanel>
 
     </Grid>
 </UserControl>

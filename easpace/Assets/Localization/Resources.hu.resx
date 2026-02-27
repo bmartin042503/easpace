@@ -95,4 +95,13 @@
     <data name="OTHER" xml:space="preserve">
         <value>Egyéb..</value>
     </data>
+    <data name="NEW_MOOD_ENTRY_TITLE" xml:space="preserve">
+        <value>Hogy érzed magad?</value>
+    </data>
+    <data name="MOOD_TITLE" xml:space="preserve">
+        <value>Hangulat</value>
+    </data>
+    <data name="MOOD_SUBTITLE" xml:space="preserve">
+        <value>Rögzítsd az érzelmeid</value>
+    </data>
 </root>

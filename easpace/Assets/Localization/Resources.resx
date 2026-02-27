@@ -98,4 +98,13 @@
     <data name="OTHER" xml:space="preserve">
         <value>Other..</value>
     </data>
+    <data name="NEW_MOOD_ENTRY_TITLE" xml:space="preserve">
+        <value>How are you feeling?</value>
+    </data>
+    <data name="MOOD_TITLE" xml:space="preserve">
+        <value>Mood</value>
+    </data>
+    <data name="MOOD_SUBTITLE" xml:space="preserve">
+        <value>Track your emotions</value>
+    </data>
 </root>

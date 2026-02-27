@@ -58,6 +58,10 @@
             <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
             <Setter Property="BorderThickness" Value="0.75" />
         </Style>
+        
+        <Style Selector="^:pointerover">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
 
         <Style Selector="^:checked /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Primary100}" />

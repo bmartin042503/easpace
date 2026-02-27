@@ -1,7 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Constants;
 using easpace.Models;
+using easpace.Services;
 
 namespace easpace.ViewModels;
 
@@ -10,9 +12,38 @@ public partial class MoodViewModel : PageViewModel
     public ObservableCollection<MoodEntry> MoodEntries { get; set; }
     public ObservableCollection<MoodLabel> MoodLabels { get; set; }
 
+    [ObservableProperty] private string _moodStateText = string.Empty;
+
+    public double MoodSliderValue
+    {
+        get;
+        set
+        {
+            if (value is < 0 or > 1) return;
+            field = value;
+            
+            var localizedValue = value switch
+            {
+                < 0.2 => LocalizationService.GetString("VERY_UNPLEASANT"),
+                < 0.4 => LocalizationService.GetString("SLIGHTLY_UNPLEASANT"),
+                < 0.6 => LocalizationService.GetString("NEUTRAL"),
+                < 0.8 => LocalizationService.GetString("SLIGHTLY_PLEASANT"),
+                <= 1.0 => LocalizationService.GetString("VERY_PLEASANT"),
+                _ => string.Empty
+            };
+            
+            MoodStateText = localizedValue;
+            
+            OnPropertyChanged();
+        }
+    }
+
+
     public MoodViewModel()
     {
         Page = ApplicationPage.Mood;
+
+        MoodSliderValue = 0.5;
 
         MoodEntries =
         [
@@ -109,4 +140,6 @@ public partial class MoodViewModel : PageViewModel
 
         MoodLabels = new ObservableCollection<MoodLabel>(MoodLabelsData.GetMoodLabels());
     }
+    
+    
 }
