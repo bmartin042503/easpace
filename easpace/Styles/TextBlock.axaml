@@ -5,47 +5,68 @@
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 
-                <!-- Sample textblocks -->
                 <StackPanel Orientation="Vertical" Spacing="20">
                     <StackPanel Orientation="Vertical">
                         
-                        <!-- Sample textblock - Page title -->
+                        <!-- Sample textblock item 1 - page title -->
                         <TextBlock Text="Page title" Classes="pageTitle"/>
                         
-                        <!-- Sample textblock - Page subtitle -->
+                        <!-- Sample textblock item 2 - page subtitle -->
                         <TextBlock Text="Page subtitle" Classes="pageSubTitle"/>
                         
                     </StackPanel>
                     
-                    <!-- Sample textblock - Journal title -->
+                    <!-- Sample textblock item 3 - Journal title -->
                     <TextBlock Text="Journal title" Classes="journalTitle"/>
+                    
+                    <!-- Sample textblock item 4 - New mood entry title -->
+                    <TextBlock Text="How are you feeling?" Classes="newMoodEntryTitle"/>
+                    
+                    <!-- Sample textblock item 5 - Mood state -->
+                    <TextBlock Text="Neutral" Classes="moodStateText"/>
                     
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
     
-    <!-- TextBlock styles -->
+    <!-- TextBlock styling -->
     <Style Selector="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Poppins}"/>
     </Style>
 
-    <!-- Page title styles -->
+    <!-- Page title styling -->
     <Style Selector="TextBlock.pageTitle">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="FontWeight" Value="500"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
     </Style>
     
-    <!-- Page subtitle styles -->
+    <!-- Page subtitle styling -->
     <Style Selector="TextBlock.pageSubTitle">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral500}"/>
     </Style>
     
-    <!-- Journal title styles -->
+    <!-- Journal title styling -->
     <Style Selector="TextBlock.journalTitle">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+    </Style>
+    
+    <!-- New mood entry title styling -->
+    <Style Selector="TextBlock.newMoodEntryTitle">
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    
+    <!-- Mood state styling -->
+    <Style Selector="TextBlock.moodStateText">
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource Primary800}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
     </Style>
 </Styles>

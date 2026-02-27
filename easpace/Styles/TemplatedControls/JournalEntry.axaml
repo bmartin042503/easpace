@@ -2,30 +2,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:templatedControls="using:easpace.Styles.TemplatedControls">
     <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 <StackPanel Orientation="Vertical" Spacing="12">
                     
-                    <!-- Sample journal entry item 1 -->
+                    <!-- Sample JournalEntry item 1 -->
                     <templatedControls:JournalEntry Title="Journal Entry 1"/>
                     
-                    <!-- Sample journal entry item 2 -->
+                    <!-- Sample JournalEntry item 2 -->
                     <templatedControls:JournalEntry Title="Journal Entry 2"/>
                     
-                    <!-- Sample journal entry item 3 -->
+                    <!-- Sample JournalEntry item 3 -->
                     <templatedControls:JournalEntry Title="Journal Entry 3"/>
                     
-                    <!-- Sample journal entry item 4 (selected) -->
+                    <!-- Sample JournalEntry item 4 - selected -->
                     <templatedControls:JournalEntry Title="Journal Entry 4" Classes="selected"/>
                     
-                    <!-- Sample journal entry item 5 -->
+                    <!-- Sample JournalEntry item 5 -->
                     <templatedControls:JournalEntry Title="Journal Entry 5"/>
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
-    <!-- Journal entry build -->
+    <!-- JournalEntry template -->
     <Style Selector="templatedControls|JournalEntry">
         <Setter Property="Template">
             <ControlTemplate>
@@ -34,7 +35,10 @@
                         CommandParameter="{Binding DataContext, RelativeSource={RelativeSource TemplatedParent}}"/>
             </ControlTemplate>
         </Setter>
-        
+    </Style>
+    
+    <!-- JournalEntry styling -->
+    <Style Selector="templatedControls|JournalEntry">
         <Style Selector="^ /template/ Button">
             <Setter Property="Padding" Value="0"/>
             <Style Selector="^:pointerover /template/ ContentPresenter">
@@ -57,5 +61,4 @@
             </Style>
         </Style>
     </Style>
-    
 </Styles>

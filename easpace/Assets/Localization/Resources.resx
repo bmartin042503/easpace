@@ -78,4 +78,33 @@
     <data name="VERY_UNPLEASANT" xml:space="preserve">
         <value>Very unpleasant</value>
     </data>
+    <data name="MOOD_LABEL_JOY" xml:space="preserve"><value>Joy</value></data>
+    <data name="MOOD_LABEL_HOPE" xml:space="preserve"><value>Hope</value></data>
+    <data name="MOOD_LABEL_AWE" xml:space="preserve"><value>Awe</value></data>
+    <data name="MOOD_LABEL_GRATITUDE" xml:space="preserve"><value>Gratitude</value></data>
+    <data name="MOOD_LABEL_COURAGE" xml:space="preserve"><value>Courage</value></data>
+    <data name="MOOD_LABEL_CONFIDENCE" xml:space="preserve"><value>Confidence</value></data>
+    <data name="MOOD_LABEL_PEACE" xml:space="preserve"><value>Peace</value></data>
+    <data name="MOOD_LABEL_CALM" xml:space="preserve"><value>Calm</value></data>
+    <data name="MOOD_LABEL_RELIEF" xml:space="preserve"><value>Relief</value></data>
+    <data name="MOOD_LABEL_CONTENTMENT" xml:space="preserve"><value>Contentment</value></data>
+    <data name="MOOD_LABEL_SADNESS" xml:space="preserve"><value>Sadness</value></data>
+    <data name="MOOD_LABEL_ANXIETY" xml:space="preserve"><value>Anxiety</value></data>
+    <data name="MOOD_LABEL_ANGER" xml:space="preserve"><value>Anger</value></data>
+    <data name="MOOD_LABEL_GUILT" xml:space="preserve"><value>Guilt</value></data>
+    <data name="MOOD_LABEL_LONELINESS" xml:space="preserve"><value>Loneliness</value></data>
+    <data name="MOOD_LABEL_EXHAUSTION" xml:space="preserve"><value>Exhaustion</value></data>
+    <data name="MOOD_LABEL_FRUSTRATION" xml:space="preserve"><value>Frustration</value></data>
+    <data name="OTHER" xml:space="preserve">
+        <value>Other..</value>
+    </data>
+    <data name="NEW_MOOD_ENTRY_TITLE" xml:space="preserve">
+        <value>How are you feeling?</value>
+    </data>
+    <data name="MOOD_TITLE" xml:space="preserve">
+        <value>Mood</value>
+    </data>
+    <data name="MOOD_SUBTITLE" xml:space="preserve">
+        <value>Track your emotions</value>
+    </data>
 </root>

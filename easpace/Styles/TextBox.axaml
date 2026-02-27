@@ -1,19 +1,31 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 <Border
                     Padding="40"
                     Classes="primaryCard">
-                    <StackPanel Orientation="Vertical">
-                        <TextBox Watermark="Search" Classes="searchBox">
+                    <StackPanel Orientation="Vertical" Spacing="20">
+                        
+                        <!-- Sample textbox item 1 - search box -->
+                        <TextBox Watermark="Search" Classes="searchBox" MinWidth="160">
                             <TextBox.InnerRightContent>
                                 <Viewbox Width="14" Height="14">
                                     <Path Data="{StaticResource MagnifyingGlassBoldIcon}"/>
                                 </Viewbox>
                             </TextBox.InnerRightContent>
                         </TextBox>
+                        
+                        <!-- Sample textbox item 2 - large box -->
+                        <TextBox
+                            Height="75"
+                            AcceptsReturn="True"
+                            Watermark="Other.."
+                            Classes="largeTextBox"
+                        />
+                        
                     </StackPanel>
                 </Border>
             </Border>
@@ -21,8 +33,9 @@
     </Design.PreviewWith>
     
     <!-- TODO: center text in SearchBox vertically somehow -->
+    <!-- TODO: clean this to avoid repetitive code -->
     
-    <!-- Text box styles -->
+    <!-- TextBox styling -->
     <Style Selector="TextBox">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -31,7 +44,7 @@
         <Setter Property="BorderThickness" Value="0.75" />
     </Style>
     
-    <!-- Search box styles -->
+    <!-- Search box styling -->
     <Style Selector="TextBox.searchBox">
         <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
@@ -59,6 +72,30 @@
         
         <Style Selector="^ Path">
             <Setter Property="Fill" Value="{DynamicResource Neutral400}" />
+        </Style>
+    </Style>
+    
+    <!-- Large box styling -->
+    <Style Selector="TextBox.largeTextBox">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Background" Value="{DynamicResource Neutral100}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
+        <Setter Property="Foreground" Value="{DynamicResource Neutral800}"/>
+        <Setter Property="TextAlignment" Value="Start"/>
+        <Setter Property="BorderThickness" Value="0.75" />
+        
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ TextBlock#PART_Watermark">
+                <Setter Property="Foreground" Value="{DynamicResource Neutral800}" />
+            </Style>
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Neutral100}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+                <Setter Property="BorderThickness" Value="0.75" />
+            </Style>
         </Style>
     </Style>
     

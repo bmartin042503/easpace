@@ -21,16 +21,17 @@
     </Application.DataTemplates>
   
     <Application.Styles>
-        <!-- Global styles -->
-        <StyleInclude Source="Styles/Global.axaml"/>
         
-        <!-- AXAML styles -->
+        <!-- AXAML styling -->
         <StyleInclude Source="Styles/TextBlock.axaml"/>
         <StyleInclude Source="Styles/TextBox.axaml"/>
         <StyleInclude Source="Styles/Button.axaml"/>
+        <StyleInclude Source="Styles/ToggleButton.axaml"/>
         <StyleInclude Source="Styles/Border.axaml"/>
         <StyleInclude Source="Styles/Path.axaml"/>
         <StyleInclude Source="Styles/GridSplitter.axaml"/>
+        <StyleInclude Source="Styles/MoodEntryFlyout.axaml"/>
+        <StyleInclude Source="Styles/Slider.axaml"/>
         
         <!-- Templated controls -->
         <StyleInclude Source="Styles/TemplatedControls/JournalEntry.axaml"/>

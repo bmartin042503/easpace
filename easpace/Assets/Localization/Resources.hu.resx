@@ -6,10 +6,14 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <data name="CONTINUE" xml:space="preserve">
         <value>Tovább</value>
@@ -70,5 +74,34 @@
     </data>
     <data name="VERY_UNPLEASANT" xml:space="preserve">
         <value>Nagyon kellemetlen</value>
+    </data>
+    <data name="MOOD_LABEL_JOY" xml:space="preserve"><value>Öröm</value></data>
+    <data name="MOOD_LABEL_HOPE" xml:space="preserve"><value>Remény</value></data>
+    <data name="MOOD_LABEL_AWE" xml:space="preserve"><value>Ámulat</value></data>
+    <data name="MOOD_LABEL_GRATITUDE" xml:space="preserve"><value>Hála</value></data>
+    <data name="MOOD_LABEL_COURAGE" xml:space="preserve"><value>Bátorság</value></data>
+    <data name="MOOD_LABEL_CONFIDENCE" xml:space="preserve"><value>Önbizalom</value></data>
+    <data name="MOOD_LABEL_PEACE" xml:space="preserve"><value>Béke</value></data>
+    <data name="MOOD_LABEL_CALM" xml:space="preserve"><value>Nyugalom</value></data>
+    <data name="MOOD_LABEL_RELIEF" xml:space="preserve"><value>Megkönnyebbülés</value></data>
+    <data name="MOOD_LABEL_CONTENTMENT" xml:space="preserve"><value>Elégedettség</value></data>
+    <data name="MOOD_LABEL_SADNESS" xml:space="preserve"><value>Szomorúság</value></data>
+    <data name="MOOD_LABEL_ANXIETY" xml:space="preserve"><value>Szorongás</value></data>
+    <data name="MOOD_LABEL_ANGER" xml:space="preserve"><value>Harag</value></data>
+    <data name="MOOD_LABEL_GUILT" xml:space="preserve"><value>Bűntudat</value></data>
+    <data name="MOOD_LABEL_LONELINESS" xml:space="preserve"><value>Magány</value></data>
+    <data name="MOOD_LABEL_EXHAUSTION" xml:space="preserve"><value>Kimerültség</value></data>
+    <data name="MOOD_LABEL_FRUSTRATION" xml:space="preserve"><value>Frusztráció</value></data>
+    <data name="OTHER" xml:space="preserve">
+        <value>Egyéb..</value>
+    </data>
+    <data name="NEW_MOOD_ENTRY_TITLE" xml:space="preserve">
+        <value>Hogy érzed magad?</value>
+    </data>
+    <data name="MOOD_TITLE" xml:space="preserve">
+        <value>Hangulat</value>
+    </data>
+    <data name="MOOD_SUBTITLE" xml:space="preserve">
+        <value>Rögzítsd az érzelmeid</value>
     </data>
 </root>

@@ -1,0 +1,74 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <Border Classes="secondaryCard" Padding="20">
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" MaxWidth="200">
+
+                        <!-- Sample toggle button item 1 - mood label -->
+                        <ToggleButton IsChecked="False"
+                                      Classes="moodLabelToggleButton">
+                            <TextBlock Text="Joy" />
+                        </ToggleButton>
+
+                        <!-- Sample toggle button item 2 - mood label -->
+                        <ToggleButton IsChecked="False"
+                                      Classes="moodLabelToggleButton">
+                            <TextBlock Text="Hope" />
+                        </ToggleButton>
+
+                        <!-- Sample toggle button item 3 - mood label -->
+                        <ToggleButton IsChecked="False"
+                                      Classes="moodLabelToggleButton">
+                            <TextBlock Text="Relief" />
+                        </ToggleButton>
+
+                        <!-- Sample toggle button item 4 - mood label -->
+                        <ToggleButton IsChecked="False"
+                                      Classes="moodLabelToggleButton">
+                            <TextBlock Text="Anger" />
+                        </ToggleButton>
+
+                        <!-- Sample toggle button item 5 - mood label -->
+                        <ToggleButton IsChecked="False"
+                                      Classes="moodLabelToggleButton">
+                            <TextBlock Text="Bravery" />
+                        </ToggleButton>
+                    </WrapPanel>
+                </Border>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Mood label toggle button styling -->
+    <Style Selector="ToggleButton.moodLabelToggleButton">
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Normal" />
+
+        <Style
+            Selector="^ /template/ ContentPresenter,
+                      ^:pointerover /template/ ContentPresenter,
+                      ^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Clear}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Neutral600}" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
+            <Setter Property="BorderThickness" Value="0.75" />
+        </Style>
+        
+        <Style Selector="^:pointerover">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style Selector="^:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Primary100}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+            <Setter Property="Foreground" Value="{DynamicResource Primary700}" />
+            <Setter Property="BorderThickness" Value="0.75" />
+        </Style>
+
+    </Style>
+</Styles>

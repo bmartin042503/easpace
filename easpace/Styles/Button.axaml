@@ -1,43 +1,44 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Controls"
+        xmlns:services="clr-namespace:easpace.Services">
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
-
-                <!-- Sample buttons -->
+                
                 <StackPanel Orientation="Horizontal" Spacing="24">
                     <StackPanel Orientation="Vertical" Spacing="24">
 
-                        <!-- Sample sidebar icon button - Mood -->
+                        <!-- Sample sidebar icon button item 1 - Mood -->
                         <Button Classes="sidebarIconButton">
                             <Viewbox Width="24" Height="24">
                                 <Path Data="{StaticResource BrainIcon}" />
                             </Viewbox>
                         </Button>
 
-                        <!-- Sample sidebar icon button - Journal -->
+                        <!-- Sample sidebar icon button item 2 - Journal -->
                         <Button Classes="sidebarIconButton">
                             <Viewbox Width="20" Height="20">
                                 <Path Data="{StaticResource NotebookIcon}" />
                             </Viewbox>
                         </Button>
 
-                        <!-- Sample sidebar icon button - Growth (selected) -->
+                        <!-- Sample sidebar icon button item 3 - Growth (selected) -->
                         <Button Classes="sidebarIconButton selected">
                             <Viewbox Width="20" Height="20">
                                 <Path Data="{StaticResource TargetIcon}" />
                             </Viewbox>
                         </Button>
 
-                        <!-- Sample sidebar icon button - Wellness -->
+                        <!-- Sample sidebar icon button item 4 - Wellness -->
                         <Button Classes="sidebarIconButton">
                             <Viewbox Width="24" Height="24">
                                 <Path Data="{StaticResource FlowerLotusIcon}" />
                             </Viewbox>
                         </Button>
 
-                        <!-- Sample sidebar icon button - Settings -->
+                        <!-- Sample sidebar icon button item 5 - Settings -->
                         <Button Classes="sidebarIconButton">
                             <Viewbox Width="20" Height="20">
                                 <Path Data="{StaticResource GearIcon}" />
@@ -47,7 +48,7 @@
 
                     <StackPanel Orientation="Vertical" Spacing="12">
 
-                        <!-- Sample interaction button - Edit -->
+                        <!-- Sample interaction button item 1 - Edit -->
                         <Button Classes="editButton" HorizontalAlignment="Left">
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                 <TextBlock Grid.Column="0"
@@ -58,7 +59,7 @@
                             </Grid>
                         </Button>
 
-                        <!-- Sample interaction button - Delete -->
+                        <!-- Sample interaction button item 2 - Delete -->
                         <Button Classes="deleteButton" HorizontalAlignment="Left">
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
                                 <TextBlock Grid.Column="0"
@@ -69,11 +70,30 @@
                             </Grid>
                         </Button>
 
-                        <!-- Sample interaction button - Add (plus) -->
+                        <!-- Sample interaction button item 3 - Add (plus) -->
                         <Button Classes="addPlusButton" HorizontalAlignment="Left">
                             <Viewbox Width="26" Height="26">
                                 <Path Data="{StaticResource PlusCircleFillIcon}" />
                             </Viewbox>
+                        </Button>
+                        
+                        <!-- Sample interaction button item 4 - MoodEntry context menu (dots) -->
+                        
+                        <Button Classes="moodEntryContextButton" HorizontalAlignment="Left">
+                            <Viewbox Width="20" Height="20">
+                                <Path Data="{StaticResource DotsThreeIcon}" />
+                            </Viewbox>
+                            
+                            <Button.Flyout>
+                                <controls:MoodEntryFlyout>
+                                    <Border Classes="primaryCard">
+                                        <Button
+                                            Classes="contextMenuButton"
+                                            Content="{services:LocalizationService Key='DELETE'}"/>
+                                    </Border>
+                                </controls:MoodEntryFlyout>
+                            </Button.Flyout>
+                            
                         </Button>
 
                     </StackPanel>
@@ -82,15 +102,38 @@
         </ThemeVariantScope>
     </Design.PreviewWith>
 
-    <!-- Button styles -->
+    <!-- Button styling -->
     <Style Selector="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
     </Style>
+    
+    <!-- Sidebar icon button styling -->
+    <Style Selector="Button.sidebarIconButton">
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
+        </Style>
 
-    <!-- Edit button styles -->
-    <Style Selector="Button.editButton">
+        <Style Selector="^.selected Path">
+            <Setter Property="Fill" Value="{DynamicResource Primary600}" />
+        </Style>
+
+        <Style Selector="^.selected">
+            <Setter Property="Effect" Value="{DynamicResource PrimaryDropShadowEffect}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </Style>
+
+    <!-- Edit button styling -->
+    <Style Selector="Button.editButton, Button.saveButton">
         <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="Padding" Value="10,4" />
@@ -118,7 +161,7 @@
         </Style>
     </Style>
 
-    <!-- Add (plus) button styles -->
+    <!-- Add (plus) button styling -->
     <Style Selector="Button.addPlusButton">
         <Setter Property="CornerRadius" Value="64" />
         <Setter Property="BorderThickness" Value="0.5" />
@@ -140,7 +183,7 @@
         </Style>
     </Style>
 
-    <!-- Delete button styles -->
+    <!-- Delete button styling -->
     <Style Selector="Button.deleteButton">
         <Setter Property="Background" Value="{DynamicResource DeleteButtonGradientBrush}" />
         <Setter Property="CornerRadius" Value="6" />
@@ -168,21 +211,12 @@
             <Setter Property="Fill" Value="{DynamicResource Clear}" />
         </Style>
     </Style>
-
-    <!-- Sidebar icon button styles -->
-    <Style Selector="Button.sidebarIconButton">
-        <Style Selector="^ Path">
-            <Setter Property="Fill" Value="{DynamicResource Neutral500}" />
-        </Style>
-
-        <Style Selector="^.selected Path">
-            <Setter Property="Fill" Value="{DynamicResource Primary600}" />
-        </Style>
-
-        <Style Selector="^.selected">
-            <Setter Property="Effect" Value="{DynamicResource PrimaryDropShadowEffect}" />
-        </Style>
-
+    
+    <!-- MoodEntry context button styling -->
+    <Style Selector="Button.moodEntryContextButton">
+        
+        <Setter Property="Padding" Value="0"/>
+        
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
@@ -190,6 +224,10 @@
         <Style Selector="^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
         </Style>
+        
+        <Style Selector="^ Path">
+            <Setter Property="Fill" Value="{DynamicResource Neutral400}" />
+        </Style>
+        
     </Style>
-
 </Styles>
