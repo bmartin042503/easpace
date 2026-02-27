@@ -19,7 +19,7 @@ public class MoodEntryFlyout : PopupFlyoutBase
 
     protected override Control CreatePresenter()
     {
-        return new FlyoutPresenter
+        var flyoutPresenter = new FlyoutPresenter
         {
             Background = null,
             BorderBrush = null,
@@ -27,5 +27,8 @@ public class MoodEntryFlyout : PopupFlyoutBase
             Padding = new Thickness(0),
             Content = Items
         };
+        
+        flyoutPresenter.Classes.Add("moodEntryFlyoutPresenter");
+        return flyoutPresenter;
     }
 }

@@ -139,9 +139,9 @@
                             
                             <Button.Flyout>
                                 <controls:MoodEntryFlyout>
-                                    <Border Classes="primaryCard" Padding="0" CornerRadius="6">
+                                    <Border Classes="primaryCard">
                                         <Button
-                                            Classes="contextMenuButton"
+                                            Classes="contextDeleteButton"
                                             Content="{services:LocalizationService Key='DELETE'}"/>
                                     </Border>
                                 </controls:MoodEntryFlyout>

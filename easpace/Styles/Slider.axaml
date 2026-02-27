@@ -1,0 +1,108 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <Slider Classes="moodSlider" Minimum="0" Maximum="1" Width="200" Value="0.5" />
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Mood slider styling -->
+    <Style Selector="Slider.moodSlider">
+        <Setter Property="Background" Value="{DynamicResource Primary600}" />
+        <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
+        <Setter Property="BorderThickness" Value="2" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+
+                        <Grid x:Name="SliderContainer"
+                              Margin="{TemplateBinding Padding}"
+                              Background="Transparent">
+
+                            <Grid
+                                x:Name="HorizontalTemplate"
+                                MinHeight="6"
+                                ColumnDefinitions="Auto,Auto,*" RowDefinitions="6,Auto,6">
+
+                                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                                        Classes="primaryCard" VerticalAlignment="Center"
+                                        Height="12">
+                                </Border>
+
+                                <Track
+                                    x:Name="PART_Track"
+                                    Grid.Column="0"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    Minimum="{TemplateBinding Minimum}"
+                                    Maximum="{TemplateBinding Maximum}"
+                                    Value="{TemplateBinding Value, Mode=TwoWay}"
+                                    IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
+                                    Orientation="Horizontal">
+
+                                    <Track.DecreaseButton>
+                                        <RepeatButton
+                                            Name="PART_DecreaseButton"
+                                            Background="Transparent"
+                                            IsVisible="False"
+                                            Focusable="False" />
+                                    </Track.DecreaseButton>
+
+                                    <Track.IncreaseButton>
+                                        <RepeatButton
+                                            Name="PART_IncreaseButton"
+                                            Background="Transparent"
+                                            IsVisible="False"
+                                            Focusable="False" />
+                                    </Track.IncreaseButton>
+
+                                    <Thumb
+                                        Name="thumb"
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0"
+                                        Padding="0"
+                                        Background="{DynamicResource PrimaryButtonGradientBrush}"
+                                        BorderBrush="{DynamicResource Primary600}"
+                                        Effect="{DynamicResource PrimaryDropShadowEffect}"
+                                        BorderThickness="0.75"
+                                        DataContext="{TemplateBinding Value}" />
+                                </Track>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^:pointerover /template/ Thumb#thumb,
+                         ^:pressed /template/ Thumb#thumb">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        </Style>
+
+        <Style Selector="^ /template/ Thumb#thumb">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="20" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
+
+        <Style Selector="^ /template/ Thumb#thumb:pointerover, 
+                 ^ /template/ Thumb#thumb:pressed">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+        </Style>
+    </Style>
+</Styles>

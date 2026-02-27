@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
@@ -22,6 +23,9 @@ public class MoodEntry : TemplatedControl
             o => o.Labels,
             (o, v) => o.Labels = v
         );
+    
+    public static readonly StyledProperty<ICommand?> DeleteCommandProperty =
+        AvaloniaProperty.Register<MoodEntry, ICommand?>(nameof(DeleteCommand));
 
     public double MoodSliderValue
     {
@@ -45,5 +49,11 @@ public class MoodEntry : TemplatedControl
     {
         get;
         set => SetAndRaise(LabelsProperty, ref field, value);
+    }
+    
+    public ICommand? DeleteCommand
+    {
+        get => GetValue(DeleteCommandProperty);
+        set => SetValue(DeleteCommandProperty, value);
     }
 }

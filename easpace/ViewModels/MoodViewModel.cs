@@ -8,6 +8,7 @@ namespace easpace.ViewModels;
 public partial class MoodViewModel : PageViewModel
 {
     public ObservableCollection<MoodEntry> MoodEntries { get; set; }
+    public ObservableCollection<MoodLabel> MoodLabels { get; set; }
 
     public MoodViewModel()
     {
@@ -105,5 +106,7 @@ public partial class MoodViewModel : PageViewModel
                 Description = "A kedvenc ételemet ettem vacsorára.", Labels = ["gasztro", "öröm"]
             }
         ];
+
+        MoodLabels = new ObservableCollection<MoodLabel>(MoodLabelsData.GetMoodLabels());
     }
 }

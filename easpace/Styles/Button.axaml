@@ -133,7 +133,7 @@
     </Style>
 
     <!-- Edit button styling -->
-    <Style Selector="Button.editButton">
+    <Style Selector="Button.editButton, Button.saveButton">
         <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="Padding" Value="10,4" />
@@ -230,24 +230,4 @@
         </Style>
         
     </Style>
-    
-    <!-- Context menu button styling -->
-    <Style Selector="Button.contextMenuButton">
-        
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="FontSize" Value="10"/>
-        <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
-        
-        <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
-        </Style>
-
-        <Style Selector="^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Neutral700}"/>
-        </Style>
-        
-    </Style>
-
 </Styles>
