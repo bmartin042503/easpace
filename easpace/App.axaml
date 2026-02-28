@@ -32,6 +32,7 @@
         <StyleInclude Source="Styles/GridSplitter.axaml"/>
         <StyleInclude Source="Styles/MoodEntryFlyout.axaml"/>
         <StyleInclude Source="Styles/Slider.axaml"/>
+        <StyleInclude Source="Styles/GrowthDiagram.axaml"/>
         
         <!-- Templated controls -->
         <StyleInclude Source="Styles/TemplatedControls/JournalEntry.axaml"/>
