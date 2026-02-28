@@ -3,6 +3,7 @@ using easpace.Models;
 
 namespace easpace.Constants;
 
+// TODO: refactor this as default mood labels after setting up a db
 public static class MoodLabelsData
 {
     public static List<MoodLabel> GetMoodLabels()

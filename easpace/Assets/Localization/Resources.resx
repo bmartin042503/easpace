@@ -107,4 +107,13 @@
     <data name="MOOD_SUBTITLE" xml:space="preserve">
         <value>Track your emotions</value>
     </data>
+    <data name="ADD_NEW" xml:space="preserve">
+        <value>Add new</value>
+    </data>
+    <data name="GROWTH_TITLE" xml:space="preserve">
+        <value>Growth</value>
+    </data>
+    <data name="GROWTH_SUBTITLE" xml:space="preserve">
+        <value>Track your progress</value>
+    </data>
 </root>

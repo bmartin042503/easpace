@@ -88,7 +88,7 @@
                                 <controls:MoodEntryFlyout>
                                     <Border Classes="primaryCard">
                                         <Button
-                                            Classes="contextMenuButton"
+                                            Classes="moodEntryContextButton"
                                             Content="{services:LocalizationService Key='DELETE'}"/>
                                     </Border>
                                 </controls:MoodEntryFlyout>
@@ -133,7 +133,7 @@
     </Style>
 
     <!-- Edit button styling -->
-    <Style Selector="Button.editButton, Button.saveButton">
+    <Style Selector="Button.editButton, Button.interactionButton">
         <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="Padding" Value="10,4" />

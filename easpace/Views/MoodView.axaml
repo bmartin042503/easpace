@@ -98,7 +98,7 @@
                         Watermark="{services:LocalizationService Key='OTHER'}"
                         Classes="largeTextBox" />
                     
-                    <Button Classes="saveButton" HorizontalAlignment="Center">
+                    <Button Classes="interactionButton" HorizontalAlignment="Center">
                         <TextBlock Text="{services:LocalizationService Key='SAVE'}" />
                     </Button>
                 </StackPanel>
