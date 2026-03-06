@@ -1,0 +1,91 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+        xmlns:models="clr-namespace:easpace.Desktop.Models"
+        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}" Height="400" Width="800">
+                <controls:GrowthDiagram>
+                    <controls:GrowthDiagram.Entries>
+                        <generic:List x:TypeArguments="models:IGrowthTargetEntry">
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="98.0"
+                                                      Date="2015-01-05T06:30:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="95.2"
+                                                      Date="2015-05-12T08:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="96.1"
+                                                      Date="2015-09-10T11:40:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="93.8"
+                                                      Date="2016-01-12T06:15:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="94.4"
+                                                      Date="2016-05-05T06:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="92.3"
+                                                      Date="2016-08-19T08:10:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="90.5"
+                                                      Date="2017-03-22T07:45:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="91.2"
+                                                      Date="2017-12-25T10:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="89.9"
+                                                      Date="2018-05-05T08:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="88.1"
+                                                      Date="2018-11-30T14:20:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="88.8"
+                                                      Date="2019-04-01T07:50:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="87.6"
+                                                      Date="2019-10-10T15:30:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="86.7"
+                                                      Date="2020-01-20T08:15:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="85.4"
+                                                      Date="2020-07-04T12:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="85.5"
+                                                      Date="2020-11-20T16:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="84.2"
+                                                      Date="2021-01-01T10:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="82.5"
+                                                      Date="2021-03-15T09:45:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="84.9"
+                                                      Date="2021-06-15T08:20:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="83.3"
+                                                      Date="2022-02-14T07:30:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="82.0"
+                                                      Date="2022-10-31T07:45:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="81.2"
+                                                      Date="2023-09-18T19:20:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="80.0"
+                                                      Date="2024-01-01T09:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="79.9"
+                                                      Date="2024-05-01T07:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="80.4"
+                                                      Date="2024-11-11T08:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="76.8"
+                                                      Date="2025-02-02T07:30:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="75.5"
+                                                      Date="2025-06-30T07:10:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="76.2"
+                                                      Date="2025-12-24T18:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="77.1"
+                                                      Date="2026-01-10T08:30:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="78.4"
+                                                      Date="2026-02-20T07:15:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="78.9"
+                                                      Date="2026-02-28T22:00:00" />
+                            <models:GrowthTargetEntry x:TypeArguments="sys:Double" Value="78.9"
+                                                      Date="2026-03-01T22:00:00" />
+                        </generic:List>
+                    </controls:GrowthDiagram.Entries>
+                </controls:GrowthDiagram>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|GrowthDiagram">
+        <Setter Property="AxisLineBrush" Value="{DynamicResource Neutral500}" />
+        <Setter Property="LineThickness" Value="2" />
+        <Setter Property="DataLineBrush" Value="{DynamicResource Primary600}" />
+        <Setter Property="Padding" Value="48" />
+        <Setter Property="Ticks" Value="3"/>
+        <Setter Property="TickWidth" Value="10"/>
+    </Style>
+</Styles>

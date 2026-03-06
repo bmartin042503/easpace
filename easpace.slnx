@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/easpace.Desktop/easpace.Desktop.csproj" />
+    <Project Path="src/easpace.Questionnaire/easpace.Questionnaire.csproj" />
+  </Folder>
+</Solution>

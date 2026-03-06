@@ -1,0 +1,68 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:templatedControls="using:easpace.Desktop.Styles.TemplatedControls">
+    <Design.PreviewWith>
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <StackPanel Orientation="Vertical" Spacing="12" Width="250">
+                    <templatedControls:GrowthTargetListItem Title="Read 100 books" />
+                    <templatedControls:GrowthTargetListItem Title="Lose 5 kg" Classes="selected" />
+                    <templatedControls:GrowthTargetListItem Title="Meditate 5 mins daily" />
+                    <templatedControls:GrowthTargetListItem Title="Play the guitar daily" />
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Template of GrowthTargetListItem -->
+    <Style Selector="templatedControls|GrowthTargetListItem">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button
+                    Content="{TemplateBinding Title}"
+                    Command="{TemplateBinding SelectCommand}"
+                    CommandParameter="{Binding DataContext, RelativeSource={RelativeSource TemplatedParent}}" />
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <!-- GrowthTargetListItem styling -->
+    <Style Selector="templatedControls|GrowthTargetListItem">
+
+        <Style Selector="^ /template/ Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="12,8" />
+
+            <!-- TODO: clean this to avoid repetitive code -->
+            <Setter Property="Background" Value="{DynamicResource Clear}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
+            <Setter Property="BorderThickness" Value="0.75" />
+            <Setter Property="CornerRadius" Value="8" />
+
+            <Style
+                Selector="^:pointerover /template/ ContentPresenter,
+                      ^:pressed /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource Clear}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}" />
+                <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^.selected">
+
+            <Style Selector="^ /template/ Button">
+                <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+                <Setter Property="Background" Value="{DynamicResource Primary100}" />
+                <Style
+                    Selector="^:pointerover /template/ ContentPresenter,
+                              ^:pressed /template/ ContentPresenter">
+                    <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+                    <Setter Property="Background" Value="{DynamicResource Primary100}" />
+                    <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
+                </Style>
+            </Style>
+        </Style>
+    </Style>
+</Styles>
