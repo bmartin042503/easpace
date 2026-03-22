@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:easpace.Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:constants="clr-namespace:easpace.Desktop.Constants"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="easpace.Desktop.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        WindowStartupLocation="CenterScreen"
+        Title="easpace"
+        MinHeight="450"
+        MinWidth="650">
+
+    <Grid ColumnDefinitions="Auto,*">
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Classes="primaryGradientSideBar">
+            <Border.Padding>
+                <OnPlatform>
+                    <OnPlatform.Default>14,14,14,28</OnPlatform.Default>
+                    <OnPlatform.macOS>14,42,14,28</OnPlatform.macOS>
+                </OnPlatform>
+            </Border.Padding>
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                  RowSpacing="32"
+                  IsVisible="{Binding IsSidebarVisible}">
+                
+                <!-- Mood -->
+                <Button Grid.Row="0"
+                        x:Name="MoodButton"
+                        Click="SidebarButton_OnClick"
+                        Classes="sidebarIconButton"
+                        Command="{Binding SetPage}"
+                        CommandParameter="{x:Static constants:ApplicationPage.Mood}">
+                    <Viewbox Width="24" Height="24">
+                        <Path Data="{StaticResource BrainIcon}"/>
+                    </Viewbox>
+                </Button>
+                
+                <!-- Journal -->
+                <Button Grid.Row="1"
+                        x:Name="JournalButton"
+                        Click="SidebarButton_OnClick"
+                        Classes="sidebarIconButton"
+                        Command="{Binding SetPage}"
+                        CommandParameter="{x:Static constants:ApplicationPage.Journal}">
+                    <Viewbox Width="20" Height="20">
+                        <Path Data="{StaticResource NotebookIcon}"/>
+                    </Viewbox>
+                </Button>
+                
+                <!-- Growth -->
+                <Button Grid.Row="2"
+                        x:Name="GrowthButton"
+                        Click="SidebarButton_OnClick"
+                        Classes="sidebarIconButton"
+                        Command="{Binding SetPage}"
+                        CommandParameter="{x:Static constants:ApplicationPage.Growth}">
+                    <Viewbox Width="22" Height="22">
+                        <Path Data="{StaticResource TargetIcon}"/>
+                    </Viewbox>
+                </Button>
+                
+                <!-- Wellness -->
+                <Button Grid.Row="3"
+                        x:Name="WellnessButton"
+                        Click="SidebarButton_OnClick"
+                        Classes="sidebarIconButton"
+                        Command="{Binding SetPage}"
+                        CommandParameter="{x:Static constants:ApplicationPage.Wellness}">
+                    <Viewbox Width="24" Height="24">
+                        <Path Data="{StaticResource FlowerLotusIcon}"/>
+                    </Viewbox>
+                </Button>
+                
+                <!-- Settings -->
+                <Button Grid.Row="5"
+                        x:Name="SettingsButton"
+                        Click="SidebarButton_OnClick"
+                        Classes="sidebarIconButton"
+                        Command="{Binding SetPage}"
+                        CommandParameter="{x:Static constants:ApplicationPage.Settings}">
+                    <Viewbox Width="22" Height="22">
+                        <Path Data="{StaticResource GearIcon}"/>
+                    </Viewbox>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Selected page content -->
+        <ContentControl Grid.Column="1"
+                        x:Name="PageContent"
+                        Content="{Binding CurrentPageViewModel}" />
+    </Grid>
+
+</Window>

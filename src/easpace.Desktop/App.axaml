@@ -1,0 +1,44 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="easpace.Desktop.App"
+             xmlns:local="using:easpace.Desktop"
+             RequestedThemeVariant="Default">
+
+    <!-- Global resources -->
+     <Application.Resources>
+         <ResourceDictionary>
+             <ResourceDictionary.MergedDictionaries>
+                 <MergeResourceInclude Source="/Styles/Themes/LightTheme.axaml" />
+                 <MergeResourceInclude Source="/Styles/Themes/DarkTheme.axaml" />
+                 <MergeResourceInclude Source="/Styles/Icons.axaml" />
+             </ResourceDictionary.MergedDictionaries>
+         </ResourceDictionary>
+         <FontFamily x:Key="Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
+     </Application.Resources>         
+    
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+  
+    <Application.Styles>
+        
+        <!-- AXAML styling -->
+        <StyleInclude Source="Styles/TextBlock.axaml"/>
+        <StyleInclude Source="Styles/TextBox.axaml"/>
+        <StyleInclude Source="Styles/Button.axaml"/>
+        <StyleInclude Source="Styles/ToggleButton.axaml"/>
+        <StyleInclude Source="Styles/Border.axaml"/>
+        <StyleInclude Source="Styles/Path.axaml"/>
+        <StyleInclude Source="Styles/GridSplitter.axaml"/>
+        <StyleInclude Source="Styles/MoodEntryFlyout.axaml"/>
+        <StyleInclude Source="Styles/Slider.axaml"/>
+        <StyleInclude Source="Styles/GrowthDiagram.axaml"/>
+        
+        <!-- Templated controls -->
+        <StyleInclude Source="Styles/TemplatedControls/JournalEntry.axaml"/>
+        <StyleInclude Source="Styles/TemplatedControls/MoodEntry.axaml"/>
+        <StyleInclude Source="Styles/TemplatedControls/GrowthTargetListItem.axaml"/>
+        
+        <FluentTheme />
+    </Application.Styles>
+</Application>
