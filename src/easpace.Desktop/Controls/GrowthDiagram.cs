@@ -8,7 +8,7 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
-using easpace.Desktop.Models;
+using easpace.Desktop.Models.Growth;
 
 namespace easpace.Desktop.Controls;
 
@@ -35,8 +35,8 @@ public class GrowthDiagram : Control
     public static readonly StyledProperty<double?> TickWidthProperty =
         AvaloniaProperty.Register<GrowthDiagram, double?>(nameof(TickWidth));
 
-    public static readonly DirectProperty<GrowthDiagram, IEnumerable<IGrowthTargetEntry>?> EntriesProperty =
-        AvaloniaProperty.RegisterDirect<GrowthDiagram, IEnumerable<IGrowthTargetEntry>?>(
+    public static readonly DirectProperty<GrowthDiagram, IEnumerable<NumericDataEntry>> EntriesProperty =
+        AvaloniaProperty.RegisterDirect<GrowthDiagram, IEnumerable<NumericDataEntry>>(
             nameof(Entries),
             o => o.Entries,
             (o, v) => o.Entries = v,
@@ -85,7 +85,7 @@ public class GrowthDiagram : Control
         set => SetValue(TickWidthProperty, value);
     }
 
-    public IEnumerable<IGrowthTargetEntry>? Entries
+    public IEnumerable<NumericDataEntry> Entries
     {
         get;
         set => SetAndRaise(EntriesProperty, ref field, value);
@@ -129,13 +129,13 @@ public class GrowthDiagram : Control
             var tickStartPointY = tickDistance * i + padding;
 
             var tickValue = GetValueFromPosY(tickStartPointY);
-            
+
             var tickTextLayout = CreateTickTextLayout(tickValue.ToString(CultureInfo.InvariantCulture));
-            
+
             var tickTextStartPoint = new Point(
                 _renderPosX,
                 tickStartPointY - (tickTextLayout.Height - lineThickness) / 2);
-            
+
             tickTextLayout.Draw(context, tickTextStartPoint);
 
             if (tickTextLayout.Width > tickTextMaxWidth) tickTextMaxWidth = tickTextLayout.Width;
@@ -153,12 +153,12 @@ public class GrowthDiagram : Control
             var tickEndPoint = new Point(_renderPosX + tickWidth, tickDistance * i + padding);
             context.DrawLine(pen, tickStartPoint, tickEndPoint);
         }
-        
+
         _renderPosX += tickWidth / 2;
-        
+
         // render Y axis line
         context.DrawLine(pen, new Point(_renderPosX, 0), new Point(_renderPosX, DesiredSize.Height));
-        
+
         _renderPosX += tickWidth / 2;
     }
 
@@ -214,7 +214,7 @@ public class GrowthDiagram : Control
         var entriesMax = Convert.ToDouble(Entries.MaxBy(entry => entry.Value)?.Value);
         var entriesMin = Convert.ToDouble(Entries.MinBy(entry => entry.Value)?.Value);
         var diff = Math.Abs(entriesMax - entriesMin);
-        
+
         var diagramHeight = DesiredSize.Height - padding * 2;
 
         if (diagramHeight <= 0) return 0.0;

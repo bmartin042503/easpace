@@ -5,21 +5,21 @@ using Avalonia.Controls.Primitives;
 
 namespace easpace.Desktop.Styles.TemplatedControls;
 
-public class GrowthTargetListItem : TemplatedControl
+public class ActivityListItem : TemplatedControl
 {
     public static readonly StyledProperty<string?> TitleProperty =
-        AvaloniaProperty.Register<GrowthTargetListItem, string?>(nameof(Title));
+        AvaloniaProperty.Register<ActivityListItem, string?>(nameof(Title));
     
-    public static readonly DirectProperty<GrowthTargetListItem, Guid?> IdProperty =
-        AvaloniaProperty.RegisterDirect<GrowthTargetListItem, Guid?>(
+    public static readonly DirectProperty<ActivityListItem, Guid?> IdProperty =
+        AvaloniaProperty.RegisterDirect<ActivityListItem, Guid?>(
             nameof(Id),
             o => o.Id,
             (o, v) => o.Id = v,
             unsetValue: Guid.Empty
         );
     
-    public static readonly DirectProperty<GrowthTargetListItem, Guid?> SelectedIdProperty =
-        AvaloniaProperty.RegisterDirect<GrowthTargetListItem, Guid?>(
+    public static readonly DirectProperty<ActivityListItem, Guid?> SelectedIdProperty =
+        AvaloniaProperty.RegisterDirect<ActivityListItem, Guid?>(
             nameof(SelectedId),
             o => o.SelectedId,
             (o, v) => o.SelectedId = v,
@@ -27,7 +27,7 @@ public class GrowthTargetListItem : TemplatedControl
         );
     
     public static readonly StyledProperty<ICommand?> SelectCommandProperty =
-        AvaloniaProperty.Register<GrowthTargetListItem, ICommand?>(nameof(SelectCommand));
+        AvaloniaProperty.Register<ActivityListItem, ICommand?>(nameof(SelectCommand));
 
     public string? Title
     {

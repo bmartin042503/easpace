@@ -5,17 +5,17 @@
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
                 <StackPanel Orientation="Vertical" Spacing="12" Width="250">
-                    <templatedControls:GrowthTargetListItem Title="Read 100 books" />
-                    <templatedControls:GrowthTargetListItem Title="Lose 5 kg" Classes="selected" />
-                    <templatedControls:GrowthTargetListItem Title="Meditate 5 mins daily" />
-                    <templatedControls:GrowthTargetListItem Title="Play the guitar daily" />
+                    <templatedControls:ActivityListItem Title="Read 100 books" />
+                    <templatedControls:ActivityListItem Title="Lose 5 kg" Classes="selected" />
+                    <templatedControls:ActivityListItem Title="Meditate 5 mins daily" />
+                    <templatedControls:ActivityListItem Title="Play the guitar daily" />
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
     <!-- Template of GrowthTargetListItem -->
-    <Style Selector="templatedControls|GrowthTargetListItem">
+    <Style Selector="templatedControls|ActivityListItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <Button
@@ -27,7 +27,7 @@
     </Style>
 
     <!-- GrowthTargetListItem styling -->
-    <Style Selector="templatedControls|GrowthTargetListItem">
+    <Style Selector="templatedControls|ActivityListItem">
 
         <Style Selector="^ /template/ Button">
             <Setter Property="HorizontalAlignment" Value="Stretch" />

@@ -1,87 +1,69 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
-using easpace.Desktop.Models;
+using easpace.Desktop.Constants.Keys;
+using easpace.Desktop.Models.Growth;
 
 namespace easpace.Desktop.ViewModels;
 
 public partial class GrowthViewModel : PageViewModel
 {
-    public ObservableCollection<IGrowthTarget> GrowthTargets { get; set; }
+    [ObservableProperty] private ObservableCollection<GrowthActivity> _activities = [];
+    [ObservableProperty] private GrowthActivity? _selectedActivity;
     
-    [ObservableProperty] private IGrowthTarget? _selectedGrowthTarget;
-
     public GrowthViewModel()
     {
         Page = ApplicationPage.Growth;
-
-        // TODO: delete this after db is added
-        var growthTargets = new List<IGrowthTarget>
-        {
-            new GrowthTarget<int>
-            {
-                Id = Guid.NewGuid(),
-                Title = "Napi vízbevitel",
-                Unit = "pohár",
-                Goal = 8,
-                Entries = new ObservableCollection<GrowthTargetEntry<int>>
-                {
-                    new() { Value = 2, Date = DateTime.Now.AddHours(-10) },
-                    new() { Value = 5, Date = DateTime.Now.AddHours(-2) }
-                }
-            },
-            
-            new GrowthTarget<double>
-            {
-                Id = Guid.NewGuid(),
-                Title = "Alvás időtartama",
-                Unit = "óra",
-                Goal = 7.5,
-                Entries = new ObservableCollection<GrowthTargetEntry<double>>
-                {
-                    new() { Value = 6.2, Date = DateTime.Now.AddDays(-1) },
-                    new() { Value = 8.0, Date = DateTime.Now }
-                }
-            },
-            
-            new GrowthTarget<int>
-            {
-                Id = Guid.NewGuid(),
-                Title = "Meditáció",
-                Unit = "perc",
-                Goal = 20,
-                Entries = new ObservableCollection<GrowthTargetEntry<int>>
-                {
-                    new() { Value = 10, Date = DateTime.Now.AddMinutes(-30) }
-                }
-            },
-            
-            new GrowthTarget<double>
-            {
-                Id = Guid.NewGuid(),
-                Title = "Séta/Futás",
-                Unit = "km",
-                Goal = 5.0,
-                Entries = new ObservableCollection<GrowthTargetEntry<double>>
-                {
-                    new() { Value = 1.2, Date = DateTime.Now.AddHours(-5) },
-                    new() { Value = 3.8, Date = DateTime.Now.AddHours(-1) }
-                }
-            }
-        };
-
-        GrowthTargets = new ObservableCollection<IGrowthTarget>(growthTargets);
-        SelectedGrowthTarget = GrowthTargets[0];
+        LoadMockData();
     }
 
     [RelayCommand]
-    public void SelectTarget(object parameter)
+    public void SelectActivity(object parameter)
     {
-        if (parameter is not IGrowthTarget target) return;
-        if (target.Id == SelectedGrowthTarget?.Id) return;
-        SelectedGrowthTarget = target;
+        if (parameter is not GrowthActivity activity) return;
+        SelectedActivity = activity;
+    }
+    
+    private void LoadMockData()
+    {
+        Activities =
+        [
+            new MilestoneActivity
+            {
+                Title = "Elolvasott könyvek",
+                TargetValue = 1000,
+                Unit = "oldal",
+                Entries =
+                {
+                    new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 15 },
+                    new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 32 }
+                }
+            },
+
+            new TrendActivity
+            {
+                Title = "Testsúly követés",
+                TargetValue = 75.0,
+                Unit = "kg",
+                Entries =
+                {
+                    new NumericDataEntry { Date = DateTime.Now.AddDays(-5), Value = 82.5 },
+                    new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 81.2 }
+                }
+            },
+
+            new RoutineActivity
+            {
+                Title = "Napi Meditáció",
+                Entries =
+                {
+                    new RoutineDataEntry { Date = DateTime.Now.AddDays(-2), State = RoutineState.Completed },
+                    new RoutineDataEntry { Date = DateTime.Now.AddDays(-1), State = RoutineState.NotCompleted },
+                    new RoutineDataEntry { Date = DateTime.Now, State = RoutineState.Completed }
+                }
+            }
+        ];
     }
 }
