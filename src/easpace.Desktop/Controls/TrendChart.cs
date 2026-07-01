@@ -12,31 +12,31 @@ using easpace.Desktop.Models.Growth;
 
 namespace easpace.Desktop.Controls;
 
-public class GrowthDiagram : Control
+public class TrendChart : Control
 {
     public static readonly StyledProperty<IBrush?> DataLineBrushProperty =
-        AvaloniaProperty.Register<GrowthDiagram, IBrush?>(nameof(DataLineBrush));
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(DataLineBrush));
 
     public static readonly StyledProperty<IBrush?> DataLineBackgroundProperty =
-        AvaloniaProperty.Register<GrowthDiagram, IBrush?>(nameof(DataLineBackground));
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(DataLineBackground));
 
     public static readonly StyledProperty<IBrush?> AxisLineBrushProperty =
-        AvaloniaProperty.Register<GrowthDiagram, IBrush?>(nameof(AxisLineBrush));
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(AxisLineBrush));
 
     public static readonly StyledProperty<double?> LineThicknessProperty =
-        AvaloniaProperty.Register<GrowthDiagram, double?>(nameof(LineThickness));
+        AvaloniaProperty.Register<TrendChart, double?>(nameof(LineThickness));
 
     public static readonly StyledProperty<double?> PaddingProperty =
-        AvaloniaProperty.Register<GrowthDiagram, double?>(nameof(Padding));
+        AvaloniaProperty.Register<TrendChart, double?>(nameof(Padding));
 
     public static readonly StyledProperty<int?> TicksProperty =
-        AvaloniaProperty.Register<GrowthDiagram, int?>(nameof(Ticks));
+        AvaloniaProperty.Register<TrendChart, int?>(nameof(Ticks));
 
     public static readonly StyledProperty<double?> TickWidthProperty =
-        AvaloniaProperty.Register<GrowthDiagram, double?>(nameof(TickWidth));
+        AvaloniaProperty.Register<TrendChart, double?>(nameof(TickWidth));
 
-    public static readonly DirectProperty<GrowthDiagram, IEnumerable<NumericDataEntry>> EntriesProperty =
-        AvaloniaProperty.RegisterDirect<GrowthDiagram, IEnumerable<NumericDataEntry>>(
+    public static readonly DirectProperty<TrendChart, IEnumerable<NumericDataEntry>> EntriesProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, IEnumerable<NumericDataEntry>>(
             nameof(Entries),
             o => o.Entries,
             (o, v) => o.Entries = v,
@@ -91,7 +91,7 @@ public class GrowthDiagram : Control
         set => SetAndRaise(EntriesProperty, ref field, value);
     }
 
-    public GrowthDiagram()
+    public TrendChart()
     {
         _tickTextLayouts = new List<TextLayout>();
     }
@@ -209,7 +209,7 @@ public class GrowthDiagram : Control
 
     private double GetValueFromPosY(double y)
     {
-        if (Entries is null || !Entries.Any()) return 0.0;
+        if (!Entries.Any()) return 0.0;
         var padding = Padding ?? 12;
         var entriesMax = Convert.ToDouble(Entries.MaxBy(entry => entry.Value)?.Value);
         var entriesMin = Convert.ToDouble(Entries.MinBy(entry => entry.Value)?.Value);
@@ -230,7 +230,6 @@ public class GrowthDiagram : Control
         return new TextLayout(
             string.IsNullOrEmpty(text) ? "Tick" : text,
             new Typeface(_fontFamily),
-            null,
             12,
             AxisLineBrush ?? new ImmutableSolidColorBrush(Colors.Black),
             TextAlignment.Right,

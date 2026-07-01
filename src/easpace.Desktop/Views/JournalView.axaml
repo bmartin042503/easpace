@@ -42,7 +42,7 @@
 
                         <!-- Search box -->
                         <TextBox Grid.Column="0" Classes="searchBox"
-                                 Watermark="{services:LocalizationService Key='SEARCH'}">
+                                 PlaceholderText="{services:LocalizationService Key='SEARCH'}">
                             <TextBox.InnerRightContent>
                                 <Viewbox Width="14" Height="14">
                                     <Path Data="{StaticResource MagnifyingGlassBoldIcon}" />

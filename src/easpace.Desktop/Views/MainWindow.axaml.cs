@@ -18,7 +18,6 @@ public partial class MainWindow : Window
 
             // Remove title bar
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.NoChrome;
             ExtendClientAreaTitleBarHeightHint = 0;
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))

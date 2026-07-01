@@ -95,7 +95,7 @@
                     <TextBox
                         Height="75"
                         AcceptsReturn="True"
-                        Watermark="{services:LocalizationService Key='OTHER'}"
+                        PlaceholderText="{services:LocalizationService Key='OTHER'}"
                         Classes="largeTextBox" />
                     
                     <Button Classes="interactionButton" HorizontalAlignment="Center">
