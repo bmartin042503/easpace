@@ -1,6 +1,6 @@
 using System;
 
-namespace easpace.Desktop.Models.Growth;
+namespace easpace.Desktop.Models.Activities;
 
 public class DataEntry
 {

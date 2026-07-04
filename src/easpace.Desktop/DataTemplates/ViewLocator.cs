@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop;
+namespace easpace.Desktop.DataTemplates;
 
 public class ViewLocator : IDataTemplate
 {

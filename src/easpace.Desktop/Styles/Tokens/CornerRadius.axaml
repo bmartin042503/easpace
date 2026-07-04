@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Corner radius of ListBoxItems -->
+    <CornerRadius x:Key="ListBoxItemCornerRadius">10</CornerRadius>
+    
+    <!-- Corner radius of Buttons -->
+    <CornerRadius x:Key="LabeledButtonCornerRadius">6</CornerRadius>
+    <CornerRadius x:Key="IconButtonCornerRadius">32</CornerRadius>
+    
+    <!-- Corner radius of primary card Border -->
+    <CornerRadius x:Key="PrimaryCardCornerRadius">20</CornerRadius>
+    
+</ResourceDictionary>

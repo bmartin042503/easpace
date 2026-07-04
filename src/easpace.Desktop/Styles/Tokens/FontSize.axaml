@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <!-- Font size of labeled Button -->
+    <system:Double x:Key="LabeledButtonFontSize">12</system:Double>
+    
+    <!-- Font size of activity title TextBox -->
+    <system:Double x:Key="ActivityTitleFontSize">24</system:Double>
+</ResourceDictionary>

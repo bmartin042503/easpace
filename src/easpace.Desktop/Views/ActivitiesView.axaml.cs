@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Views;
 
-public partial class GrowthView : UserControl
+public partial class ActivitiesView : UserControl
 {
-    public GrowthView()
+    public ActivitiesView()
     {
         InitializeComponent();
     }

@@ -4,6 +4,7 @@
         <ResourceDictionary x:Key="Light">
 
             <!-- Primary colors -->
+            <Color x:Key="Primary50">#F7FDFF</Color>
             <Color x:Key="Primary100">#EBFBFF</Color>
             <Color x:Key="Primary200">#C5EAF4</Color>
             <Color x:Key="Primary300">#A3E1F3</Color>
@@ -82,13 +83,13 @@
             <!-- Primary button gradient brush -->
             <LinearGradientBrush x:Key="PrimaryButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
                 <GradientStop Color="{DynamicResource Primary400}" Offset="0.0" />
-                <GradientStop Color="{DynamicResource Primary500}" Offset="1.0" />
+                <GradientStop Color="{DynamicResource Primary600}" Offset="1.0" />
             </LinearGradientBrush>
             
-            <!-- Delete button gradient brush -->
-            <LinearGradientBrush x:Key="DeleteButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
+            <!-- Danger button gradient brush -->
+            <LinearGradientBrush x:Key="DangerButtonGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
                 <GradientStop Color="{DynamicResource Danger400}" Offset="0.0" />
-                <GradientStop Color="{DynamicResource Danger500}" Offset="1.0" />
+                <GradientStop Color="{DynamicResource Danger600}" Offset="1.0" />
             </LinearGradientBrush>
 
             <!-- Primary drop shadow effect -->

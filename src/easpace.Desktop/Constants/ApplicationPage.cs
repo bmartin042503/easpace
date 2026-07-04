@@ -4,7 +4,7 @@ public enum ApplicationPage
 {
     Intro,
     Journal,
-    Growth,
+    Activities,
     Mood,
     Wellness,
     Settings

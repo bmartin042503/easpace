@@ -8,7 +8,7 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
-using easpace.Desktop.Models.Growth;
+using easpace.Desktop.Models.Activities;
 
 namespace easpace.Desktop.Controls;
 

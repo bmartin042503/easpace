@@ -1,6 +1,5 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:templatedControls="using:easpace.Desktop.Styles.TemplatedControls"
         xmlns:converters="using:easpace.Desktop.Converters"
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
         xmlns:controls="clr-namespace:easpace.Desktop.Controls"
@@ -13,95 +12,95 @@
                 <StackPanel Orientation="Vertical" Spacing="20">
 
                     <!-- Sample MoodEntry item 1 - with description, labels -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         Description="Woke up feeling incredibly refreshed and ready to tackle the day."
                         MoodSliderValue="0.9"
                         Date="2026-02-22T22:25:00">
-                        <templatedControls:MoodEntry.Labels>
+                        <controls:MoodEntry.Labels>
                             <generic:List x:TypeArguments="x:String">
                                 <x:String>Energetic</x:String>
                                 <x:String>Rested</x:String>
                             </generic:List>
-                        </templatedControls:MoodEntry.Labels>
-                    </templatedControls:MoodEntry>
+                        </controls:MoodEntry.Labels>
+                    </controls:MoodEntry>
 
                     <!-- Sample MoodEntry item 2 - with description, labels -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         Description="A bit stressed about the upcoming deadline, but managing."
                         MoodSliderValue="0.4"
                         Date="2026-02-22T22:10:00">
-                        <templatedControls:MoodEntry.Labels>
+                        <controls:MoodEntry.Labels>
                             <generic:List x:TypeArguments="x:String">
                                 <x:String>Anxious</x:String>
                                 <x:String>Focused</x:String>
                             </generic:List>
-                        </templatedControls:MoodEntry.Labels>
-                    </templatedControls:MoodEntry>
+                        </controls:MoodEntry.Labels>
+                    </controls:MoodEntry>
 
                     <!-- Sample MoodEntry item 3 - with description -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         Description="Had a really nice meal with an old friend."
                         MoodSliderValue="0.8"
                         Date="2026-02-22T18:00:00" />
 
                     <!-- Sample MoodEntry item 4 -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         MoodSliderValue="0.5"
                         Date="2026-02-21T10:00:00" />
 
                     <!-- Sample MoodEntry item 5 - with labels -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         MoodSliderValue="0.7"
                         Date="2026-02-18T14:30:00">
-                        <templatedControls:MoodEntry.Labels>
+                        <controls:MoodEntry.Labels>
                             <generic:List x:TypeArguments="x:String">
                                 <x:String>Peaceful</x:String>
                                 <x:String>Nature</x:String>
                             </generic:List>
-                        </templatedControls:MoodEntry.Labels>
-                    </templatedControls:MoodEntry>
+                        </controls:MoodEntry.Labels>
+                    </controls:MoodEntry>
 
                     <!-- Sample MoodEntry item 6 - with description -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         Description="Just feeling really tired today, nothing specific happened."
                         MoodSliderValue="0.2"
                         Date="2026-02-01T09:00:00" />
 
                     <!-- Sample MoodEntry item 7 - with labels -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         MoodSliderValue="0.6"
                         Date="2025-12-10T11:00:00">
-                        <templatedControls:MoodEntry.Labels>
+                        <controls:MoodEntry.Labels>
                             <generic:List x:TypeArguments="x:String">
                                 <x:String>Okay</x:String>
                                 <x:String>Routine</x:String>
                             </generic:List>
-                        </templatedControls:MoodEntry.Labels>
-                    </templatedControls:MoodEntry>
+                        </controls:MoodEntry.Labels>
+                    </controls:MoodEntry>
 
                     <!-- Sample MoodEntry item 8 -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         MoodSliderValue="1.0"
                         Date="2025-08-05T16:20:00" />
 
                     <!-- Sample MoodEntry item 9 -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         MoodSliderValue="0.1"
                         Date="2025-01-15T08:00:00" />
 
                     <!-- Sample MoodEntry item 10 - with description, labels -->
-                    <templatedControls:MoodEntry
+                    <controls:MoodEntry
                         Description="Watched a great comedy, laughed a lot."
                         MoodSliderValue="0.85"
                         Date="2023-11-20T20:00:00">
-                        <templatedControls:MoodEntry.Labels>
+                        <controls:MoodEntry.Labels>
                             <generic:List x:TypeArguments="x:String">
                                 <x:String>Happy</x:String>
                                 <x:String>Amused</x:String>
                                 <x:String>Relaxed</x:String>
                             </generic:List>
-                        </templatedControls:MoodEntry.Labels>
-                    </templatedControls:MoodEntry>
+                        </controls:MoodEntry.Labels>
+                    </controls:MoodEntry>
 
                 </StackPanel>
             </Border>
@@ -109,7 +108,7 @@
     </Design.PreviewWith>
 
     <!-- MoodEntry template -->
-    <Style Selector="templatedControls|MoodEntry">
+    <Style Selector="controls|MoodEntry">
         <Style.Resources>
             <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
             <converters:DateTimeConverter x:Key="DateTimeConverter" />
@@ -197,7 +196,7 @@
     </Style>
 
     <!-- MoodEntry styling -->
-    <Style Selector="templatedControls|MoodEntry">
+    <Style Selector="controls|MoodEntry">
         <Style Selector="^ /template/ TextBlock#MoodTextBlock">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />

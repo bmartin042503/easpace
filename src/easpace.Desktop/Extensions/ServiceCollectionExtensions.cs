@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
         
             collection.AddSingleton<IntroViewModel>();
             collection.AddSingleton<JournalViewModel>();
-            collection.AddSingleton<GrowthViewModel>();
+            collection.AddSingleton<ActivitiesViewModel>();
             collection.AddSingleton<MoodViewModel>();
             collection.AddSingleton<WellnessViewModel>();
             collection.AddSingleton<SettingsViewModel>();
@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
             {
                 ApplicationPage.Intro => serviceProvider.GetRequiredService<IntroViewModel>(),
                 ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalViewModel>(),
-                ApplicationPage.Growth => serviceProvider.GetRequiredService<GrowthViewModel>(),
+                ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesViewModel>(),
                 ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodViewModel>(),
                 ApplicationPage.Wellness => serviceProvider.GetRequiredService<WellnessViewModel>(),
                 ApplicationPage.Settings => serviceProvider.GetRequiredService<SettingsViewModel>(),

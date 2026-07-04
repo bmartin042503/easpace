@@ -3,23 +3,23 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
-namespace easpace.Desktop.Styles.TemplatedControls;
+namespace easpace.Desktop.Controls;
 
-public class ActivityListItem : TemplatedControl
+public class JournalEntry : TemplatedControl
 {
     public static readonly StyledProperty<string?> TitleProperty =
-        AvaloniaProperty.Register<ActivityListItem, string?>(nameof(Title));
+        AvaloniaProperty.Register<JournalEntry, string?>(nameof(Title));
     
-    public static readonly DirectProperty<ActivityListItem, Guid?> IdProperty =
-        AvaloniaProperty.RegisterDirect<ActivityListItem, Guid?>(
+    public static readonly DirectProperty<JournalEntry, Guid?> IdProperty =
+        AvaloniaProperty.RegisterDirect<JournalEntry, Guid?>(
             nameof(Id),
             o => o.Id,
             (o, v) => o.Id = v,
             unsetValue: Guid.Empty
         );
     
-    public static readonly DirectProperty<ActivityListItem, Guid?> SelectedIdProperty =
-        AvaloniaProperty.RegisterDirect<ActivityListItem, Guid?>(
+    public static readonly DirectProperty<JournalEntry, Guid?> SelectedIdProperty =
+        AvaloniaProperty.RegisterDirect<JournalEntry, Guid?>(
             nameof(SelectedId),
             o => o.SelectedId,
             (o, v) => o.SelectedId = v,
@@ -27,7 +27,7 @@ public class ActivityListItem : TemplatedControl
         );
     
     public static readonly StyledProperty<ICommand?> SelectCommandProperty =
-        AvaloniaProperty.Register<ActivityListItem, ICommand?>(nameof(SelectCommand));
+        AvaloniaProperty.Register<JournalEntry, ICommand?>(nameof(SelectCommand));
 
     public string? Title
     {

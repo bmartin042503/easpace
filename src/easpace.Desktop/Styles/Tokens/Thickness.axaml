@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Thickness of Button borders -->
+    <Thickness x:Key="ButtonBorderThickness">1</Thickness>
+
+    <!-- Padding of Buttons -->
+    <Thickness x:Key="LabeledButtonPadding">10,4</Thickness>
+    <Thickness x:Key="IconButtonPadding">0</Thickness>
+
+    <!-- Padding of ListBoxItems -->
+    <Thickness x:Key="ListBoxItemPadding">14,12</Thickness>
+
+    <!-- Padding of primary card Border -->
+    <Thickness x:Key="PrimaryCardPadding">20</Thickness>
+    
+    <!-- Thickness of primary card Border -->
+    <Thickness x:Key="PrimaryCardBorderThickness">1</Thickness>
+
+</ResourceDictionary>

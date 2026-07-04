@@ -1,0 +1,116 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
+        xmlns:activitiesvm="clr-namespace:easpace.Desktop.ViewModels.Activities">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+                <ListBox Classes="activitiesList" Width="350">
+
+                    <!-- Sample listbox item 1 - Trend Activity -->
+                    <activitiesvm:TrendActivityViewModel>
+                        <activitiesvm:TrendActivityViewModel.BaseActivity>
+                            <activities:TrendActivity TargetValue="75.0" Unit="kg" Title="Lose weight">
+                                <activities:TrendActivity.Entries>
+                                    <activities:NumericDataEntry Value="83.5" />
+                                    <activities:NumericDataEntry Value="82.1" />
+                                    <activities:NumericDataEntry Value="81.2" />
+                                </activities:TrendActivity.Entries>
+                            </activities:TrendActivity>
+                        </activitiesvm:TrendActivityViewModel.BaseActivity>
+                    </activitiesvm:TrendActivityViewModel>
+
+                    <!-- Sample listbox item 2 - Routine Activity -->
+                    <activitiesvm:RoutineActivityViewModel>
+                        <activitiesvm:RoutineActivityViewModel.BaseActivity>
+                            <activities:RoutineActivity Title="Daily workout">
+                                <activities:RoutineActivity.Entries>
+                                    <activities:RoutineDataEntry State="NotCompleted" />
+                                    <activities:RoutineDataEntry State="Completed" />
+                                </activities:RoutineActivity.Entries>
+                            </activities:RoutineActivity>
+                        </activitiesvm:RoutineActivityViewModel.BaseActivity>
+                    </activitiesvm:RoutineActivityViewModel>
+
+                    <!-- Sample listbox item 3 - Milestone Activity -->
+                    <activitiesvm:MilestoneActivityViewModel>
+                        <activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                            <activities:MilestoneActivity Title="Read 1000 pages" TargetValue="1000" Unit="pages">
+                                <activities:MilestoneActivity.Entries>
+                                    <activities:NumericDataEntry Value="45" />
+                                    <activities:NumericDataEntry Value="120" />
+                                    <activities:NumericDataEntry Value="85" />
+                                </activities:MilestoneActivity.Entries>
+                            </activities:MilestoneActivity>
+                        </activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                    </activitiesvm:MilestoneActivityViewModel>
+
+                    <!-- Sample listbox item 4 - Routine Activity -->
+                    <activitiesvm:RoutineActivityViewModel>
+                        <activitiesvm:RoutineActivityViewModel.BaseActivity>
+                            <activities:RoutineActivity Title="Quit smoking">
+                                <activities:RoutineActivity.Entries>
+                                    <activities:RoutineDataEntry State="Completed" />
+                                    <activities:RoutineDataEntry State="Completed" />
+                                    <activities:RoutineDataEntry State="Completed" />
+                                </activities:RoutineActivity.Entries>
+                            </activities:RoutineActivity>
+                        </activitiesvm:RoutineActivityViewModel.BaseActivity>
+                    </activitiesvm:RoutineActivityViewModel>
+
+                </ListBox>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Activity list styling -->
+    <Style Selector="ListBox.activitiesList">
+        <Setter Property="SelectionMode" Value="AlwaysSelected,Single" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate x:DataType="activitiesvm:ActivityViewModel">
+                    <ContentControl Content="{Binding}"
+                                    ContentTemplate="{StaticResource ActivityListItemTemplateSelector}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Activity list item styling -->
+    <Style Selector="ListBox.activitiesList ListBoxItem">
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="Padding" Value="{DynamicResource ListBoxItemPadding}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="{DynamicResource Neutral50}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral400}" />
+        <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThickness}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ListBoxItemCornerRadius}" />
+
+        <Style Selector="^ Path.activityIcon">
+            <Setter Property="Fill" Value="{DynamicResource Neutral700}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Neutral50}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Neutral400}" />
+            <Setter Property="Foreground" Value="{DynamicResource Neutral700}" />
+        </Style>
+
+        <Style Selector="^:selected /template/ ContentPresenter, ^:selected:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Primary100}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Primary600}" />
+            <Setter Property="Foreground" Value="{DynamicResource Primary700}" />
+        </Style>
+
+        <Style Selector="^:selected Path.activityIcon, ^:selected:pointerover Path.activityIcon">
+            <Setter Property="Fill" Value="{DynamicResource Primary700}" />
+        </Style>
+
+    </Style>
+</Styles>

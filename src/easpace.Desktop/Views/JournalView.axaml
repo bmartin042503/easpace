@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
-             xmlns:templatedControls="clr-namespace:easpace.Desktop.Styles.TemplatedControls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.JournalView"
              x:DataType="vm:JournalViewModel"
@@ -50,12 +50,8 @@
                             </TextBox.InnerRightContent>
                         </TextBox>
 
-                        <!-- Add (plus) button -->
-                        <Button Grid.Column="1" Classes="addPlusButton" HorizontalAlignment="Left">
-                            <Viewbox Width="26" Height="26">
-                                <Path Data="{StaticResource PlusCircleFillIcon}" />
-                            </Viewbox>
-                        </Button>
+                        <!-- Add button -->
+                        <Button Grid.Column="1" Classes="primaryIconButton addButton" HorizontalAlignment="Left"/>
                     </Grid>
 
                     <!-- Journal entries -->
@@ -71,7 +67,7 @@
 
                                 <!-- Template for a single Journal entry -->
                                 <DataTemplate DataType="models:JournalEntry">
-                                    <templatedControls:JournalEntry
+                                    <controls:JournalEntry
                                         HorizontalAlignment="Left"
                                         Title="{Binding Title}"
                                         Id="{Binding Id}"
@@ -100,15 +96,7 @@
                     
                     <!-- Interaction buttons -->
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <Button Classes="editButton">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                <TextBlock Grid.Column="0"
-                                           Text="{services:LocalizationService Key='EDIT'}" />
-                                <Viewbox Grid.Column="1" Width="10" Height="10">
-                                    <Path Data="{StaticResource PencilFillIcon}" />
-                                </Viewbox>
-                            </Grid>
-                        </Button>
+                        <Button Classes="secondaryIconButton editButton"/>
                     </StackPanel>
                     
                     <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"

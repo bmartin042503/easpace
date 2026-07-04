@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
-namespace easpace.Desktop.Styles.TemplatedControls;
+namespace easpace.Desktop.Controls;
 
 public class MoodEntry : TemplatedControl
 {

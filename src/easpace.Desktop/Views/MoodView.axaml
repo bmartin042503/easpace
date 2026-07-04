@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:templatedControls="clr-namespace:easpace.Desktop.Styles.TemplatedControls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.MoodView"
              x:DataType="vm:MoodViewModel"
@@ -37,7 +37,7 @@
                     <DataTemplate DataType="models:MoodEntry">
 
                         <!-- Build of a single mood entry item -->
-                        <templatedControls:MoodEntry
+                        <controls:MoodEntry
                             MoodSliderValue="{Binding MoodSliderValue}"
                             Date="{Binding Date}"
                             Description="{Binding Description}"

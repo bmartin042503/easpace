@@ -107,10 +107,19 @@
     <data name="ADD_NEW" xml:space="preserve">
         <value>Új hozzáadása</value>
     </data>
-    <data name="GROWTH_TITLE" xml:space="preserve">
-        <value>Fejlődés</value>
+    <data name="ACTIVITIES_TITLE" xml:space="preserve">
+        <value>Tevékenységek</value>
     </data>
-    <data name="GROWTH_SUBTITLE" xml:space="preserve">
-        <value>Kövesd nyomon a haladásod </value>
+    <data name="ACTIVITIES_SUBTITLE" xml:space="preserve">
+        <value>Szokások és mérföldkövek</value>
+    </data>
+    <data name="ROUTINE_STATE_COMPLETED" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="ROUTINE_STATE_NOT_COMPLETED" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="ROUTINE_STATE_NONE" xml:space="preserve">
+        <value>Üres</value>
     </data>
 </root>

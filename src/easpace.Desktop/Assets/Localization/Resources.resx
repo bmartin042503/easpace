@@ -110,10 +110,19 @@
     <data name="ADD_NEW" xml:space="preserve">
         <value>Add new</value>
     </data>
-    <data name="GROWTH_TITLE" xml:space="preserve">
-        <value>Growth</value>
+    <data name="ACTIVITIES_TITLE" xml:space="preserve">
+        <value>Activities</value>
     </data>
-    <data name="GROWTH_SUBTITLE" xml:space="preserve">
-        <value>Track your progress</value>
+    <data name="ACTIVITIES_SUBTITLE" xml:space="preserve">
+        <value>Habits and milestones</value>
+    </data>
+    <data name="ROUTINE_STATE_COMPLETED" xml:space="preserve">
+        <value>Completed</value>
+    </data>
+    <data name="ROUTINE_STATE_NOT_COMPLETED" xml:space="preserve">
+        <value>Not completed</value>
+    </data>
+    <data name="ROUTINE_STATE_NONE" xml:space="preserve">
+        <value>None</value>
     </data>
 </root>

@@ -1,6 +1,6 @@
-using easpace.Desktop.Constants.Keys;
+using easpace.Desktop.Constants;
 
-namespace easpace.Desktop.Models.Growth;
+namespace easpace.Desktop.Models.Activities;
 
 public class RoutineDataEntry : DataEntry
 {

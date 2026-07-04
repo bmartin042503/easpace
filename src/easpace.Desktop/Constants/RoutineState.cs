@@ -1,4 +1,4 @@
-namespace easpace.Desktop.Constants.Keys;
+namespace easpace.Desktop.Constants;
 
 public enum RoutineState
 {

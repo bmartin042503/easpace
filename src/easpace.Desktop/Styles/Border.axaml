@@ -38,30 +38,31 @@
     <Style Selector="Border.primaryCard">
         <Setter Property="Background" Value="{DynamicResource Clear}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource PrimaryCardBorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource PrimaryCardCornerRadius}"/>
+        <Setter Property="Padding" Value="{DynamicResource PrimaryCardPadding}"/>
     </Style>
     
     <!-- Primary gradient card styling -->
     <Style Selector="Border.primaryGradientCard">
         <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource PrimaryCardBorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource PrimaryCardCornerRadius}"/>
     </Style>
     
     <!-- Secondary card styling -->
     <Style Selector="Border.secondaryCard">
         <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource PrimaryCardBorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource PrimaryCardCornerRadius}"/>
     </Style>
     
     <!-- Primary gradient sidebar styling -->
     <Style Selector="Border.primaryGradientSideBar">
         <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0,0,0.75,0"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
     </Style>
 </Styles>
