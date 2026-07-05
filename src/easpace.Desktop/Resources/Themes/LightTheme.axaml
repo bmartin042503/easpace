@@ -71,12 +71,12 @@
             <Color x:Key="Neutral800">#15262A</Color>
             <Color x:Key="Neutral900">#040F12</Color>
 
-            <!-- Clear -->
+            <!-- Clear (White) -->
             <Color x:Key="Clear">#FFFFFF</Color>
 
             <!-- Primary card gradient brush -->
             <LinearGradientBrush x:Key="PrimaryCardGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%">
-                <GradientStop Color="#FFFFFF" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Clear}" Offset="0.0" />
                 <GradientStop Color="{DynamicResource Primary100}" Offset="1.0" />
             </LinearGradientBrush>
             
@@ -99,6 +99,12 @@
                               Opacity="0.4"
                               OffsetX="0"
                               OffsetY="0" />
+            
+            <!-- TrendChart gradient brush -->
+            <LinearGradientBrush x:Key="TrendChartGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%" Opacity="0.5">
+                <GradientStop Color="{DynamicResource Primary500}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource Clear}" Offset="1.0" />
+            </LinearGradientBrush>
 
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>

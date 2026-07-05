@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Assets\Fonts\" />
+        <Folder Include="Assets\Fonts\*" />
         <Folder Include="Assets\Svgs\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
@@ -50,14 +50,5 @@
         <DependentUpon>JournalEntry.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Styles\Themes\DarkTheme.axaml" />
-      <AdditionalFiles Include="Styles\Themes\LightTheme.axaml" />
-      <AdditionalFiles Include="Styles\Tokens\CornerRadius.axaml" />
-      <AdditionalFiles Include="Styles\Tokens\FontSize.axaml" />
-      <AdditionalFiles Include="Styles\Tokens\Size.axaml" />
-      <AdditionalFiles Include="Styles\Tokens\Thickness.axaml" />
     </ItemGroup>
 </Project>

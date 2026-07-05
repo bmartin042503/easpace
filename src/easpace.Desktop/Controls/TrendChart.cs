@@ -9,22 +9,23 @@ using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Controls;
 
 public class TrendChart : Control
 {
-    public static readonly StyledProperty<IBrush?> DataLineBrushProperty =
-        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(DataLineBrush));
+    public static readonly StyledProperty<IBrush?> StrokeProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(Stroke));
 
-    public static readonly StyledProperty<IBrush?> DataLineBackgroundProperty =
-        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(DataLineBackground));
+    public static readonly StyledProperty<IBrush?> AreaBrushProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(AreaBrush));
 
-    public static readonly StyledProperty<IBrush?> AxisLineBrushProperty =
-        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(AxisLineBrush));
+    public static readonly StyledProperty<IBrush?> AxisStrokeProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(AxisStroke));
 
-    public static readonly StyledProperty<double?> LineThicknessProperty =
-        AvaloniaProperty.Register<TrendChart, double?>(nameof(LineThickness));
+    public static readonly StyledProperty<double?> StrokeThicknessProperty =
+        AvaloniaProperty.Register<TrendChart, double?>(nameof(StrokeThickness));
 
     public static readonly StyledProperty<double?> PaddingProperty =
         AvaloniaProperty.Register<TrendChart, double?>(nameof(Padding));
@@ -34,37 +35,66 @@ public class TrendChart : Control
 
     public static readonly StyledProperty<double?> TickWidthProperty =
         AvaloniaProperty.Register<TrendChart, double?>(nameof(TickWidth));
+    
+    public static readonly DirectProperty<TrendChart, double?> TargetProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, double?>(
+            nameof(Target),
+            o => o.Target,
+            (o, v) => o.Target = v,
+            0.0
+        );
 
-    public static readonly DirectProperty<TrendChart, IEnumerable<NumericDataEntry>> EntriesProperty =
-        AvaloniaProperty.RegisterDirect<TrendChart, IEnumerable<NumericDataEntry>>(
+    public static readonly DirectProperty<TrendChart, IEnumerable<NumericDataEntry>?> EntriesProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, IEnumerable<NumericDataEntry>?>(
             nameof(Entries),
             o => o.Entries,
             (o, v) => o.Entries = v,
             []
         );
+    
+    public static readonly DirectProperty<TrendChart, string?> UnitProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, string?>(
+            nameof(Unit),
+            o => o.Unit,
+            (o, v) => o.Unit = v,
+            string.Empty
+        );
 
-    public IBrush? DataLineBrush
+    static TrendChart()
     {
-        get => GetValue(DataLineBrushProperty);
-        set => SetValue(DataLineBrushProperty, value);
+        AffectsRender<TrendChart>(
+            StrokeProperty,
+            AreaBrushProperty,
+            AxisStrokeProperty,
+            StrokeThicknessProperty,
+            PaddingProperty,
+            TicksProperty,
+            TickWidthProperty
+        );
     }
 
-    public IBrush? DataLineBackground
+    public IBrush? Stroke
     {
-        get => GetValue(DataLineBackgroundProperty);
-        set => SetValue(DataLineBackgroundProperty, value);
+        get => GetValue(StrokeProperty);
+        set => SetValue(StrokeProperty, value);
     }
 
-    public IBrush? AxisLineBrush
+    public IBrush? AreaBrush
     {
-        get => GetValue(AxisLineBrushProperty);
-        set => SetValue(AxisLineBrushProperty, value);
+        get => GetValue(AreaBrushProperty);
+        set => SetValue(AreaBrushProperty, value);
     }
 
-    public double? LineThickness
+    public IBrush? AxisStroke
     {
-        get => GetValue(LineThicknessProperty);
-        set => SetValue(LineThicknessProperty, value);
+        get => GetValue(AxisStrokeProperty);
+        set => SetValue(AxisStrokeProperty, value);
+    }
+
+    public double? StrokeThickness
+    {
+        get => GetValue(StrokeThicknessProperty);
+        set => SetValue(StrokeThicknessProperty, value);
     }
 
     public double? Padding
@@ -85,176 +115,203 @@ public class TrendChart : Control
         set => SetValue(TickWidthProperty, value);
     }
 
-    public IEnumerable<NumericDataEntry> Entries
+    public IEnumerable<NumericDataEntry>? Entries
     {
         get;
-        set => SetAndRaise(EntriesProperty, ref field, value);
+        set
+        {
+            if (SetAndRaise(EntriesProperty, ref field, value)) InvalidateVisual();
+        }
     }
-
-    public TrendChart()
+    
+    public double? Target
     {
-        _tickTextLayouts = new List<TextLayout>();
+        get;
+        set
+        {
+            if (SetAndRaise(TargetProperty, ref field, value)) InvalidateVisual();
+        }
+    }
+    
+    public string? Unit
+    {
+        get;
+        set
+        {
+            if (SetAndRaise(UnitProperty, ref field, value)) InvalidateVisual();
+        }
     }
 
     public override void Render(DrawingContext context)
     {
-        _renderPosX = 0;
-        RenderDiagramLine(context);
-        RenderEntries(context);
-    }
+        if (Entries == null || !Entries.Any()) return;
 
-    private readonly FontFamily _fontFamily = new("avares://easpace/Assets/Fonts/Poppins");
-    private IList<TextLayout?> _tickTextLayouts;
-    private double _renderPosX;
-
-    private void RenderDiagramLine(DrawingContext context)
-    {
-        if (Entries is null) return;
-
-        var lineThickness = LineThickness ?? 6;
-        var ticks = Ticks ?? 3;
+        var padding = Padding ?? 12;
+        var ticksCount = Ticks ?? 3;
         var tickWidth = TickWidth ?? 10;
-        var padding = Padding ?? 12;
-        var pen = new Pen(AxisLineBrush ?? new ImmutableSolidColorBrush(Colors.Black), lineThickness);
+        var strokeThickness = StrokeThickness ?? 2.0;
+        var axisPen = new Pen(AxisStroke, strokeThickness);
+        
+        var exactMin = Entries.Min(e => e.Value);
+        var exactMax = Entries.Max(e => e.Value);
 
-        var tickDistance = (DesiredSize.Height - padding * 2) / (ticks - 1);
-        var tickTextMaxWidth = 0.0;
-
-        var entriesMax = Convert.ToDouble(Entries.MaxBy(entry => entry.Value)?.Value);
-        var entriesMin = Convert.ToDouble(Entries.MinBy(entry => entry.Value)?.Value);
-
-        // render ticks' text
-        for (var i = 0; i < ticks; i++)
+        if (Target.HasValue)
         {
-            var tickStartPointY = tickDistance * i + padding;
+            exactMin = Math.Min(exactMin, Target.Value);
+            exactMax = Math.Max(exactMax, Target.Value);
+        }
+        
+        var niceInterval = CalculateNiceInterval(exactMax - exactMin, ticksCount);
+        
+        var graphMax = Math.Ceiling(exactMax / niceInterval) * niceInterval;
+        var graphMin = graphMax - (ticksCount - 1) * niceInterval;
+        var valueRange = graphMax - graphMin;
 
-            var tickValue = GetValueFromPosY(tickStartPointY);
+        var graphHeight = Bounds.Height - padding * 2;
 
-            var tickTextLayout = CreateTickTextLayout(tickValue.ToString(CultureInfo.InvariantCulture));
+        var tickTexts = new List<(double Value, TextLayout Layout)>();
+        var maxTextWidth = 0.0;
 
-            var tickTextStartPoint = new Point(
-                _renderPosX,
-                tickStartPointY - (tickTextLayout.Height - lineThickness) / 2);
-
-            tickTextLayout.Draw(context, tickTextStartPoint);
-
-            if (tickTextLayout.Width > tickTextMaxWidth) tickTextMaxWidth = tickTextLayout.Width;
-
-            _tickTextLayouts.Add(tickTextLayout);
+        for (var i = 0; i < ticksCount; i++)
+        {
+            var val = graphMax - i * niceInterval;
+            var textLayout = new TextLayout(
+                val.ToString("0.#"),
+                new Typeface(_fontFamily),
+                12,
+                AxisStroke,
+                TextAlignment.Right);
+            
+            tickTexts.Add((val, textLayout));
+            maxTextWidth = Math.Max(maxTextWidth, textLayout.Width);
         }
 
-        _renderPosX += tickTextMaxWidth;
-        _renderPosX += 6;
+        var textRightMargin = padding + maxTextWidth + 6;
+        var axisLineX = textRightMargin + tickWidth / 2;
+        var tickEnd = textRightMargin + tickWidth;
 
-        // render ticks
-        for (var i = 0; i < ticks; i++)
+        var graphWidth = Bounds.Width - axisLineX - padding;
+        var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
+
+        var yTickPadding = 20.0;
+        var drawableHeight = graphArea.Height - yTickPadding * 2;
+        
+        RenderChart(context, graphArea, Entries.ToList(), graphMin, valueRange, yTickPadding, drawableHeight);
+
+        if (Target.HasValue && !string.IsNullOrEmpty(Unit))
         {
-            var tickStartPoint = new Point(_renderPosX, tickDistance * i + padding);
-            var tickEndPoint = new Point(_renderPosX + tickWidth, tickDistance * i + padding);
-            context.DrawLine(pen, tickStartPoint, tickEndPoint);
+            var yRatio = (Target.Value - graphMin) / valueRange;
+            var targetY = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
+            
+            context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
+
+            var targetText = new TextLayout(
+                $"{LocalizationService.GetString("TARGET")}: {Target.Value} {Unit}",
+                new Typeface(_fontFamily),
+                12,
+                axisPen.Brush
+            );
+            
+            targetText.Draw(context, new Point(graphArea.Left + 4, targetY - targetText.Height - 2));
         }
 
-        _renderPosX += tickWidth / 2;
-
-        // render Y axis line
-        context.DrawLine(pen, new Point(_renderPosX, 0), new Point(_renderPosX, DesiredSize.Height));
-
-        _renderPosX += tickWidth / 2;
+        foreach (var tick in tickTexts)
+        {
+            var yRatio = (tick.Value - graphMin) / valueRange;
+            var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
+            
+            tick.Layout.Draw(context, new Point(padding, y - tick.Layout.Height / 2));
+            
+            context.DrawLine(axisPen, new Point(textRightMargin, y), new Point(tickEnd, y));
+        }
+        
+        context.DrawLine(axisPen, new Point(axisLineX, graphArea.Top), new Point(axisLineX, graphArea.Bottom));
     }
 
-    private void RenderEntries(DrawingContext context)
+    private readonly FontFamily _fontFamily = new("Poppins");
+
+    private void RenderChart(
+        DrawingContext context, 
+        Rect graphArea, 
+        List<NumericDataEntry> entries, 
+        double graphMin, 
+        double valueRange,
+        double yTickPadding,
+        double drawableHeight)
     {
-        if (Entries is null || !Entries.Any()) return;
+        var minTime = entries.First().Date.Ticks;
+        var maxTime = entries.Last().Date.Ticks;
+        var timeRange = maxTime - minTime;
 
-        var padding = Padding ?? 12;
+        if (timeRange == 0 || valueRange == 0) return;
 
-        var entriesList = Entries.OrderBy(entry => entry.Date).ToList();
-
-        var firstDateTime = entriesList.First().Date.Ticks;
-        var lastDateTime = entriesList.Last().Date.Ticks;
-        var totalDuration = lastDateTime - firstDateTime;
-
-        var entriesMax = Convert.ToDouble(entriesList.MaxBy(entry => entry.Value)?.Value);
-        var entriesMin = Convert.ToDouble(entriesList.MinBy(entry => entry.Value)?.Value);
-        var diff = Math.Abs(entriesMax - entriesMin);
-
-        var lineStartPoint = new Point();
-
-        for (var i = 0; i < entriesList.Count; i++)
+        var fillGeometry = new StreamGeometry();
+        var strokeGeometry = new StreamGeometry();
+        
+        using (var fillContext = fillGeometry.Open())
+        using (var strokeContext = strokeGeometry.Open())
         {
-            var offsetX = entriesList[i].Date.Ticks - firstDateTime;
-            var ratioX = offsetX / (double)totalDuration;
-            var posX = _renderPosX + ratioX * (DesiredSize.Width - _renderPosX);
+            var isFirstPoint = true;
 
-            var offsetY = entriesMax - Convert.ToDouble(entriesList[i].Value);
-            var ratioY = offsetY / diff;
-            var posY = padding + ratioY * (DesiredSize.Height - padding * 2);
-
-            var dataLineBrush = DataLineBrush ?? new ImmutableSolidColorBrush(Colors.Black);
-            var dataPoint = new Point(posX, posY);
-            context.DrawEllipse(dataLineBrush, null, dataPoint, LineThickness * 1.3 ?? 9, LineThickness * 1.3 ?? 9);
-            var ellipseTextLayout =
-                CreateTickTextLayout(Convert.ToDouble(entriesList[i].Value).ToString(CultureInfo.InvariantCulture));
-            ellipseTextLayout.Draw(context, new Point(dataPoint.X, dataPoint.Y + 16));
-
-            if (i > 0)
+            for (var i = 0; i < entries.Count; i++)
             {
-                var pen = new Pen(DataLineBrush ?? new ImmutableSolidColorBrush(Colors.Black), LineThickness ?? 6);
-                context.DrawLine(pen, lineStartPoint, dataPoint);
+                var entry = entries[i];
+                
+                var xRatio = (double)(entry.Date.Ticks - minTime) / timeRange;
+                var x = graphArea.X + xRatio * graphArea.Width;
+                
+                var yRatio = (entry.Value - graphMin) / valueRange;
+                var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
+                
+                var currentPoint = new Point(x, y);
+
+                if (isFirstPoint)
+                {
+                    fillContext.BeginFigure(new Point(x, graphArea.Bottom));
+                    fillContext.LineTo(currentPoint);
+                    
+                    strokeContext.BeginFigure(currentPoint, false);
+                    
+                    isFirstPoint = false;
+                }
+                else
+                {
+                    fillContext.LineTo(currentPoint);
+                    strokeContext.LineTo(currentPoint);
+                }
+
+                if (i == entries.Count - 1)
+                {
+                    fillContext.LineTo(new Point(x, graphArea.Bottom));
+                }
             }
-
-            lineStartPoint = dataPoint;
         }
+        
+        context.DrawGeometry(AreaBrush, null, fillGeometry);
+
+        var linePen = new Pen(Stroke, StrokeThickness ?? 6)
+        {
+            LineCap = PenLineCap.Round,
+            LineJoin = PenLineJoin.Round
+        };
+        
+        context.DrawGeometry(null, linePen, strokeGeometry);
     }
 
-    private double GetValueFromPosY(double y)
+    private static double CalculateNiceInterval(double exactRange, int ticks)
     {
-        if (!Entries.Any()) return 0.0;
-        var padding = Padding ?? 12;
-        var entriesMax = Convert.ToDouble(Entries.MaxBy(entry => entry.Value)?.Value);
-        var entriesMin = Convert.ToDouble(Entries.MinBy(entry => entry.Value)?.Value);
-        var diff = Math.Abs(entriesMax - entriesMin);
+        var exactInterval = exactRange / (ticks - 1);
+        var magnitude = Math.Pow(10, Math.Floor(Math.Log10(exactInterval)));
+        var fraction = exactInterval / magnitude;
+        
+        var niceFraction = fraction switch
+        {
+            <= 1.0 => 1.0,
+            <= 2.0 => 2.0,
+            <= 5.0 => 5.0,
+            _ => 10.0
+        };
 
-        var diagramHeight = DesiredSize.Height - padding * 2;
-
-        if (diagramHeight <= 0) return 0.0;
-
-        var offsetY = y - padding;
-        var ratioY = offsetY / diagramHeight;
-
-        return entriesMax - ratioY * diff;
-    }
-
-    private TextLayout CreateTickTextLayout(string text)
-    {
-        return new TextLayout(
-            string.IsNullOrEmpty(text) ? "Tick" : text,
-            new Typeface(_fontFamily),
-            12,
-            AxisLineBrush ?? new ImmutableSolidColorBrush(Colors.Black),
-            TextAlignment.Right,
-            TextWrapping.NoWrap,
-            TextTrimming.None
-        );
-    }
-
-    protected override Size MeasureOverride(Size availableSize)
-    {
-        return availableSize;
-    }
-
-    protected override void OnMeasureInvalidated()
-    {
-        base.OnMeasureInvalidated();
-    }
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        base.OnPointerMoved(e);
-    }
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
+        return niceFraction * magnitude;
     }
 }

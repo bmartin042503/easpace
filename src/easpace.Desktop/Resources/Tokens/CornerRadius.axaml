@@ -8,7 +8,7 @@
     <CornerRadius x:Key="LabeledButtonCornerRadius">6</CornerRadius>
     <CornerRadius x:Key="IconButtonCornerRadius">32</CornerRadius>
     
-    <!-- Corner radius of primary card Border -->
-    <CornerRadius x:Key="PrimaryCardCornerRadius">20</CornerRadius>
+    <!-- Corner radius of card Border -->
+    <CornerRadius x:Key="CardCornerRadius">20</CornerRadius>
     
 </ResourceDictionary>

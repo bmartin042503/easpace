@@ -1,0 +1,126 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+                    xmlns:activitiesvm="clr-namespace:easpace.Desktop.ViewModels.Activities"
+                    xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+                    xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities">
+
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}" Height="800" Width="600">
+
+                <!-- Sample activity view item 1 - TrendActivity -->
+                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}">
+                    <ContentControl.Content>
+                        <activitiesvm:TrendActivityViewModel>
+                            <activitiesvm:TrendActivityViewModel.BaseActivity>
+                                <activities:TrendActivity Title="Lose weight" TargetValue="75.0" Unit="kg">
+                                    <activities:TrendActivity.Entries>
+                                        <activities:NumericDataEntry Value="83.5" />
+                                        <activities:NumericDataEntry Value="82.1" />
+                                        <activities:NumericDataEntry Value="81.2" />
+                                    </activities:TrendActivity.Entries>
+                                    <activities:TrendActivity.TargetDate>
+                                        2027.07.05.12:30:10
+                                    </activities:TrendActivity.TargetDate>
+                                </activities:TrendActivity>
+                            </activitiesvm:TrendActivityViewModel.BaseActivity>
+                        </activitiesvm:TrendActivityViewModel>
+                    </ContentControl.Content>
+                </ContentControl>
+
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Template selector of Activity view -->
+    <dataTemplates:ActivityViewModelTemplateSelector x:Key="ActivityViewTemplateSelector">
+        <DataTemplate x:Key="TrendActivityViewModel" x:DataType="activitiesvm:TrendActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Details -->
+                    <Grid Grid.Column="0" Grid.Row="1" RowDefinitions="Auto,Auto">
+
+                        <!-- Values -->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12">
+                            
+                            <!-- Current value -->
+                            <TextBlock FontSize="{DynamicResource ActivityTextFontSize}"
+                                       VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Activity.LastEntry.Value" />
+                                        <Binding Path="Activity.Unit" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+
+                            <!-- Target value -->
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Foreground="{DynamicResource Primary600}"
+                                           FontSize="16"
+                                           FontWeight="Medium" VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Activity.TargetValue" />
+                                            <Binding Path="Activity.Unit" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <PathIcon
+                                    Width="18" Height="18"
+                                    Data="{DynamicResource TargetIcon}"
+                                    Foreground="{DynamicResource Primary600}"
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+                            
+                        </StackPanel>
+
+                        <!-- Start and target date -->
+                        <TextBlock Grid.Row="1" FontSize="12">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} - {1}">
+                                    <Binding Path="Activity.CreatedAt" />
+                                    <Binding Path="Activity.TargetDate" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+
+                    <!-- Chart -->
+                    <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                         Target="{Binding Activity.TargetValue}"
+                                         Unit="{Binding Activity.Unit}"
+                                         Entries="{Binding Activity.Entries}"
+                                         Margin="0,20,0,0"/>
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </dataTemplates:ActivityViewModelTemplateSelector>
+</ResourceDictionary>

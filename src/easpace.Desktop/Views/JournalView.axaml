@@ -24,7 +24,7 @@
                    Classes="pageSubTitle" />
 
         <!-- Main content -->
-        <Border Grid.Row="2" Classes="primaryGradientCard"
+        <Border Grid.Row="2" Classes="card gradient"
                 Margin="0,20,0,0">
 
             <Grid>
@@ -51,7 +51,9 @@
                         </TextBox>
 
                         <!-- Add button -->
-                        <Button Grid.Column="1" Classes="primaryIconButton addButton" HorizontalAlignment="Left"/>
+                        <Button Grid.Column="1" Classes="icon-btn primary" HorizontalAlignment="Left">
+                            <PathIcon Data="{DynamicResource PlusIcon}"/>
+                        </Button>
                     </Grid>
 
                     <!-- Journal entries -->
@@ -96,7 +98,9 @@
                     
                     <!-- Interaction buttons -->
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <Button Classes="secondaryIconButton editButton"/>
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}"/>
+                        </Button>
                     </StackPanel>
                     
                     <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"

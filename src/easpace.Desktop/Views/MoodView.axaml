@@ -64,7 +64,7 @@
 
             </StackPanel>
 
-            <Border Classes="secondaryCard" Padding="20">
+            <Border Classes="card secondary" Padding="20">
                 <StackPanel Orientation="Vertical" Spacing="20">
 
                     <!-- TODO: fix scrollviewer height sizing to be responsive -->
@@ -83,7 +83,7 @@
 
                                     <!-- Build of a single mood label item -->
                                     <ToggleButton IsChecked="{Binding IsChecked}"
-                                                  Classes="moodLabelToggleButton">
+                                                  Classes="mood-label">
                                         <TextBlock Text="{Binding Name}" />
                                     </ToggleButton>
 
@@ -98,7 +98,7 @@
                         PlaceholderText="{services:LocalizationService Key='OTHER'}"
                         Classes="largeTextBox" />
                     
-                    <Button Classes="interactionButton" HorizontalAlignment="Center">
+                    <Button Classes="labeled-btn primary" HorizontalAlignment="Center">
                         <TextBlock Text="{services:LocalizationService Key='SAVE'}" />
                     </Button>
                 </StackPanel>

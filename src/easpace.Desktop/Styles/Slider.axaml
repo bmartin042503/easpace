@@ -35,7 +35,7 @@
                                 ColumnDefinitions="Auto,Auto,*" RowDefinitions="6,Auto,6">
 
                                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                                        Classes="primaryCard" VerticalAlignment="Center"
+                                        Classes="card primary" VerticalAlignment="Center"
                                         Height="16">
                                 </Border>
 
@@ -74,7 +74,6 @@
                                         Padding="0"
                                         Background="{DynamicResource PrimaryButtonGradientBrush}"
                                         BorderBrush="{DynamicResource Primary600}"
-                                        Effect="{DynamicResource PrimaryDropShadowEffect}"
                                         BorderThickness="0.75"
                                         DataContext="{TemplateBinding Value}" />
                                 </Track>

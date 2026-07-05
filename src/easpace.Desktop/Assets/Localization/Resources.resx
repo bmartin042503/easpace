@@ -125,4 +125,7 @@
     <data name="ROUTINE_STATE_NONE" xml:space="preserve">
         <value>None</value>
     </data>
+    <data name="TARGET" xml:space="preserve">
+        <value>Target</value>
+    </data>
 </root>

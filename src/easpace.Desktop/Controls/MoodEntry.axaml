@@ -116,7 +116,7 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Classes="secondaryCard" Padding="20">
+                <Border Classes="card secondary" Padding="20">
 
                     <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
 
@@ -130,7 +130,7 @@
 
                         <!-- Context menu button (dots) -->
                         <Button Grid.Row="0" Grid.Column="1"
-                                Classes="moodEntryContextButton">
+                                Classes="context-btn">
                             
                             <Viewbox Width="20" Height="20">
                                 <Path Data="{StaticResource DotsThreeIcon}"/>
@@ -138,9 +138,9 @@
                             
                             <Button.Flyout>
                                 <controls:MoodEntryFlyout>
-                                    <Border Classes="primaryCard">
+                                    <Border Classes="card primary">
                                         <Button
-                                            Classes="contextDeleteButton"
+                                            Classes="context-btn"
                                             Content="{services:LocalizationService Key='DELETE'}"/>
                                     </Border>
                                 </controls:MoodEntryFlyout>
@@ -181,7 +181,7 @@
                                 <DataTemplate x:DataType="x:String">
 
                                     <!-- Label item -->
-                                    <Border Classes="primaryCard">
+                                    <Border Classes="card primary">
                                         <TextBlock x:Name="LabelTextBlock" Text="{Binding .}" />
                                     </Border>
 
@@ -219,7 +219,7 @@
         </Style>
 
         <!-- Label card (border) styles -->
-        <Style Selector="^ Border.primaryCard">
+        <Style Selector="^ Border.card.primary">
             <Setter Property="Padding" Value="10,4" />
             <Setter Property="CornerRadius" Value="6" />
         </Style>

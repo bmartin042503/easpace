@@ -28,7 +28,4 @@
     <!-- Size of icon inside labeled Button -->
     <system:Double x:Key="IconSizeInLabeledButton">12</system:Double>
     
-    <!-- Size of column spacing in Button -->
-    <system:Double x:Key="LabeledButtonColumnSpacing">12</system:Double>
-    
 </ResourceDictionary>

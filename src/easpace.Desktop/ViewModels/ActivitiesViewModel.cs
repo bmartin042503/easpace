@@ -50,7 +50,7 @@ public partial class ActivitiesViewModel : PageViewModel
             {
                 BaseActivity = new TrendActivity
                 {
-                    Title = "Testsúly követés",
+                    Title = "Testsúly",
                     TargetValue = 75.0,
                     TargetDate = DateTime.Now,
                     Unit = "kg",

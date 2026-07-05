@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <!-- Column spacing of labeled Button -->
+    <system:Double x:Key="LabeledButtonColumnSpacing">12</system:Double>
+    
+    <!-- Activity view title spacing -->
+    <system:Double x:Key="ActivityTitleSpacing">10</system:Double>
+    
+    <!-- Interaction buttons spacing -->
+    <system:Double x:Key="InteractionButtonsSpacing">14</system:Double>
+    
+    <!-- Page content spacing -->
+    <system:Double x:Key="PageContentSpacing">48</system:Double>
+    
+</ResourceDictionary>

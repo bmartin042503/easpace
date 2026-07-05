@@ -8,14 +8,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <MergeResourceInclude Source="/Styles/Themes/LightTheme.axaml" />
-                <MergeResourceInclude Source="/Styles/Themes/DarkTheme.axaml" />
-                <MergeResourceInclude Source="/Styles/Icons.axaml" />
-                <MergeResourceInclude Source="/Styles/Tokens/Thickness.axaml" />
-                <MergeResourceInclude Source="/Styles/Tokens/CornerRadius.axaml" />
-                <MergeResourceInclude Source="/Styles/Tokens/Size.axaml" />
-                <MergeResourceInclude Source="/Styles/Tokens/FontSize.axaml" />
-                <MergeResourceInclude Source="/Styles/ActivityTemplates.axaml" />
+                <MergeResourceInclude Source="/Resources/Themes/LightTheme.axaml" />
+                <MergeResourceInclude Source="/Resources/Themes/DarkTheme.axaml" />
+                <MergeResourceInclude Source="/Resources/Icons.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/Thickness.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/CornerRadius.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/Size.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/FontSize.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/Spacing.axaml" />
+                <MergeResourceInclude Source="/Resources/TemplateSelectors/ActivityListItemTemplateSelector.axaml" />
+                <MergeResourceInclude Source="/Resources/TemplateSelectors/ActivityViewTemplateSelector.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <FontFamily x:Key="Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>

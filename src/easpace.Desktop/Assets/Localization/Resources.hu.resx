@@ -122,4 +122,7 @@
     <data name="ROUTINE_STATE_NONE" xml:space="preserve">
         <value>Üres</value>
     </data>
+    <data name="TARGET" xml:space="preserve">
+        <value>Cél</value>
+    </data>
 </root>

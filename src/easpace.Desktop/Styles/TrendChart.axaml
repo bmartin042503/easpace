@@ -7,7 +7,7 @@
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}" Height="400" Width="800">
-                <controls:TrendChart>
+                <controls:TrendChart Target="85.0" Unit="kg">
                     <controls:TrendChart.Entries>
                         <generic:List x:TypeArguments="activities:NumericDataEntry">
                             <activities:NumericDataEntry Value="98.0"
@@ -80,11 +80,12 @@
     </Design.PreviewWith>
 
     <Style Selector="controls|TrendChart">
-        <Setter Property="AxisLineBrush" Value="{DynamicResource Neutral500}" />
-        <Setter Property="LineThickness" Value="3" />
-        <Setter Property="DataLineBrush" Value="{DynamicResource Primary600}" />
-        <Setter Property="Padding" Value="48" />
-        <Setter Property="Ticks" Value="3"/>
-        <Setter Property="TickWidth" Value="14"/>
+        <Setter Property="AxisStroke" Value="{DynamicResource Neutral500}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="Stroke" Value="{DynamicResource Primary600}" />
+        <Setter Property="AreaBrush" Value="{DynamicResource TrendChartGradientBrush}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Ticks" Value="5"/>
+        <Setter Property="TickWidth" Value="12"/>
     </Style>
 </Styles>
