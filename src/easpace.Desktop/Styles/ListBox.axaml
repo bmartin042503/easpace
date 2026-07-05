@@ -6,7 +6,7 @@
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
-                <ListBox Classes="activitiesList" Width="350">
+                <ListBox Classes="activities-list" Width="350">
 
                     <!-- Sample listbox item 1 - Trend Activity -->
                     <activitiesvm:TrendActivityViewModel>
@@ -65,11 +65,10 @@
     </Design.PreviewWith>
 
     <!-- Activity list styling -->
-    <Style Selector="ListBox.activitiesList">
+    <Style Selector="ListBox.activities-list">
         <Setter Property="SelectionMode" Value="AlwaysSelected,Single" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
 
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -79,11 +78,17 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Vertical" Spacing="{DynamicResource ListItemSpacing}"/>
+            </ItemsPanelTemplate>
+        </Setter>
     </Style>
 
     <!-- Activity list item styling -->
-    <Style Selector="ListBox.activitiesList ListBoxItem">
-        <Setter Property="Margin" Value="0,10" />
+    <Style Selector="ListBox.activities-list ListBoxItem">
+        
         <Setter Property="Padding" Value="{DynamicResource ListBoxItemPadding}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Background" Value="{DynamicResource Neutral50}" />
@@ -92,7 +97,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ListBoxItemCornerRadius}" />
 
-        <Style Selector="^ Path.activityIcon">
+        <Style Selector="^ Path.activity-icon">
             <Setter Property="Fill" Value="{DynamicResource Neutral700}" />
         </Style>
 
@@ -108,7 +113,7 @@
             <Setter Property="Foreground" Value="{DynamicResource Primary700}" />
         </Style>
 
-        <Style Selector="^:selected Path.activityIcon, ^:selected:pointerover Path.activityIcon">
+        <Style Selector="^:selected Path.activity-icon, ^:selected:pointerover Path.activity-icon">
             <Setter Property="Fill" Value="{DynamicResource Primary700}" />
         </Style>
 

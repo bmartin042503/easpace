@@ -19,5 +19,8 @@
     
     <!-- Thickness of card Border -->
     <Thickness x:Key="CardBorderThickness">1</Thickness>
+    
+    <!-- Page content margin -->
+    <Thickness x:Key="PageContentMargin">26</Thickness>
 
 </ResourceDictionary>

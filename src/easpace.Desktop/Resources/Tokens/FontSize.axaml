@@ -6,8 +6,8 @@
     <system:Double x:Key="LabeledButtonFontSize">12</system:Double>
     
     <!-- Font size of activity title TextBox -->
-    <system:Double x:Key="ActivityTitleFontSize">30</system:Double>
+    <system:Double x:Key="ActivityTitleFontSize">34</system:Double>
     
     <!-- Font size of activity text -->
-    <system:Double x:Key="ActivityTextFontSize">20</system:Double>
+    <system:Double x:Key="ActivityTextFontSize">22</system:Double>
 </ResourceDictionary>

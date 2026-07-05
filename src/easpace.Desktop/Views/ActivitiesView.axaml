@@ -13,7 +13,7 @@
         <vm:ActivitiesViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="1*,3*" Margin="26"
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="1*,3*" Margin="{DynamicResource PageContentMargin}"
           ColumnSpacing="{DynamicResource PageContentSpacing}">
 
         <!-- Main title -->
@@ -26,8 +26,8 @@
                    Text="{services:LocalizationService Key='ACTIVITIES_SUBTITLE'}"
                    Classes="pageSubTitle" />
 
-        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Vertical" Margin="0,30,0,0">
-            <Button Classes="labeled-btn primary" HorizontalAlignment="Left">
+        <Grid Grid.Column="0" Grid.Row="2" RowDefinitions="Auto,*" Margin="0,30,0,0">
+            <Button Grid.Row="0" Classes="labeled-btn primary" HorizontalAlignment="Left">
                 <Grid ColumnDefinitions="*,Auto"
                       ColumnSpacing="{DynamicResource LabeledButtonColumnSpacing}">
                     <TextBlock Grid.Column="0"
@@ -36,14 +36,12 @@
                     <PathIcon Grid.Column="1" Data="{DynamicResource PlusIcon}" />
                 </Grid>
             </Button>
-
-            <ScrollViewer>
-                <ListBox Classes="activitiesList"
-                         Margin="0,20,0,0"
-                         ItemsSource="{Binding ActivityViewModels}"
-                         SelectedItem="{Binding SelectedActivityViewModel}" />
-            </ScrollViewer>
-        </StackPanel>
+            
+            <ListBox Grid.Row="1" Classes="activities-list"
+                     Margin="0,20,0,0"
+                     ItemsSource="{Binding ActivityViewModels}"
+                     SelectedItem="{Binding SelectedActivityViewModel}"/>
+        </Grid>
 
         <ContentControl Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
                         Content="{Binding SelectedActivityViewModel}"

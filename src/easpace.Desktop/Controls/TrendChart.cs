@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
-using Avalonia.Media.Immutable;
 using Avalonia.Media.TextFormatting;
 using easpace.Desktop.Models.Activities;
 using easpace.Desktop.Services;
@@ -15,8 +13,25 @@ namespace easpace.Desktop.Controls;
 
 public class TrendChart : Control
 {
+    #region Fields
+
+    private readonly FontFamily _fontFamily = new("Poppins");
+    private readonly List<(Point CanvasPoint, NumericDataEntry Entry)> _dataPoints = [];
+    private NumericDataEntry? _hoveredEntry;
+    private Point _hoveredPoint;
+
+    #endregion
+
+    #region Styled & Direct Properties
+
     public static readonly StyledProperty<IBrush?> StrokeProperty =
         AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(Stroke));
+
+    public static readonly StyledProperty<IBrush?> GridLineBrushProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(GridLineBrush));
+
+    public static readonly StyledProperty<int?> GridLinesProperty =
+        AvaloniaProperty.Register<TrendChart, int?>(nameof(GridLines));
 
     public static readonly StyledProperty<IBrush?> AreaBrushProperty =
         AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(AreaBrush));
@@ -35,7 +50,22 @@ public class TrendChart : Control
 
     public static readonly StyledProperty<double?> TickWidthProperty =
         AvaloniaProperty.Register<TrendChart, double?>(nameof(TickWidth));
-    
+
+    public static readonly StyledProperty<IBrush?> TooltipBackgroundProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(TooltipBackground));
+
+    public static readonly StyledProperty<IBrush?> TooltipValueForegroundProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(TooltipValueForeground));
+
+    public static readonly StyledProperty<IBrush?> TooltipDateForegroundProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(TooltipDateForeground));
+
+    public static readonly StyledProperty<IBrush?> TooltipBorderBrushProperty =
+        AvaloniaProperty.Register<TrendChart, IBrush?>(nameof(TooltipBorderBrush));
+
+    public static readonly StyledProperty<double> TooltipBorderThicknessProperty =
+        AvaloniaProperty.Register<TrendChart, double>(nameof(TooltipBorderThickness), 1.0);
+
     public static readonly DirectProperty<TrendChart, double?> TargetProperty =
         AvaloniaProperty.RegisterDirect<TrendChart, double?>(
             nameof(Target),
@@ -51,7 +81,7 @@ public class TrendChart : Control
             (o, v) => o.Entries = v,
             []
         );
-    
+
     public static readonly DirectProperty<TrendChart, string?> UnitProperty =
         AvaloniaProperty.RegisterDirect<TrendChart, string?>(
             nameof(Unit),
@@ -60,18 +90,9 @@ public class TrendChart : Control
             string.Empty
         );
 
-    static TrendChart()
-    {
-        AffectsRender<TrendChart>(
-            StrokeProperty,
-            AreaBrushProperty,
-            AxisStrokeProperty,
-            StrokeThicknessProperty,
-            PaddingProperty,
-            TicksProperty,
-            TickWidthProperty
-        );
-    }
+    #endregion
+
+    #region Properties
 
     public IBrush? Stroke
     {
@@ -83,6 +104,18 @@ public class TrendChart : Control
     {
         get => GetValue(AreaBrushProperty);
         set => SetValue(AreaBrushProperty, value);
+    }
+
+    public IBrush? GridLineBrush
+    {
+        get => GetValue(GridLineBrushProperty);
+        set => SetValue(GridLineBrushProperty, value);
+    }
+
+    public int? GridLines
+    {
+        get => GetValue(GridLinesProperty);
+        set => SetValue(GridLinesProperty, value);
     }
 
     public IBrush? AxisStroke
@@ -115,6 +148,36 @@ public class TrendChart : Control
         set => SetValue(TickWidthProperty, value);
     }
 
+    public IBrush? TooltipBackground
+    {
+        get => GetValue(TooltipBackgroundProperty);
+        set => SetValue(TooltipBackgroundProperty, value);
+    }
+
+    public IBrush? TooltipValueForeground
+    {
+        get => GetValue(TooltipValueForegroundProperty);
+        set => SetValue(TooltipValueForegroundProperty, value);
+    }
+
+    public IBrush? TooltipDateForeground
+    {
+        get => GetValue(TooltipDateForegroundProperty);
+        set => SetValue(TooltipDateForegroundProperty, value);
+    }
+
+    public IBrush? TooltipBorderBrush
+    {
+        get => GetValue(TooltipBorderBrushProperty);
+        set => SetValue(TooltipBorderBrushProperty, value);
+    }
+
+    public double TooltipBorderThickness
+    {
+        get => GetValue(TooltipBorderThicknessProperty);
+        set => SetValue(TooltipBorderThicknessProperty, value);
+    }
+
     public IEnumerable<NumericDataEntry>? Entries
     {
         get;
@@ -123,7 +186,7 @@ public class TrendChart : Control
             if (SetAndRaise(EntriesProperty, ref field, value)) InvalidateVisual();
         }
     }
-    
+
     public double? Target
     {
         get;
@@ -132,7 +195,7 @@ public class TrendChart : Control
             if (SetAndRaise(TargetProperty, ref field, value)) InvalidateVisual();
         }
     }
-    
+
     public string? Unit
     {
         get;
@@ -142,33 +205,78 @@ public class TrendChart : Control
         }
     }
 
+    #endregion
+
+    #region Initialization
+
+    static TrendChart()
+    {
+        AffectsRender<TrendChart>(
+            StrokeProperty,
+            AreaBrushProperty,
+            GridLineBrushProperty,
+            GridLinesProperty,
+            AxisStrokeProperty,
+            StrokeThicknessProperty,
+            PaddingProperty,
+            TicksProperty,
+            TickWidthProperty,
+            TooltipBackgroundProperty,
+            TooltipValueForegroundProperty,
+            TooltipDateForegroundProperty,
+            TooltipBorderBrushProperty,
+            TooltipBorderThicknessProperty
+        );
+    }
+
+    #endregion
+
+    #region Rendering
+
     public override void Render(DrawingContext context)
     {
         if (Entries == null || !Entries.Any()) return;
 
+        var entriesList = Entries.ToList();
+        
+        // base values
         var padding = Padding ?? 12;
         var ticksCount = Ticks ?? 3;
         var tickWidth = TickWidth ?? 10;
         var strokeThickness = StrokeThickness ?? 2.0;
         var axisPen = new Pen(AxisStroke, strokeThickness);
-        
-        var exactMin = Entries.Min(e => e.Value);
-        var exactMax = Entries.Max(e => e.Value);
+
+        // find min and max values to determine the scale
+        var exactMin = entriesList.Min(e => e.Value);
+        var exactMax = entriesList.Max(e => e.Value);
 
         if (Target.HasValue)
         {
             exactMin = Math.Min(exactMin, Target.Value);
             exactMax = Math.Max(exactMax, Target.Value);
         }
-        
+
+        // calculate nicely rounded boundaries for the y-axis
         var niceInterval = CalculateNiceInterval(exactMax - exactMin, ticksCount);
-        
         var graphMax = Math.Ceiling(exactMax / niceInterval) * niceInterval;
         var graphMin = graphMax - (ticksCount - 1) * niceInterval;
         var valueRange = graphMax - graphMin;
 
-        var graphHeight = Bounds.Height - padding * 2;
+        // calculate time range for the x-axis
+        var timeMin = entriesList.First().Date.Ticks;
+        var timeMax = entriesList.Last().Date.Ticks;
+        var timeRange = timeMax - timeMin;
 
+        // early return if there is no range to draw
+        if (timeRange == 0 || valueRange == 0) return;
+
+        // layout measurements
+        const double xAxisHeight = 25.0;
+        const double yTickPadding = 20.0;
+        var graphHeight = Bounds.Height - padding * 2 - xAxisHeight;
+        var drawableHeight = graphHeight - yTickPadding * 2;
+
+        // measure y-axis texts to determine left margin
         var tickTexts = new List<(double Value, TextLayout Layout)>();
         var maxTextWidth = 0.0;
 
@@ -181,7 +289,7 @@ public class TrendChart : Control
                 12,
                 AxisStroke,
                 TextAlignment.Right);
-            
+
             tickTexts.Add((val, textLayout));
             maxTextWidth = Math.Max(maxTextWidth, textLayout.Width);
         }
@@ -190,64 +298,133 @@ public class TrendChart : Control
         var axisLineX = textRightMargin + tickWidth / 2;
         var tickEnd = textRightMargin + tickWidth;
 
+        // compute the actual drawing area for the chart data
         var graphWidth = Bounds.Width - axisLineX - padding;
         var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
 
-        var yTickPadding = 20.0;
-        var drawableHeight = graphArea.Height - yTickPadding * 2;
+        // rendering order (z-index): back to front
+        DrawDataSeries(context, graphArea, entriesList, graphMin, valueRange, timeMin, timeRange, yTickPadding, drawableHeight);
+        DrawGridAndXAxis(context, graphArea, axisPen, timeMin, timeRange);
+        DrawTargetLine(context, graphArea, axisPen, graphMin, valueRange, yTickPadding, drawableHeight);
+        DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight, padding, textRightMargin, tickEnd, axisLineX);
         
-        RenderChart(context, graphArea, Entries.ToList(), graphMin, valueRange, yTickPadding, drawableHeight);
+        // drawn absolutely last to always stay on top
+        DrawTooltip(context);
+    }
 
-        if (Target.HasValue && !string.IsNullOrEmpty(Unit))
+    private void DrawGridAndXAxis(
+        DrawingContext context, 
+        Rect graphArea, 
+        Pen axisPen, 
+        long timeMin, 
+        long timeRange)
+    {
+        // base x-axis line
+        context.DrawLine(axisPen, new Point(graphArea.Left, graphArea.Bottom), new Point(graphArea.Right, graphArea.Bottom));
+
+        var gridLines = GridLines ?? 7;
+        var totalDays = new TimeSpan(timeRange).TotalDays;
+        var dateFormat = totalDays > 365 ? "yyyy. MM." : "MM. dd.";
+        var gridPen = new Pen(GridLineBrush) { DashStyle = DashStyle.Dash };
+
+        for (var i = 0; i < gridLines; i++)
         {
-            var yRatio = (Target.Value - graphMin) / valueRange;
-            var targetY = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-            
-            context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
+            var ratio = (double)i / (gridLines - 1);
+            var x = graphArea.Left + ratio * graphArea.Width;
 
-            var targetText = new TextLayout(
-                $"{LocalizationService.GetString("TARGET")}: {Target.Value} {Unit}",
+            // draw vertical grid line (skip the first one to avoid overlapping the y-axis)
+            if (i > 0) context.DrawLine(gridPen, new Point(x, graphArea.Top), new Point(x, graphArea.Bottom));
+
+            var tickTicks = timeMin + (long)(timeRange * ratio);
+            var tickDate = new DateTime(tickTicks);
+
+            var xText = new TextLayout(
+                tickDate.ToString(dateFormat),
                 new Typeface(_fontFamily),
-                12,
-                axisPen.Brush
-            );
-            
-            targetText.Draw(context, new Point(graphArea.Left + 4, targetY - targetText.Height - 2));
+                11,
+                AxisStroke,
+                TextAlignment.Center);
+
+            // align text to prevent clipping on edges
+            var textX = x - xText.Width / 2;
+            if (i == 0) textX = x;
+            if (i == gridLines - 1) textX = x - xText.Width;
+
+            xText.Draw(context, new Point(textX, graphArea.Bottom + 4));
         }
+    }
+
+    private static void DrawYAxis(
+        DrawingContext context, 
+        Rect graphArea, 
+        Pen axisPen, 
+        List<(double Value, TextLayout Layout)> tickTexts,
+        double graphMin, 
+        double valueRange, 
+        double yTickPadding, 
+        double drawableHeight, 
+        double padding,
+        double textRightMargin,
+        double tickEnd,
+        double axisLineX)
+    {
+        // base y-axis line
+        context.DrawLine(axisPen, new Point(axisLineX, graphArea.Top), new Point(axisLineX, graphArea.Bottom));
 
         foreach (var tick in tickTexts)
         {
+            // calculate vertical ratio based on value
             var yRatio = (tick.Value - graphMin) / valueRange;
             var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-            
+
             tick.Layout.Draw(context, new Point(padding, y - tick.Layout.Height / 2));
-            
             context.DrawLine(axisPen, new Point(textRightMargin, y), new Point(tickEnd, y));
         }
-        
-        context.DrawLine(axisPen, new Point(axisLineX, graphArea.Top), new Point(axisLineX, graphArea.Bottom));
     }
 
-    private readonly FontFamily _fontFamily = new("Poppins");
-
-    private void RenderChart(
+    private void DrawTargetLine(
         DrawingContext context, 
         Rect graphArea, 
-        List<NumericDataEntry> entries, 
+        Pen axisPen, 
         double graphMin, 
+        double valueRange, 
+        double yTickPadding, 
+        double drawableHeight)
+    {
+        if (!Target.HasValue || string.IsNullOrEmpty(Unit)) return;
+
+        var yRatio = (Target.Value - graphMin) / valueRange;
+        var targetY = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
+
+        context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
+
+        var targetText = new TextLayout(
+            $"{LocalizationService.GetString("TARGET")}: {Target.Value} {Unit}",
+            new Typeface(_fontFamily),
+            12,
+            axisPen.Brush
+        );
+
+        targetText.Draw(context, new Point(graphArea.Left + 4, targetY - targetText.Height - 2));
+    }
+
+    private void DrawDataSeries(
+        DrawingContext context,
+        Rect graphArea,
+        List<NumericDataEntry> entries,
+        double graphMin,
         double valueRange,
+        long timeMin,
+        long timeRange,
         double yTickPadding,
         double drawableHeight)
     {
-        var minTime = entries.First().Date.Ticks;
-        var maxTime = entries.Last().Date.Ticks;
-        var timeRange = maxTime - minTime;
-
-        if (timeRange == 0 || valueRange == 0) return;
-
         var fillGeometry = new StreamGeometry();
         var strokeGeometry = new StreamGeometry();
-        
+
+        _dataPoints.Clear();
+
+        // build geometric paths for the gradient area and the stroke line
         using (var fillContext = fillGeometry.Open())
         using (var strokeContext = strokeGeometry.Open())
         {
@@ -256,22 +433,24 @@ public class TrendChart : Control
             for (var i = 0; i < entries.Count; i++)
             {
                 var entry = entries[i];
-                
-                var xRatio = (double)(entry.Date.Ticks - minTime) / timeRange;
+
+                var xRatio = (double)(entry.Date.Ticks - timeMin) / timeRange;
                 var x = graphArea.X + xRatio * graphArea.Width;
-                
+
                 var yRatio = (entry.Value - graphMin) / valueRange;
                 var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-                
+
                 var currentPoint = new Point(x, y);
+                
+                // store calculated points for hover hit-testing
+                _dataPoints.Add((currentPoint, entry));
 
                 if (isFirstPoint)
                 {
                     fillContext.BeginFigure(new Point(x, graphArea.Bottom));
                     fillContext.LineTo(currentPoint);
-                    
+
                     strokeContext.BeginFigure(currentPoint, false);
-                    
                     isFirstPoint = false;
                 }
                 else
@@ -286,7 +465,7 @@ public class TrendChart : Control
                 }
             }
         }
-        
+
         context.DrawGeometry(AreaBrush, null, fillGeometry);
 
         var linePen = new Pen(Stroke, StrokeThickness ?? 6)
@@ -294,16 +473,78 @@ public class TrendChart : Control
             LineCap = PenLineCap.Round,
             LineJoin = PenLineJoin.Round
         };
-        
+
         context.DrawGeometry(null, linePen, strokeGeometry);
+
+        // draw data markers (dots)
+        foreach (var dp in _dataPoints)
+        {
+            context.DrawEllipse(Stroke, null, dp.CanvasPoint, 3, 3);
+        }
     }
+
+    private void DrawTooltip(DrawingContext context)
+    {
+        if (_hoveredEntry == null) return;
+
+        // highlight the hovered data point
+        context.DrawEllipse(Stroke, null, _hoveredPoint, 5, 5);
+
+        var valueText = new TextLayout(
+            $"{_hoveredEntry.Value} {Unit}",
+            new Typeface(_fontFamily),
+            14,
+            TooltipValueForeground,
+            TextAlignment.Center);
+
+        var dateText = new TextLayout(
+            $"{_hoveredEntry.Date:yyyy. MM. dd. hh:mm:ss}",
+            new Typeface(_fontFamily),
+            10,
+            TooltipDateForeground ?? AxisStroke,
+            TextAlignment.Center);
+
+        const int paddingX = 8;
+        const int paddingY = 6;
+        const int spacing = 2;
+
+        var tooltipWidth = Math.Max(valueText.Width, dateText.Width) + paddingX * 2;
+        var tooltipHeight = valueText.Height + spacing + dateText.Height + paddingY * 2;
+
+        // center tooltip above the hovered point
+        var tooltipX = _hoveredPoint.X - tooltipWidth / 2;
+        var tooltipY = _hoveredPoint.Y - tooltipHeight - 12;
+
+        // keep tooltip within control boundaries
+        if (tooltipX < 0) tooltipX = 0;
+        if (tooltipX + tooltipWidth > Bounds.Width) tooltipX = Bounds.Width - tooltipWidth;
+        if (tooltipY < 0) tooltipY = _hoveredPoint.Y + 12;
+
+        var tooltipRect = new Rect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+        var borderPen = new Pen(TooltipBorderBrush, TooltipBorderThickness);
+
+        context.DrawRectangle(TooltipBackground, borderPen, new RoundedRect(tooltipRect, 6, 6));
+
+        var valueTextX = tooltipX + (tooltipWidth - valueText.Width) / 2;
+        var dateTextX = tooltipX + (tooltipWidth - dateText.Width) / 2;
+
+        valueText.Draw(context, new Point(valueTextX, tooltipY + paddingY));
+        dateText.Draw(context, new Point(dateTextX, tooltipY + paddingY + valueText.Height + spacing));
+    }
+
+    #endregion
+
+    #region Helpers
 
     private static double CalculateNiceInterval(double exactRange, int ticks)
     {
         var exactInterval = exactRange / (ticks - 1);
+        
+        // find the closest power of 10 to determine the magnitude of the interval
         var magnitude = Math.Pow(10, Math.Floor(Math.Log10(exactInterval)));
         var fraction = exactInterval / magnitude;
-        
+
+        // snap to nice, human-readable numbers
         var niceFraction = fraction switch
         {
             <= 1.0 => 1.0,
@@ -314,4 +555,49 @@ public class TrendChart : Control
 
         return niceFraction * magnitude;
     }
+
+    #endregion
+
+    #region Interaction
+
+    protected override void OnPointerMoved(PointerEventArgs e)
+    {
+        base.OnPointerMoved(e);
+
+        if (_dataPoints.Count == 0) return;
+
+        var currentPosition = e.GetPosition(this);
+        var closestPoint = _dataPoints.MinBy(dp => Math.Abs(dp.CanvasPoint.X - currentPosition.X));
+
+        if (Math.Abs(closestPoint.CanvasPoint.X - currentPosition.X) < 40)
+        {
+            if (_hoveredEntry != closestPoint.Entry)
+            {
+                _hoveredEntry = closestPoint.Entry;
+                _hoveredPoint = closestPoint.CanvasPoint;
+                InvalidateVisual();
+            }
+        }
+        else
+        {
+            if (_hoveredEntry != null)
+            {
+                _hoveredEntry = null;
+                InvalidateVisual();
+            }
+        }
+    }
+
+    protected override void OnPointerExited(PointerEventArgs e)
+    {
+        base.OnPointerExited(e);
+
+        if (_hoveredEntry != null)
+        {
+            _hoveredEntry = null;
+            InvalidateVisual();
+        }
+    }
+
+    #endregion
 }

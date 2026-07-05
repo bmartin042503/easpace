@@ -87,7 +87,7 @@
 
                             <Button.Flyout>
                                 <controls:MoodEntryFlyout>
-                                    <Border Classes="primaryCard">
+                                    <Border Classes="card primary">
                                         <Button
                                             Classes="context-btn"
                                             Content="{services:LocalizationService Key='DELETE'}" />

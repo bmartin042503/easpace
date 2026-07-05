@@ -14,9 +14,9 @@
         <DataTemplate x:Key="TrendActivityViewModel" DataType="activities:TrendActivityViewModel">
             <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Grid.Column="0" Text="{Binding Activity.Title}"
-                           VerticalAlignment="Center" />
-                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                    <TextBlock Grid.Column="0" FontSize="12" VerticalAlignment="Center">
+                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityListItemSpacing}">
+                    <TextBlock Grid.Column="0" FontSize="12" VerticalAlignment="Center" >
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} {1}">
                                 <Binding Path="Activity.LastEntry.Value" />
@@ -25,7 +25,7 @@
                         </TextBlock.Text>
                     </TextBlock>
                     <Viewbox Grid.Column="1" Width="16" Height="16">
-                        <Path Data="{StaticResource ChartLineIcon}" Classes="activityIcon" />
+                        <Path Data="{StaticResource ChartLineIcon}" Classes="activity-icon" />
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -35,12 +35,12 @@
         <DataTemplate x:Key="RoutineActivityViewModel" DataType="activities:RoutineActivityViewModel">
             <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Grid.Column="0" Text="{Binding Activity.Title}"
-                           VerticalAlignment="Center" />
-                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityListItemSpacing}">
                     <TextBlock Grid.Column="0" FontSize="12" VerticalAlignment="Center"
                                Text="{Binding Activity.LastEntry.State, Converter={StaticResource RoutineStateConverter}}" />
                     <Viewbox Grid.Column="1" Width="16" Height="16">
-                        <Path Data="{StaticResource CheckSquareOffsetIcon}" Classes="activityIcon" />
+                        <Path Data="{StaticResource CheckSquareOffsetIcon}" Classes="activity-icon" />
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -50,8 +50,8 @@
         <DataTemplate x:Key="MilestoneActivityViewModel" DataType="activities:MilestoneActivityViewModel">
             <Grid ColumnDefinitions="*,Auto">
                 <TextBlock Grid.Column="0" Text="{Binding Activity.Title}"
-                           VerticalAlignment="Center" />
-                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <Grid Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityListItemSpacing}">
                     <TextBlock Grid.Column="0" FontSize="12" VerticalAlignment="Center">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0}/{1} {2}">
@@ -62,7 +62,7 @@
                         </TextBlock.Text>
                     </TextBlock>
                     <Viewbox Grid.Column="1" Width="16" Height="16">
-                        <Path Data="{StaticResource ChartPieSliceIcon}" Classes="activityIcon" />
+                        <Path Data="{StaticResource ChartPieSliceIcon}" Classes="activity-icon" />
                     </Viewbox>
                 </Grid>
             </Grid>

@@ -17,8 +17,8 @@
         <Border Grid.Column="0" Classes="sidebar">
             <Border.Padding>
                 <OnPlatform>
-                    <OnPlatform.Default>20,20,20,32</OnPlatform.Default>
-                    <OnPlatform.macOS>20,42,20,32</OnPlatform.macOS>
+                    <OnPlatform.Default>14,32</OnPlatform.Default>
+                    <OnPlatform.macOS>14,42,14,32</OnPlatform.macOS>
                 </OnPlatform>
             </Border.Padding>
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"

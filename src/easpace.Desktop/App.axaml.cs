@@ -21,7 +21,7 @@ public partial class App : Application
     {
         _services = services;
     }
-    
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -34,14 +34,14 @@ public partial class App : Application
             base.OnFrameworkInitializationCompleted();
             return;
         }
-        
+
         if (_services == null)
         {
             throw new InvalidOperationException("Services are not initialized.");
         }
-        
+
         RequestedThemeVariant = ThemeVariant.Light;
-        
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

@@ -38,14 +38,15 @@
     <dataTemplates:ActivityViewModelTemplateSelector x:Key="ActivityViewTemplateSelector">
         <DataTemplate x:Key="TrendActivityViewModel" x:DataType="activitiesvm:TrendActivityViewModel">
             <Border Classes="card primary">
-                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="20" RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
 
                     <!-- Title -->
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
                                FontSize="{DynamicResource ActivityTitleFontSize}"
                                FontWeight="Medium"
                                Foreground="{DynamicResource Neutral700}"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"/>
 
                     <!-- Interaction buttons -->
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="{DynamicResource InteractionButtonsSpacing}"
@@ -64,53 +65,39 @@
                     </StackPanel>
 
                     <!-- Details -->
-                    <Grid Grid.Column="0" Grid.Row="1" RowDefinitions="Auto,Auto">
+                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Spacing="12">
+                        
+                        <!-- Current value -->
+                        <TextBlock FontSize="{DynamicResource ActivityTextFontSize}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Activity.LastEntry.Value" />
+                                    <Binding Path="Activity.Unit" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
 
-                        <!-- Values -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="12">
-                            
-                            <!-- Current value -->
-                            <TextBlock FontSize="{DynamicResource ActivityTextFontSize}"
-                                       VerticalAlignment="Center">
+                        <!-- Target value -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Foreground="{DynamicResource Primary600}"
+                                       FontSize="16"
+                                       FontWeight="Medium" VerticalAlignment="Center">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Activity.LastEntry.Value" />
+                                        <Binding Path="Activity.TargetValue" />
                                         <Binding Path="Activity.Unit" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-
-                            <!-- Target value -->
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <TextBlock Foreground="{DynamicResource Primary600}"
-                                           FontSize="16"
-                                           FontWeight="Medium" VerticalAlignment="Center">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="Activity.TargetValue" />
-                                            <Binding Path="Activity.Unit" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                                <PathIcon
-                                    Width="18" Height="18"
-                                    Data="{DynamicResource TargetIcon}"
-                                    Foreground="{DynamicResource Primary600}"
-                                    VerticalAlignment="Center"/>
-                            </StackPanel>
-                            
+                            <PathIcon
+                                Width="18" Height="18"
+                                Data="{DynamicResource TargetIcon}"
+                                Foreground="{DynamicResource Primary600}"
+                                VerticalAlignment="Center"/>
                         </StackPanel>
-
-                        <!-- Start and target date -->
-                        <TextBlock Grid.Row="1" FontSize="12">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} - {1}">
-                                    <Binding Path="Activity.CreatedAt" />
-                                    <Binding Path="Activity.TargetDate" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </Grid>
+                        
+                    </StackPanel>
 
                     <!-- Chart -->
                     <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"

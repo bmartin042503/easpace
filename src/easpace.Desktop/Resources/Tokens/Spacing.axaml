@@ -12,6 +12,12 @@
     <system:Double x:Key="InteractionButtonsSpacing">14</system:Double>
     
     <!-- Page content spacing -->
-    <system:Double x:Key="PageContentSpacing">48</system:Double>
+    <system:Double x:Key="PageContentSpacing">26</system:Double>
+    
+    <!-- Activity list item spacing -->
+    <system:Double x:Key="ActivityListItemSpacing">14</system:Double>
+    
+    <!-- List item spacing -->
+    <system:Double x:Key="ListItemSpacing">20</system:Double>
     
 </ResourceDictionary>
