@@ -11,8 +11,7 @@ public class RoutineActivityViewModel : ActivityViewModel
     {
         BaseActivity = activity;
     }
-
-    public RoutineActivityViewModel()
-    {
-    }
+    
+    // empty constructor for AXAML preview
+    public RoutineActivityViewModel() {}
 }

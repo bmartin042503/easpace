@@ -38,8 +38,8 @@ public partial class ActivitiesViewModel : PageViewModel
         ActivityViewModels =
         [
             new MilestoneActivityViewModel
-            {
-                BaseActivity = new MilestoneActivity
+            (
+                new MilestoneActivity
                 {
                     Title = "Elolvasott könyvek",
                     TargetValue = 1000,
@@ -50,11 +50,11 @@ public partial class ActivitiesViewModel : PageViewModel
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 32 }
                     }
                 }
-            },
+            ),
 
             new TrendActivityViewModel
-            {
-                BaseActivity = new TrendActivity
+            (
+                new TrendActivity
                 {
                     Title = "Testsúly",
                     TargetValue = 75.0,
@@ -72,14 +72,15 @@ public partial class ActivitiesViewModel : PageViewModel
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-9), Value = 82.9 },
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-5), Value = 82.5 },
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-3), Value = 81.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 81.2 }
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 81.2 },
+                        new NumericDataEntry { Date = DateTime.Now, Value = 100.2 }
                     }
                 }
-            },
+            ),
 
             new TrendActivityViewModel
-            {
-                BaseActivity = new TrendActivity
+            (
+                new TrendActivity
                 {
                     Title = "Testzsír százalék",
                     TargetValue = 15.0,
@@ -120,11 +121,11 @@ public partial class ActivitiesViewModel : PageViewModel
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 18.2 }
                     }
                 }
-            },
+            ),
 
             new RoutineActivityViewModel
-            {
-                BaseActivity = new RoutineActivity
+            (
+                new RoutineActivity
                 {
                     Title = "Napi Meditáció",
                     Entries =
@@ -134,7 +135,7 @@ public partial class ActivitiesViewModel : PageViewModel
                         new RoutineDataEntry { Date = DateTime.Now, State = RoutineState.Completed }
                     }
                 }
-            },
+            ),
             
             GenerateMassiveTestData()
         ];
@@ -143,30 +144,25 @@ public partial class ActivitiesViewModel : PageViewModel
     public static TrendActivityViewModel GenerateMassiveTestData(int dataPoints = 3000)
     {
         var viewModel = new TrendActivityViewModel
-        {
-            BaseActivity = new TrendActivity
+        (
+            new TrendActivity
             {
-                Title = "Napi Lépésszám (Stresszteszt)",
+                Title = "Napi lépés",
                 TargetValue = 10000.0,
                 TargetDate = DateTime.Now,
                 Unit = "lépés"
-                // Az Entries listát a ciklusban töltjük fel
             }
-        };
+        );
 
-        // Fix seed-et használunk, hogy minden futtatáskor ugyanazt a görbét kapd (könnyebb tesztelni)
         var random = new Random(42);
         var startDate = DateTime.Now.AddDays(-dataPoints);
 
-        // Kezdőérték
         double currentValue = 6000;
 
         for (int i = 0; i < dataPoints; i++)
         {
-            // Valósághű ugrálások (néha sok, néha kevés lépés), enyhe pozitív eltolással
             currentValue += random.Next(-1500, 1550);
 
-            // Limitáljuk az értékeket, hogy reális tartományban maradjanak (1000 és 25000 lépés között)
             if (currentValue < 1000) currentValue = 1000 + random.Next(0, 500);
             if (currentValue > 25000) currentValue = 25000 - random.Next(0, 500);
 

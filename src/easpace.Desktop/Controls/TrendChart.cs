@@ -235,9 +235,9 @@ public class TrendChart : Control
 
     public override void Render(DrawingContext context)
     {
-        if (Entries == null || !Entries.Any()) return;
-
-        var entriesList = Entries.ToList();
+        // create a safe list and check if there is any data
+        var entriesList = Entries?.ToList() ?? [];
+        var hasEntries = entriesList.Count > 0;
         
         // base values
         var padding = Padding ?? 12;
@@ -247,13 +247,43 @@ public class TrendChart : Control
         var axisPen = new Pen(AxisStroke, strokeThickness);
 
         // find min and max values to determine the scale
-        var exactMin = entriesList.Min(e => e.Value);
-        var exactMax = entriesList.Max(e => e.Value);
+        double exactMin = 0;
+        double exactMax = 100;
 
+        if (hasEntries)
+        {
+            // get real min/max if we have data
+            exactMin = entriesList.Min(e => e.Value);
+            exactMax = entriesList.Max(e => e.Value);
+        }
+        else if (Target.HasValue)
+        {
+            // build a default scale around the target if the chart is empty
+            exactMin = Target.Value - 10;
+            exactMax = Target.Value + 10;
+        }
+        
         if (Target.HasValue)
         {
+            // ensure the target fits inside the calculated boundaries
             exactMin = Math.Min(exactMin, Target.Value);
             exactMax = Math.Max(exactMax, Target.Value);
+        }
+        
+        // add a 10% breathing room (padding) so lines and target don't overlap the chart edges
+        if (Math.Abs(exactMin - exactMax) < 0.1)
+        {
+            // handle straight lines (no variance in data)
+            var pad = exactMin == 0 ? 10 : Math.Abs(exactMin * 0.1);
+            exactMin -= pad;
+            exactMax += pad;
+        }
+        else
+        {
+            // standard 10% padding based on value range
+            var rangePad = (exactMax - exactMin) * 0.1;
+            exactMin -= rangePad;
+            exactMax += rangePad;
         }
 
         // calculate nicely rounded boundaries for the y-axis
@@ -263,18 +293,37 @@ public class TrendChart : Control
         var valueRange = graphMax - graphMin;
 
         // calculate time range for the x-axis
-        var timeMin = entriesList.First().Date.Ticks;
-        var timeMax = entriesList.Last().Date.Ticks;
+        long timeMin, timeMax;
+        
+        if (hasEntries)
+        {
+            timeMin = entriesList.First().Date.Ticks;
+            timeMax = entriesList.Last().Date.Ticks;
+        }
+        else
+        {
+            // draw a visual 1-day fallback range for empty charts
+            timeMax = DateTime.Now.Ticks;
+            timeMin = DateTime.Now.AddDays(-1).Ticks;
+        }
+
         var timeRange = timeMax - timeMin;
 
-        // early return if there is no range to draw
-        if (timeRange == 0 || valueRange == 0) return;
+        // create a fictional time window (+/- 12 hours) if there is only 1 data point
+        if (timeRange == 0)
+        {
+            timeMin -= TimeSpan.FromHours(12).Ticks;
+            timeMax += TimeSpan.FromHours(12).Ticks;
+            timeRange = timeMax - timeMin;
+        }
 
         // layout measurements
         const double xAxisHeight = 25.0;
         const double yTickPadding = 20.0;
         var graphHeight = Bounds.Height - padding * 2 - xAxisHeight;
         var drawableHeight = graphHeight - yTickPadding * 2;
+        
+        if (graphHeight <= 0 || drawableHeight <= 0) return;
 
         // measure y-axis texts to determine left margin
         var tickTexts = new List<(double Value, TextLayout Layout)>();
@@ -303,13 +352,28 @@ public class TrendChart : Control
         var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
 
         // rendering order (z-index): back to front
-        DrawDataSeries(context, graphArea, entriesList, graphMin, valueRange, timeMin, timeRange, yTickPadding, drawableHeight);
+        
+        // 1. draw the data series first so everything else sits on top of it
+        if (hasEntries)
+        {
+            DrawDataSeries(context, graphArea, entriesList, graphMin, valueRange, timeMin, timeRange, yTickPadding, drawableHeight);
+        }
+        else
+        {
+            // clear the hit-test points if there are no entries
+            _dataPoints.Clear(); 
+        }
+
+        // 2. draw grid, axes and target lines over the data
         DrawGridAndXAxis(context, graphArea, axisPen, timeMin, timeRange);
         DrawTargetLine(context, graphArea, axisPen, graphMin, valueRange, yTickPadding, drawableHeight);
         DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight, padding, textRightMargin, tickEnd, axisLineX);
         
-        // drawn absolutely last to always stay on top
-        DrawTooltip(context);
+        // 3. draw tooltip absolutely last to always stay on top
+        if (hasEntries)
+        {
+            DrawTooltip(context);
+        }
     }
 
     private void DrawGridAndXAxis(
@@ -405,7 +469,15 @@ public class TrendChart : Control
             axisPen.Brush
         );
 
-        targetText.Draw(context, new Point(graphArea.Left + 4, targetY - targetText.Height - 2));
+        // prevent the text from clipping at the top of the control
+        var textY = targetY - targetText.Height - 2;
+        if (textY < graphArea.Top) 
+        {
+            // move the text below the line if there is no space above
+            textY = targetY + 2; 
+        }
+
+        targetText.Draw(context, new Point(graphArea.Left + 4, textY));
     }
 
     private void DrawDataSeries(

@@ -10,4 +10,8 @@
     
     <!-- Font size of activity text -->
     <system:Double x:Key="ActivityTextFontSize">22</system:Double>
+    
+    <!-- Font size of Chart segmented control item -->
+    <system:Double x:Key="ChartSegmentedControlItemFontSize">12</system:Double>
+    
 </ResourceDictionary>

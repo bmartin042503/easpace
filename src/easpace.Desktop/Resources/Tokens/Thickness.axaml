@@ -6,7 +6,11 @@
 
     <!-- Thickness of Button borders -->
     <Thickness x:Key="ButtonBorderThickness">1</Thickness>
-
+    
+    <!-- Thickness of card Border -->
+    <Thickness x:Key="CardBorderThickness">1</Thickness>
+    
+    
     <!-- Padding of Buttons -->
     <Thickness x:Key="LabeledButtonPadding">10,4</Thickness>
     <Thickness x:Key="IconButtonPadding">0</Thickness>
@@ -17,10 +21,16 @@
     <!-- Padding of card Border -->
     <Thickness x:Key="CardPadding">20</Thickness>
     
-    <!-- Thickness of card Border -->
-    <Thickness x:Key="CardBorderThickness">1</Thickness>
+    <!-- Padding of TrendChart segmented control -->
+    <Thickness x:Key="ChartSegmentedControlPadding">4</Thickness>
     
-    <!-- Page content margin -->
+    <!-- Padding of TrendChart segmented control item -->
+    <Thickness x:Key="ChartSegmentedControlItemPadding">12,4</Thickness>
+    
+    
+    <!-- Margin of Page content -->
     <Thickness x:Key="PageContentMargin">26</Thickness>
+    
+    
 
 </ResourceDictionary>

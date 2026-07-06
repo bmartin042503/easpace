@@ -125,4 +125,19 @@
     <data name="TARGET" xml:space="preserve">
         <value>Cél</value>
     </data>
+    <data name="YEAR" xml:space="preserve">
+        <value>Év</value>
+    </data>
+    <data name="MONTH" xml:space="preserve">
+        <value>Hónap</value>
+    </data>
+    <data name="WEEK" xml:space="preserve">
+        <value>Hét</value>
+    </data>
+    <data name="DAY" xml:space="preserve">
+        <value>Nap</value>
+    </data>
+    <data name="ALL" xml:space="preserve">
+        <value>Összes</value>
+    </data>
 </root>

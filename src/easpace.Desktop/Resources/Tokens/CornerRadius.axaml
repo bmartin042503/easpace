@@ -11,4 +11,10 @@
     <!-- Corner radius of card Border -->
     <CornerRadius x:Key="CardCornerRadius">20</CornerRadius>
     
+    <!-- Corner radius of TrendChart segmented control -->
+    <CornerRadius x:Key="ChartSegmentedControlCornerRadius">8</CornerRadius>
+    
+    <!-- Corner radius of TrendChart segmented control item -->
+    <CornerRadius x:Key="ChartSegmentedControlItemCornerRadius">6</CornerRadius>
+    
 </ResourceDictionary>

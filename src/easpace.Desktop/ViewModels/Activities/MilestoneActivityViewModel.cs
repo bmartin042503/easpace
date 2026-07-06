@@ -12,10 +12,9 @@ public class MilestoneActivityViewModel : ActivityViewModel
     {
         BaseActivity = activity;
     }
-
-    public MilestoneActivityViewModel()
-    {
-    }
+    
+    // empty constructor for AXAML preview
+    public MilestoneActivityViewModel() {}
 
     public DateTime StartDate => Activity.Entries.OrderBy(x => x.Date).First().Date;
 }

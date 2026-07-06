@@ -101,7 +101,7 @@
                               OffsetY="0" />
             
             <!-- TrendChart gradient brush -->
-            <LinearGradientBrush x:Key="TrendChartGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%" Opacity="0.5">
+            <LinearGradientBrush x:Key="TrendChartGradientBrush" StartPoint="50%,0%" EndPoint="50%,100%" Opacity="0.25">
                 <GradientStop Color="{DynamicResource Primary400}" Offset="0.0" />
                 <GradientStop Color="{DynamicResource Primary100}" Offset="1.0" />
             </LinearGradientBrush>

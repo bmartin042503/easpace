@@ -89,7 +89,7 @@
         <Setter Property="GridLines" Value="7"/>
         <Setter Property="TickWidth" Value="12"/>
         <Setter Property="GridLineBrush" Value="{DynamicResource Primary600}"/>
-        <Setter Property="TooltipBackground" Value="{DynamicResource Primary100}"/>
+        <Setter Property="TooltipBackground" Value="{DynamicResource Primary50}"/>
         <Setter Property="TooltipDateForeground" Value="{DynamicResource Primary700}"/>
         <Setter Property="TooltipValueForeground" Value="{DynamicResource Primary700}"/>
         <Setter Property="TooltipBorderBrush" Value="{DynamicResource Primary700}"/>
