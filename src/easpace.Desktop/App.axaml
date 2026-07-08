@@ -13,6 +13,8 @@
                 <MergeResourceInclude Source="/Resources/Icons.axaml" />
                 <MergeResourceInclude Source="/Resources/Tokens/Thickness.axaml" />
                 <MergeResourceInclude Source="/Resources/Tokens/CornerRadius.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/Margin.axaml" />
+                <MergeResourceInclude Source="/Resources/Tokens/Padding.axaml" />
                 <MergeResourceInclude Source="/Resources/Tokens/Size.axaml" />
                 <MergeResourceInclude Source="/Resources/Tokens/FontSize.axaml" />
                 <MergeResourceInclude Source="/Resources/Tokens/Spacing.axaml" />
@@ -41,6 +43,7 @@
         <StyleInclude Source="Styles/MoodEntryFlyout.axaml" />
         <StyleInclude Source="Styles/Slider.axaml" />
         <StyleInclude Source="Styles/TrendChart.axaml" />
+        <StyleInclude Source="Styles/MilestoneChart.axaml" />
 
         <!-- Templated controls -->
         <StyleInclude Source="Controls/JournalEntry.axaml" />

@@ -140,4 +140,10 @@
     <data name="ALL" xml:space="preserve">
         <value>Összes</value>
     </data>
+    <data name="START_DATE" xml:space="preserve">
+        <value>Kezdet</value>
+    </data>
+    <data name="TARGET_DATE" xml:space="preserve">
+        <value>Céldátum</value>
+    </data>
 </root>

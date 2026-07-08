@@ -1,11 +1,10 @@
 using System;
+using System.Globalization;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
-using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +40,11 @@ public partial class App : Application
         }
 
         RequestedThemeVariant = ThemeVariant.Light;
+        
+        var culture = CultureInfo.InvariantCulture; 
+        
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
     
     <!-- Thickness of sidebar -->
     <Thickness x:Key="SidebarBorderThickness">0,0,1,0</Thickness>
@@ -10,27 +11,7 @@
     <!-- Thickness of card Border -->
     <Thickness x:Key="CardBorderThickness">1</Thickness>
     
-    
-    <!-- Padding of Buttons -->
-    <Thickness x:Key="LabeledButtonPadding">10,4</Thickness>
-    <Thickness x:Key="IconButtonPadding">0</Thickness>
-
-    <!-- Padding of ListBoxItems -->
-    <Thickness x:Key="ListBoxItemPadding">14,12</Thickness>
-
-    <!-- Padding of card Border -->
-    <Thickness x:Key="CardPadding">20</Thickness>
-    
-    <!-- Padding of TrendChart segmented control -->
-    <Thickness x:Key="ChartSegmentedControlPadding">4</Thickness>
-    
-    <!-- Padding of TrendChart segmented control item -->
-    <Thickness x:Key="ChartSegmentedControlItemPadding">12,4</Thickness>
-    
-    
-    <!-- Margin of Page content -->
-    <Thickness x:Key="PageContentMargin">26</Thickness>
-    
-    
+    <!-- Thickness of MilestoneChart's ring -->
+    <system:Double x:Key="MilestoneChartRingThickness">34</system:Double>
 
 </ResourceDictionary>

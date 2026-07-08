@@ -138,7 +138,7 @@
         <Setter Property="VerticalAlignment" Value="Top" /> 
         
         <Setter Property="Background" Value="{DynamicResource Neutral100}" />
-        <Setter Property="Padding" Value="{DynamicResource ChartSegmentedControlPadding}" />
+        <Setter Property="Padding" Value="{DynamicResource TrendChartSegmentedControlPadding}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ChartSegmentedControlCornerRadius}" />
         <Setter Property="SelectionMode" Value="AlwaysSelected,Single" />
         
@@ -156,13 +156,13 @@
     
     <!-- TrendChart segmented control item styling -->
     <Style Selector="ListBox.chart-segmented-control ListBoxItem">
-        <Setter Property="Padding" Value="{DynamicResource ChartSegmentedControlItemPadding}" />
+        <Setter Property="Padding" Value="{DynamicResource TrendChartSegmentedControlItemPadding}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ChartSegmentedControlItemCornerRadius}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource Neutral800}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Margin" Value="0" />
-        <Setter Property="FontSize" Value="{DynamicResource ChartSegmentedControlItemFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource TrendChartSegmentedControlItemFontSize}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         

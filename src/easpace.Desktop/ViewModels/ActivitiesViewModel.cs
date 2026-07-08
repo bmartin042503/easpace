@@ -41,9 +41,9 @@ public partial class ActivitiesViewModel : PageViewModel
             (
                 new MilestoneActivity
                 {
-                    Title = "Elolvasott könyvek",
+                    Title = "Read 1000 pages",
                     TargetValue = 1000,
-                    Unit = "oldal",
+                    Unit = "pages",
                     Entries =
                     {
                         new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 15 },
@@ -56,7 +56,7 @@ public partial class ActivitiesViewModel : PageViewModel
             (
                 new TrendActivity
                 {
-                    Title = "Testsúly",
+                    Title = "Weight",
                     TargetValue = 75.0,
                     TargetDate = DateTime.Now,
                     Unit = "kg",
@@ -82,7 +82,7 @@ public partial class ActivitiesViewModel : PageViewModel
             (
                 new TrendActivity
                 {
-                    Title = "Testzsír százalék",
+                    Title = "Body fat",
                     TargetValue = 15.0,
                     TargetDate = DateTime.Now,
                     Unit = "%",
@@ -127,7 +127,7 @@ public partial class ActivitiesViewModel : PageViewModel
             (
                 new RoutineActivity
                 {
-                    Title = "Napi Meditáció",
+                    Title = "Daily workout",
                     Entries =
                     {
                         new RoutineDataEntry { Date = DateTime.Now.AddDays(-2), State = RoutineState.Completed },
@@ -147,10 +147,10 @@ public partial class ActivitiesViewModel : PageViewModel
         (
             new TrendActivity
             {
-                Title = "Napi lépés",
+                Title = "Daily steps",
                 TargetValue = 10000.0,
                 TargetDate = DateTime.Now,
-                Unit = "lépés"
+                Unit = "step"
             }
         );
 

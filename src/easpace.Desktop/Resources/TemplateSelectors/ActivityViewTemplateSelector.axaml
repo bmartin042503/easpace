@@ -4,7 +4,8 @@
                     xmlns:activitiesvm="clr-namespace:easpace.Desktop.ViewModels.Activities"
                     xmlns:controls="clr-namespace:easpace.Desktop.Controls"
                     xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
-                    xmlns:converters="clr-namespace:easpace.Desktop.Converters">
+                    xmlns:converters="clr-namespace:easpace.Desktop.Converters"
+                    xmlns:services="clr-namespace:easpace.Desktop.Services">
 
     <!-- TimeRange converter for Chart segmented control-->
     <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
@@ -12,25 +13,48 @@
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Neutral100}" Height="800" Width="600">
+            <Border Padding="40" Background="{DynamicResource Neutral100}">
 
-                <!-- Sample activity view item 1 - TrendActivity -->
-                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}">
+                <!-- Sample activity view item - TrendActivity
+                    <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                    Height="650" Width="650">
+                        <ContentControl.Content>
+                            <activitiesvm:TrendActivityViewModel>
+                                <activitiesvm:TrendActivityViewModel.BaseActivity>
+                                    <activities:TrendActivity Title="Lose weight" TargetValue="75.0" Unit="kg">
+                                        <activities:TrendActivity.Entries>
+                                            <activities:NumericDataEntry Value="83.5" />
+                                            <activities:NumericDataEntry Value="82.1" />
+                                            <activities:NumericDataEntry Value="81.2" />
+                                        </activities:TrendActivity.Entries>
+                                        <activities:TrendActivity.TargetDate>
+                                            2027.07.05.12:30:10
+                                        </activities:TrendActivity.TargetDate>
+                                    </activities:TrendActivity>
+                                </activitiesvm:TrendActivityViewModel.BaseActivity>
+                            </activitiesvm:TrendActivityViewModel>
+                        </ContentControl.Content>
+                    </ContentControl> -->
+
+                <!-- Sample activity view item - MilestoneActivity -->
+                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                Height="650" Width="650">
                     <ContentControl.Content>
-                        <activitiesvm:TrendActivityViewModel>
-                            <activitiesvm:TrendActivityViewModel.BaseActivity>
-                                <activities:TrendActivity Title="Lose weight" TargetValue="75.0" Unit="kg">
-                                    <activities:TrendActivity.Entries>
-                                        <activities:NumericDataEntry Value="83.5" />
-                                        <activities:NumericDataEntry Value="82.1" />
-                                        <activities:NumericDataEntry Value="81.2" />
-                                    </activities:TrendActivity.Entries>
-                                    <activities:TrendActivity.TargetDate>
-                                        2027.07.05.12:30:10
-                                    </activities:TrendActivity.TargetDate>
-                                </activities:TrendActivity>
-                            </activitiesvm:TrendActivityViewModel.BaseActivity>
-                        </activitiesvm:TrendActivityViewModel>
+                        <activitiesvm:MilestoneActivityViewModel>
+                            <activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                                <activities:MilestoneActivity Title="Read 1000 pages" TargetValue="1000" Unit="pages">
+                                    <activities:MilestoneActivity.Entries>
+                                        <activities:NumericDataEntry Value="24" />
+                                        <activities:NumericDataEntry Value="13" />
+                                        <activities:NumericDataEntry Value="36" />
+                                        <activities:NumericDataEntry Value="43" />
+                                    </activities:MilestoneActivity.Entries>
+                                    <activities:MilestoneActivity.TargetDate>
+                                        2026.12.31.23:59:59
+                                    </activities:MilestoneActivity.TargetDate>
+                                </activities:MilestoneActivity>
+                            </activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                        </activitiesvm:MilestoneActivityViewModel>
                     </ContentControl.Content>
                 </ContentControl>
 
@@ -40,6 +64,8 @@
 
     <!-- Template selector of Activity view -->
     <dataTemplates:ActivityViewModelTemplateSelector x:Key="ActivityViewTemplateSelector">
+
+        <!-- Template of Trend Activity -->
         <DataTemplate x:Key="TrendActivityViewModel" x:DataType="activitiesvm:TrendActivityViewModel">
             <Border Classes="card primary">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
@@ -129,5 +155,66 @@
                 </Grid>
             </Border>
         </DataTemplate>
+
+        <!-- Template of Milestone Activity -->
+        <DataTemplate x:Key="MilestoneActivityViewModel" x:DataType="activitiesvm:MilestoneActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
+                      RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Details -->
+                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="4">
+
+                        <!-- Start date -->
+                        <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
+                            <Run Text="{services:LocalizationService Key='START_DATE'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.CreatedAt}" />
+                        </TextBlock>
+
+                        <!-- Target date -->
+                        <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
+                            <Run Text="{services:LocalizationService Key='TARGET_DATE'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.TargetDate}" />
+                        </TextBlock>
+
+                    </StackPanel>
+                    
+                    <!-- Chart -->
+                    <controls:MilestoneChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Value="{Binding Activity.EntriesSum}"
+                                             Maximum="{Binding Activity.TargetValue}"
+                                             Unit="{Binding Activity.Unit}"/>
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+
     </dataTemplates:ActivityViewModelTemplateSelector>
 </ResourceDictionary>

@@ -79,6 +79,7 @@
         </ThemeVariantScope>
     </Design.PreviewWith>
 
+    <!-- TrendChart styling -->
     <Style Selector="controls|TrendChart">
         <Setter Property="AxisStroke" Value="{DynamicResource Neutral500}" />
         <Setter Property="StrokeThickness" Value="2" />
