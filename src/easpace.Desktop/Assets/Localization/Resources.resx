@@ -149,4 +149,25 @@
     <data name="TARGET_DATE" xml:space="preserve">
         <value>Target date</value>
     </data>
+    <data name="MONDAY_SHORT" xml:space="preserve">
+        <value>Mon</value>
+    </data>
+    <data name="TUESDAY_SHORT" xml:space="preserve">
+        <value>Tue</value>
+    </data>
+    <data name="WEDNESDAY_SHORT" xml:space="preserve">
+        <value>Wed</value>
+    </data>
+    <data name="THURSDAY_SHORT" xml:space="preserve">
+        <value>Thu</value>
+    </data>
+    <data name="FRIDAY_SHORT" xml:space="preserve">
+        <value>Fri</value>
+    </data>
+    <data name="SATURDAY_SHORT" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="SUNDAY_SHORT" xml:space="preserve">
+        <value>Sun</value>
+    </data>
 </root>

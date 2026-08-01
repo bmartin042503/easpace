@@ -3,9 +3,9 @@
                     xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
                     xmlns:activitiesvm="clr-namespace:easpace.Desktop.ViewModels.Activities"
                     xmlns:controls="clr-namespace:easpace.Desktop.Controls"
-                    xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
                     xmlns:converters="clr-namespace:easpace.Desktop.Converters"
-                    xmlns:services="clr-namespace:easpace.Desktop.Services">
+                    xmlns:services="clr-namespace:easpace.Desktop.Services"
+                    xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities">
 
     <!-- TimeRange converter for Chart segmented control-->
     <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
@@ -36,7 +36,7 @@
                         </ContentControl.Content>
                     </ContentControl> -->
 
-                <!-- Sample activity view item - MilestoneActivity -->
+                <!-- Sample activity view item - MilestoneActivity
                 <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
                                 Height="650" Width="650">
                     <ContentControl.Content>
@@ -55,6 +55,34 @@
                                 </activities:MilestoneActivity>
                             </activitiesvm:MilestoneActivityViewModel.BaseActivity>
                         </activitiesvm:MilestoneActivityViewModel>
+                    </ContentControl.Content>
+                </ContentControl> -->
+
+                <!-- Sample activity view item - RoutineActivity -->
+                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                Height="650" Width="650">
+                    <ContentControl.Content>
+                        <activitiesvm:RoutineActivityViewModel>
+                            <activitiesvm:RoutineActivityViewModel.BaseActivity>
+                                <activities:RoutineActivity Title="Daily workout">
+                                    <activities:RoutineActivity.Entries>
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-01" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-02" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-03" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-04" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-05" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-06" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-07" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-09" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-10" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-11" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-12" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-13" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-17" />
+                                    </activities:RoutineActivity.Entries>
+                                </activities:RoutineActivity>
+                            </activitiesvm:RoutineActivityViewModel.BaseActivity>
+                        </activitiesvm:RoutineActivityViewModel>
                     </ContentControl.Content>
                 </ContentControl>
 
@@ -205,12 +233,67 @@
                         </TextBlock>
 
                     </StackPanel>
-                    
+
                     <!-- Chart -->
                     <controls:MilestoneChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                              Value="{Binding Activity.EntriesSum}"
                                              Maximum="{Binding Activity.TargetValue}"
-                                             Unit="{Binding Activity.Unit}"/>
+                                             Unit="{Binding Activity.Unit}" />
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Template of Routine Activity -->
+        <DataTemplate x:Key="RoutineActivityViewModel" x:DataType="activitiesvm:RoutineActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
+                      RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Calendar days -->
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                            BorderThickness="0,0,0,1"
+                            Margin="-20,0"
+                            BorderBrush="{DynamicResource Neutral300}"
+                            Padding="0,20,0,10">
+                        <UniformGrid Classes="calendar-days">
+                            <TextBlock Text="{services:LocalizationService Key='MONDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='TUESDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='WEDNESDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='THURSDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='FRIDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='SATURDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='SUNDAY_SHORT'}" />
+                        </UniformGrid>
+                    </Border>
+                    
+                    <!-- TODO: Calendar -->
+
 
                 </Grid>
             </Border>

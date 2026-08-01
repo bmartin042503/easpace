@@ -44,6 +44,8 @@
         <StyleInclude Source="Styles/Slider.axaml" />
         <StyleInclude Source="Styles/TrendChart.axaml" />
         <StyleInclude Source="Styles/MilestoneChart.axaml" />
+        <StyleInclude Source="Styles/RoutineCalendarDay.axaml" />
+        <StyleInclude Source="Styles/UniformGrid.axaml" />
 
         <!-- Templated controls -->
         <StyleInclude Source="Controls/JournalEntry.axaml" />

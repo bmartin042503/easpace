@@ -14,7 +14,7 @@
     <Style Selector="controls|MilestoneChart">
         <Setter Property="TrackBrush" Value="{DynamicResource Primary200}"/>
         <Setter Property="ProgressBrush" Value="{DynamicResource Primary600}"/>
-        <Setter Property="TextBrush" Value="{DynamicResource Primary600}"/>
+        <Setter Property="UnitBrush" Value="{DynamicResource Neutral500}"/>
         <Setter Property="RingThickness" Value="{DynamicResource MilestoneChartRingThickness}"/>
         <Setter Property="Padding" Value="{DynamicResource MilestoneChartPadding}" />
         <Setter Property="FontSize" Value="{DynamicResource MilestoneChartValueFontSize}" />

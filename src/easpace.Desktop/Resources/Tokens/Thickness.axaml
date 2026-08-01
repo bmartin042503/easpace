@@ -13,5 +13,8 @@
     
     <!-- Thickness of MilestoneChart's ring -->
     <system:Double x:Key="MilestoneChartRingThickness">34</system:Double>
+    
+    <!-- Thickness of CalendarDay -->
+    <system:Double x:Key="CalendarDayBorderThickness">1.5</system:Double>
 
 </ResourceDictionary>

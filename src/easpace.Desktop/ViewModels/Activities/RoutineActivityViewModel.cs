@@ -1,4 +1,3 @@
-using System;
 using easpace.Desktop.Models.Activities;
 
 namespace easpace.Desktop.ViewModels.Activities;

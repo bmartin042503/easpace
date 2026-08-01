@@ -17,4 +17,7 @@
     <!-- Corner radius of TrendChart segmented control item -->
     <CornerRadius x:Key="ChartSegmentedControlItemCornerRadius">6</CornerRadius>
     
+    <!-- Corner radius of CalendarDay -->
+    <CornerRadius x:Key="CalendarDayCornerRadius">12</CornerRadius>
+    
 </ResourceDictionary>

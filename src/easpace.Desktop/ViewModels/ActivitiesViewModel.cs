@@ -51,6 +51,43 @@ public partial class ActivitiesViewModel : PageViewModel
                     }
                 }
             ),
+            
+            new MilestoneActivityViewModel
+            (
+                new MilestoneActivity
+                {
+                    Title = "Run 250 kms",
+                    TargetValue = 250,
+                    Unit = "kms",
+                    Entries =
+                    {
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 10 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 7 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 23 }
+                    }
+                }
+            ),
+            
+            new MilestoneActivityViewModel
+            (
+                new MilestoneActivity
+                {
+                    Title = "Do 1000 pushups",
+                    TargetValue = 1000,
+                    Unit = "pushups",
+                    Entries =
+                    {
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 100 },
+                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 100 }
+                    }
+                }
+            ),
 
             new TrendActivityViewModel
             (

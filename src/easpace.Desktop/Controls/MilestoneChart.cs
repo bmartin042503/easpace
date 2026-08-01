@@ -39,12 +39,12 @@ public class MilestoneChart : Control
 
     public static readonly StyledProperty<IBrush?> ProgressBrushProperty =
         AvaloniaProperty.Register<MilestoneChart, IBrush?>(nameof(ProgressBrush));
+    
+    public static readonly StyledProperty<IBrush?> UnitBrushProperty =
+        AvaloniaProperty.Register<MilestoneChart, IBrush?>(nameof(UnitBrush));
 
     public static readonly StyledProperty<IBrush?> TrackBrushProperty =
         AvaloniaProperty.Register<MilestoneChart, IBrush?>(nameof(TrackBrush));
-
-    public static readonly StyledProperty<IBrush?> TextBrushProperty =
-        AvaloniaProperty.Register<MilestoneChart, IBrush?>(nameof(TextBrush));
 
     public static readonly StyledProperty<double> FontSizeProperty =
         AvaloniaProperty.Register<MilestoneChart, double>(nameof(FontSize), 32.0);
@@ -88,17 +88,17 @@ public class MilestoneChart : Control
         get => GetValue(ProgressBrushProperty);
         set => SetValue(ProgressBrushProperty, value);
     }
+    
+    public IBrush? UnitBrush
+    {
+        get => GetValue(UnitBrushProperty);
+        set => SetValue(UnitBrushProperty, value);
+    }
 
     public IBrush? TrackBrush
     {
         get => GetValue(TrackBrushProperty);
         set => SetValue(TrackBrushProperty, value);
-    }
-
-    public IBrush? TextBrush
-    {
-        get => GetValue(TextBrushProperty);
-        set => SetValue(TextBrushProperty, value);
     }
 
     public double FontSize
@@ -131,8 +131,8 @@ public class MilestoneChart : Control
             UnitProperty,
             RingThicknessProperty,
             ProgressBrushProperty,
+            UnitBrushProperty,
             TrackBrushProperty,
-            TextBrushProperty,
             FontSizeProperty,
             UnitFontSizeProperty,
             PaddingProperty
@@ -296,7 +296,7 @@ public class MilestoneChart : Control
             mainTextString,
             new Typeface(_fontFamily),
             FontSize,
-            TextBrush ?? progressPen.Brush,
+            progressPen.Brush,
             TextAlignment.Center);
 
         TextLayout? unitTextLayout = null;
@@ -308,7 +308,7 @@ public class MilestoneChart : Control
                 Unit,
                 new Typeface(_fontFamily),
                 UnitFontSize,
-                TextBrush ?? progressPen.Brush,
+                UnitBrush ?? progressPen.Brush,
                 TextAlignment.Center);
         }
 
