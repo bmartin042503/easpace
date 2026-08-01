@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
-             xmlns:templatedControls="clr-namespace:easpace.Desktop.Styles.TemplatedControls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.JournalView"
              x:DataType="vm:JournalViewModel"
@@ -24,7 +24,7 @@
                    Classes="pageSubTitle" />
 
         <!-- Main content -->
-        <Border Grid.Row="2" Classes="primaryGradientCard"
+        <Border Grid.Row="2" Classes="card gradient"
                 Margin="0,20,0,0">
 
             <Grid>
@@ -50,11 +50,9 @@
                             </TextBox.InnerRightContent>
                         </TextBox>
 
-                        <!-- Add (plus) button -->
-                        <Button Grid.Column="1" Classes="addPlusButton" HorizontalAlignment="Left">
-                            <Viewbox Width="26" Height="26">
-                                <Path Data="{StaticResource PlusCircleFillIcon}" />
-                            </Viewbox>
+                        <!-- Add button -->
+                        <Button Grid.Column="1" Classes="icon-btn primary" HorizontalAlignment="Left">
+                            <PathIcon Data="{DynamicResource PlusIcon}"/>
                         </Button>
                     </Grid>
 
@@ -71,7 +69,7 @@
 
                                 <!-- Template for a single Journal entry -->
                                 <DataTemplate DataType="models:JournalEntry">
-                                    <templatedControls:JournalEntry
+                                    <controls:JournalEntry
                                         HorizontalAlignment="Left"
                                         Title="{Binding Title}"
                                         Id="{Binding Id}"
@@ -100,14 +98,8 @@
                     
                     <!-- Interaction buttons -->
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <Button Classes="editButton">
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                <TextBlock Grid.Column="0"
-                                           Text="{services:LocalizationService Key='EDIT'}" />
-                                <Viewbox Grid.Column="1" Width="10" Height="10">
-                                    <Path Data="{StaticResource PencilFillIcon}" />
-                                </Viewbox>
-                            </Grid>
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}"/>
                         </Button>
                     </StackPanel>
                     

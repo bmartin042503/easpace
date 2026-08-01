@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <!-- Since the sidebar icons appear differently, their size must be adjusted separately -->
+    
+    <!-- Size of "Journal" sidebar Icon -->
+    <system:Double x:Key="JournalSidebarIconSize">22</system:Double>
+    
+    <!-- Size of "Mood" sidebar Icon -->
+    <system:Double x:Key="MoodSidebarIconSize">26</system:Double>
+    
+    <!-- Size of "Activities" sidebar Icon -->
+    <system:Double x:Key="ActivitiesSidebarIconSize">24</system:Double>
+    
+    <!-- Size of "Wellness" sidebar Icon -->
+    <system:Double x:Key="WellnessSidebarIconSize">26</system:Double>
+    
+    <!-- Size of "Settings" sidebar Icon -->
+    <system:Double x:Key="SettingsSidebarIconSize">24</system:Double>
+    
+    <!-- Size of primary icon Button -->
+    <system:Double x:Key="IconButtonSize">32</system:Double>
+    
+    <!-- Size of icon inside Button -->
+    <system:Double x:Key="IconSizeInButton">16</system:Double>
+    
+    <!-- Size of icon inside labeled Button -->
+    <system:Double x:Key="IconSizeInLabeledButton">12</system:Double>
+    
+</ResourceDictionary>

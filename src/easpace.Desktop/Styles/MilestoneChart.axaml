@@ -1,0 +1,24 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}" Height="600" Width="600">
+                <controls:MilestoneChart Unit="pages" Value="48" Maximum="1000"/>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- MilestoneChart styling -->
+    <Style Selector="controls|MilestoneChart">
+        <Setter Property="TrackBrush" Value="{DynamicResource Primary200}"/>
+        <Setter Property="ProgressBrush" Value="{DynamicResource Primary600}"/>
+        <Setter Property="UnitBrush" Value="{DynamicResource Neutral500}"/>
+        <Setter Property="RingThickness" Value="{DynamicResource MilestoneChartRingThickness}"/>
+        <Setter Property="Padding" Value="{DynamicResource MilestoneChartPadding}" />
+        <Setter Property="FontSize" Value="{DynamicResource MilestoneChartValueFontSize}" />
+        <Setter Property="UnitFontSize" Value="{DynamicResource MilestoneChartUnitFontSize}" />
+    </Style>
+    
+</Styles>

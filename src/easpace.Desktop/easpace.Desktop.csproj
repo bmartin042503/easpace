@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Assets\Fonts\" />
+        <Folder Include="Assets\Fonts\*" />
         <Folder Include="Assets\Svgs\" />
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
@@ -26,7 +26,6 @@
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
         <PackageReference Include="Svg.Controls.Avalonia" Version="12.0.0.13" />
         
         <!-- .NET packages -->
@@ -39,5 +38,16 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controls\MoodEntry.axaml.cs">
+        <DependentUpon>MoodEntry.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Controls\JournalEntry.axaml.cs">
+        <DependentUpon>JournalEntry.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

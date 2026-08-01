@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ActivitiesViewModel"
+             x:Class="easpace.Desktop.Views.ActivitiesView"
+             Background="{DynamicResource Neutral100}">
+
+    <Design.DataContext>
+        <vm:ActivitiesViewModel />
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="1*,3*" Margin="{DynamicResource PageContentMargin}"
+          ColumnSpacing="{DynamicResource PageContentSpacing}">
+
+        <!-- Main title -->
+        <TextBlock Grid.Column="0" Grid.Row="0"
+                   Text="{services:LocalizationService Key='ACTIVITIES_TITLE'}"
+                   Classes="pageTitle" />
+
+        <!-- Subtitle -->
+        <TextBlock Grid.Column="0" Grid.Row="1"
+                   Text="{services:LocalizationService Key='ACTIVITIES_SUBTITLE'}"
+                   Classes="pageSubTitle" />
+
+        <Grid Grid.Column="0" Grid.Row="2" RowDefinitions="Auto,*" Margin="0,30,0,0">
+            <Button Grid.Row="0" Classes="labeled-btn primary" HorizontalAlignment="Left">
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="{DynamicResource LabeledButtonColumnSpacing}">
+                    <TextBlock Grid.Column="0"
+                               FontSize="{DynamicResource LabeledButtonFontSize}"
+                               Text="{services:LocalizationService Key='ADD_NEW'}" />
+                    <PathIcon Grid.Column="1" Data="{DynamicResource PlusIcon}" />
+                </Grid>
+            </Button>
+            
+            <ListBox Grid.Row="1" Classes="activities-list"
+                     Margin="0,20,0,0"
+                     ItemsSource="{Binding ActivityViewModels}"
+                     SelectedItem="{Binding SelectedActivityViewModel}"/>
+        </Grid>
+
+        <ContentControl Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
+                        Content="{Binding SelectedActivityViewModel}"
+                        ContentTemplate="{DynamicResource ActivityViewTemplateSelector}" />
+
+    </Grid>
+</UserControl>

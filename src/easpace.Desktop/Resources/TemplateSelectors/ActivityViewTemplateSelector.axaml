@@ -1,0 +1,303 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+                    xmlns:activitiesvm="clr-namespace:easpace.Desktop.ViewModels.Activities"
+                    xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+                    xmlns:converters="clr-namespace:easpace.Desktop.Converters"
+                    xmlns:services="clr-namespace:easpace.Desktop.Services"
+                    xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities">
+
+    <!-- TimeRange converter for Chart segmented control-->
+    <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
+
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="40" Background="{DynamicResource Neutral100}">
+
+                <!-- Sample activity view item - TrendActivity
+                    <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                    Height="650" Width="650">
+                        <ContentControl.Content>
+                            <activitiesvm:TrendActivityViewModel>
+                                <activitiesvm:TrendActivityViewModel.BaseActivity>
+                                    <activities:TrendActivity Title="Lose weight" TargetValue="75.0" Unit="kg">
+                                        <activities:TrendActivity.Entries>
+                                            <activities:NumericDataEntry Value="83.5" />
+                                            <activities:NumericDataEntry Value="82.1" />
+                                            <activities:NumericDataEntry Value="81.2" />
+                                        </activities:TrendActivity.Entries>
+                                        <activities:TrendActivity.TargetDate>
+                                            2027.07.05.12:30:10
+                                        </activities:TrendActivity.TargetDate>
+                                    </activities:TrendActivity>
+                                </activitiesvm:TrendActivityViewModel.BaseActivity>
+                            </activitiesvm:TrendActivityViewModel>
+                        </ContentControl.Content>
+                    </ContentControl> -->
+
+                <!-- Sample activity view item - MilestoneActivity
+                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                Height="650" Width="650">
+                    <ContentControl.Content>
+                        <activitiesvm:MilestoneActivityViewModel>
+                            <activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                                <activities:MilestoneActivity Title="Read 1000 pages" TargetValue="1000" Unit="pages">
+                                    <activities:MilestoneActivity.Entries>
+                                        <activities:NumericDataEntry Value="24" />
+                                        <activities:NumericDataEntry Value="13" />
+                                        <activities:NumericDataEntry Value="36" />
+                                        <activities:NumericDataEntry Value="43" />
+                                    </activities:MilestoneActivity.Entries>
+                                    <activities:MilestoneActivity.TargetDate>
+                                        2026.12.31.23:59:59
+                                    </activities:MilestoneActivity.TargetDate>
+                                </activities:MilestoneActivity>
+                            </activitiesvm:MilestoneActivityViewModel.BaseActivity>
+                        </activitiesvm:MilestoneActivityViewModel>
+                    </ContentControl.Content>
+                </ContentControl> -->
+
+                <!-- Sample activity view item - RoutineActivity -->
+                <ContentControl ContentTemplate="{DynamicResource ActivityViewTemplateSelector}"
+                                Height="650" Width="650">
+                    <ContentControl.Content>
+                        <activitiesvm:RoutineActivityViewModel>
+                            <activitiesvm:RoutineActivityViewModel.BaseActivity>
+                                <activities:RoutineActivity Title="Daily workout">
+                                    <activities:RoutineActivity.Entries>
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-01" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-02" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-03" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-04" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-05" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-06" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-07" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-09" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-10" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-11" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-12" />
+                                        <activities:RoutineDataEntry State="NotCompleted" Date="2026-06-13" />
+                                        <activities:RoutineDataEntry State="Completed" Date="2026-06-17" />
+                                    </activities:RoutineActivity.Entries>
+                                </activities:RoutineActivity>
+                            </activitiesvm:RoutineActivityViewModel.BaseActivity>
+                        </activitiesvm:RoutineActivityViewModel>
+                    </ContentControl.Content>
+                </ContentControl>
+
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Template selector of Activity view -->
+    <dataTemplates:ActivityViewModelTemplateSelector x:Key="ActivityViewTemplateSelector">
+
+        <!-- Template of Trend Activity -->
+        <DataTemplate x:Key="TrendActivityViewModel" x:DataType="activitiesvm:TrendActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
+                      RowDefinitions="Auto,Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Details -->
+                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Spacing="12">
+
+                        <!-- Current value -->
+                        <TextBlock FontSize="{DynamicResource ActivityTextFontSize}"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Activity.LastEntry.Value" />
+                                    <Binding Path="Activity.Unit" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+                        <!-- Target value -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Foreground="{DynamicResource Primary600}"
+                                       FontSize="16"
+                                       FontWeight="Medium" VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Activity.TargetValue" />
+                                        <Binding Path="Activity.Unit" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <PathIcon
+                                Width="18" Height="18"
+                                Data="{DynamicResource TargetIcon}"
+                                Foreground="{DynamicResource Primary600}"
+                                VerticalAlignment="Center" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Time Range Selection (segmented control) -->
+                    <ListBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Classes="chart-segmented-control"
+                             HorizontalAlignment="Left" Margin="0,10,0,0"
+                             ItemsSource="{Binding TimeRanges}"
+                             SelectedItem="{Binding SelectedTimeRange}">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <!-- Chart -->
+                    <controls:TrendChart Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                         Target="{Binding Activity.TargetValue}"
+                                         Unit="{Binding Activity.Unit}"
+                                         Entries="{Binding ChartEntries}"
+                                         Margin="0,20,0,0" />
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Template of Milestone Activity -->
+        <DataTemplate x:Key="MilestoneActivityViewModel" x:DataType="activitiesvm:MilestoneActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
+                      RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Details -->
+                    <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="4">
+
+                        <!-- Start date -->
+                        <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
+                            <Run Text="{services:LocalizationService Key='START_DATE'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.CreatedAt}" />
+                        </TextBlock>
+
+                        <!-- Target date -->
+                        <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
+                                   VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
+                            <Run Text="{services:LocalizationService Key='TARGET_DATE'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.TargetDate}" />
+                        </TextBlock>
+
+                    </StackPanel>
+
+                    <!-- Chart -->
+                    <controls:MilestoneChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                             Value="{Binding Activity.EntriesSum}"
+                                             Maximum="{Binding Activity.TargetValue}"
+                                             Unit="{Binding Activity.Unit}" />
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Template of Routine Activity -->
+        <DataTemplate x:Key="RoutineActivityViewModel" x:DataType="activitiesvm:RoutineActivityViewModel">
+            <Border Classes="card primary">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
+                      RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
+                               FontSize="{DynamicResource ActivityTitleFontSize}"
+                               FontWeight="Medium"
+                               Foreground="{DynamicResource Neutral700}"
+                               VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" />
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{DynamicResource InteractionButtonsSpacing}"
+                                VerticalAlignment="Center">
+
+                        <!-- Add button -->
+                        <Button Classes="icon-btn primary">
+                            <PathIcon Data="{DynamicResource PlusIcon}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="icon-btn secondary">
+                            <PathIcon Data="{DynamicResource PencilFillIcon}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Calendar days -->
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                            BorderThickness="0,0,0,1"
+                            Margin="-20,0"
+                            BorderBrush="{DynamicResource Neutral300}"
+                            Padding="0,20,0,10">
+                        <UniformGrid Classes="calendar-days">
+                            <TextBlock Text="{services:LocalizationService Key='MONDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='TUESDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='WEDNESDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='THURSDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='FRIDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='SATURDAY_SHORT'}" />
+                            <TextBlock Text="{services:LocalizationService Key='SUNDAY_SHORT'}" />
+                        </UniformGrid>
+                    </Border>
+                    
+                    <!-- TODO: Calendar -->
+
+
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+    </dataTemplates:ActivityViewModelTemplateSelector>
+</ResourceDictionary>

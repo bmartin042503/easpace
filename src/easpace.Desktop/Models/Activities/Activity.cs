@@ -1,0 +1,33 @@
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace easpace.Desktop.Models.Activities;
+
+public abstract partial class Activity : ObservableObject
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    [ObservableProperty] private string _title = string.Empty;
+}
+
+public abstract class Activity<TEntry> : Activity
+    where TEntry : DataEntry
+{
+    public ObservableCollection<TEntry> Entries { get; set; } = [];
+
+    protected Activity()
+    {
+        Entries.CollectionChanged += (s, e) =>
+        {
+            OnPropertyChanged(nameof(LastEntry));
+            OnCollectionChanged();
+        };
+    }
+    
+    public TEntry? LastEntry => Entries.LastOrDefault();
+    
+    protected virtual void OnCollectionChanged() { }
+}

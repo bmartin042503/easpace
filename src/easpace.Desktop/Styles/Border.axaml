@@ -6,62 +6,61 @@
             <Border Background="{DynamicResource Neutral100}">
                 <StackPanel Orientation="Horizontal" Spacing="20">
                     
-                    <!-- Sample border item 1 - primary gradient sidebar -->
+                    <!-- Sample border item 1 - sidebar -->
                     <Border
                         Padding="40,60"
-                        Classes="primaryGradientSideBar"/>
+                        Classes="sidebar"/>
                     
                     <StackPanel Orientation="Vertical" Spacing="20" Margin="20">
                         
                         <!-- Sample border item 2 - primary card -->
                         <Border
                             Padding="120,40"
-                            Classes="primaryCard"/>
+                            Classes="card primary"/>
                         
-                        <!-- Sample border item 3 - primary gradient card -->
+                        <!-- Sample border item 3 - gradient card -->
                         <Border
                             Padding="120,40"
-                            Classes="primaryGradientCard"/>
+                            Classes="card gradient"/>
                         
                         <!-- Sample border item 4 - secondary card -->
                         <Border
                             Padding="120,40"
-                            Classes="secondaryCard"/>
+                            Classes="card secondary"/>
                         
                     </StackPanel>
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
+    
+    <!-- Primary card styling -->
+    <Style Selector="Border.card">
+        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource CardBorderThickness}"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource CardCornerRadius}"/>
+        <Setter Property="Padding" Value="{DynamicResource CardPadding}"/>
+    </Style>
 
     <!-- Primary card styling -->
-    <Style Selector="Border.primaryCard">
+    <Style Selector="Border.card.primary">
         <Setter Property="Background" Value="{DynamicResource Clear}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
     </Style>
     
-    <!-- Primary gradient card styling -->
-    <Style Selector="Border.primaryGradientCard">
+    <!-- Gradient card styling -->
+    <Style Selector="Border.card.gradient">
         <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
     </Style>
     
     <!-- Secondary card styling -->
-    <Style Selector="Border.secondaryCard">
+    <Style Selector="Border.card.secondary">
         <Setter Property="Background" Value="{DynamicResource Neutral50}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0.75"/>
-        <Setter Property="CornerRadius" Value="12"/>
     </Style>
     
-    <!-- Primary gradient sidebar styling -->
-    <Style Selector="Border.primaryGradientSideBar">
+    <!-- Sidebar styling -->
+    <Style Selector="Border.sidebar">
         <Setter Property="Background" Value="{DynamicResource PrimaryCardGradientBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Neutral300}"/>
-        <Setter Property="BorderThickness" Value="0,0,0.75,0"/>
+        <Setter Property="BorderThickness" Value="{DynamicResource SidebarBorderThickness}"/>
     </Style>
 </Styles>

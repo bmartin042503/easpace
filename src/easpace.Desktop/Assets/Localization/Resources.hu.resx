@@ -107,10 +107,64 @@
     <data name="ADD_NEW" xml:space="preserve">
         <value>Új hozzáadása</value>
     </data>
-    <data name="GROWTH_TITLE" xml:space="preserve">
-        <value>Fejlődés</value>
+    <data name="ACTIVITIES_TITLE" xml:space="preserve">
+        <value>Tevékenységek</value>
     </data>
-    <data name="GROWTH_SUBTITLE" xml:space="preserve">
-        <value>Kövesd nyomon a haladásod </value>
+    <data name="ACTIVITIES_SUBTITLE" xml:space="preserve">
+        <value>Szokások és mérföldkövek</value>
+    </data>
+    <data name="ROUTINE_STATE_COMPLETED" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="ROUTINE_STATE_NOT_COMPLETED" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="ROUTINE_STATE_NONE" xml:space="preserve">
+        <value>Üres</value>
+    </data>
+    <data name="TARGET" xml:space="preserve">
+        <value>Cél</value>
+    </data>
+    <data name="YEAR" xml:space="preserve">
+        <value>Év</value>
+    </data>
+    <data name="MONTH" xml:space="preserve">
+        <value>Hónap</value>
+    </data>
+    <data name="WEEK" xml:space="preserve">
+        <value>Hét</value>
+    </data>
+    <data name="DAY" xml:space="preserve">
+        <value>Nap</value>
+    </data>
+    <data name="ALL" xml:space="preserve">
+        <value>Összes</value>
+    </data>
+    <data name="START_DATE" xml:space="preserve">
+        <value>Kezdet</value>
+    </data>
+    <data name="TARGET_DATE" xml:space="preserve">
+        <value>Céldátum</value>
+    </data>
+    <data name="MONDAY_SHORT" xml:space="preserve">
+        <value>H</value>
+    </data>
+    <data name="TUESDAY_SHORT" xml:space="preserve">
+        <value>K</value>
+    </data>
+    <data name="WEDNESDAY_SHORT" xml:space="preserve">
+        <value>Sze</value>
+    </data>
+    <data name="THURSDAY_SHORT" xml:space="preserve">
+        <value>Cs</value>
+    </data>
+    <data name="FRIDAY_SHORT" xml:space="preserve">
+        <value>P</value>
+    </data>
+    <data name="SATURDAY_SHORT" xml:space="preserve">
+        <value>Szo</value>
+    </data>
+    <data name="SUNDAY_SHORT" xml:space="preserve">
+        <value>V</value>
     </data>
 </root>

@@ -110,10 +110,64 @@
     <data name="ADD_NEW" xml:space="preserve">
         <value>Add new</value>
     </data>
-    <data name="GROWTH_TITLE" xml:space="preserve">
-        <value>Growth</value>
+    <data name="ACTIVITIES_TITLE" xml:space="preserve">
+        <value>Activities</value>
     </data>
-    <data name="GROWTH_SUBTITLE" xml:space="preserve">
-        <value>Track your progress</value>
+    <data name="ACTIVITIES_SUBTITLE" xml:space="preserve">
+        <value>Habits and milestones</value>
+    </data>
+    <data name="ROUTINE_STATE_COMPLETED" xml:space="preserve">
+        <value>Completed</value>
+    </data>
+    <data name="ROUTINE_STATE_NOT_COMPLETED" xml:space="preserve">
+        <value>Not completed</value>
+    </data>
+    <data name="ROUTINE_STATE_NONE" xml:space="preserve">
+        <value>None</value>
+    </data>
+    <data name="TARGET" xml:space="preserve">
+        <value>Target</value>
+    </data>
+    <data name="YEAR" xml:space="preserve">
+        <value>Year</value>
+    </data>
+    <data name="MONTH" xml:space="preserve">
+        <value>Month</value>
+    </data>
+    <data name="WEEK" xml:space="preserve">
+        <value>Week</value>
+    </data>
+    <data name="DAY" xml:space="preserve">
+        <value>Day</value>
+    </data>
+    <data name="ALL" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="START_DATE" xml:space="preserve">
+        <value>Started</value>
+    </data>
+    <data name="TARGET_DATE" xml:space="preserve">
+        <value>Target date</value>
+    </data>
+    <data name="MONDAY_SHORT" xml:space="preserve">
+        <value>Mon</value>
+    </data>
+    <data name="TUESDAY_SHORT" xml:space="preserve">
+        <value>Tue</value>
+    </data>
+    <data name="WEDNESDAY_SHORT" xml:space="preserve">
+        <value>Wed</value>
+    </data>
+    <data name="THURSDAY_SHORT" xml:space="preserve">
+        <value>Thu</value>
+    </data>
+    <data name="FRIDAY_SHORT" xml:space="preserve">
+        <value>Fri</value>
+    </data>
+    <data name="SATURDAY_SHORT" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="SUNDAY_SHORT" xml:space="preserve">
+        <value>Sun</value>
     </data>
 </root>

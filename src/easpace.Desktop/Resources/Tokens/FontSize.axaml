@@ -1,0 +1,24 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    
+    <!-- Font size of labeled Button -->
+    <system:Double x:Key="LabeledButtonFontSize">12</system:Double>
+    
+    <!-- Font size of activity title TextBox -->
+    <system:Double x:Key="ActivityTitleFontSize">34</system:Double>
+    
+    <!-- Font size of activity text -->
+    <system:Double x:Key="ActivityTextFontSize">22</system:Double>
+    
+    <!-- Font size of activity sub text -->
+    <system:Double x:Key="ActivitySubTextFontSize">18</system:Double>
+    
+    <!-- Font size of TrendChart segmented control item -->
+    <system:Double x:Key="TrendChartSegmentedControlItemFontSize">12</system:Double>
+    
+    <!-- Font size of MilestoneChart values -->
+    <system:Double x:Key="MilestoneChartValueFontSize">30</system:Double>
+    <system:Double x:Key="MilestoneChartUnitFontSize">18</system:Double>
+    
+</ResourceDictionary>
