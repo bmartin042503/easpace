@@ -1,29 +1,13 @@
+<!--
+Copyright (c) 2025 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="easpace.Desktop.App"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              RequestedThemeVariant="Default">
-
-    <!-- Global resources -->
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <MergeResourceInclude Source="/Resources/Themes/LightTheme.axaml" />
-                <MergeResourceInclude Source="/Resources/Themes/DarkTheme.axaml" />
-                <MergeResourceInclude Source="/Resources/Icons.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/Thickness.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/CornerRadius.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/Margin.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/Padding.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/Size.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/FontSize.axaml" />
-                <MergeResourceInclude Source="/Resources/Tokens/Spacing.axaml" />
-                <MergeResourceInclude Source="/Resources/TemplateSelectors/ActivityListItemTemplateSelector.axaml" />
-                <MergeResourceInclude Source="/Resources/TemplateSelectors/ActivityViewTemplateSelector.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        <FontFamily x:Key="Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
-    </Application.Resources>
 
     <Application.DataTemplates>
         <dataTemplates:ViewLocator />
@@ -31,26 +15,11 @@
 
     <Application.Styles>
 
-        <!-- AXAML styling -->
-        <StyleInclude Source="Styles/TextBlock.axaml" />
-        <StyleInclude Source="Styles/TextBox.axaml" />
-        <StyleInclude Source="Styles/Button.axaml" />
-        <StyleInclude Source="Styles/ToggleButton.axaml" />
-        <StyleInclude Source="Styles/Border.axaml" />
-        <StyleInclude Source="Styles/ListBox.axaml" />
-        <StyleInclude Source="Styles/Path.axaml" />
-        <StyleInclude Source="Styles/GridSplitter.axaml" />
-        <StyleInclude Source="Styles/MoodEntryFlyout.axaml" />
-        <StyleInclude Source="Styles/Slider.axaml" />
-        <StyleInclude Source="Styles/TrendChart.axaml" />
-        <StyleInclude Source="Styles/MilestoneChart.axaml" />
-        <StyleInclude Source="Styles/RoutineCalendarDay.axaml" />
-        <StyleInclude Source="Styles/UniformGrid.axaml" />
-
-        <!-- Templated controls -->
-        <StyleInclude Source="Controls/JournalEntry.axaml" />
-        <StyleInclude Source="Controls/MoodEntry.axaml" />
-
+        <!-- Avalonia Fluent Theme -->
         <FluentTheme />
+        
+        <!-- Haven Theme -->
+        <StyleInclude Source="Resources/HavenTheme/HavenTheme.axaml" />
+        
     </Application.Styles>
 </Application>

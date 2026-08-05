@@ -1,0 +1,93 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+                <Border Padding="20">
+                    <StackPanel Orientation="Vertical" Spacing="20">
+                        
+                        <TextBox PlaceholderText="Search..." MinWidth="140">
+                            <TextBox.InnerRightContent>
+                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
+                            </TextBox.InnerRightContent>
+                        </TextBox>
+                        
+                        <TextBox Text="Edit Journal Entry Title"
+                                 Classes="journal-edit title"
+                                 VerticalAlignment="Center" />
+                        
+                        <TextBox Classes="journal-edit paragraph" Height="200"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 PlaceholderText="Write down your thoughts here..."
+                                 VerticalAlignment="Stretch" />
+
+                    </StackPanel>
+                </Border>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBox">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        
+        <Style Selector="^ PathIcon">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+            <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+        
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+            </Style>
+        </Style>
+        
+    </Style>
+    
+    <!-- TODO: fix - SelectionForegroundBrush not setting correctly -->
+    <Style Selector="TextBox.journal-edit">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </Style>
+        
+    </Style>
+    
+    <Style Selector="TextBox.journal-edit.title">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
+    </Style>
+    
+    <Style Selector="TextBox.journal-edit.paragraph">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+    </Style>
+
+</Styles>

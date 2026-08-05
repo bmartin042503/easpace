@@ -1,0 +1,37 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+
+                <Grid ColumnDefinitions="*,Auto,*" Height="300">
+                    <GridSplitter Grid.Column="1" Classes="horizontal" />
+                </Grid>
+
+            </Border>
+        </ThemeVariantScope>
+
+    </Design.PreviewWith>
+
+    <!-- GridSplitter template & styling -->
+    <Style Selector="GridSplitter.horizontal">
+
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Spacing.Sm}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{StaticResource Haven.Scale.Transparent}">
+                    <Rectangle Fill="{DynamicResource Haven.Sem.Border}"
+                               Width="{StaticResource Haven.Scale.Border.Thickness.Double}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+    </Style>
+</Styles>

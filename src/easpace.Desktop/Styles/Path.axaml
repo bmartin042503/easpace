@@ -1,9 +1,0 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <!-- Path styling -->
-    <Style Selector="Path">
-        <Setter Property="Stretch" Value="Uniform"/>
-    </Style>
-    
-</Styles>

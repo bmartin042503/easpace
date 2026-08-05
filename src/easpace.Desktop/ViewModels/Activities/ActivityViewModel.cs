@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Models.Activities;
 

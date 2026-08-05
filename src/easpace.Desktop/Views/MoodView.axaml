@@ -1,3 +1,8 @@
+<!--
+Copyright (c) 2025 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -5,11 +10,10 @@
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.MoodView"
              x:DataType="vm:MoodViewModel"
-             Background="{DynamicResource Neutral100}">
+             Background="{DynamicResource Haven.Sem.Canvas}">
 
     <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="3*,*,3*,Auto" Margin="26">
 
@@ -37,12 +41,7 @@
                     <DataTemplate DataType="models:MoodEntry">
 
                         <!-- Build of a single mood entry item -->
-                        <controls:MoodEntry
-                            MoodSliderValue="{Binding MoodSliderValue}"
-                            Date="{Binding Date}"
-                            Description="{Binding Description}"
-                            Labels="{Binding Labels}" />
-
+                        
                     </DataTemplate>
                 </ItemsControl.DataTemplates>
             </ItemsControl>

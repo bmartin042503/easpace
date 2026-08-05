@@ -1,6 +1,7 @@
+// Copyright (c) 2025 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
+
 using System;
-using System.Globalization;
-using System.Threading;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -40,11 +41,6 @@ public partial class App : Application
         }
 
         RequestedThemeVariant = ThemeVariant.Light;
-        
-        var culture = CultureInfo.InvariantCulture; 
-        
-        Thread.CurrentThread.CurrentCulture = culture;
-        Thread.CurrentThread.CurrentUICulture = culture;
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

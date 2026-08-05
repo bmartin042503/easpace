@@ -1,90 +1,66 @@
+<!--
+Copyright (c) 2025 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:easpace.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:constants="clr-namespace:easpace.Desktop.Constants"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+        xmlns:services="clr-namespace:easpace.Desktop.Services"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
         Title="easpace"
         MinHeight="450"
-        MinWidth="650">
+        MinWidth="700">
 
     <Grid ColumnDefinitions="Auto,*">
+
         <!-- Sidebar -->
         <Border Grid.Column="0" Classes="sidebar">
-            <Border.Padding>
-                <OnPlatform>
-                    <OnPlatform.Default>14,32</OnPlatform.Default>
-                    <OnPlatform.macOS>14,42,14,32</OnPlatform.macOS>
-                </OnPlatform>
-            </Border.Padding>
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
-                  RowSpacing="32"
-                  IsVisible="{Binding IsSidebarVisible}">
 
-                <!-- Journal -->
-                <Button Grid.Row="0"
-                        x:Name="JournalButton"
-                        Click="SidebarButton_OnClick"
-                        Classes="sidebar-btn"
-                        Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Journal}">
-                    <PathIcon Width="{DynamicResource JournalSidebarIconSize}"
-                              Height="{DynamicResource JournalSidebarIconSize}" 
-                              Data="{StaticResource NotebookIcon}" />
-                </Button>
+            <ListBox Classes="sidebar-nav"
+                     SelectedIndex="{Binding SelectedNavIndex}">
+
+                <controls:NavigationItem Grid.Row="0"
+                                         Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                                         Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
                 
-                <!-- Mood -->
-                <Button Grid.Row="1"
-                        x:Name="MoodButton"
-                        Click="SidebarButton_OnClick"
-                        Classes="sidebar-btn"
-                        Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Mood}">
-                    <PathIcon Width="{DynamicResource MoodSidebarIconSize}"
-                              Height="{DynamicResource MoodSidebarIconSize}" 
-                              Data="{StaticResource BrainIcon}" />
-                </Button>
+                <controls:NavigationItem Grid.Row="1"
+                                         Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                         Text="{services:LocalizationService Key='Navigation.Item.Activities'}" />
 
-                <!-- Activities -->
-                <Button Grid.Row="2"
-                        x:Name="ActivitiesButton"
-                        Click="SidebarButton_OnClick"
-                        Classes="sidebar-btn"
-                        Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Activities}">
-                    <PathIcon Width="{DynamicResource ActivitiesSidebarIconSize}"
-                              Height="{DynamicResource ActivitiesSidebarIconSize}" 
-                              Data="{StaticResource TargetIcon}" />
-                </Button>
+                <controls:NavigationItem Grid.Row="2"
+                                         Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                         Text="{services:LocalizationService Key='Navigation.Item.Mood'}" />
 
-                <!-- Wellness -->
-                <Button Grid.Row="3"
-                        x:Name="WellnessButton"
-                        Click="SidebarButton_OnClick"
-                        Classes="sidebar-btn"
-                        Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Wellness}">
-                    <PathIcon Width="{DynamicResource WellnessSidebarIconSize}"
-                              Height="{DynamicResource WellnessSidebarIconSize}" 
-                              Data="{StaticResource FlowerLotusIcon}" />
-                </Button>
+                <controls:NavigationItem Grid.Row="3"
+                                         Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
+                                         Text="{services:LocalizationService Key='Navigation.Item.Wellness'}" />
 
-                <!-- Settings -->
-                <Button Grid.Row="5"
-                        x:Name="SettingsButton"
-                        Click="SidebarButton_OnClick"
-                        Classes="sidebar-btn"
-                        Command="{Binding SetPage}"
-                        CommandParameter="{x:Static constants:ApplicationPage.Settings}">
-                    <PathIcon Width="{DynamicResource SettingsSidebarIconSize}"
-                              Height="{DynamicResource SettingsSidebarIconSize}" 
-                              Data="{StaticResource GearIcon}" />
-                </Button>
-            </Grid>
+                <controls:NavigationItem Grid.Row="5"
+                                         Icon="{StaticResource Haven.PhosphorIcons.Gear}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
+                                         Text="{services:LocalizationService Key='Navigation.Item.Settings'}" />
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                              IsVisible="{Binding IsSidebarVisible}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                
+            </ListBox>
+
         </Border>
 
         <!-- Selected page content -->

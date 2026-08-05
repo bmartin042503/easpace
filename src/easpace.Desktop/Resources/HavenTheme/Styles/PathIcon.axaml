@@ -1,0 +1,53 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <StackPanel Orientation="Vertical" Spacing="30">
+                    <PathIcon Classes="sidebar journal"
+                              Data="{StaticResource Haven.PhosphorIcons.Notebook}" />
+                    <PathIcon Classes="sidebar mood"
+                              Data="{StaticResource Haven.PhosphorIcons.Brain}" />
+                    <PathIcon Classes="sidebar activities"
+                              Data="{StaticResource Haven.PhosphorIcons.Target}" />
+                    <PathIcon Classes="sidebar wellness"
+                              Data="{StaticResource Haven.PhosphorIcons.FlowerLotus}" />
+                    <PathIcon Classes="sidebar settings"
+                              Data="{StaticResource Haven.PhosphorIcons.Gear}" />
+                </StackPanel>
+                
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="PathIcon.sidebar.journal">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.mood">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Lg}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Lg}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.activities">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.wellness">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Lg}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Lg}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.settings">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+    </Style>
+
+</Styles>

@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
+
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;

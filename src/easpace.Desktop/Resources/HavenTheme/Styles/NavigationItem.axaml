@@ -1,0 +1,83 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+            <StackPanel Orientation="Vertical" Spacing="20">
+                <controls:NavigationItem IsSelected="True"
+                                         Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                                         Text="Journal" />
+
+                <controls:NavigationItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                         Text="Mood" />
+
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|NavigationItem">
+        
+        <Setter Property="Background" Value="{DynamicResource Haven.Scale.Transparent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Sm}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Sm}" />
+        <Setter Property="Cursor" Value="Hand" />
+        
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}">
+
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                        <PathIcon Name="PART_Icon"
+                                  Data="{TemplateBinding Icon}"
+                                  Foreground="{TemplateBinding Foreground}" />
+
+                        <TextBlock Name="PART_Text"
+                                   VerticalAlignment="Center"
+                                   Text="{TemplateBinding Text}"
+                                   Foreground="{TemplateBinding Foreground}" />
+                    </StackPanel>
+
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^ /template/ TextBlock#PART_Text">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
+        </Style>
+        
+        <Style Selector="^ /template/ PathIcon#PART_Icon">
+            <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+            <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+        </Style>
+        
+        <Style Selector="^:selected /template/ TextBlock#PART_Text">
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+        </Style>
+        
+        <Style Selector="^:selected /template/ PathIcon#PART_Icon">
+            <Setter Property="Data" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FilledIcon}" />
+        </Style>
+        
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        </Style>
+        
+        <Style Selector="^:selected">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+        
+    </Style>
+
+</Styles>

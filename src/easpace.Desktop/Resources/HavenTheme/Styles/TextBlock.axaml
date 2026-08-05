@@ -1,0 +1,50 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Neutral100}">
+
+                <StackPanel Orientation="Vertical" Spacing="20">
+
+                    <controls:NavigationItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                             FilledIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                             Text="Mood" />
+
+                    <SelectableTextBlock Classes="title" Text="Journal Entry Title" />
+                    <SelectableTextBlock Classes="paragraph" Text="Journal Entry Text" />
+
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource Poppins}" />
+    </Style>
+    
+    <Style Selector="SelectableTextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource Poppins}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
+    </Style>
+
+    <Style Selector="TextBlock.title, SelectableTextBlock.title">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+    <Style Selector="TextBlock.paragraph, SelectableTextBlock.paragraph">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+
+</Styles>

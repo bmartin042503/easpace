@@ -1,0 +1,49 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <x:Double x:Key="Haven.Scale.Spacing.Xxs">6</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Xs">10</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Sm">18</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Md">22</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Lg">26</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Xl">32</x:Double>
+    <x:Double x:Key="Haven.Scale.Spacing.Xxl">48</x:Double>
+    
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xxs">6</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xs">10</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Sm">18</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Md">22</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Lg">26</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xl">32</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xxl">48</Thickness>
+    
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xxs">6,2</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xs">10,6</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Sm">18,10</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Md">22,18</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Lg">26,22</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xl">32,26</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xxl">48,32</Thickness>
+    
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xxs">6,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xs">10,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Sm">18,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Md">22,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Lg">26,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xl">32,0</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xxl">48,0</Thickness>
+    
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Xxs">0,6</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Xs">0,10</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Sm">0,18</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Md">0,22</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Lg">0,26</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Xl">0,32</Thickness>
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Vertical.Xxl">0,48</Thickness>
+    
+</ResourceDictionary>

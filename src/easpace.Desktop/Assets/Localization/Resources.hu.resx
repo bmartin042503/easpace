@@ -1,4 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+Copyright (c) 2025 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
 <root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
@@ -6,165 +18,63 @@
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="CONTINUE" xml:space="preserve">
-        <value>Tovább</value>
-    </data>
-    <data name="DELETE" xml:space="preserve">
-        <value>Törlés</value>
-    </data>
-    <data name="EDIT" xml:space="preserve">
-        <value>Szerkesztés</value>
-    </data>
-    <data name="SAVE" xml:space="preserve">
-        <value>Mentés</value>
-    </data>
-    <data name="SEARCH" xml:space="preserve">
-        <value>Keresés</value>
-    </data>
-    <data name="JOURNAL_TITLE" xml:space="preserve">
+    <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Napló</value>
     </data>
-    <data name="JOURNAL_SUBTITLE" xml:space="preserve">
-        <value>Rögzítsd és kövesd nyomon a bejegyzéseid</value>
-    </data>
-    <data name="DAYS_AGO" xml:space="preserve">
-        <value>{0} napja</value>
-    </data>
-    <data name="HOURS_AGO" xml:space="preserve">
-        <value>{0} órája</value>
-    </data>
-    <data name="JUST_NOW" xml:space="preserve">
-        <value>épp most</value>
-    </data>
-    <data name="MINUTES_AGO" xml:space="preserve">
-        <value>{0} perce</value>
-    </data>
-    <data name="MONTHS_AGO" xml:space="preserve">
-        <value>{0} hónapja</value>
-    </data>
-    <data name="SECONDS_AGO" xml:space="preserve">
-        <value>{0} másodperce</value>
-    </data>
-    <data name="WEEKS_AGO" xml:space="preserve">
-        <value>{0} hete</value>
-    </data>
-    <data name="YEARS_AGO" xml:space="preserve">
-        <value>{0} éve</value>
-    </data>
-    <data name="NEUTRAL" xml:space="preserve">
-        <value>Semleges</value>
-    </data>
-    <data name="SLIGHTLY_PLEASANT" xml:space="preserve">
-        <value>Kissé kellemes</value>
-    </data>
-    <data name="VERY_PLEASANT" xml:space="preserve">
-        <value>Nagyon kellemes</value>
-    </data>
-    <data name="SLIGHTLY_UNPLEASANT" xml:space="preserve">
-        <value>Kissé kellemetlen</value>
-    </data>
-    <data name="VERY_UNPLEASANT" xml:space="preserve">
-        <value>Nagyon kellemetlen</value>
-    </data>
-    <data name="MOOD_LABEL_JOY" xml:space="preserve"><value>Öröm</value></data>
-    <data name="MOOD_LABEL_HOPE" xml:space="preserve"><value>Remény</value></data>
-    <data name="MOOD_LABEL_AWE" xml:space="preserve"><value>Ámulat</value></data>
-    <data name="MOOD_LABEL_GRATITUDE" xml:space="preserve"><value>Hála</value></data>
-    <data name="MOOD_LABEL_COURAGE" xml:space="preserve"><value>Bátorság</value></data>
-    <data name="MOOD_LABEL_CONFIDENCE" xml:space="preserve"><value>Önbizalom</value></data>
-    <data name="MOOD_LABEL_PEACE" xml:space="preserve"><value>Béke</value></data>
-    <data name="MOOD_LABEL_CALM" xml:space="preserve"><value>Nyugalom</value></data>
-    <data name="MOOD_LABEL_RELIEF" xml:space="preserve"><value>Megkönnyebbülés</value></data>
-    <data name="MOOD_LABEL_CONTENTMENT" xml:space="preserve"><value>Elégedettség</value></data>
-    <data name="MOOD_LABEL_SADNESS" xml:space="preserve"><value>Szomorúság</value></data>
-    <data name="MOOD_LABEL_ANXIETY" xml:space="preserve"><value>Szorongás</value></data>
-    <data name="MOOD_LABEL_ANGER" xml:space="preserve"><value>Harag</value></data>
-    <data name="MOOD_LABEL_GUILT" xml:space="preserve"><value>Bűntudat</value></data>
-    <data name="MOOD_LABEL_LONELINESS" xml:space="preserve"><value>Magány</value></data>
-    <data name="MOOD_LABEL_EXHAUSTION" xml:space="preserve"><value>Kimerültség</value></data>
-    <data name="MOOD_LABEL_FRUSTRATION" xml:space="preserve"><value>Frusztráció</value></data>
-    <data name="OTHER" xml:space="preserve">
-        <value>Egyéb..</value>
-    </data>
-    <data name="NEW_MOOD_ENTRY_TITLE" xml:space="preserve">
-        <value>Hogy érzed magad?</value>
-    </data>
-    <data name="MOOD_TITLE" xml:space="preserve">
+    <data name="Navigation.Item.Mood" xml:space="preserve">
         <value>Hangulat</value>
     </data>
-    <data name="MOOD_SUBTITLE" xml:space="preserve">
-        <value>Rögzítsd az érzelmeid</value>
-    </data>
-    <data name="ADD_NEW" xml:space="preserve">
-        <value>Új hozzáadása</value>
-    </data>
-    <data name="ACTIVITIES_TITLE" xml:space="preserve">
+    <data name="Navigation.Item.Activities" xml:space="preserve">
         <value>Tevékenységek</value>
     </data>
-    <data name="ACTIVITIES_SUBTITLE" xml:space="preserve">
-        <value>Szokások és mérföldkövek</value>
+    <data name="Navigation.Item.Settings" xml:space="preserve">
+        <value>Beállítások</value>
     </data>
-    <data name="ROUTINE_STATE_COMPLETED" xml:space="preserve">
-        <value>Teljesítve</value>
+    <data name="Navigation.Item.Wellness" xml:space="preserve">
+        <value>Wellness</value>
     </data>
-    <data name="ROUTINE_STATE_NOT_COMPLETED" xml:space="preserve">
-        <value>Nincs teljesítve</value>
+    <data name="Common.Time.JustNow" xml:space="preserve">
+        <value>Épp most</value>
     </data>
-    <data name="ROUTINE_STATE_NONE" xml:space="preserve">
-        <value>Üres</value>
+    <data name="Common.Time.OneMinuteAgo" xml:space="preserve">
+        <value>1 perce</value>
     </data>
-    <data name="TARGET" xml:space="preserve">
-        <value>Cél</value>
+    <data name="Common.Time.MinutesAgo" xml:space="preserve">
+        <value>{0} perce</value>
     </data>
-    <data name="YEAR" xml:space="preserve">
-        <value>Év</value>
+    <data name="Common.Time.OneHourAgo" xml:space="preserve">
+        <value>1 órája</value>
     </data>
-    <data name="MONTH" xml:space="preserve">
-        <value>Hónap</value>
+    <data name="Common.Time.HoursAgo" xml:space="preserve">
+        <value>{0} órája</value>
     </data>
-    <data name="WEEK" xml:space="preserve">
-        <value>Hét</value>
+    <data name="Common.Button.Add" xml:space="preserve">
+        <value>Új hozzáadása</value>
     </data>
-    <data name="DAY" xml:space="preserve">
-        <value>Nap</value>
+    <data name="Common.Button.Edit" xml:space="preserve">
+        <value>Szerkesztés</value>
     </data>
-    <data name="ALL" xml:space="preserve">
-        <value>Összes</value>
+    <data name="Common.Button.Save" xml:space="preserve">
+        <value>Mentés</value>
     </data>
-    <data name="START_DATE" xml:space="preserve">
-        <value>Kezdet</value>
+    <data name="Common.Button.Cancel" xml:space="preserve">
+        <value>Mégse</value>
     </data>
-    <data name="TARGET_DATE" xml:space="preserve">
-        <value>Céldátum</value>
+    <data name="Common.Button.Delete" xml:space="preserve">
+        <value>Törlés</value>
     </data>
-    <data name="MONDAY_SHORT" xml:space="preserve">
-        <value>H</value>
+    <data name="Journal.Search.Placeholder" xml:space="preserve">
+        <value>Keresés...</value>
     </data>
-    <data name="TUESDAY_SHORT" xml:space="preserve">
-        <value>K</value>
+    <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
+        <value>Írd ide a gondolataidat...</value>
     </data>
-    <data name="WEDNESDAY_SHORT" xml:space="preserve">
-        <value>Sze</value>
-    </data>
-    <data name="THURSDAY_SHORT" xml:space="preserve">
-        <value>Cs</value>
-    </data>
-    <data name="FRIDAY_SHORT" xml:space="preserve">
-        <value>P</value>
-    </data>
-    <data name="SATURDAY_SHORT" xml:space="preserve">
-        <value>Szo</value>
-    </data>
-    <data name="SUNDAY_SHORT" xml:space="preserve">
-        <value>V</value>
+    <data name="Journal.Empty.Message" xml:space="preserve">
+        <value>Kattins a + gombra az első bejegyzésed létrehozásához.</value>
     </data>
 </root>

@@ -1,0 +1,22 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <x:Double x:Key="Haven.Scale.FontSize.Xs">12</x:Double>
+    <x:Double x:Key="Haven.Scale.FontSize.Sm">14</x:Double>
+    <x:Double x:Key="Haven.Scale.FontSize.Md">16</x:Double>
+    <x:Double x:Key="Haven.Scale.FontSize.Lg">18</x:Double>
+    <x:Double x:Key="Haven.Scale.FontSize.Xl">24</x:Double>
+    <x:Double x:Key="Haven.Scale.FontSize.Xxl">32</x:Double>
+    
+    <FontWeight x:Key="Haven.Scale.FontWeight.Light">Light</FontWeight>
+    <FontWeight x:Key="Haven.Scale.FontWeight.Regular">Normal</FontWeight>
+    <FontWeight x:Key="Haven.Scale.FontWeight.Medium">Medium</FontWeight>
+    <FontWeight x:Key="Haven.Scale.FontWeight.SemiBold">SemiBold</FontWeight>
+    <FontWeight x:Key="Haven.Scale.FontWeight.Bold">Bold</FontWeight>
+    
+</ResourceDictionary>

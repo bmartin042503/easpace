@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
+
 using System;
 using System.Globalization;
 using Avalonia.Markup.Xaml;
@@ -6,6 +9,8 @@ namespace easpace.Desktop.Services;
 
 public class LocalizationService : MarkupExtension
 {
+    // Key naming convention: Category.Component.Function
+    
     private static readonly System.Threading.Lock Lock = new();
     private static CultureInfo _resourceCulture = CultureInfo.CurrentUICulture;
     

@@ -1,0 +1,86 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Turquoise -->
+    <Color x:Key="Haven.Scale.Turquoise50">#F7FDFF</Color>
+    <Color x:Key="Haven.Scale.Turquoise100">#EBFBFF</Color>
+    <Color x:Key="Haven.Scale.Turquoise200">#C5EAF4</Color>
+    <Color x:Key="Haven.Scale.Turquoise300">#A3E1F3</Color>
+    <Color x:Key="Haven.Scale.Turquoise400">#67D0EE</Color>
+    <Color x:Key="Haven.Scale.Turquoise500">#2AAED3</Color>
+    <Color x:Key="Haven.Scale.Turquoise600">#1591B3</Color>
+    <Color x:Key="Haven.Scale.Turquoise700">#08637D</Color>
+    <Color x:Key="Haven.Scale.Turquoise800">#034355</Color>
+    <Color x:Key="Haven.Scale.Turquoise900">#00303D</Color>
+
+    <!-- Green -->
+    <Color x:Key="Haven.Scale.Green100">#ECFFEB</Color>
+    <Color x:Key="Haven.Scale.Green200">#CAF5C6</Color>
+    <Color x:Key="Haven.Scale.Green300">#A8F2A2</Color>
+    <Color x:Key="Haven.Scale.Green400">#76E66D</Color>
+    <Color x:Key="Haven.Scale.Green500">#40D335</Color>
+    <Color x:Key="Haven.Scale.Green600">#21B315</Color>
+    <Color x:Key="Haven.Scale.Green700">#117D09</Color>
+    <Color x:Key="Haven.Scale.Green800">#074F02</Color>
+    <Color x:Key="Haven.Scale.Green900">#043D00</Color>
+
+    <!-- Yellow -->
+    <Color x:Key="Haven.Scale.Yellow100">#FFFFE6</Color>
+    <Color x:Key="Haven.Scale.Yellow200">#F7F7B1</Color>
+    <Color x:Key="Haven.Scale.Yellow300">#F4F479</Color>
+    <Color x:Key="Haven.Scale.Yellow400">#EAEA52</Color>
+    <Color x:Key="Haven.Scale.Yellow500">#D8D82B</Color>
+    <Color x:Key="Haven.Scale.Yellow600">#C0C01B</Color>
+    <Color x:Key="Haven.Scale.Yellow700">#90850A</Color>
+    <Color x:Key="Haven.Scale.Yellow800">#5F5004</Color>
+    <Color x:Key="Haven.Scale.Yellow900">#3D2E00</Color>
+
+    <!-- Red -->
+    <Color x:Key="Haven.Scale.Red100">#FFEBEB</Color>
+    <Color x:Key="Haven.Scale.Red200">#F6C1C1</Color>
+    <Color x:Key="Haven.Scale.Red300">#F79B9B</Color>
+    <Color x:Key="Haven.Scale.Red400">#ED6666</Color>
+    <Color x:Key="Haven.Scale.Red500">#D42A2A</Color>
+    <Color x:Key="Haven.Scale.Red600">#B31515</Color>
+    <Color x:Key="Haven.Scale.Red700">#7D0909</Color>
+    <Color x:Key="Haven.Scale.Red800">#4F0303</Color>
+    <Color x:Key="Haven.Scale.Red900">#3D0000</Color>
+
+    <!-- Blue -->
+    <Color x:Key="Haven.Scale.Blue100">#EBEFFF</Color>
+    <Color x:Key="Haven.Scale.Blue200">#C6D1F5</Color>
+    <Color x:Key="Haven.Scale.Blue300">#A2B4F2</Color>
+    <Color x:Key="Haven.Scale.Blue400">#6684ED</Color>
+    <Color x:Key="Haven.Scale.Blue500">#2A50D4</Color>
+    <Color x:Key="Haven.Scale.Blue600">#1538B3</Color>
+    <Color x:Key="Haven.Scale.Blue700">#09247D</Color>
+    <Color x:Key="Haven.Scale.Blue800">#02144F</Color>
+    <Color x:Key="Haven.Scale.Blue900">#000E3D</Color>
+
+    <!-- Neutral -->
+    <Color x:Key="Haven.Scale.Neutral50">#F7F7F7</Color>
+    <Color x:Key="Haven.Scale.Neutral100">#EDEFF0</Color>
+    <Color x:Key="Haven.Scale.Neutral200">#CFD6D8</Color>
+    <Color x:Key="Haven.Scale.Neutral300">#A9B6BA</Color>
+    <Color x:Key="Haven.Scale.Neutral400">#879AA0</Color>
+    <Color x:Key="Haven.Scale.Neutral500">#5E7379</Color>
+    <Color x:Key="Haven.Scale.Neutral600">#41585E</Color>
+    <Color x:Key="Haven.Scale.Neutral700">#253A40</Color>
+    <Color x:Key="Haven.Scale.Neutral800">#15262A</Color>
+    <Color x:Key="Haven.Scale.Neutral900">#040F12</Color>
+    
+    <!-- White -->
+    <Color x:Key="Haven.Scale.White">#FFFFFF</Color>
+    
+    <!-- Black -->
+    <Color x:Key="Haven.Scale.Black">#000000</Color>
+    
+    <!-- Transparent -->
+    <Color x:Key="Haven.Scale.Transparent">Transparent</Color>
+
+</ResourceDictionary>
