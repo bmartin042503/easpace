@@ -26,8 +26,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Title -->
                     <TextBlock Text="{Binding Activity.Title}"
                                Classes="title"
-                               VerticalAlignment="Center"
-                               TextTrimming="CharacterEllipsis" />
+                               VerticalAlignment="Center" />
 
                     <!-- Details -->
                     <StackPanel Orientation="Horizontal"
@@ -92,7 +91,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    
+
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
@@ -112,55 +111,57 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Template of Milestone Activity -->
         <DataTemplate x:Key="MilestoneActivityViewModel" x:DataType="activities:MilestoneActivityViewModel">
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{DynamicResource ActivityTitleSpacing}"
-                  RowDefinitions="Auto,Auto,*" RowSpacing="{DynamicResource ActivityTitleSpacing}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+                  RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}"
+                  Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
 
-                <!-- Title -->
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Title}"
-                           FontSize="{DynamicResource ActivityTitleFontSize}"
-                           FontWeight="Medium"
-                           Foreground="{DynamicResource Neutral700}"
-                           VerticalAlignment="Center"
-                           TextTrimming="CharacterEllipsis" />
+                <!-- Top bar -->
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
-                <!-- Interaction buttons -->
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                            Spacing="{DynamicResource InteractionButtonsSpacing}"
-                            VerticalAlignment="Center">
+                    <!-- Title -->
+                    <TextBlock Text="{Binding Activity.Title}"
+                               Classes="title"
+                               VerticalAlignment="Center" />
 
-                    <!-- Add button -->
-                    <Button Classes="icon-btn primary">
-                        <PathIcon Data="{DynamicResource PlusIcon}" />
-                    </Button>
+                    <!-- Details -->
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
-                    <!-- Edit button -->
-                    <Button Classes="icon-btn secondary">
-                        <PathIcon Data="{DynamicResource PencilFillIcon}" />
-                    </Button>
+                        <!-- Start date -->
+                        <TextBlock Classes="activity-value" VerticalAlignment="Center">
+                            <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.CreatedAt}" />
+                        </TextBlock>
+
+                        <!-- Target date -->
+                        <TextBlock Classes="activity-value" VerticalAlignment="Center">
+                            <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" /><Run Text=": " />
+                            <Run Text="{Binding Activity.TargetDate}" />
+                        </TextBlock>
+
+                    </StackPanel>
 
                 </StackPanel>
 
-                <!-- Details -->
-                <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Spacing="4">
+                <!-- Interaction buttons -->
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                            VerticalAlignment="Top">
 
-                    <!-- Start date -->
-                    <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
-                               VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
-                        <Run Text="{services:LocalizationService Key='START_DATE'}" /><Run Text=": " />
-                        <Run Text="{Binding Activity.CreatedAt}" />
-                    </TextBlock>
+                    <!-- Edit button -->
+                    <Button Classes="tertiary icon">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                    </Button>
 
-                    <!-- Target date -->
-                    <TextBlock FontSize="{DynamicResource ActivitySubTextFontSize}"
-                               VerticalAlignment="Center" Foreground="{DynamicResource Neutral600}">
-                        <Run Text="{services:LocalizationService Key='TARGET_DATE'}" /><Run Text=": " />
-                        <Run Text="{Binding Activity.TargetDate}" />
-                    </TextBlock>
+                    <!-- Add button -->
+                    <Button Classes="tertiary icon">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+                    </Button>
 
                 </StackPanel>
 
                 <!-- Chart -->
-                <controls:MilestoneChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                <controls:MilestoneChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                          Value="{Binding Activity.EntriesSum}"
                                          Maximum="{Binding Activity.TargetValue}"
                                          Unit="{Binding Activity.Unit}" />

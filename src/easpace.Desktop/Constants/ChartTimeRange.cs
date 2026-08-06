@@ -5,9 +5,9 @@ namespace easpace.Desktop.Constants;
 
 public enum ChartTimeRange
 {
-    Year,
-    Month,
-    Week,
     Day,
+    Week,
+    Month,
+    Year,
     All
 }

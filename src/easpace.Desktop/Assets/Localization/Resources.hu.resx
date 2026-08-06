@@ -104,7 +104,13 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.RoutineState.None" xml:space="preserve">
         <value>Üres</value>
     </data>
-    <data name="Activities.Activity.Target" xml:space="preserve">
+    <data name="Activities.NumericActivity.Target" xml:space="preserve">
         <value>Cél</value>
+    </data>
+    <data name="Activities.NumericActivity.StartDate" xml:space="preserve">
+        <value>Kezdés</value>
+    </data>
+    <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
+        <value>Céldátum</value>
     </data>
 </root>

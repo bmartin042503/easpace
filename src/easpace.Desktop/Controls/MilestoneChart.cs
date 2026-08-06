@@ -14,7 +14,7 @@ public class MilestoneChart : Control
 {
     #region Fields
 
-    private readonly FontFamily _fontFamily = new("Poppins");
+    private readonly FontFamily _fontFamily = new("avares://easpace.Desktop/Assets/Fonts#Poppins");
     
     // fields for animation logic
     private double _animatedValue;

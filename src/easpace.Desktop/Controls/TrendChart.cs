@@ -466,7 +466,7 @@ public class TrendChart : Control
         context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
 
         var targetText = new TextLayout(
-            $"{LocalizationService.GetString("Activities.Activity.Target")}: {Target.Value} {Unit}",
+            $"{LocalizationService.GetString("Activities.NumericActivity.Target")}: {Target.Value} {Unit}",
             new Typeface(_fontFamily),
             12,
             axisPen.Brush
