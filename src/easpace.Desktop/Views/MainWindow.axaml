@@ -23,33 +23,37 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Sidebar -->
         <Border Grid.Column="0" Classes="sidebar">
 
-            <ListBox Classes="sidebar-nav"
-                     SelectedIndex="{Binding SelectedNavIndex}">
+            <ListBox Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
 
-                <controls:NavigationItem Grid.Row="0"
-                                         Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
-                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
-                                         Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
-                
-                <controls:NavigationItem Grid.Row="1"
-                                         Icon="{StaticResource Haven.PhosphorIcons.Target}"
-                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
-                                         Text="{services:LocalizationService Key='Navigation.Item.Activities'}" />
+                <ListBoxItem Grid.Row="0">
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                                                 Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
+                </ListBoxItem>
 
-                <controls:NavigationItem Grid.Row="2"
-                                         Icon="{StaticResource Haven.PhosphorIcons.Brain}"
-                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
-                                         Text="{services:LocalizationService Key='Navigation.Item.Mood'}" />
+                <ListBoxItem Grid.Row="1">
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                                 Text="{services:LocalizationService Key='Navigation.Item.Activities'}" />
+                </ListBoxItem>
 
-                <controls:NavigationItem Grid.Row="3"
-                                         Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
-                                         FilledIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
-                                         Text="{services:LocalizationService Key='Navigation.Item.Wellness'}" />
+                <ListBoxItem Grid.Row="2">
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                                 Text="{services:LocalizationService Key='Navigation.Item.Mood'}" />
+                </ListBoxItem>
 
-                <controls:NavigationItem Grid.Row="5"
-                                         Icon="{StaticResource Haven.PhosphorIcons.Gear}"
-                                         FilledIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
-                                         Text="{services:LocalizationService Key='Navigation.Item.Settings'}" />
+                <ListBoxItem Grid.Row="3">
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
+                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
+                                                 Text="{services:LocalizationService Key='Navigation.Item.Wellness'}" />
+                </ListBoxItem>
+
+                <ListBoxItem Grid.Row="5">
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
+                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
+                                                 Text="{services:LocalizationService Key='Navigation.Item.Settings'}" />
+                </ListBoxItem>
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -58,7 +62,7 @@ Licensed under the MIT License. See LICENSE file for details.
                               IsVisible="{Binding IsSidebarVisible}" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                
+
             </ListBox>
 
         </Border>

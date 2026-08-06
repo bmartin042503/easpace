@@ -13,7 +13,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Foreground -->
     <SolidColorBrush x:Key="Haven.Sem.Foreground" Color="{StaticResource Haven.Scale.Neutral700}" />
     <SolidColorBrush x:Key="Haven.Sem.Foreground.Subtle" Color="{StaticResource Haven.Scale.Neutral500}" />
-    <SolidColorBrush x:Key="Haven.Sem.Foreground.Muted" Color="{StaticResource Haven.Scale.Neutral300}" />
     
     <!-- Border -->
     <SolidColorBrush x:Key="Haven.Sem.Border" Color="{StaticResource Haven.Scale.Neutral200}" />
@@ -21,6 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Surface -->
     <SolidColorBrush x:Key="Haven.Sem.Surface" Color="{StaticResource Haven.Scale.Neutral50}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Elevated" Color="{StaticResource Haven.Scale.White}" />
+    <SolidColorBrush x:Key="Haven.Sem.Surface.Accent" Color="{StaticResource Haven.Scale.Turquoise100}" />
     
     <!-- Gradient -->
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">

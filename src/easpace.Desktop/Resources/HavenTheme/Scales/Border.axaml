@@ -9,6 +9,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <x:Double x:Key="Haven.Scale.Border.Thickness.Double">1</x:Double>
     
     <Thickness x:Key="Haven.Scale.Border.Thickness">1</Thickness>
+    <Thickness x:Key="Haven.Scale.Border.Thickness.Medium">1.5</Thickness>
+    
     <Thickness x:Key="Haven.Scale.Border.Thickness.Right">0,0,1,0</Thickness>
     
 </ResourceDictionary>

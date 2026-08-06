@@ -9,21 +9,16 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
-             xmlns:converters="clr-namespace:easpace.Desktop.Converters"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.JournalView"
              x:DataType="vm:JournalViewModel"
              Background="{DynamicResource Haven.Sem.Canvas}">
 
-    <UserControl.Resources>
-        <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
-    </UserControl.Resources>
-
     <Border Classes="card" Classes.gradient="{Binding !IsEditing}"
             Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
 
-        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="350" />
@@ -32,12 +27,12 @@ Licensed under the MIT License. See LICENSE file for details.
             </Grid.ColumnDefinitions>
 
             <!-- Sidebar -->
-            <Grid RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="20">
+            <Grid RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
                 <!-- Top bar -->
                 <StackPanel Grid.Row="0" Orientation="Vertical">
 
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="14">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
                         <!-- Search box -->
                         <TextBox Grid.Column="0"
@@ -83,7 +78,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Journal entries list -->
                 <ScrollViewer Grid.Row="1" IsVisible="{Binding HasEntries}">
-                    <ListBox Classes="journal-entries"
+                    <ListBox Classes="journal list"
                              SelectedIndex="0" IsEnabled="{Binding !IsEditing}"
                              SelectedItem="{Binding SelectedJournalEntry}"
                              ItemsSource="{Binding JournalEntries}">
@@ -98,6 +93,12 @@ Licensed under the MIT License. See LICENSE file for details.
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
 
                     </ListBox>
                 </ScrollViewer>

@@ -1,0 +1,42 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+
+    <Style Selector="controls|ActivityListItem">
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}">
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                        <TextBlock Name="PART_Title" Grid.Column="0"
+                                   Text="{TemplateBinding Title}"
+                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+
+                        <Grid Grid.Column="1" ColumnDefinitions="*,Auto"
+                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                            <TextBlock Name="PART_Status" Grid.Column="0"
+                                       VerticalAlignment="Center"
+                                       Text="{TemplateBinding Status}" />
+
+                            <PathIcon Name="PART_Icon" Grid.Column="1"
+                                      Data="{TemplateBinding Icon}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+</Styles>

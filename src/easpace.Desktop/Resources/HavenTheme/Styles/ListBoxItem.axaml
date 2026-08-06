@@ -1,0 +1,304 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+        xmlns:converters="clr-namespace:easpace.Desktop.Converters"
+        xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+        xmlns:models="clr-namespace:easpace.Desktop.Models"
+        xmlns:activities="clr-namespace:easpace.Desktop.ViewModels.Activities"
+        xmlns:activities1="clr-namespace:easpace.Desktop.Models.Activities">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+
+                <Border.Resources>
+                    <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
+                </Border.Resources>
+
+                <StackPanel Orientation="Horizontal" Spacing="20">
+
+                    <Border Classes="sidebar" Height="600" Width="180">
+                        <ListBox Classes="nav list">
+
+                            <ListBoxItem Grid.Row="0">
+                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                                                             Text="Journal" />
+                            </ListBoxItem>
+
+                            <ListBoxItem Grid.Row="1">
+                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                                             Text="Activities" />
+                            </ListBoxItem>
+
+                            <ListBoxItem Grid.Row="2">
+                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                                             Text="Mood" />
+                            </ListBoxItem>
+
+                            <ListBoxItem Grid.Row="3">
+                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
+                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
+                                                             Text="Wellness" />
+                            </ListBoxItem>
+
+                            <ListBoxItem Grid.Row="5">
+                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
+                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
+                                                             Text="Settings" />
+                            </ListBoxItem>
+
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                                          RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+
+                        </ListBox>
+                    </Border>
+
+                    <ListBox Classes="journal list">
+                        <ListBox.ItemsSource>
+                            <generic:List x:TypeArguments="models:JournalEntry">
+                                <models:JournalEntry Title="Journal Entry 1"
+                                                     CreatedAt="2026-08-01T07:30:00" />
+
+                                <models:JournalEntry Title="Journal Entry 2"
+                                                     CreatedAt="2026-08-02T20:15:00" />
+
+                                <models:JournalEntry Title="Journal Entry 3"
+                                                     CreatedAt="2026-08-04T09:45:00" />
+
+                                <models:JournalEntry Title="Journal Entry 4"
+                                                     CreatedAt="2026-08-05T14:20:00" />
+                            </generic:List>
+                        </ListBox.ItemsSource>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:JournalEntry">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Classes="list-item"
+                                               Text="{Binding Title}" />
+                                    <TextBlock Classes="sub-list-item"
+                                               Text="{Binding CreatedAt, Converter={StaticResource RelativeDateConverter}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                    </ListBox>
+
+                    <!-- Activities List -->
+                    <ListBox Classes="activity list" Width="350">
+
+                        <!-- Sample listbox item 1 - Trend Activity -->
+                        <activities:TrendActivityViewModel>
+                            <activities:TrendActivityViewModel.BaseActivity>
+                                <activities1:TrendActivity TargetValue="75.0" Unit="kg" Title="Lose weight">
+                                    <activities1:TrendActivity.Entries>
+                                        <activities1:NumericDataEntry Value="83.5" />
+                                        <activities1:NumericDataEntry Value="82.1" />
+                                        <activities1:NumericDataEntry Value="81.2" />
+                                    </activities1:TrendActivity.Entries>
+                                </activities1:TrendActivity>
+                            </activities:TrendActivityViewModel.BaseActivity>
+                        </activities:TrendActivityViewModel>
+
+                        <!-- Sample listbox item 2 - Routine Activity -->
+                        <activities:RoutineActivityViewModel>
+                            <activities:RoutineActivityViewModel.BaseActivity>
+                                <activities1:RoutineActivity Title="Daily workout">
+                                    <activities1:RoutineActivity.Entries>
+                                        <activities1:RoutineDataEntry State="NotCompleted" />
+                                        <activities1:RoutineDataEntry State="Completed" />
+                                    </activities1:RoutineActivity.Entries>
+                                </activities1:RoutineActivity>
+                            </activities:RoutineActivityViewModel.BaseActivity>
+                        </activities:RoutineActivityViewModel>
+
+                        <!-- Sample listbox item 3 - Milestone Activity -->
+                        <activities:MilestoneActivityViewModel>
+                            <activities:MilestoneActivityViewModel.BaseActivity>
+                                <activities1:MilestoneActivity Title="Read 1000 pages" TargetValue="1000" Unit="pages">
+                                    <activities1:MilestoneActivity.Entries>
+                                        <activities1:NumericDataEntry Value="45" />
+                                        <activities1:NumericDataEntry Value="120" />
+                                        <activities1:NumericDataEntry Value="85" />
+                                    </activities1:MilestoneActivity.Entries>
+                                </activities1:MilestoneActivity>
+                            </activities:MilestoneActivityViewModel.BaseActivity>
+                        </activities:MilestoneActivityViewModel>
+
+                        <!-- Sample listbox item 4 - Routine Activity -->
+                        <activities:RoutineActivityViewModel>
+                            <activities:RoutineActivityViewModel.BaseActivity>
+                                <activities1:RoutineActivity Title="Quit smoking">
+                                    <activities1:RoutineActivity.Entries>
+                                        <activities1:RoutineDataEntry State="Completed" />
+                                        <activities1:RoutineDataEntry State="Completed" />
+                                        <activities1:RoutineDataEntry State="Completed" />
+                                    </activities1:RoutineActivity.Entries>
+                                </activities1:RoutineActivity>
+                            </activities:RoutineActivityViewModel.BaseActivity>
+                        </activities:RoutineActivityViewModel>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="activities:ActivityViewModel">
+                                <ContentControl Content="{Binding .}"
+                                                ContentTemplate="{StaticResource ActivityListItemSelector}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                    </ListBox>
+
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <!-- Journal entries styling -->
+    <Style Selector="ListBox.journal.list ListBoxItem">
+
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Horizontal.Xxs}" />
+        <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        </Style>
+
+        <Style Selector="^ TextBlock.list-item">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        </Style>
+
+        <Style Selector="^ TextBlock.sub-list-item">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        </Style>
+
+        <Style Selector="^ TextBlock">
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style Selector="^:selected TextBlock">
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        </Style>
+
+        <Style Selector="^:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+    </Style>
+
+    <!-- Navigation items styling -->
+    <Style Selector="ListBox.nav.list ListBoxItem">
+
+        <Setter Property="Background" Value="{DynamicResource Haven.Scale.Transparent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Sm}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Sm}" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Style Selector="^ controls|NavigationListItem TextBlock#PART_Text">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
+        </Style>
+
+        <Style Selector="^ controls|NavigationListItem PathIcon#PART_Icon">
+            <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+            <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        </Style>
+
+        <Style Selector="^:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+        <Style Selector="^:selected controls|NavigationListItem TextBlock#PART_Text">
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+        </Style>
+
+        <Style Selector="^:selected controls|NavigationListItem /template/ PathIcon#PART_Icon">
+            <Setter Property="Data"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
+        </Style>
+
+    </Style>
+
+    <!-- Activity items styling -->
+    <Style Selector="ListBox.activity.list ListBoxItem">
+
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Cursor" Value="Hand" />
+
+        <Style Selector="^ controls|ActivityListItem TextBlock#PART_Title">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        </Style>
+
+        <Style Selector="^ controls|ActivityListItem TextBlock#PART_Status">
+            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        </Style>
+
+        <Style Selector="^ controls|ActivityListItem PathIcon#PART_Icon">
+            <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+            <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
+        </Style>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        </Style>
+
+        <Style Selector="^:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+        <Style Selector="^:selected controls|ActivityListItem /template/ PathIcon#PART_Icon">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Data"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
+        </Style>
+
+        <Style
+            Selector="^:selected controls|ActivityListItem TextBlock#PART_Title, ^:selected controls|ActivityListItem TextBlock#PART_Status">
+            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+    </Style>
+
+</Styles>
