@@ -16,6 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <!-- Border -->
     <SolidColorBrush x:Key="Haven.Sem.Border" Color="{StaticResource Haven.Scale.Neutral200}" />
+    <SolidColorBrush x:Key="Haven.Sem.Border.Accent" Color="{StaticResource Haven.Scale.Turquoise300}" />
     
     <!-- Surface -->
     <SolidColorBrush x:Key="Haven.Sem.Surface" Color="{StaticResource Haven.Scale.Neutral50}" />
@@ -23,10 +24,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Haven.Sem.Surface.Accent" Color="{StaticResource Haven.Scale.Turquoise100}" />
     
     <!-- Gradient -->
-    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
-        <GradientStop Color="{StaticResource Haven.Scale.Neutral50}" Offset="0.0" />
-        <GradientStop Color="{StaticResource Haven.Scale.Turquoise100}" Offset="1.0" />
-    </LinearGradientBrush>
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise400}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise600}" Offset="1.0" />
@@ -34,6 +31,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise500}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise700}" Offset="1.0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent.Muted" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.Neutral50}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Turquoise100}" Offset="1.0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.Turquoise50}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Turquoise100}" Offset="1.0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Neutral.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.Neutral100}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Neutral200}" Offset="1.0" />
     </LinearGradientBrush>
     
     <!-- Accent -->

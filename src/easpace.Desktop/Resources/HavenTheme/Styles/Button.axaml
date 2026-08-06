@@ -79,19 +79,19 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="Button.tertiary">
         <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
         <Setter Property="BorderThickness" Value="0" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
     </Style>
     
     <Style Selector="Button.tertiary.delete">
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger}" />
         </Style>
     </Style>
 

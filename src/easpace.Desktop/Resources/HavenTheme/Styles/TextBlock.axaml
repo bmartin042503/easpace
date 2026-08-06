@@ -11,9 +11,10 @@ Licensed under the MIT License. See LICENSE file for details.
             <Border Padding="20" Background="{DynamicResource Neutral100}">
 
                 <StackPanel Orientation="Vertical" Spacing="20">
-                    <SelectableTextBlock Classes="title" Text="Journal Entry Title" />
-                    <SelectableTextBlock Classes="paragraph" Text="Journal Entry Text" />
-
+                    <SelectableTextBlock Classes="title" Text="Title" />
+                    <SelectableTextBlock Classes="paragraph" Text="paragraph" />
+                    <TextBlock Classes="activity-value" Text="Activity current value" />
+                    <TextBlock Classes="activity-target" Text="Activity target value" />
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
@@ -39,6 +40,17 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+    
+    <Style Selector="TextBlock.activity-value">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+    </Style>
+    
+    <Style Selector="TextBlock.activity-target">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+        <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
     </Style>
 
 </Styles>

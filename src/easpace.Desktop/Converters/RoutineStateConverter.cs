@@ -18,9 +18,9 @@ public class RoutineStateConverter : IValueConverter
         {
             return state switch
             {
-                RoutineState.Completed => LocalizationService.GetString("ROUTINE_STATE_COMPLETED"),
-                RoutineState.NotCompleted => LocalizationService.GetString("ROUTINE_STATE_NOT_COMPLETED"),
-                RoutineState.None => LocalizationService.GetString("ROUTINE_STATE_NONE"),
+                RoutineState.Completed => LocalizationService.GetString("Activities.RoutineState.Completed"),
+                RoutineState.NotCompleted => LocalizationService.GetString("Activities.RoutineState.NotCompleted"),
+                RoutineState.None => LocalizationService.GetString("Activities.RoutineState.None"),
                 _ => string.Empty
             };
         }

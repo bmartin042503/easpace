@@ -30,8 +30,8 @@ Licensed under the MIT License. See LICENSE file for details.
     </Styles.Resources>
     
     <Style Selector="Border.sidebar">
-        <Setter Property="MinWidth" Value="180" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Subtle}" />
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Right}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
 
@@ -49,7 +49,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
     
     <Style Selector="Border.gradient.card">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Subtle}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
     </Style>
 
 </Styles>

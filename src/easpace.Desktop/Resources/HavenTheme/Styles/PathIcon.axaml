@@ -20,7 +20,11 @@ Licensed under the MIT License. See LICENSE file for details.
                     <PathIcon Classes="sidebar settings"
                               Data="{StaticResource Haven.PhosphorIcons.Gear}" />
                 </StackPanel>
-                
+
+                <PathIcon Classes="target"
+                          Data="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                          VerticalAlignment="Center" />
+
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -49,8 +53,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
         <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
     </Style>
-    
+
     <Style Selector="PathIcon.activity-entry">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+    </Style>
+
+    <Style Selector="PathIcon.target">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
         <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
     </Style>

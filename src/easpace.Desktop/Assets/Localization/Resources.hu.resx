@@ -53,6 +53,21 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Time.HoursAgo" xml:space="preserve">
         <value>{0} órája</value>
     </data>
+    <data name="Common.Time.Year" xml:space="preserve">
+        <value>Év</value>
+    </data>
+    <data name="Common.Time.Month" xml:space="preserve">
+        <value>Hónap</value>
+    </data>
+    <data name="Common.Time.Week" xml:space="preserve">
+        <value>Hét</value>
+    </data>
+    <data name="Common.Time.Day" xml:space="preserve">
+        <value>Nap</value>
+    </data>
+    <data name="Common.Time.All" xml:space="preserve">
+        <value>Összes</value>
+    </data>
     <data name="Common.Button.Add" xml:space="preserve">
         <value>Új hozzáadása</value>
     </data>
@@ -79,5 +94,17 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
+    </data>
+    <data name="Activities.RoutineState.Completed" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="Activities.RoutineState.NotCompleted" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="Activities.RoutineState.None" xml:space="preserve">
+        <value>Üres</value>
+    </data>
+    <data name="Activities.Activity.Target" xml:space="preserve">
+        <value>Cél</value>
     </data>
 </root>

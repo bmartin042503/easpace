@@ -18,7 +18,7 @@ public class TrendChart : Control
 {
     #region Fields
 
-    private readonly FontFamily _fontFamily = new("Poppins");
+    private readonly FontFamily _fontFamily = new("avares://easpace.Desktop/Assets/Fonts#Poppins");
     private readonly List<(Point CanvasPoint, NumericDataEntry Entry)> _dataPoints = [];
     private NumericDataEntry? _hoveredEntry;
     private Point _hoveredPoint;
@@ -466,7 +466,7 @@ public class TrendChart : Control
         context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
 
         var targetText = new TextLayout(
-            $"{LocalizationService.GetString("TARGET")}: {Target.Value} {Unit}",
+            $"{LocalizationService.GetString("Activities.Activity.Target")}: {Target.Value} {Unit}",
             new Typeface(_fontFamily),
             12,
             axisPen.Brush

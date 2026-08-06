@@ -22,6 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xl">32</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Xxl">48</Thickness>
     
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.3Xs">8,4</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xxs">10,6</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xs">14,8</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Sm">18,10</Thickness>
@@ -29,6 +30,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Lg">26,22</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xl">32,26</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Wide.Xxl">48,32</Thickness>
+    
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Left.Xs">10,0,0,0</Thickness>
     
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xxs">6,0</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xs">10,0</Thickness>

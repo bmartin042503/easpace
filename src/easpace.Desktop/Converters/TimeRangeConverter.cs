@@ -15,8 +15,16 @@ public class TimeRangeConverter : IValueConverter
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not ChartTimeRange timeRange) return value?.ToString();
-        
-        var localizationKey = timeRange.ToString().ToUpper();
+
+        var localizationKey = timeRange switch
+        {
+            ChartTimeRange.Year => "Common.Time.Year",
+            ChartTimeRange.Week => "Common.Time.Week",
+            ChartTimeRange.Month => "Common.Time.Month",
+            ChartTimeRange.Day => "Common.Time.Day",
+            _ => "Common.Time.All"
+            
+        };
         
         return LocalizationService.GetString(localizationKey);
 
