@@ -10,5 +10,4 @@ public abstract partial class NumericActivity : Activity<NumericDataEntry>
 {
     [ObservableProperty] private double? _targetValue;
     [ObservableProperty] private string _unit = string.Empty;
-    [ObservableProperty] private DateTime _targetDate;
 }

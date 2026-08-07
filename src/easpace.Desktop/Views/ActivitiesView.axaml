@@ -24,7 +24,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="350" />
+                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -90,6 +90,8 @@ Licensed under the MIT License. See LICENSE file for details.
             <ContentControl Grid.Row="0" Grid.Column="2"
                             Content="{Binding SelectedActivityViewModel}"
                             ContentTemplate="{StaticResource ActivityItemSelector}" />
+            
+            <!--  -->
             
         </Grid>
         

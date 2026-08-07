@@ -86,6 +86,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Search entries...</value>
     </data>
+    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
+        <value>Enter a title...</value>
+    </data>
     <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
         <value>Write your thoughts here...</value>
     </data>
@@ -112,5 +115,35 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
         <value>Goal date</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
+        <value>Mon</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
+        <value>Tue</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
+        <value>Wed</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
+        <value>Thu</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
+        <value>Fri</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
+        <value>Sun</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Completed" xml:space="preserve">
+        <value>Completed</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.NotCompleted" xml:space="preserve">
+        <value>Not completed</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Today</value>
     </data>
 </root>

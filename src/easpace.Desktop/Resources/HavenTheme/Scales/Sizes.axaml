@@ -12,4 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <x:Double x:Key="Haven.Scale.Icon.Size.Lg">28</x:Double>
     <x:Double x:Key="Haven.Scale.Icon.Size.Xl">32</x:Double>
     
+    <x:Double x:Key="Haven.Scale.Container.Size.Sm">14</x:Double>
+    <x:Double x:Key="Haven.Scale.Container.Size.Xl">48</x:Double>
+    
 </ResourceDictionary>

@@ -1,0 +1,38 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+
+    <Style Selector="controls|RoutineMonthItem">
+
+        <Setter Property="ItemSpacing" Value="{StaticResource Haven.Scale.Spacing.Sm}"/>
+        <Setter Property="TitleSpacing" Value="{StaticResource Haven.Scale.Spacing.Sm}"/>
+        <Setter Property="ItemCornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Double}"/>
+        <Setter Property="TitleFontSize" Value="{StaticResource Haven.Scale.FontSize.Lg}"/>
+        <Setter Property="DayFontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}"/>
+        <Setter Property="TitleForeground" Value="{DynamicResource Haven.Sem.Foreground}"/>
+        
+        <Setter Property="DummyBackground" Value="{StaticResource Haven.Scale.Transparent}"/>
+        <Setter Property="DummyBorderBrush" Value="{DynamicResource Haven.Sem.Border}"/>
+
+        <Setter Property="NoneBackground" Value="{DynamicResource Haven.Sem.Surface.Elevated}"/>
+        <Setter Property="NoneBorderBrush" Value="{DynamicResource Haven.Sem.Border}"/>
+        <Setter Property="NoneTextForeground" Value="{DynamicResource Haven.Sem.Foreground}"/>
+
+        <Setter Property="CompletedBackground" Value="{DynamicResource Haven.Sem.Surface.Success}"/>
+        <Setter Property="CompletedBorderBrush" Value="{DynamicResource Haven.Sem.Success.Strong}"/>
+        <Setter Property="CompletedTextForeground" Value="{DynamicResource Haven.Sem.Success.Strong}"/>
+
+        <Setter Property="NotCompletedBackground" Value="{DynamicResource Haven.Sem.Surface.Danger}"/>
+        <Setter Property="NotCompletedBorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong}"/>
+        <Setter Property="NotCompletedTextForeground" Value="{DynamicResource Haven.Sem.Danger.Strong}"/>
+        
+        <Setter Property="TodayBorderBrush" Value="{DynamicResource Haven.Sem.Accent}"/>
+        
+    </Style>
+</Styles>

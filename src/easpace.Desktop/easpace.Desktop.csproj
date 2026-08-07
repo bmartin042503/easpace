@@ -30,6 +30,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="12.0.0" />
         
         <!-- .NET packages -->
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />

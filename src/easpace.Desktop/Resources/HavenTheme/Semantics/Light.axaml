@@ -22,6 +22,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Haven.Sem.Surface" Color="{StaticResource Haven.Scale.Neutral50}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Elevated" Color="{StaticResource Haven.Scale.White}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Accent" Color="{StaticResource Haven.Scale.Turquoise100}" />
+    <SolidColorBrush x:Key="Haven.Sem.Surface.Success" Color="{StaticResource Haven.Scale.Green100}" />
+    <SolidColorBrush x:Key="Haven.Sem.Surface.Danger" Color="{StaticResource Haven.Scale.Red100}" />
     
     <!-- Gradient -->
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent" StartPoint="50%,0%" EndPoint="50%,100%">
@@ -57,5 +59,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Error -->
     <SolidColorBrush x:Key="Haven.Sem.Danger" Color="{StaticResource Haven.Scale.Red600}" />
     <SolidColorBrush x:Key="Haven.Sem.Danger.Strong" Color="{StaticResource Haven.Scale.Red700}" />
+    
+    <!-- Success -->
+    <SolidColorBrush x:Key="Haven.Sem.Success" Color="{StaticResource Haven.Scale.Green600}" />
+    <SolidColorBrush x:Key="Haven.Sem.Success.Strong" Color="{StaticResource Haven.Scale.Green700}" />
 
 </ResourceDictionary>

@@ -20,7 +20,7 @@ public partial class ActivitiesViewModel : PageViewModel
     public ActivitiesViewModel()
     {
         Page = ApplicationPage.Activities;
-        
+
         LoadMockData();
 
         if (ActivityViewModels.Any())
@@ -49,12 +49,12 @@ public partial class ActivitiesViewModel : PageViewModel
                     Unit = "pages",
                     Entries =
                     {
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 15 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 32 }
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 15 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 32 }
                     }
                 }
             ),
-            
+
             new MilestoneActivityViewModel
             (
                 new MilestoneActivity
@@ -64,13 +64,13 @@ public partial class ActivitiesViewModel : PageViewModel
                     Unit = "kms",
                     Entries =
                     {
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 10 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 7 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 23 }
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 10 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 7 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 23 }
                     }
                 }
             ),
-            
+
             new MilestoneActivityViewModel
             (
                 new MilestoneActivity
@@ -80,14 +80,14 @@ public partial class ActivitiesViewModel : PageViewModel
                     Unit = "pushups",
                     Entries =
                     {
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-2), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 100 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 100 }
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 100 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 100 }
                     }
                 }
             ),
@@ -98,22 +98,21 @@ public partial class ActivitiesViewModel : PageViewModel
                 {
                     Title = "Weight",
                     TargetValue = 75.0,
-                    TargetDate = DateTime.Now,
                     Unit = "kg",
                     Entries =
                     {
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-35), Value = 89.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-31), Value = 88.2 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-27), Value = 87.0 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-24), Value = 86.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-20), Value = 85.2 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-16), Value = 84.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-13), Value = 83.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-9), Value = 82.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-5), Value = 82.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-3), Value = 81.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 81.2 },
-                        new NumericDataEntry { Date = DateTime.Now, Value = 100.2 }
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-35), Value = 89.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-31), Value = 88.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-27), Value = 87.0 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-24), Value = 86.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-20), Value = 85.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-16), Value = 84.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-13), Value = 83.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-9), Value = 82.9 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-5), Value = 82.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-3), Value = 81.9 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 81.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now, Value = 100.2 }
                     }
                 }
             ),
@@ -124,41 +123,40 @@ public partial class ActivitiesViewModel : PageViewModel
                 {
                     Title = "Body fat",
                     TargetValue = 15.0,
-                    TargetDate = DateTime.Now,
                     Unit = "%",
                     Entries =
                     {
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-90), Value = 24.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-87), Value = 24.6 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-84), Value = 24.2 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-81), Value = 24.0 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-78), Value = 23.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-75), Value = 23.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-72), Value = 23.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-69), Value = 23.1 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-66), Value = 23.2 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-63), Value = 22.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-60), Value = 22.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-57), Value = 22.6 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-54), Value = 22.1 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-51), Value = 21.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-48), Value = 21.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-45), Value = 21.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-42), Value = 21.1 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-39), Value = 20.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-36), Value = 20.9 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-33), Value = 20.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-30), Value = 20.2 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-27), Value = 20.0 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-24), Value = 20.1 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-21), Value = 19.8 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-18), Value = 19.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-15), Value = 19.3 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-12), Value = 19.4 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-9), Value = 19.0 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-6), Value = 18.7 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-3), Value = 18.5 },
-                        new NumericDataEntry { Date = DateTime.Now.AddDays(-1), Value = 18.2 }
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-90), Value = 24.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-87), Value = 24.6 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-84), Value = 24.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-81), Value = 24.0 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-78), Value = 23.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-75), Value = 23.9 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-72), Value = 23.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-69), Value = 23.1 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-66), Value = 23.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-63), Value = 22.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-60), Value = 22.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-57), Value = 22.6 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-54), Value = 22.1 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-51), Value = 21.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-48), Value = 21.9 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-45), Value = 21.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-42), Value = 21.1 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-39), Value = 20.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-36), Value = 20.9 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-33), Value = 20.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-30), Value = 20.2 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-27), Value = 20.0 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-24), Value = 20.1 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-21), Value = 19.8 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-18), Value = 19.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-15), Value = 19.3 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-12), Value = 19.4 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-9), Value = 19.0 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-6), Value = 18.7 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-3), Value = 18.5 },
+                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 18.2 }
                     }
                 }
             ),
@@ -170,13 +168,63 @@ public partial class ActivitiesViewModel : PageViewModel
                     Title = "Daily workout",
                     Entries =
                     {
-                        new RoutineDataEntry { Date = DateTime.Now.AddDays(-2), State = RoutineState.Completed },
-                        new RoutineDataEntry { Date = DateTime.Now.AddDays(-1), State = RoutineState.NotCompleted },
-                        new RoutineDataEntry { Date = DateTime.Now, State = RoutineState.Completed }
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-2), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-1), State = RoutineState.NotCompleted },
+                        new RoutineDataEntry { Timestamp = DateTime.Now, State = RoutineState.Completed }
                     }
                 }
             ),
             
+            new RoutineActivityViewModel
+            (
+                new RoutineActivity
+                {
+                    Title = "Morning Meditation",
+                    CreatedAt = DateTime.Now.AddMonths(-2),
+                    Entries =
+                    {
+                        new RoutineDataEntry
+                            { Timestamp = DateTime.Now.AddMonths(-2).AddDays(3), State = RoutineState.Completed },
+                        new RoutineDataEntry
+                            { Timestamp = DateTime.Now.AddMonths(-2).AddDays(15), State = RoutineState.NotCompleted },
+                        new RoutineDataEntry
+                            { Timestamp = DateTime.Now.AddMonths(-1).AddDays(10), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-12), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-5), State = RoutineState.NotCompleted }
+                    }
+                }
+            ),
+            
+            new RoutineActivityViewModel
+            (
+                new RoutineActivity
+                {
+                    Title = "Quit smoking",
+                    CreatedAt = DateTime.Now.AddDays(-15),
+                    Entries =
+                    {
+                        new RoutineDataEntry { Timestamp = new DateTime(2005, 2, 9), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-13), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-12), State = RoutineState.NotCompleted },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-10), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-9), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-6), State = RoutineState.NotCompleted },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-5), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-4), State = RoutineState.Completed },
+                        new RoutineDataEntry { Timestamp = DateTime.Now, State = RoutineState.Completed } // Mai nap
+                    }
+                }
+            ),
+            
+            new RoutineActivityViewModel
+            (
+                new RoutineActivity
+                {
+                    Title = "Learn Spanish",
+                    CreatedAt = DateTime.Now.AddDays(-21)
+                }
+            ),
+
             GenerateMassiveTestData()
         ];
     }
@@ -189,7 +237,6 @@ public partial class ActivitiesViewModel : PageViewModel
             {
                 Title = "Daily steps",
                 TargetValue = 10000.0,
-                TargetDate = DateTime.Now,
                 Unit = "step"
             }
         );
@@ -208,7 +255,7 @@ public partial class ActivitiesViewModel : PageViewModel
 
             viewModel.Activity.Entries.Add(new NumericDataEntry
             {
-                Date = startDate.AddDays(i),
+                Timestamp = startDate.AddDays(i),
                 Value = Math.Round(currentValue)
             });
         }

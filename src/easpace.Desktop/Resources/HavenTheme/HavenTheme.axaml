@@ -69,9 +69,9 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBox.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ToggleButton.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/UniformGrid.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/PathIcon.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/NavigationListItem.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ActivityListItem.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/RoutineMonthItem.axaml" />
 
 </Styles>

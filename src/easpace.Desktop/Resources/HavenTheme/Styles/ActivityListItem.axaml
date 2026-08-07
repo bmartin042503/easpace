@@ -15,7 +15,25 @@ Licensed under the MIT License. See LICENSE file for details.
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{TemplateBinding BorderBrush}">
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Container.Name="list-item" Container.Sizing="Width">
+                    
+                    <Border.Styles>
+                        <ContainerQuery Name="list-item" Query="max-width:250">
+                            <Style Selector="TextBlock#PART_Status">
+                                <Setter Property="IsVisible" Value="False" />
+                            </Style>
+                        </ContainerQuery>
+                    </Border.Styles>
+                    
+                    <Border.Styles>
+                        <ContainerQuery Query="max-width:200">
+                            <Style Selector="TextBlock#PART_Status">
+                                <Setter Property="IsVisible" Value="False" />
+                            </Style>
+                        </ContainerQuery>
+                    </Border.Styles>
+                    
                     <Grid ColumnDefinitions="*,Auto"
                           ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
@@ -37,6 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </Border>
             </ControlTemplate>
         </Setter>
+        
     </Style>
 
 </Styles>

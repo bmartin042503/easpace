@@ -21,7 +21,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="350" />
+                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -155,6 +155,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBox Grid.Row="0" Grid.Column="0"
                          Text="{Binding EditTitle}"
                          Classes="journal-edit title"
+                         PlaceholderText="{services:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
                          VerticalAlignment="Center" />
 
                 <!-- Buttons -->

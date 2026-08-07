@@ -86,6 +86,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
+    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
+        <value>Adj meg egy címet...</value>
+    </data>
     <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
         <value>Írd ide a gondolataidat...</value>
     </data>
@@ -112,5 +115,35 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
         <value>Céldátum</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
+        <value>Hét</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
+        <value>Kedd</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
+        <value>Sze</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
+        <value>Csüt</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
+        <value>Pén</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
+        <value>Szo</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
+        <value>Vas</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Completed" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.NotCompleted" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Mai nap</value>
     </data>
 </root>

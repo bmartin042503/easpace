@@ -54,62 +54,62 @@ public partial class TrendActivityViewModel : ActivityViewModel
         switch (SelectedTimeRange)
         {
             case ChartTimeRange.Day:
-                var dayData = Activity.Entries.Where(e => e.Date >= now.AddDays(-1)).ToList();
+                var dayData = Activity.Entries.Where(e => e.Timestamp >= now.AddDays(-1)).ToList();
                 if (dayData.Count > maxPoints)
                 {
                     // group by hour
                     ChartEntries = dayData
-                        .GroupBy(e => new DateTime(e.Date.Year, e.Date.Month, e.Date.Day))
+                        .GroupBy(e => new DateTime(e.Timestamp.Year, e.Timestamp.Month, e.Timestamp.Day))
                         .Select(g => new NumericDataEntry
-                            { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Date).ToList();
+                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                        .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = dayData.OrderBy(e => e.Date).ToList();
+                else ChartEntries = dayData.OrderBy(e => e.Timestamp).ToList();
 
                 break;
 
             case ChartTimeRange.Week:
-                var weekData = Activity.Entries.Where(e => e.Date >= now.AddDays(-7)).ToList();
+                var weekData = Activity.Entries.Where(e => e.Timestamp >= now.AddDays(-7)).ToList();
                 if (weekData.Count > maxPoints)
                 {
                     // group by day
                     ChartEntries = weekData
-                        .GroupBy(e => e.Date.Date) // .Date gives midnight of that day
+                        .GroupBy(e => e.Timestamp.Date) // .Date gives midnight of that day
                         .Select(g => new NumericDataEntry
-                            { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Date).ToList();
+                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                        .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = weekData.OrderBy(e => e.Date).ToList();
+                else ChartEntries = weekData.OrderBy(e => e.Timestamp).ToList();
 
                 break;
 
             case ChartTimeRange.Month:
-                var monthData = Activity.Entries.Where(e => e.Date >= now.AddMonths(-1)).ToList();
+                var monthData = Activity.Entries.Where(e => e.Timestamp >= now.AddMonths(-1)).ToList();
                 if (monthData.Count > maxPoints)
                 {
                     // group by day
                     ChartEntries = monthData
-                        .GroupBy(e => e.Date.Date)
+                        .GroupBy(e => e.Timestamp.Date)
                         .Select(g => new NumericDataEntry
-                            { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Date).ToList();
+                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                        .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = monthData.OrderBy(e => e.Date).ToList();
+                else ChartEntries = monthData.OrderBy(e => e.Timestamp).ToList();
 
                 break;
 
             case ChartTimeRange.Year:
-                var yearData = Activity.Entries.Where(e => e.Date >= now.AddYears(-1)).ToList();
+                var yearData = Activity.Entries.Where(e => e.Timestamp >= now.AddYears(-1)).ToList();
                 if (yearData.Count > maxPoints)
                 {
                     // group by week
                     ChartEntries = yearData
-                        .GroupBy(e => GetStartOfWeek(e.Date))
+                        .GroupBy(e => GetStartOfWeek(e.Timestamp))
                         .Select(g => new NumericDataEntry
-                            { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Date).ToList();
+                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                        .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = yearData.OrderBy(e => e.Date).ToList();
+                else ChartEntries = yearData.OrderBy(e => e.Timestamp).ToList();
 
                 break;
 
@@ -117,26 +117,26 @@ public partial class TrendActivityViewModel : ActivityViewModel
                 var allData = Activity.Entries.ToList();
                 if (allData.Count > maxPoints)
                 {
-                    var totalDays = (allData.Max(e => e.Date) - allData.Min(e => e.Date)).TotalDays;
+                    var totalDays = (allData.Max(e => e.Timestamp) - allData.Min(e => e.Timestamp)).TotalDays;
 
                     if (totalDays > 730) // > 2 years -> group by Month
                     {
                         ChartEntries = allData
-                            .GroupBy(e => new DateTime(e.Date.Year, e.Date.Month, 1))
+                            .GroupBy(e => new DateTime(e.Timestamp.Year, e.Timestamp.Month, 1))
                             .Select(g => new NumericDataEntry
-                                { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                            .OrderBy(e => e.Date).ToList();
+                                { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                            .OrderBy(e => e.Timestamp).ToList();
                     }
                     else // < 2 years -> group by Week
                     {
                         ChartEntries = allData
-                            .GroupBy(e => GetStartOfWeek(e.Date))
+                            .GroupBy(e => GetStartOfWeek(e.Timestamp))
                             .Select(g => new NumericDataEntry
-                                { Date = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                            .OrderBy(e => e.Date).ToList();
+                                { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                            .OrderBy(e => e.Timestamp).ToList();
                     }
                 }
-                else ChartEntries = allData.OrderBy(e => e.Date).ToList();
+                else ChartEntries = allData.OrderBy(e => e.Timestamp).ToList();
 
                 break;
         }

@@ -77,6 +77,8 @@ public partial class JournalViewModel : PageViewModel
     [RelayCommand]
     private void SaveEntry()
     {
+        if (string.IsNullOrEmpty(EditTitle)) return;
+        
         if (SelectedJournalEntry != null)
         {
             SelectedJournalEntry.Title = EditTitle;

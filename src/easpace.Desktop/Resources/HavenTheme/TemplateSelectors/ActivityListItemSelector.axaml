@@ -23,7 +23,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Template of Routine Activity -->
         <DataTemplate x:Key="RoutineActivityViewModel" DataType="activities:RoutineActivityViewModel">
             <controls:ActivityListItem Title="{Binding Activity.Title}"
-                                       Status="{Binding Activity.LastEntry.State, Converter={StaticResource RoutineStateConverter}}"
+                                       Status="{Binding Activity.TodayEntry.State, Converter={StaticResource RoutineStateConverter}}"
                                        Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
                                        SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
         </DataTemplate>

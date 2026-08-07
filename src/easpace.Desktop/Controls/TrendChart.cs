@@ -300,8 +300,8 @@ public class TrendChart : Control
         
         if (hasEntries)
         {
-            timeMin = entriesList.First().Date.Ticks;
-            timeMax = entriesList.Last().Date.Ticks;
+            timeMin = entriesList.First().Timestamp.Ticks;
+            timeMax = entriesList.Last().Timestamp.Ticks;
         }
         else
         {
@@ -509,7 +509,7 @@ public class TrendChart : Control
             {
                 var entry = entries[i];
 
-                var xRatio = (double)(entry.Date.Ticks - timeMin) / timeRange;
+                var xRatio = (double)(entry.Timestamp.Ticks - timeMin) / timeRange;
                 var x = graphArea.X + xRatio * graphArea.Width;
 
                 var yRatio = (entry.Value - graphMin) / valueRange;
@@ -573,7 +573,7 @@ public class TrendChart : Control
             TextAlignment.Center);
 
         var dateText = new TextLayout(
-            $"{_hoveredEntry.Date:yyyy. MM. dd. hh:mm:ss}",
+            $"{_hoveredEntry.Timestamp:yyyy. MM. dd. hh:mm:ss}",
             new Typeface(_fontFamily),
             10,
             TooltipDateForeground ?? AxisStroke,

@@ -33,6 +33,8 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Left.Xs">10,0,0,0</Thickness>
     
+    <Thickness x:Key="Haven.Scale.Spacing.Thickness.Bottom.Xxs">0,0,0,6</Thickness>
+    
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xxs">6,0</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Xs">10,0</Thickness>
     <Thickness x:Key="Haven.Scale.Spacing.Thickness.Horizontal.Sm">18,0</Thickness>
