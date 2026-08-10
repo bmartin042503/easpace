@@ -6,25 +6,25 @@ Licensed under the MIT License. See LICENSE file for details.
 <!-- Light Semantic Tokens -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
     <!-- Canvas -->
     <SolidColorBrush x:Key="Haven.Sem.Canvas" Color="{StaticResource Haven.Scale.Neutral100}" />
-    
+
     <!-- Foreground -->
     <SolidColorBrush x:Key="Haven.Sem.Foreground" Color="{StaticResource Haven.Scale.Neutral700}" />
     <SolidColorBrush x:Key="Haven.Sem.Foreground.Subtle" Color="{StaticResource Haven.Scale.Neutral500}" />
-    
+
     <!-- Border -->
     <SolidColorBrush x:Key="Haven.Sem.Border" Color="{StaticResource Haven.Scale.Neutral200}" />
     <SolidColorBrush x:Key="Haven.Sem.Border.Accent" Color="{StaticResource Haven.Scale.Turquoise300}" />
-    
+
     <!-- Surface -->
     <SolidColorBrush x:Key="Haven.Sem.Surface" Color="{StaticResource Haven.Scale.Neutral50}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Elevated" Color="{StaticResource Haven.Scale.White}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Accent" Color="{StaticResource Haven.Scale.Turquoise100}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Success" Color="{StaticResource Haven.Scale.Green100}" />
     <SolidColorBrush x:Key="Haven.Sem.Surface.Danger" Color="{StaticResource Haven.Scale.Red100}" />
-    
+
     <!-- Gradient -->
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Accent" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise400}" Offset="0.0" />
@@ -42,24 +42,34 @@ Licensed under the MIT License. See LICENSE file for details.
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise50}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Turquoise100}" Offset="1.0" />
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Danger" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.Red400}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Red600}" Offset="1.0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Danger.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.Red500}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Red700}" Offset="1.0" />
+    </LinearGradientBrush>
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Neutral.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{StaticResource Haven.Scale.Neutral100}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Neutral200}" Offset="1.0" />
     </LinearGradientBrush>
-    
+
     <!-- Accent -->
     <SolidColorBrush x:Key="Haven.Sem.Accent" Color="{StaticResource Haven.Scale.Turquoise600}" />
+    <SolidColorBrush x:Key="Haven.Sem.Accent.Hover" Color="{StaticResource Haven.Scale.Turquoise700}" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Muted" Color="{StaticResource Haven.Scale.Turquoise200}" Opacity="0.5" />
-    <SolidColorBrush x:Key="Haven.Sem.Accent.Muted.Hover" Color="{StaticResource Haven.Scale.Turquoise300}" />
+    <SolidColorBrush x:Key="Haven.Sem.Accent.Muted.Hover" Color="{StaticResource Haven.Scale.Turquoise200}" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Subtle" Color="{StaticResource Haven.Scale.Turquoise400}" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Subtle.Hover" Color="{StaticResource Haven.Scale.Turquoise500}" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Strong" Color="{StaticResource Haven.Scale.Turquoise700}" />
     <SolidColorBrush x:Key="Haven.Sem.OnAccent" Color="{StaticResource Haven.Scale.White}" />
-    
-    <!-- Error -->
+
+    <!-- Danger -->
     <SolidColorBrush x:Key="Haven.Sem.Danger" Color="{StaticResource Haven.Scale.Red600}" />
     <SolidColorBrush x:Key="Haven.Sem.Danger.Strong" Color="{StaticResource Haven.Scale.Red700}" />
-    
+    <SolidColorBrush x:Key="Haven.Sem.OnDanger" Color="{StaticResource Haven.Scale.White}" />
+
     <!-- Success -->
     <SolidColorBrush x:Key="Haven.Sem.Success" Color="{StaticResource Haven.Scale.Green600}" />
     <SolidColorBrush x:Key="Haven.Sem.Success.Strong" Color="{StaticResource Haven.Scale.Green700}" />

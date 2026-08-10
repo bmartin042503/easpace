@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Constants;
@@ -32,6 +33,9 @@ public partial class TrendActivityViewModel : ActivityViewModel
     public TrendActivityViewModel(TrendActivity activity)
     {
         BaseActivity = activity;
+        
+        Activity.Entries.CollectionChanged += OnEntriesCollectionChanged;
+        
         SelectedTimeRange = ChartTimeRange.Month;
     }
     
@@ -57,78 +61,94 @@ public partial class TrendActivityViewModel : ActivityViewModel
                 var dayData = Activity.Entries.Where(e => e.Timestamp >= now.AddDays(-1)).ToList();
                 if (dayData.Count > maxPoints)
                 {
-                    // group by hour
+                    // if there is too much data in a single day, we group by hour
                     ChartEntries = dayData
-                        .GroupBy(e => new DateTime(e.Timestamp.Year, e.Timestamp.Month, e.Timestamp.Day))
+                        .GroupBy(e => new DateTime(e.Timestamp.Year, e.Timestamp.Month, e.Timestamp.Day, e.Timestamp.Hour, 0, 0))
                         .Select(g => new NumericDataEntry
                             { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
                         .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = dayData.OrderBy(e => e.Timestamp).ToList();
-
+                else 
+                {
+                    // day view: keep the raw, exact data
+                    ChartEntries = dayData.OrderBy(e => e.Timestamp).ToList();
+                }
                 break;
 
             case ChartTimeRange.Week:
                 var weekData = Activity.Entries.Where(e => e.Timestamp >= now.AddDays(-7)).ToList();
-                if (weekData.Count > maxPoints)
-                {
-                    // group by day
-                    ChartEntries = weekData
-                        .GroupBy(e => e.Timestamp.Date) // .Date gives midnight of that day
-                        .Select(g => new NumericDataEntry
-                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Timestamp).ToList();
-                }
-                else ChartEntries = weekData.OrderBy(e => e.Timestamp).ToList();
-
+                
+                // week view: maximum 7 days., always group by day and average, no need for maxPoints check
+                ChartEntries = weekData
+                    .GroupBy(e => e.Timestamp.Date) 
+                    .Select(g => new NumericDataEntry
+                        { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                    .OrderBy(e => e.Timestamp).ToList();
                 break;
 
             case ChartTimeRange.Month:
                 var monthData = Activity.Entries.Where(e => e.Timestamp >= now.AddMonths(-1)).ToList();
-                if (monthData.Count > maxPoints)
-                {
-                    // group by day
-                    ChartEntries = monthData
-                        .GroupBy(e => e.Timestamp.Date)
-                        .Select(g => new NumericDataEntry
-                            { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
-                        .OrderBy(e => e.Timestamp).ToList();
-                }
-                else ChartEntries = monthData.OrderBy(e => e.Timestamp).ToList();
-
+                
+                // month view: maximum 31 days, always group by day and average, no need for maxPoints check
+                ChartEntries = monthData
+                    .GroupBy(e => e.Timestamp.Date)
+                    .Select(g => new NumericDataEntry
+                        { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                    .OrderBy(e => e.Timestamp).ToList();
                 break;
 
             case ChartTimeRange.Year:
                 var yearData = Activity.Entries.Where(e => e.Timestamp >= now.AddYears(-1)).ToList();
-                if (yearData.Count > maxPoints)
+                
+                // year view: always get the daily average first to avoid same-day duplications
+                var dailyYearData = yearData
+                    .GroupBy(e => e.Timestamp.Date)
+                    .Select(g => new NumericDataEntry
+                        { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                    .ToList();
+
+                if (dailyYearData.Count > maxPoints)
                 {
-                    // group by week
+                    // if we still have more than 60 points daily, we group by week
                     ChartEntries = yearData
                         .GroupBy(e => GetStartOfWeek(e.Timestamp))
                         .Select(g => new NumericDataEntry
                             { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
                         .OrderBy(e => e.Timestamp).ToList();
                 }
-                else ChartEntries = yearData.OrderBy(e => e.Timestamp).ToList();
-
+                else 
+                {
+                    // if it fits within the 60 points limit, we show the daily averaged data (not the raw)
+                    ChartEntries = dailyYearData.OrderBy(e => e.Timestamp).ToList();
+                }
                 break;
 
             case ChartTimeRange.All:
                 var allData = Activity.Entries.ToList();
-                if (allData.Count > maxPoints)
+                
+                // all view: always get the daily average first
+                var dailyAllData = allData
+                    .GroupBy(e => e.Timestamp.Date)
+                    .Select(g => new NumericDataEntry
+                        { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
+                    .ToList();
+
+                if (dailyAllData.Count > maxPoints)
                 {
                     var totalDays = (allData.Max(e => e.Timestamp) - allData.Min(e => e.Timestamp)).TotalDays;
 
-                    if (totalDays > 730) // > 2 years -> group by Month
+                    if (totalDays > 730) 
                     {
+                        // > 2 years -> group by month
                         ChartEntries = allData
                             .GroupBy(e => new DateTime(e.Timestamp.Year, e.Timestamp.Month, 1))
                             .Select(g => new NumericDataEntry
                                 { Timestamp = g.Key, Value = Math.Round(g.Average(x => x.Value), 1) })
                             .OrderBy(e => e.Timestamp).ToList();
                     }
-                    else // < 2 years -> group by Week
+                    else 
                     {
+                        // < 2 years -> group by week
                         ChartEntries = allData
                             .GroupBy(e => GetStartOfWeek(e.Timestamp))
                             .Select(g => new NumericDataEntry
@@ -136,8 +156,11 @@ public partial class TrendActivityViewModel : ActivityViewModel
                             .OrderBy(e => e.Timestamp).ToList();
                     }
                 }
-                else ChartEntries = allData.OrderBy(e => e.Timestamp).ToList();
-
+                else 
+                {
+                    // if it fits within the 60 points limit, we show the daily averaged data
+                    ChartEntries = dailyAllData.OrderBy(e => e.Timestamp).ToList();
+                }
                 break;
         }
     }
@@ -149,5 +172,10 @@ public partial class TrendActivityViewModel : ActivityViewModel
     {
         var diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
         return dt.AddDays(-1 * diff).Date;
+    }
+    
+    private void OnEntriesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        UpdateChartData();
     }
 }

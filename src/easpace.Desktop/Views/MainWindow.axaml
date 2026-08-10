@@ -71,6 +71,22 @@ Licensed under the MIT License. See LICENSE file for details.
         <ContentControl Grid.Column="1"
                         x:Name="PageContent"
                         Content="{Binding CurrentPageViewModel}" />
+
+        <!-- Dialog host -->
+        <Grid Grid.Column="0" Grid.ColumnSpan="2"
+              IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}">
+            <Border Background="{StaticResource Haven.Scale.Black}" Opacity="0.15" />
+            <ContentControl x:Name="DialogHost" Content="{Binding CurrentDialog}"
+                            PointerPressed="DialogHost_PointerPressed"
+                            PointerMoved="DialogHost_PointerMoved"
+                            PointerReleased="DialogHost_PointerReleased"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ContentControl.RenderTransform>
+                    <TranslateTransform />
+                </ContentControl.RenderTransform>
+            </ContentControl>
+        </Grid>
+
     </Grid>
 
 </Window>

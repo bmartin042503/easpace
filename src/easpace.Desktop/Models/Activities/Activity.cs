@@ -19,8 +19,8 @@ public abstract partial class Activity : ObservableObject
 public abstract class Activity<TEntry> : Activity
     where TEntry : DataEntry
 {
-    public ObservableCollection<TEntry> Entries { get; set; } = [];
-
+    public ObservableCollection<TEntry> Entries { get; } = [];
+    
     protected Activity()
     {
         Entries.CollectionChanged += (s, e) =>
@@ -30,7 +30,7 @@ public abstract class Activity<TEntry> : Activity
         };
     }
     
-    public TEntry? LastEntry => Entries.LastOrDefault();
+    public TEntry? LastEntry => Entries.MaxBy(e => e.Timestamp);
     
     protected virtual void OnCollectionChanged() { }
 }

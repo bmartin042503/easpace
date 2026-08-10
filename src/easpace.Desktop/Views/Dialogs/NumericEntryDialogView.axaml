@@ -1,0 +1,75 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             x:DataType="vm:NumericEntryDialogViewModel"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+             MinWidth="300"
+             MaxWidth="550" MaxHeight="400"
+             Background="{StaticResource Haven.Scale.Transparent}"
+             x:Class="easpace.Desktop.Views.Dialogs.NumericEntryDialogView">
+
+    <Design.DataContext>
+        <vm:NumericEntryDialogViewModel />
+    </Design.DataContext>
+
+    <Border Classes="card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            BorderThickness="0">
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}">
+
+            <!-- Title -->
+            <TextBlock Grid.Row="0" Classes="subtitle" Text="{Binding Title}"
+                       TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                <!-- Date input -->
+                <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
+                                    HorizontalAlignment="Stretch"
+                                    PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}" />
+
+                <DockPanel>
+                    
+                    <!-- Unit label -->
+                    <TextBlock DockPanel.Dock="Right" Classes="label"
+                               Text="{Binding UnitText}" VerticalAlignment="Center"
+                               TextAlignment="Center"
+                               IsVisible="{Binding UnitText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                               Margin="8,0,0,0" />
+
+                    <!-- Numeric value input -->
+                    <NumericUpDown Value="{Binding NumericValue}"
+                                   HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
+                                   PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.NumericValuePlaceholder'}" />
+
+                </DockPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                        HorizontalAlignment="Right">
+
+                <!-- Cancel button -->
+                <Button Classes="secondary regular" Content="{Binding CancelText}"
+                        Command="{Binding CancelCommand}" />
+
+                <!-- Confirm button -->
+                <Button Classes="primary regular" Content="{Binding ConfirmText}"
+                        Command="{Binding ConfirmCommand}" />
+
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

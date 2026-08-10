@@ -93,7 +93,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        
+
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
@@ -126,7 +126,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             IsVisible="{Binding HasSelectedEntry}">
 
                     <!-- Delete button -->
-                    <Button Classes="tertiary delete icon" Command="{Binding DeleteEntryCommand}"
+                    <Button Classes="tertiary danger icon" Command="{Binding DeleteEntryCommand}"
                             ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
                         <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
                     </Button>

@@ -18,17 +18,17 @@ Licensed under the MIT License. See LICENSE file for details.
     <Design.DataContext>
         <vm:ActivitiesViewModel />
     </Design.DataContext>
-    
+
     <Border Classes="card" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
-        
+
         <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <!-- Sidebar -->
             <Grid RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
 
@@ -48,7 +48,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Add button -->
                         <Button Grid.Column="1" Classes="primary icon" HorizontalAlignment="Left"
-                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                                Command="{Binding AddNewActivityCommand}"
+                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}"
+                                IsEnabled="{Binding !IsEditing}">
                             <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                         </Button>
 
@@ -69,7 +71,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                 ContentTemplate="{StaticResource ActivityListItemSelector}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        
+
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
@@ -80,21 +82,126 @@ Licensed under the MIT License. See LICENSE file for details.
                 </ScrollViewer>
 
             </Grid>
-            
+
             <!-- Horizontal splitter -->
             <GridSplitter Grid.Column="1"
                           Classes="horizontal"
                           ResizeDirection="Columns" />
-            
+
             <!-- Activity item view -->
             <ContentControl Grid.Row="0" Grid.Column="2"
+                            IsVisible="{Binding !IsEditing}"
                             Content="{Binding SelectedActivityViewModel}"
                             ContentTemplate="{StaticResource ActivityItemSelector}" />
-            
-            <!--  -->
-            
+
+            <!-- New / Edit Activity view -->
+            <ScrollViewer Grid.Row="0" Grid.Column="2" IsVisible="{Binding IsEditing}"
+                          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+                      RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding EditTitle}"
+                               Classes="title" />
+
+                    <!-- Buttons -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                        <!-- Cancel button -->
+                        <Button Classes="secondary icon" Command="{Binding CancelCommand}"
+                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Cancel'}">
+                            <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
+                        </Button>
+
+                        <!-- Save button -->
+                        <Button Classes="primary icon" Command="{Binding SaveActivityCommand}"
+                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Save'}">
+                            <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+                            <!-- Name input -->
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                                <TextBlock Classes="label"
+                                           Text="{services:LocalizationService Key='Activities.Label.Name'}" />
+                                <TextBox Text="{Binding EditName}"
+                                         PlaceholderText="{services:LocalizationService Key='Activities.Input.NamePlaceholder'}"
+                                         Width="{StaticResource Haven.Scale.Input.MaxWidth}"
+                                         HorizontalAlignment="Left" />
+                            </StackPanel>
+
+                            <!-- Type selection -->
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+                                <TextBlock Classes="label"
+                                           Text="{services:LocalizationService Key='Activities.Label.Type'}" />
+
+                                <ComboBox ItemsSource="{Binding ActivityTypes}"
+                                          SelectedItem="{Binding EditSelectedActivityType}"
+                                          IsEnabled="{Binding IsComboBoxEnabled}"
+                                          Width="{StaticResource Haven.Scale.Input.MinWidth}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                            </StackPanel>
+
+                            <!-- Unit input (visible for Trend and Milestone) -->
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                        IsVisible="{Binding IsUnitVisible}">
+                                <TextBlock Classes="label"
+                                           Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
+                                <TextBox Text="{Binding EditUnit}"
+                                         PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                                         HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
+                            </StackPanel>
+
+                            <!-- Optional target Checkbox (visible only for Trend) -->
+                            <CheckBox Theme="{StaticResource Haven.ControlTheme.CheckBox}"
+                                      Content="{services:LocalizationService Key='Activities.CheckBox.Target'}"
+                                      IsChecked="{Binding IsTargetChecked}"
+                                      IsVisible="{Binding IsTargetCheckboxVisible}" />
+
+                            <!-- Target value input (visible for Milestone, or Trend if checked) -->
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                        IsVisible="{Binding IsTargetInputVisible}">
+                                <TextBlock Classes="label"
+                                           Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
+                                <NumericUpDown Value="{Binding EditTarget}"
+                                               Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                               HorizontalAlignment="Left" Increment="1" FormatString="0.##"
+                                               PlaceholderText="{services:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
+                            </StackPanel>
+
+                            <!-- Target date input (visible for Milestone) -->
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                        IsVisible="{Binding IsTargetDateVisible}">
+                                <TextBlock Classes="label"
+                                           Text="{services:LocalizationService Key='Activities.Label.TargetDate'}" />
+                                <CalendarDatePicker SelectedDate="{Binding EditTargetDate}"
+                                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                                    PlaceholderText="{services:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                            </StackPanel>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                </Grid>
+
+            </ScrollViewer>
+
         </Grid>
-        
+
     </Border>
-    
+
 </UserControl>

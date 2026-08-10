@@ -8,7 +8,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     xmlns:services="clr-namespace:easpace.Desktop.Services"
                     xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
                     xmlns:activities="clr-namespace:easpace.Desktop.ViewModels.Activities"
-                    xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+                    xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+                    xmlns:vm="clr-namespace:easpace.Desktop.ViewModels">
 
     <!-- Template selector of Activity item -->
     <dataTemplates:TemplateSelector x:Key="ActivityItemSelector">
@@ -34,7 +35,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Current value -->
                         <TextBlock Classes="activity-value"
-                                   VerticalAlignment="Center">
+                                   VerticalAlignment="Center"
+                                   IsVisible="{Binding Activity.LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} {1}">
                                     <Binding Path="Activity.LastEntry.Value" />
@@ -44,12 +46,13 @@ Licensed under the MIT License. See LICENSE file for details.
                         </TextBlock>
 
                         <!-- Target value -->
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                    IsVisible="{Binding Activity.Target, Converter={x:Static ObjectConverters.IsNotNull}}">
                             <TextBlock Classes="activity-target"
                                        VerticalAlignment="Center">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Activity.TargetValue" />
+                                        <Binding Path="Activity.Target" />
                                         <Binding Path="Activity.Unit" />
                                     </MultiBinding>
                                 </TextBlock.Text>
@@ -69,12 +72,14 @@ Licensed under the MIT License. See LICENSE file for details.
                             VerticalAlignment="Top">
 
                     <!-- Edit button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 
@@ -102,9 +107,10 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Chart -->
                 <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                     Target="{Binding Activity.TargetValue}"
+                                     Target="{Binding Activity.Target}"
                                      Unit="{Binding Activity.Unit}"
-                                     Entries="{Binding ChartEntries}" />
+                                     Entries="{Binding ChartEntries}"
+                                     Margin="0,0,6,0" />
 
             </Grid>
         </DataTemplate>
@@ -131,14 +137,15 @@ Licensed under the MIT License. See LICENSE file for details.
                         <TextBlock Classes="activity-value" VerticalAlignment="Center">
                             <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
                             <Run Text=": " />
-                            <Run Text="{Binding Activity.CreatedAt}" />
+                            <Run Text="{Binding Activity.CreatedAt, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                         </TextBlock>
 
                         <!-- Target date -->
-                        <TextBlock Classes="activity-value" VerticalAlignment="Center">
+                        <TextBlock Classes="activity-value" VerticalAlignment="Center"
+                                   IsVisible="{Binding Activity.HasValidTargetDate}">
                             <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
                             <Run Text=": " />
-                            <Run Text="{Binding Activity.TargetDate}" />
+                            <Run Text="{Binding Activity.TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                         </TextBlock>
 
                     </StackPanel>
@@ -151,12 +158,14 @@ Licensed under the MIT License. See LICENSE file for details.
                             VerticalAlignment="Top">
 
                     <!-- Edit button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 
@@ -165,7 +174,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Chart -->
                 <controls:MilestoneChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                          Value="{Binding Activity.EntriesSum}"
-                                         Maximum="{Binding Activity.TargetValue}"
+                                         Maximum="{Binding Activity.Target}"
                                          Unit="{Binding Activity.Unit}" />
 
             </Grid>
@@ -188,12 +197,14 @@ Licensed under the MIT License. See LICENSE file for details.
                             VerticalAlignment="Top">
 
                     <!-- Edit button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
-                    <Button Classes="tertiary icon">
+                    <Button Classes="tertiary icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 

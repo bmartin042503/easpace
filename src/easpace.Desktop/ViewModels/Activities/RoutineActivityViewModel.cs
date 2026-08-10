@@ -21,9 +21,7 @@ public partial class RoutineActivityViewModel : ActivityViewModel
     public RoutineActivityViewModel(RoutineActivity activity)
     {
         BaseActivity = activity;
-
         RoutineMonths = new ObservableCollection<RoutineMonth>(GetRoutineMonths());
-
         Activity.Entries.CollectionChanged += OnEntriesCollectionChanged;
     }
 
@@ -31,24 +29,30 @@ public partial class RoutineActivityViewModel : ActivityViewModel
     public RoutineActivityViewModel()
     {
     }
+    
+    private (DateTime Start, DateTime End) GetCalendarBounds()
+    {
+        var startDate = Activity.CreatedAt.Date;
+        var endDate = DateTime.Today;
+
+        if (!Activity.Entries.Any()) return (startDate, endDate);
+        
+        var firstEntryDate = Activity.Entries.Min(e => e.Timestamp.Date);
+        if (firstEntryDate < startDate) startDate = firstEntryDate;
+
+        var lastEntryDate = Activity.Entries.Max(e => e.Timestamp.Date);
+        if (lastEntryDate > endDate) endDate = lastEntryDate;
+
+        return (startDate, endDate);
+    }
 
     private List<RoutineMonth> GetRoutineMonths()
     {
         var monthsList = new List<RoutineMonth>();
-        var startDate = Activity.CreatedAt.Date;
-        var endDate = DateTime.Today;
+        var bounds = GetCalendarBounds();
 
-        if (Activity.Entries.Any())
-        {
-            var firstEntryDate = Activity.Entries.Min(e => e.Timestamp.Date);
-            if (firstEntryDate < startDate) startDate = firstEntryDate;
-            
-            var lastEntryDate = Activity.Entries.Max(e => e.Timestamp.Date);
-            if (lastEntryDate > endDate) endDate = lastEntryDate;
-        }
-
-        var currentMonthIter = new DateTime(startDate.Year, startDate.Month, 1);
-        var endMonthIter = new DateTime(endDate.Year, endDate.Month, 1);
+        var currentMonthIter = new DateTime(bounds.Start.Year, bounds.Start.Month, 1);
+        var endMonthIter = new DateTime(bounds.End.Year, bounds.End.Month, 1);
 
         while (currentMonthIter <= endMonthIter)
         {
@@ -58,18 +62,15 @@ public partial class RoutineActivityViewModel : ActivityViewModel
 
         return monthsList;
     }
-    
+
     private RoutineMonth CreateMonth(int year, int month)
     {
         var daysInMonth = DateTime.DaysInMonth(year, month);
         var monthlyEntries = new List<RoutineDataEntry>();
 
-        // populate every day of the month
         for (var day = 1; day <= daysInMonth; day++)
         {
             var targetDate = new DateTime(year, month, day);
-
-            // look for an existing entry for this specific day
             var existingEntry = Activity.Entries.FirstOrDefault(e => e.Timestamp.Date == targetDate);
 
             if (existingEntry != null)
@@ -78,7 +79,6 @@ public partial class RoutineActivityViewModel : ActivityViewModel
             }
             else
             {
-                // create a dummy entry for the UI with 'None' state
                 monthlyEntries.Add(new RoutineDataEntry
                 {
                     Timestamp = targetDate,
@@ -97,48 +97,52 @@ public partial class RoutineActivityViewModel : ActivityViewModel
 
     private void OnEntriesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
+        if (RoutineMonths.Count > 0)
+        {
+            var bounds = GetCalendarBounds();
+            var expectedStartMonth = new DateTime(bounds.Start.Year, bounds.Start.Month, 1);
+            var expectedEndMonth = new DateTime(bounds.End.Year, bounds.End.Month, 1);
+
+            var currentStartMonth = new DateTime(RoutineMonths.First().Year, RoutineMonths.First().Month, 1);
+            var currentEndMonth = new DateTime(RoutineMonths.Last().Year, RoutineMonths.Last().Month, 1);
+
+            if (expectedStartMonth != currentStartMonth || expectedEndMonth != currentEndMonth)
+            {
+                // rebuild the entire calendar if the bounds have been changed
+                RoutineMonths = new ObservableCollection<RoutineMonth>(GetRoutineMonths());
+                return;
+            }
+        }
+        else
+        {
+            RoutineMonths = new ObservableCollection<RoutineMonth>(GetRoutineMonths());
+            return;
+        }
+        
+        // if the bounds didn't change, we only update months that are already in the collection
         var affectedMonths = new HashSet<DateTime>();
 
-        // collect the year/month combinations of all added items
         if (e.NewItems != null)
         {
             foreach (RoutineDataEntry item in e.NewItems)
-            {
                 affectedMonths.Add(new DateTime(item.Timestamp.Year, item.Timestamp.Month, 1));
-            }
         }
 
-        // collect the year/month combinations of all removed items
         if (e.OldItems != null)
         {
             foreach (RoutineDataEntry item in e.OldItems)
-            {
                 affectedMonths.Add(new DateTime(item.Timestamp.Year, item.Timestamp.Month, 1));
-            }
         }
 
         foreach (var monthDate in affectedMonths)
         {
-            // find if the month currently exists in the UI
             var existingMonth =
                 RoutineMonths.FirstOrDefault(m => m.Year == monthDate.Year && m.Month == monthDate.Month);
 
-            if (existingMonth != null)
-            {
-                // rebuild only this specific month
-                var index = RoutineMonths.IndexOf(existingMonth);
-                var updatedMonth = CreateMonth(monthDate.Year, monthDate.Month);
-
-                // replace the item in the collection. this triggers the UI to re-render just this item
-                RoutineMonths[index] = updatedMonth;
-            }
-            else
-            {
-                // if the changed item falls outside the currently tracked months (e.g., completely new bounds), 
-                // it is safer to rebuild the entire calendar to maintain correct order
-                GetRoutineMonths();
-                break;
-            }
+            if (existingMonth == null) continue;
+            
+            var index = RoutineMonths.IndexOf(existingMonth);
+            RoutineMonths[index] = CreateMonth(monthDate.Year, monthDate.Month);
         }
     }
 }

@@ -107,7 +107,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 1 - Trend Activity -->
                         <activities:TrendActivityViewModel>
                             <activities:TrendActivityViewModel.BaseActivity>
-                                <activities1:TrendActivity TargetValue="75.0" Unit="kg" Title="Lose weight">
+                                <activities1:TrendActivity Target="75.0" Unit="kg" Title="Lose weight">
                                     <activities1:TrendActivity.Entries>
                                         <activities1:NumericDataEntry Value="83.5" />
                                         <activities1:NumericDataEntry Value="82.1" />
@@ -132,7 +132,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 3 - Milestone Activity -->
                         <activities:MilestoneActivityViewModel>
                             <activities:MilestoneActivityViewModel.BaseActivity>
-                                <activities1:MilestoneActivity Title="Read 1000 pages" TargetValue="1000" Unit="pages">
+                                <activities1:MilestoneActivity Title="Read 1000 pages" Target="1000" Unit="pages">
                                     <activities1:MilestoneActivity.Entries>
                                         <activities1:NumericDataEntry Value="45" />
                                         <activities1:NumericDataEntry Value="120" />

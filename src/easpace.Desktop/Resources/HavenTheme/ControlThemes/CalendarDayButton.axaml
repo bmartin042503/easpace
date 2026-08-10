@@ -1,0 +1,89 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme x:Key="Haven.ControlTheme.CalendarDayButton" TargetType="CalendarDayButton"
+                  BasedOn="{StaticResource {x:Type CalendarDayButton}}">
+
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <!-- To mimic WinUI SystemFocusVisual, Focus visual is drawn outside the bounds of the item -->
+                    <Border Name="Root" Background="{DynamicResource Haven.Sem.Surface}"
+                            BorderThickness="0" ClipToBounds="True">
+
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Foreground="{DynamicResource Haven.Sem.Foreground}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" />
+
+                    </Border>
+
+                    <!-- Drawn Border should render on top of background to preserve the 1px margin between items-->
+                    <Border Name="Border"
+                            BorderThickness="{StaticResource Haven.Scale.Border.Thickness}"
+                            BorderBrush="{DynamicResource Haven.Sem.Border}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Border">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Thick}" />
+        </Style>
+
+        <Style Selector="^:selected">
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Thick}" />
+            </Style>
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Thick}" />
+            </Style>
+            <Style Selector="^:pressed /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Thick}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:today">
+            <Style Selector="^ /template/ Border#Root">
+                <Setter Property="Background" Value="Red" />
+            </Style>
+            <!-- These are probably set in code, but consistent -->
+            <Style Selector="^:pointerover /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="Blue" />
+            </Style>
+            <Style Selector="^:pressed /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="Yellow" />
+            </Style>
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="Green" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+            </Style>
+        </Style>
+        
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource CalendarViewWeekDayForegroundDisabled}" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

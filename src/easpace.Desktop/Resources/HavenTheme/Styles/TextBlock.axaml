@@ -17,17 +17,18 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="activity-target" Text="Activity target value" />
                     <TextBlock Classes="calendar-day" Text="Mon" />
                     <TextBlock Classes="calendar-legend" Text="Calendar legend" />
+                    <TextBlock Classes="label" Text="Label" />
                 </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
     <Style Selector="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource Poppins}" />
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
     </Style>
     
     <Style Selector="SelectableTextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource Poppins}" />
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
     </Style>
@@ -37,11 +38,22 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
+    
+    <Style Selector="TextBlock.subtitle, SelectableTextBlock.subtitle">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Lg}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
 
     <Style Selector="TextBlock.paragraph, SelectableTextBlock.paragraph">
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+    
+    <Style Selector="TextBlock.label">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
     </Style>
     
     <Style Selector="TextBlock.activity-value">

@@ -8,6 +8,7 @@ using easpace.Desktop.Constants;
 using easpace.Desktop.Constants.Keys;
 using easpace.Desktop.Factories;
 using easpace.Desktop.Services;
+using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels;
 
@@ -15,21 +16,30 @@ public partial class MainViewModel : ViewModelBase
 {
     private readonly PageFactory _pageFactory;
     private readonly IPreferencesService _preferencesService;
+    private readonly IDialogService _dialogService;
     private readonly bool _isBoarded;
 
     [ObservableProperty] private PageViewModel _currentPageViewModel;
     [ObservableProperty] private bool _isSidebarVisible = true;
     [ObservableProperty] private int _selectedNavIndex;
+    [ObservableProperty] private DialogViewModel? _currentDialog;
     
     public MainViewModel(
         PageFactory pageFactory,
         IPreferencesService preferencesService,
+        IDialogService dialogService,
         IMessenger messenger
     )
     {
         _pageFactory = pageFactory;
         _preferencesService = preferencesService;
+        _dialogService = dialogService;
 
+        _dialogService.CurrentDialogChanged += (dialog) =>
+        {
+            CurrentDialog = dialog;
+        };
+        
         messenger.Register<ApplicationMessage.RequestPage>(this, (_, msg) =>
         {
             SetPage(msg.Page);

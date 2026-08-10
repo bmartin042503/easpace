@@ -21,6 +21,9 @@ public static class ServiceCollectionExtensions
             
             collection.AddSingleton<PreferencesService>();
             collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
+            
+            collection.AddSingleton<DialogService>();
+            collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
         
             collection.AddSingleton<PageFactory>();
         

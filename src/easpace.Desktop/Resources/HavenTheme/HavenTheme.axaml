@@ -28,10 +28,17 @@ Component files located in the `Styles` directory apply these tokens to style in
 
                 <!-- Phosphor Icons -->
                 <ResourceInclude Source="/Resources/HavenTheme/PhosphorIcons.axaml" />
-                
+
                 <!-- Template selectors -->
                 <ResourceInclude Source="/Resources/HavenTheme/TemplateSelectors/ActivityItemSelector.axaml" />
                 <ResourceInclude Source="/Resources/HavenTheme/TemplateSelectors/ActivityListItemSelector.axaml" />
+
+                <!-- Control themes -->
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CheckBox.axaml" />
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/ButtonSpinner.axaml" />
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarDatePicker.axaml" />
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarItem.axaml" />
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarDayButton.axaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
@@ -47,11 +54,11 @@ Component files located in the `Styles` directory apply these tokens to style in
         </ResourceDictionary>
 
         <!-- Poppins font -->
-        <FontFamily x:Key="Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
+        <FontFamily x:Key="Haven.FontFamily.Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
 
         <!-- Converters -->
         <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
-        <converters:RoutineStateConverter x:Key="RoutineStateConverter" />
+        <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />
         <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
 
     </Styles.Resources>
@@ -67,7 +74,11 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/Slider.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBox.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/CheckBox.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/ComboBox.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/NumericUpDown.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ToggleButton.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/CalendarDatePicker.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/PathIcon.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/NavigationListItem.axaml" />

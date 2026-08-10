@@ -2,26 +2,67 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels.Activities;
+using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels;
 
 public partial class ActivitiesViewModel : PageViewModel
 {
-    [ObservableProperty] private ObservableCollection<ActivityViewModel> _activityViewModels = [];
+    private readonly IDialogService _dialogService;
+    public ObservableCollection<ActivityViewModel> ActivityViewModels { get; } = [];
+    public ObservableCollection<DataEntry> EditActivityDataEntries { get; set; } = [];
+
     [ObservableProperty] private ActivityViewModel? _selectedActivityViewModel;
 
-    public ActivitiesViewModel()
-    {
-        Page = ApplicationPage.Activities;
+    [ObservableProperty] private bool _isEditing;
+    [ObservableProperty] private bool _isCreatingNew;
+    [ObservableProperty] private bool _isComboBoxEnabled;
 
-        LoadMockData();
+    [NotifyPropertyChangedFor(nameof(IsRoutineSelected))]
+    [NotifyPropertyChangedFor(nameof(IsUnitVisible))]
+    [NotifyPropertyChangedFor(nameof(IsTargetCheckboxVisible))]
+    [NotifyPropertyChangedFor(nameof(IsTargetInputVisible))]
+    [NotifyPropertyChangedFor(nameof(IsTargetDateVisible))]
+    [ObservableProperty]
+    private ActivityType? _editSelectedActivityType;
+
+    [ObservableProperty] private string _editTitle = string.Empty;
+    [ObservableProperty] private string _editName = string.Empty;
+    [ObservableProperty] private string _editUnit = string.Empty;
+
+    [NotifyPropertyChangedFor(nameof(IsTargetInputVisible))] [ObservableProperty]
+    private bool _isTargetChecked;
+
+    [ObservableProperty] private double? _editTarget;
+    [ObservableProperty] private DateTime? _editTargetDate;
+
+    public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
+
+    public bool IsRoutineSelected => EditSelectedActivityType is ActivityType.Routine;
+    public bool IsUnitVisible => EditSelectedActivityType is ActivityType.Trend or ActivityType.Milestone;
+    public bool IsTargetCheckboxVisible => EditSelectedActivityType is ActivityType.Trend;
+
+    public bool IsTargetInputVisible =>
+        EditSelectedActivityType is ActivityType.Milestone ||
+        (EditSelectedActivityType is ActivityType.Trend && IsTargetChecked);
+
+    public bool IsTargetDateVisible => EditSelectedActivityType is ActivityType.Milestone;
+
+    public ActivitiesViewModel(IDialogService dialogService)
+    {
+        _dialogService = dialogService;
+
+        Page = ApplicationPage.Activities;
 
         if (ActivityViewModels.Any())
         {
@@ -30,236 +71,322 @@ public partial class ActivitiesViewModel : PageViewModel
     }
 
     [RelayCommand]
-    public void SelectActivityViewModel(object parameter)
+    private async Task AddNewDataEntry()
     {
-        if (parameter is not ActivityViewModel activityViewModel) return;
-        SelectedActivityViewModel = activityViewModel;
-    }
+        if (SelectedActivityViewModel == null) return;
 
-    private void LoadMockData()
-    {
-        ActivityViewModels =
-        [
-            new MilestoneActivityViewModel
-            (
-                new MilestoneActivity
-                {
-                    Title = "Read 1000 pages",
-                    TargetValue = 1000,
-                    Unit = "pages",
-                    Entries =
-                    {
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 15 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 32 }
-                    }
-                }
-            ),
-
-            new MilestoneActivityViewModel
-            (
-                new MilestoneActivity
-                {
-                    Title = "Run 250 kms",
-                    TargetValue = 250,
-                    Unit = "kms",
-                    Entries =
-                    {
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 10 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 7 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 23 }
-                    }
-                }
-            ),
-
-            new MilestoneActivityViewModel
-            (
-                new MilestoneActivity
-                {
-                    Title = "Do 1000 pushups",
-                    TargetValue = 1000,
-                    Unit = "pushups",
-                    Entries =
-                    {
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-2), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 50 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 100 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 100 }
-                    }
-                }
-            ),
-
-            new TrendActivityViewModel
-            (
-                new TrendActivity
-                {
-                    Title = "Weight",
-                    TargetValue = 75.0,
-                    Unit = "kg",
-                    Entries =
-                    {
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-35), Value = 89.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-31), Value = 88.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-27), Value = 87.0 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-24), Value = 86.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-20), Value = 85.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-16), Value = 84.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-13), Value = 83.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-9), Value = 82.9 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-5), Value = 82.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-3), Value = 81.9 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 81.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now, Value = 100.2 }
-                    }
-                }
-            ),
-
-            new TrendActivityViewModel
-            (
-                new TrendActivity
-                {
-                    Title = "Body fat",
-                    TargetValue = 15.0,
-                    Unit = "%",
-                    Entries =
-                    {
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-90), Value = 24.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-87), Value = 24.6 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-84), Value = 24.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-81), Value = 24.0 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-78), Value = 23.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-75), Value = 23.9 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-72), Value = 23.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-69), Value = 23.1 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-66), Value = 23.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-63), Value = 22.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-60), Value = 22.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-57), Value = 22.6 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-54), Value = 22.1 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-51), Value = 21.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-48), Value = 21.9 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-45), Value = 21.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-42), Value = 21.1 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-39), Value = 20.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-36), Value = 20.9 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-33), Value = 20.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-30), Value = 20.2 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-27), Value = 20.0 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-24), Value = 20.1 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-21), Value = 19.8 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-18), Value = 19.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-15), Value = 19.3 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-12), Value = 19.4 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-9), Value = 19.0 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-6), Value = 18.7 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-3), Value = 18.5 },
-                        new NumericDataEntry { Timestamp = DateTime.Now.AddDays(-1), Value = 18.2 }
-                    }
-                }
-            ),
-
-            new RoutineActivityViewModel
-            (
-                new RoutineActivity
-                {
-                    Title = "Daily workout",
-                    Entries =
-                    {
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-2), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-1), State = RoutineState.NotCompleted },
-                        new RoutineDataEntry { Timestamp = DateTime.Now, State = RoutineState.Completed }
-                    }
-                }
-            ),
-            
-            new RoutineActivityViewModel
-            (
-                new RoutineActivity
-                {
-                    Title = "Morning Meditation",
-                    CreatedAt = DateTime.Now.AddMonths(-2),
-                    Entries =
-                    {
-                        new RoutineDataEntry
-                            { Timestamp = DateTime.Now.AddMonths(-2).AddDays(3), State = RoutineState.Completed },
-                        new RoutineDataEntry
-                            { Timestamp = DateTime.Now.AddMonths(-2).AddDays(15), State = RoutineState.NotCompleted },
-                        new RoutineDataEntry
-                            { Timestamp = DateTime.Now.AddMonths(-1).AddDays(10), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-12), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-5), State = RoutineState.NotCompleted }
-                    }
-                }
-            ),
-            
-            new RoutineActivityViewModel
-            (
-                new RoutineActivity
-                {
-                    Title = "Quit smoking",
-                    CreatedAt = DateTime.Now.AddDays(-15),
-                    Entries =
-                    {
-                        new RoutineDataEntry { Timestamp = new DateTime(2005, 2, 9), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-13), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-12), State = RoutineState.NotCompleted },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-10), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-9), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-6), State = RoutineState.NotCompleted },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-5), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now.AddDays(-4), State = RoutineState.Completed },
-                        new RoutineDataEntry { Timestamp = DateTime.Now, State = RoutineState.Completed } // Mai nap
-                    }
-                }
-            ),
-            
-            new RoutineActivityViewModel
-            (
-                new RoutineActivity
-                {
-                    Title = "Learn Spanish",
-                    CreatedAt = DateTime.Now.AddDays(-21)
-                }
-            ),
-
-            GenerateMassiveTestData()
-        ];
-    }
-
-    public static TrendActivityViewModel GenerateMassiveTestData(int dataPoints = 3000)
-    {
-        var viewModel = new TrendActivityViewModel
-        (
-            new TrendActivity
-            {
-                Title = "Daily steps",
-                TargetValue = 10000.0,
-                Unit = "step"
-            }
-        );
-
-        var random = new Random(42);
-        var startDate = DateTime.Now.AddDays(-dataPoints);
-
-        double currentValue = 6000;
-
-        for (int i = 0; i < dataPoints; i++)
+        if (SelectedActivityViewModel.BaseActivity is NumericActivity numericActivity)
         {
-            currentValue += random.Next(-1500, 1550);
-
-            if (currentValue < 1000) currentValue = 1000 + random.Next(0, 500);
-            if (currentValue > 25000) currentValue = 25000 - random.Next(0, 500);
-
-            viewModel.Activity.Entries.Add(new NumericDataEntry
+            var numericEntryDialog = new NumericEntryDialogViewModel
             {
-                Timestamp = startDate.AddDays(i),
-                Value = Math.Round(currentValue)
-            });
+                Title = LocalizationService.GetString("Activities.EntryDialog.Title"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Save"),
+                UnitText = string.IsNullOrEmpty(numericActivity.Unit) ? null : numericActivity.Unit,
+                SelectedDate = DateTime.Now
+            };
+
+            await _dialogService.ShowDialogAsync(numericEntryDialog);
+
+            if (numericEntryDialog is { Confirmed: true, NumericValue: not null })
+            {
+                var date = numericEntryDialog.SelectedDate;
+                var numericValue = numericEntryDialog.NumericValue.Value;
+                var numericEntry = new NumericDataEntry
+                {
+                    Id = Guid.NewGuid(),
+                    Timestamp = date ?? DateTime.Now,
+                    Value = numericValue
+                };
+                numericActivity.Entries.Add(numericEntry);
+            }
+        }
+        else if (SelectedActivityViewModel.BaseActivity is RoutineActivity routineActivity)
+        {
+            var routineEntryDialog = new RoutineEntryDialogViewModel
+            {
+                Title = LocalizationService.GetString("Activities.EntryDialog.Title"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Save"),
+                SelectedDate = DateTime.Now,
+                SelectedItem = RoutineState.Completed
+            };
+
+            await _dialogService.ShowDialogAsync(routineEntryDialog);
+
+            if (routineEntryDialog.Confirmed)
+            {
+                var date = routineEntryDialog.SelectedDate;
+                var state = routineEntryDialog.SelectedItem;
+                
+                var existingEntry = routineActivity.Entries.FirstOrDefault(e => e.Timestamp.Date == date.Date);
+
+                if (existingEntry != null)
+                {
+                    if (state is RoutineState.None)
+                    {
+                        routineActivity.Entries.Remove(existingEntry);
+                        return;
+                    }
+                    
+                    var index = routineActivity.Entries.IndexOf(existingEntry);
+                
+                    routineActivity.Entries[index] = new RoutineDataEntry
+                    {
+                        Id = existingEntry.Id,
+                        Timestamp = date,
+                        State = state
+                    };
+                }
+                else
+                {
+                    if (state is RoutineState.None) return;
+                    
+                    var routineEntry = new RoutineDataEntry
+                    {
+                        Id = Guid.NewGuid(),
+                        Timestamp = date,
+                        State = state
+                    };
+                    routineActivity.Entries.Add(routineEntry);
+                }
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void AddNewActivity()
+    {
+        EditName = LocalizationService.GetString("Activities.Input.NewActivityName");
+        EditTitle = LocalizationService.GetString("Activities.Input.NewActivityName");
+
+        IsEditing = true;
+        IsCreatingNew = true;
+
+        IsComboBoxEnabled = true;
+        EditSelectedActivityType = ActivityTypes.FirstOrDefault();
+
+        EditUnit = string.Empty;
+        EditTarget = null;
+        EditTargetDate = null;
+        IsTargetChecked = false;
+        EditActivityDataEntries.Clear();
+    }
+
+    [RelayCommand]
+    private void EditActivity()
+    {
+        if (SelectedActivityViewModel == null) return;
+
+        IsEditing = true;
+        IsCreatingNew = false;
+        IsComboBoxEnabled = false;
+
+        var activity = SelectedActivityViewModel.BaseActivity;
+        IEnumerable<DataEntry> dataEntries = [];
+        EditName = activity.Title;
+        EditTitle = string.Format(LocalizationService.GetString("Activities.Title.Edit"), activity.Title);
+
+        switch (activity)
+        {
+            case TrendActivity trendActivity:
+                EditSelectedActivityType = ActivityType.Trend;
+                EditUnit = trendActivity.Unit ?? string.Empty;
+                EditTargetDate = null;
+
+                if (trendActivity.Target.HasValue)
+                {
+                    IsTargetChecked = true;
+                    EditTarget = trendActivity.Target.Value;
+                }
+                else
+                {
+                    IsTargetChecked = false;
+                    EditTarget = null;
+                }
+
+                dataEntries = trendActivity.Entries;
+                break;
+
+            case MilestoneActivity milestoneActivity:
+                EditSelectedActivityType = ActivityType.Milestone;
+                EditUnit = milestoneActivity.Unit ?? string.Empty;
+
+                if (milestoneActivity.Target.HasValue)
+                {
+                    EditTarget = milestoneActivity.Target.Value;
+                }
+
+                EditTargetDate = milestoneActivity.TargetDate;
+
+                dataEntries = milestoneActivity.Entries;
+                break;
+
+            case RoutineActivity routineActivity:
+                EditSelectedActivityType = ActivityType.Routine;
+                EditUnit = string.Empty;
+                EditTarget = null;
+                IsTargetChecked = false;
+
+                dataEntries = routineActivity.Entries;
+                break;
         }
 
-        return viewModel;
+        EditActivityDataEntries = new(dataEntries);
+    }
+
+    // TODO: validate form, add checks for Unit value (Trend & Milestone)
+
+    [RelayCommand]
+    private void SaveActivity()
+    {
+        if (!IsEditing) return;
+
+        if (string.IsNullOrEmpty(EditName)) return;
+
+        if (IsCreatingNew)
+        {
+            var vm = new ActivityViewModel();
+            switch (EditSelectedActivityType)
+            {
+                case ActivityType.Trend:
+                    var trendActivity = new TrendActivity
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedAt = DateTime.Now,
+                        Title = EditName,
+                        Unit = EditUnit
+                    };
+
+                    if (IsTargetChecked && EditTarget.HasValue)
+                    {
+                        trendActivity.Target = EditTarget;
+                    }
+
+                    vm = new TrendActivityViewModel(trendActivity);
+                    break;
+
+                case ActivityType.Milestone:
+                    if (!EditTarget.HasValue) return;
+
+                    var milestoneActivity = new MilestoneActivity
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedAt = DateTime.Now,
+                        Title = EditName,
+                        Unit = EditUnit,
+                        Target = EditTarget,
+                    };
+
+                    if (EditTargetDate != null && EditTargetDate >= DateTime.Now)
+                    {
+                        milestoneActivity.TargetDate = EditTargetDate;
+                    }
+
+                    vm = new MilestoneActivityViewModel(milestoneActivity);
+                    break;
+
+                case ActivityType.Routine:
+                    var routineActivity = new RoutineActivity
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedAt = DateTime.Now,
+                        Title = EditName
+                    };
+
+                    vm = new RoutineActivityViewModel(routineActivity);
+                    break;
+            }
+
+            ActivityViewModels.Insert(0, vm);
+            SelectedActivityViewModel = vm;
+        }
+        else
+        {
+            if (SelectedActivityViewModel == null) return;
+
+            var activity = SelectedActivityViewModel.BaseActivity;
+            activity.Title = EditName;
+
+            switch (activity)
+            {
+                case TrendActivity trendActivity:
+                    trendActivity.Unit = EditUnit;
+                    trendActivity.Target = IsTargetChecked ? EditTarget : null;
+
+                    var trendEntriesToRemove = trendActivity.Entries
+                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
+
+                    foreach (var item in trendEntriesToRemove)
+                    {
+                        trendActivity.Entries.Remove(item);
+                    }
+
+                    break;
+
+                case MilestoneActivity milestoneActivity:
+                    if (!EditTarget.HasValue) return;
+
+                    milestoneActivity.Unit = EditUnit;
+                    milestoneActivity.Target = EditTarget;
+
+                    if (EditTargetDate != null && EditTargetDate >= DateTime.Now)
+                    {
+                        milestoneActivity.TargetDate = EditTargetDate;
+                    }
+
+                    var milestoneEntriesToRemove = milestoneActivity.Entries
+                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
+
+                    foreach (var item in milestoneEntriesToRemove)
+                    {
+                        milestoneActivity.Entries.Remove(item);
+                    }
+
+                    break;
+
+                case RoutineActivity routineActivity:
+                    var routineEntriesToRemove = routineActivity.Entries
+                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
+
+                    foreach (var item in routineEntriesToRemove)
+                    {
+                        routineActivity.Entries.Remove(item);
+                    }
+
+                    break;
+            }
+        }
+
+        IsEditing = false;
+        IsCreatingNew = false;
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        IsEditing = false;
+        IsCreatingNew = false;
+    }
+
+    [RelayCommand]
+    private void DeleteActivity()
+    {
+        if (SelectedActivityViewModel == null) return;
+
+        ActivityViewModels.Remove(SelectedActivityViewModel);
+
+        IsEditing = false;
+        IsCreatingNew = false;
+
+        SelectedActivityViewModel = ActivityViewModels.FirstOrDefault();
+    }
+
+    [RelayCommand]
+    private void DeleteDataEntry(DataEntry? entry)
+    {
+        if (entry == null) return;
+
+        EditActivityDataEntries.Remove(entry);
     }
 }

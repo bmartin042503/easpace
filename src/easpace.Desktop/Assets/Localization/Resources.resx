@@ -95,17 +95,14 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Empty.Message" xml:space="preserve">
         <value>Click the + button to create your first entry.</value>
     </data>
+    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
+        <value>Delete '{0}'?</value>
+    </data>
+    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this journal entry? This action can't be undone.</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Search activities...</value>
-    </data>
-    <data name="Activities.RoutineState.Completed" xml:space="preserve">
-        <value>Completed</value>
-    </data>
-    <data name="Activities.RoutineState.NotCompleted" xml:space="preserve">
-        <value>Not completed</value>
-    </data>
-    <data name="Activities.RoutineState.None" xml:space="preserve">
-        <value>Empty</value>
     </data>
     <data name="Activities.NumericActivity.Target" xml:space="preserve">
         <value>Target</value>
@@ -115,6 +112,60 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
         <value>Goal date</value>
+    </data>
+    <data name="Activities.Input.NewActivityName" xml:space="preserve">
+        <value>New activity</value>
+    </data>
+    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
+        <value>Enter activity name...</value>
+    </data>
+    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
+        <value>Unit...</value>
+    </data>
+    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
+        <value>Goal...</value>
+    </data>
+    <data name="Activities.Input.DatePlaceholder" xml:space="preserve">
+        <value>Date...</value>
+    </data>
+    <data name="Activities.Label.Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="Activities.Label.Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Activities.Label.Unit" xml:space="preserve">
+        <value>Unit (e.g. kg, pages, steps)</value>
+    </data>
+    <data name="Activities.Label.TargetValue" xml:space="preserve">
+        <value>Goal value</value>
+    </data>
+    <data name="Activities.Label.TargetDate" xml:space="preserve">
+        <value>Goal date</value>
+    </data>
+    <data name="Activities.CheckBox.Target" xml:space="preserve">
+        <value>Set a goal</value>
+    </data>
+    <data name="Activities.Title.Edit" xml:space="preserve">
+        <value>Edit '{0}'</value>
+    </data>
+    <data name="Activities.EntryDialog.Title" xml:space="preserve">
+        <value>Add new entry</value>
+    </data>
+    <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
+        <value>Date...</value>
+    </data>
+    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
+        <value>Value...</value>
+    </data>
+    <data name="Activities.Type.Trend" xml:space="preserve">
+        <value>Trend</value>
+    </data>
+    <data name="Activities.Type.Milestone" xml:space="preserve">
+        <value>Milestone</value>
+    </data>
+    <data name="Activities.Type.Routine" xml:space="preserve">
+        <value>Routine</value>
     </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Mon</value>
@@ -145,5 +196,14 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
         <value>Today</value>
+    </data>
+    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
+        <value>Completed</value>
+    </data>
+    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
+        <value>Not completed</value>
+    </data>
+    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
+        <value>Empty</value>
     </data>
 </root>

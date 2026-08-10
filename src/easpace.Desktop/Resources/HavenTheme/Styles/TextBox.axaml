@@ -9,33 +9,34 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
-                <Border Padding="20">
-                    <StackPanel Orientation="Vertical" Spacing="20">
+                <StackPanel Orientation="Vertical" Spacing="20">
 
-                        <TextBox PlaceholderText="Search..." MinWidth="140">
-                            <TextBox.InnerRightContent>
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
-                            </TextBox.InnerRightContent>
-                        </TextBox>
+                    <TextBox PlaceholderText="Search..." MinWidth="140">
+                        <TextBox.InnerRightContent>
+                            <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
+                        </TextBox.InnerRightContent>
+                    </TextBox>
 
-                        <TextBox Text="Edit Journal Entry Title"
-                                 Classes="journal-edit title"
-                                 VerticalAlignment="Center" />
+                    <TextBox Text="Edit Journal Entry Title"
+                             Classes="journal-edit title"
+                             VerticalAlignment="Center" />
 
-                        <TextBox Classes="journal-edit paragraph" Height="200"
-                                 AcceptsReturn="True"
-                                 TextWrapping="Wrap"
-                                 PlaceholderText="Write down your thoughts here..."
-                                 VerticalAlignment="Stretch" />
+                    <TextBox Classes="journal-edit paragraph" Height="200"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             PlaceholderText="Write down your thoughts here..."
+                             VerticalAlignment="Stretch" />
 
-                    </StackPanel>
-                </Border>
+                    <TextBox Text="Text box" />
+
+                </StackPanel>
             </Border>
         </ThemeVariantScope>
     </Design.PreviewWith>
 
     <Style Selector="TextBox">
-        <Setter Property="FontFamily" Value="{StaticResource Poppins}" />
+        
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />

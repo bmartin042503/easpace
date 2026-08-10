@@ -1,0 +1,80 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
+             x:DataType="vm:ConfirmDialogViewModel"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+             MaxWidth="550" MaxHeight="400"
+             Background="{StaticResource Haven.Scale.Transparent}"
+             x:Class="easpace.Desktop.Views.Dialogs.ConfirmDialogView">
+
+    <Design.DataContext>
+        <vm:ConfirmDialogViewModel />
+    </Design.DataContext>
+
+    <Border Classes="gradient card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            BorderThickness="0">
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
+                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                <!-- Warning icon -->
+                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Foreground="{DynamicResource Haven.Sem.Foreground}"
+                          Data="{StaticResource Haven.PhosphorIcons.Warning.Fill}"
+                          IsVisible="{Binding IsDestructive}"
+                          VerticalAlignment="Top"
+                          Margin="0,4,0,0" />
+
+                <!-- Info icon -->
+                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Foreground="{DynamicResource Haven.Sem.Foreground}"
+                          Data="{StaticResource Haven.PhosphorIcons.Info.Fill}"
+                          IsVisible="{Binding !IsDestructive}"
+                          VerticalAlignment="Top"
+                          Margin="0,4,0,0" />
+
+                <!-- Title -->
+                <TextBlock Grid.Column="1" Classes="subtitle" Text="{Binding Title}"
+                           TextWrapping="Wrap" VerticalAlignment="Center" />
+
+            </Grid>
+
+            <!-- Message -->
+            <TextBlock Grid.Row="1" Classes="paragraph"
+                       Text="{Binding Message}"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       TextWrapping="Wrap"
+                       TextAlignment="Left" />
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                        HorizontalAlignment="Right">
+
+                <!-- Cancel button -->
+                <Button Classes="secondary regular" Content="{Binding CancelText}"
+                        Command="{Binding CancelCommand}" />
+
+                <!-- Confirm button -->
+                <Button Classes.danger="{Binding IsDestructive}"
+                        Classes.primary="{Binding !IsDestructive}"
+                        Classes="regular" Content="{Binding ConfirmText}"
+                        Command="{Binding ConfirmCommand}" />
+
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

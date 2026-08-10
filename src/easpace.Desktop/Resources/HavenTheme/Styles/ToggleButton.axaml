@@ -58,7 +58,7 @@ Licensed under the MIT License. See LICENSE file for details.
             Selector="^ /template/ ContentPresenter,
                       ^:pointerover /template/ ContentPresenter,
                       ^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Clear}" />
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Neutral600}" />
             <Setter Property="Foreground" Value="{DynamicResource Neutral600}" />
             <Setter Property="BorderThickness" Value="0.75" />

@@ -1,0 +1,71 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <ControlTheme x:Key="Haven.ControlTheme.CalendarDatePickerButton" TargetType="Button">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Height="24" Width="24"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <PathIcon Width="22" Height="22"
+                              Data="{StaticResource Haven.PhosphorIcons.CalendarBlank}"
+                              Foreground="{DynamicResource Haven.Sem.Accent.Strong}" />
+
+                    <TextBlock Margin="0,6,0,0"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                               FontSize="10" FontWeight="{StaticResource Haven.Scale.FontWeight.Medium}"
+                               Text="{Binding Source={x:Static sys:DateTime.Today}, Path=Day}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="Haven.ControlTheme.CalendarDatePicker"
+                  TargetType="CalendarDatePicker" BasedOn="{StaticResource {x:Type CalendarDatePicker}}">
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Panel x:Name="LayoutRoot"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch">
+                        <Border x:Name="Background"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Grid.Column="0" Name="PART_TextBox"
+                                     BorderThickness="0"
+                                     Background="{StaticResource Haven.Scale.Transparent}"/>
+                            <Button Name="PART_Button"
+                                    Theme="{StaticResource Haven.ControlTheme.CalendarDatePickerButton}"
+                                    Grid.Column="1" Margin="0,0,6,0"
+                                    Focusable="False" />
+                            <Popup Name="PART_Popup"
+                                   PlacementTarget="{TemplateBinding}"
+                                   IsLightDismissEnabled="True">
+                                <Calendar Name="PART_Calendar"
+                                          FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                          IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                          SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedDate, Mode=TwoWay}"
+                                          DisplayDate="{TemplateBinding DisplayDate}"
+                                          DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                          DisplayDateEnd="{TemplateBinding DisplayDateEnd}" />
+                            </Popup>
+                        </Grid>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -1,0 +1,49 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+                <StackPanel Orientation="Vertical" Spacing="20" Width="400" Height="400">
+
+                    <NumericUpDown Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                   HorizontalAlignment="Left"/>
+
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="NumericUpDown">
+
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+
+        <Style Selector="^ ButtonSpinner">
+            <Setter Property="Theme" Value="{StaticResource Haven.ControlTheme.ButtonSpinner}" />
+        </Style>
+
+        <Style Selector="^ TextBox:pointerover /template/ Border, ^ TextBox:focus /template/ Border">
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="^ RepeatButton:pointerover /template/ ContentPresenter#PART_ContentPresenter, 
+                         ^ RepeatButton:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+        </Style>
+
+    </Style>
+
+</Styles>

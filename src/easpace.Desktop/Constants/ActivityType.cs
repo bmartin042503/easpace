@@ -1,6 +1,11 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
-namespace easpace.Desktop.Models.Activities;
+namespace easpace.Desktop.Constants;
 
-public class TrendActivity : NumericActivity;
+public enum ActivityType
+{
+    Trend,
+    Milestone,
+    Routine
+}

@@ -10,7 +10,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <ThemeVariantScope RequestedThemeVariant="Light">
             <Border Padding="20" Background="{DynamicResource Neutral100}">
 
-                <StackPanel Orientation="Horizontal" Spacing="20">
+                <StackPanel Orientation="Vertical" Spacing="20">
 
                     <Button Classes="primary icon">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
@@ -24,7 +24,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
                     
-                    <Button Classes="tertiary delete icon">
+                    <Button Classes="tertiary danger icon">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Trash.Fill}" />
                     </Button>
                     
@@ -39,6 +39,10 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Button Classes="secondary icon" IsEnabled="False">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
+                    
+                    <Button Classes="secondary regular" Content="Secondary Regular" />
+                    <Button Classes="primary regular" Content="Primary Regular" />
+                    <Button Classes="danger regular" Content="Danger Regular" />
 
                 </StackPanel>
             </Border>
@@ -89,7 +93,21 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
     </Style>
     
-    <Style Selector="Button.tertiary.delete">
+    <Style Selector="Button.regular.danger">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong} " />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong} " />
+            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
+        </Style>
+    </Style>
+    
+    <Style Selector="Button.tertiary.danger">
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger}" />
         </Style>
@@ -102,6 +120,23 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style Selector="^ PathIcon">
             <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
             <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+        </Style>
+    </Style>
+    
+    <Style Selector="Button.regular">
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+    </Style>
+    
+    <Style Selector="Button.clear">
+        <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderThickness" Value="0" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style>
     </Style>
 

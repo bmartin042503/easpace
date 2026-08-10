@@ -240,6 +240,7 @@ public class RoutineMonthItem : Control
         );
 
         AffectsMeasure<RoutineMonthItem>(
+            MonthDataProperty,
             ItemSpacingProperty,
             TitleFontSizeProperty
         );
@@ -269,7 +270,7 @@ public class RoutineMonthItem : Control
         // calculate cell width to determine a fallback height (maintaining aspect ratio)
         var cellWidth = Math.Max(0, (width - 6 * ItemSpacing) / 7.0);
 
-        // calculate an ideal height based on width (6% of width)
+        // calculate an ideal height based on width (60% of width)
         var cellHeight = cellWidth * 0.6;
 
         // adding space for the title (font size + some margin)
@@ -321,9 +322,8 @@ public class RoutineMonthItem : Control
         var availableWidth = Bounds.Width;
         var cellWidth = Math.Max(0, (availableWidth - 6 * ItemSpacing) / 7.0);
 
-        // calculate dynamic item height based on actual control height and spacing
-        var availableHeight = Math.Max(0, Bounds.Height - titleSpace);
-        var cellHeight = Math.Max(0, (availableHeight - (rows - 1) * ItemSpacing) / rows);
+        // calculate an ideal height based on width (60% of width)
+        var cellHeight = cellWidth * 0.6;
 
         // create pens for borders
         var dummyPen = new Pen(DummyBorderBrush, BorderThickness);

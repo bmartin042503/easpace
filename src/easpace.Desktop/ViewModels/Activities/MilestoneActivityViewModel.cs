@@ -8,7 +8,7 @@ namespace easpace.Desktop.ViewModels.Activities;
 public class MilestoneActivityViewModel : ActivityViewModel
 {
     public MilestoneActivity Activity => (MilestoneActivity)BaseActivity;
-    
+
     public MilestoneActivityViewModel(MilestoneActivity activity)
     {
         BaseActivity = activity;

@@ -23,7 +23,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Template of Routine Activity -->
         <DataTemplate x:Key="RoutineActivityViewModel" DataType="activities:RoutineActivityViewModel">
             <controls:ActivityListItem Title="{Binding Activity.Title}"
-                                       Status="{Binding Activity.TodayEntry.State, Converter={StaticResource RoutineStateConverter}}"
+                                       Status="{Binding Activity.TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
                                        Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
                                        SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
         </DataTemplate>
@@ -36,7 +36,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <controls:ActivityListItem.Status>
                     <MultiBinding StringFormat="{}{0}/{1}">
                         <Binding Path="Activity.EntriesSum" />
-                        <Binding Path="Activity.TargetValue" />
+                        <Binding Path="Activity.Target" />
                     </MultiBinding>
                 </controls:ActivityListItem.Status>
             </controls:ActivityListItem>

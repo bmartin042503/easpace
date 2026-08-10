@@ -1,0 +1,71 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             x:DataType="vm:RoutineEntryDialogViewModel"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+             MaxWidth="550" MaxHeight="400"
+             Background="{StaticResource Haven.Scale.Transparent}"
+             x:Class="easpace.Desktop.Views.Dialogs.RoutineEntryDialogView">
+
+    <Design.DataContext>
+        <vm:RoutineEntryDialogViewModel />
+    </Design.DataContext>
+
+    <Border Classes="card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            BorderThickness="0">
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+
+            <!-- Title -->
+            <TextBlock Grid.Row="0" Classes="subtitle" Text="{Binding Title}"
+                       TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                <!-- Date input -->
+                <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
+                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                    HorizontalAlignment="Center"
+                                    PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}" />
+                
+                <!-- Routine state selection -->
+                <ComboBox ItemsSource="{Binding States}"
+                          SelectedItem="{Binding SelectedItem}"
+                          Width="{StaticResource Haven.Scale.Input.MinWidth}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                        HorizontalAlignment="Right">
+
+                <!-- Cancel button -->
+                <Button Classes="secondary regular" Content="{Binding CancelText}"
+                        Command="{Binding CancelCommand}" />
+
+                <!-- Confirm button -->
+                <Button Classes="primary regular" Content="{Binding ConfirmText}"
+                        Command="{Binding ConfirmCommand}" />
+
+            </StackPanel>
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

@@ -95,17 +95,14 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Empty.Message" xml:space="preserve">
         <value>Kattins a + gombra az első bejegyzésed létrehozásához.</value>
     </data>
+    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
+        <value>Törlöd a(z) "{0}" bejegyzést?</value>
+    </data>
+    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
-    </data>
-    <data name="Activities.RoutineState.Completed" xml:space="preserve">
-        <value>Teljesítve</value>
-    </data>
-    <data name="Activities.RoutineState.NotCompleted" xml:space="preserve">
-        <value>Nincs teljesítve</value>
-    </data>
-    <data name="Activities.RoutineState.None" xml:space="preserve">
-        <value>Üres</value>
     </data>
     <data name="Activities.NumericActivity.Target" xml:space="preserve">
         <value>Cél</value>
@@ -115,6 +112,60 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
         <value>Céldátum</value>
+    </data>
+    <data name="Activities.Input.NewActivityName" xml:space="preserve">
+        <value>Új tevékenység</value>
+    </data>
+    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
+        <value>Adj meg egy nevet...</value>
+    </data>
+    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
+        <value>Egység...</value>
+    </data>
+    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
+        <value>Cél...</value>
+    </data>
+    <data name="Activities.Input.DatePlaceholder" xml:space="preserve">
+        <value>Dátum...</value>
+    </data>
+    <data name="Activities.Label.Name" xml:space="preserve">
+        <value>Név</value>
+    </data>
+    <data name="Activities.Label.Type" xml:space="preserve">
+        <value>Típus</value>
+    </data>
+    <data name="Activities.Label.Unit" xml:space="preserve">
+        <value>Egység (pl. kg, oldal, lépés)</value>
+    </data>
+    <data name="Activities.Label.TargetValue" xml:space="preserve">
+        <value>Cél értéke</value>
+    </data>
+    <data name="Activities.Label.TargetDate" xml:space="preserve">
+        <value>Cél dátum</value>
+    </data>
+    <data name="Activities.CheckBox.Target" xml:space="preserve">
+        <value>Cél beállítása</value>
+    </data>
+    <data name="Activities.Title.Edit" xml:space="preserve">
+        <value>"{0}" szerkesztése</value>
+    </data>
+    <data name="Activities.EntryDialog.Title" xml:space="preserve">
+        <value>Új érték hozzáadása</value>
+    </data>
+    <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
+        <value>Dátum...</value>
+    </data>
+    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
+        <value>Érték...</value>
+    </data>
+    <data name="Activities.Type.Trend" xml:space="preserve">
+        <value>Trend</value>
+    </data>
+    <data name="Activities.Type.Milestone" xml:space="preserve">
+        <value>Mérföldkő</value>
+    </data>
+    <data name="Activities.Type.Routine" xml:space="preserve">
+        <value>Rutin</value>
     </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Hét</value>
@@ -145,5 +196,14 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
         <value>Mai nap</value>
+    </data>
+    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
+        <value>Üres</value>
     </data>
 </root>
