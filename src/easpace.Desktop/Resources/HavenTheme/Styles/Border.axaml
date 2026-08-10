@@ -51,6 +51,10 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="Border.gradient.card">
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
     </Style>
+    
+    <Style Selector="Border.danger.card">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger.Subtle}" />
+    </Style>
 
     <Style Selector="Border.calendar-legend-box">
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xxs}" />

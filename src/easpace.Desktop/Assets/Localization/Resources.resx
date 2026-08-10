@@ -101,6 +101,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.DeleteDialog.Message" xml:space="preserve">
         <value>Are you sure you want to delete this journal entry? This action can't be undone.</value>
     </data>
+    <data name="Activities.Empty.Message" xml:space="preserve">
+        <value>Click the + button to create your first activity.</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Search activities...</value>
     </data>
@@ -143,11 +146,23 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Label.TargetDate" xml:space="preserve">
         <value>Goal date</value>
     </data>
+    <data name="Activities.Label.DataEntry" xml:space="preserve">
+        <value>Data (1 entry)</value>
+    </data>
+    <data name="Activities.Label.DataEntries" xml:space="preserve">
+        <value>Data ({0} entries)</value>
+    </data>
     <data name="Activities.CheckBox.Target" xml:space="preserve">
         <value>Set a goal</value>
     </data>
     <data name="Activities.Title.Edit" xml:space="preserve">
         <value>Edit '{0}'</value>
+    </data>
+    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
+        <value>Delete '{0}'?</value>
+    </data>
+    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this activity? This action can't be undone.</value>
     </data>
     <data name="Activities.EntryDialog.Title" xml:space="preserve">
         <value>Add new entry</value>
@@ -157,6 +172,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
         <value>Value...</value>
+    </data>
+    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
+        <value>Edit entry</value>
     </data>
     <data name="Activities.Type.Trend" xml:space="preserve">
         <value>Trend</value>

@@ -18,7 +18,8 @@ Licensed under the MIT License. See LICENSE file for details.
         <vm:ConfirmDialogViewModel />
     </Design.DataContext>
 
-    <Border Classes="gradient card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+    <Border x:Name="DialogRootBorder" Classes="card"
+            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
         <Grid RowDefinitions="Auto,*,Auto"
@@ -46,7 +47,8 @@ Licensed under the MIT License. See LICENSE file for details.
                           Margin="0,4,0,0" />
 
                 <!-- Title -->
-                <TextBlock Grid.Column="1" Classes="subtitle" Text="{Binding Title}"
+                <TextBlock x:Name="DialogRootTitle" Grid.Column="1"
+                           Classes="subtitle" Text="{Binding Title}"
                            TextWrapping="Wrap" VerticalAlignment="Center" />
 
             </Grid>

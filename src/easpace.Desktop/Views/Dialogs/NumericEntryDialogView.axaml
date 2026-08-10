@@ -20,14 +20,16 @@ Licensed under the MIT License. See LICENSE file for details.
         <vm:NumericEntryDialogViewModel />
     </Design.DataContext>
 
-    <Border Classes="card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+    <Border x:Name="DialogRootBorder" Classes="card" 
+            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
         <Grid RowDefinitions="Auto,*,Auto"
               RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}">
 
             <!-- Title -->
-            <TextBlock Grid.Row="0" Classes="subtitle" Text="{Binding Title}"
+            <TextBlock x:Name="DialogRootTitle" Grid.Row="0" 
+                       Classes="subtitle" Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
@@ -40,9 +42,9 @@ Licensed under the MIT License. See LICENSE file for details.
                 <DockPanel>
                     
                     <!-- Unit label -->
-                    <TextBlock DockPanel.Dock="Right" Classes="label"
+                    <TextBlock DockPanel.Dock="Right"
                                Text="{Binding UnitText}" VerticalAlignment="Center"
-                               TextAlignment="Center"
+                               TextAlignment="Center" Foreground="{DynamicResource Haven.Sem.Foreground}"
                                IsVisible="{Binding UnitText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                Margin="8,0,0,0" />
 

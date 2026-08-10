@@ -10,6 +10,8 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:activities="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:models="clr-namespace:easpace.Desktop.Models.Activities"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesViewModel"
              x:Class="easpace.Desktop.Views.ActivitiesView"
@@ -56,6 +58,60 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     </Grid>
 
+                </StackPanel>
+
+                <!-- No entries view -->
+                <StackPanel Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            IsVisible="{Binding !HasActivities}">
+
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                                HorizontalAlignment="Center">
+
+                        <!-- Chart line icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
+
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="-10" />
+                            </PathIcon.RenderTransform>
+
+                        </PathIcon>
+
+                        <!-- Chart pie slice icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+
+                        <!-- Check square offset icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
+
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="10" />
+                            </PathIcon.RenderTransform>
+
+                        </PathIcon>
+
+                    </StackPanel>
+
+                    <!-- 'Add entries' message -->
+                    <TextBlock Text="{services:LocalizationService Key='Activities.Empty.Message'}"
+                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               TextTrimming="CharacterEllipsis" />
                 </StackPanel>
 
                 <!-- Activity entries list -->
@@ -192,6 +248,119 @@ Licensed under the MIT License. See LICENSE file for details.
                                                     Width="{StaticResource Haven.Scale.Input.MinWidth}"
                                                     PlaceholderText="{services:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
                             </StackPanel>
+
+                            <Separator Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                                       IsVisible="{Binding IsDataEntriesVisible}" />
+
+                            <!-- Data entries -->
+                            <Border Classes="card" Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                    IsVisible="{Binding IsDataEntriesVisible}">
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                                    <!-- Label -->
+                                    <TextBlock Classes="label"
+                                               Text="{Binding DataEntriesLabel}" />
+
+                                    <!-- Items -->
+                                    <ItemsRepeater ItemsSource="{Binding EditActivityDataEntries}">
+
+                                        <!-- TODO: extract these code into DataEntryListItem -->
+                                        <ItemsRepeater.Resources>
+                                            <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
+
+                                                <DataTemplate x:Key="NumericDataEntry"
+                                                              x:DataType="models:NumericDataEntry">
+                                                    <Grid ColumnDefinitions="*,Auto"
+                                                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                                                        
+                                                        <TextBlock Grid.Column="0"
+                                                                   Foreground="{DynamicResource Haven.Sem.Foreground}">
+                                                            <Run Text="{Binding Value}" />
+                                                            <Run Text="("/><Run Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" /><Run Text=")"/>
+                                                        </TextBlock>
+                                                        
+                                                        <!-- Interaction buttons -->
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                                    VerticalAlignment="Center">
+
+                                                            <!-- Delete button -->
+                                                            <Button Classes="tertiary danger icon"
+                                                                    Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).DeleteDataEntryCommand}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                                            </Button>
+
+                                                            <!-- Edit button -->
+                                                            <Button Classes="tertiary icon"
+                                                                    Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditDataEntryCommand}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                                                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                                                            </Button>
+
+                                                        </StackPanel>
+                                                        
+                                                    </Grid>
+                                                </DataTemplate>
+
+                                                <DataTemplate x:Key="RoutineDataEntry"
+                                                              x:DataType="models:RoutineDataEntry">
+                                                    <Grid ColumnDefinitions="*,Auto"
+                                                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                                                        
+                                                        <TextBlock Grid.Column="0"
+                                                                   Foreground="{DynamicResource Haven.Sem.Foreground}">
+                                                            <Run Text="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                            <Run Text="("/><Run Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" /><Run Text=")"/>
+                                                        </TextBlock>
+                                                        
+                                                        <!-- Interaction buttons -->
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                                    VerticalAlignment="Center">
+
+                                                            <!-- Delete button -->
+                                                            <Button Classes="tertiary danger icon"
+                                                                    Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).DeleteDataEntryCommand}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                                            </Button>
+
+                                                            <!-- Edit button -->
+                                                            <Button Classes="tertiary icon"
+                                                                    Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditDataEntryCommand}"
+                                                                    CommandParameter="{Binding .}"
+                                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                                                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                                                            </Button>
+
+                                                        </StackPanel>
+                                                        
+                                                    </Grid>
+                                                </DataTemplate>
+
+                                            </dataTemplates:TemplateSelector>
+                                        </ItemsRepeater.Resources>
+
+                                        <ItemsRepeater.ItemTemplate>
+                                            <DataTemplate x:DataType="models:DataEntry">
+                                                <ContentControl Content="{Binding .}"
+                                                                ContentTemplate="{StaticResource DataEntrySelector}" />
+                                            </DataTemplate>
+                                        </ItemsRepeater.ItemTemplate>
+
+                                        <ItemsRepeater.Layout>
+                                            <StackLayout Orientation="Vertical"
+                                                         Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                                        </ItemsRepeater.Layout>
+
+                                    </ItemsRepeater>
+
+                                </StackPanel>
+                            </Border>
 
                         </StackPanel>
                     </ScrollViewer>

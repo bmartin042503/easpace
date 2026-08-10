@@ -71,15 +71,24 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
                             VerticalAlignment="Top">
 
+                    <!-- Delete button -->
+                    <Button Classes="tertiary danger icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).DeleteActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                        <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                    </Button>
+
                     <!-- Edit button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 
@@ -157,15 +166,24 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
                             VerticalAlignment="Top">
 
+                    <!-- Delete button -->
+                    <Button Classes="tertiary danger icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).DeleteActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                        <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                    </Button>
+
                     <!-- Edit button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 
@@ -196,15 +214,24 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
                             VerticalAlignment="Top">
 
+                    <!-- Delete button -->
+                    <Button Classes="tertiary danger icon"
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).DeleteActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                        <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                    </Button>
+
                     <!-- Edit button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).EditActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                     <!-- Add button -->
                     <Button Classes="tertiary icon"
-                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}">
+                            Command="{Binding $parent[UserControl].((vm:ActivitiesViewModel)DataContext).AddNewDataEntryCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
 
@@ -250,7 +277,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <ItemsRepeater.Layout>
                                 <StackLayout Orientation="Vertical"
-                                            Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                             Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
                             </ItemsRepeater.Layout>
 
                         </ItemsRepeater>

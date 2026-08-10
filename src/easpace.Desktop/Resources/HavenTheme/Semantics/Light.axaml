@@ -50,6 +50,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <GradientStop Color="{StaticResource Haven.Scale.Red500}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Red700}" Offset="1.0" />
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Haven.Sem.Gradient.Danger.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Haven.Scale.White}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Haven.Scale.Red100}" Offset="1.0" />
+    </LinearGradientBrush>
     <LinearGradientBrush x:Key="Haven.Sem.Gradient.Neutral.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{StaticResource Haven.Scale.Neutral100}" Offset="0.0" />
         <GradientStop Color="{StaticResource Haven.Scale.Neutral200}" Offset="1.0" />

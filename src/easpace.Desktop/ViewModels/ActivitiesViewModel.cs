@@ -20,7 +20,7 @@ public partial class ActivitiesViewModel : PageViewModel
 {
     private readonly IDialogService _dialogService;
     public ObservableCollection<ActivityViewModel> ActivityViewModels { get; } = [];
-    public ObservableCollection<DataEntry> EditActivityDataEntries { get; set; } = [];
+    public ObservableCollection<DataEntry> EditActivityDataEntries { get; } = [];
 
     [ObservableProperty] private ActivityViewModel? _selectedActivityViewModel;
 
@@ -51,6 +51,14 @@ public partial class ActivitiesViewModel : PageViewModel
     public bool IsRoutineSelected => EditSelectedActivityType is ActivityType.Routine;
     public bool IsUnitVisible => EditSelectedActivityType is ActivityType.Trend or ActivityType.Milestone;
     public bool IsTargetCheckboxVisible => EditSelectedActivityType is ActivityType.Trend;
+    public bool HasActivities => ActivityViewModels.Count > 0;
+    public bool IsDataEntriesVisible => EditActivityDataEntries.Count > 0 && !IsCreatingNew;
+
+    public string DataEntriesLabel =>
+        EditActivityDataEntries.Count == 1
+            ? LocalizationService.GetString("Activities.Label.DataEntry")
+            : string.Format(LocalizationService.GetString("Activities.Label.DataEntries"),
+                EditActivityDataEntries.Count);
 
     public bool IsTargetInputVisible =>
         EditSelectedActivityType is ActivityType.Milestone ||
@@ -63,6 +71,14 @@ public partial class ActivitiesViewModel : PageViewModel
         _dialogService = dialogService;
 
         Page = ApplicationPage.Activities;
+
+        ActivityViewModels.CollectionChanged += (s, e) => OnPropertyChanged(nameof(HasActivities));
+
+        EditActivityDataEntries.CollectionChanged += (s, e) =>
+        {
+            OnPropertyChanged(nameof(IsDataEntriesVisible));
+            OnPropertyChanged(nameof(DataEntriesLabel));
+        };
 
         if (ActivityViewModels.Any())
         {
@@ -99,6 +115,9 @@ public partial class ActivitiesViewModel : PageViewModel
                     Value = numericValue
                 };
                 numericActivity.Entries.Add(numericEntry);
+
+                // Keep the edit view's list in sync if it's currently open
+                if (IsEditing) EditActivityDataEntries.Add(numericEntry);
             }
         }
         else if (SelectedActivityViewModel.BaseActivity is RoutineActivity routineActivity)
@@ -118,7 +137,7 @@ public partial class ActivitiesViewModel : PageViewModel
             {
                 var date = routineEntryDialog.SelectedDate;
                 var state = routineEntryDialog.SelectedItem;
-                
+
                 var existingEntry = routineActivity.Entries.FirstOrDefault(e => e.Timestamp.Date == date.Date);
 
                 if (existingEntry != null)
@@ -126,22 +145,24 @@ public partial class ActivitiesViewModel : PageViewModel
                     if (state is RoutineState.None)
                     {
                         routineActivity.Entries.Remove(existingEntry);
+                        if (IsEditing) EditActivityDataEntries.Remove(existingEntry);
                         return;
                     }
-                    
-                    var index = routineActivity.Entries.IndexOf(existingEntry);
-                
-                    routineActivity.Entries[index] = new RoutineDataEntry
+
+                    var newEntry = new RoutineDataEntry
                     {
                         Id = existingEntry.Id,
                         Timestamp = date,
                         State = state
                     };
+
+                    ReplaceEntry(routineActivity.Entries, existingEntry, newEntry);
+                    if (IsEditing) ReplaceEntry(EditActivityDataEntries, existingEntry, newEntry);
                 }
                 else
                 {
                     if (state is RoutineState.None) return;
-                    
+
                     var routineEntry = new RoutineDataEntry
                     {
                         Id = Guid.NewGuid(),
@@ -149,6 +170,7 @@ public partial class ActivitiesViewModel : PageViewModel
                         State = state
                     };
                     routineActivity.Entries.Add(routineEntry);
+                    if (IsEditing) EditActivityDataEntries.Add(routineEntry);
                 }
             }
         }
@@ -232,16 +254,19 @@ public partial class ActivitiesViewModel : PageViewModel
                 break;
         }
 
-        EditActivityDataEntries = new(dataEntries);
-    }
+        EditActivityDataEntries.Clear();
 
-    // TODO: validate form, add checks for Unit value (Trend & Milestone)
+        // Populate the edit list
+        foreach (var dataEntry in dataEntries.OrderByDescending(e => e.Timestamp))
+        {
+            EditActivityDataEntries.Add(dataEntry);
+        }
+    }
 
     [RelayCommand]
     private void SaveActivity()
     {
         if (!IsEditing) return;
-
         if (string.IsNullOrEmpty(EditName)) return;
 
         if (IsCreatingNew)
@@ -305,6 +330,7 @@ public partial class ActivitiesViewModel : PageViewModel
         {
             if (SelectedActivityViewModel == null) return;
 
+            // Only metadata is saved here. DataEntries are managed immediately upon edit/delete.
             var activity = SelectedActivityViewModel.BaseActivity;
             activity.Title = EditName;
 
@@ -313,15 +339,6 @@ public partial class ActivitiesViewModel : PageViewModel
                 case TrendActivity trendActivity:
                     trendActivity.Unit = EditUnit;
                     trendActivity.Target = IsTargetChecked ? EditTarget : null;
-
-                    var trendEntriesToRemove = trendActivity.Entries
-                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
-
-                    foreach (var item in trendEntriesToRemove)
-                    {
-                        trendActivity.Entries.Remove(item);
-                    }
-
                     break;
 
                 case MilestoneActivity milestoneActivity:
@@ -333,25 +350,6 @@ public partial class ActivitiesViewModel : PageViewModel
                     if (EditTargetDate != null && EditTargetDate >= DateTime.Now)
                     {
                         milestoneActivity.TargetDate = EditTargetDate;
-                    }
-
-                    var milestoneEntriesToRemove = milestoneActivity.Entries
-                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
-
-                    foreach (var item in milestoneEntriesToRemove)
-                    {
-                        milestoneActivity.Entries.Remove(item);
-                    }
-
-                    break;
-
-                case RoutineActivity routineActivity:
-                    var routineEntriesToRemove = routineActivity.Entries
-                        .Where(e => !EditActivityDataEntries.Contains(e)).ToList();
-
-                    foreach (var item in routineEntriesToRemove)
-                    {
-                        routineActivity.Entries.Remove(item);
                     }
 
                     break;
@@ -370,9 +368,23 @@ public partial class ActivitiesViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void DeleteActivity()
+    private async Task DeleteActivity()
     {
         if (SelectedActivityViewModel == null) return;
+
+        var confirmDeletionDialog = new ConfirmDialogViewModel
+        {
+            Title = string.Format(LocalizationService.GetString("Activities.DeleteDialog.Title"),
+                SelectedActivityViewModel.BaseActivity.Title),
+            Message = LocalizationService.GetString("Activities.DeleteDialog.Message"),
+            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+            ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
+            IsDestructive = true,
+        };
+
+        await _dialogService.ShowDialogAsync(confirmDeletionDialog);
+
+        if (!confirmDeletionDialog.Confirmed) return;
 
         ActivityViewModels.Remove(SelectedActivityViewModel);
 
@@ -383,10 +395,108 @@ public partial class ActivitiesViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void DeleteDataEntry(DataEntry? entry)
+    private void DeleteDataEntry(object parameter)
     {
-        if (entry == null) return;
+        if (parameter is not DataEntry entry || SelectedActivityViewModel == null) return;
+
+        // Apply deletion immediately to both the actual activity and the edit view collection
+        var activity = SelectedActivityViewModel.BaseActivity;
+
+        switch (activity)
+        {
+            case NumericActivity numActivity when entry is NumericDataEntry numEntry:
+                numActivity.Entries.Remove(numEntry);
+                break;
+            case RoutineActivity routActivity when entry is RoutineDataEntry routEntry:
+                routActivity.Entries.Remove(routEntry);
+                break;
+        }
 
         EditActivityDataEntries.Remove(entry);
+    }
+
+    [RelayCommand]
+    private async Task EditDataEntry(object parameter)
+    {
+        if (parameter is not DataEntry entry || SelectedActivityViewModel == null) return;
+
+        var activity = SelectedActivityViewModel.BaseActivity;
+
+        if (activity is NumericActivity numericActivity && entry is NumericDataEntry numericEntry)
+        {
+            var dialog = new NumericEntryDialogViewModel
+            {
+                Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Save"),
+                UnitText = numericActivity.Unit,
+                SelectedDate = numericEntry.Timestamp,
+                NumericValue = numericEntry.Value
+            };
+
+            await _dialogService.ShowDialogAsync(dialog);
+
+            if (dialog is { Confirmed: true, NumericValue: not null })
+            {
+                // Creating a new instance to replace the old one ensures proper UI collection update
+                var updatedEntry = new NumericDataEntry
+                {
+                    Id = numericEntry.Id,
+                    Timestamp = dialog.SelectedDate ?? DateTime.Now,
+                    Value = dialog.NumericValue.Value
+                };
+
+                ReplaceEntry(numericActivity.Entries, numericEntry, updatedEntry);
+                ReplaceEntry(EditActivityDataEntries, numericEntry, updatedEntry);
+            }
+        }
+        else if (activity is RoutineActivity routineActivity && entry is RoutineDataEntry routineEntry)
+        {
+            var dialog = new RoutineEntryDialogViewModel
+            {
+                Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Save"),
+                SelectedDate = routineEntry.Timestamp,
+                SelectedItem = routineEntry.State
+            };
+
+            await _dialogService.ShowDialogAsync(dialog);
+
+            if (dialog.Confirmed)
+            {
+                if (dialog.SelectedItem == RoutineState.None)
+                {
+                    // If user selects 'None', it equals deletion in Routine context
+                    routineActivity.Entries.Remove(routineEntry);
+                    EditActivityDataEntries.Remove(routineEntry);
+                }
+                else
+                {
+                    var updatedEntry = new RoutineDataEntry
+                    {
+                        Id = routineEntry.Id,
+                        Timestamp = dialog.SelectedDate,
+                        State = dialog.SelectedItem
+                    };
+
+                    ReplaceEntry(routineActivity.Entries, routineEntry, updatedEntry);
+                    ReplaceEntry(EditActivityDataEntries, routineEntry, updatedEntry);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Helper method to replace an item in an ObservableCollection to trigger UI updates seamlessly
+    /// </summary>
+    private static void ReplaceEntry<T>(ObservableCollection<T> collection, T oldItem, T newItem)
+        where T : DataEntry
+    {
+        var index = collection.IndexOf(oldItem);
+        if (index >= 0)
+        {
+            collection[index] = newItem;
+        }
     }
 }

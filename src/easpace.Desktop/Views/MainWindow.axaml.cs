@@ -69,8 +69,14 @@ public partial class MainWindow : Window
     private void DialogHost_PointerPressed(object sender, PointerPressedEventArgs e)
     {
         if (sender is not Control control) return;
-        
-        if (e.Source is TextBox or ComboBox) return;
+
+        var sourceControl = e.Source as Control;
+        var isAllowedToDrag = sourceControl is { Name: "DialogRootBorder" or "DialogRootTitle" };
+
+        if (!isAllowedToDrag) 
+        {
+            return;
+        }
         
         var properties = e.GetCurrentPoint(this).Properties;
         

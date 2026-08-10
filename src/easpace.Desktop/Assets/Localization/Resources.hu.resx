@@ -101,6 +101,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.DeleteDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
     </data>
+    <data name="Activities.Empty.Message" xml:space="preserve">
+        <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
@@ -143,20 +146,35 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Label.TargetDate" xml:space="preserve">
         <value>Cél dátum</value>
     </data>
+    <data name="Activities.Label.DataEntry" xml:space="preserve">
+        <value>Adatok (1 bejegyzés)</value>
+    </data>
+    <data name="Activities.Label.DataEntries" xml:space="preserve">
+        <value>Adatok ({0} bejegyzés)</value>
+    </data>
     <data name="Activities.CheckBox.Target" xml:space="preserve">
         <value>Cél beállítása</value>
     </data>
     <data name="Activities.Title.Edit" xml:space="preserve">
         <value>"{0}" szerkesztése</value>
     </data>
+    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
+        <value>Törlöd a(z) "{0}" tevékenységet?</value>
+    </data>
+    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a tevékenységet? A művelet nem vonható vissza.</value>
+    </data>
     <data name="Activities.EntryDialog.Title" xml:space="preserve">
-        <value>Új érték hozzáadása</value>
+        <value>Új bejegyzés hozzáadása</value>
     </data>
     <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
         <value>Dátum...</value>
     </data>
     <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
         <value>Érték...</value>
+    </data>
+    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
+        <value>Bejegyzés szerkesztése</value>
     </data>
     <data name="Activities.Type.Trend" xml:space="preserve">
         <value>Trend</value>

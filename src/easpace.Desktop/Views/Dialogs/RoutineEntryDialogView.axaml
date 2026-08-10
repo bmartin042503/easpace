@@ -19,14 +19,16 @@ Licensed under the MIT License. See LICENSE file for details.
         <vm:RoutineEntryDialogViewModel />
     </Design.DataContext>
 
-    <Border Classes="card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+    <Border x:Name="DialogRootBorder" Classes="card"
+            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
         <Grid RowDefinitions="Auto,*,Auto"
               RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
 
             <!-- Title -->
-            <TextBlock Grid.Row="0" Classes="subtitle" Text="{Binding Title}"
+            <TextBlock x:Name="DialogRootTitle" Grid.Row="0" Classes="subtitle"
+                       Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
@@ -36,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     Width="{StaticResource Haven.Scale.Input.MinWidth}"
                                     HorizontalAlignment="Center"
                                     PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}" />
-                
+
                 <!-- Routine state selection -->
                 <ComboBox ItemsSource="{Binding States}"
                           SelectedItem="{Binding SelectedItem}"
