@@ -45,7 +45,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Add button -->
                         <Button Grid.Column="1" Classes="primary icon" HorizontalAlignment="Left"
-                                Command="{Binding AddNewEntryCommand}"
+                                Command="{Binding AddEntryCommand}"
                                 IsEnabled="{Binding !IsEditing}"
                                 ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                             <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />

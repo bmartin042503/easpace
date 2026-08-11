@@ -1,4 +1,9 @@
+[Bb]in/
+[Oo]bj/
 .DS_Store
-.idea/
 *.DotSettings.user
+.idea/
+.vs/
 .vscode/
+*.user
+*.suo

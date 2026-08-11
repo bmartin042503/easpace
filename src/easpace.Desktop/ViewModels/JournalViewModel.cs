@@ -46,7 +46,7 @@ public partial class JournalViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void AddNewEntry()
+    private void AddEntry()
     {
         var culture = CultureInfo.CurrentCulture;
 
