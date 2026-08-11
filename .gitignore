@@ -1,9 +1,42 @@
+# Build artifacts
 [Bb]in/
 [Oo]bj/
-.DS_Store
-*.DotSettings.user
-.idea/
-.vs/
-.vscode/
+artifacts/
+
+# User-specific files
 *.user
 *.suo
+*.userprefs
+*.pidb
+*.DotSettings.user
+
+# JetBrains Rider & VS Code
+.idea/
+.idea_modules/
+.vscode/
+
+# Visual Studio
+.vs/
+*.psess
+
+# Installer / Publish outputs
+**/publish/
+**/installer/
+
+# Logs & Packages
+*.log
+*.tlog
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# OS-specific files (macOS & Windows)
+.DS_Store
+Thumbs.db
+
+# Avalonia Designer-related files
+**/*.Designer.cs
+
+# Avalonia-specific files
+*.g.cs
+*.g.i.cs
