@@ -4,16 +4,22 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.Services;
 
 namespace easpace.Desktop.ViewModels.Activities;
 
-public partial class TrendActivityViewModel : ActivityViewModel
+public partial class TrendActivityViewModel : NumericActivityViewModel<TrendActivity>
 {
     [ObservableProperty] private IEnumerable<NumericDataEntry> _chartEntries = [];
+
+    public string CurrentValueText => string.Format(LocalizationService.GetString("TrendActivity.Details.CurrentValue"),
+        Activity.LastEntry?.Value, Activity.Unit);
 
     public IEnumerable<ChartTimeRange> TimeRanges { get; } = Enum.GetValues<ChartTimeRange>();
 
@@ -28,19 +34,14 @@ public partial class TrendActivityViewModel : ActivityViewModel
         }
     }
 
-    public TrendActivity Activity => (TrendActivity)BaseActivity;
-
-    public TrendActivityViewModel(TrendActivity activity)
+    public TrendActivityViewModel(TrendActivity activity, IDialogService dialogService) : base(activity, dialogService)
     {
-        BaseActivity = activity;
-        
         Activity.Entries.CollectionChanged += OnEntriesCollectionChanged;
+        
+        Activity.PropertyChanged += OnActivityPropertyChanged;
         
         SelectedTimeRange = ChartTimeRange.Month;
     }
-    
-    // empty constructor for AXAML preview
-    public TrendActivityViewModel() {}
     
     private void UpdateChartData()
     {
@@ -168,14 +169,23 @@ public partial class TrendActivityViewModel : ActivityViewModel
     /// <summary>
     /// Helper method to find the Monday of the week for a given date
     /// </summary>
-    private static DateTime GetStartOfWeek(DateTime dt)
+    private static DateTime GetStartOfWeek(DateTimeOffset dto)
     {
-        var diff = (7 + (dt.DayOfWeek - DayOfWeek.Monday)) % 7;
-        return dt.AddDays(-1 * diff).Date;
+        var diff = (7 + (dto.DayOfWeek - DayOfWeek.Monday)) % 7;
+        return dto.AddDays(-1 * diff).Date;
     }
     
     private void OnEntriesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         UpdateChartData();
+        OnPropertyChanged(nameof(CurrentValueText));
+    }
+
+    private void OnActivityPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(NumericActivity.Unit))
+        {
+            OnPropertyChanged(nameof(CurrentValueText));
+        }
     }
 }

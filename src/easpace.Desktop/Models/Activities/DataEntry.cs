@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace easpace.Desktop.Models.Activities;
 
-public class DataEntry
+public abstract partial class DataEntry : ObservableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime Timestamp { get; set; }
+
+    [ObservableProperty] private DateTimeOffset _timestamp;
 }

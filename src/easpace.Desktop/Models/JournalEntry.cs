@@ -11,5 +11,5 @@ public partial class JournalEntry : ObservableObject
     [ObservableProperty] private Guid _id;
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _content = string.Empty;
-    [ObservableProperty] private DateTime _createdAt;
+    [ObservableProperty] private DateTimeOffset _createdAt;
 }

@@ -11,9 +11,9 @@ namespace easpace.Desktop.Models.Activities;
 public abstract partial class Activity : ObservableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
-    [ObservableProperty] private string _title = string.Empty;
+    [ObservableProperty] private string _name = string.Empty;
 }
 
 public abstract class Activity<TEntry> : Activity

@@ -138,11 +138,13 @@ Licensed under the MIT License. See LICENSE file for details.
                     </Button>
 
                 </StackPanel>
-
+                
                 <!-- Journal entry content -->
-                <SelectableTextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                     TextWrapping="Wrap" Classes="paragraph"
-                                     Text="{Binding SelectedJournalEntry.Content}" />
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <SelectableTextBlock TextWrapping="Wrap" Classes="paragraph"
+                                         Text="{Binding SelectedJournalEntry.Content}" />
+                </ScrollViewer>
+                
             </Grid>
 
             <!-- Journal entry edit view -->

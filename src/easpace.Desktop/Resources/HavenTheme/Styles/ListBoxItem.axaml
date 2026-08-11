@@ -107,7 +107,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 1 - Trend Activity -->
                         <activities:TrendActivityViewModel>
                             <activities:TrendActivityViewModel.BaseActivity>
-                                <activities1:TrendActivity Target="75.0" Unit="kg" Title="Lose weight">
+                                <activities1:TrendActivity Target="75.0" Unit="kg" Name="Lose weight">
                                     <activities1:TrendActivity.Entries>
                                         <activities1:NumericDataEntry Value="83.5" />
                                         <activities1:NumericDataEntry Value="82.1" />
@@ -120,7 +120,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 2 - Routine Activity -->
                         <activities:RoutineActivityViewModel>
                             <activities:RoutineActivityViewModel.BaseActivity>
-                                <activities1:RoutineActivity Title="Daily workout">
+                                <activities1:RoutineActivity Name="Daily workout">
                                     <activities1:RoutineActivity.Entries>
                                         <activities1:RoutineDataEntry State="NotCompleted" />
                                         <activities1:RoutineDataEntry State="Completed" />
@@ -132,7 +132,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 3 - Milestone Activity -->
                         <activities:MilestoneActivityViewModel>
                             <activities:MilestoneActivityViewModel.BaseActivity>
-                                <activities1:MilestoneActivity Title="Read 1000 pages" Target="1000" Unit="pages">
+                                <activities1:MilestoneActivity Name="Read 1000 pages" Target="1000" Unit="pages">
                                     <activities1:MilestoneActivity.Entries>
                                         <activities1:NumericDataEntry Value="45" />
                                         <activities1:NumericDataEntry Value="120" />
@@ -145,7 +145,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Sample listbox item 4 - Routine Activity -->
                         <activities:RoutineActivityViewModel>
                             <activities:RoutineActivityViewModel.BaseActivity>
-                                <activities1:RoutineActivity Title="Quit smoking">
+                                <activities1:RoutineActivity Name="Quit smoking">
                                     <activities1:RoutineActivity.Entries>
                                         <activities1:RoutineDataEntry State="Completed" />
                                         <activities1:RoutineDataEntry State="Completed" />

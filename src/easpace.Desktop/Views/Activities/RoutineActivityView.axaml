@@ -1,0 +1,136 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vma:RoutineActivityViewModel"
+             x:Class="easpace.Desktop.Views.Activities.RoutineActivityView">
+    
+    <Design.DataContext>
+        <vma:RoutineActivityViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+          RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+
+        <!-- Title -->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Name}"
+                   Classes="title"
+                   VerticalAlignment="Center" />
+
+        <!-- Interaction buttons -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                    VerticalAlignment="Top">
+
+            <!-- Delete button -->
+            <Button Classes="tertiary danger icon"
+                    Command="{Binding DeleteCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+            </Button>
+
+            <!-- Edit button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding EditCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+            </Button>
+
+            <!-- Add button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding AddRoutineEntryCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+            </Button>
+
+        </StackPanel>
+
+        <!-- Calendar days -->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" RowDefinitions="Auto,*"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+              MinWidth="500">
+
+            <!-- Day names -->
+            <Border Grid.Row="0"
+                    BorderThickness="{StaticResource Haven.Scale.Border.Thickness.Bottom}"
+                    BorderBrush="{DynamicResource Haven.Sem.Border}">
+                <UniformGrid Rows="1" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Bottom.Xxs}">
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.TuesdayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.WednesdayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.ThursdayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.FridayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SaturdayShort'}" />
+                    <TextBlock Classes="calendar-day"
+                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SundayShort'}" />
+                </UniformGrid>
+            </Border>
+
+            <!-- Month items -->
+            <ScrollViewer Grid.Row="1">
+                <ItemsRepeater ItemsSource="{Binding RoutineMonths}">
+
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <controls:RoutineMonthItem MonthData="{Binding}"
+                                                       Margin="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Vertical"
+                                     Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                    </ItemsRepeater.Layout>
+
+                </ItemsRepeater>
+            </ScrollViewer>
+
+        </Grid>
+
+        <!-- Calendar legend -->
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}">
+
+            <!-- Completed legend -->
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <Border Classes="calendar-legend-box completed" />
+                <TextBlock Classes="calendar-legend"
+                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
+            </StackPanel>
+
+            <!-- Not completed legend -->
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <Border Classes="calendar-legend-box not-completed" />
+                <TextBlock Classes="calendar-legend"
+                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
+            </StackPanel>
+
+            <!-- Today legend -->
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <Border Classes="calendar-legend-box today" />
+                <TextBlock Classes="calendar-legend"
+                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,92 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vma:MilestoneActivityViewModel"
+             x:Class="easpace.Desktop.Views.Activities.MilestoneActivityView">
+    
+    <Design.DataContext>
+        <vma:MilestoneActivityViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+          RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}"
+          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+
+        <!-- Top bar -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+            <!-- Title -->
+            <TextBlock Text="{Binding Activity.Name}"
+                       Classes="title"
+                       VerticalAlignment="Center" />
+
+            <!-- Details -->
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+                <!-- Start date -->
+                <TextBlock Classes="activity-value" VerticalAlignment="Center">
+                    <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
+                    <Run Text=": " />
+                    <Run Text="{Binding Activity.CreatedAt, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+                </TextBlock>
+
+                <!-- Target date -->
+                <TextBlock Classes="activity-value" VerticalAlignment="Center"
+                           IsVisible="{Binding Activity.HasValidTargetDate}">
+                    <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
+                    <Run Text=": " />
+                    <Run Text="{Binding Activity.TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+                </TextBlock>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Interaction buttons -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                    VerticalAlignment="Top">
+
+            <!-- Delete button -->
+            <Button Classes="tertiary danger icon"
+                    Command="{Binding DeleteCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+            </Button>
+
+            <!-- Edit button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding EditCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+            </Button>
+
+            <!-- Add button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding AddNumericEntryCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+            </Button>
+
+        </StackPanel>
+
+        <!-- Chart -->
+        <controls:MilestoneChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                 Value="{Binding Activity.EntriesSum}"
+                                 Maximum="{Binding Activity.Target}"
+                                 Unit="{Binding Activity.Unit}" />
+
+    </Grid>
+
+</UserControl>

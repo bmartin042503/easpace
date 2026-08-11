@@ -29,10 +29,6 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <!-- Phosphor Icons -->
                 <ResourceInclude Source="/Resources/HavenTheme/PhosphorIcons.axaml" />
 
-                <!-- Template selectors -->
-                <ResourceInclude Source="/Resources/HavenTheme/TemplateSelectors/ActivityItemSelector.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/TemplateSelectors/ActivityListItemSelector.axaml" />
-
                 <!-- Control themes -->
                 <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CheckBox.axaml" />
                 <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/ButtonSpinner.axaml" />

@@ -31,17 +31,28 @@ Licensed under the MIT License. See LICENSE file for details.
                        Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                        HorizontalAlignment="Center">
 
-                <!-- Date input -->
-                <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
-                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
-                                    HorizontalAlignment="Center"
-                                    PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}" />
+                <Grid ColumnDefinitions="2*,*"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                    
+                    <!-- Date input -->
+                    <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding SelectedDate}"
+                                        HorizontalAlignment="Stretch"
+                                        PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
+                                        DisplayDateEnd="{Binding MaxAllowedDate}" />
+                    
+                    <!-- Time picker -->
+                    <TimePicker Grid.Column="1"
+                                SelectedTime="{Binding SelectedTime}"
+                                ClockIdentifier="24HourClock" />
+                    
+                </Grid>
 
                 <!-- Routine state selection -->
                 <ComboBox ItemsSource="{Binding States}"
-                          SelectedItem="{Binding SelectedItem}"
+                          SelectedItem="{Binding SelectedState}"
                           Width="{StaticResource Haven.Scale.Input.MinWidth}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

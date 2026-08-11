@@ -2,19 +2,14 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.Services;
 
 namespace easpace.Desktop.ViewModels.Activities;
 
-public class MilestoneActivityViewModel : ActivityViewModel
+public class MilestoneActivityViewModel : NumericActivityViewModel<MilestoneActivity>
 {
-    public MilestoneActivity Activity => (MilestoneActivity)BaseActivity;
-
-    public MilestoneActivityViewModel(MilestoneActivity activity)
+    public MilestoneActivityViewModel(MilestoneActivity activity, IDialogService dialogService) : base(activity,
+        dialogService)
     {
-        BaseActivity = activity;
     }
-    
-    // empty constructor for AXAML preview
-    public MilestoneActivityViewModel() {}
-    
 }

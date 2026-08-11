@@ -13,9 +13,9 @@ public class RelativeDateConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is not DateTime date) return value?.ToString();
+        if (value is not DateTimeOffset date) return value?.ToString();
         
-        var timeSince = DateTime.Now - date;
+        var timeSince = DateTimeOffset.Now - date;
 
         if (!(timeSince.TotalDays < 1)) return date.ToString("g", culture);
 

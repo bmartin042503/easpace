@@ -1,0 +1,121 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vma:TrendActivityViewModel"
+             x:Class="easpace.Desktop.Views.Activities.TrendActivityView">
+    
+    <Design.DataContext>
+        <vma:TrendActivityViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}"
+          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+
+        <!-- Top bar -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+            <!-- Title -->
+            <TextBlock Text="{Binding Activity.Name}"
+                       Classes="title"
+                       VerticalAlignment="Center" />
+
+            <!-- Details -->
+            <StackPanel Orientation="Horizontal"
+                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                <!-- Current value -->
+                <TextBlock Classes="activity-value"
+                           VerticalAlignment="Center" Text="{Binding CurrentValueText}"
+                           IsVisible="{Binding Activity.LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}" />
+
+                <!-- Target value -->
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            IsVisible="{Binding Activity.Target, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <TextBlock Classes="activity-target"
+                               VerticalAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Activity.Target" />
+                                <Binding Path="Activity.Unit" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <PathIcon Classes="target"
+                              Data="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                              VerticalAlignment="Center" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Interaction buttons -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                    VerticalAlignment="Top">
+
+            <!-- Delete button -->
+            <Button Classes="tertiary danger icon"
+                    Command="{Binding DeleteCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+            </Button>
+
+            <!-- Edit button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding EditCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+            </Button>
+
+            <!-- Add button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding AddNumericEntryCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+            </Button>
+
+        </StackPanel>
+
+        <!-- Time Range Selection (segmented control) -->
+        <ListBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="time-range-segmented"
+                 HorizontalAlignment="Left"
+                 ItemsSource="{Binding TimeRanges}"
+                 SelectedItem="{Binding SelectedTimeRange}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+        </ListBox>
+
+        <!-- Chart -->
+        <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                             Target="{Binding Activity.Target}"
+                             Unit="{Binding Activity.Unit}"
+                             Entries="{Binding ChartEntries}"
+                             Margin="0,0,6,0" />
+
+    </Grid>
+
+</UserControl>

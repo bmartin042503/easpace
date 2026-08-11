@@ -6,6 +6,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Activities;
 
 namespace easpace.Desktop.DataTemplates;

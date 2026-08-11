@@ -1,9 +1,11 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace easpace.Desktop.Models.Activities;
 
-public class NumericDataEntry : DataEntry
+public partial class NumericDataEntry : DataEntry
 {
-    public double Value { get; set; }
+    [ObservableProperty] private double _value;
 }

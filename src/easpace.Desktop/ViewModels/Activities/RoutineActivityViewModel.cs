@@ -6,37 +6,98 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Models.Activities;
+using easpace.Desktop.Services;
+using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels.Activities;
 
 public partial class RoutineActivityViewModel : ActivityViewModel
 {
+    private readonly IDialogService _dialogService;
+    
     public RoutineActivity Activity => (RoutineActivity)BaseActivity;
 
     [ObservableProperty] private ObservableCollection<RoutineMonth> _routineMonths = [];
 
-    public RoutineActivityViewModel(RoutineActivity activity)
+    public RoutineActivityViewModel(RoutineActivity activity, IDialogService dialogService)
     {
         BaseActivity = activity;
+        
+        _dialogService = dialogService;
+        
         RoutineMonths = new ObservableCollection<RoutineMonth>(GetRoutineMonths());
         Activity.Entries.CollectionChanged += OnEntriesCollectionChanged;
     }
 
-    // empty constructor for AXAML preview
-    public RoutineActivityViewModel()
+    [RelayCommand]
+    private async Task AddRoutineEntry()
     {
+        var routineEntryDialog = new RoutineEntryDialogViewModel
+        {
+            Title = LocalizationService.GetString("Activities.EntryDialog.Title"),
+            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+            ConfirmText = LocalizationService.GetString("Common.Button.Save"),
+            SelectedDate = DateTime.Now,
+            SelectedState = RoutineState.Completed
+        };
+
+        await _dialogService.ShowDialogAsync(routineEntryDialog);
+
+        if (routineEntryDialog.Confirmed)
+        {
+            var timestamp = routineEntryDialog.GetTimestamp();
+            var state = routineEntryDialog.SelectedState;
+
+            var existingEntry = Activity.Entries.FirstOrDefault(e => e.Timestamp.Date == timestamp.Date);
+
+            if (existingEntry != null)
+            {
+                if (state is RoutineState.None)
+                {
+                    Activity.Entries.Remove(existingEntry);
+                    return;
+                }
+
+                var replaceEntry = new RoutineDataEntry
+                {
+                    Id = existingEntry.Id,
+                    Timestamp = routineEntryDialog.GetTimestamp(),
+                    State = state
+                };
+
+                var index = Activity.Entries.IndexOf(existingEntry);
+                if (index >= 0)
+                {
+                    Activity.Entries[index] = replaceEntry;
+                }
+            }
+            else
+            {
+                if (state is RoutineState.None) return;
+
+                var newEntry = new RoutineDataEntry
+                {
+                    Id = Guid.NewGuid(),
+                    Timestamp = routineEntryDialog.GetTimestamp(),
+                    State = state
+                };
+                Activity.Entries.Add(newEntry);
+            }
+        }
     }
-    
+
     private (DateTime Start, DateTime End) GetCalendarBounds()
     {
         var startDate = Activity.CreatedAt.Date;
         var endDate = DateTime.Today;
 
         if (!Activity.Entries.Any()) return (startDate, endDate);
-        
+
         var firstEntryDate = Activity.Entries.Min(e => e.Timestamp.Date);
         if (firstEntryDate < startDate) startDate = firstEntryDate;
 
@@ -118,7 +179,7 @@ public partial class RoutineActivityViewModel : ActivityViewModel
             RoutineMonths = new ObservableCollection<RoutineMonth>(GetRoutineMonths());
             return;
         }
-        
+
         // if the bounds didn't change, we only update months that are already in the collection
         var affectedMonths = new HashSet<DateTime>();
 
@@ -140,7 +201,7 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                 RoutineMonths.FirstOrDefault(m => m.Year == monthDate.Year && m.Month == monthDate.Month);
 
             if (existingMonth == null) continue;
-            
+
             var index = RoutineMonths.IndexOf(existingMonth);
             RoutineMonths[index] = CreateMonth(monthDate.Year, monthDate.Month);
         }

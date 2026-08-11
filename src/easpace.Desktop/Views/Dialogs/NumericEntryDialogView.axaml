@@ -20,7 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <vm:NumericEntryDialogViewModel />
     </Design.DataContext>
 
-    <Border x:Name="DialogRootBorder" Classes="card" 
+    <Border x:Name="DialogRootBorder" Classes="card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
@@ -28,19 +28,30 @@ Licensed under the MIT License. See LICENSE file for details.
               RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}">
 
             <!-- Title -->
-            <TextBlock x:Name="DialogRootTitle" Grid.Row="0" 
+            <TextBlock x:Name="DialogRootTitle" Grid.Row="0"
                        Classes="subtitle" Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
-                <!-- Date input -->
-                <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
-                                    HorizontalAlignment="Stretch"
-                                    PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}" />
+                <Grid ColumnDefinitions="2*,*"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                    
+                    <!-- Date input -->
+                    <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding SelectedDate}"
+                                        HorizontalAlignment="Stretch"
+                                        PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
+                                        DisplayDateEnd="{Binding MaxAllowedDate}" />
+                    
+                    <!-- Time picker -->
+                    <TimePicker Grid.Column="1"
+                                SelectedTime="{Binding SelectedTime}"
+                                ClockIdentifier="24HourClock" />
+                    
+                </Grid>
 
                 <DockPanel>
-                    
+
                     <!-- Unit label -->
                     <TextBlock DockPanel.Dock="Right"
                                Text="{Binding UnitText}" VerticalAlignment="Center"

@@ -11,6 +11,6 @@ public partial class MoodEntry : ObservableObject
 {
     [ObservableProperty] private double _moodSliderValue;
     [ObservableProperty] private string _description = string.Empty;
-    [ObservableProperty] private DateTime _date;
+    [ObservableProperty] private DateTimeOffset _date;
     [ObservableProperty] private IList<string> _labels = [];
 }

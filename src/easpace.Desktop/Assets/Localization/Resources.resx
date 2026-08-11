@@ -224,4 +224,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="RoutineActivity.EntryState.None" xml:space="preserve">
         <value>Empty</value>
     </data>
+    <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
+        <value>Current value: {0} {1}</value>
+    </data>
 </root>

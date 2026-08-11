@@ -1,0 +1,305 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
+             xmlns:converters="clr-namespace:easpace.Desktop.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ActivityEditorViewModel"
+             x:Class="easpace.Desktop.Views.ActivityEditorView">
+
+    <Design.DataContext>
+        <vm:ActivityEditorViewModel />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+
+        <!-- TrendActivity edit form -->
+        <DataTemplate x:Key="TrendTemplate" x:DataType="vm:ActivityEditorViewModel">
+
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+                <!-- Unit input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <TextBlock Classes="label"
+                               Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
+                    <TextBox Text="{Binding Unit}"
+                             PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                             HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
+                </StackPanel>
+
+                <!-- Target checkbox -->
+                <CheckBox Theme="{StaticResource Haven.ControlTheme.CheckBox}"
+                          Content="{services:LocalizationService Key='Activities.CheckBox.Target'}"
+                          IsChecked="{Binding IsTargetChecked}" />
+
+                <!-- Target value input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            IsVisible="{Binding IsTargetChecked}">
+                    <TextBlock Classes="label"
+                               Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
+                    <NumericUpDown Value="{Binding Target}"
+                                   Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                   HorizontalAlignment="Left" Increment="1" FormatString="0.##"
+                                   PlaceholderText="{services:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </DataTemplate>
+
+        <!-- MilestoneActivity edit form -->
+        <DataTemplate x:Key="MilestoneTemplate" x:DataType="vm:ActivityEditorViewModel">
+
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+                <!-- Unit input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <TextBlock Classes="label"
+                               Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
+                    <TextBox Text="{Binding Unit}"
+                             PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                             HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
+                </StackPanel>
+
+                <!-- Target value input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <TextBlock Classes="label"
+                               Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
+                    <NumericUpDown Value="{Binding Target}"
+                                   Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                   HorizontalAlignment="Left" Increment="1" FormatString="0.##"
+                                   PlaceholderText="{services:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
+                </StackPanel>
+
+                <!-- Target date input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <TextBlock Classes="label"
+                               Text="{services:LocalizationService Key='Activities.Label.TargetDate'}" />
+                    <CalendarDatePicker SelectedDate="{Binding TargetDate}"
+                                        Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                        PlaceholderText="{services:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                </StackPanel>
+
+            </StackPanel>
+
+        </DataTemplate>
+
+        <!-- RoutineActivity edit form -->
+        <!-- Left it empty, as its only content is the Name textbox which is already in the view -->
+        <DataTemplate x:Key="RoutineTemplate" x:DataType="vm:ActivityEditorViewModel" />
+
+        <!-- Converts ActivityType to a template (selects the correct form layout) -->
+        <converters:ActivityTypeToTemplateConverter x:Key="ActivityTypeToTemplateConverter"
+                                                    TrendTemplate="{StaticResource TrendTemplate}"
+                                                    MilestoneTemplate="{StaticResource MilestoneTemplate}"
+                                                    RoutineTemplate="{StaticResource RoutineTemplate}" />
+
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto"
+          RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+        <!-- Title -->
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding TitleText}"
+                   Classes="title" />
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+            <!-- Cancel button -->
+            <Button Classes="secondary icon" Command="{Binding CancelCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Cancel'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
+            </Button>
+
+            <!-- Save button -->
+            <Button Classes="primary icon" Command="{Binding SaveCommand}"
+                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Save'}">
+                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
+            </Button>
+
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+                    <!-- Name input -->
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                        <TextBlock Classes="label"
+                                   Text="{services:LocalizationService Key='Activities.Label.Name'}" />
+                        <TextBox Text="{Binding Name}"
+                                 PlaceholderText="{services:LocalizationService Key='Activities.Input.NamePlaceholder'}"
+                                 Width="{StaticResource Haven.Scale.Input.MaxWidth}"
+                                 HorizontalAlignment="Left" />
+                    </StackPanel>
+
+                    <!-- Type selection -->
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+                        <TextBlock Classes="label"
+                                   Text="{services:LocalizationService Key='Activities.Label.Type'}" />
+
+                        <ComboBox ItemsSource="{Binding ActivityTypes}"
+                                  SelectedItem="{Binding SelectedType}"
+                                  IsEnabled="{Binding IsCreatingNew}"
+                                  Width="{StaticResource Haven.Scale.Input.MinWidth}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                    </StackPanel>
+
+                    <!-- Rest of the form -->
+                    <ContentControl Content="{Binding .}"
+                                    ContentTemplate="{Binding SelectedType, Converter={StaticResource ActivityTypeToTemplateConverter}}" />
+
+                </StackPanel>
+
+                <!-- Separator line -->
+                <Separator Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                           IsVisible="{Binding !IsCreatingNew}" />
+
+                <!-- Data entries -->
+                <Border Classes="card" Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                        IsVisible="{Binding !IsCreatingNew}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                        <!-- Label -->
+                        <TextBlock Classes="label"
+                                   Text="{Binding DataEntriesLabel}" />
+
+                        <!-- Items -->
+                        <ItemsRepeater ItemsSource="{Binding DataEntries}">
+
+                            <!-- TODO: extract these code into DataEntryListItem -->
+                            <ItemsRepeater.Resources>
+                                <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
+
+                                    <DataTemplate x:Key="NumericDataEntry"
+                                                  x:DataType="activities:NumericDataEntry">
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                                            <TextBlock Grid.Column="0"
+                                                       Foreground="{DynamicResource Haven.Sem.Foreground}">
+                                                <Run Text="{Binding Value}" />
+                                                <Run Text="(" />
+                                                <Run
+                                                    Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" />
+                                                <Run Text=")" />
+                                            </TextBlock>
+
+                                            <!-- Interaction buttons -->
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                        VerticalAlignment="Center">
+
+                                                <!-- Delete button -->
+                                                <Button Classes="tertiary danger icon"
+                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                    <PathIcon
+                                                        Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                                </Button>
+
+                                                <!-- Edit button -->
+                                                <Button Classes="tertiary icon"
+                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                                                    <PathIcon
+                                                        Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                                                </Button>
+
+                                            </StackPanel>
+
+                                        </Grid>
+                                    </DataTemplate>
+
+                                    <DataTemplate x:Key="RoutineDataEntry"
+                                                  x:DataType="activities:RoutineDataEntry">
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                                            <TextBlock Grid.Column="0"
+                                                       Foreground="{DynamicResource Haven.Sem.Foreground}">
+                                                <Run
+                                                    Text="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                <Run Text="(" />
+                                                <Run
+                                                    Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" />
+                                                <Run Text=")" />
+                                            </TextBlock>
+
+                                            <!-- Interaction buttons -->
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                        VerticalAlignment="Center">
+
+                                                <!-- Delete button -->
+                                                <Button Classes="tertiary danger icon"
+                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                    <PathIcon
+                                                        Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                                </Button>
+
+                                                <!-- Edit button -->
+                                                <Button Classes="tertiary icon"
+                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                                                    <PathIcon
+                                                        Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                                                </Button>
+
+                                            </StackPanel>
+
+                                        </Grid>
+                                    </DataTemplate>
+
+                                </dataTemplates:TemplateSelector>
+                            </ItemsRepeater.Resources>
+
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="activities:DataEntry">
+                                    <ContentControl Content="{Binding .}"
+                                                    ContentTemplate="{StaticResource DataEntrySelector}" />
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                            </ItemsRepeater.Layout>
+
+                        </ItemsRepeater>
+
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+
+</UserControl>
