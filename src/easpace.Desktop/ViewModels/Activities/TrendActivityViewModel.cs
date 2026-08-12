@@ -34,6 +34,11 @@ public partial class TrendActivityViewModel : NumericActivityViewModel<TrendActi
         }
     }
 
+    public override void RefreshDataEntries()
+    {
+        UpdateChartData();
+    }
+
     public TrendActivityViewModel(TrendActivity activity, IDialogService dialogService) : base(activity, dialogService)
     {
         Activity.Entries.CollectionChanged += OnEntriesCollectionChanged;

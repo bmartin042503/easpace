@@ -44,7 +44,7 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data)
     {
-        return data is ViewModelBase;
+        return data is ViewModelBase or ValidatorViewModelBase;
     }
 
     private static Control CreateView(Control view, object viewModel)

@@ -27,7 +27,7 @@ public class MoodSliderValueConverter : IValueConverter
         return localizedValue;
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return new BindingNotification(new NotSupportedException("Mood value cannot be converted back."));
     }

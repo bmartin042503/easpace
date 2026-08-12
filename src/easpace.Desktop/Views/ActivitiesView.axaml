@@ -155,7 +155,8 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ScrollViewer Grid.Row="1">
                     <ListBox Classes="activity list"
                              ItemsSource="{Binding ActivityViewModels}"
-                             SelectedItem="{Binding SelectedActivityViewModel}">
+                             SelectedItem="{Binding SelectedActivityViewModel}"
+                             IsEnabled="{Binding !IsEditing}">
 
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="vma:ActivityViewModel">

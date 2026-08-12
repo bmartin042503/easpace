@@ -227,4 +227,13 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
         <value>Current value: {0} {1}</value>
     </data>
+    <data name="FormValidation.Name.Required" xml:space="preserve">
+        <value>Please enter a name.</value>
+    </data>
+    <data name="FormValidation.Name.MinLength" xml:space="preserve">
+        <value>Name must be at least 3 characters.</value>
+    </data>
+    <data name="FormValidation.Target.Required" xml:space="preserve">
+        <value>Please set a goal value.</value>
+    </data>
 </root>

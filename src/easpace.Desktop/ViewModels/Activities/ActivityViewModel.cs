@@ -18,6 +18,8 @@ public abstract partial class ActivityViewModel : ViewModelBase
     public event EventHandler? DeleteRequested;
     public event EventHandler? EditRequested;
     
+    public virtual void RefreshDataEntries() {}
+    
     [RelayCommand]
     private void Delete()
     {

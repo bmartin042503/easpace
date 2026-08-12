@@ -47,6 +47,12 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        
+        <Style Selector="^:error /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+        </Style>
 
         <Style Selector="^ PathIcon">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -64,14 +70,11 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
 
     </Style>
-
-    <!-- TODO: fix - SelectionForegroundBrush not setting correctly -->
+    
     <Style Selector="TextBox.journal-edit">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
 

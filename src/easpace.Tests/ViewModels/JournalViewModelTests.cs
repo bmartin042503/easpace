@@ -92,7 +92,7 @@ public class JournalViewModelTests
     }
 
     [Fact]
-    public void SaveEntryCommand_WhenTitleIsEmpty_DoesNotSaveAndStaysInEditMode()
+    public void SaveEntryCommand_WhenTitleIsEmpty_SetsTitleForTodayAndSaves()
     {
         // arrange
         var mockDialogService = new Mock<IDialogService>();
@@ -104,7 +104,9 @@ public class JournalViewModelTests
         sut.SaveEntryCommand.Execute(null);
 
         // assert
-        sut.IsEditing.Should().BeTrue();
+        sut.SelectedJournalEntry?.Title.Should().NotBeNullOrWhiteSpace();
+        sut.JournalEntries.Should().HaveCount(1);
+        sut.IsEditing.Should().BeFalse();
     }
 
     [Fact]
@@ -175,7 +177,26 @@ public class JournalViewModelTests
     }
 
     [Fact]
-    public async Task DeleteEntryCommand_WhenDialogCancelled_DoesNotDeleteEntry()
+    public async Task DeleteEntryCommand_WhenContentIsEmpty_RemovesEntryWithoutAsking()
+    {
+        // arrange
+        var mockDialogService = new Mock<IDialogService>();
+        
+        var sut = new JournalViewModel(mockDialogService.Object);
+        var entry = new JournalEntry { Title = "Journal Title", Content = "   " };
+        sut.JournalEntries.Add(entry);
+        sut.SelectedJournalEntry = entry;
+        
+        // act
+        await sut.DeleteEntryCommand.ExecuteAsync(null);
+        
+        // assert
+        mockDialogService.Verify(x => x.ShowDialogAsync(It.IsAny<ConfirmDialogViewModel>()), Times.Never);
+        sut.JournalEntries.Should().HaveCount(0);
+    }
+
+    [Fact]
+    public async Task DeleteEntryCommand_WhenDialogCancelled_DoesNotRemoveEntry()
     {
         // arrange
         var mockDialogService = new Mock<IDialogService>();
@@ -186,7 +207,7 @@ public class JournalViewModelTests
             .Returns(Task.CompletedTask);
 
         var sut = new JournalViewModel(mockDialogService.Object);
-        var entry = new JournalEntry { Title = "To Delete" };
+        var entry = new JournalEntry { Title = "Journal Title", Content = "Journal Content" };
         sut.JournalEntries.Add(entry);
         sut.SelectedJournalEntry = entry;
 

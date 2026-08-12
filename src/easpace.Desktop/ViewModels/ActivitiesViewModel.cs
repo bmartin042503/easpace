@@ -21,7 +21,7 @@ public partial class ActivitiesViewModel : PageViewModel
 
     [ObservableProperty] private ActivityViewModel? _selectedActivityViewModel;
 
-    [ObservableProperty] private ViewModelBase? _contentViewModel;
+    [ObservableProperty] private ObservableObject? _contentViewModel;
     
     [ObservableProperty] private bool _isEditing;
 
@@ -91,7 +91,7 @@ public partial class ActivitiesViewModel : PageViewModel
         {
             await DeleteActivity(activityViewModel);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // TODO: proper logging
         }
@@ -113,7 +113,7 @@ public partial class ActivitiesViewModel : PageViewModel
         CloseEditor();
     }
 
-    private void OnActivityEditorCancelled(object? sender, EventArgs e)
+    private void OnActivityEditorCanceled(object? sender, EventArgs e)
     {
         CloseEditor();
     }
@@ -125,7 +125,7 @@ public partial class ActivitiesViewModel : PageViewModel
             : new ActivityEditorViewModel(activityViewModel, _dialogService);
 
         _editorViewModel.Saved += OnActivityEditorSaved;
-        _editorViewModel.Cancelled += OnActivityEditorCancelled;
+        _editorViewModel.Canceled += OnActivityEditorCanceled;
 
         ContentViewModel = _editorViewModel;
         
@@ -144,7 +144,7 @@ public partial class ActivitiesViewModel : PageViewModel
         if (_editorViewModel == null) return;
 
         _editorViewModel.Saved -= OnActivityEditorSaved;
-        _editorViewModel.Cancelled -= OnActivityEditorCancelled;
+        _editorViewModel.Canceled -= OnActivityEditorCanceled;
 
         _editorViewModel = null;
 

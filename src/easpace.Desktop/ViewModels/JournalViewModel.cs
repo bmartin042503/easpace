@@ -86,7 +86,16 @@ public partial class JournalViewModel : PageViewModel
     [RelayCommand]
     private void SaveEntry()
     {
-        if (string.IsNullOrEmpty(EditTitle)) return;
+        var culture = CultureInfo.CurrentCulture;
+
+        var dateFormat = culture.TwoLetterISOLanguageName == "hu"
+            ? "yyyy. MMMM d. HH:mm"
+            : "MMMM d, yyyy, h:mm tt";
+        
+        if (string.IsNullOrEmpty(EditTitle))
+        {
+            EditTitle = DateTime.Now.ToString(dateFormat, culture);
+        }
 
         if (SelectedJournalEntry != null)
         {
@@ -116,19 +125,22 @@ public partial class JournalViewModel : PageViewModel
     {
         if (SelectedJournalEntry == null) return;
 
-        var confirmDeletionDialog = new ConfirmDialogViewModel
+        if (!string.IsNullOrWhiteSpace(SelectedJournalEntry.Content))
         {
-            Title = string.Format(LocalizationService.GetString("Journal.DeleteDialog.Title"),
-                SelectedJournalEntry.Title),
-            Message = LocalizationService.GetString("Journal.DeleteDialog.Message"),
-            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
-            ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
-            IsDestructive = true,
-        };
+            var confirmDeletionDialog = new ConfirmDialogViewModel
+            {
+                Title = string.Format(LocalizationService.GetString("Journal.DeleteDialog.Title"),
+                    SelectedJournalEntry.Title),
+                Message = LocalizationService.GetString("Journal.DeleteDialog.Message"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
+                IsDestructive = true,
+            };
 
-        await _dialogService.ShowDialogAsync(confirmDeletionDialog);
+            await _dialogService.ShowDialogAsync(confirmDeletionDialog);
 
-        if (!confirmDeletionDialog.Confirmed) return;
+            if (!confirmDeletionDialog.Confirmed) return;
+        }
 
         JournalEntries.Remove(SelectedJournalEntry);
         SelectedJournalEntry = JournalEntries.FirstOrDefault();

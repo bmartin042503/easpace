@@ -1,0 +1,57 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme x:Key="Haven.ControlTheme.DataValidationErrors" TargetType="DataValidationErrors" 
+                  BasedOn="{StaticResource {x:Type DataValidationErrors}}">
+        
+        <Setter Property="Template">
+            <ControlTemplate TargetType="DataValidationErrors">
+                <DockPanel LastChildFill="True">
+                    <ContentControl x:Name="InlineDataValidationContentControl"
+                                    Margin="0,4,0,0"
+                                    Content="{Binding (DataValidationErrors.Errors)}"
+                                    ContentTemplate="{TemplateBinding ErrorTemplate}"
+                                    DataContext="{TemplateBinding Owner}"
+                                    DockPanel.Dock="Bottom"
+                                    IsVisible="{Binding (DataValidationErrors.HasErrors)}" />
+                    <ContentPresenter Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      Background="{TemplateBinding Background}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      CornerRadius="{TemplateBinding CornerRadius}" />
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+        
+        <Setter Property="ErrorTemplate">
+            <DataTemplate>
+                <ItemsControl x:DataType="DataValidationErrors"
+                              Foreground="{DynamicResource Haven.Sem.Danger.Strong}"
+                              ItemsSource="{Binding}">
+                    
+                    <ItemsControl.Styles>
+                        <Style Selector="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </ItemsControl.Styles>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource ValidationResultToLocalizedConverter}}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    
+                </ItemsControl>
+            </DataTemplate>
+        </Setter>
+        
+    </ControlTheme>
+
+</ResourceDictionary>

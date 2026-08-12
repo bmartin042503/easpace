@@ -36,7 +36,7 @@ public class RelativeDateConverter : IValueConverter
         return string.Format(LocalizationService.GetString(hourKey), hours);
     }
 
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         return new BindingNotification(new NotSupportedException("Relative date time cannot be converted back."));
     }

@@ -4,49 +4,97 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Models.Activities;
 using easpace.Desktop.Services;
+using easpace.Desktop.Validation;
 using easpace.Desktop.ViewModels.Activities;
 using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels;
 
-public partial class ActivityEditorViewModel : ViewModelBase
+public partial class ActivityEditorViewModel : ValidatorViewModelBase
 {
-    private readonly IDialogService _dialogService;
-    public IEnumerable<DataEntry>? DataEntries { get; private set; }
+    #region Fields
 
-    [ObservableProperty] private ActivityType? _selectedType;
+    private readonly IDialogService _dialogService;
+    private ActivityViewModel? _editActivityViewModel;
 
     [ObservableProperty] private string _titleText = string.Empty;
-    [ObservableProperty] private string _name = string.Empty;
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "FormValidation.Name.Required")]
+    [MinLength(3, ErrorMessage = "FormValidation.Name.MinLength")]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private string _name = LocalizationService.GetString("Activities.Input.NewActivityName");
+
     [ObservableProperty] private string _unit = string.Empty;
 
     [ObservableProperty] private bool _isTargetChecked;
 
-    [ObservableProperty] private double? _target;
-    [ObservableProperty] private DateTimeOffset? _targetDate;
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private double? _target;
 
-    private ActivityViewModel? _editActivityViewModel;
+    [ObservableProperty] private DateTime? _targetDate;
+
+    #endregion
+
+    #region Events
+
+    /// <summary>
+    /// Occurs when the activity is successfully saved.
+    /// </summary>
+    public event EventHandler<ActivityViewModel>? Saved;
+
+    /// <summary>
+    /// Occurs when the editing process is canceled.
+    /// </summary>
+    public event EventHandler? Canceled;
+
+    #endregion
+
+    #region Properties
+
     public bool IsCreatingNew { get; }
+
+    public IEnumerable<DataEntry>? DataEntries { get; }
 
     public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
 
-    public bool HasDataEntries => DataEntries is not null && DataEntriesCount > 0;
+    public ActivityType? SelectedType
+    {
+        get;
+        set
+        {
+            SetProperty(ref field, value);
+            ValidateAllProperties();
+            SaveCommand.NotifyCanExecuteChanged();
+        }
+    }
+
     private int DataEntriesCount => (DataEntries as System.Collections.ICollection)?.Count ?? 0;
+
     public string DataEntriesLabel =>
         DataEntriesCount == 1
             ? LocalizationService.GetString("Activities.Label.DataEntry")
-            : string.Format(LocalizationService.GetString("Activities.Label.DataEntries"),
-                DataEntriesCount);
+            : string.Format(LocalizationService.GetString("Activities.Label.DataEntries"), DataEntriesCount);
 
-    public event EventHandler<ActivityViewModel>? Saved;
-    public event EventHandler? Cancelled;
+    #endregion
 
+    #region Constructors
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActivityEditorViewModel"/> class for creating a new activity.
+    /// </summary>
+    /// <param name="dialogService">The dialog service used for showing UI dialogs.</param>
     public ActivityEditorViewModel(IDialogService dialogService)
     {
         _dialogService = dialogService;
@@ -55,6 +103,11 @@ public partial class ActivityEditorViewModel : ViewModelBase
         TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ActivityEditorViewModel"/> class for editing an existing activity.
+    /// </summary>
+    /// <param name="activityViewModel">The activity view model to be edited.</param>
+    /// <param name="dialogService">The dialog service used for showing UI dialogs.</param>
     public ActivityEditorViewModel(ActivityViewModel activityViewModel, IDialogService dialogService)
     {
         _dialogService = dialogService;
@@ -63,9 +116,9 @@ public partial class ActivityEditorViewModel : ViewModelBase
 
         var activity = activityViewModel.BaseActivity;
         TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), activity.Name);
-
         Name = activity.Name;
 
+        // populate specific fields based on the concrete activity type
         switch (activity)
         {
             case TrendActivity trendActivity:
@@ -73,7 +126,6 @@ public partial class ActivityEditorViewModel : ViewModelBase
                 Unit = trendActivity.Unit ?? string.Empty;
                 IsTargetChecked = trendActivity.Target.HasValue;
                 Target = trendActivity.Target;
-
                 DataEntries = trendActivity.Entries;
                 break;
 
@@ -81,31 +133,42 @@ public partial class ActivityEditorViewModel : ViewModelBase
                 SelectedType = ActivityType.Milestone;
                 Unit = milestoneActivity.Unit ?? string.Empty;
                 Target = milestoneActivity.Target;
-                TargetDate = milestoneActivity.TargetDate;
-
+                
+                TargetDate = milestoneActivity.HasValidTargetDate 
+                    ? milestoneActivity.TargetDate!.Value.Date 
+                    : null;
+                
                 DataEntries = milestoneActivity.Entries;
                 break;
 
             case RoutineActivity routineActivity:
                 SelectedType = ActivityType.Routine;
-
                 DataEntries = routineActivity.Entries;
                 break;
         }
-
+        
         if (DataEntries is INotifyCollectionChanged observableCollection)
         {
             observableCollection.CollectionChanged += (_, _) =>
             {
                 OnPropertyChanged(nameof(DataEntriesLabel));
-                OnPropertyChanged(nameof(HasDataEntries));
             };
         }
     }
 
-    [RelayCommand]
+    #endregion
+
+    #region Commands
+
+    /// <summary>
+    /// Saves the created or edited activity if validation passes.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanSubmit))]
     private void Save()
     {
+        ValidateAllProperties();
+        if (HasErrors) return;
+
         ActivityViewModel? vm;
 
         if (IsCreatingNew)
@@ -114,7 +177,9 @@ public partial class ActivityEditorViewModel : ViewModelBase
         }
         else
         {
+            // fallback safety check
             if (_editActivityViewModel == null) return;
+
             UpdateActivityViewModel(_editActivityViewModel);
             vm = _editActivityViewModel;
         }
@@ -122,15 +187,23 @@ public partial class ActivityEditorViewModel : ViewModelBase
         Saved?.Invoke(this, vm);
     }
 
+    /// <summary>
+    /// Cancels the editing process and fires the cancellation event.
+    /// </summary>
     [RelayCommand]
     private void Cancel()
     {
-        Cancelled?.Invoke(this, EventArgs.Empty);
+        Canceled?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Deletes a specific data entry from the activity's collection.
+    /// </summary>
+    /// <param name="parameter">The data entry object to be deleted.</param>
     [RelayCommand]
     private void DeleteDataEntry(object parameter)
     {
+        // verify entry type and ensure we are in edit mode before deleting
         if (parameter is not DataEntry entry || IsCreatingNew || _editActivityViewModel == null) return;
 
         switch (entry)
@@ -147,9 +220,15 @@ public partial class ActivityEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Opens a dialog to edit an existing data entry.
+    /// </summary>
+    /// <param name="parameter">The data entry object to be edited.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [RelayCommand]
     private async Task EditDataEntry(object parameter)
     {
+        // abort if the parameter is invalid, or we are not in edit mode
         if (parameter is not DataEntry entry || IsCreatingNew || _editActivityViewModel == null) return;
 
         switch (entry)
@@ -157,6 +236,7 @@ public partial class ActivityEditorViewModel : ViewModelBase
             case NumericDataEntry numericDataEntry:
                 if (_editActivityViewModel.BaseActivity is not NumericActivity numericActivity) return;
 
+                // setup numeric entry dialog
                 var numericDialog = new NumericEntryDialogViewModel
                 {
                     Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
@@ -170,6 +250,7 @@ public partial class ActivityEditorViewModel : ViewModelBase
 
                 await _dialogService.ShowDialogAsync(numericDialog);
 
+                // apply changes if the user confirmed
                 if (numericDialog.Confirmed)
                 {
                     if (numericDialog is { SelectedDate: not null, SelectedTime: not null })
@@ -186,9 +267,9 @@ public partial class ActivityEditorViewModel : ViewModelBase
                 break;
 
             case RoutineDataEntry routineDataEntry:
-
                 if (_editActivityViewModel.BaseActivity is not RoutineActivity) return;
 
+                // setup routine entry dialog
                 var routineDialog = new RoutineEntryDialogViewModel
                 {
                     Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
@@ -201,6 +282,7 @@ public partial class ActivityEditorViewModel : ViewModelBase
 
                 await _dialogService.ShowDialogAsync(routineDialog);
 
+                // apply changes if the user confirmed
                 if (routineDialog.Confirmed)
                 {
                     if (routineDialog is { SelectedDate: not null, SelectedTime: not null })
@@ -216,12 +298,30 @@ public partial class ActivityEditorViewModel : ViewModelBase
 
                 break;
         }
+        
+        // refresh data entries, so the TrendChart can show updated aggregated values
+        _editActivityViewModel.RefreshDataEntries();
     }
 
+    #endregion
+
+    #region Private Helper Methods
+
+    /// <summary>
+    /// Determines whether the save command can be executed.
+    /// </summary>
+    /// <returns>True if there are no validation errors; otherwise, false.</returns>
+    private bool CanSubmit() => !HasErrors;
+
+    /// <summary>
+    /// Creates a new activity view model based on the selected type and populated fields.
+    /// </summary>
+    /// <returns>A newly created <see cref="ActivityViewModel"/> instance.</returns>
     private ActivityViewModel CreateNewActivityViewModel()
     {
         ActivityViewModel vm;
 
+        // instantiate the concrete activity class based on current selection
         switch (SelectedType)
         {
             case ActivityType.Trend:
@@ -244,7 +344,9 @@ public partial class ActivityEditorViewModel : ViewModelBase
                     Name = Name,
                     Unit = Unit,
                     Target = Target,
-                    TargetDate = TargetDate
+                    TargetDate = TargetDate.HasValue && TargetDate.Value > DateTime.MinValue
+                        ? new DateTimeOffset(TargetDate.Value) 
+                        : null
                 };
                 vm = new MilestoneActivityViewModel(milestoneActivity, _dialogService);
                 break;
@@ -266,10 +368,19 @@ public partial class ActivityEditorViewModel : ViewModelBase
         return vm;
     }
 
+    /// <summary>
+    /// Updates the underlying model of an existing activity view model with the current field values.
+    /// </summary>
+    /// <param name="vm">The activity view model to update.</param>
     private void UpdateActivityViewModel(ActivityViewModel vm)
     {
-        if (!string.IsNullOrWhiteSpace(Name)) vm.BaseActivity.Name = Name;
+        // only update name if it contains valid text
+        if (!string.IsNullOrWhiteSpace(Name))
+        {
+            vm.BaseActivity.Name = Name;
+        }
 
+        // update specific properties based on the activity type
         switch (vm.BaseActivity)
         {
             case TrendActivity trendActivity:
@@ -280,8 +391,12 @@ public partial class ActivityEditorViewModel : ViewModelBase
             case MilestoneActivity milestoneActivity:
                 milestoneActivity.Unit = Unit;
                 milestoneActivity.Target = Target;
-                milestoneActivity.TargetDate = TargetDate;
+                milestoneActivity.TargetDate = TargetDate.HasValue && TargetDate.Value > DateTime.MinValue
+                    ? new DateTimeOffset(TargetDate.Value) 
+                    : null;
                 break;
         }
     }
+
+    #endregion
 }
