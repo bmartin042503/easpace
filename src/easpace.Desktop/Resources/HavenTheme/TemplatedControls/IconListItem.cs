@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using Avalonia;
-using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 
-namespace easpace.Desktop.Controls;
+namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
-public class IconListItem : ContentControl
+public class IconListItem : TemplatedControl
 {
     public static readonly StyledProperty<StreamGeometry> IconProperty =
         AvaloniaProperty.Register<IconListItem, StreamGeometry>(nameof(Icon));

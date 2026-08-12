@@ -1,0 +1,58 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
+        xmlns:services="clr-namespace:easpace.Desktop.Services">
+
+    <Style Selector="controls|DataEntryListItem">
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                    <TextBlock Grid.Column="0"
+                               Foreground="{DynamicResource Haven.Sem.Foreground}">
+                        <Run Text="{TemplateBinding Value}" />
+                        <Run Text="(" />
+                        <Run
+                            Text="{TemplateBinding Timestamp}" />
+                        <Run Text=")" />
+                    </TextBlock>
+
+                    <!-- Interaction buttons -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                VerticalAlignment="Center">
+
+                        <!-- Delete button -->
+                        <Button Classes="tertiary danger icon"
+                                Command="{TemplateBinding DeleteCommand}"
+                                CommandParameter="{TemplateBinding CommandsParameter}"
+                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                            <PathIcon
+                                Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                        </Button>
+
+                        <!-- Edit button -->
+                        <Button Classes="tertiary icon"
+                                Command="{TemplateBinding EditCommand}"
+                                CommandParameter="{TemplateBinding CommandsParameter}"
+                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                            <PathIcon
+                                Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
+                        </Button>
+
+                    </StackPanel>
+
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+    </Style>
+
+</Styles>

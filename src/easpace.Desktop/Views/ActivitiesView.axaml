@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
-             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesViewModel"
              x:Class="easpace.Desktop.Views.ActivitiesView"
@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Template of Trend Activity -->
             <DataTemplate x:Key="TrendActivityViewModel" DataType="vma:TrendActivityViewModel">
-                <controls:ActivityListItem Title="{Binding Activity.Name}"
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
                                            Status="{Binding Activity.LastEntry.Value}"
                                            Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
                                            SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
@@ -35,24 +35,24 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Template of Routine Activity -->
             <DataTemplate x:Key="RoutineActivityViewModel" DataType="vma:RoutineActivityViewModel">
-                <controls:ActivityListItem Title="{Binding Activity.Name}"
-                                           Status="{Binding Activity.TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+                                                    Status="{Binding Activity.TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
             </DataTemplate>
 
             <!-- Template of Milestone Activity -->
             <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vma:MilestoneActivityViewModel">
-                <controls:ActivityListItem Title="{Binding Activity.Name}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
-                    <controls:ActivityListItem.Status>
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
+                    <templatedControls:ActivityListItem.Status>
                         <MultiBinding StringFormat="{}{0}/{1}">
                             <Binding Path="Activity.EntriesSum" />
                             <Binding Path="Activity.Target" />
                         </MultiBinding>
-                    </controls:ActivityListItem.Status>
-                </controls:ActivityListItem>
+                    </templatedControls:ActivityListItem.Status>
+                </templatedControls:ActivityListItem>
             </DataTemplate>
 
         </dataTemplates:TemplateSelector>

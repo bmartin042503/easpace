@@ -12,6 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
              xmlns:converters="clr-namespace:easpace.Desktop.Converters"
+             xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivityEditorViewModel"
              x:Class="easpace.Desktop.Views.ActivityEditorView">
@@ -187,94 +188,34 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Items -->
                         <ItemsRepeater ItemsSource="{Binding DataEntries}">
-
-                            <!-- TODO: extract these code into DataEntryListItem -->
+                            
                             <ItemsRepeater.Resources>
                                 <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
 
+                                    <!-- NumericDataEntry template -->
                                     <DataTemplate x:Key="NumericDataEntry"
                                                   x:DataType="activities:NumericDataEntry">
-                                        <Grid ColumnDefinitions="*,Auto"
-                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
-
-                                            <TextBlock Grid.Column="0"
-                                                       Foreground="{DynamicResource Haven.Sem.Foreground}">
-                                                <Run Text="{Binding Value}" />
-                                                <Run Text="(" />
-                                                <Run
-                                                    Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" />
-                                                <Run Text=")" />
-                                            </TextBlock>
-
-                                            <!-- Interaction buttons -->
-                                            <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                                                        VerticalAlignment="Center">
-
-                                                <!-- Delete button -->
-                                                <Button Classes="tertiary danger icon"
-                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
-                                                    <PathIcon
-                                                        Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
-                                                </Button>
-
-                                                <!-- Edit button -->
-                                                <Button Classes="tertiary icon"
-                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
-                                                    <PathIcon
-                                                        Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
-                                                </Button>
-
-                                            </StackPanel>
-
-                                        </Grid>
+                                        
+                                        <templatedControls:DataEntryListItem
+                                            Value="{Binding Value}"
+                                            Timestamp="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}"
+                                            DeleteCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
+                                            EditCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
+                                            CommandsParameter="{Binding .}" />
+                                        
                                     </DataTemplate>
 
+                                    <!-- RoutineDataEntry template -->
                                     <DataTemplate x:Key="RoutineDataEntry"
                                                   x:DataType="activities:RoutineDataEntry">
-                                        <Grid ColumnDefinitions="*,Auto"
-                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
-
-                                            <TextBlock Grid.Column="0"
-                                                       Foreground="{DynamicResource Haven.Sem.Foreground}">
-                                                <Run
-                                                    Text="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}" />
-                                                <Run Text="(" />
-                                                <Run
-                                                    Text="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}" />
-                                                <Run Text=")" />
-                                            </TextBlock>
-
-                                            <!-- Interaction buttons -->
-                                            <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                                                        VerticalAlignment="Center">
-
-                                                <!-- Delete button -->
-                                                <Button Classes="tertiary danger icon"
-                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
-                                                    <PathIcon
-                                                        Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
-                                                </Button>
-
-                                                <!-- Edit button -->
-                                                <Button Classes="tertiary icon"
-                                                        Command="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
-                                                        CommandParameter="{Binding .}"
-                                                        ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
-                                                    <PathIcon
-                                                        Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
-                                                </Button>
-
-                                            </StackPanel>
-
-                                        </Grid>
+                                        
+                                        <templatedControls:DataEntryListItem
+                                            Value="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}"
+                                            Timestamp="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}"
+                                            DeleteCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
+                                            EditCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).EditDataEntryCommand}"
+                                            CommandsParameter="{Binding .}" />
+                                        
                                     </DataTemplate>
 
                                 </dataTemplates:TemplateSelector>

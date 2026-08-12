@@ -10,7 +10,8 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
         xmlns:models="clr-namespace:easpace.Desktop.Models"
         xmlns:activities="clr-namespace:easpace.Desktop.ViewModels.Activities"
-        xmlns:activities1="clr-namespace:easpace.Desktop.Models.Activities">
+        xmlns:activities1="clr-namespace:easpace.Desktop.Models.Activities"
+        xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls">
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
@@ -26,33 +27,33 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ListBox Classes="nav list">
 
                             <ListBoxItem Grid.Row="0">
-                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                                <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
                                                              SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
                                                              Text="Journal" />
                             </ListBoxItem>
 
                             <ListBoxItem Grid.Row="1">
-                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
-                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
-                                                             Text="Activities" />
+                                <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                                                      SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                                                      Text="Activities" />
                             </ListBoxItem>
 
                             <ListBoxItem Grid.Row="2">
-                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
-                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
-                                                             Text="Mood" />
+                                <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                                                                      SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                                                                      Text="Mood" />
                             </ListBoxItem>
 
                             <ListBoxItem Grid.Row="3">
-                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
-                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
-                                                             Text="Wellness" />
+                                <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
+                                                                      SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
+                                                                      Text="Wellness" />
                             </ListBoxItem>
 
                             <ListBoxItem Grid.Row="5">
-                                <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
-                                                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
-                                                             Text="Settings" />
+                                <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
+                                                                      SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
+                                                                      Text="Settings" />
                             </ListBoxItem>
 
                             <ListBox.ItemsPanel>
@@ -239,12 +240,12 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Sm}" />
         <Setter Property="Cursor" Value="Hand" />
 
-        <Style Selector="^ controls|NavigationListItem TextBlock#PART_Text">
+        <Style Selector="^ templatedControls|NavigationListItem TextBlock#PART_Text">
             <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
             <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
         </Style>
 
-        <Style Selector="^ controls|NavigationListItem PathIcon#PART_Icon">
+        <Style Selector="^ templatedControls|NavigationListItem PathIcon#PART_Icon">
             <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
             <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
         </Style>
@@ -259,11 +260,11 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
         </Style>
 
-        <Style Selector="^:selected controls|NavigationListItem TextBlock#PART_Text">
+        <Style Selector="^:selected templatedControls|NavigationListItem TextBlock#PART_Text">
             <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
         </Style>
 
-        <Style Selector="^:selected controls|NavigationListItem /template/ PathIcon#PART_Icon">
+        <Style Selector="^:selected templatedControls|NavigationListItem /template/ PathIcon#PART_Icon">
             <Setter Property="Data"
                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
         </Style>
@@ -281,15 +282,15 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Cursor" Value="Hand" />
 
-        <Style Selector="^ controls|ActivityListItem TextBlock#PART_Title">
+        <Style Selector="^ templatedControls|ActivityListItem TextBlock#PART_Title">
             <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
         </Style>
 
-        <Style Selector="^ controls|ActivityListItem TextBlock#PART_Status">
+        <Style Selector="^ templatedControls|ActivityListItem TextBlock#PART_Status">
             <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
         </Style>
 
-        <Style Selector="^ controls|ActivityListItem PathIcon#PART_Icon">
+        <Style Selector="^ templatedControls|ActivityListItem PathIcon#PART_Icon">
             <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
             <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />
         </Style>
@@ -304,14 +305,14 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border.Accent}" />
         </Style>
 
-        <Style Selector="^:selected controls|ActivityListItem /template/ PathIcon#PART_Icon">
+        <Style Selector="^:selected templatedControls|ActivityListItem /template/ PathIcon#PART_Icon">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
             <Setter Property="Data"
                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
         </Style>
 
         <Style
-            Selector="^:selected controls|ActivityListItem TextBlock#PART_Title, ^:selected controls|ActivityListItem TextBlock#PART_Status">
+            Selector="^:selected templatedControls|ActivityListItem TextBlock#PART_Title, ^:selected templatedControls|ActivityListItem TextBlock#PART_Status">
             <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
         </Style>

@@ -67,7 +67,6 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/GridSplitter.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ListBox.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ListBoxItem.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/MilestoneChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/Path.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/Slider.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBlock.axaml" />
@@ -76,12 +75,16 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/ComboBox.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/NumericUpDown.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ToggleButton.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/CalendarDatePicker.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/PathIcon.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/NavigationListItem.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/ActivityListItem.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/RoutineMonthItem.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/CalendarDatePicker.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/DataValidationErrors.axaml" />
-
+    <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/MilestoneChart.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/RoutineMonthItem.axaml" />
+    
+    <!-- Templated controls -->
+    <StyleInclude Source="/Resources/HavenTheme/TemplatedControls/NavigationListItem.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/TemplatedControls/ActivityListItem.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/TemplatedControls/DataEntryListItem.axaml" />
+    
 </Styles>

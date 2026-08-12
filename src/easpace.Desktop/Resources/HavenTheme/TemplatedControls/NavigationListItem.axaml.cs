@@ -4,7 +4,7 @@
 using System;
 using Avalonia;
 
-namespace easpace.Desktop.Controls;
+namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
 public class NavigationListItem : IconListItem
 {
