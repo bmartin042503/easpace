@@ -6,7 +6,8 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
 
         </xsd:element>
@@ -18,10 +19,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Napló</value>
@@ -88,6 +93,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Common.Button.Restore" xml:space="preserve">
         <value>Visszaállítás</value>
+    </data>
+    <data name="Common.Button.More" xml:space="preserve">
+        <value>Még több...</value>
     </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
@@ -247,5 +255,158 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="FormValidation.Target.Required" xml:space="preserve">
         <value>Kérlek, adj meg egy cél értéket.</value>
+    </data>
+    <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
+        <value>Nagyon kellemetlen</value>
+    </data>
+    <data name="Mood.State.SlightlyUnpleasant" xml:space="preserve">
+        <value>Kissé kellemetlen</value>
+    </data>
+    <data name="Mood.State.Neutral" xml:space="preserve">
+        <value>Semleges</value>
+    </data>
+    <data name="Mood.State.SlightlyPleasant" xml:space="preserve">
+        <value>Kissé kellemes</value>
+    </data>
+    <data name="Mood.State.VeryPleasant" xml:space="preserve">
+        <value>Nagyon kellemes</value>
+    </data>
+    <data name="Mood.SliderState.VeryUnpleasant" xml:space="preserve">
+        <value>Nagyon kellemetlenül</value>
+    </data>
+    <data name="Mood.SliderState.SlightlyUnpleasant" xml:space="preserve">
+        <value>Kissé kellemetlenül</value>
+    </data>
+    <data name="Mood.SliderState.Neutral" xml:space="preserve">
+        <value>Semlegesen</value>
+    </data>
+    <data name="Mood.SliderState.SlightlyPleasant" xml:space="preserve">
+        <value>Kissé kellemesen</value>
+    </data>
+    <data name="Mood.SliderState.VeryPleasant" xml:space="preserve">
+        <value>Nagyon kellemesen</value>
+    </data>
+    <data name="Mood.Form.Title" xml:space="preserve">
+        <value>Hogy érzed magad?</value>
+    </data>
+    <data name="Mood.Label.Worry" xml:space="preserve">
+        <value>Aggodalom</value>
+    </data>
+    <data name="Mood.Label.Amazement" xml:space="preserve">
+        <value>Ámulat</value>
+    </data>
+    <data name="Mood.Label.Courage" xml:space="preserve">
+        <value>Bátorság</value>
+    </data>
+    <data name="Mood.Label.Peace" xml:space="preserve">
+        <value>Béke</value>
+    </data>
+    <data name="Mood.Label.Happiness" xml:space="preserve">
+        <value>Boldogság</value>
+    </data>
+    <data name="Mood.Label.Annoyance" xml:space="preserve">
+        <value>Bosszúság</value>
+    </data>
+    <data name="Mood.Label.Guilt" xml:space="preserve">
+        <value>Bűntudat</value>
+    </data>
+    <data name="Mood.Label.Pride" xml:space="preserve">
+        <value>Büszkeség</value>
+    </data>
+    <data name="Mood.Label.Disappointment" xml:space="preserve">
+        <value>Csalódottság</value>
+    </data>
+    <data name="Mood.Label.Anger" xml:space="preserve">
+        <value>Düh</value>
+    </data>
+    <data name="Mood.Label.Satisfaction" xml:space="preserve">
+        <value>Elégedettség</value>
+    </data>
+    <data name="Mood.Label.Discouragement" xml:space="preserve">
+        <value>Elkedvetlenedés</value>
+    </data>
+    <data name="Mood.Label.Fear" xml:space="preserve">
+        <value>Félelem</value>
+    </data>
+    <data name="Mood.Label.Jealousy" xml:space="preserve">
+        <value>Féltékenység</value>
+    </data>
+    <data name="Mood.Label.Frustration" xml:space="preserve">
+        <value>Frusztráció</value>
+    </data>
+    <data name="Mood.Label.Carefreeness" xml:space="preserve">
+        <value>Gondtalanság</value>
+    </data>
+    <data name="Mood.Label.Gratitude" xml:space="preserve">
+        <value>Hála</value>
+    </data>
+    <data name="Mood.Label.Nervousness" xml:space="preserve">
+        <value>Idegesség</value>
+    </data>
+    <data name="Mood.Label.Excitement" xml:space="preserve">
+        <value>Izgatottság</value>
+    </data>
+    <data name="Mood.Label.Exhaustion" xml:space="preserve">
+        <value>Kimerültség</value>
+    </data>
+    <data name="Mood.Label.Embarrassment" xml:space="preserve">
+        <value>Kínos érzés</value>
+    </data>
+    <data name="Mood.Label.Indifference" xml:space="preserve">
+        <value>Közömbösség</value>
+    </data>
+    <data name="Mood.Label.Confidence" xml:space="preserve">
+        <value>Magabiztosság</value>
+    </data>
+    <data name="Mood.Label.Loneliness" xml:space="preserve">
+        <value>Magány</value>
+    </data>
+    <data name="Mood.Label.Relief" xml:space="preserve">
+        <value>Megkönnyebbülés</value>
+    </data>
+    <data name="Mood.Label.Surprise" xml:space="preserve">
+        <value>Meglepődés</value>
+    </data>
+    <data name="Mood.Label.Calmness" xml:space="preserve">
+        <value>Nyugalom</value>
+    </data>
+    <data name="Mood.Label.Joy" xml:space="preserve">
+        <value>Öröm</value>
+    </data>
+    <data name="Mood.Label.Hope" xml:space="preserve">
+        <value>Remény</value>
+    </data>
+    <data name="Mood.Label.Despair" xml:space="preserve">
+        <value>Reménytelenség</value>
+    </data>
+    <data name="Mood.Label.Stress" xml:space="preserve">
+        <value>Stressz</value>
+    </data>
+    <data name="Mood.Label.Shame" xml:space="preserve">
+        <value>Szégyen</value>
+    </data>
+    <data name="Mood.Label.Passion" xml:space="preserve">
+        <value>Szenvedély</value>
+    </data>
+    <data name="Mood.Label.Sadness" xml:space="preserve">
+        <value>Szomorúság</value>
+    </data>
+    <data name="Mood.Label.Anxiety" xml:space="preserve">
+        <value>Szorongás</value>
+    </data>
+    <data name="Mood.Label.Overwhelm" xml:space="preserve">
+        <value>Túlterheltség</value>
+    </data>
+    <data name="Mood.Label.Disgust" xml:space="preserve">
+        <value>Undor</value>
+    </data>
+    <data name="Mood.Label.Cheerfulness" xml:space="preserve">
+        <value>Vidámság</value>
+    </data>
+    <data name="Mood.Input.DescriptionPlaceholder" xml:space="preserve">
+        <value>Leírás...</value>
+    </data>
+    <data name="Mood.Input.DatePlaceholder" xml:space="preserve">
+        <value>Dátum...</value>
     </data>
 </root>

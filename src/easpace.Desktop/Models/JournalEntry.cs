@@ -8,8 +8,9 @@ namespace easpace.Desktop.Models;
 
 public partial class JournalEntry : ObservableObject
 {
-    [ObservableProperty] private Guid _id;
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public DateTimeOffset CreatedAt { get; set; }
+    
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _content = string.Empty;
-    [ObservableProperty] private DateTimeOffset _createdAt;
 }

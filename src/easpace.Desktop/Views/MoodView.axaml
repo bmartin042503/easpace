@@ -15,94 +15,125 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="vm:MoodViewModel"
              Background="{DynamicResource Haven.Sem.Canvas}">
 
-    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="3*,*,3*,Auto" Margin="26">
+    <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
 
-        <!-- Main title -->
-        <TextBlock Grid.Column="0" Grid.Row="0"
-                   Text="{services:LocalizationService Key='MOOD_TITLE'}"
-                   Classes="pageTitle" />
-
-        <!-- Subtitle -->
-        <TextBlock Grid.Column="0" Grid.Row="1"
-                   Text="{services:LocalizationService Key='MOOD_SUBTITLE'}"
-                   Classes="pageSubTitle" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
         <!-- Mood entries -->
-        <ScrollViewer Grid.Row="2" Grid.Column="0" Margin="0,20,0,0">
-            <ItemsControl ItemsSource="{Binding MoodEntries}">
+        <Border Classes="card" Grid.Column="0">
+            <ScrollViewer>
 
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical" Spacing="16" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                <ItemsRepeater ItemsSource="{Binding MoodEntries}">
 
-                <ItemsControl.DataTemplates>
-                    <DataTemplate DataType="models:MoodEntry">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:MoodEntry">
+                            <Border Classes="elevated card">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                               Text="{Binding Value, Converter={StaticResource MoodSliderValueConverter}}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Description}" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0"
+                                               Text="{Binding Timestamp, Converter={StaticResource RelativeDateConverter}}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
 
-                        <!-- Build of a single mood entry item -->
-                        
-                    </DataTemplate>
-                </ItemsControl.DataTemplates>
-            </ItemsControl>
-        </ScrollViewer>
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Vertical"
+                                     Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                    </ItemsRepeater.Layout>
 
-        <!-- New mood entry -->
-        <StackPanel Grid.Row="2" Grid.Column="2" Spacing="40" VerticalAlignment="Center">
+                </ItemsRepeater>
 
-            <!-- Mood entry title -->
-            <TextBlock Classes="newMoodEntryTitle" Text="{services:LocalizationService Key='NEW_MOOD_ENTRY_TITLE'}" />
+            </ScrollViewer>
+        </Border>
 
-            <StackPanel Orientation="Vertical">
+        <!-- Horizontal splitter -->
+        <GridSplitter Grid.Column="1"
+                      Background="{StaticResource Haven.Scale.Transparent}"
+                      Width="{StaticResource Haven.Scale.Spacing.Lg}"
+                      ResizeDirection="Columns" />
 
-                <!-- Mood state -->
-                <TextBlock Classes="moodStateText" Text="{Binding MoodStateText}" />
+        <!-- New mood entry form -->
+        <Border Classes="card" Grid.Column="2" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
+            <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}">
 
-                <!-- Mood slider -->
-                <Slider Classes="moodSlider" Minimum="0" Maximum="1" MaxWidth="250" Value="{Binding MoodSliderValue}"/>
+                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
 
-            </StackPanel>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
 
-            <Border Classes="card secondary" Padding="20">
-                <StackPanel Orientation="Vertical" Spacing="20">
+                        <!-- Form title -->
+                        <TextBlock Grid.Row="0" Classes="title"
+                                   Text="{services:LocalizationService Key='Mood.Form.Title'}"
+                                   TextAlignment="Center" VerticalAlignment="Top" />
 
-                    <!-- TODO: fix scrollviewer height sizing to be responsive -->
-                    <!-- Mood label items -->
-                    <ScrollViewer MaxHeight="140">
-                        <ItemsControl ItemsSource="{Binding MoodLabels}">
+                        <!-- Slider -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Width="400"
+                                    VerticalAlignment="Center">
+                            <TextBlock Classes="subtitle" Text="{Binding MoodStateText}"
+                                       Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                                       HorizontalAlignment="Center" />
+                            <Slider Classes="mood" Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
+                                    HorizontalAlignment="Stretch" />
+                        </StackPanel>
 
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                    </Grid>
 
-                            <ItemsControl.DataTemplates>
-                                <DataTemplate DataType="models:MoodLabel">
+                    <Grid Grid.Row="1" RowDefinitions="*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
-                                    <!-- Build of a single mood label item -->
-                                    <ToggleButton IsChecked="{Binding IsChecked}"
-                                                  Classes="mood-label">
-                                        <TextBlock Text="{Binding Name}" />
-                                    </ToggleButton>
+                        <!-- Labels -->
+                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding MoodLabels}" HorizontalAlignment="Center">
 
-                                </DataTemplate>
-                            </ItemsControl.DataTemplates>
-                        </ItemsControl>
-                    </ScrollViewer>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                   ItemSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                   LineSpacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
 
-                    <TextBox
-                        Height="75"
-                        AcceptsReturn="True"
-                        PlaceholderText="{services:LocalizationService Key='OTHER'}"
-                        Classes="largeTextBox" />
-                    
-                    <Button Classes="labeled-btn primary" HorizontalAlignment="Center">
-                        <TextBlock Text="{services:LocalizationService Key='SAVE'}" />
-                    </Button>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+                                <ItemsControl.DataTemplates>
+                                    <DataTemplate DataType="vm:MoodLabelViewModel">
+
+                                        <ToggleButton IsChecked="{Binding IsChecked}" Classes="mood-label">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </ToggleButton>
+
+                                    </DataTemplate>
+                                </ItemsControl.DataTemplates>
+
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <!-- Load more button -->
+                        <Button Grid.Row="1" Classes="regular tertiary"
+                                Content="{services:LocalizationService Key='Common.Button.More'}"
+                                Command="{Binding LoadAllLabelsCommand}" IsVisible="{Binding IsLoadMoreButtonVisible}"
+                                HorizontalAlignment="Center" />
+                    </Grid>
+
+                    <!-- Description text box -->
+                    <TextBox Grid.Row="2" Classes="large-text-area" Text="{Binding Description}"
+                             HorizontalAlignment="Stretch" Height="100"
+                             PlaceholderText="{services:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
+
+                </Grid>
+
+                <!-- Save button -->
+                <Button Grid.Row="1" Classes="regular primary" Command="{Binding SaveCommand}"
+                        Content="{services:LocalizationService Key='Common.Button.Save'}"
+                        HorizontalAlignment="Right" />
+
+            </Grid>
+        </Border>
 
     </Grid>
+
 </UserControl>

@@ -28,6 +28,8 @@ Licensed under the MIT License. See LICENSE file for details.
                              VerticalAlignment="Stretch" />
 
                     <TextBox Text="Text box" />
+                    
+                    <TextBox Classes="large-text-area" Text="Description" />
 
                 </StackPanel>
             </Border>
@@ -93,6 +95,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="TextBox.journal-edit.paragraph">
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+    </Style>
+    
+    <Style Selector="TextBox.large-text-area">
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="AcceptsReturn" Value="True" />
     </Style>
 
 </Styles>

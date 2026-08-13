@@ -116,7 +116,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:selected /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
         </Style>
 
         <Style Selector="^:selected templatedControls|ActivityListItem /template/ PathIcon#PART_Icon">

@@ -6,21 +6,18 @@ Licensed under the MIT License. See LICENSE file for details.
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
-        <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Neutral100}">
-                <Slider Classes="moodSlider" Minimum="0" Maximum="1" Width="275" Value="0.5" />
-            </Border>
-        </ThemeVariantScope>
+        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+            <Slider Classes="mood" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+        </Border>
     </Design.PreviewWith>
 
     <!-- TODO: make track bar clickable so the user can change value without tumb as well -->
-    
+
     <!-- Mood slider styling -->
-    <Style Selector="Slider.moodSlider">
-        <Setter Property="Background" Value="{DynamicResource Primary600}" />
-        <Setter Property="Foreground" Value="{DynamicResource Primary600}" />
-        <Setter Property="BorderThickness" Value="2" />
+    <Style Selector="Slider.mood">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -40,7 +37,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 ColumnDefinitions="Auto,Auto,*" RowDefinitions="6,Auto,6">
 
                                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
-                                        Classes="card primary" VerticalAlignment="Center"
+                                        Classes="elevated card" VerticalAlignment="Center"
                                         Height="16">
                                 </Border>
 
@@ -77,21 +74,26 @@ Licensed under the MIT License. See LICENSE file for details.
                                         Height="24"
                                         Margin="0"
                                         Padding="0"
-                                        Background="{DynamicResource PrimaryButtonGradientBrush}"
-                                        BorderBrush="{DynamicResource Primary600}"
+                                        Background="{DynamicResource Haven.Sem.Gradient.Accent}"
+                                        BorderBrush="{DynamicResource Haven.Sem.Accent.Strong}"
                                         BorderThickness="0.75"
                                         DataContext="{TemplateBinding Value}" />
+
                                 </Track>
+
                             </Grid>
+
                         </Grid>
+
                     </Border>
                 </DataValidationErrors>
             </ControlTemplate>
         </Setter>
-        
-        <Style Selector="^:pointerover /template/ Thumb#thumb,
+
+        <Style
+            Selector="^:pointerover /template/ Thumb#thumb,
                          ^:pressed /template/ Thumb#thumb">
-            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
         </Style>
 
         <Style Selector="^ /template/ Thumb#thumb">
@@ -108,7 +110,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^ /template/ Thumb#thumb:pointerover, 
                  ^ /template/ Thumb#thumb:pressed">
-            <Setter Property="Background" Value="{DynamicResource PrimaryButtonGradientBrush}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
         </Style>
     </Style>
 </Styles>

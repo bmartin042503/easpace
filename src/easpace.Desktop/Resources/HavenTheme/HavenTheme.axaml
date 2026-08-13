@@ -53,6 +53,7 @@ Component files located in the `Styles` directory apply these tokens to style in
         <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />
         <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
         <converters:ValidationResultToLocalizedConverter x:Key="ValidationResultToLocalizedConverter" />
+        <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
 
     </Styles.Resources>
 

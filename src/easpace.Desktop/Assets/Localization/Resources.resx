@@ -6,9 +6,10 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -18,10 +19,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
     </resheader>
     <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Journal</value>
@@ -88,6 +93,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Common.Button.Restore" xml:space="preserve">
         <value>Restore</value>
+    </data>
+    <data name="Common.Button.More" xml:space="preserve">
+        <value>More...</value>
     </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Search entries...</value>
@@ -247,5 +255,158 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="FormValidation.Target.Required" xml:space="preserve">
         <value>Please set a goal value.</value>
+    </data>
+    <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
+        <value>Very unpleasant</value>
+    </data>
+    <data name="Mood.State.SlightlyUnpleasant" xml:space="preserve">
+        <value>Slightly unpleasant</value>
+    </data>
+    <data name="Mood.State.Neutral" xml:space="preserve">
+        <value>Neutral</value>
+    </data>
+    <data name="Mood.State.SlightlyPleasant" xml:space="preserve">
+        <value>Slightly pleasant</value>
+    </data>
+    <data name="Mood.State.VeryPleasant" xml:space="preserve">
+        <value>Very pleasant</value>
+    </data>
+    <data name="Mood.SliderState.VeryUnpleasant" xml:space="preserve">
+        <value>Very unpleasant</value>
+    </data>
+    <data name="Mood.SliderState.SlightlyUnpleasant" xml:space="preserve">
+        <value>Slightly unpleasant</value>
+    </data>
+    <data name="Mood.SliderState.Neutral" xml:space="preserve">
+        <value>Neutral</value>
+    </data>
+    <data name="Mood.SliderState.SlightlyPleasant" xml:space="preserve">
+        <value>Slightly pleasant</value>
+    </data>
+    <data name="Mood.SliderState.VeryPleasant" xml:space="preserve">
+        <value>Very pleasant</value>
+    </data>
+    <data name="Mood.Form.Title" xml:space="preserve">
+        <value>How do you feel?</value>
+    </data>
+    <data name="Mood.Label.Worry" xml:space="preserve">
+        <value>Worry</value>
+    </data>
+    <data name="Mood.Label.Amazement" xml:space="preserve">
+        <value>Amazement</value>
+    </data>
+    <data name="Mood.Label.Courage" xml:space="preserve">
+        <value>Courage</value>
+    </data>
+    <data name="Mood.Label.Peace" xml:space="preserve">
+        <value>Peace</value>
+    </data>
+    <data name="Mood.Label.Happiness" xml:space="preserve">
+        <value>Happiness</value>
+    </data>
+    <data name="Mood.Label.Annoyance" xml:space="preserve">
+        <value>Annoyance</value>
+    </data>
+    <data name="Mood.Label.Guilt" xml:space="preserve">
+        <value>Guilt</value>
+    </data>
+    <data name="Mood.Label.Pride" xml:space="preserve">
+        <value>Pride</value>
+    </data>
+    <data name="Mood.Label.Disappointment" xml:space="preserve">
+        <value>Disappointment</value>
+    </data>
+    <data name="Mood.Label.Anger" xml:space="preserve">
+        <value>Anger</value>
+    </data>
+    <data name="Mood.Label.Satisfaction" xml:space="preserve">
+        <value>Satisfaction</value>
+    </data>
+    <data name="Mood.Label.Discouragement" xml:space="preserve">
+        <value>Discouragement</value>
+    </data>
+    <data name="Mood.Label.Fear" xml:space="preserve">
+        <value>Fear</value>
+    </data>
+    <data name="Mood.Label.Jealousy" xml:space="preserve">
+        <value>Jealousy</value>
+    </data>
+    <data name="Mood.Label.Frustration" xml:space="preserve">
+        <value>Frustration</value>
+    </data>
+    <data name="Mood.Label.Carefreeness" xml:space="preserve">
+        <value>Carefreeness</value>
+    </data>
+    <data name="Mood.Label.Gratitude" xml:space="preserve">
+        <value>Gratitude</value>
+    </data>
+    <data name="Mood.Label.Nervousness" xml:space="preserve">
+        <value>Nervousness</value>
+    </data>
+    <data name="Mood.Label.Excitement" xml:space="preserve">
+        <value>Excitement</value>
+    </data>
+    <data name="Mood.Label.Exhaustion" xml:space="preserve">
+        <value>Exhaustion</value>
+    </data>
+    <data name="Mood.Label.Embarrassment" xml:space="preserve">
+        <value>Embarrassment</value>
+    </data>
+    <data name="Mood.Label.Indifference" xml:space="preserve">
+        <value>Indifference</value>
+    </data>
+    <data name="Mood.Label.Confidence" xml:space="preserve">
+        <value>Confidence</value>
+    </data>
+    <data name="Mood.Label.Loneliness" xml:space="preserve">
+        <value>Loneliness</value>
+    </data>
+    <data name="Mood.Label.Relief" xml:space="preserve">
+        <value>Relief</value>
+    </data>
+    <data name="Mood.Label.Surprise" xml:space="preserve">
+        <value>Surprise</value>
+    </data>
+    <data name="Mood.Label.Calmness" xml:space="preserve">
+        <value>Calmness</value>
+    </data>
+    <data name="Mood.Label.Joy" xml:space="preserve">
+        <value>Joy</value>
+    </data>
+    <data name="Mood.Label.Hope" xml:space="preserve">
+        <value>Hope</value>
+    </data>
+    <data name="Mood.Label.Despair" xml:space="preserve">
+        <value>Despair</value>
+    </data>
+    <data name="Mood.Label.Stress" xml:space="preserve">
+        <value>Stress</value>
+    </data>
+    <data name="Mood.Label.Shame" xml:space="preserve">
+        <value>Shame</value>
+    </data>
+    <data name="Mood.Label.Passion" xml:space="preserve">
+        <value>Passion</value>
+    </data>
+    <data name="Mood.Label.Sadness" xml:space="preserve">
+        <value>Sadness</value>
+    </data>
+    <data name="Mood.Label.Anxiety" xml:space="preserve">
+        <value>Anxiety</value>
+    </data>
+    <data name="Mood.Label.Overwhelm" xml:space="preserve">
+        <value>Overwhelm</value>
+    </data>
+    <data name="Mood.Label.Disgust" xml:space="preserve">
+        <value>Disgust</value>
+    </data>
+    <data name="Mood.Label.Cheerfulness" xml:space="preserve">
+        <value>Cheerfulness</value>
+    </data>
+    <data name="Mood.Input.DescriptionPlaceholder" xml:space="preserve">
+        <value>Description...</value>
+    </data>
+    <data name="Mood.Input.DatePlaceholder" xml:space="preserve">
+        <value>Date...</value>
     </data>
 </root>

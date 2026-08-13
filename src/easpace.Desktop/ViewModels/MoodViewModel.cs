@@ -2,8 +2,11 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Models;
 using easpace.Desktop.Services;
@@ -12,10 +15,20 @@ namespace easpace.Desktop.ViewModels;
 
 public partial class MoodViewModel : PageViewModel
 {
-    public ObservableCollection<MoodEntry> MoodEntries { get; set; }
-    public ObservableCollection<MoodLabel> MoodLabels { get; set; }
+    private readonly List<MoodLabelViewModel> _allMoodLabels = [];
+
+    public ObservableCollection<MoodEntry> MoodEntries { get; } = [];
+    public ObservableCollection<MoodLabelViewModel> MoodLabels { get; set; } = [];
 
     [ObservableProperty] private string _moodStateText = string.Empty;
+    [ObservableProperty] private string _description = string.Empty;
+    
+    // [ObservableProperty] private DateTime? _selectedDate = DateTime.Now;
+    // [ObservableProperty] private TimeSpan? _selectedTime = DateTimeOffset.Now.TimeOfDay;
+
+    public DateTimeOffset MaxAllowedDate => DateTimeOffset.Now;
+    
+    public bool IsLoadMoreButtonVisible => MoodLabels.Count < _allMoodLabels.Count;
 
     public double MoodSliderValue
     {
@@ -27,122 +40,112 @@ public partial class MoodViewModel : PageViewModel
             
             var localizedValue = value switch
             {
-                < 0.2 => LocalizationService.GetString("VERY_UNPLEASANT"),
-                < 0.4 => LocalizationService.GetString("SLIGHTLY_UNPLEASANT"),
-                < 0.6 => LocalizationService.GetString("NEUTRAL"),
-                < 0.8 => LocalizationService.GetString("SLIGHTLY_PLEASANT"),
-                <= 1.0 => LocalizationService.GetString("VERY_PLEASANT"),
+                < 0.2 => LocalizationService.GetString("Mood.SliderState.VeryUnpleasant"),
+                < 0.4 => LocalizationService.GetString("Mood.SliderState.SlightlyUnpleasant"),
+                < 0.6 => LocalizationService.GetString("Mood.SliderState.Neutral"),
+                < 0.8 => LocalizationService.GetString("Mood.SliderState.SlightlyPleasant"),
+                <= 1.0 => LocalizationService.GetString("Mood.SliderState.VeryPleasant"),
                 _ => string.Empty
             };
             
             MoodStateText = localizedValue;
             
+            UpdateMoodLabels();
+            
             OnPropertyChanged();
         }
     }
-
 
     public MoodViewModel()
     {
         Page = ApplicationPage.Mood;
 
+        MoodLabels.CollectionChanged += (_, _) => OnPropertyChanged(nameof(IsLoadMoreButtonVisible));
+
+        InitializeMoodLabels();
         MoodSliderValue = 0.5;
-
-        MoodEntries =
-        [
-            new MoodEntry
-            {
-                Date = DateTime.Now, MoodSliderValue = 0.9, Description = "Fantasztikus nap, minden sikerült!",
-                Labels = ["siker", "boldogság"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-1), MoodSliderValue = 0.4,
-                Description = "Kicsit fáradtnak érzem magam ma.", Labels = []
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-2), MoodSliderValue = 0.7,
-                Labels = ["munka", "flow"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-3), MoodSliderValue = 0.2,
-                Labels = ["időjárás"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-4), MoodSliderValue = 0.8, Description = "Egy jó edzés után minden jobb.",
-                Labels = ["sport", "egészség"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-5), MoodSliderValue = 0.5, Description = "Átlagos szerda, semmi különös.",
-                Labels = ["rutin"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-6), MoodSliderValue = 1.0, Description = "Végre hétvége és kirándulás!",
-                Labels = ["természet", "kikapcsolódás"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-7), MoodSliderValue = 0.3,
-                Labels = []
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-8), MoodSliderValue = 0.6, Description = "Olvasással töltöttem az estét.",
-                Labels = ["könyv", "nyugalom"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-9), MoodSliderValue = 0.1,
-                Description = "Rossz hír érkezett, mélyponton vagyok.", Labels = ["szomorúság"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-10), MoodSliderValue = 0.75, Description = "Régi barátokkal találkoztam.",
-                Labels = ["barátok", "nosztalgia"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-11), MoodSliderValue = 0.45,
-                Labels = ["türelem"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-12), MoodSliderValue = 0.85,
-                Labels = ["tanulás", "fejlődés"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-13), MoodSliderValue = 0.55,
-                Description = "Kicsit sokat agyaltam a jövőn.", Labels = ["gondolatok"]
-            },
-
-            new MoodEntry
-            {
-                Date = DateTime.Now.AddDays(-14), MoodSliderValue = 0.95,
-                Description = "A kedvenc ételemet ettem vacsorára.", Labels = ["gasztro", "öröm"]
-            }
-        ];
-
-        MoodLabels = new ObservableCollection<MoodLabel>(MoodLabelsData.GetMoodLabels());
     }
-    
-    
+
+    private void InitializeMoodLabels()
+    {
+        foreach (var labelState in Enum.GetValues<MoodLabelState>())
+        {
+            var localizedName = LocalizationService.GetString($"Mood.Label.{labelState}");
+            _allMoodLabels.Add(new MoodLabelViewModel(labelState, localizedName));
+        }
+    }
+
+    private void UpdateMoodLabels()
+    {
+        if (_allMoodLabels.Count <= 0) return;
+
+        var currentState = MoodSliderValue switch
+        {
+            < 0.2 => MoodState.VeryUnpleasant,
+            < 0.4 => MoodState.SlightlyUnpleasant,
+            < 0.6 => MoodState.Neutral,
+            < 0.8 => MoodState.SlightlyPleasant,
+            _ => MoodState.VeryPleasant
+        };
+
+        var labelsToShow = _allMoodLabels
+            .Where(l => l.IsChecked || l.State.BelongsTo(currentState))
+            .ToList();
+        
+        if (MoodLabels.SequenceEqual(labelsToShow))
+        {
+            return;
+        }
+
+        MoodLabels.Clear();
+        foreach (var label in labelsToShow)
+        {
+            MoodLabels.Add(label);
+        }
+    }
+
+    [RelayCommand]
+    private void LoadAllLabels()
+    {
+        MoodLabels.Clear();
+        foreach (var label in _allMoodLabels)
+        {
+            MoodLabels.Add(label);
+        }
+    }
+
+    [RelayCommand]
+    private void Save()
+    {
+        var timestamp = DateTimeOffset.Now;
+
+        var selectedLabels = _allMoodLabels
+            .Where(l => l.IsChecked)
+            .Select(l => l.State)
+            .ToList();
+
+        var entry = new MoodEntry
+        {
+            Timestamp = timestamp,
+            Value = MoodSliderValue,
+            Labels = selectedLabels,
+            Description = Description
+        };
+
+        MoodEntries.Insert(0, entry);
+
+        ResetForm();
+    }
+
+    private void ResetForm()
+    {
+        Description = string.Empty;
+
+        foreach (var label in _allMoodLabels)
+        {
+            label.IsChecked = false;
+        }
+
+        MoodSliderValue = 0.5;
+    }
 }

@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Constants;
 
-public enum Mood
+public enum MoodState
 {
     VeryUnpleasant,
     SlightlyUnpleasant,
