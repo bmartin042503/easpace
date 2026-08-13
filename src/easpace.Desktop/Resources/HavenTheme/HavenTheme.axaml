@@ -30,13 +30,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="/Resources/HavenTheme/PhosphorIcons.axaml" />
 
                 <!-- Control themes -->
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CheckBox.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/ButtonSpinner.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarDatePicker.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarItem.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/CalendarDayButton.axaml" />
                 <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/DataValidationErrors.axaml" />
-                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/TimePicker.axaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
@@ -72,13 +66,9 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/Slider.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBlock.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TextBox.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/CheckBox.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ComboBox.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/NumericUpDown.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/ToggleButton.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/PathIcon.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/CalendarDatePicker.axaml" />
-    <StyleInclude Source="/Resources/HavenTheme/Styles/TimePicker.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/DataValidationErrors.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/MilestoneChart.axaml" />
