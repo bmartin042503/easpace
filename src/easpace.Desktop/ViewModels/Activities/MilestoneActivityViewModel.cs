@@ -12,4 +12,10 @@ public class MilestoneActivityViewModel : NumericActivityViewModel<MilestoneActi
         dialogService)
     {
     }
+
+    public override void RefreshDataEntries()
+    {
+        base.RefreshDataEntries();
+        Activity.RefreshEntriesSum();
+    }
 }

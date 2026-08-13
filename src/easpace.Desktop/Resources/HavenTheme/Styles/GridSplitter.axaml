@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- GridSplitter template & styling -->
     <Style Selector="GridSplitter.horizontal">
 
-        <Setter Property="Width" Value="{StaticResource Haven.Scale.Spacing.Sm}" />
+        <Setter Property="Width" Value="{StaticResource Haven.Scale.Spacing.Xs}" />
 
         <Setter Property="Template">
             <ControlTemplate>

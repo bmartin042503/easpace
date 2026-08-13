@@ -83,6 +83,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Delete" xml:space="preserve">
         <value>Törlés</value>
     </data>
+    <data name="Common.Button.Archive" xml:space="preserve">
+        <value>Archiválás</value>
+    </data>
+    <data name="Common.Button.Restore" xml:space="preserve">
+        <value>Visszaállítás</value>
+    </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
@@ -184,6 +190,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.Type.Routine" xml:space="preserve">
         <value>Rutin</value>
+    </data>
+    <data name="Activities.Filter.Active" xml:space="preserve">
+        <value>Aktív</value>
+    </data>
+    <data name="Activities.Filter.Archived" xml:space="preserve">
+        <value>Archivált</value>
     </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Hét</value>

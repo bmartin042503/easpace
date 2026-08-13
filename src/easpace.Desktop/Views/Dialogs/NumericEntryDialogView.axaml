@@ -32,22 +32,22 @@ Licensed under the MIT License. See LICENSE file for details.
                        Classes="subtitle" Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
-                <Grid ColumnDefinitions="2*,*"
-                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
-                    
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
                     <!-- Date input -->
                     <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding SelectedDate}"
                                         HorizontalAlignment="Stretch"
                                         PlaceholderText="{services:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
-                                        DisplayDateEnd="{Binding MaxAllowedDate}" />
-                    
+                                        DisplayDateEnd="{Binding MaxAllowedDate}"
+                                        MinHeight="37" />
+
                     <!-- Time picker -->
-                    <TimePicker Grid.Column="1"
-                                SelectedTime="{Binding SelectedTime}"
-                                ClockIdentifier="24HourClock" />
-                    
+                    <TimePicker Grid.Column="1" SelectedTime="{Binding SelectedTime}"
+                                ClockIdentifier="24HourClock"
+                                MinHeight="37" />
+
                 </Grid>
 
                 <DockPanel>

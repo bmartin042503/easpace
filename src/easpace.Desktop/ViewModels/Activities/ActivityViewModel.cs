@@ -19,6 +19,12 @@ public abstract partial class ActivityViewModel : ViewModelBase
     public event EventHandler? EditRequested;
     
     public virtual void RefreshDataEntries() {}
+
+    [RelayCommand]
+    private void ToggleArchive()
+    {
+        BaseActivity.IsArchived = !BaseActivity.IsArchived;
+    }
     
     [RelayCommand]
     private void Delete()

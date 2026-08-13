@@ -51,6 +51,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="Button">
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
     </Style>
 
     <Style Selector="Button.primary">
@@ -91,6 +92,11 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
+        
+        <Style Selector="^:disabled /template/ ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        </Style>
     </Style>
     
     <Style Selector="Button.regular.danger">
@@ -125,7 +131,7 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="Button.regular">
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
-        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
     </Style>
     
     <Style Selector="Button.clear">

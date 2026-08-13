@@ -20,4 +20,9 @@ public partial class MilestoneActivity : NumericActivity
         base.OnCollectionChanged();
         OnPropertyChanged(nameof(EntriesSum));
     }
+
+    public void RefreshEntriesSum()
+    {
+        OnPropertyChanged(nameof(EntriesSum));
+    }
 }

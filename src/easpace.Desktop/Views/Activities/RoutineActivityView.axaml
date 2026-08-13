@@ -19,8 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.DataContext>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
-          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+          RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
         <!-- Title -->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Name}"
@@ -37,6 +36,22 @@ Licensed under the MIT License. See LICENSE file for details.
                     Command="{Binding DeleteCommand}"
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+            </Button>
+            
+            <!-- Archive/Restore button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding ToggleArchiveCommand}">
+                <Panel>
+                    
+                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
+                              IsVisible="{Binding !Activity.IsArchived}"
+                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
+                
+                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
+                              IsVisible="{Binding Activity.IsArchived}"
+                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
+                    
+                </Panel>
             </Button>
 
             <!-- Edit button -->

@@ -28,9 +28,9 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Template of Trend Activity -->
             <DataTemplate x:Key="TrendActivityViewModel" DataType="vma:TrendActivityViewModel">
                 <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
-                                           Status="{Binding Activity.LastEntry.Value}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
+                                                    Status="{Binding Activity.LastEntry.Value}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
             </DataTemplate>
 
             <!-- Template of Routine Activity -->
@@ -60,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Border Classes="card" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
 
-        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
@@ -69,36 +69,59 @@ Licensed under the MIT License. See LICENSE file for details.
             </Grid.ColumnDefinitions>
 
             <!-- Sidebar -->
-            <Grid RowDefinitions="Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+            <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Md}">
 
                 <!-- Top bar -->
-                <StackPanel Grid.Row="0" Orientation="Vertical">
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
 
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <!-- List filter (Active / Archive) -->
+                    <ListBox Grid.Column="0" Classes="toolbar" SelectedIndex="{Binding SelectedFilterIndex}"
+                             IsVisible="{Binding HasActivities}">
 
-                        <!-- Search box -->
-                        <TextBox Grid.Column="0"
-                                 PlaceholderText="{services:LocalizationService Key='Activities.Search.Placeholder'}"
-                                 MinWidth="140">
-                            <TextBox.InnerRightContent>
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
-                            </TextBox.InnerRightContent>
-                        </TextBox>
+                        <!-- Active -->
+                        <ListBoxItem>
+                            <templatedControls:IconListItem
+                                Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Active'}" />
+                        </ListBoxItem>
 
-                        <!-- Add button -->
-                        <Button Grid.Column="1" Classes="primary icon" HorizontalAlignment="Left"
-                                Command="{Binding AddActivityCommand}"
-                                ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}"
-                                IsEnabled="{Binding !IsEditing}">
-                            <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
-                        </Button>
+                        <!-- Archive -->
+                        <ListBoxItem>
+                            <templatedControls:IconListItem
+                                Icon="{StaticResource Haven.PhosphorIcons.Archive}"
+                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
+                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Archived'}" />
+                        </ListBoxItem>
 
-                    </Grid>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
 
-                </StackPanel>
+                    </ListBox>
+
+                    <!-- Add button -->
+                    <Button Grid.Row="0" Grid.Column="2" Classes="primary icon" HorizontalAlignment="Right"
+                            Command="{Binding AddActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}"
+                            IsEnabled="{Binding !IsEditing}"
+                            Margin="0,1">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+                    </Button>
+
+                </Grid>
+
+                <Separator Grid.Row="1" Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                           Margin="0" />
 
                 <!-- No entries view -->
-                <StackPanel Grid.Row="1"
+                <StackPanel Grid.Row="2"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
@@ -152,7 +175,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Activity entries list -->
-                <ScrollViewer Grid.Row="1">
+                <ScrollViewer Grid.Row="2">
                     <ListBox Classes="activity list"
                              ItemsSource="{Binding ActivityViewModels}"
                              SelectedItem="{Binding SelectedActivityViewModel}"

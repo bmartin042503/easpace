@@ -14,6 +14,7 @@ public abstract partial class Activity : ObservableObject
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     [ObservableProperty] private string _name = string.Empty;
+    [ObservableProperty] private bool _isArchived;
 }
 
 public abstract class Activity<TEntry> : Activity

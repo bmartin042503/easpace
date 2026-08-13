@@ -19,8 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.DataContext>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}"
-          Margin="{StaticResource Haven.Scale.Spacing.Thickness.Left.Xs}">
+          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
 
         <!-- Top bar -->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
@@ -72,6 +71,22 @@ Licensed under the MIT License. See LICENSE file for details.
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
             </Button>
+            
+            <!-- Archive/Restore button -->
+            <Button Classes="tertiary icon"
+                    Command="{Binding ToggleArchiveCommand}">
+                <Panel>
+                    
+                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
+                              IsVisible="{Binding !Activity.IsArchived}"
+                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
+                
+                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
+                              IsVisible="{Binding Activity.IsArchived}"
+                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
+                    
+                </Panel>
+            </Button>
 
             <!-- Edit button -->
             <Button Classes="tertiary icon"
@@ -90,7 +105,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </StackPanel>
 
         <!-- Time Range Selection (segmented control) -->
-        <ListBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="time-range-segmented"
+        <ListBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="segmented"
                  HorizontalAlignment="Left"
                  ItemsSource="{Binding TimeRanges}"
                  SelectedItem="{Binding SelectedTimeRange}">

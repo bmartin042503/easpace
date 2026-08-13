@@ -13,6 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Foreground -->
     <SolidColorBrush x:Key="Haven.Sem.Foreground" Color="{StaticResource Haven.Scale.Neutral700}" />
     <SolidColorBrush x:Key="Haven.Sem.Foreground.Subtle" Color="{StaticResource Haven.Scale.Neutral500}" />
+    <SolidColorBrush x:Key="Haven.Sem.Foreground.Muted" Color="{StaticResource Haven.Scale.Neutral300}" />
 
     <!-- Border -->
     <SolidColorBrush x:Key="Haven.Sem.Border" Color="{StaticResource Haven.Scale.Neutral200}" />

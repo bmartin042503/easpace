@@ -18,10 +18,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Grid.Column="0"
                                Foreground="{DynamicResource Haven.Sem.Foreground}">
                         <Run Text="{TemplateBinding Value}" />
-                        <Run Text="(" />
-                        <Run
-                            Text="{TemplateBinding Timestamp}" />
-                        <Run Text=")" />
+                        <Run Text="(" /><Run Text="{TemplateBinding Timestamp}" /><Run Text=")" />
                     </TextBlock>
 
                     <!-- Interaction buttons -->

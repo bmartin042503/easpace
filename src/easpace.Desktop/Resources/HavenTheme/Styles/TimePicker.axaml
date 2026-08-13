@@ -1,0 +1,35 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}" Width="400" Height="400">
+            <TimePicker HorizontalAlignment="Center" />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="TimePicker">
+        
+        <Setter Property="Theme" Value="{StaticResource Haven.ControlTheme.TimePicker}" />
+        
+        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="MinHeight" Value="32" />
+        
+        <Style Selector="^ TextBlock#PART_HourTextBlock, ^ TextBlock#PART_MinuteTextBlock">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        
+    </Style>
+    
+</Styles>

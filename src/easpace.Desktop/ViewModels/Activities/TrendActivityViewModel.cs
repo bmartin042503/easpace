@@ -45,7 +45,7 @@ public partial class TrendActivityViewModel : NumericActivityViewModel<TrendActi
         
         Activity.PropertyChanged += OnActivityPropertyChanged;
         
-        SelectedTimeRange = ChartTimeRange.Month;
+        SelectedTimeRange = ChartTimeRange.Day;
     }
     
     private void UpdateChartData()

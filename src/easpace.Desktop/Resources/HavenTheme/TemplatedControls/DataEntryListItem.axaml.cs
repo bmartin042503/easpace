@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
@@ -9,6 +10,8 @@ namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
 public class DataEntryListItem : TemplatedControl
 {
+    protected override Type StyleKeyOverride => typeof(DataEntryListItem);
+    
     public static readonly StyledProperty<string> ValueProperty =
         AvaloniaProperty.Register<DataEntryListItem, string>(nameof(Value), defaultValue: string.Empty);
     

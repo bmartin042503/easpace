@@ -2,12 +2,14 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
+using easpace.Desktop.Models.Activities;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels.Activities;
 using easpace.Desktop.ViewModels.Dialogs;
@@ -17,25 +19,36 @@ namespace easpace.Desktop.ViewModels;
 public partial class ActivitiesViewModel : PageViewModel
 {
     private readonly IDialogService _dialogService;
+    private readonly List<ActivityViewModel> _allActivityViewModels = [];
     public ObservableCollection<ActivityViewModel> ActivityViewModels { get; } = [];
 
     [ObservableProperty] private ActivityViewModel? _selectedActivityViewModel;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
-    
+
     [ObservableProperty] private bool _isEditing;
 
     private ActivityEditorViewModel? _editorViewModel;
 
-    
-    public bool HasActivities => ActivityViewModels.Any();
+    public int SelectedFilterIndex
+    {
+        get;
+        set
+        {
+            SetProperty(ref field, value);
+            FilterActivities();
+        }
+    }
+
+
+    public bool HasActivities => _allActivityViewModels.Any();
 
     public ActivitiesViewModel(IDialogService dialogService)
     {
         _dialogService = dialogService;
 
         Page = ApplicationPage.Activities;
-        
+
         ActivityViewModels.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasActivities));
     }
 
@@ -128,7 +141,7 @@ public partial class ActivitiesViewModel : PageViewModel
         _editorViewModel.Canceled += OnActivityEditorCanceled;
 
         ContentViewModel = _editorViewModel;
-        
+
         IsEditing = true;
     }
 
@@ -153,17 +166,57 @@ public partial class ActivitiesViewModel : PageViewModel
 
     private void InsertViewModel(ActivityViewModel activityViewModel)
     {
-        ActivityViewModels.Insert(0, activityViewModel);
+        _allActivityViewModels.Insert(0, activityViewModel);
         activityViewModel.DeleteRequested += OnActivityDeleteRequested;
         activityViewModel.EditRequested += OnActivityEditRequested;
-        
-        SelectedActivityViewModel = activityViewModel;
+
+        activityViewModel.BaseActivity.PropertyChanged += OnActivityPropertyChanged;
+
+        FilterActivities();
+
+        if (ActivityViewModels.Contains(activityViewModel))
+        {
+            SelectedActivityViewModel = activityViewModel;
+        }
     }
 
     private void RemoveViewModel(ActivityViewModel activityViewModel)
     {
+        _allActivityViewModels.Remove(activityViewModel);
         ActivityViewModels.Remove(activityViewModel);
+
         activityViewModel.DeleteRequested -= OnActivityDeleteRequested;
         activityViewModel.EditRequested -= OnActivityEditRequested;
+        activityViewModel.BaseActivity.PropertyChanged -= OnActivityPropertyChanged;
+
+        if (SelectedActivityViewModel == activityViewModel)
+        {
+            SelectedActivityViewModel = ActivityViewModels.FirstOrDefault();
+        }
+    }
+
+    private void FilterActivities()
+    {
+        var showArchived = SelectedFilterIndex == 1;
+
+        var filteredItems = _allActivityViewModels
+            .Where(vm => vm.BaseActivity.IsArchived == showArchived)
+            .ToList();
+
+        ActivityViewModels.Clear();
+        foreach (var item in filteredItems)
+        {
+            ActivityViewModels.Add(item);
+        }
+
+        SelectedActivityViewModel = ActivityViewModels.FirstOrDefault();
+    }
+
+    private void OnActivityPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(Activity.IsArchived))
+        {
+            FilterActivities();
+        }
     }
 }

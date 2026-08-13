@@ -8,7 +8,6 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:vm="using:easpace.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:easpace.Desktop.Controls"
         xmlns:services="clr-namespace:easpace.Desktop.Services"
         xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
