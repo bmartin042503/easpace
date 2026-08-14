@@ -49,6 +49,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Time.OneMinuteAgo" xml:space="preserve">
         <value>1 minute ago</value>
     </data>
+    <data name="Common.Time.OneMinute" xml:space="preserve">
+        <value>1 minute</value>
+    </data>
+    <data name="Common.Time.Minutes" xml:space="preserve">
+        <value>{0} minutes</value>
+    </data>
     <data name="Common.Time.MinutesAgo" xml:space="preserve">
         <value>{0} minutes ago</value>
     </data>
@@ -411,5 +417,44 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Mood.Empty.Message" xml:space="preserve">
         <value>No entries</value>
+    </data>
+    <data name="Wellness.Title.Start" xml:space="preserve">
+        <value>Take a moment for yourself</value>
+    </data>
+    <data name="Wellness.SessionType.Breathing" xml:space="preserve">
+        <value>Breathing</value>
+    </data>
+    <data name="Wellness.SessionType.Meditation" xml:space="preserve">
+        <value>Meditation</value>
+    </data>
+    <data name="Wellness.Description.Breathing" xml:space="preserve">
+        <value>Find your center with guided breathing exercises.</value>
+    </data>
+    <data name="Wellness.Description.Meditation" xml:space="preserve">
+        <value>Clear your mind in a quiet, distraction-free space.</value>
+    </data>
+    <data name="Wellness.Label.Duration" xml:space="preserve">
+        <value>Duration</value>
+    </data>
+    <data name="Wellness.Label.Music" xml:space="preserve">
+        <value>Background audio</value>
+    </data>
+    <data name="Wellness.Button.BeginSession" xml:space="preserve">
+        <value>Begin session</value>
+    </data>
+    <data name="Wellness.Button.EndSession" xml:space="preserve">
+        <value>End session</value>
+    </data>
+    <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
+        <value>Breathe in...</value>
+    </data>
+    <data name="Wellness.Instruction.Hold" xml:space="preserve">
+        <value>Hold...</value>
+    </data>
+    <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
+        <value>Breathe out...</value>
+    </data>
+    <data name="Wellness.Instruction.SessionCompleted" xml:space="preserve">
+        <value>Session completed</value>
     </data>
 </root>

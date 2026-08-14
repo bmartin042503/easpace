@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2025 Martin Bartos
+Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
@@ -9,10 +9,8 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.WellnessView"
-             x:DataType="vm:WellnessViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             x:Class="easpace.Desktop.Views.WellnessSessionView"
+             x:DataType="vm:WellnessSessionViewModel">
     
-    <ContentControl Content="{Binding Content}" />
-
+        
 </UserControl>

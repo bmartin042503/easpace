@@ -38,6 +38,12 @@ public class ViewLocator : IDataTemplate
             ConfirmDialogViewModel vm => CreateView(new ConfirmDialogView(), vm),
             NumericEntryDialogViewModel vm => CreateView(new NumericEntryDialogView(), vm),
             RoutineEntryDialogViewModel vm => CreateView(new RoutineEntryDialogView(), vm),
+            
+            // Wellness
+            WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
+            WellnessSettingsViewModel vm => CreateView(new WellnessSettingsView(), vm),
+            WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
+            
             _ => null
         };
     }

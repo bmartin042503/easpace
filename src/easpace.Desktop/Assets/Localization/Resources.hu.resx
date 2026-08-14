@@ -49,6 +49,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Time.OneMinuteAgo" xml:space="preserve">
         <value>1 perce</value>
     </data>
+    <data name="Common.Time.OneMinute" xml:space="preserve">
+        <value>1 perc</value>
+    </data>
+    <data name="Common.Time.Minutes" xml:space="preserve">
+        <value>{0} perc</value>
+    </data>
     <data name="Common.Time.MinutesAgo" xml:space="preserve">
         <value>{0} perce</value>
     </data>
@@ -411,5 +417,44 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Mood.Empty.Message" xml:space="preserve">
         <value>Nincsenek bejegyzések</value>
+    </data>
+    <data name="Wellness.Title.Start" xml:space="preserve">
+        <value>Szánj egy percet magadra</value>
+    </data>
+    <data name="Wellness.SessionType.Breathing" xml:space="preserve">
+        <value>Légzés</value>
+    </data>
+    <data name="Wellness.SessionType.Meditation" xml:space="preserve">
+        <value>Meditáció</value>
+    </data>
+    <data name="Wellness.Description.Breathing" xml:space="preserve">
+        <value>Találd meg az egyensúlyt irányított légzéssel.</value>
+    </data>
+    <data name="Wellness.Description.Meditation" xml:space="preserve">
+        <value>Csendesítsd el az elmédet egy zavartalan térben.</value>
+    </data>
+    <data name="Wellness.Label.Duration" xml:space="preserve">
+        <value>Időtartam</value>
+    </data>
+    <data name="Wellness.Label.Music" xml:space="preserve">
+        <value>Háttérzene</value>
+    </data>
+    <data name="Wellness.Button.BeginSession" xml:space="preserve">
+        <value>Gyakorlat indítása</value>
+    </data>
+    <data name="Wellness.Button.EndSession" xml:space="preserve">
+        <value>Befejezés</value>
+    </data>
+    <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
+        <value>Lélegezz be...</value>
+    </data>
+    <data name="Wellness.Instruction.Hold" xml:space="preserve">
+        <value>Tartsd bent...</value>
+    </data>
+    <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
+        <value>Lélegezz ki...</value>
+    </data>
+    <data name="Wellness.Instruction.SessionCompleted" xml:space="preserve">
+        <value>Gyakorlat elmentve</value>
     </data>
 </root>

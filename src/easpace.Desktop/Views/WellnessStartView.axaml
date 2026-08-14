@@ -1,0 +1,65 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:constants="clr-namespace:easpace.Desktop.Constants"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Views.WellnessStartView"
+             x:DataType="vm:WellnessStartViewModel">
+    
+    <Grid RowDefinitions="*,*"
+          RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Text="{services:LocalizationService Key='Wellness.Title.Start'}"
+                   Classes="neutral fs1" TextAlignment="Center"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <!-- Breathing -->
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                        Classes="wellness-panel" Background="Transparent" VerticalAlignment="Center">
+                
+                <Button Classes="secondary regular"
+                        Content="{services:LocalizationService Key='Wellness.SessionType.Breathing'}"
+                        HorizontalAlignment="Center"
+                        Command="{Binding SelectSessionCommand}"
+                        CommandParameter="{x:Static constants:WellnessSessionType.Breathing}" />
+                
+                <TextBlock Classes="wellness-description subtle neutral fs5"
+                           Text="{services:LocalizationService Key='Wellness.Description.Breathing'}"
+                           TextAlignment="Center" TextWrapping="Wrap" MaxWidth="250" />
+                
+            </StackPanel>
+
+            <!-- Meditation -->
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                        Classes="wellness-panel" Background="Transparent" VerticalAlignment="Center">
+                    
+                    <Button Classes="secondary regular"
+                            Content="{services:LocalizationService Key='Wellness.SessionType.Meditation'}"
+                            HorizontalAlignment="Center"
+                            Command="{Binding SelectSessionCommand}"
+                            CommandParameter="{x:Static constants:WellnessSessionType.Meditation}" />
+                
+                <TextBlock Classes="wellness-description subtle neutral fs5"
+                           Text="{services:LocalizationService Key='Wellness.Description.Meditation'}"
+                           TextAlignment="Center" TextWrapping="Wrap" MaxWidth="250" />
+                
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+    
+</UserControl>

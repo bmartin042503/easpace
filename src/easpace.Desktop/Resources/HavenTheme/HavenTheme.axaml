@@ -74,6 +74,7 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="/Resources/HavenTheme/Styles/TrendChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/MilestoneChart.axaml" />
     <StyleInclude Source="/Resources/HavenTheme/Styles/RoutineMonthItem.axaml" />
+    <StyleInclude Source="/Resources/HavenTheme/Styles/StackPanel.axaml" />
 
     <!-- Templated controls -->
     <StyleInclude Source="/Resources/HavenTheme/TemplatedControls/IconListItem.axaml" />
