@@ -70,10 +70,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{services:LocalizationService Key='Journal.Empty.Message'}"
-                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                               Classes="subtle neutral trm-ellipsis"
                                TextAlignment="Center"
-                               TextWrapping="Wrap"
-                               TextTrimming="CharacterEllipsis" />
+                               TextWrapping="Wrap" />
                 </StackPanel>
 
                 <!-- Journal entries list -->
@@ -86,10 +85,15 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="models:JournalEntry">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Classes="list-item"
+                                    
+                                    <!-- Entry title -->
+                                    <TextBlock Classes="journal-list-item fs5 trm-ellipsis"
                                                Text="{Binding Title}" />
-                                    <TextBlock Classes="sub-list-item"
+                                    
+                                    <!-- Entry timestamp -->
+                                    <TextBlock Classes="journal-sub-list-item fs6 trm-ellipsis"
                                                Text="{Binding CreatedAt, Converter={StaticResource RelativeDateConverter}}" />
+                                    
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -117,8 +121,8 @@ Licensed under the MIT License. See LICENSE file for details.
                   IsVisible="{Binding !IsEditing}">
 
                 <!-- Journal entry title -->
-                <SelectableTextBlock Grid.Row="0" Classes="title"
-                                     Text="{Binding SelectedJournalEntry.Title}" Grid.Column="0" />
+                <SelectableTextBlock Grid.Row="0" Grid.Column="0" Classes="neutral fs2 trm-ellipsis"
+                                     Text="{Binding SelectedJournalEntry.Title}" />
 
                 <!-- Buttons -->
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
@@ -141,7 +145,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 
                 <!-- Journal entry content -->
                 <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <SelectableTextBlock TextWrapping="Wrap" Classes="paragraph"
+                    <SelectableTextBlock TextWrapping="Wrap" Classes="neutral fs4 trm-ellipsis"
                                          Text="{Binding SelectedJournalEntry.Content}" />
                 </ScrollViewer>
                 
@@ -156,7 +160,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Journal entry title -->
                 <TextBox Grid.Row="0" Grid.Column="0"
                          Text="{Binding EditTitle}"
-                         Classes="journal-edit title"
+                         Classes="journal-edit fs2"
                          PlaceholderText="{services:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
                          VerticalAlignment="Center" />
 
@@ -181,7 +185,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Journal entry content -->
                 <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                          Text="{Binding EditContent}"
-                         Classes="journal-edit paragraph"
+                         Classes="journal-edit fs4"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          PlaceholderText="{services:LocalizationService Key='Journal.Input.ContentPlaceholder'}"

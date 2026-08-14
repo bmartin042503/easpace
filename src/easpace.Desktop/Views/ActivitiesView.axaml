@@ -17,10 +17,6 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Views.ActivitiesView"
              Background="{DynamicResource Haven.Sem.Canvas}">
 
-    <Design.DataContext>
-        <vm:ActivitiesViewModel />
-    </Design.DataContext>
-
     <UserControl.Resources>
         <!-- Template selector of Activity list item -->
         <dataTemplates:TemplateSelector x:Key="ActivityListItemSelector">
@@ -168,10 +164,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{services:LocalizationService Key='Activities.Empty.Message'}"
-                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
-                               TextAlignment="Center"
-                               TextWrapping="Wrap"
-                               TextTrimming="CharacterEllipsis" />
+                               Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
 
                 <!-- Activity entries list -->

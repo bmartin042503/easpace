@@ -409,4 +409,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Input.DatePlaceholder" xml:space="preserve">
         <value>Date...</value>
     </data>
+    <data name="Mood.Empty.Message" xml:space="preserve">
+        <value>No entries</value>
+    </data>
 </root>

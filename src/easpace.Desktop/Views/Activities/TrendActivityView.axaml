@@ -13,10 +13,6 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vma:TrendActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.TrendActivityView">
-    
-    <Design.DataContext>
-        <vma:TrendActivityViewModel />
-    </Design.DataContext>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
@@ -27,7 +23,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Title -->
             <TextBlock Text="{Binding Activity.Name}"
-                       Classes="title"
+                       Classes="neutral fs2 trm-ellipsis"
                        VerticalAlignment="Center" />
 
             <!-- Details -->
@@ -35,14 +31,14 @@ Licensed under the MIT License. See LICENSE file for details.
                         Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
                 <!-- Current value -->
-                <TextBlock Classes="activity-value"
+                <TextBlock Classes="neutral fs4"
                            VerticalAlignment="Center" Text="{Binding CurrentValueText}"
                            IsVisible="{Binding Activity.LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
                 <!-- Target value -->
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
                             IsVisible="{Binding Activity.Target, Converter={x:Static ObjectConverters.IsNotNull}}">
-                    <TextBlock Classes="activity-target"
+                    <TextBlock Classes="accent fs5 medium"
                                VerticalAlignment="Center">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} {1}">

@@ -58,9 +58,9 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="RenderTransform">
             <TranslateTransform />
         </Setter>
-
+        
         <Style.Animations>
-            <Animation Duration="0:0:0.6" Easing="CubicEaseOut" FillMode="Forward">
+            <Animation Duration="0:0:0.45" Easing="CubicEaseOut" FillMode="Forward">
                 
                 <KeyFrame Cue="0%">
                     <Setter Property="Opacity" Value="0" />
@@ -76,4 +76,5 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style.Animations>
 
     </Style>
+    
 </Styles>

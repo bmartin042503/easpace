@@ -13,18 +13,13 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vma:RoutineActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.RoutineActivityView">
-    
-    <Design.DataContext>
-        <vma:RoutineActivityViewModel />
-    </Design.DataContext>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
         <!-- Title -->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Name}"
-                   Classes="title"
-                   VerticalAlignment="Center" />
+                   Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
@@ -80,19 +75,19 @@ Licensed under the MIT License. See LICENSE file for details.
                     BorderThickness="{StaticResource Haven.Scale.Border.Thickness.Bottom}"
                     BorderBrush="{DynamicResource Haven.Sem.Border}">
                 <UniformGrid Rows="1" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Bottom.Xxs}">
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.TuesdayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.WednesdayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.ThursdayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.FridayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SaturdayShort'}" />
-                    <TextBlock Classes="calendar-day"
+                    <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SundayShort'}" />
                 </UniformGrid>
             </Border>
@@ -126,21 +121,21 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Completed legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box completed" />
-                <TextBlock Classes="calendar-legend"
+                <TextBlock Classes="neutral fs6"
                            Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
             </StackPanel>
 
             <!-- Not completed legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box not-completed" />
-                <TextBlock Classes="calendar-legend"
+                <TextBlock Classes="neutral fs6"
                            Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
             </StackPanel>
 
             <!-- Today legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box today" />
-                <TextBlock Classes="calendar-legend"
+                <TextBlock Classes="neutral fs6"
                            Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />
             </StackPanel>
 

@@ -39,13 +39,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <TextBlock Name="PART_Title" Grid.Column="0"
                                    Text="{TemplateBinding Title}"
-                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                   VerticalAlignment="Center" Classes="fs6 trm-ellipsis" />
 
                         <Grid Grid.Column="1" ColumnDefinitions="*,Auto"
                               ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
                             <TextBlock Name="PART_Status" Grid.Column="0"
-                                       VerticalAlignment="Center"
+                                       VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
                                        Text="{TemplateBinding Status}" />
 
                             <PathIcon Name="PART_Icon" Grid.Column="1"

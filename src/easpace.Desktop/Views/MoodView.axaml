@@ -10,6 +10,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:models="clr-namespace:easpace.Desktop.Models"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:constants="clr-namespace:easpace.Desktop.Constants"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.MoodView"
              x:DataType="vm:MoodViewModel"
@@ -23,34 +24,136 @@ Licensed under the MIT License. See LICENSE file for details.
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Mood entries -->
+        
         <Border Classes="card" Grid.Column="0">
-            <ScrollViewer>
+            <Grid>
 
-                <ItemsRepeater ItemsSource="{Binding MoodEntries}">
+                <!-- No entries view -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            IsVisible="{Binding !HasMoodEntries}">
 
-                    <ItemsRepeater.ItemTemplate>
-                        <DataTemplate x:DataType="models:MoodEntry">
-                            <Border Classes="elevated card">
-                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
-                                    <TextBlock Grid.Row="0" Grid.Column="0"
-                                               Text="{Binding Value, Converter={StaticResource MoodSliderValueConverter}}" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Description}" />
-                                    <TextBlock Grid.Row="3" Grid.Column="0"
-                                               Text="{Binding Timestamp, Converter={StaticResource RelativeDateConverter}}" />
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                                HorizontalAlignment="Center">
 
-                    <ItemsRepeater.Layout>
-                        <StackLayout Orientation="Vertical"
-                                     Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
-                    </ItemsRepeater.Layout>
+                        <!-- Smiley sad icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.SmileySad}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
 
-                </ItemsRepeater>
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="-10" />
+                            </PathIcon.RenderTransform>
 
-            </ScrollViewer>
+                        </PathIcon>
+
+                        <!-- Smiley meh icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.SmileyMeh}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+
+                        <!-- Smiley icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Smiley}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
+
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="10" />
+                            </PathIcon.RenderTransform>
+
+                        </PathIcon>
+
+                    </StackPanel>
+
+                    <!-- 'Add entries' message -->
+                    <TextBlock Text="{services:LocalizationService Key='Mood.Empty.Message'}"
+                               Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Mood entries -->
+                <ScrollViewer IsVisible="{Binding HasMoodEntries}">
+                    <ItemsRepeater ItemsSource="{Binding MoodEntries}">
+
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="models:MoodEntry">
+                                <Border Classes="elevated card">
+
+                                    <StackPanel Orientation="Vertical"
+                                                Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                                            <!-- Mood state -->
+                                            <TextBlock Grid.Column="0" Classes="neutral fs4 trm-ellipsis"
+                                                       Text="{Binding Value, Converter={StaticResource MoodSliderValueConverter}}"
+                                                       VerticalAlignment="Center" />
+
+                                            <!-- Delete button -->
+                                            <Button Grid.Column="1" Classes="tertiary danger icon"
+                                                    Command="{Binding $parent[UserControl].((vm:MoodViewModel)DataContext).DeleteEntryCommand}"
+                                                    CommandParameter="{Binding .}" VerticalAlignment="Top"
+                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                            </Button>
+
+                                        </Grid>
+
+                                        <!-- Description -->
+                                        <TextBlock Classes="neutral fs6 trm-ellipsis"
+                                                   Text="{Binding Description}"
+                                                   IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                   TextWrapping="Wrap" />
+
+                                        <!-- Labels -->
+                                        <ItemsControl ItemsSource="{Binding Labels}"
+                                                      IsVisible="{Binding Labels, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="constants:MoodLabelState">
+                                                    <TextBlock Classes="strong accent fs6 medium"
+                                                               Text="{Binding Path=., Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"
+                                                               ItemSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                                                               LineSpacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                        </ItemsControl>
+
+                                        <!-- Relative date -->
+                                        <TextBlock Classes="subtle neutral fs6 trm-ellipsis"
+                                                   Text="{Binding Timestamp, Converter={StaticResource RelativeDateConverter}}" />
+
+                                    </StackPanel>
+
+                                </Border>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+
+                        <ItemsRepeater.Layout>
+                            <StackLayout Orientation="Vertical"
+                                         Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                        </ItemsRepeater.Layout>
+
+                    </ItemsRepeater>
+
+                </ScrollViewer>
+
+            </Grid>
         </Border>
 
         <!-- Horizontal splitter -->
@@ -68,14 +171,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
 
                         <!-- Form title -->
-                        <TextBlock Grid.Row="0" Classes="title"
+                        <TextBlock Grid.Row="0" Classes="neutral fs2"
                                    Text="{services:LocalizationService Key='Mood.Form.Title'}"
                                    TextAlignment="Center" VerticalAlignment="Top" />
 
                         <!-- Slider -->
                         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Width="400"
                                     VerticalAlignment="Center">
-                            <TextBlock Classes="subtitle" Text="{Binding MoodStateText}"
+                            <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
                                        Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
                                        HorizontalAlignment="Center" />
                             <Slider Classes="mood" Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
@@ -115,7 +218,8 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Load more button -->
                         <Button Grid.Row="1" Classes="regular tertiary"
                                 Content="{services:LocalizationService Key='Common.Button.More'}"
-                                Command="{Binding LoadAllLabelsCommand}" IsVisible="{Binding IsLoadMoreButtonVisible}"
+                                Command="{Binding LoadAllLabelsCommand}"
+                                IsVisible="{Binding IsLoadMoreButtonVisible}"
                                 HorizontalAlignment="Center" />
                     </Grid>
 

@@ -18,10 +18,10 @@ Licensed under the MIT License. See LICENSE file for details.
                     </TextBox>
 
                     <TextBox Text="Edit Journal Entry Title"
-                             Classes="journal-edit title"
+                             Classes="journal-edit fs2"
                              VerticalAlignment="Center" />
 
-                    <TextBox Classes="journal-edit paragraph" Height="200"
+                    <TextBox Classes="journal-edit fs4" Height="200"
                              AcceptsReturn="True"
                              TextWrapping="Wrap"
                              PlaceholderText="Write down your thoughts here..."
@@ -89,12 +89,28 @@ Licensed under the MIT License. See LICENSE file for details.
 
     </Style>
 
-    <Style Selector="TextBox.journal-edit.title">
+    <Style Selector="TextBox.fs1">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xxl}" />
+    </Style>
+
+    <Style Selector="TextBox.fs2">
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
     </Style>
 
-    <Style Selector="TextBox.journal-edit.paragraph">
+    <Style Selector="TextBox.fs3">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Lg}" />
+    </Style>
+
+    <Style Selector="TextBox.fs4">
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+    </Style>
+
+    <Style Selector="TextBox.fs5">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+    </Style>
+
+    <Style Selector="TextBox.fs6">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
     </Style>
     
     <Style Selector="TextBox.large-text-area">

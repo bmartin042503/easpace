@@ -17,10 +17,6 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="vm:ActivityEditorViewModel"
              x:Class="easpace.Desktop.Views.ActivityEditorView">
 
-    <Design.DataContext>
-        <vm:ActivityEditorViewModel />
-    </Design.DataContext>
-
     <UserControl.Resources>
 
         <!-- TrendActivity edit form -->
@@ -30,7 +26,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    <TextBlock Classes="label"
+                    <TextBlock Classes="neutral fs4"
                                Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
                              PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
@@ -38,14 +34,13 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Target checkbox -->
-                <CheckBox Theme="{StaticResource Haven.ControlTheme.CheckBox}"
-                          Content="{services:LocalizationService Key='Activities.CheckBox.Target'}"
+                <CheckBox Content="{services:LocalizationService Key='Activities.CheckBox.Target'}"
                           IsChecked="{Binding IsTargetChecked}" />
 
                 <!-- Target value input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
                             IsVisible="{Binding IsTargetChecked}">
-                    <TextBlock Classes="label"
+                    <TextBlock Classes="neutral fs4"
                                Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
@@ -64,7 +59,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    <TextBlock Classes="label"
+                    <TextBlock Classes="neutral fs4"
                                Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
                              PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
@@ -73,7 +68,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Target value input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    <TextBlock Classes="label"
+                    <TextBlock Classes="neutral fs4"
                                Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
@@ -83,7 +78,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Target date input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    <TextBlock Classes="label"
+                    <TextBlock Classes="neutral fs4"
                                Text="{services:LocalizationService Key='Activities.Label.TargetDate'}" />
                     <CalendarDatePicker SelectedDate="{Binding TargetDate}"
                                         Width="{StaticResource Haven.Scale.Input.MinWidth}"
@@ -112,7 +107,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Title -->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding TitleText}"
-                   Classes="title" />
+                   Classes="neutral fs2 trm-ellipsis" />
 
         <!-- Buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
@@ -139,7 +134,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Name input -->
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                        <TextBlock Classes="label"
+                        <TextBlock Classes="neutral fs4"
                                    Text="{services:LocalizationService Key='Activities.Label.Name'}" />
                         <TextBox Text="{Binding Name}"
                                  PlaceholderText="{services:LocalizationService Key='Activities.Input.NamePlaceholder'}"
@@ -150,7 +145,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Type selection -->
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
-                        <TextBlock Classes="label"
+                        <TextBlock Classes="neutral fs4"
                                    Text="{services:LocalizationService Key='Activities.Label.Type'}" />
 
                         <ComboBox ItemsSource="{Binding ActivityTypes}"
@@ -183,7 +178,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
                         <!-- Label -->
-                        <TextBlock Classes="label"
+                        <TextBlock Classes="neutral fs4"
                                    Text="{Binding DataEntriesLabel}" />
 
                         <!-- Items -->

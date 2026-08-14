@@ -18,18 +18,15 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
         </Style>
 
-        <Style Selector="^ TextBlock.list-item">
-            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+        <Style Selector="^ TextBlock.journal-list-item">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         </Style>
 
-        <Style Selector="^ TextBlock.sub-list-item">
-            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+        <Style Selector="^ TextBlock.journal-sub-list-item">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
         </Style>
 
         <Style Selector="^ TextBlock">
-            <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         </Style>
 
@@ -95,14 +92,6 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Cursor" Value="Hand" />
-
-        <Style Selector="^ templatedControls|ActivityListItem TextBlock#PART_Title">
-            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
-        </Style>
-
-        <Style Selector="^ templatedControls|ActivityListItem TextBlock#PART_Status">
-            <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
-        </Style>
 
         <Style Selector="^ templatedControls|ActivityListItem PathIcon#PART_Icon">
             <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Sm}" />

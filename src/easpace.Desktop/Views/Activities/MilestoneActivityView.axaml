@@ -13,10 +13,6 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vma:MilestoneActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.MilestoneActivityView">
-    
-    <Design.DataContext>
-        <vma:MilestoneActivityViewModel />
-    </Design.DataContext>
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
@@ -27,21 +23,20 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Title -->
             <TextBlock Text="{Binding Activity.Name}"
-                       Classes="title"
-                       VerticalAlignment="Center" />
+                       Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
 
             <!-- Details -->
             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                 <!-- Start date -->
-                <TextBlock Classes="activity-value" VerticalAlignment="Center">
+                <TextBlock Classes="neutral fs4" VerticalAlignment="Center">
                     <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
                     <Run Text=": " />
                     <Run Text="{Binding Activity.CreatedAt, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                 </TextBlock>
 
                 <!-- Target date -->
-                <TextBlock Classes="activity-value" VerticalAlignment="Center"
+                <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
                            IsVisible="{Binding Activity.HasValidTargetDate}">
                     <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
                     <Run Text=": " />
@@ -63,20 +58,20 @@ Licensed under the MIT License. See LICENSE file for details.
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
             </Button>
-            
+
             <!-- Archive/Restore button -->
             <Button Classes="tertiary icon"
                     Command="{Binding ToggleArchiveCommand}">
                 <Panel>
-                    
+
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                               IsVisible="{Binding !Activity.IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
-                
+
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
                               IsVisible="{Binding Activity.IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
-                    
+
                 </Panel>
             </Button>
 

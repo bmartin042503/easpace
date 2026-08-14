@@ -48,17 +48,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Title -->
                 <TextBlock x:Name="DialogRootTitle" Grid.Column="1"
-                           Classes="subtitle" Text="{Binding Title}"
+                           Classes="neutral fs3 trm-ellipsis" Text="{Binding Title}"
                            TextWrapping="Wrap" VerticalAlignment="Center" />
 
             </Grid>
 
             <!-- Message -->
-            <TextBlock Grid.Row="1" Classes="paragraph"
+            <TextBlock Grid.Row="1" Classes="neutral fs4 trm-ellipsis"
                        Text="{Binding Message}"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                       TextWrapping="Wrap"
-                       TextAlignment="Left" />
+                       TextWrapping="Wrap" TextAlignment="Left" />
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
                         HorizontalAlignment="Right">

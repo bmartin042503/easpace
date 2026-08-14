@@ -6,76 +6,158 @@ Licensed under the MIT License. See LICENSE file for details.
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
-        <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Neutral100}">
-
+        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+            <StackPanel Orientation="Horizontal" Spacing="40">
+                
+                <!-- Foreground -->
                 <StackPanel Orientation="Vertical" Spacing="20">
-                    <SelectableTextBlock Classes="title" Text="Title" />
-                    <SelectableTextBlock Classes="paragraph" Text="paragraph" />
-                    <TextBlock Classes="activity-value" Text="Activity current value" />
-                    <TextBlock Classes="activity-target" Text="Activity target value" />
-                    <TextBlock Classes="calendar-day" Text="Mon" />
-                    <TextBlock Classes="calendar-legend" Text="Calendar legend" />
-                    <TextBlock Classes="label" Text="Label" />
+                    <TextBlock Classes="neutral" Text="Neutral" />
+                    <TextBlock Classes="subtle neutral" Text="Subtle Neutral" />
+                    <TextBlock Classes="muted neutral" Text="Muted Neutral" />
+                    <TextBlock Classes="accent" Text="Accent" />
+                    <TextBlock Classes="strong accent" Text="Strong Accent" />
+                    <TextBlock Classes="subtle accent" Text="Subtle Accent" />
+                    <TextBlock Classes="danger" Text="Danger" />
+                    <TextBlock Classes="strong danger" Text="Strong Danger" />
+                    <TextBlock Classes="success" Text="Success" />
+                    <TextBlock Classes="strong success" Text="Strong Success" />
                 </StackPanel>
-            </Border>
-        </ThemeVariantScope>
+                
+                <!-- FontSize -->
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <TextBlock Classes="neutral fs1" Text="fs1" />
+                    <TextBlock Classes="neutral fs2" Text="fs2" />
+                    <TextBlock Classes="neutral fs3" Text="fs3" />
+                    <TextBlock Classes="neutral fs4" Text="fs4" />
+                    <TextBlock Classes="neutral fs5" Text="fs5" />
+                    <TextBlock Classes="neutral fs6" Text="fs6" />
+                    <TextBlock Classes="neutral" Text="Default" />
+                </StackPanel>
+                
+                <!-- FontWeight -->
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <TextBlock Classes="fs4 light" Text="Light" />
+                    <TextBlock Classes="fs4 regular" Text="Regular" />
+                    <TextBlock Classes="fs4 medium" Text="Medium" />
+                    <TextBlock Classes="fs4 semibold" Text="Semibold" />
+                    <TextBlock Classes="fs4 bold" Text="Bold" />
+                </StackPanel>
+                
+                <!-- SelectableTextBlock -->
+                <StackPanel Orientation="Vertical" Spacing="20">
+                    <SelectableTextBlock Classes="neutral fs4" Text="Selectable" />
+                </StackPanel>
+                
+            </StackPanel>
+        </Border>
     </Design.PreviewWith>
+    
+    <!-- Class naming convention: {Overriding Classes}/{Foreground} {FontSize} {FontWeight} {Other}
+    e.g. "subtle neutral fs2 medium trm-ellipsis" or "journal-list-item fs4 trm-ellipsis" -->
 
-    <Style Selector="TextBlock">
+    <Style Selector="TextBlock, SelectableTextBlock">
         <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
     </Style>
-    
+
     <Style Selector="SelectableTextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
     </Style>
 
-    <Style Selector="TextBlock.title, SelectableTextBlock.title">
+    <!-- Foreground -->
+
+    <Style Selector="TextBlock.neutral, SelectableTextBlock.neutral">
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
-        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
-    </Style>
-    
-    <Style Selector="TextBlock.subtitle, SelectableTextBlock.subtitle">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Lg}" />
-        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 
-    <Style Selector="TextBlock.paragraph, SelectableTextBlock.paragraph">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
-        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    <Style Selector="TextBlock.subtle.neutral, SelectableTextBlock.subtle.neutral">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+    </Style>
+
+    <Style Selector="TextBlock.muted.neutral, SelectableTextBlock.muted.neutral">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
     </Style>
     
-    <Style Selector="TextBlock.label">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
-    </Style>
-    
-    <Style Selector="TextBlock.activity-value">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
-    </Style>
-    
-    <Style Selector="TextBlock.activity-target">
+    <Style Selector="TextBlock.accent, SelectableTextBlock.accent">
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+    </Style>
+    
+    <Style Selector="TextBlock.strong.accent, SelectableTextBlock.strong.accent">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+    </Style>
+    
+    <Style Selector="TextBlock.subtle.accent, SelectableTextBlock.subtle.accent">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Subtle}" />
+    </Style>
+    
+    <Style Selector="TextBlock.danger, SelectableTextBlock.danger">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger}" />
+    </Style>
+    
+    <Style Selector="TextBlock.strong.danger, SelectableTextBlock.strong.danger">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+    </Style>
+    
+    <Style Selector="TextBlock.success, SelectableTextBlock.success">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success}" />
+    </Style>
+    
+    <Style Selector="TextBlock.strong.success, SelectableTextBlock.strong.success">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+    </Style>
+
+    <!-- FontSize -->
+
+    <Style Selector="TextBlock.fs1, SelectableTextBlock.fs1">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xxl}" />
+    </Style>
+
+    <Style Selector="TextBlock.fs2, SelectableTextBlock.fs2">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xl}" />
+    </Style>
+
+    <Style Selector="TextBlock.fs3, SelectableTextBlock.fs3">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Lg}" />
+    </Style>
+
+    <Style Selector="TextBlock.fs4, SelectableTextBlock.fs4">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Md}" />
+    </Style>
+
+    <Style Selector="TextBlock.fs5, SelectableTextBlock.fs5">
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+    </Style>
+
+    <Style Selector="TextBlock.fs6, SelectableTextBlock.fs6">
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+    </Style>
+
+    <!-- FontWeight -->
+
+    <Style Selector="TextBlock.light, SelectableTextBlock.light">
+        <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Light}" />
+    </Style>
+
+    <Style Selector="TextBlock.regular, SelectableTextBlock.regular">
+        <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Regular}" />
+    </Style>
+
+    <Style Selector="TextBlock.medium, SelectableTextBlock.medium">
         <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
     </Style>
-    
-    <Style Selector="TextBlock.calendar-day">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
-        <Setter Property="TextAlignment" Value="Center" />
+
+    <Style Selector="TextBlock.semibold, SelectableTextBlock.semibold">
+        <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.SemiBold}" />
+    </Style>
+
+    <Style Selector="TextBlock.bold, SelectableTextBlock.bold">
+        <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Bold}" />
     </Style>
     
-    <Style Selector="TextBlock.calendar-legend">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />
+    <!-- Other -->
+    
+    <Style Selector="TextBlock.trm-ellipsis">
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
 
 </Styles>

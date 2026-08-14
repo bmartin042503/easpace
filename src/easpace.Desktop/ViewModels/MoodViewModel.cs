@@ -18,13 +18,15 @@ public partial class MoodViewModel : PageViewModel
     private readonly List<MoodLabelViewModel> _allMoodLabels = [];
 
     public ObservableCollection<MoodEntry> MoodEntries { get; } = [];
-    public ObservableCollection<MoodLabelViewModel> MoodLabels { get; set; } = [];
+    public ObservableCollection<MoodLabelViewModel> MoodLabels { get; } = [];
 
     [ObservableProperty] private string _moodStateText = string.Empty;
     [ObservableProperty] private string _description = string.Empty;
     
     // [ObservableProperty] private DateTime? _selectedDate = DateTime.Now;
     // [ObservableProperty] private TimeSpan? _selectedTime = DateTimeOffset.Now.TimeOfDay;
+    
+    public bool HasMoodEntries => MoodEntries.Count > 0;
 
     public DateTimeOffset MaxAllowedDate => DateTimeOffset.Now;
     
@@ -61,6 +63,7 @@ public partial class MoodViewModel : PageViewModel
         Page = ApplicationPage.Mood;
 
         MoodLabels.CollectionChanged += (_, _) => OnPropertyChanged(nameof(IsLoadMoreButtonVisible));
+        MoodEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasMoodEntries));
 
         InitializeMoodLabels();
         MoodSliderValue = 0.5;
@@ -135,6 +138,14 @@ public partial class MoodViewModel : PageViewModel
         MoodEntries.Insert(0, entry);
 
         ResetForm();
+    }
+    
+    [RelayCommand]
+    private void DeleteEntry(object? parameter)
+    {
+        if (parameter is not MoodEntry entry) return;
+        
+        MoodEntries.Remove(entry);
     }
 
     private void ResetForm()

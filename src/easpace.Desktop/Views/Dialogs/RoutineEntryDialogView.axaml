@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
               RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
 
             <!-- Title -->
-            <TextBlock x:Name="DialogRootTitle" Grid.Row="0" Classes="subtitle"
+            <TextBlock x:Name="DialogRootTitle" Grid.Row="0" Classes="neutral fs3 trm-ellipsis"
                        Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 

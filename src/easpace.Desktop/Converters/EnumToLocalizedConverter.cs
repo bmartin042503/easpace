@@ -35,6 +35,11 @@ public class EnumToLocalizedConverter : IValueConverter
                 _ => string.Empty
             };
         }
+
+        if (value is MoodLabelState moodLabelState)
+        {
+            return LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}");
+        }
         
         return string.Empty;
     }

@@ -29,7 +29,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Title -->
             <TextBlock x:Name="DialogRootTitle" Grid.Row="0"
-                       Classes="subtitle" Text="{Binding Title}"
+                       Classes="neutral fs3 trm-ellipsis" Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
