@@ -19,7 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
+            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="600" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -176,7 +176,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                    TextAlignment="Center" VerticalAlignment="Top" />
 
                         <!-- Slider -->
-                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Width="400"
+                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" MaxWidth="400"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
                                        Foreground="{DynamicResource Haven.Sem.Accent.Strong}"

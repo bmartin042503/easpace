@@ -4,17 +4,19 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
     <Design.PreviewWith>
         <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
             <Slider Classes="mood" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
         </Border>
     </Design.PreviewWith>
 
-    <!-- TODO: make track bar clickable so the user can change value without tumb as well -->
-
     <!-- Mood slider styling -->
     <Style Selector="Slider.mood">
+        
+        <Setter Property="behaviors:SliderBehavior.JumpToClick" Value="True" />
+        
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
@@ -51,22 +53,6 @@ Licensed under the MIT License. See LICENSE file for details.
                                     Value="{TemplateBinding Value, Mode=TwoWay}"
                                     IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
                                     Orientation="Horizontal">
-
-                                    <Track.DecreaseButton>
-                                        <RepeatButton
-                                            Name="PART_DecreaseButton"
-                                            Background="Transparent"
-                                            IsVisible="False"
-                                            Focusable="False" />
-                                    </Track.DecreaseButton>
-
-                                    <Track.IncreaseButton>
-                                        <RepeatButton
-                                            Name="PART_IncreaseButton"
-                                            Background="Transparent"
-                                            IsVisible="False"
-                                            Focusable="False" />
-                                    </Track.IncreaseButton>
 
                                     <Thumb
                                         Name="thumb"
