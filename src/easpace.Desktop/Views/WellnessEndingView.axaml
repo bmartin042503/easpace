@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.WellnessSettingsView"
-             x:DataType="vm:WellnessSettingsViewModel">
-    
+             x:Class="easpace.Desktop.Views.WellnessEndingView"
+             x:DataType="vm:WellnessEndingViewModel">
+    Welcome to Avalonia!
 </UserControl>

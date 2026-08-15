@@ -10,51 +10,82 @@ namespace easpace.Desktop.ViewModels;
 
 public partial class WellnessViewModel : PageViewModel
 {
-    [ObservableProperty] private ViewModelBase _content;
-    
-    private WellnessStartViewModel? _startViewModel;
-    private WellnessSettingsViewModel? _settingsViewModel;
+    [ObservableProperty] private ObservableObject? _contentViewModel;
+
+    private WellnessConfigurationViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
-    
+    private WellnessEndingViewModel? _endingViewModel;
+
     public WellnessViewModel()
     {
         Page = ApplicationPage.Wellness;
-        
-        _startViewModel = new WellnessStartViewModel();
-        _startViewModel.SessionSelected += OnSessionSelected;
-        
-        Content = _startViewModel;
+        SetConfigurationView();
     }
 
-    private void OnSessionSelected(object? sender, WellnessSessionType sessionType)
+    private void OnSessionStarted(object? sender, WellnessSessionConfiguration sessionConfiguration)
     {
-        _settingsViewModel = new WellnessSettingsViewModel
+        SetSessionView(sessionConfiguration);
+        CleanUpConfigurationView();
+    }
+
+    private void OnSessionEnded(object? sender, WellnessSession session)
+    {
+        SetEndingView(session);
+        CleanUpSessionView();
+    }
+
+    private void OnNavigatedToConfiguration(object? sender, EventArgs e)
+    {
+        SetConfigurationView();
+        CleanUpEndingView();
+    }
+
+    private void SetConfigurationView()
+    {
+        if (_configurationViewModel == null)
         {
-            SelectedSessionType = sessionType
-        };
-        
-        _settingsViewModel.NavigatedBack += OnNavigatedBack;
-        _settingsViewModel.SessionStarted += OnSessionStarted;
-        
-        Content = _settingsViewModel;
+            _configurationViewModel = new WellnessConfigurationViewModel();
+            _configurationViewModel.SessionStarted += OnSessionStarted;
+        }
+
+        ContentViewModel = _configurationViewModel;
     }
 
-    private void OnNavigatedBack(object? sender, EventArgs e)
+    private void SetSessionView(WellnessSessionConfiguration sessionConfiguration)
     {
-        if (_startViewModel == null) return;
-        Content = _startViewModel;
+        _sessionViewModel = new WellnessSessionViewModel(sessionConfiguration);
+        _sessionViewModel.SessionEnded += OnSessionEnded;
+        ContentViewModel = _sessionViewModel;
     }
 
-    private void OnSessionStarted(object? sender, WellnessSession session)
+    private void SetEndingView(WellnessSession session)
     {
-        _sessionViewModel = new WellnessSessionViewModel(session);
-        Content = _sessionViewModel;
+        _endingViewModel = new WellnessEndingViewModel(session);
+        _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
+        ContentViewModel = _endingViewModel;
+    }
+
+    private void CleanUpConfigurationView()
+    {
+        if (_configurationViewModel == null) return;
         
-        _startViewModel?.SessionSelected -= OnSessionSelected;
-        _settingsViewModel?.NavigatedBack -= OnNavigatedBack;
-        _settingsViewModel?.SessionStarted -= OnSessionStarted;
+        _configurationViewModel.SessionStarted -= OnSessionStarted;
+        _configurationViewModel = null;
+    }
+
+    private void CleanUpSessionView()
+    {
+        if (_sessionViewModel == null) return;
         
-        _startViewModel = null;
-        _settingsViewModel = null;
+        _sessionViewModel.SessionEnded -= OnSessionEnded;
+        _sessionViewModel = null;
+    }
+
+    private void CleanUpEndingView()
+    {
+        if (_endingViewModel == null) return;
+        
+        _endingViewModel?.NavigatedToConfiguration -= OnNavigatedToConfiguration;
+        _endingViewModel = null;
     }
 }

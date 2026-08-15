@@ -159,14 +159,5 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="TextBlock.trm-ellipsis">
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
     </Style>
-    
-    <Style Selector="TextBlock.wellness-description">
-        <Setter Property="Opacity" Value="0" />
-        <Setter Property="Transitions">
-            <Transitions>
-                <DoubleTransition Property="Opacity" Duration="0:0:0.3" Easing="SineEaseInOut" />
-            </Transitions>
-        </Setter>
-    </Style>
 
 </Styles>
