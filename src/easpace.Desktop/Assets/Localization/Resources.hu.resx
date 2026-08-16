@@ -103,6 +103,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.More" xml:space="preserve">
         <value>Még több...</value>
     </data>
+    <data name="Common.Button.Back" xml:space="preserve">
+        <value>Vissza</value>
+    </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
@@ -436,14 +439,23 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Időtartam</value>
     </data>
-    <data name="Wellness.Label.Music" xml:space="preserve">
-        <value>Háttérzene</value>
+    <data name="Wellness.Label.Cycles" xml:space="preserve">
+        <value>Ciklusok</value>
     </data>
     <data name="Wellness.Button.BeginSession" xml:space="preserve">
         <value>Gyakorlat indítása</value>
     </data>
+    <data name="Wellness.Button.PauseSession" xml:space="preserve">
+        <value>Szüneteltetés</value>
+    </data>
+    <data name="Wellness.Button.ResumeSession" xml:space="preserve">
+        <value>Folytatás</value>
+    </data>
     <data name="Wellness.Button.EndSession" xml:space="preserve">
         <value>Befejezés</value>
+    </data>
+    <data name="Wellness.Button.DiscardSession" xml:space="preserve">
+        <value>Elvetés</value>
     </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Lélegezz be...</value>
@@ -454,7 +466,19 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
         <value>Lélegezz ki...</value>
     </data>
-    <data name="Wellness.Instruction.SessionCompleted" xml:space="preserve">
+    <data name="Wellness.Instruction.Meditation" xml:space="preserve">
+        <value>Wellness.Instruction.Meditation</value>
+    </data>
+    <data name="Wellness.Question.SaveSession" xml:space="preserve">
+        <value>Szeretnéd elmenteni ezt a gyakorlatot?</value>
+    </data>
+    <data name="Wellness.Text.SessionSaved" xml:space="preserve">
         <value>Gyakorlat elmentve</value>
+    </data>
+    <data name="Wellness.Slider.OneCycle" xml:space="preserve">
+        <value>1 ciklus</value>
+    </data>
+    <data name="Wellness.Slider.Cycles" xml:space="preserve">
+        <value>{0} ciklus</value>
     </data>
 </root>

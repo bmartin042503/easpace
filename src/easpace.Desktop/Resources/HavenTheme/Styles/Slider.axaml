@@ -8,12 +8,11 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
     <Design.PreviewWith>
         <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
-            <Slider Classes="mood" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+            <Slider Classes="haven" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
         </Border>
     </Design.PreviewWith>
-
-    <!-- Mood slider styling -->
-    <Style Selector="Slider.mood">
+    
+    <Style Selector="Slider.haven">
         
         <Setter Property="behaviors:SliderBehavior.JumpToClick" Value="True" />
         

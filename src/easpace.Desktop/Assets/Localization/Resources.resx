@@ -103,6 +103,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.More" xml:space="preserve">
         <value>More...</value>
     </data>
+    <data name="Common.Button.Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Search entries...</value>
     </data>
@@ -436,14 +439,23 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Duration</value>
     </data>
-    <data name="Wellness.Label.Music" xml:space="preserve">
-        <value>Background audio</value>
+    <data name="Wellness.Label.Cycles" xml:space="preserve">
+        <value>Cycles</value>
     </data>
     <data name="Wellness.Button.BeginSession" xml:space="preserve">
-        <value>Begin session</value>
+        <value>Begin</value>
+    </data>
+    <data name="Wellness.Button.PauseSession" xml:space="preserve">
+        <value>Pause</value>
+    </data>
+    <data name="Wellness.Button.ResumeSession" xml:space="preserve">
+        <value>Resume</value>
     </data>
     <data name="Wellness.Button.EndSession" xml:space="preserve">
-        <value>End session</value>
+        <value>End Session</value>
+    </data>
+    <data name="Wellness.Button.DiscardSession" xml:space="preserve">
+        <value>Discard</value>
     </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Breathe in...</value>
@@ -454,7 +466,19 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
         <value>Breathe out...</value>
     </data>
-    <data name="Wellness.Instruction.SessionCompleted" xml:space="preserve">
-        <value>Session completed</value>
+    <data name="Wellness.Instruction.Meditation" xml:space="preserve">
+        <value>Wellness.Instruction.Meditation</value>
+    </data>
+    <data name="Wellness.Question.SaveSession" xml:space="preserve">
+        <value>Would you like to save this session?</value>
+    </data>
+    <data name="Wellness.Text.SessionSaved" xml:space="preserve">
+        <value>Session Saved</value>
+    </data>
+    <data name="Wellness.Slider.OneCycle" xml:space="preserve">
+        <value>1 cycle</value>
+    </data>
+    <data name="Wellness.Slider.Cycles" xml:space="preserve">
+        <value>{0} cycles</value>
     </data>
 </root>

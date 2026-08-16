@@ -40,6 +40,16 @@ public class EnumToLocalizedConverter : IValueConverter
         {
             return LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}");
         }
+
+        if (value is WellnessSessionType sessionType)
+        {
+            return sessionType switch
+            {
+                WellnessSessionType.Breathing => LocalizationService.GetString("Wellness.SessionType.Breathing"),
+                WellnessSessionType.Meditation => LocalizationService.GetString("Wellness.SessionType.Meditation"),
+                _ => string.Empty
+            };
+        }
         
         return string.Empty;
     }

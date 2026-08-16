@@ -8,8 +8,79 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:models="clr-namespace:easpace.Desktop.Models"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.WellnessConfigurationView"
              x:DataType="vm:WellnessConfigurationViewModel">
-    
+
+    <Grid RowDefinitions="*,*,*,*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}"
+          MaxHeight="620">
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0" Classes="neutral fs1"
+                   Text="{services:LocalizationService Key='Wellness.Title.Start'}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
+
+        <!-- Radio buttons -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="160"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400">
+
+            <!-- Breathing -->
+            <RadioButton GroupName="session-type"
+                         IsChecked="{Binding IsBreathingChecked}"
+                         Content="{services:LocalizationService Key='Wellness.SessionType.Breathing'}"
+                         HorizontalAlignment="Center" />
+
+            <!-- Meditation -->
+            <RadioButton GroupName="session-type"
+                         IsChecked="{Binding IsMeditationChecked}"
+                         Content="{services:LocalizationService Key='Wellness.SessionType.Meditation'}"
+                         HorizontalAlignment="Center" />
+
+        </StackPanel>
+
+        <!-- Breathing techniques -->
+        <ComboBox Grid.Row="2" IsVisible="{Binding IsBreathingChecked}"
+                  SelectedItem="{Binding SelectedBreathingTechnique}"
+                  ItemsSource="{Binding BreathingTechniques}"
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="models:BreathingTechnique">
+                    <TextBlock Classes="neutral" Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+        </ComboBox>
+        
+        <!-- Timer checkbox -->
+        <CheckBox Grid.Row="3" Content="{services:LocalizationService Key='Wellness.Label.Duration'}"
+                  IsChecked="{Binding IsTimerChecked}"
+                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+        <!-- Duration slider -->
+        <StackPanel Grid.Row="4" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                    VerticalAlignment="Center" IsVisible="{Binding IsTimerChecked}">
+
+            <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
+                       Text="{Binding DurationText}" />
+
+            <Slider Classes="haven"
+                    Minimum="{Binding MinimumSeconds}"
+                    Maximum="{Binding MaximumSeconds}"
+                    Value="{Binding SelectedSeconds}"
+                    TickFrequency="{Binding StepSeconds}"
+                    IsSnapToTickEnabled="True"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxWidth="400" />
+
+        </StackPanel>
+
+        <Button Grid.Row="5" Classes="primary regular"
+                Content="{services:LocalizationService Key='Wellness.Button.BeginSession'}"
+                Command="{Binding StartSessionCommand}"
+                HorizontalAlignment="Center" />
+
+    </Grid>
+
 </UserControl>
