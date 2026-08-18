@@ -3,6 +3,8 @@
 
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using easpace.Desktop.Features.Journal.ViewModels;
+using easpace.Desktop.Features.Journal.Views;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Activities;
 using easpace.Desktop.ViewModels.Dialogs;
@@ -20,7 +22,7 @@ public class ViewLocator : IDataTemplate
         {
             // Pages
             IntroViewModel vm => CreateView(new IntroView(), vm),
-            JournalViewModel vm => CreateView(new JournalView(), vm),
+            JournalPageViewModel vm => CreateView(new JournalPageView(), vm),
             ActivitiesViewModel vm => CreateView(new ActivitiesView(), vm),
             MoodViewModel vm => CreateView(new MoodView(), vm),
             WellnessViewModel vm => CreateView(new WellnessView(), vm),

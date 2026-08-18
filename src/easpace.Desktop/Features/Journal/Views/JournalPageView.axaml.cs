@@ -3,11 +3,11 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Views;
+namespace easpace.Desktop.Features.Journal.Views;
 
-public partial class JournalView : UserControl
+public partial class JournalPageView : UserControl
 {
-    public JournalView()
+    public JournalPageView()
     {
         InitializeComponent();
     }

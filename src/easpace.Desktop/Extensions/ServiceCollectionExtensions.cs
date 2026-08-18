@@ -5,6 +5,8 @@ using System;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Factories;
+using easpace.Desktop.Features.Journal.Services;
+using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,13 +26,16 @@ public static class ServiceCollectionExtensions
             
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
+            
+            collection.AddSingleton<JournalService>();
+            collection.AddSingleton<IJournalService>(sp => sp.GetRequiredService<JournalService>());
         
             collection.AddSingleton<PageFactory>();
         
             collection.AddSingleton<MainViewModel>();
         
             collection.AddSingleton<IntroViewModel>();
-            collection.AddSingleton<JournalViewModel>();
+            collection.AddSingleton<JournalPageViewModel>();
             collection.AddSingleton<ActivitiesViewModel>();
             collection.AddSingleton<MoodViewModel>();
             collection.AddSingleton<WellnessViewModel>();
@@ -39,7 +44,7 @@ public static class ServiceCollectionExtensions
             collection.AddSingleton<Func<ApplicationPage, PageViewModel>>(serviceProvider => page => page switch
             {
                 ApplicationPage.Intro => serviceProvider.GetRequiredService<IntroViewModel>(),
-                ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalViewModel>(),
+                ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalPageViewModel>(),
                 ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesViewModel>(),
                 ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodViewModel>(),
                 ApplicationPage.Wellness => serviceProvider.GetRequiredService<WellnessViewModel>(),

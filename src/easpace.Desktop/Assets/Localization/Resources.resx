@@ -118,6 +118,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Empty.Message" xml:space="preserve">
         <value>Click the + button to create your first entry.</value>
     </data>
+    <data name="Journal.Empty.SearchResult" xml:space="preserve">
+        <value>No results</value>
+    </data>
     <data name="Journal.DeleteDialog.Title" xml:space="preserve">
         <value>Delete '{0}'?</value>
     </data>

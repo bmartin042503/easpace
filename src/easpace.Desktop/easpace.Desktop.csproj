@@ -62,4 +62,11 @@ Licensed under the MIT License. See LICENSE file for details.
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Features\Journal\Views\JournalPageView.axaml.cs">
+        <DependentUpon>JournalView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>
