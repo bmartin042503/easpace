@@ -26,7 +26,7 @@ public partial class JournalEntryViewModel : ViewModelBase
     {
         if (entry.Id != Id)
         {
-            throw new ArgumentException(@"A different journal entry cannot update this view model.", nameof(entry));
+            throw new ArgumentException("A different journal entry cannot update this view model.", nameof(entry));
         }
 
         Title = entry.Title;

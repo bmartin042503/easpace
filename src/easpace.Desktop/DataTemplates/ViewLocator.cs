@@ -3,10 +3,11 @@
 
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using easpace.Desktop.Features.Activities.ViewModels;
+using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Features.Journal.Views;
 using easpace.Desktop.ViewModels;
-using easpace.Desktop.ViewModels.Activities;
 using easpace.Desktop.ViewModels.Dialogs;
 using easpace.Desktop.Views;
 using easpace.Desktop.Views.Activities;
@@ -23,7 +24,7 @@ public class ViewLocator : IDataTemplate
             // Pages
             IntroViewModel vm => CreateView(new IntroView(), vm),
             JournalPageViewModel vm => CreateView(new JournalPageView(), vm),
-            ActivitiesViewModel vm => CreateView(new ActivitiesView(), vm),
+            ActivitiesPageViewModel vm => CreateView(new ActivitiesPageView(), vm),
             MoodViewModel vm => CreateView(new MoodView(), vm),
             WellnessViewModel vm => CreateView(new WellnessView(), vm),
             SettingsViewModel vm => CreateView(new SettingsView(), vm),

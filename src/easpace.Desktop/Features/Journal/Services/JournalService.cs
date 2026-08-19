@@ -34,10 +34,8 @@ public class JournalService : IJournalService
     public JournalEntry? UpdateJournalEntry(Guid entryId, string title, string content)
     {
         var entry = _journalEntries.FirstOrDefault(entry => entry.Id == entryId);
-        if (entry is null)
-        {
-            return null;
-        }
+        
+        if (entry is null) return null;
 
         entry.Title = title;
         entry.Content = content;

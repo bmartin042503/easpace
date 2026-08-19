@@ -6,7 +6,7 @@ using System.Globalization;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Converters;
 

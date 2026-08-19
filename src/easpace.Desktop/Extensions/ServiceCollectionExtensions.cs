@@ -5,6 +5,9 @@ using System;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Factories;
+using easpace.Desktop.Features.Activities.Services;
+using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Services;
@@ -20,32 +23,49 @@ public static class ServiceCollectionExtensions
         public void AddCommonServices()
         {
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
-            
+
             collection.AddSingleton<PreferencesService>();
             collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
-            
+
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
-            
+
             collection.AddSingleton<JournalService>();
             collection.AddSingleton<IJournalService>(sp => sp.GetRequiredService<JournalService>());
-        
+
+            collection.AddSingleton<ActivityService>();
+            collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());
+            
+            collection.AddSingleton<ActivityEditorService>();
+            collection.AddSingleton<IActivityEditorService>(sp => sp.GetRequiredService<ActivityEditorService>());
+
+            collection.AddSingleton<DataEntryService>();
+            collection.AddSingleton<IDataEntryService>(sp => sp.GetRequiredService<DataEntryService>());
+
+            collection.AddSingleton<TrendActivityDataProvider>();
+            collection.AddSingleton<ITrendActivityDataProvider>(sp =>
+                sp.GetRequiredService<TrendActivityDataProvider>());
+
+            collection.AddSingleton<RoutineActivityDataProvider>();
+            collection.AddSingleton<IRoutineActivityDataProvider>(sp =>
+                sp.GetRequiredService<RoutineActivityDataProvider>());
+
             collection.AddSingleton<PageFactory>();
-        
+
             collection.AddSingleton<MainViewModel>();
-        
+
             collection.AddSingleton<IntroViewModel>();
             collection.AddSingleton<JournalPageViewModel>();
-            collection.AddSingleton<ActivitiesViewModel>();
+            collection.AddSingleton<ActivitiesPageViewModel>();
             collection.AddSingleton<MoodViewModel>();
             collection.AddSingleton<WellnessViewModel>();
             collection.AddSingleton<SettingsViewModel>();
-        
+
             collection.AddSingleton<Func<ApplicationPage, PageViewModel>>(serviceProvider => page => page switch
             {
                 ApplicationPage.Intro => serviceProvider.GetRequiredService<IntroViewModel>(),
                 ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalPageViewModel>(),
-                ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesViewModel>(),
+                ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesPageViewModel>(),
                 ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodViewModel>(),
                 ApplicationPage.Wellness => serviceProvider.GetRequiredService<WellnessViewModel>(),
                 ApplicationPage.Settings => serviceProvider.GetRequiredService<SettingsViewModel>(),

@@ -47,7 +47,7 @@ public partial class JournalEditorViewModel : ViewModelBase
             ? GetFormattedNow()
             : Title.Trim();
 
-        JournalEntry? savedEntry = IsCreatingNew
+        var savedEntry = IsCreatingNew
             ? _journalService.CreateJournalEntry(title, Content)
             : _journalService.UpdateJournalEntry(_editingEntryId!.Value, title, Content);
 

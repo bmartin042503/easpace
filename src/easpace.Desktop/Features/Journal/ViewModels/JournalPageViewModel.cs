@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
@@ -23,20 +24,19 @@ public partial class JournalPageViewModel : PageViewModel
     private readonly IDialogService _dialogService;
     private readonly List<JournalEntryViewModel> _allEntries = [];
 
-    public ObservableCollection<JournalEntryViewModel> Entries { get; } = [];
+    public AvaloniaList<JournalEntryViewModel> Entries { get; } = [];
 
-    [ObservableProperty]
-    private JournalEntryViewModel? _selectedEntry;
+    [ObservableProperty] private JournalEntryViewModel? _selectedEntry;
 
     [ObservableProperty] private string _searchText = string.Empty;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsEditing))]
     private JournalEditorViewModel? _editor;
-    
-    [NotifyPropertyChangedFor(nameof(HasActiveEntry))]
-    [ObservableProperty] private JournalEntryViewModel? _activeEntry;
 
-    public bool HasEntries => _allEntries.Count > 0; 
+    [NotifyPropertyChangedFor(nameof(HasActiveEntry))] [ObservableProperty]
+    private JournalEntryViewModel? _activeEntry;
+
+    public bool HasEntries => _allEntries.Count > 0;
     public bool HasActiveEntry => ActiveEntry is not null;
     public bool IsEditing => Editor is not null;
 
@@ -72,10 +72,7 @@ public partial class JournalPageViewModel : PageViewModel
     [RelayCommand]
     private void EditEntry()
     {
-        if (ActiveEntry is null)
-        {
-            return;
-        }
+        if (ActiveEntry is null) return;
 
         OpenEditor(ActiveEntry);
     }
@@ -88,7 +85,7 @@ public partial class JournalPageViewModel : PageViewModel
         {
             return;
         }
-        
+
         if (!string.IsNullOrWhiteSpace(entryToDelete.Content))
         {
             var confirmation = new ConfirmDialogViewModel
@@ -109,7 +106,7 @@ public partial class JournalPageViewModel : PageViewModel
                 return;
             }
         }
-        
+
         if (!_journalService.DeleteJournalEntry(entryToDelete.Id))
         {
             return;
@@ -131,11 +128,11 @@ public partial class JournalPageViewModel : PageViewModel
     private void LoadEntries()
     {
         _allEntries.Clear();
+        
+        var journalEntries = _journalService.GetJournalEntries()
+            .Select(e => new JournalEntryViewModel(e));
 
-        foreach (var entry in _journalService.GetJournalEntries())
-        {
-            _allEntries.Add(new JournalEntryViewModel(entry));
-        }
+        _allEntries.AddRange(journalEntries);
 
         ApplyFilter();
     }
@@ -173,9 +170,9 @@ public partial class JournalPageViewModel : PageViewModel
         }
 
         CloseEditor();
-        
+
         ActiveEntry = entryViewModel;
-        
+
         ApplyFilter();
 
         if (Entries.Contains(entryViewModel))
@@ -211,16 +208,11 @@ public partial class JournalPageViewModel : PageViewModel
             .ToList();
 
         Entries.Clear();
-
-        foreach (var entry in filteredEntries)
-        {
-            Entries.Add(entry);
-        }
+        Entries.AddRange(filteredEntries);
 
         if (lastSelectedEntryId is not null)
         {
-            SelectedEntry = Entries.FirstOrDefault(
-                entry => entry.Id == lastSelectedEntryId);
+            SelectedEntry = Entries.FirstOrDefault(entry => entry.Id == lastSelectedEntryId);
         }
     }
 

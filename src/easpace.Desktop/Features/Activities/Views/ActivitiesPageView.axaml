@@ -1,0 +1,208 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:ActivitiesPageViewModel"
+             x:Class="easpace.Desktop.Views.ActivitiesPageView"
+             Background="{DynamicResource Haven.Sem.Canvas}">
+
+    <UserControl.Resources>
+        <!-- Template selector of Activity list item -->
+        <dataTemplates:TemplateSelector x:Key="ActivityListItemSelector">
+
+            <!-- Template of Trend Activity -->
+            <DataTemplate x:Key="TrendActivityViewModel" DataType="vma:TrendActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+                                                    Status="{Binding Activity.LastEntry.Value}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
+            </DataTemplate>
+
+            <!-- Template of Routine Activity -->
+            <DataTemplate x:Key="RoutineActivityViewModel" DataType="vma:RoutineActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+                                                    Status="{Binding Activity.TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
+            </DataTemplate>
+
+            <!-- Template of Milestone Activity -->
+            <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vma:MilestoneActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
+                    <templatedControls:ActivityListItem.Status>
+                        <MultiBinding StringFormat="{}{0}/{1}">
+                            <Binding Path="Activity.EntriesSum" />
+                            <Binding Path="Activity.Target" />
+                        </MultiBinding>
+                    </templatedControls:ActivityListItem.Status>
+                </templatedControls:ActivityListItem>
+            </DataTemplate>
+
+        </dataTemplates:TemplateSelector>
+    </UserControl.Resources>
+
+    <Border Classes="card" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+
+        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+
+                <!-- Top bar -->
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+                    <!-- List filter (Active / Archive) -->
+                    <ListBox Grid.Column="0" Classes="toolbar" SelectedIndex="{Binding SelectedFilterIndex}"
+                             IsVisible="{Binding HasActivities}">
+
+                        <!-- Active -->
+                        <ListBoxItem>
+                            <templatedControls:IconListItem
+                                Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Active'}" />
+                        </ListBoxItem>
+
+                        <!-- Archive -->
+                        <ListBoxItem>
+                            <templatedControls:IconListItem
+                                Icon="{StaticResource Haven.PhosphorIcons.Archive}"
+                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
+                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Archived'}" />
+                        </ListBoxItem>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                    </ListBox>
+
+                    <!-- Add button -->
+                    <Button Grid.Row="0" Grid.Column="2" Classes="primary icon" HorizontalAlignment="Right"
+                            Command="{Binding AddActivityCommand}"
+                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}"
+                            IsEnabled="{Binding !IsEditing}"
+                            Margin="0,1">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+                    </Button>
+
+                </Grid>
+
+                <Separator Grid.Row="1" Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                           Margin="0" />
+
+                <!-- No entries view -->
+                <StackPanel Grid.Row="2"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            IsVisible="{Binding !HasActivities}">
+
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                                HorizontalAlignment="Center">
+
+                        <!-- Chart line icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
+
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="-10" />
+                            </PathIcon.RenderTransform>
+
+                        </PathIcon>
+
+                        <!-- Chart pie slice icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+
+                        <!-- Check square offset icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  RenderTransformOrigin="50%,50%"
+                                  Margin="0,6,0,0">
+
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="10" />
+                            </PathIcon.RenderTransform>
+
+                        </PathIcon>
+
+                    </StackPanel>
+
+                    <!-- 'Add entries' message -->
+                    <TextBlock Text="{services:LocalizationService Key='Activities.Empty.Message'}"
+                               Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Activity entries list -->
+                <ScrollViewer Grid.Row="2">
+                    <ListBox Classes="activity list"
+                             ItemsSource="{Binding ActivityViewModels}"
+                             SelectedItem="{Binding SelectedActivityViewModel}"
+                             IsEnabled="{Binding !IsEditing}">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="vma:ActivityViewModel">
+                                <ContentControl Content="{Binding .}"
+                                                ContentTemplate="{StaticResource ActivityListItemSelector}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                    </ListBox>
+                </ScrollViewer>
+
+            </Grid>
+
+            <!-- Horizontal splitter -->
+            <GridSplitter Grid.Column="1"
+                          Classes="horizontal"
+                          ResizeDirection="Columns" />
+
+            <!-- Activity item view -->
+            <ContentControl Grid.Row="0" Grid.Column="2"
+                            Content="{Binding ContentViewModel}" />
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

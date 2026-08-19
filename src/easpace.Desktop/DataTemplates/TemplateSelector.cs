@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
-using easpace.Desktop.Models.Activities;
-using easpace.Desktop.ViewModels;
-using easpace.Desktop.ViewModels.Activities;
+using easpace.Desktop.Features.Activities.Entities.DataEntries;
+using easpace.Desktop.Features.Activities.ViewModels;
 
 namespace easpace.Desktop.DataTemplates;
 

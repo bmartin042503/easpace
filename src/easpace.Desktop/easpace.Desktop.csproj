@@ -16,6 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <Folder Include="Assets\Fonts\*" />
         <AvaloniaResource Include="Assets\**" />
+        <Folder Include="Controls\" />
     </ItemGroup>
 
     <!-- Versions -->
@@ -66,6 +67,34 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
       <Compile Update="Features\Journal\Views\JournalPageView.axaml.cs">
         <DependentUpon>JournalView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\ActivitiesPageView.axaml.cs">
+        <DependentUpon>ActivitiesView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\ActivityEditorView.axaml.cs">
+        <DependentUpon>ActivityEditorView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\MilestoneActivityView.axaml.cs">
+        <DependentUpon>MilestoneActivityView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\RoutineActivityView.axaml.cs">
+        <DependentUpon>RoutineActivityView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\TrendActivityView.axaml.cs">
+        <DependentUpon>TrendActivityView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\Dialogs\NumericEntryDialogView.axaml.cs">
+        <DependentUpon>NumericEntryDialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Activities\Views\Dialogs\RoutineEntryDialogView.axaml.cs">
+        <DependentUpon>RoutineEntryDialogView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
