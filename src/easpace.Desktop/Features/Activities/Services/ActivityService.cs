@@ -105,7 +105,6 @@ public class ActivityService : IActivityService
                 trendActivity.Name = updateRequest.Name;
                 trendActivity.Unit = updateRequest.Unit;
                 trendActivity.Target = updateRequest.Target;
-                trendActivity.IsArchived = updateRequest.IsArchived;
                 return trendActivity;
             
             case MilestoneActivity milestoneActivity:
@@ -113,12 +112,10 @@ public class ActivityService : IActivityService
                 milestoneActivity.Unit = updateRequest.Unit;
                 milestoneActivity.Target = updateRequest.Target;
                 milestoneActivity.TargetDate = updateRequest.TargetDate;
-                milestoneActivity.IsArchived = updateRequest.IsArchived;
                 return milestoneActivity;
             
             case RoutineActivity routineActivity:
                 routineActivity.Name = updateRequest.Name;
-                routineActivity.IsArchived = updateRequest.IsArchived;
                 return routineActivity;
             
             default:

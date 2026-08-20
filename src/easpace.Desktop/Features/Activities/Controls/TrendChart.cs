@@ -229,7 +229,8 @@ public class TrendChart : Control
             TooltipValueForegroundProperty,
             TooltipDateForegroundProperty,
             TooltipBorderBrushProperty,
-            TooltipBorderThicknessProperty
+            TooltipBorderThicknessProperty,
+            DataPointsProperty
         );
     }
 

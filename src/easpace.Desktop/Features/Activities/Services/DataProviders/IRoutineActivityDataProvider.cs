@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using easpace.Desktop.Features.Activities.Contracts;
-using easpace.Desktop.Features.Activities.Entities.DataEntries;
+using easpace.Desktop.Features.Activities.Entities;
 
 namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
 public interface IRoutineActivityDataProvider
 {
-    List<RoutineMonth> GetRoutineMonths(List<RoutineDataEntry> routineEntries);
+    List<RoutineMonth> GetRoutineMonths(RoutineActivity routineActivity);
 }

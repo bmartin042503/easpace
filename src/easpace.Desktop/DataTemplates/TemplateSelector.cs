@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
-using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.ViewModels;
+using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 
 namespace easpace.Desktop.DataTemplates;
 
@@ -61,7 +61,7 @@ public class TemplateSelector : IDataTemplate
         var key = data switch
         {
             ActivityViewModel activity => activity.GetType().Name,
-            DataEntry dataEntry => dataEntry.GetType().Name,
+            DataEntryViewModel dataEntry => dataEntry.GetType().Name,
             _ => data.ToString()
         };
 

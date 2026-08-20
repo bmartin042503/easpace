@@ -9,6 +9,5 @@ public record UpdateActivityRequest(
     string Name,
     double? Target,
     string? Unit,
-    DateTimeOffset? TargetDate,
-    bool IsArchived
+    DateTimeOffset? TargetDate
 );

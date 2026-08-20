@@ -7,18 +7,18 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vma:RoutineActivityViewModel"
+             x:DataType="viewModels:RoutineActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.RoutineActivityView">
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
         <!-- Title -->
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Activity.Name}"
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}"
                    Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
 
         <!-- Interaction buttons -->
@@ -39,11 +39,11 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Panel>
                     
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
-                              IsVisible="{Binding !Activity.IsArchived}"
+                              IsVisible="{Binding !IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
                 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
-                              IsVisible="{Binding Activity.IsArchived}"
+                              IsVisible="{Binding IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
                     
                 </Panel>
@@ -58,7 +58,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Add button -->
             <Button Classes="tertiary icon"
-                    Command="{Binding AddRoutineEntryCommand}"
+                    Command="{Binding AddDataEntryCommand}"
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
             </Button>

@@ -6,21 +6,33 @@ using System.Collections.Generic;
 using System.Linq;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
+using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
 public class RoutineActivityDataProvider : IRoutineActivityDataProvider
 {
-    public List<RoutineMonth> GetRoutineMonths(List<RoutineDataEntry> routineEntries)
+    public List<RoutineMonth> GetRoutineMonths(RoutineActivity routineActivity)
     {
-        var firstEntryDate = routineEntries.Min(e => e.Timestamp.Date);
-        var lastEntryDate = routineEntries.Max(e => e.Timestamp.Date);
+        var startDate = routineActivity.CreatedAt.Date;
+        var endDate = DateTime.Today;
+
+        if (routineActivity.Entries.Any())
+        {
+            var firstEntryDate = routineActivity.Entries.Min(e => e.Timestamp.Date);
+            if (firstEntryDate < startDate) startDate = firstEntryDate;
+            
+            var lastEntryDate = routineActivity.Entries.Max(e => e.Timestamp.Date);
+            if (lastEntryDate > endDate) endDate = lastEntryDate;
+        }
         
         var monthsList = new List<RoutineMonth>();
 
-        var currentMonthIter = new DateTime(firstEntryDate.Year, firstEntryDate.Month, 1);
-        var endMonthIter = new DateTime(lastEntryDate.Year, lastEntryDate.Month, 1);
+        var currentMonthIter = new DateTime(startDate.Year, startDate.Month, 1);
+        var endMonthIter = new DateTime(endDate.Year, endDate.Month, 1);
+        
+        var routineEntries = routineActivity.Entries.OfType<RoutineDataEntry>().ToList();
 
         while (currentMonthIter <= endMonthIter)
         {

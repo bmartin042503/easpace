@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace easpace.Desktop.Validation;
+namespace easpace.Desktop.ValidationAttributes;
 
 public class RequiredIfAttribute : ValidationAttribute
 {

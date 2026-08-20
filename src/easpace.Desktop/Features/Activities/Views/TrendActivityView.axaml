@@ -7,11 +7,11 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vma:TrendActivityViewModel"
+             x:DataType="viewModels:TrendActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.TrendActivityView">
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
             <!-- Title -->
-            <TextBlock Text="{Binding Activity.Name}"
+            <TextBlock Text="{Binding Name}"
                        Classes="neutral fs2 trm-ellipsis"
                        VerticalAlignment="Center" />
 
@@ -33,17 +33,17 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Current value -->
                 <TextBlock Classes="neutral fs4"
                            VerticalAlignment="Center" Text="{Binding CurrentValueText}"
-                           IsVisible="{Binding Activity.LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                           IsVisible="{Binding LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
                 <!-- Target value -->
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
-                            IsVisible="{Binding Activity.Target, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            IsVisible="{Binding Target, Converter={x:Static ObjectConverters.IsNotNull}}">
                     <TextBlock Classes="accent fs5 medium"
                                VerticalAlignment="Center">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} {1}">
-                                <Binding Path="Activity.Target" />
-                                <Binding Path="Activity.Unit" />
+                                <Binding Path="Target" />
+                                <Binding Path="Unit" />
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
@@ -74,11 +74,11 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Panel>
                     
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
-                              IsVisible="{Binding !Activity.IsArchived}"
+                              IsVisible="{Binding !IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
                 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
-                              IsVisible="{Binding Activity.IsArchived}"
+                              IsVisible="{Binding IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
                     
                 </Panel>
@@ -93,7 +93,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Add button -->
             <Button Classes="tertiary icon"
-                    Command="{Binding AddNumericEntryCommand}"
+                    Command="{Binding AddDataEntryCommand}"
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
             </Button>
@@ -122,9 +122,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Chart -->
         <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                             Target="{Binding Activity.Target}"
-                             Unit="{Binding Activity.Unit}"
-                             Entries="{Binding ChartEntries}"
+                             Target="{Binding Target}"
+                             Unit="{Binding Unit}"
+                             DataPoints="{Binding DataPoints}"
                              Margin="0,0,6,0" />
 
     </Grid>

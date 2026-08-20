@@ -7,9 +7,9 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             x:DataType="vm:NumericEntryDialogViewModel"
+             xmlns:vmDialogs="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.Dialogs"
+             x:DataType="vmDialogs:NumericEntryDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
              MinWidth="300"
              MaxWidth="550" MaxHeight="400"
@@ -17,7 +17,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Views.Dialogs.NumericEntryDialogView">
 
     <Design.DataContext>
-        <vm:NumericEntryDialogViewModel />
+        <vmDialogs:NumericEntryDialogViewModel />
     </Design.DataContext>
 
     <Border x:Name="DialogRootBorder" Classes="card"

@@ -7,16 +7,16 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             x:DataType="vm:RoutineEntryDialogViewModel"
+             xmlns:vmDialogs="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.Dialogs"
+             x:DataType="vmDialogs:RoutineEntryDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
              MaxWidth="550" MaxHeight="400"
              Background="{StaticResource Haven.Scale.Transparent}"
              x:Class="easpace.Desktop.Views.Dialogs.RoutineEntryDialogView">
 
     <Design.DataContext>
-        <vm:RoutineEntryDialogViewModel />
+        <vmDialogs:RoutineEntryDialogViewModel />
     </Design.DataContext>
 
     <Border x:Name="DialogRootBorder" Classes="card"

@@ -7,11 +7,10 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Views.ActivitiesPageView"
@@ -22,30 +21,30 @@ Licensed under the MIT License. See LICENSE file for details.
         <dataTemplates:TemplateSelector x:Key="ActivityListItemSelector">
 
             <!-- Template of Trend Activity -->
-            <DataTemplate x:Key="TrendActivityViewModel" DataType="vma:TrendActivityViewModel">
-                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
-                                                    Status="{Binding Activity.LastEntry.Value}"
+            <DataTemplate x:Key="TrendActivityViewModel" DataType="vm:TrendActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Name}"
+                                                    Status="{Binding LastEntry.Value}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
             </DataTemplate>
 
             <!-- Template of Routine Activity -->
-            <DataTemplate x:Key="RoutineActivityViewModel" DataType="vma:RoutineActivityViewModel">
-                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
-                                                    Status="{Binding Activity.TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
+            <DataTemplate x:Key="RoutineActivityViewModel" DataType="vm:RoutineActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Name}"
+                                                    Status="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
             </DataTemplate>
 
             <!-- Template of Milestone Activity -->
-            <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vma:MilestoneActivityViewModel">
-                <templatedControls:ActivityListItem Title="{Binding Activity.Name}"
+            <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vm:MilestoneActivityViewModel">
+                <templatedControls:ActivityListItem Title="{Binding Name}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
                     <templatedControls:ActivityListItem.Status>
                         <MultiBinding StringFormat="{}{0}/{1}">
-                            <Binding Path="Activity.EntriesSum" />
-                            <Binding Path="Activity.Target" />
+                            <Binding Path="EntriesSum" />
+                            <Binding Path="Target" />
                         </MultiBinding>
                     </templatedControls:ActivityListItem.Status>
                 </templatedControls:ActivityListItem>
@@ -170,12 +169,12 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Activity entries list -->
                 <ScrollViewer Grid.Row="2">
                     <ListBox Classes="activity list"
-                             ItemsSource="{Binding ActivityViewModels}"
-                             SelectedItem="{Binding SelectedActivityViewModel}"
+                             ItemsSource="{Binding Activities}"
+                             SelectedItem="{Binding SelectedActivity}"
                              IsEnabled="{Binding !IsEditing}">
 
                         <ListBox.ItemTemplate>
-                            <DataTemplate x:DataType="vma:ActivityViewModel">
+                            <DataTemplate x:DataType="vm:ActivityViewModel">
                                 <ContentControl Content="{Binding .}"
                                                 ContentTemplate="{StaticResource ActivityListItemSelector}" />
                             </DataTemplate>

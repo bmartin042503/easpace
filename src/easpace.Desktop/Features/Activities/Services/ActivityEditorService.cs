@@ -19,8 +19,7 @@ public class ActivityEditorService : IActivityEditorService
                     Name: trendActivity.Name,
                     Target: trendActivity.Target,
                     Unit: trendActivity.Unit,
-                    TargetDate: null,
-                    IsArchived: trendActivity.IsArchived
+                    TargetDate: null
                 );
 
             case MilestoneActivityViewModel milestoneActivity:
@@ -29,8 +28,7 @@ public class ActivityEditorService : IActivityEditorService
                     Name: milestoneActivity.Name,
                     Target: milestoneActivity.Target,
                     Unit: milestoneActivity.Unit,
-                    TargetDate: milestoneActivity.TargetDate,
-                    IsArchived: milestoneActivity.IsArchived
+                    TargetDate: milestoneActivity.TargetDate
                 );
 
             case RoutineActivityViewModel routineActivity:
@@ -39,8 +37,7 @@ public class ActivityEditorService : IActivityEditorService
                     Name: routineActivity.Name,
                     null,
                     null,
-                    null,
-                    IsArchived: routineActivity.IsArchived
+                    null
                 );
             
             default:

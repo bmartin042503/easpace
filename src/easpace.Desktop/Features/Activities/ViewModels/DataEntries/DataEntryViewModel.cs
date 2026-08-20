@@ -13,7 +13,7 @@ public abstract partial class DataEntryViewModel : ViewModelBase
     public Guid Id { get; }
     public Guid ActivityId { get; }
 
-    [ObservableProperty] private DateTimeOffset? _timestamp;
+    [ObservableProperty] private DateTimeOffset _timestamp;
     
     protected DataEntryViewModel(DataEntry dataEntry)
     {

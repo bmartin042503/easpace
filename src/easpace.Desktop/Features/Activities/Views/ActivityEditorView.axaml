@@ -7,12 +7,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:activities="clr-namespace:easpace.Desktop.Models.Activities"
              xmlns:converters="clr-namespace:easpace.Desktop.Converters"
              xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
+             xmlns:vmDataEntries="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.DataEntries"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivityEditorViewModel"
              x:Class="easpace.Desktop.Views.ActivityEditorView">
@@ -188,8 +188,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
 
                                     <!-- NumericDataEntry template -->
-                                    <DataTemplate x:Key="NumericDataEntry"
-                                                  x:DataType="activities:NumericDataEntry">
+                                    <DataTemplate x:Key="NumericDataEntryViewModel"
+                                                  x:DataType="vmDataEntries:NumericDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
                                             Value="{Binding Value}"
@@ -201,8 +201,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                     </DataTemplate>
 
                                     <!-- RoutineDataEntry template -->
-                                    <DataTemplate x:Key="RoutineDataEntry"
-                                                  x:DataType="activities:RoutineDataEntry">
+                                    <DataTemplate x:Key="RoutineDataEntryViewModel"
+                                                  x:DataType="vmDataEntries:RoutineDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
                                             Value="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}"
@@ -217,7 +217,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </ItemsRepeater.Resources>
 
                             <ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="activities:DataEntry">
+                                <DataTemplate x:DataType="vmDataEntries:DataEntryViewModel">
                                     <ContentControl Content="{Binding .}"
                                                     ContentTemplate="{StaticResource DataEntrySelector}" />
                                 </DataTemplate>

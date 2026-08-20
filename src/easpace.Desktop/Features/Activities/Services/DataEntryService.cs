@@ -28,7 +28,7 @@ public class DataEntryService : IDataEntryService
                 var numericDataEntry = new NumericDataEntry
                 {
                     Id = Guid.NewGuid(),
-                    Timestamp = DateTimeOffset.Now,
+                    Timestamp = createRequest.Timestamp ?? DateTimeOffset.Now,
                     ActivityId = activityId,
                     Value = createRequest.Value.Value
                 };
@@ -43,7 +43,7 @@ public class DataEntryService : IDataEntryService
                 var routineDataEntry = new RoutineDataEntry
                 {
                     Id = Guid.NewGuid(),
-                    Timestamp = DateTimeOffset.Now,
+                    Timestamp = createRequest.Timestamp ?? DateTimeOffset.Now,
                     ActivityId = activityId,
                     State = createRequest.State.Value
                 };

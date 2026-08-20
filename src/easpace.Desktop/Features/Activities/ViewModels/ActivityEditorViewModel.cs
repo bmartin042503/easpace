@@ -2,16 +2,20 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
+using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services;
-using easpace.Desktop.Validation;
+using easpace.Desktop.ValidationAttributes;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
@@ -38,16 +42,26 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private double? _target;
 
-    [ObservableProperty] private DateTimeOffset? _targetDate;
+    [ObservableProperty] private DateTime? _targetDate;
 
     private bool CanSubmit() => !HasErrors;
 
     public event EventHandler<Activity>? Saved;
     public event EventHandler? Canceled;
 
+    public AvaloniaList<DataEntryViewModel> DataEntries { get; } = [];
+    
+    public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
+
     public bool IsCreatingNew { get; }
+    
+    public string DataEntriesLabel =>
+        DataEntries.Count == 1
+            ? LocalizationService.GetString("Activities.Label.DataEntry")
+            : string.Format(LocalizationService.GetString("Activities.Label.DataEntries"), DataEntries.Count);
 
     public ActivityType SelectedType
     {
@@ -69,6 +83,9 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         IsCreatingNew = true;
         SelectedType = ActivityType.Trend;
         TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
+        
+        ValidateAllProperties();
+        SaveCommand.NotifyCanExecuteChanged();
     }
 
     public ActivityEditorViewModel(
@@ -91,8 +108,13 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
             RoutineActivityViewModel => ActivityType.Routine,
             _ => SelectedType
         };
+        
+        DataEntries.AddRange(activity.Entries);
 
         TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), _activity.Name);
+        
+        ValidateAllProperties();
+        SaveCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand(CanExecute = nameof(CanSubmit))]
@@ -110,7 +132,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         {
             if (_activity == null) return;
             
-            var updateRequest = _editorService.GetUpdateRequest(_activity);
+            var updateRequest = GetUpdateRequest();
             var updatedEntry = _activity.UpdateFrom(updateRequest);
             
             if (updatedEntry == null) return;
@@ -130,17 +152,20 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     {
         if (parameter is not DataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
         
-        _activity.DeleteDataEntry(dataEntryVm.Id);
+        var deleted = _activity.DeleteDataEntry(dataEntryVm.Id);
+
+        if (deleted)
+        {
+            DataEntries.Remove(dataEntryVm);
+        }
     }
 
     [RelayCommand]
-    private void EditDataEntry(object? parameter)
+    private async Task EditDataEntry(object? parameter)
     {
         if (parameter is not DataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
 
-        // TODO: show edit dialog and pass DTO to the method below
-        
-        // _activity.UpdateDataEntry(dataEntryVm.Id, );
+        await _activity.EditDataEntry(dataEntryVm.Id);
     }
 
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)
@@ -148,8 +173,10 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         Name = updateRequest.Name;
         Unit = updateRequest.Unit;
         Target = updateRequest.Target;
-        TargetDate = updateRequest.TargetDate;
+        IsTargetChecked = updateRequest.Target.HasValue;
+        TargetDate = updateRequest.TargetDate?.Date;
     }
 
     private CreateActivityRequest GetCreateRequest() => new (Name, SelectedType, Target, Unit, TargetDate);
+    private UpdateActivityRequest GetUpdateRequest() => new(Name, Target, Unit, TargetDate);
 }

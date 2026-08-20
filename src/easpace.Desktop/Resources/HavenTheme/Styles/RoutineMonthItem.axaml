@@ -5,7 +5,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:easpace.Desktop.Controls">
+        xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls">
 
     <Style Selector="controls|RoutineMonthItem">
 

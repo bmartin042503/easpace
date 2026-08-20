@@ -7,11 +7,11 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:vma="clr-namespace:easpace.Desktop.ViewModels.Activities"
+             xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vma:MilestoneActivityViewModel"
+             x:DataType="viewModels:MilestoneActivityViewModel"
              x:Class="easpace.Desktop.Views.Activities.MilestoneActivityView">
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
             <!-- Title -->
-            <TextBlock Text="{Binding Activity.Name}"
+            <TextBlock Text="{Binding Name}"
                        Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
 
             <!-- Details -->
@@ -32,15 +32,15 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBlock Classes="neutral fs4" VerticalAlignment="Center">
                     <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
                     <Run Text=": " />
-                    <Run Text="{Binding Activity.CreatedAt, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+                    <Run Text="{Binding StartDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                 </TextBlock>
 
                 <!-- Target date -->
                 <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
-                           IsVisible="{Binding Activity.HasValidTargetDate}">
+                           IsVisible="{Binding HasValidTargetDate}">
                     <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
                     <Run Text=": " />
-                    <Run Text="{Binding Activity.TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+                    <Run Text="{Binding TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                 </TextBlock>
 
             </StackPanel>
@@ -65,11 +65,11 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Panel>
 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
-                              IsVisible="{Binding !Activity.IsArchived}"
+                              IsVisible="{Binding !IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
-                              IsVisible="{Binding Activity.IsArchived}"
+                              IsVisible="{Binding IsArchived}"
                               ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
 
                 </Panel>
@@ -84,7 +84,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Add button -->
             <Button Classes="tertiary icon"
-                    Command="{Binding AddNumericEntryCommand}"
+                    Command="{Binding AddDataEntryCommand}"
                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
             </Button>
@@ -93,9 +93,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Chart -->
         <controls:MilestoneChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Value="{Binding Activity.EntriesSum}"
-                                 Maximum="{Binding Activity.Target}"
-                                 Unit="{Binding Activity.Unit}" />
+                                 Value="{Binding EntriesSum}"
+                                 Maximum="{Binding Target}"
+                                 Unit="{Binding Unit}" />
 
     </Grid>
 
