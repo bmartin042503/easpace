@@ -3,33 +3,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
-using easpace.Desktop.Models;
+using easpace.Desktop.Features.Mood.Constants;
+using easpace.Desktop.Features.Mood.Contracts;
+using easpace.Desktop.Features.Mood.Entities;
+using easpace.Desktop.Features.Mood.Services;
 using easpace.Desktop.Services;
+using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.ViewModels;
+namespace easpace.Desktop.Features.Mood.ViewModels;
 
-public partial class MoodViewModel : PageViewModel
+public partial class MoodPageViewModel : PageViewModel
 {
+    private readonly IMoodEntryService _moodEntryService;
+
     private readonly List<MoodLabelViewModel> _allMoodLabels = [];
 
-    public ObservableCollection<MoodEntry> MoodEntries { get; } = [];
-    public ObservableCollection<MoodLabelViewModel> MoodLabels { get; } = [];
+    public AvaloniaList<MoodEntryViewModel> MoodEntries { get; } = [];
+    public AvaloniaList<MoodLabelViewModel> MoodLabels { get; } = [];
 
     [ObservableProperty] private string _moodStateText = string.Empty;
     [ObservableProperty] private string _description = string.Empty;
-    
+
     // [ObservableProperty] private DateTime? _selectedDate = DateTime.Now;
     // [ObservableProperty] private TimeSpan? _selectedTime = DateTimeOffset.Now.TimeOfDay;
-    
+    // public DateTimeOffset MaxAllowedDate => DateTimeOffset.Now;
+
     public bool HasMoodEntries => MoodEntries.Count > 0;
 
-    public DateTimeOffset MaxAllowedDate => DateTimeOffset.Now;
-    
     public bool IsLoadMoreButtonVisible => MoodLabels.Count < _allMoodLabels.Count;
 
     public double MoodSliderValue
@@ -39,7 +44,7 @@ public partial class MoodViewModel : PageViewModel
         {
             if (value is < 0 or > 1) return;
             field = value;
-            
+
             var localizedValue = value switch
             {
                 < 0.2 => LocalizationService.GetString("Mood.SliderState.VeryUnpleasant"),
@@ -49,17 +54,19 @@ public partial class MoodViewModel : PageViewModel
                 <= 1.0 => LocalizationService.GetString("Mood.SliderState.VeryPleasant"),
                 _ => string.Empty
             };
-            
+
             MoodStateText = localizedValue;
-            
+
             UpdateMoodLabels();
-            
+
             OnPropertyChanged();
         }
     }
 
-    public MoodViewModel()
+    public MoodPageViewModel(IMoodEntryService moodEntryService)
     {
+        _moodEntryService = moodEntryService;
+
         Page = ApplicationPage.Mood;
 
         MoodLabels.CollectionChanged += (_, _) => OnPropertyChanged(nameof(IsLoadMoreButtonVisible));
@@ -94,27 +101,21 @@ public partial class MoodViewModel : PageViewModel
         var labelsToShow = _allMoodLabels
             .Where(l => l.IsChecked || l.State.BelongsTo(currentState))
             .ToList();
-        
+
         if (MoodLabels.SequenceEqual(labelsToShow))
         {
             return;
         }
 
         MoodLabels.Clear();
-        foreach (var label in labelsToShow)
-        {
-            MoodLabels.Add(label);
-        }
+        MoodLabels.AddRange(labelsToShow);
     }
 
     [RelayCommand]
     private void LoadAllLabels()
     {
         MoodLabels.Clear();
-        foreach (var label in _allMoodLabels)
-        {
-            MoodLabels.Add(label);
-        }
+        MoodLabels.AddRange(_allMoodLabels);
     }
 
     [RelayCommand]
@@ -127,25 +128,33 @@ public partial class MoodViewModel : PageViewModel
             .Select(l => l.State)
             .ToList();
 
-        var entry = new MoodEntry
-        {
-            Timestamp = timestamp,
-            Value = MoodSliderValue,
-            Labels = selectedLabels,
-            Description = Description
-        };
+        var createEntryRequest = new UpsertMoodEntryRequest(
+            Timestamp: timestamp,    
+            Value: MoodSliderValue,
+            Labels: selectedLabels,
+            Description: Description
+        );
+        
+        var savedEntry = _moodEntryService.CreateMoodEntry(createEntryRequest);
 
-        MoodEntries.Insert(0, entry);
+        var entryViewModel = new MoodEntryViewModel(savedEntry);
+
+        MoodEntries.Insert(0, entryViewModel);
 
         ResetForm();
     }
-    
+
     [RelayCommand]
     private void DeleteEntry(object? parameter)
     {
-        if (parameter is not MoodEntry entry) return;
-        
-        MoodEntries.Remove(entry);
+        if (parameter is not MoodEntryViewModel entryViewModel) return;
+
+        var deleted = _moodEntryService.DeleteMoodEntry(entryViewModel.Id);
+
+        if (deleted)
+        {
+            MoodEntries.Remove(entryViewModel);
+        }
     }
 
     private void ResetForm()

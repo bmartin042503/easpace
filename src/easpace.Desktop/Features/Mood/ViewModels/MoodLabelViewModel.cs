@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Mood.Constants;
 
-namespace easpace.Desktop.ViewModels;
+namespace easpace.Desktop.Features.Mood.ViewModels;
 
 public partial class MoodLabelViewModel : ObservableObject
 {

@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Journal.Entities;
 namespace easpace.Desktop.Features.Journal.Services;
 
 // Temporary in-memory implementation.
-public class JournalService : IJournalService
+public class JournalEntryService : IJournalEntryService
 {
     private readonly List<JournalEntry> _journalEntries = [];
 

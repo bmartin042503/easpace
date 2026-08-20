@@ -20,7 +20,7 @@ namespace easpace.Desktop.Features.Journal.ViewModels;
 
 public partial class JournalPageViewModel : PageViewModel
 {
-    private readonly IJournalService _journalService;
+    private readonly IJournalEntryService _journalEntryService;
     private readonly IDialogService _dialogService;
     private readonly List<JournalEntryViewModel> _allEntries = [];
 
@@ -40,9 +40,9 @@ public partial class JournalPageViewModel : PageViewModel
     public bool HasActiveEntry => ActiveEntry is not null;
     public bool IsEditing => Editor is not null;
 
-    public JournalPageViewModel(IJournalService journalService, IDialogService dialogService)
+    public JournalPageViewModel(IJournalEntryService journalEntryService, IDialogService dialogService)
     {
-        _journalService = journalService;
+        _journalEntryService = journalEntryService;
         _dialogService = dialogService;
 
         Page = ApplicationPage.Journal;
@@ -107,7 +107,7 @@ public partial class JournalPageViewModel : PageViewModel
             }
         }
 
-        if (!_journalService.DeleteJournalEntry(entryToDelete.Id))
+        if (!_journalEntryService.DeleteJournalEntry(entryToDelete.Id))
         {
             return;
         }
@@ -129,7 +129,7 @@ public partial class JournalPageViewModel : PageViewModel
     {
         _allEntries.Clear();
         
-        var journalEntries = _journalService.GetJournalEntries()
+        var journalEntries = _journalEntryService.GetJournalEntries()
             .Select(e => new JournalEntryViewModel(e));
 
         _allEntries.AddRange(journalEntries);
@@ -145,8 +145,8 @@ public partial class JournalPageViewModel : PageViewModel
         }
 
         var editor = entry is null
-            ? new JournalEditorViewModel(_journalService)
-            : new JournalEditorViewModel(_journalService, entry);
+            ? new JournalEditorViewModel(_journalEntryService)
+            : new JournalEditorViewModel(_journalEntryService, entry);
 
         editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;

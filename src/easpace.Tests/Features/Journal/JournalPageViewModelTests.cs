@@ -16,7 +16,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void Constructor_WhenServiceIsEmpty_InitializesAnEmptyJournalPage()
     {
-        var journalPageVm = CreatePage(new JournalService(), out _);
+        var journalPageVm = CreatePage(new JournalEntryService(), out _);
 
         journalPageVm.Page.Should().Be(ApplicationPage.Journal);
         journalPageVm.Entries.Should().BeEmpty();
@@ -29,7 +29,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void AddEntryCommand_OpensEditorWithoutCreatingAPersistedEntry()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var journalPageVm = CreatePage(service, out _);
 
         journalPageVm.AddEntryCommand.Execute(null);
@@ -43,7 +43,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void NewEntrySave_AddsSelectsAndClosesEditor()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var journalPageVm = CreatePage(service, out _);
         journalPageVm.AddEntryCommand.Execute(null);
 
@@ -64,7 +64,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void NewEntryCancel_ClosesEditorWithoutAddingAnEntry()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Existing", "Existing content");
         var journalPageVm = CreatePage(service, out _);
         journalPageVm.SelectedEntry = journalPageVm.Entries.First();
@@ -82,7 +82,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void EditEntryCommand_WhenNothingIsSelected_DoesNothing()
     {
-        var journalPageVm = CreatePage(new JournalService(), out _);
+        var journalPageVm = CreatePage(new JournalEntryService(), out _);
 
         journalPageVm.EditEntryCommand.Execute(null);
 
@@ -92,7 +92,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void ExistingEntryCancel_LeavesTheDisplayedAndPersistedEntryUnchanged()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Original", "Original content");
         var journalPageVm = CreatePage(service, out _);
 
@@ -113,7 +113,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void ExistingEntrySave_UpdatesTheActiveEntryAndClosesEditor()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Original", "Original content");
 
         var journalPageVm = CreatePage(service, out _);
@@ -138,7 +138,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task DeleteEntryCommand_WhenContentIsEmpty_DeletesWithoutShowingADialog()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Title", "   ");
 
         var journalPageVm = CreatePage(service, out var dialogService);
@@ -161,7 +161,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task DeleteEntryCommand_WhenDialogIsCanceled_KeepsTheEntry()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Title", "Meaningful content");
         var sut = CreatePage(service, out var dialogService);
 
@@ -182,7 +182,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task DeleteEntryCommand_WhenDialogIsConfirmed_DeletesAndSelectsAnotherVisibleEntry()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("First", "First content");
         service.CreateJournalEntry("Second", "Second content");
         var journalPageVm = CreatePage(service, out var dialogService);
@@ -206,7 +206,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void SearchText_FiltersByTitleAndContent()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Morning reflection", "Coffee and a walk");
         service.CreateJournalEntry("Evening note", "Read an excellent book");
         var journalPageVm = CreatePage(service, out _);
@@ -223,10 +223,10 @@ public class JournalPageViewModelTests
     }
 
     private static JournalPageViewModel CreatePage(
-        IJournalService journalService,
+        IJournalEntryService journalEntryService,
         out Mock<IDialogService> dialogService)
     {
         dialogService = new Mock<IDialogService>();
-        return new JournalPageViewModel(journalService, dialogService.Object);
+        return new JournalPageViewModel(journalEntryService, dialogService.Object);
     }
 }

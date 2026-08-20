@@ -13,7 +13,7 @@ namespace easpace.Desktop.Features.Journal.ViewModels;
 
 public partial class JournalEditorViewModel : ViewModelBase
 {
-    private readonly IJournalService _journalService;
+    private readonly IJournalEntryService _journalEntryService;
     private readonly Guid? _editingEntryId;
 
     [ObservableProperty] private string _title = string.Empty;
@@ -25,16 +25,16 @@ public partial class JournalEditorViewModel : ViewModelBase
     public event EventHandler? Canceled;
 
     /// <summary>Creates a blank draft for a new journal entry.</summary>
-    public JournalEditorViewModel(IJournalService journalService)
+    public JournalEditorViewModel(IJournalEntryService journalEntryService)
     {
-        _journalService = journalService;
+        _journalEntryService = journalEntryService;
         Title = GetFormattedNow();
     }
 
     /// <summary>Copies an existing entry into an independent editing draft.</summary>
-    public JournalEditorViewModel(IJournalService journalService, JournalEntryViewModel entry)
+    public JournalEditorViewModel(IJournalEntryService journalEntryService, JournalEntryViewModel entry)
     {
-        _journalService = journalService;
+        _journalEntryService = journalEntryService;
         _editingEntryId = entry.Id;
         Title = entry.Title;
         Content = entry.Content;
@@ -48,8 +48,8 @@ public partial class JournalEditorViewModel : ViewModelBase
             : Title.Trim();
 
         var savedEntry = IsCreatingNew
-            ? _journalService.CreateJournalEntry(title, Content)
-            : _journalService.UpdateJournalEntry(_editingEntryId!.Value, title, Content);
+            ? _journalEntryService.CreateJournalEntry(title, Content)
+            : _journalEntryService.UpdateJournalEntry(_editingEntryId!.Value, title, Content);
 
         // A deleted entry cannot normally be edited, but do not close the editor
         // as if it had been saved if its backing entity no longer exists.

@@ -7,6 +7,7 @@ using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Features.Journal.Views;
+using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
 using easpace.Desktop.Views;
@@ -25,7 +26,7 @@ public class ViewLocator : IDataTemplate
             IntroViewModel vm => CreateView(new IntroView(), vm),
             JournalPageViewModel vm => CreateView(new JournalPageView(), vm),
             ActivitiesPageViewModel vm => CreateView(new ActivitiesPageView(), vm),
-            MoodViewModel vm => CreateView(new MoodView(), vm),
+            MoodPageViewModel vm => CreateView(new MoodPageView(), vm),
             WellnessViewModel vm => CreateView(new WellnessView(), vm),
             SettingsViewModel vm => CreateView(new SettingsView(), vm),
             

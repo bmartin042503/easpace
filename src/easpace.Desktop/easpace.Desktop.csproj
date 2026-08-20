@@ -16,7 +16,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <Folder Include="Assets\Fonts\*" />
         <AvaloniaResource Include="Assets\**" />
-        <Folder Include="Controls\" />
     </ItemGroup>
 
     <!-- Versions -->
@@ -95,6 +94,10 @@ Licensed under the MIT License. See LICENSE file for details.
       </Compile>
       <Compile Update="Features\Activities\Views\Dialogs\RoutineEntryDialogView.axaml.cs">
         <DependentUpon>RoutineEntryDialogView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Features\Mood\Views\MoodPageView.axaml.cs">
+        <DependentUpon>MoodView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

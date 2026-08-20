@@ -7,13 +7,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
-             xmlns:models="clr-namespace:easpace.Desktop.Models"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
-             xmlns:constants="clr-namespace:easpace.Desktop.Constants"
+             xmlns:constants="clr-namespace:easpace.Desktop.Features.Mood.Constants"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Mood.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.MoodView"
-             x:DataType="vm:MoodViewModel"
+             x:Class="easpace.Desktop.Views.MoodPageView"
+             x:DataType="vm:MoodPageViewModel"
              Background="{DynamicResource Haven.Sem.Canvas}">
 
     <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
@@ -83,7 +82,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <ItemsRepeater ItemsSource="{Binding MoodEntries}">
 
                         <ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="models:MoodEntry">
+                            <DataTemplate x:DataType="vm:MoodEntryViewModel">
                                 <Border Classes="elevated card">
 
                                     <StackPanel Orientation="Vertical"
@@ -99,7 +98,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                             <!-- Delete button -->
                                             <Button Grid.Column="1" Classes="tertiary danger icon"
-                                                    Command="{Binding $parent[UserControl].((vm:MoodViewModel)DataContext).DeleteEntryCommand}"
+                                                    Command="{Binding $parent[UserControl].((vm:MoodPageViewModel)DataContext).DeleteEntryCommand}"
                                                     CommandParameter="{Binding .}" VerticalAlignment="Top"
                                                     ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
                                                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />

@@ -10,6 +10,8 @@ using easpace.Desktop.Features.Activities.Services.DataProviders;
 using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Features.Journal.ViewModels;
+using easpace.Desktop.Features.Mood.Services;
+using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,8 +32,8 @@ public static class ServiceCollectionExtensions
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
 
-            collection.AddSingleton<JournalService>();
-            collection.AddSingleton<IJournalService>(sp => sp.GetRequiredService<JournalService>());
+            collection.AddSingleton<JournalEntryService>();
+            collection.AddSingleton<IJournalEntryService>(sp => sp.GetRequiredService<JournalEntryService>());
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());
@@ -41,6 +43,9 @@ public static class ServiceCollectionExtensions
 
             collection.AddSingleton<DataEntryService>();
             collection.AddSingleton<IDataEntryService>(sp => sp.GetRequiredService<DataEntryService>());
+            
+            collection.AddSingleton<MoodEntryService>();
+            collection.AddSingleton<IMoodEntryService>(sp => sp.GetRequiredService<MoodEntryService>());
 
             collection.AddSingleton<TrendActivityDataProvider>();
             collection.AddSingleton<ITrendActivityDataProvider>(sp =>
@@ -57,7 +62,7 @@ public static class ServiceCollectionExtensions
             collection.AddSingleton<IntroViewModel>();
             collection.AddSingleton<JournalPageViewModel>();
             collection.AddSingleton<ActivitiesPageViewModel>();
-            collection.AddSingleton<MoodViewModel>();
+            collection.AddSingleton<MoodPageViewModel>();
             collection.AddSingleton<WellnessViewModel>();
             collection.AddSingleton<SettingsViewModel>();
 
@@ -66,7 +71,7 @@ public static class ServiceCollectionExtensions
                 ApplicationPage.Intro => serviceProvider.GetRequiredService<IntroViewModel>(),
                 ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalPageViewModel>(),
                 ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesPageViewModel>(),
-                ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodViewModel>(),
+                ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodPageViewModel>(),
                 ApplicationPage.Wellness => serviceProvider.GetRequiredService<WellnessViewModel>(),
                 ApplicationPage.Settings => serviceProvider.GetRequiredService<SettingsViewModel>(),
                 _ => throw new InvalidOperationException()

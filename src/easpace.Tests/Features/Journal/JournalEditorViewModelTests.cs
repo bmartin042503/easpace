@@ -13,7 +13,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void NewEditor_StartsAsAnIndependentDraft()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
 
         var editor = new JournalEditorViewModel(service);
 
@@ -26,7 +26,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void SaveCommand_WhenCreatingNew_CreatesEntryAndRaisesSaved()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var editor = new JournalEditorViewModel(service)
         {
             Title = "A clear title",
@@ -47,7 +47,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void SaveCommand_WhenTitleIsWhitespace_GeneratesADefaultTitle()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var editor = new JournalEditorViewModel(service)
         {
             Title = "   ",
@@ -61,7 +61,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void ExistingEditor_DoesNotMutateTheEntryUntilSave()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var entry = service.CreateJournalEntry("Original", "Original content");
         var entryViewModel = new JournalEntryViewModel(entry);
         var editor = new JournalEditorViewModel(service, entryViewModel)
@@ -78,7 +78,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void SaveCommand_WhenEditingExisting_UpdatesServiceAndRaisesSaved()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var entry = service.CreateJournalEntry("Original", "Original content");
         var editor = new JournalEditorViewModel(service, new JournalEntryViewModel(entry))
         {
@@ -99,7 +99,7 @@ public class JournalEditorViewModelTests
     [Fact]
     public void CancelCommand_RaisesCanceledWithoutChangingTheService()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var editor = new JournalEditorViewModel(service);
         var canceled = false;
         editor.Canceled += (_, _) => canceled = true;

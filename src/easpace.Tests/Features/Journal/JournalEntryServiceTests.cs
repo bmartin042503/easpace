@@ -7,12 +7,12 @@ using FluentAssertions;
 
 namespace easpace.Tests.Features.Journal;
 
-public class JournalServiceTests
+public class JournalEntryServiceTests
 {
     [Fact]
     public void CreateJournalEntry_CreatesAnEntryWithIdentifierAndTimestamp()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var beforeCreate = DateTimeOffset.Now;
 
         var entry = service.CreateJournalEntry("Morning reflection", "Some content");
@@ -27,7 +27,7 @@ public class JournalServiceTests
     [Fact]
     public void GetJournalEntries_ReturnsASnapshotInsteadOfTheInternalList()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         service.CreateJournalEntry("Title", "Content");
 
         var snapshot = service.GetJournalEntries();
@@ -39,7 +39,7 @@ public class JournalServiceTests
     [Fact]
     public void UpdateJournalEntry_WhenEntryExists_UpdatesAndReturnsIt()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var entry = service.CreateJournalEntry("Old title", "Old content");
 
         var updated = service.UpdateJournalEntry(entry.Id, "New title", "New content");
@@ -53,7 +53,7 @@ public class JournalServiceTests
     [Fact]
     public void UpdateJournalEntry_WhenEntryDoesNotExist_ReturnsNull()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
 
         var updated = service.UpdateJournalEntry(Guid.NewGuid(), "Title", "Content");
 
@@ -63,7 +63,7 @@ public class JournalServiceTests
     [Fact]
     public void DeleteJournalEntry_WhenEntryExists_RemovesItAndReturnsTrue()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
         var entry = service.CreateJournalEntry("Title", "Content");
 
         var deleted = service.DeleteJournalEntry(entry.Id);
@@ -75,7 +75,7 @@ public class JournalServiceTests
     [Fact]
     public void DeleteJournalEntry_WhenEntryDoesNotExist_ReturnsFalse()
     {
-        var service = new JournalService();
+        var service = new JournalEntryService();
 
         var deleted = service.DeleteJournalEntry(Guid.NewGuid());
 

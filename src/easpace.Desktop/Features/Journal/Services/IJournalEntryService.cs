@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Journal.Entities;
 
 namespace easpace.Desktop.Features.Journal.Services;
 
-public interface IJournalService
+public interface IJournalEntryService
 {
     JournalEntry CreateJournalEntry(string title, string content);
     IReadOnlyList<JournalEntry> GetJournalEntries();

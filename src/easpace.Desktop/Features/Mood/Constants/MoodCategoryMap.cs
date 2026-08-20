@@ -2,8 +2,9 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System.Collections.Generic;
+using easpace.Desktop.Constants;
 
-namespace easpace.Desktop.Constants;
+namespace easpace.Desktop.Features.Mood.Constants;
 
 public static class MoodCategoryMap
 {

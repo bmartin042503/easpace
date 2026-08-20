@@ -114,6 +114,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
     
     <Style Selector="TextBox.large-text-area">
+        <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="MinHeight" Value="120" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
