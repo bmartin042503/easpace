@@ -54,7 +54,14 @@ public partial class RoutineActivityViewModel : ActivityViewModel
     {
         base.OnEntryCollectionChanged();
         OnPropertyChanged(nameof(TodayEntry));
-        LoadRoutineMonths();
+
+        if (RoutineMonths.Count is <= 0 or 1)
+        {
+            LoadRoutineMonths();
+            return;
+        }
+
+        UpdateMonths();
     }
 
     public override Activity? UpdateFrom(UpdateActivityRequest updateRequest)
@@ -75,7 +82,7 @@ public partial class RoutineActivityViewModel : ActivityViewModel
         RoutineMonths.Clear();
         RoutineMonths.AddRange(months);
     }
-    
+
     [RelayCommand]
     private async Task AddDataEntry()
     {
@@ -92,25 +99,58 @@ public partial class RoutineActivityViewModel : ActivityViewModel
 
         if (routineEntryDialog is { Confirmed: true })
         {
-            var createEntryRequest = new CreateDataEntryRequest(
-                Timestamp: routineEntryDialog.GetTimestamp(),
-                State: routineEntryDialog.SelectedState,
-                Value: null,
-                Type: DataEntryType.Routine
-            );
-            
-            var dataEntry = _dataEntryService.CreateDataEntry(Id, createEntryRequest);
+            var existingEntry = _routineActivity.Entries.FirstOrDefault(e =>
+                e.Timestamp.Date.Year == routineEntryDialog.SelectedDate.Value.Year
+                && e.Timestamp.Date.Month == routineEntryDialog.SelectedDate.Value.Month
+                && e.Timestamp.Date.Day == routineEntryDialog.SelectedDate.Value.Day);
 
-            if (dataEntry is not RoutineDataEntry routineDataEntry) return;
-            
-            _routineActivity.Entries.Add(routineDataEntry);
-            
-            var dataEntryVm = new RoutineDataEntryViewModel(routineDataEntry);
-            
-            Entries.Add(dataEntryVm);
+            if (existingEntry is not null)
+            {
+                var updateEntryRequest = new UpdateDataEntryRequest(
+                    Timestamp: routineEntryDialog.GetTimestamp(),
+                    State: routineEntryDialog.SelectedState,
+                    Value: null
+                );
+                
+                var updatedDataEntry = _dataEntryService.UpdateDataEntry(existingEntry.Id, updateEntryRequest);
+
+                if (updatedDataEntry is RoutineDataEntry routineDataEntry)
+                {
+                    var dataEntryVm = Entries.FirstOrDefault(e => e.Id == routineDataEntry.Id);
+
+                    if (dataEntryVm is RoutineDataEntryViewModel routineDataEntryVm)
+                    {
+                        routineDataEntryVm.Timestamp = routineEntryDialog.GetTimestamp();
+                        routineDataEntryVm.State = routineEntryDialog.SelectedState;
+                        
+                        var entryVmReplaceIndex = Entries.IndexOf(routineDataEntryVm);
+                        Entries.Remove(routineDataEntryVm);
+                        Entries.Insert(entryVmReplaceIndex, routineDataEntryVm);
+                    }
+                }
+            }
+            else
+            {
+                var createEntryRequest = new CreateDataEntryRequest(
+                    Timestamp: routineEntryDialog.GetTimestamp(),
+                    State: routineEntryDialog.SelectedState,
+                    Value: null,
+                    Type: DataEntryType.Routine
+                );
+
+                var dataEntry = _dataEntryService.CreateDataEntry(Id, createEntryRequest);
+
+                if (dataEntry is not RoutineDataEntry routineDataEntry) return;
+
+                _routineActivity.Entries.Add(routineDataEntry);
+
+                var dataEntryVm = new RoutineDataEntryViewModel(routineDataEntry);
+
+                Entries.Add(dataEntryVm);
+            }
         }
     }
-    
+
     public override async Task<DataEntryViewModel?> EditDataEntry(Guid entryId)
     {
         var entryVm = Entries.OfType<RoutineDataEntryViewModel>().FirstOrDefault(e => e.Id == entryId);
@@ -148,8 +188,80 @@ public partial class RoutineActivityViewModel : ActivityViewModel
             {
                 entryVm.State = routineDataEntry.State;
             }
+
+            var month = _routineActivityDataProvider.BuildRoutineMonth(
+                routineDataEntry.Timestamp.Year,
+                routineDataEntry.Timestamp.Month,
+                _routineActivity);
+
+            ReplaceRoutineMonths([month]);
         }
 
         return entryVm;
+    }
+
+    private void ReplaceRoutineMonths(List<RoutineMonth> newRoutineMonths)
+    {
+        foreach (var routineMonth in newRoutineMonths)
+        {
+            var monthToReplace =
+                RoutineMonths.FirstOrDefault(m => m.Year == routineMonth.Year && m.Month == routineMonth.Month);
+
+            if (monthToReplace is not null)
+            {
+                var monthToReplaceIndex = RoutineMonths.IndexOf(monthToReplace);
+                RoutineMonths.RemoveAt(monthToReplaceIndex);
+                RoutineMonths.Insert(monthToReplaceIndex, routineMonth);
+            }
+        }
+    }
+
+    private (DateTime builtStartDate, DateTime builtEndDate, DateTime entriesStartDate, DateTime entriesEndDate)
+        GetBounds()
+    {
+        var builtMonthStartDate =
+            RoutineMonths
+                .GroupBy(m => new DateTime(m.Year, m.Month, 1))
+                .MinBy(g => g.Key)!.Key;
+
+        var builtMonthEndDate =
+            RoutineMonths
+                .GroupBy(m => new DateTime(m.Year, m.Month, 1))
+                .MaxBy(g => g.Key)!.Key;
+
+        var routineEntriesStartDate = _routineActivity.Entries.Min(e => e.Timestamp.Date);
+        var routineEntriesEndDate = _routineActivity.Entries.Max(e => e.Timestamp.Date);
+
+        routineEntriesStartDate = new DateTime(routineEntriesStartDate.Year, routineEntriesStartDate.Month, 1);
+        routineEntriesEndDate = new DateTime(routineEntriesEndDate.Year, routineEntriesEndDate.Month, 1);
+
+        return (builtMonthStartDate, builtMonthEndDate, routineEntriesStartDate, routineEntriesEndDate);
+    }
+
+    private void UpdateMonths()
+    {
+        var bounds = GetBounds();
+
+        if (bounds.entriesStartDate < bounds.builtStartDate || bounds.entriesEndDate > bounds.builtEndDate)
+        {
+            LoadRoutineMonths();
+        }
+        else
+        {
+            var affectedMonthsDates =
+                _routineActivityDataProvider.GetAffectedMonths(RoutineMonths.ToList(), _routineActivity);
+
+            List<RoutineMonth> builtAffectedMonths = [];
+
+            foreach (var affectedMonthDate in affectedMonthsDates)
+            {
+                var builtMonth = _routineActivityDataProvider.BuildRoutineMonth(affectedMonthDate.Year,
+                    affectedMonthDate.Month, _routineActivity);
+
+                builtAffectedMonths.Add(builtMonth);
+            }
+
+            ReplaceRoutineMonths(builtAffectedMonths);
+        }
     }
 }

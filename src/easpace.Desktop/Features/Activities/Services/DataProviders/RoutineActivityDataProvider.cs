@@ -22,28 +22,26 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
         {
             var firstEntryDate = routineActivity.Entries.Min(e => e.Timestamp.Date);
             if (firstEntryDate < startDate) startDate = firstEntryDate;
-            
+
             var lastEntryDate = routineActivity.Entries.Max(e => e.Timestamp.Date);
             if (lastEntryDate > endDate) endDate = lastEntryDate;
         }
-        
+
         var monthsList = new List<RoutineMonth>();
 
         var currentMonthIter = new DateTime(startDate.Year, startDate.Month, 1);
         var endMonthIter = new DateTime(endDate.Year, endDate.Month, 1);
-        
-        var routineEntries = routineActivity.Entries.OfType<RoutineDataEntry>().ToList();
 
         while (currentMonthIter <= endMonthIter)
         {
-            monthsList.Add(CreateRoutineMonth(currentMonthIter.Year, currentMonthIter.Month, routineEntries));
+            monthsList.Add(BuildRoutineMonth(currentMonthIter.Year, currentMonthIter.Month, routineActivity));
             currentMonthIter = currentMonthIter.AddMonths(1);
         }
 
         return monthsList;
     }
 
-    private RoutineMonth CreateRoutineMonth(int year, int month, List<RoutineDataEntry> routineEntries)
+    public RoutineMonth BuildRoutineMonth(int year, int month, RoutineActivity routineActivity)
     {
         var daysInMonth = DateTime.DaysInMonth(year, month);
         var monthlyEntries = new List<RoutineDataEntry>();
@@ -51,11 +49,11 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
         for (var day = 1; day <= daysInMonth; day++)
         {
             var targetDate = new DateTime(year, month, day);
-            var existingEntry = routineEntries.FirstOrDefault(e => e.Timestamp.Date == targetDate);
+            var existingEntry = routineActivity.Entries.FirstOrDefault(e => e.Timestamp.Date == targetDate);
 
-            if (existingEntry != null)
+            if (existingEntry is RoutineDataEntry existingRoutineDataEntry)
             {
-                monthlyEntries.Add(existingEntry);
+                monthlyEntries.Add(existingRoutineDataEntry);
             }
             else
             {
@@ -73,5 +71,60 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
             Month = month,
             Entries = monthlyEntries
         };
+    }
+
+    public List<DateTime> GetAffectedMonths(List<RoutineMonth> builtMonths, RoutineActivity routineActivity)
+    {
+        if (routineActivity.Entries.Count <= 0 || builtMonths.Count <= 0) return [];
+
+        var startDate = routineActivity.Entries.MinBy(e => e.Timestamp.Date)?.Timestamp.Date;
+        var endDate = routineActivity.Entries.MaxBy(e => e.Timestamp.Date)?.Timestamp.Date;
+
+        var currentMonthIter = new DateTime(startDate!.Value.Year, startDate.Value.Month, 1);
+        var endMonthIter = new DateTime(endDate!.Value.Year, endDate.Value.Month, 1);
+
+        List<DateTime> affectedMonths = [];
+
+        while (currentMonthIter <= endMonthIter)
+        {
+            if (!routineActivity.Entries.Any(e =>
+                    e.Timestamp.Date.Year == currentMonthIter.Year && e.Timestamp.Date.Month == currentMonthIter.Month))
+            {
+                currentMonthIter = currentMonthIter.AddMonths(1);
+                continue;
+            }
+
+            var builtMonthEntries = builtMonths.FirstOrDefault(m =>
+                    m.Year == currentMonthIter.Year && m.Month == currentMonthIter.Month)?.Entries
+                .Where(e => e.State != RoutineState.None);
+
+            HashSet<RoutineDataEntry> builtMonthEntriesSet = new();
+            HashSet<RoutineDataEntry> activityEntriesSet;
+
+            if (builtMonthEntries != null)
+            {
+                var routineDataEntries = builtMonthEntries.ToList();
+                builtMonthEntriesSet = new(routineDataEntries);
+            }
+
+            var iter = currentMonthIter;
+
+            var activityEntries = routineActivity
+                .Entries.Where(m =>
+                    m.Timestamp.Date.Year == iter.Year && m.Timestamp.Date.Month == iter.Month)
+                .OfType<RoutineDataEntry>();
+
+            activityEntriesSet = new(activityEntries);
+
+            var affectedMonthEntries = activityEntriesSet.Except(builtMonthEntriesSet);
+            if (affectedMonthEntries.Any())
+            {
+                affectedMonths.Add(new DateTime(iter.Year, iter.Month, 1));
+            }
+
+            currentMonthIter = currentMonthIter.AddMonths(1);
+        }
+
+        return affectedMonths;
     }
 }
