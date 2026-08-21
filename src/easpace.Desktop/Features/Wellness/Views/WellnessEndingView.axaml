@@ -7,10 +7,10 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.WellnessEndingView"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessEndingView"
              x:DataType="vm:WellnessEndingViewModel">
 
     <Grid RowDefinitions="*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">

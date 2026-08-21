@@ -10,8 +10,8 @@ namespace easpace.Desktop.Features.Mood.Services;
 
 public interface IMoodEntryService
 {
-    MoodEntry CreateMoodEntry(UpsertMoodEntryRequest entryRequest);
+    MoodEntry CreateMoodEntry(UpsertMoodEntryRequest upsertRequest);
     IReadOnlyList<MoodEntry> GetMoodEntries();
-    MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest entryRequest);
+    MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest upsertRequest);
     bool DeleteMoodEntry(Guid entryId);
 }

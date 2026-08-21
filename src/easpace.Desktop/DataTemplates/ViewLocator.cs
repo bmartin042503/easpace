@@ -5,13 +5,17 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
+using easpace.Desktop.Features.Activities.Views;
+using easpace.Desktop.Features.Activities.Views.Dialogs;
 using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Features.Journal.Views;
 using easpace.Desktop.Features.Mood.ViewModels;
+using easpace.Desktop.Features.Mood.Views;
+using easpace.Desktop.Features.Wellness.ViewModels;
+using easpace.Desktop.Features.Wellness.Views;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
 using easpace.Desktop.Views;
-using easpace.Desktop.Views.Activities;
 using easpace.Desktop.Views.Dialogs;
 
 namespace easpace.Desktop.DataTemplates;
@@ -27,7 +31,7 @@ public class ViewLocator : IDataTemplate
             JournalPageViewModel vm => CreateView(new JournalPageView(), vm),
             ActivitiesPageViewModel vm => CreateView(new ActivitiesPageView(), vm),
             MoodPageViewModel vm => CreateView(new MoodPageView(), vm),
-            WellnessViewModel vm => CreateView(new WellnessView(), vm),
+            WellnessPageViewModel vm => CreateView(new WellnessPageView(), vm),
             SettingsViewModel vm => CreateView(new SettingsView(), vm),
             
             // Activities
@@ -44,7 +48,7 @@ public class ViewLocator : IDataTemplate
             RoutineEntryDialogViewModel vm => CreateView(new RoutineEntryDialogView(), vm),
             
             // Wellness
-            WellnessConfigurationViewModel vm => CreateView(new WellnessConfigurationView(), vm),
+            WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
             WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
             WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
             

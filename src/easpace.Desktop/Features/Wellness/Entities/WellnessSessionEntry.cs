@@ -2,14 +2,14 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Wellness.Constants;
 
-namespace easpace.Desktop.Models;
+namespace easpace.Desktop.Features.Wellness.Entities;
 
 /// <summary>
 /// Represents a recorded wellness session.
 /// </summary>
-public class WellnessSession
+public class WellnessSessionEntry
 {
     /// <summary>
     /// Gets or sets the unique identifier for the session.
@@ -24,7 +24,7 @@ public class WellnessSession
     /// <summary>
     /// Gets or sets the originally planned duration for the session.
     /// </summary>
-    public TimeSpan TargetDuration { get; set; }
+    public TimeSpan? TargetDuration { get; set; }
 
     /// <summary>
     /// Gets or sets the actual duration the session lasted.
@@ -44,5 +44,5 @@ public class WellnessSession
     /// <summary>
     /// Gets or sets the actual number of breathing cycles completed during the session.
     /// </summary>
-    public int ActualBreathingCycles { get; set; }
+    public int? ActualBreathingCycles { get; set; }
 }

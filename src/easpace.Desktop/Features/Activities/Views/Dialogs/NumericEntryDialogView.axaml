@@ -14,7 +14,7 @@ Licensed under the MIT License. See LICENSE file for details.
              MinWidth="300"
              MaxWidth="550" MaxHeight="400"
              Background="{StaticResource Haven.Scale.Transparent}"
-             x:Class="easpace.Desktop.Views.Dialogs.NumericEntryDialogView">
+             x:Class="easpace.Desktop.Features.Activities.Views.Dialogs.NumericEntryDialogView">
 
     <Design.DataContext>
         <vmDialogs:NumericEntryDialogViewModel />

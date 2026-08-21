@@ -5,9 +5,9 @@ using System;
 using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Mood.Constants;
+using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Converters;

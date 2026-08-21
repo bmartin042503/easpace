@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vmDataEntries="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.DataEntries"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivityEditorViewModel"
-             x:Class="easpace.Desktop.Views.ActivityEditorView">
+             x:Class="easpace.Desktop.Features.Activities.Views.ActivityEditorView">
 
     <UserControl.Resources>
 

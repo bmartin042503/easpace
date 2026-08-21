@@ -7,6 +7,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
 using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
+using easpace.Desktop.Features.Wellness.Constants;
 
 namespace easpace.Desktop.DataTemplates;
 
@@ -62,6 +63,7 @@ public class TemplateSelector : IDataTemplate
         {
             ActivityViewModel activity => activity.GetType().Name,
             DataEntryViewModel dataEntry => dataEntry.GetType().Name,
+            WellnessSessionType sessionType => sessionType.ToString(),
             _ => data.ToString()
         };
 

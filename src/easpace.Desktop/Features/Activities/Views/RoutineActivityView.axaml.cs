@@ -3,7 +3,7 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Views.Activities;
+namespace easpace.Desktop.Features.Activities.Views;
 
 public partial class RoutineActivityView : UserControl
 {

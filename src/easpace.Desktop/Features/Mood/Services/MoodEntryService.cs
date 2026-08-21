@@ -9,19 +9,20 @@ using easpace.Desktop.Features.Mood.Entities;
 
 namespace easpace.Desktop.Features.Mood.Services;
 
+// Temporary in-memory implementation.
 public class MoodEntryService : IMoodEntryService
 {
     private readonly List<MoodEntry> _moodEntries = [];
 
-    public MoodEntry CreateMoodEntry(UpsertMoodEntryRequest entryRequest)
+    public MoodEntry CreateMoodEntry(UpsertMoodEntryRequest upsertRequest)
     {
         var moodEntry = new MoodEntry
         {
             Id = Guid.NewGuid(),
-            Timestamp = entryRequest.Timestamp,
-            Description = entryRequest.Description,
-            Labels = entryRequest.Labels,
-            Value = entryRequest.Value
+            Timestamp = upsertRequest.Timestamp,
+            Description = upsertRequest.Description,
+            Labels = upsertRequest.Labels,
+            Value = upsertRequest.Value
         };
 
         _moodEntries.Add(moodEntry);
@@ -31,16 +32,16 @@ public class MoodEntryService : IMoodEntryService
 
     public IReadOnlyList<MoodEntry> GetMoodEntries() => _moodEntries;
 
-    public MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest entryRequest)
+    public MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest upsertRequest)
     {
         var existingEntry = _moodEntries.FirstOrDefault(e => e.Id == entryId);
 
         if (existingEntry == null) return null;
 
-        existingEntry.Timestamp = entryRequest.Timestamp;
-        existingEntry.Description = entryRequest.Description;
-        existingEntry.Labels = entryRequest.Labels;
-        existingEntry.Value = entryRequest.Value;
+        existingEntry.Timestamp = upsertRequest.Timestamp;
+        existingEntry.Description = upsertRequest.Description;
+        existingEntry.Labels = upsertRequest.Labels;
+        existingEntry.Value = upsertRequest.Value;
 
         return existingEntry;
     }

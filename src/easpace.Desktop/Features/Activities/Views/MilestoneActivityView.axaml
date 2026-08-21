@@ -12,7 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:MilestoneActivityViewModel"
-             x:Class="easpace.Desktop.Views.Activities.MilestoneActivityView">
+             x:Class="easpace.Desktop.Features.Activities.Views.MilestoneActivityView">
 
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">

@@ -2,19 +2,24 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Constants;
-using easpace.Desktop.Models;
+using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Contracts;
+using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services;
+using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public partial class WellnessConfigurationViewModel : ViewModelBase
+public partial class WellnessStartViewModel : ViewModelBase
 {
     #region Fields
+
+    private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
+    private readonly IBreathingTechniqueService _breathingTechniqueService;
 
     [NotifyPropertyChangedFor(nameof(DurationText))] [ObservableProperty]
     private double _selectedSeconds = 300;
@@ -25,7 +30,11 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
     [ObservableProperty] private bool _isTimerChecked = true;
     [ObservableProperty] private bool _isBreathingChecked = true;
     [ObservableProperty] private bool _isMeditationChecked;
-    [ObservableProperty] private BreathingTechnique? _selectedBreathingTechnique;
+    [ObservableProperty] private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
+    
+    public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
+    
+    public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
 
     #endregion
 
@@ -49,7 +58,7 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
         {
             var timeSpan = TimeSpan.FromSeconds(SelectedSeconds);
 
-            if (IsBreathingChecked && SelectedBreathingTechnique != null)
+            if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
             {
                 // format string as hh:mm:ss if an hour or more, otherwise mm:ss
                 var timeString = timeSpan.TotalHours >= 1
@@ -63,11 +72,11 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
                 // get localized cycle text based on cycle count
                 if (cycles == 1)
                 {
-                    cyclesText = LocalizationService.GetString("Wellness.Slider.OneCycle");
+                    cyclesText = LocalizationService.GetString("Wellness.Session.OneCycle");
                 }
                 else if (cycles > 1)
                 {
-                    cyclesText = string.Format(LocalizationService.GetString("Wellness.Slider.Cycles"), cycles);
+                    cyclesText = string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
                 }
 
                 return $"{timeString} ({cyclesText})";
@@ -83,19 +92,26 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
     /// <summary>
     /// Gets the collection of available breathing techniques.
     /// </summary>
-    public ObservableCollection<BreathingTechnique> BreathingTechniques { get; } = [];
+    public AvaloniaList<BreathingTechniqueViewModel> BreathingTechniques { get; } = [];
 
     #endregion
 
     #region Constructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WellnessConfigurationViewModel"/> class.
+    /// Initializes a new instance of the <see cref="WellnessStartViewModel"/> class.
     /// </summary>
-    public WellnessConfigurationViewModel()
+    public WellnessStartViewModel(
+        IWellnessSessionEntryService wellnessSessionEntryService,
+        IBreathingTechniqueService breathingTechniqueService)
     {
-        InitializeStockBreathingTechniques();
-        SelectedBreathingTechnique = BreathingTechniques.FirstOrDefault();
+        _wellnessSessionEntryService = wellnessSessionEntryService;
+        _breathingTechniqueService = breathingTechniqueService;
+        
+        LoadWellnessSessionEntries();
+        LoadBreathingTechniques();
+
+        WellnessSessionEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSessionEntries));
     }
 
     #endregion
@@ -112,10 +128,10 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
         BreathingTechniqueConfiguration? breathingTechniqueConfiguration = null;
 
         // configure the breathing technique parameters if applicable
-        if (IsBreathingChecked && SelectedBreathingTechnique != null)
+        if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
         {
             // calculate the total duration of a single breathing cycle in seconds
-            var cycleDurationSeconds = SelectedBreathingTechnique.Phases.Sum(p => p.DurationSeconds);
+            var cycleDurationSeconds = SelectedBreathingTechniqueViewModel.Phases.Sum(p => p.DurationSeconds);
 
             int cycles;
 
@@ -126,12 +142,12 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
             }
             else
             {
-                cycles = SelectedBreathingTechnique.Cycles;
+                cycles = SelectedBreathingTechniqueViewModel.Cycles;
                 targetDuration = TimeSpan.Zero;
             }
 
             breathingTechniqueConfiguration = new BreathingTechniqueConfiguration(
-                BreathingTechnique: SelectedBreathingTechnique,
+                BreathingTechnique: SelectedBreathingTechniqueViewModel.BreathingTechnique,
                 Cycles: cycles
             );
         }
@@ -163,6 +179,25 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
 
     #region Private Helper Methods
 
+    private void LoadWellnessSessionEntries()
+    {
+        var sessionEntryViewModels = 
+            _wellnessSessionEntryService.GetWellnessSessionEntries()
+                .Select(se => new WellnessSessionEntryViewModel(se));
+        
+        WellnessSessionEntries.AddRange(sessionEntryViewModels);
+    }
+
+    private void LoadBreathingTechniques()
+    {
+        var techniqueViewModels = _breathingTechniqueService.GetBreathingTechniques()
+            .Select(t => new BreathingTechniqueViewModel(t)).ToList();
+        
+        BreathingTechniques.AddRange(techniqueViewModels);
+        
+        SelectedBreathingTechniqueViewModel = BreathingTechniques.FirstOrDefault();
+    }
+
     /// <summary>
     /// Triggered automatically when the breathing radio button state changes.
     /// </summary>
@@ -176,17 +211,17 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
     /// <summary>
     /// Triggered automatically when the selected breathing technique changes.
     /// </summary>
-    partial void OnSelectedBreathingTechniqueChanged(BreathingTechnique? value) => UpdateSlider();
+    partial void OnSelectedBreathingTechniqueViewModelChanged(BreathingTechniqueViewModel? value) => UpdateSlider();
 
     /// <summary>
     /// Recalculates slider limits, steps, and selected value to align with the current session mode.
     /// </summary>
     private void UpdateSlider()
     {
-        if (IsBreathingChecked && SelectedBreathingTechnique != null)
+        if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
         {
             MaximumSeconds = 20 * 60;
-            StepSeconds = SelectedBreathingTechnique.Phases.Sum(p => p.DurationSeconds);
+            StepSeconds = SelectedBreathingTechniqueViewModel.Phases.Sum(p => p.DurationSeconds);
 
             // calculate minimum cycles required to hit at least one minute
             var minCycles = Math.Ceiling(60.0 / StepSeconds);
@@ -215,26 +250,6 @@ public partial class WellnessConfigurationViewModel : ViewModelBase
         }
 
         SelectedSeconds = newSelectedSeconds;
-    }
-
-    private void InitializeStockBreathingTechniques()
-    {
-        // TODO: retrieve these from the database instead of hardcoding
-        BreathingTechniques.Add(
-            new BreathingTechnique
-            {
-                Name = "Box Breathing",
-                Description = "Box Breathing Description",
-                Phases =
-                [
-                    new BreathingPhase { Type = BreathingPhaseType.Inhale, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.HoldIn, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.Exhale, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.HoldOut, DurationSeconds = 4 }
-                ],
-                Cycles = 4
-            }
-        );
     }
 
     #endregion

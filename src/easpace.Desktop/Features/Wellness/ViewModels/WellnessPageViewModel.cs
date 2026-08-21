@@ -2,38 +2,64 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Linq;
+using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Constants;
-using easpace.Desktop.Models;
+using easpace.Desktop.Features.Wellness.Contracts;
+using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public partial class WellnessViewModel : PageViewModel
+public partial class WellnessPageViewModel : PageViewModel
 {
     #region Fields
+    
+    private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
+    private readonly IBreathingTechniqueService _breathingTechniqueService;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
 
-    private WellnessConfigurationViewModel? _configurationViewModel;
+    private WellnessStartViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
     private WellnessEndingViewModel? _endingViewModel;
+
+    public AvaloniaList<WellnessSessionEntryViewModel> SessionEntries { get; } = [];
 
     #endregion
 
     #region Constructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WellnessViewModel"/> class.
+    /// Initializes a new instance of the <see cref="WellnessPageViewModel"/> class.
     /// </summary>
-    public WellnessViewModel()
+    public WellnessPageViewModel(
+        IWellnessSessionEntryService wellnessSessionEntryService,
+        IBreathingTechniqueService breathingTechniqueService)
     {
         Page = ApplicationPage.Wellness;
+        _wellnessSessionEntryService = wellnessSessionEntryService;
+        _breathingTechniqueService = breathingTechniqueService;
+
         SetConfigurationView();
+        LoadSessionEntries();
     }
 
     #endregion
 
     #region Private Helper Methods
+
+    private void LoadSessionEntries()
+    {
+        SessionEntries.Clear();
+
+        var entryViewModels = _wellnessSessionEntryService.GetWellnessSessionEntries()
+            .Select(se => new WellnessSessionEntryViewModel(se)).ToList();
+
+        SessionEntries.AddRange(entryViewModels);
+    }
 
     /// <summary>
     /// Handles the event when a new session is started from the configuration view.
@@ -50,10 +76,10 @@ public partial class WellnessViewModel : PageViewModel
     /// Handles the event when an active session ends or is manually stopped.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="session">The completed session details.</param>
-    private void OnSessionEnded(object? sender, WellnessSession session)
+    /// <param name="createEntryRequest">The completed session's create request.</param>
+    private void OnSessionEnded(object? sender, CreateWellnessSessionEntryRequest createEntryRequest)
     {
-        SetEndingView(session);
+        SetEndingView(createEntryRequest);
         CleanUpSessionView();
     }
 
@@ -76,7 +102,7 @@ public partial class WellnessViewModel : PageViewModel
         // initialize configuration view model if it doesn't exist
         if (_configurationViewModel == null)
         {
-            _configurationViewModel = new WellnessConfigurationViewModel();
+            _configurationViewModel = new WellnessStartViewModel(_wellnessSessionEntryService, _breathingTechniqueService);
             _configurationViewModel.SessionStarted += OnSessionStarted;
         }
 
@@ -98,10 +124,10 @@ public partial class WellnessViewModel : PageViewModel
     /// <summary>
     /// Sets the current content view to the ending summary view and subscribes to its events.
     /// </summary>
-    /// <param name="session">The session data to display in the ending view model.</param>
-    private void SetEndingView(WellnessSession session)
+    /// <param name="createEntryRequest">A create request to pass to the ending view model for saving.</param>
+    private void SetEndingView(CreateWellnessSessionEntryRequest createEntryRequest)
     {
-        _endingViewModel = new WellnessEndingViewModel(session);
+        _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, createEntryRequest);
         _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
 
         ContentViewModel = _endingViewModel;

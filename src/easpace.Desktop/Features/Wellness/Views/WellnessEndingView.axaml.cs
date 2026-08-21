@@ -1,8 +1,9 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+// Copyright (c) 2026 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
 
-namespace easpace.Desktop.Views;
+using Avalonia.Controls;
+
+namespace easpace.Desktop.Features.Wellness.Views;
 
 public partial class WellnessEndingView : UserControl
 {

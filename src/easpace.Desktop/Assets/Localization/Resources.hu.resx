@@ -478,10 +478,13 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Text.SessionSaved" xml:space="preserve">
         <value>Gyakorlat elmentve</value>
     </data>
-    <data name="Wellness.Slider.OneCycle" xml:space="preserve">
+    <data name="Wellness.Session.OneCycle" xml:space="preserve">
         <value>1 ciklus</value>
     </data>
-    <data name="Wellness.Slider.Cycles" xml:space="preserve">
+    <data name="Wellness.Session.Cycles" xml:space="preserve">
         <value>{0} ciklus</value>
+    </data>
+    <data name="Wellness.Title.History" xml:space="preserve">
+        <value>Előzmények</value>
     </data>
 </root>

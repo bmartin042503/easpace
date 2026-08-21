@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace easpace.Desktop.Models;
+namespace easpace.Desktop.Features.Wellness.Entities;
 
 /// <summary>
 /// Represents a specific breathing technique consisting of multiple phases.
@@ -15,6 +15,11 @@ public class BreathingTechnique
     /// Gets or sets the unique identifier for the breathing technique.
     /// </summary>
     public Guid Id { get; set; } = Guid.NewGuid();
+    
+    /// <summary>
+    /// Gets or sets the creation date of the breathing technique.
+    /// </summary>
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
 
     /// <summary>
     /// Gets or sets the display name of the breathing technique.
@@ -29,7 +34,7 @@ public class BreathingTechnique
     /// <summary>
     /// Gets or sets the sequence of phases that make up a single cycle of this technique.
     /// </summary>
-    public List<BreathingPhase> Phases { get; set; } = [];
+    public ICollection<BreathingPhase> Phases { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the default or target number of cycles for this technique.

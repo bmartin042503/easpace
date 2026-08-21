@@ -1,0 +1,191 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
+             x:DataType="vm:WellnessStartViewModel">
+
+    <UserControl.Resources>
+
+        <dataTemplates:TemplateSelector x:Key="WellnessSessionEntrySelector">
+
+            <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
+                <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Wind}"
+                          Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                          Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                          Height="{StaticResource Haven.Scale.Icon.Size.Md}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
+                <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
+                          Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                          Width="{StaticResource Haven.Scale.Icon.Size.Md}"
+                          Height="{StaticResource Haven.Scale.Icon.Size.Md}" />
+            </DataTemplate>
+
+        </dataTemplates:TemplateSelector>
+
+    </UserControl.Resources>
+
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+
+        <!-- History -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,*"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+              IsVisible="{Binding HasSessionEntries}"
+              Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+
+            <TextBlock Grid.Row="0" Text="{services:LocalizationService Key='Wellness.Title.History'}"
+                       Classes="neutral fs3" TextAlignment="Center" />
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                <ItemsRepeater ItemsSource="{Binding WellnessSessionEntries}">
+
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
+
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                                <!-- Icon -->
+                                <ContentControl Grid.Column="0" Content="{Binding SessionType}"
+                                                ContentTemplate="{StaticResource WellnessSessionEntrySelector}"
+                                                VerticalAlignment="Center" />
+
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
+
+                                    <!-- Session type name -->
+                                    <TextBlock
+                                        Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
+                                        Classes="neutral fs5" />
+
+                                    <!-- Breathing session details -->
+                                    <StackPanel Orientation="Horizontal" Spacing="4"
+                                                IsVisible="{Binding IsTypeBreathing}">
+
+                                        <TextBlock Classes="subtle neutral fs6"
+                                                   Text="{Binding BreathingTechnique.Name}" />
+
+                                        <TextBlock Classes="subtle neutral fs6"
+                                                   Text="•" />
+
+                                        <TextBlock Classes="subtle neutral fs6"
+                                                   Text="{Binding DurationMinutesText}">
+                                        </TextBlock>
+
+                                        <TextBlock Classes="subtle neutral fs6"
+                                                   Text="•" />
+
+                                        <TextBlock Classes="subtle neutral fs6"
+                                                   Text="{Binding CyclesText}" />
+
+                                    </StackPanel>
+
+                                    <!-- Meditation session details -->
+                                    <TextBlock Classes="subtle neutral fs6"
+                                               IsVisible="{Binding IsTypeMeditation}"
+                                               Text="{Binding DurationMinutesText}" />
+
+                                    <!-- Start date -->
+                                    <TextBlock Classes="subtle neutral fs6"
+                                               Text="{Binding StartDate, Converter={StaticResource RelativeDateConverter}}" />
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Vertical"
+                                     Spacing="{StaticResource Haven.Scale.Spacing.Md}" />
+                    </ItemsRepeater.Layout>
+
+                </ItemsRepeater>
+            </ScrollViewer>
+
+        </Grid>
+
+        <!-- Configuration -->
+        <Grid Grid.Column="1" RowDefinitions="*,*,*,*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}"
+              MaxHeight="620">
+
+            <!-- Title -->
+            <TextBlock Grid.Row="0" Classes="neutral fs1"
+                       Text="{services:LocalizationService Key='Wellness.Title.Start'}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
+
+            <!-- Radio buttons -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="160"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400">
+
+                <!-- Breathing -->
+                <RadioButton GroupName="session-type"
+                             IsChecked="{Binding IsBreathingChecked}"
+                             Content="{services:LocalizationService Key='Wellness.SessionType.Breathing'}"
+                             HorizontalAlignment="Center" />
+
+                <!-- Meditation -->
+                <RadioButton GroupName="session-type"
+                             IsChecked="{Binding IsMeditationChecked}"
+                             Content="{services:LocalizationService Key='Wellness.SessionType.Meditation'}"
+                             HorizontalAlignment="Center" />
+
+            </StackPanel>
+
+            <!-- Breathing techniques -->
+            <ComboBox Grid.Row="2" IsVisible="{Binding IsBreathingChecked}"
+                      SelectedItem="{Binding SelectedBreathingTechniqueViewModel}"
+                      ItemsSource="{Binding BreathingTechniques}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:BreathingTechniqueViewModel">
+                        <TextBlock Classes="neutral" Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+
+            <!-- Timer checkbox -->
+            <CheckBox Grid.Row="3" Content="{services:LocalizationService Key='Wellness.Label.Duration'}"
+                      IsChecked="{Binding IsTimerChecked}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+            <!-- Duration slider -->
+            <StackPanel Grid.Row="4" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                        VerticalAlignment="Center" IsVisible="{Binding IsTimerChecked}">
+
+                <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
+                           Text="{Binding DurationText}" />
+
+                <Slider Classes="haven"
+                        Minimum="{Binding MinimumSeconds}"
+                        Maximum="{Binding MaximumSeconds}"
+                        Value="{Binding SelectedSeconds}"
+                        TickFrequency="{Binding StepSeconds}"
+                        IsSnapToTickEnabled="True"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxWidth="400" />
+
+            </StackPanel>
+
+            <Button Grid.Row="5" Classes="primary regular"
+                    Content="{services:LocalizationService Key='Wellness.Button.BeginSession'}"
+                    Command="{Binding StartSessionCommand}"
+                    HorizontalAlignment="Center" />
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

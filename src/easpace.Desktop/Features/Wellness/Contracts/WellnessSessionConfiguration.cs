@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Wellness.Constants;
 
-namespace easpace.Desktop.Models;
+namespace easpace.Desktop.Features.Wellness.Contracts;
 
 /// <summary>
 /// Represents the configuration parameters required to start a wellness session.
@@ -16,6 +16,6 @@ namespace easpace.Desktop.Models;
 public record WellnessSessionConfiguration(
     WellnessSessionType SessionType,
     bool IsTimerSet,
-    TimeSpan TargetDuration,
+    TimeSpan? TargetDuration,
     BreathingTechniqueConfiguration? BreathingTechniqueConfiguration
 );

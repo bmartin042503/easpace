@@ -1,0 +1,50 @@
+// Copyright (c) 2026 Martin Bartos
+// Licensed under the MIT License. See LICENSE file for details.
+
+using System;
+using System.Linq;
+using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Services;
+using easpace.Desktop.ViewModels;
+
+namespace easpace.Desktop.Features.Wellness.ViewModels;
+
+public class WellnessSessionEntryViewModel : ViewModelBase
+{
+    public Guid Id { get; }
+    public DateTimeOffset StartDate { get; }
+    public TimeSpan? TargetDuration { get; }
+    public TimeSpan ActualDuration { get; }
+    public WellnessSessionType SessionType { get; }
+    public BreathingTechnique? BreathingTechnique { get; }
+    
+    public bool IsTypeBreathing => SessionType == WellnessSessionType.Breathing;
+    public bool IsTypeMeditation => SessionType == WellnessSessionType.Meditation;
+    
+    public string DurationMinutesText { get; init; }
+    public string CyclesText { get; init; }
+    
+    public WellnessSessionEntryViewModel(WellnessSessionEntry wellnessSessionEntry)
+    {
+        Id = wellnessSessionEntry.Id;
+        StartDate = wellnessSessionEntry.StartDate;
+        TargetDuration = wellnessSessionEntry.TargetDuration;
+        ActualDuration = wellnessSessionEntry.ActualDuration;
+        SessionType = wellnessSessionEntry.Type;
+        BreathingTechnique = wellnessSessionEntry.BreathingTechnique;
+        
+        var minutes = ActualDuration.Minutes;
+        
+        DurationMinutesText = minutes == 1
+            ? LocalizationService.GetString("Common.Time.OneMinute")
+            : string.Format(LocalizationService.GetString("Common.Time.Minutes"), minutes);
+
+        var cycles = ActualDuration.Seconds / BreathingTechnique?.Phases.Sum(p => p.DurationSeconds);
+
+        CyclesText = cycles == 1
+            ? LocalizationService.GetString("Wellness.Session.OneCycle")
+            : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
+
+    }
+}

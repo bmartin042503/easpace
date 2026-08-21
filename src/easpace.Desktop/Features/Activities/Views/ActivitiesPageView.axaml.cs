@@ -3,7 +3,7 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Views;
+namespace easpace.Desktop.Features.Activities.Views;
 
 public partial class ActivitiesPageView : UserControl
 {

@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:constants="clr-namespace:easpace.Desktop.Features.Mood.Constants"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Mood.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.MoodPageView"
+             x:Class="easpace.Desktop.Features.Mood.Views.MoodPageView"
              x:DataType="vm:MoodPageViewModel"
              Background="{DynamicResource Haven.Sem.Canvas}">
 

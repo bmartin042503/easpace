@@ -3,7 +3,7 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Views.Dialogs;
+namespace easpace.Desktop.Features.Activities.Views.Dialogs;
 
 public partial class RoutineEntryDialogView : UserControl
 {

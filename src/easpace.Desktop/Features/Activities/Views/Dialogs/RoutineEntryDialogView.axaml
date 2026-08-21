@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
              MaxWidth="550" MaxHeight="400"
              Background="{StaticResource Haven.Scale.Transparent}"
-             x:Class="easpace.Desktop.Views.Dialogs.RoutineEntryDialogView">
+             x:Class="easpace.Desktop.Features.Activities.Views.Dialogs.RoutineEntryDialogView">
 
     <Design.DataContext>
         <vmDialogs:RoutineEntryDialogViewModel />
