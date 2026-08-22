@@ -56,7 +56,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     public event EventHandler<Activity>? Saved;
     public event EventHandler? Canceled;
 
-    public AvaloniaList<ActivityDataEntryViewModel> DataEntries { get; } = [];
+    public AvaloniaList<ActivityDataEntryViewModel> DataEntries { get; init; }
     
     public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
 
@@ -85,6 +85,8 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         SelectedType = ActivityType.Trend;
         TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
         
+        DataEntries = [];
+        
         ValidateAllProperties();
         SaveCommand.NotifyCanExecuteChanged();
     }
@@ -108,8 +110,8 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
             RoutineActivityViewModel => ActivityType.Routine,
             _ => SelectedType
         };
-        
-        DataEntries.AddRange(activity.Entries);
+
+        DataEntries = _activity.Entries;
         
         DataEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(DataEntriesLabel));
 
@@ -168,6 +170,8 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
 
         await _activity.EditDataEntry(dataEntryVm.Id);
+        
+        OnPropertyChanged(nameof(MilestoneActivityViewModel.EntriesSum));
     }
 
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)

@@ -26,6 +26,8 @@ public abstract partial class ActivityViewModel : ViewModelBase
     private readonly Activity _activity;
 
     public Guid Id { get; }
+    
+    public DateTimeOffset CreatedAt { get; }
 
     public event EventHandler? EditRequested;
     public event EventHandler? DeleteRequested;
@@ -43,6 +45,7 @@ public abstract partial class ActivityViewModel : ViewModelBase
 
         Id = _activity.Id;
         Name = _activity.Name;
+        CreatedAt = _activity.CreatedAt;
 
         Entries.CollectionChanged += (s, e) =>
         {

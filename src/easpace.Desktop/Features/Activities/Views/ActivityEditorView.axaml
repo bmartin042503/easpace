@@ -188,7 +188,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
 
                                     <!-- NumericDataEntry template -->
-                                    <DataTemplate x:Key="NumericDataEntryViewModel"
+                                    <DataTemplate x:Key="NumericActivityDataEntryViewModel"
                                                   x:DataType="vmDataEntries:NumericActivityDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
@@ -201,7 +201,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     </DataTemplate>
 
                                     <!-- RoutineDataEntry template -->
-                                    <DataTemplate x:Key="RoutineDataEntryViewModel"
+                                    <DataTemplate x:Key="RoutineActivityDataEntryViewModel"
                                                   x:DataType="vmDataEntries:RoutineActivityDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
@@ -218,8 +218,10 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="vmDataEntries:ActivityDataEntryViewModel">
+                                    
                                     <ContentControl Content="{Binding .}"
-                                                    ContentTemplate="{StaticResource DataEntrySelector}" />
+                                                    ContentTemplate="{StaticResource DataEntrySelector}" /> 
+                                    
                                 </DataTemplate>
                             </ItemsRepeater.ItemTemplate>
 

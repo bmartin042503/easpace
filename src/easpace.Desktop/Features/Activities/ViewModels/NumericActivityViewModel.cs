@@ -109,8 +109,11 @@ public abstract partial class NumericActivityViewModel : ActivityViewModel
             {
                 entryVm.Value = numericDataEntry.Value;
             }
+            OnDataEntryUpdated();
         }
 
         return entryVm;
     }
+
+    protected virtual void OnDataEntryUpdated() {}
 }

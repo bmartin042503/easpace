@@ -57,4 +57,10 @@ public partial class MilestoneActivityViewModel : NumericActivityViewModel
         base.OnEntryCollectionChanged();
         OnPropertyChanged(nameof(EntriesSum));
     }
+
+    protected override void OnDataEntryUpdated()
+    {
+        base.OnDataEntryUpdated();
+        OnPropertyChanged(nameof(EntriesSum));
+    }
 }

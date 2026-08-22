@@ -75,13 +75,22 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
     private async Task LoadActivities()
     {
-        _allActivities.Clear();
-
-        foreach (var activity in await _activityService.GetActivitiesAsync())
-        {
-            // TODO: optimize as every insertion here will notify UI instead of one single notification
-            InsertViewModel(activity);
-        }
+        var activities = await _activityService.GetActivitiesAsync();
+        
+        var activityViewModels = activities
+            .Select(CreateViewModel)
+            .ToList();
+        
+        activityViewModels.ForEach(SubscribeToActivityEvents);
+        
+        _allActivities.AddRange(activityViewModels);
+        Activities.AddRange(activityViewModels);
+        
+        FilterActivities();
+        
+        SelectedActivity = activityViewModels.FirstOrDefault();
+            
+        OnPropertyChanged(nameof(HasActivities)); 
     }
 
     partial void OnSelectedActivityChanged(ActivityViewModel? value)
@@ -154,7 +163,20 @@ public partial class ActivitiesPageViewModel : PageViewModel
     {
         if (sender is ActivityEditorViewModel { IsCreatingNew: true })
         {
-            InsertViewModel(activity);
+            var vm = CreateViewModel(activity);
+            
+            _allActivities.Add(vm);
+            Activities.Insert(0, vm);
+            SubscribeToActivityEvents(vm);
+            
+            OnPropertyChanged(nameof(HasActivities));
+            
+            FilterActivities();
+            
+            if (Activities.Contains(vm))
+            {
+                SelectedActivity = vm;
+            }
         }
 
         // editor updates the view model by calling UpdateFrom() with an update request
@@ -162,43 +184,27 @@ public partial class ActivitiesPageViewModel : PageViewModel
         CloseEditor();
     }
 
-    private void InsertViewModel(Activity activity)
+    private ActivityViewModel CreateViewModel(Activity activity)
     {
-        ActivityViewModel? activityViewModel = null;
-        
         switch (activity)
         {
             case TrendActivity trendActivity:
-                activityViewModel = new TrendActivityViewModel(
+                return new TrendActivityViewModel(
                     trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
                 );
-                break;
             
             case MilestoneActivity milestoneActivity:
-                activityViewModel = new MilestoneActivityViewModel(
+                return new MilestoneActivityViewModel(
                     milestoneActivity, _activityDataEntryService, _activityService, _dialogService
                 );
-                break;
             
             case RoutineActivity routineActivity:
-                activityViewModel = new RoutineActivityViewModel(
+                return new RoutineActivityViewModel(
                     routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
                 );
-                break;
-        }
-
-        if (activityViewModel is null) return;
-        _allActivities.Add(activityViewModel);
-        Activities.Insert(0, activityViewModel);
-        SubscribeToActivityEvents(activityViewModel);
-        
-        OnPropertyChanged(nameof(HasActivities));
-        
-        FilterActivities();
-
-        if (Activities.Contains(activityViewModel))
-        {
-            SelectedActivity = activityViewModel;
+            
+            default:
+                throw new NotSupportedException("Undefined activity type");
         }
     }
 
@@ -258,6 +264,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
         var filteredItems = _allActivities
             .Where(vm => vm.IsArchived == showArchivedActivities)
+            .OrderByDescending(vm => vm.CreatedAt)
             .ToList();
 
         Activities.Clear();

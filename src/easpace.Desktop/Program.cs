@@ -34,6 +34,10 @@ sealed class Program
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
             await dbContext.Database.MigrateAsync();
+            
+            // TODO:
+            // implement database seeder (for saving a couple of breathing techniques) and call it here
+            // with localization support (?)
         }
         
         App.ConfigureServices(host.Services);
