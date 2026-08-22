@@ -62,7 +62,7 @@ public class TemplateSelector : IDataTemplate
         var key = data switch
         {
             ActivityViewModel activity => activity.GetType().Name,
-            DataEntryViewModel dataEntry => dataEntry.GetType().Name,
+            ActivityDataEntryViewModel dataEntry => dataEntry.GetType().Name,
             WellnessSessionType sessionType => sessionType.ToString(),
             _ => data.ToString()
         };

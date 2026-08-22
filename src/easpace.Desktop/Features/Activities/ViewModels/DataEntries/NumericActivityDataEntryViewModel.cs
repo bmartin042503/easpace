@@ -6,12 +6,12 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 
-public partial class NumericDataEntryViewModel : DataEntryViewModel
+public partial class NumericActivityDataEntryViewModel : ActivityDataEntryViewModel
 {
     [ObservableProperty] private double _value;
     
-    public NumericDataEntryViewModel(NumericDataEntry numericEntry) : base(numericEntry)
+    public NumericActivityDataEntryViewModel(NumericActivityDataEntry numericActivityEntry) : base(numericActivityEntry)
     {
-        Value = numericEntry.Value;
+        Value = numericActivityEntry.Value;
     }
 }

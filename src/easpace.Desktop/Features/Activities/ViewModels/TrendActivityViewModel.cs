@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Activities.Constants;
@@ -29,7 +30,7 @@ public partial class TrendActivityViewModel : NumericActivityViewModel
     [ObservableProperty] private ChartTimeRange _selectedTimeRange;
     [ObservableProperty] private IEnumerable<TrendChartDataPoint> _dataPoints = [];
 
-    public NumericDataEntryViewModel? LastEntry => Entries.OfType<NumericDataEntryViewModel>().MaxBy(e => e.Timestamp);
+    public NumericActivityDataEntryViewModel? LastEntry => Entries.OfType<NumericActivityDataEntryViewModel>().MaxBy(e => e.Timestamp);
 
     public string CurrentValueText => string.Format(LocalizationService.GetString("TrendActivity.Details.CurrentValue"),
         LastEntry?.Value, Unit);
@@ -37,20 +38,22 @@ public partial class TrendActivityViewModel : NumericActivityViewModel
     public TrendActivityViewModel(
         TrendActivity trendActivity,
         ITrendActivityDataProvider trendActivityDataProvider,
-        IDataEntryService dataEntryService,
+        IActivityDataEntryService activityDataEntryService,
         IActivityService activityService,
-        IDialogService dialogService) : base(trendActivity, dataEntryService, dialogService)
+        IDialogService dialogService) : base(trendActivity, activityDataEntryService, dialogService)
     {
         _trendActivity = trendActivity;
         _trendActivityDataProvider = trendActivityDataProvider;
         _activityService = activityService;
 
         _selectedTimeRange = ChartTimeRange.Day;
+        
+        LoadEntries();
     }
 
-    public override Activity? UpdateFrom(UpdateActivityRequest updateRequest)
+    public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = _activityService.UpdateActivity(Id, updateRequest);
+        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is null) return null;
 
@@ -68,7 +71,7 @@ public partial class TrendActivityViewModel : NumericActivityViewModel
 
     private void UpdateDataPoints(ChartTimeRange timeRange)
     {
-        var numericEntries = _trendActivity.Entries.OfType<NumericDataEntry>().ToList();
+        var numericEntries = _trendActivity.Entries.OfType<NumericActivityDataEntry>().ToList();
         DataPoints = _trendActivityDataProvider.GetChartData(timeRange, numericEntries);
     }
 

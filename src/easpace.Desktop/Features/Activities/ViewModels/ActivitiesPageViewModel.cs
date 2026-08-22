@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,6 +15,7 @@ using easpace.Desktop.Features.Activities.Services.DataProviders;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
@@ -21,8 +23,9 @@ public partial class ActivitiesPageViewModel : PageViewModel
 {
     private readonly IActivityService _activityService;
     private readonly IActivityEditorService _activityEditorService;
-    private readonly IDataEntryService _dataEntryService;
+    private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly IDialogService _dialogService;
+    private readonly ILogger<ActivitiesPageViewModel> _logger;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
 
@@ -38,6 +41,8 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
     public bool HasActivities => _allActivities.Count > 0;
 
+    private bool _isInitialized;
+
     public int SelectedFilterIndex
     {
         get;
@@ -51,8 +56,9 @@ public partial class ActivitiesPageViewModel : PageViewModel
     public ActivitiesPageViewModel(
         IActivityService activityService,
         IActivityEditorService activityEditorService,
-        IDataEntryService dataEntryService,
+        IActivityDataEntryService activityDataEntryService,
         IDialogService dialogService,
+        ILogger<ActivitiesPageViewModel> logger,
         ITrendActivityDataProvider trendActivityDataProvider,
         IRoutineActivityDataProvider routineActivityDataProvider)
     {
@@ -60,24 +66,22 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
         _activityService = activityService;
         _activityEditorService = activityEditorService;
-        _dataEntryService = dataEntryService;
+        _activityDataEntryService = activityDataEntryService;
         _dialogService = dialogService;
+        _logger = logger;
         _trendActivityDataProvider = trendActivityDataProvider;
         _routineActivityDataProvider = routineActivityDataProvider;
-
-        LoadActivities();
     }
 
-    private void LoadActivities()
+    private async Task LoadActivities()
     {
         _allActivities.Clear();
 
-        foreach (var activity in _activityService.GetActivities())
+        foreach (var activity in await _activityService.GetActivitiesAsync())
         {
+            // TODO: optimize as every insertion here will notify UI instead of one single notification
             InsertViewModel(activity);
         }
-
-        Activities.AddRange(_allActivities);
     }
 
     partial void OnSelectedActivityChanged(ActivityViewModel? value)
@@ -85,6 +89,23 @@ public partial class ActivitiesPageViewModel : PageViewModel
         if (_editorViewModel == null)
         {
             ContentViewModel = value;
+        }
+    }
+
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
+        if (_isInitialized) return;
+
+        try
+        {
+            await LoadActivities();
+            _isInitialized = true;
+        }
+        catch (Exception ex)
+        {
+            // TODO: proper logging and better exception handling
+            _logger.LogError(ex, ex.Message);
         }
     }
 
@@ -149,19 +170,19 @@ public partial class ActivitiesPageViewModel : PageViewModel
         {
             case TrendActivity trendActivity:
                 activityViewModel = new TrendActivityViewModel(
-                    trendActivity, _trendActivityDataProvider, _dataEntryService, _activityService, _dialogService
+                    trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
                 );
                 break;
             
             case MilestoneActivity milestoneActivity:
                 activityViewModel = new MilestoneActivityViewModel(
-                    milestoneActivity, _dataEntryService, _activityService, _dialogService
+                    milestoneActivity, _activityDataEntryService, _activityService, _dialogService
                 );
                 break;
             
             case RoutineActivity routineActivity:
                 activityViewModel = new RoutineActivityViewModel(
-                    routineActivity, _routineActivityDataProvider, _dataEntryService, _activityService, _dialogService
+                    routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
                 );
                 break;
         }
@@ -212,7 +233,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
             if (!confirmDeletionDialog.Confirmed) return;
 
-            var deleted = _activityService.DeleteActivity(activityViewModel.Id);
+            var deleted = await _activityService.DeleteActivityAsync(activityViewModel.Id);
 
             if (!deleted) return;
 

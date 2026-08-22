@@ -11,10 +11,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
+             xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{DynamicResource Haven.Sem.Canvas}"
+             utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <UserControl.Resources>
         <!-- Template selector of Activity list item -->

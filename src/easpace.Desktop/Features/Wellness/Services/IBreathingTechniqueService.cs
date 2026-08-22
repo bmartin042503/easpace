@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 
@@ -10,9 +11,8 @@ namespace easpace.Desktop.Features.Wellness.Services;
 
 public interface IBreathingTechniqueService
 {
-    BreathingTechnique CreateBreathingTechnique(UpsertBreathingTechniqueRequest upsertRequest);
-    IReadOnlyList<BreathingTechnique> GetBreathingTechniques();
-    BreathingTechnique? UpdateActivity(Guid techniqueId, UpsertBreathingTechniqueRequest upsertRequest);
-    bool DeleteBreathingTechnique(Guid techniqueId);
-    
+    Task<BreathingTechnique> CreateBreathingTechniqueAsync(UpsertBreathingTechniqueRequest upsertRequest);
+    Task<IReadOnlyList<BreathingTechnique>> GetBreathingTechniquesAsync();
+    Task<BreathingTechnique?> UpdateBreathingTechniqueAsync(Guid techniqueId, UpsertBreathingTechniqueRequest upsertRequest);
+    Task<bool> DeleteBreathingTechniqueAsync(Guid techniqueId);
 }

@@ -25,28 +25,29 @@ public partial class RoutineActivityViewModel : ActivityViewModel
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
     private readonly IActivityService _activityService;
     private readonly IDialogService _dialogService;
-    private readonly IDataEntryService _dataEntryService;
+    private readonly IActivityDataEntryService _activityDataEntryService;
 
     public AvaloniaList<RoutineMonth> RoutineMonths { get; } = [];
 
-    public RoutineDataEntryViewModel? TodayEntry =>
+    public RoutineActivityDataEntryViewModel? TodayEntry =>
         Entries
-            .OfType<RoutineDataEntryViewModel>()
+            .OfType<RoutineActivityDataEntryViewModel>()
             .FirstOrDefault(e => e.Timestamp.Date == DateTime.Today && e.State != RoutineState.None);
 
     public RoutineActivityViewModel(
         RoutineActivity routineActivity,
         IRoutineActivityDataProvider routineActivityDataProvider,
-        IDataEntryService dataEntryService,
+        IActivityDataEntryService activityDataEntryService,
         IActivityService activityService,
-        IDialogService dialogService) : base(routineActivity, dataEntryService)
+        IDialogService dialogService) : base(routineActivity, activityDataEntryService)
     {
         _routineActivity = routineActivity;
         _routineActivityDataProvider = routineActivityDataProvider;
         _activityService = activityService;
         _dialogService = dialogService;
-        _dataEntryService = dataEntryService;
+        _activityDataEntryService = activityDataEntryService;
 
+        LoadEntries();
         LoadRoutineMonths();
     }
 
@@ -64,9 +65,9 @@ public partial class RoutineActivityViewModel : ActivityViewModel
         UpdateMonths();
     }
 
-    public override Activity? UpdateFrom(UpdateActivityRequest updateRequest)
+    public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = _activityService.UpdateActivity(Id, updateRequest);
+        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is null) return null;
 
@@ -112,13 +113,13 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                     Value: null
                 );
                 
-                var updatedDataEntry = _dataEntryService.UpdateDataEntry(existingEntry.Id, updateEntryRequest);
+                var updatedDataEntry = await _activityDataEntryService.UpdateDataEntryAsync(existingEntry.Id, updateEntryRequest);
 
-                if (updatedDataEntry is RoutineDataEntry routineDataEntry)
+                if (updatedDataEntry is RoutineActivityDataEntry routineDataEntry)
                 {
                     var dataEntryVm = Entries.FirstOrDefault(e => e.Id == routineDataEntry.Id);
 
-                    if (dataEntryVm is RoutineDataEntryViewModel routineDataEntryVm)
+                    if (dataEntryVm is RoutineActivityDataEntryViewModel routineDataEntryVm)
                     {
                         routineDataEntryVm.Timestamp = routineEntryDialog.GetTimestamp();
                         routineDataEntryVm.State = routineEntryDialog.SelectedState;
@@ -135,25 +136,25 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                     Timestamp: routineEntryDialog.GetTimestamp(),
                     State: routineEntryDialog.SelectedState,
                     Value: null,
-                    Type: DataEntryType.Routine
+                    Type: ActivityDataEntryType.Routine
                 );
 
-                var dataEntry = _dataEntryService.CreateDataEntry(Id, createEntryRequest);
+                var dataEntry = await _activityDataEntryService.CreateDataEntryAsync(Id, createEntryRequest);
 
-                if (dataEntry is not RoutineDataEntry routineDataEntry) return;
+                if (dataEntry is not RoutineActivityDataEntry routineDataEntry) return;
 
                 _routineActivity.Entries.Add(routineDataEntry);
 
-                var dataEntryVm = new RoutineDataEntryViewModel(routineDataEntry);
+                var dataEntryVm = new RoutineActivityDataEntryViewModel(routineDataEntry);
 
                 Entries.Add(dataEntryVm);
             }
         }
     }
 
-    public override async Task<DataEntryViewModel?> EditDataEntry(Guid entryId)
+    public override async Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId)
     {
-        var entryVm = Entries.OfType<RoutineDataEntryViewModel>().FirstOrDefault(e => e.Id == entryId);
+        var entryVm = Entries.OfType<RoutineActivityDataEntryViewModel>().FirstOrDefault(e => e.Id == entryId);
         if (entryVm is null) return null;
 
         var routineEntryDialog = new RoutineEntryDialogViewModel
@@ -175,9 +176,9 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                 Value: null
             );
 
-            var updatedEntry = _dataEntryService.UpdateDataEntry(entryId, updateRequest);
+            var updatedEntry = await _activityDataEntryService.UpdateDataEntryAsync(entryId, updateRequest);
 
-            if (updatedEntry is not RoutineDataEntry routineDataEntry) return null;
+            if (updatedEntry is not RoutineActivityDataEntry routineDataEntry) return null;
 
             if (updateRequest.Timestamp is not null)
             {

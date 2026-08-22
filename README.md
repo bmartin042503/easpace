@@ -5,7 +5,7 @@
 
 **easpace** is a cross-platform, open-source application built with **.NET** and **Avalonia UI**, designed to be a personal digital haven. It provides a quiet, secure space to reflect, track your well-being, and find your center.
 
-Mental health tools should be accessible and completely safe. That is why easpace is **100% open-source and free forever**. No ads, no subscriptions, no hidden paywalls, no servers and no cloud tracking. **All your data is stored encrypted on your device locally**.
+Mental health tools should be accessible and completely safe. That is why easpace is **100% open-source and free forever**. No ads, no subscriptions, no hidden paywalls, no servers and no cloud tracking. **All your data is stored locally on your device, encrypted with ChaCha20-Poly1305**.
 
 Will be available for Windows, macOS and Linux (also for iOS and Android in later versions).
 
@@ -42,7 +42,7 @@ Contributions are currently closed until the first version is released.
 - [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) - Cross-platform UI framework
 - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) - MVVM architecture toolkit
 - [Entity Framework Core](https://github.com/dotnet/efcore) - Object-relational mapper
-- [SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers) - Database encryption
+- [SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers-NuGet) - Database encryption
 - [Devlooped.CredentialManager](https://github.com/devlooped/CredentialManager) - Secure local key storage
 - [Phosphor Icons](https://phosphoricons.com/) - Iconography
 

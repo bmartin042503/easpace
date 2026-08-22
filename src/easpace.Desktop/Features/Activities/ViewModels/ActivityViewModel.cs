@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Data;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
@@ -21,7 +22,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 public abstract partial class ActivityViewModel : ViewModelBase
 {
-    private readonly IDataEntryService _dataEntryService;
+    private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly Activity _activity;
 
     public Guid Id { get; }
@@ -33,12 +34,12 @@ public abstract partial class ActivityViewModel : ViewModelBase
     [ObservableProperty] private string _name = string.Empty;
     [ObservableProperty] private bool _isArchived;
 
-    public AvaloniaList<DataEntryViewModel> Entries { get; } = [];
+    public AvaloniaList<ActivityDataEntryViewModel> Entries { get; } = [];
 
-    protected ActivityViewModel(Activity activity, IDataEntryService dataEntryService)
+    protected ActivityViewModel(Activity activity, IActivityDataEntryService activityDataEntryService)
     {
         _activity = activity;
-        _dataEntryService = dataEntryService;
+        _activityDataEntryService = activityDataEntryService;
 
         Id = _activity.Id;
         Name = _activity.Name;
@@ -47,18 +48,16 @@ public abstract partial class ActivityViewModel : ViewModelBase
         {
             OnEntryCollectionChanged();
         };
-
-        LoadEntries();
     }
     
     protected virtual void OnEntryCollectionChanged() {}
 
-    public abstract Activity? UpdateFrom(UpdateActivityRequest updateRequest);
+    public abstract Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest);
 
-    public abstract Task<DataEntryViewModel?> EditDataEntry(Guid entryId);
+    public abstract Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId);
 
     [RelayCommand]
-    private void ToggleArchive()
+    private async Task ToggleArchive()
     {
         IsArchived = !IsArchived;
         ArchiveToggled?.Invoke(this, EventArgs.Empty);
@@ -81,15 +80,15 @@ public abstract partial class ActivityViewModel : ViewModelBase
         _activity.IsArchived = value;
     }
 
-    private void LoadEntries()
+    protected void LoadEntries()
     {
         switch (_activity)
         {
             case NumericActivity numericActivity:
 
                 var numericVms = numericActivity.Entries
-                    .OfType<NumericDataEntry>()
-                    .Select(e => new NumericDataEntryViewModel(e));
+                    .OfType<NumericActivityDataEntry>()
+                    .Select(e => new NumericActivityDataEntryViewModel(e));
 
                 Entries.Clear();
                 Entries.AddRange(numericVms);
@@ -99,8 +98,8 @@ public abstract partial class ActivityViewModel : ViewModelBase
             case RoutineActivity routineActivity:
 
                 var routineVms = routineActivity.Entries
-                    .OfType<RoutineDataEntry>()
-                    .Select(e => new RoutineDataEntryViewModel(e));
+                    .OfType<RoutineActivityDataEntry>()
+                    .Select(e => new RoutineActivityDataEntryViewModel(e));
 
                 Entries.Clear();
                 Entries.AddRange(routineVms);
@@ -112,12 +111,12 @@ public abstract partial class ActivityViewModel : ViewModelBase
         }
     }
 
-    public bool DeleteDataEntry(Guid entryId)
+    public async Task<bool> DeleteDataEntryAsync(Guid entryId)
     {
         var entryVm = Entries.FirstOrDefault(e => e.Id == entryId);
         if (entryVm is null) return false;
 
-        var deleted = _dataEntryService.DeleteDataEntry(entryVm.Id);
+        var deleted = await _activityDataEntryService.DeleteDataEntryAsync(entryVm.Id);
 
         if (!deleted) return false;
 

@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Constants;
 
-public enum DataEntryType
+public enum ActivityDataEntryType
 {
     Numeric,
     Routine

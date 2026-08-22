@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Mood.Constants;
 
 namespace easpace.Desktop.Features.Mood.Entities;

@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.IO;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
+using easpace.Desktop.Data;
 using easpace.Desktop.Factories;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.Services.DataProviders;
@@ -16,6 +18,7 @@ using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace easpace.Desktop.Extensions;
@@ -36,24 +39,26 @@ public static class ServiceCollectionExtensions
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());
-            
+
             collection.AddSingleton<ActivityEditorService>();
             collection.AddSingleton<IActivityEditorService>(sp => sp.GetRequiredService<ActivityEditorService>());
 
-            collection.AddSingleton<DataEntryService>();
-            collection.AddSingleton<IDataEntryService>(sp => sp.GetRequiredService<DataEntryService>());
-            
+            collection.AddSingleton<ActivityDataEntryService>();
+            collection.AddSingleton<IActivityDataEntryService>(sp => sp.GetRequiredService<ActivityDataEntryService>());
+
             collection.AddSingleton<JournalEntryService>();
             collection.AddSingleton<IJournalEntryService>(sp => sp.GetRequiredService<JournalEntryService>());
-            
+
             collection.AddSingleton<MoodEntryService>();
             collection.AddSingleton<IMoodEntryService>(sp => sp.GetRequiredService<MoodEntryService>());
-            
+
             collection.AddSingleton<BreathingTechniqueService>();
-            collection.AddSingleton<IBreathingTechniqueService>(sp => sp.GetRequiredService<BreathingTechniqueService>());
-            
+            collection.AddSingleton<IBreathingTechniqueService>(sp =>
+                sp.GetRequiredService<BreathingTechniqueService>());
+
             collection.AddSingleton<WellnessSessionEntryService>();
-            collection.AddSingleton<IWellnessSessionEntryService>(sp => sp.GetRequiredService<WellnessSessionEntryService>());
+            collection.AddSingleton<IWellnessSessionEntryService>(sp =>
+                sp.GetRequiredService<WellnessSessionEntryService>());
 
             collection.AddSingleton<TrendActivityDataProvider>();
             collection.AddSingleton<ITrendActivityDataProvider>(sp =>
@@ -84,6 +89,23 @@ public static class ServiceCollectionExtensions
                 ApplicationPage.Settings => serviceProvider.GetRequiredService<SettingsViewModel>(),
                 _ => throw new InvalidOperationException()
             });
+        }
+
+        public void AddDatabaseServices()
+        {
+            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "easpace");
+            Directory.CreateDirectory(folderPath);
+            var dbPath = Path.Combine(folderPath, "easpace.db");
+
+            // this will be changed later and integrated with the Credentials Manager
+            var password = "TemporaryPassword12345";
+
+            collection.AddDbContext<AppDbContext>(options =>
+            {
+                var connectionString = $"Data Source={dbPath};Password={password};";
+                options.UseSqlite(connectionString);
+            }, ServiceLifetime.Singleton);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 public abstract partial class NumericActivityViewModel : ActivityViewModel
 {
     private readonly NumericActivity _numericActivity;
-    private readonly IDataEntryService _dataEntryService;
+    private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly IDialogService _dialogService;
 
     [ObservableProperty] private string? _unit;
@@ -28,11 +28,11 @@ public abstract partial class NumericActivityViewModel : ActivityViewModel
 
     public NumericActivityViewModel(
         NumericActivity numericActivity,
-        IDataEntryService dataEntryService,
-        IDialogService dialogService) : base(numericActivity, dataEntryService)
+        IActivityDataEntryService activityDataEntryService,
+        IDialogService dialogService) : base(numericActivity, activityDataEntryService)
     {
         _numericActivity = numericActivity;
-        _dataEntryService = dataEntryService;
+        _activityDataEntryService = activityDataEntryService;
         _dialogService = dialogService;
         Unit = numericActivity.Unit;
         Target = numericActivity.Target;
@@ -57,24 +57,24 @@ public abstract partial class NumericActivityViewModel : ActivityViewModel
                 Timestamp: numericEntryDialog.GetTimestamp(),
                 Value: numericEntryDialog.NumericValue,
                 State: null,
-                Type: DataEntryType.Numeric
+                Type: ActivityDataEntryType.Numeric
             );
 
-            var dataEntry = _dataEntryService.CreateDataEntry(Id, createEntryRequest);
+            var dataEntry = await _activityDataEntryService.CreateDataEntryAsync(Id, createEntryRequest);
 
-            if (dataEntry is not NumericDataEntry numericDataEntry) return;
+            if (dataEntry is not NumericActivityDataEntry numericDataEntry) return;
             
             _numericActivity.Entries.Add(numericDataEntry);
 
-            var dataEntryVm = new NumericDataEntryViewModel(numericDataEntry);
+            var dataEntryVm = new NumericActivityDataEntryViewModel(numericDataEntry);
 
             Entries.Add(dataEntryVm);
         }
     }
 
-    public override async Task<DataEntryViewModel?> EditDataEntry(Guid entryId)
+    public override async Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId)
     {
-        var entryVm = Entries.OfType<NumericDataEntryViewModel>().FirstOrDefault(e => e.Id == entryId);
+        var entryVm = Entries.OfType<NumericActivityDataEntryViewModel>().FirstOrDefault(e => e.Id == entryId);
         if (entryVm is null) return null;
 
         var numericEntryDialog = new NumericEntryDialogViewModel
@@ -96,9 +96,9 @@ public abstract partial class NumericActivityViewModel : ActivityViewModel
                 State: null
             );
 
-            var updatedEntry = _dataEntryService.UpdateDataEntry(entryId, updateRequest);
+            var updatedEntry = await _activityDataEntryService.UpdateDataEntryAsync(entryId, updateRequest);
 
-            if (updatedEntry is not NumericDataEntry numericDataEntry) return null;
+            if (updatedEntry is not NumericActivityDataEntry numericDataEntry) return null;
 
             if (updateRequest.Timestamp is not null)
             {

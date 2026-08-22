@@ -4,23 +4,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using easpace.Desktop.Data;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-// Temporary in-memory implementation.
 public class BreathingTechniqueService : IBreathingTechniqueService
 {
-    private readonly List<BreathingTechnique> _breathingTechniques = [];
+    private readonly AppDbContext _dbContext;
 
-    public BreathingTechniqueService()
+    public BreathingTechniqueService(AppDbContext dbContext)
     {
-        InitializeStockBreathingTechniques();
+        _dbContext = dbContext;
     }
 
-    public BreathingTechnique CreateBreathingTechnique(UpsertBreathingTechniqueRequest upsertRequest)
+    public async Task<BreathingTechnique> CreateBreathingTechniqueAsync(UpsertBreathingTechniqueRequest upsertRequest)
     {
         var breathingTechnique = new BreathingTechnique
         {
@@ -32,50 +34,54 @@ public class BreathingTechniqueService : IBreathingTechniqueService
             Cycles = upsertRequest.Cycles,
         };
 
-        _breathingTechniques.Add(breathingTechnique);
+        _dbContext.BreathingTechniques.Add(breathingTechnique);
+        await _dbContext.SaveChangesAsync();
 
         return breathingTechnique;
     }
 
-    public IReadOnlyList<BreathingTechnique> GetBreathingTechniques() => 
-        _breathingTechniques.OrderByDescending(t => t.CreatedAt).ToList();
-
-    public BreathingTechnique? UpdateActivity(Guid techniqueId, UpsertBreathingTechniqueRequest upsertRequest)
+    public async Task<IReadOnlyList<BreathingTechnique>> GetBreathingTechniquesAsync()
     {
-        var technique = _breathingTechniques.FirstOrDefault(t => t.Id == techniqueId);
+        // don't use OrderByDescending on dbContext with the CreatedAt column
+        // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
+        
+        var techniques = await _dbContext.BreathingTechniques
+            .Include(t => t.Phases)
+            .AsNoTracking()
+            .ToListAsync();
+        
+        return techniques.OrderByDescending(t => t.CreatedAt).ToList();
+    }
+
+    public async Task<BreathingTechnique?> UpdateBreathingTechniqueAsync(Guid techniqueId, UpsertBreathingTechniqueRequest upsertRequest)
+    {
+        var technique = await _dbContext.BreathingTechniques
+            .Include(t => t.Phases)
+            .FirstOrDefaultAsync(t => t.Id == techniqueId);
 
         if (technique == null) return null;
 
         technique.Name = upsertRequest.Name;
         technique.Description = upsertRequest.Description;
-        technique.Phases = upsertRequest.Phases;
         technique.Cycles = upsertRequest.Cycles;
+
+        _dbContext.BreathingPhases.RemoveRange(technique.Phases);
+        technique.Phases = upsertRequest.Phases;
+
+        await _dbContext.SaveChangesAsync();
 
         return technique;
     }
 
-    public bool DeleteBreathingTechnique(Guid techniqueId)
+    public async Task<bool> DeleteBreathingTechniqueAsync(Guid techniqueId)
     {
-        var technique = _breathingTechniques.FirstOrDefault(t => t.Id == techniqueId);
-        return technique is not null && _breathingTechniques.Remove(technique);
-    }
-    
-    private void InitializeStockBreathingTechniques()
-    {
-        _breathingTechniques.Add(
-            new BreathingTechnique
-            {
-                Name = "Box Breathing",
-                Description = "Box Breathing Description",
-                Phases =
-                [
-                    new BreathingPhase { Type = BreathingPhaseType.Inhale, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.HoldIn, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.Exhale, DurationSeconds = 4 },
-                    new BreathingPhase { Type = BreathingPhaseType.HoldOut, DurationSeconds = 4 }
-                ],
-                Cycles = 4
-            }
-        );
+        var technique = await _dbContext.BreathingTechniques.FindAsync(techniqueId);
+        if (technique is null) return false;
+
+        _dbContext.BreathingTechniques.Remove(technique);
+        
+        await _dbContext.SaveChangesAsync();
+        
+        return true;
     }
 }

@@ -10,5 +10,5 @@ namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
 public interface ITrendActivityDataProvider
 {
-    List<TrendChartDataPoint> GetChartData(ChartTimeRange chartTimeRange, List<NumericDataEntry> numericEntries);
+    List<TrendChartDataPoint> GetChartData(ChartTimeRange chartTimeRange, List<NumericActivityDataEntry> numericEntries);
 }

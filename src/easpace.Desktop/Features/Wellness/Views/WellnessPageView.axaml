@@ -8,10 +8,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessPageView"
              x:DataType="viewModels:WellnessPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{DynamicResource Haven.Sem.Canvas}"
+             utils:ViewInitialization.Command="{Binding InitializeAsync}">
     
     <ContentControl Content="{Binding ContentViewModel}" />
 

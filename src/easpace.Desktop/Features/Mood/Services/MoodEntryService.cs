@@ -4,17 +4,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using easpace.Desktop.Data;
 using easpace.Desktop.Features.Mood.Contracts;
 using easpace.Desktop.Features.Mood.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Features.Mood.Services;
 
-// Temporary in-memory implementation.
 public class MoodEntryService : IMoodEntryService
 {
-    private readonly List<MoodEntry> _moodEntries = [];
+    private readonly AppDbContext _dbContext;
 
-    public MoodEntry CreateMoodEntry(UpsertMoodEntryRequest upsertRequest)
+    public MoodEntryService(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<MoodEntry> CreateMoodEntryAsync(UpsertMoodEntryRequest upsertRequest)
     {
         var moodEntry = new MoodEntry
         {
@@ -25,16 +32,27 @@ public class MoodEntryService : IMoodEntryService
             Value = upsertRequest.Value
         };
 
-        _moodEntries.Add(moodEntry);
+        _dbContext.MoodEntries.Add(moodEntry);
+        await _dbContext.SaveChangesAsync();
 
         return moodEntry;
     }
 
-    public IReadOnlyList<MoodEntry> GetMoodEntries() => _moodEntries;
-
-    public MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest upsertRequest)
+    public async Task<IReadOnlyList<MoodEntry>> GetMoodEntriesAsync()
     {
-        var existingEntry = _moodEntries.FirstOrDefault(e => e.Id == entryId);
+        // don't use OrderByDescending on dbContext with the CreatedAt column
+        // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
+        
+        var entries = await _dbContext.MoodEntries
+            .AsNoTracking()
+            .ToListAsync();
+
+        return entries.OrderByDescending(e => e.Timestamp).ToList();
+    }
+
+    public async Task<MoodEntry?> UpdateMoodEntryAsync(Guid entryId, UpsertMoodEntryRequest upsertRequest)
+    {
+        var existingEntry = await _dbContext.MoodEntries.FindAsync(entryId);
 
         if (existingEntry == null) return null;
 
@@ -42,13 +60,20 @@ public class MoodEntryService : IMoodEntryService
         existingEntry.Description = upsertRequest.Description;
         existingEntry.Labels = upsertRequest.Labels;
         existingEntry.Value = upsertRequest.Value;
+        
+        await _dbContext.SaveChangesAsync();
 
         return existingEntry;
     }
 
-    public bool DeleteMoodEntry(Guid entryId)
+    public async Task<bool> DeleteMoodEntryAsync(Guid entryId)
     {
-        var entry = _moodEntries.FirstOrDefault(entry => entry.Id == entryId);
-        return entry is not null && _moodEntries.Remove(entry);
+        var entry = await _dbContext.MoodEntries.FindAsync(entryId);
+        if (entry is null) return false;
+
+        _dbContext.MoodEntries.Remove(entry);
+        
+        await _dbContext.SaveChangesAsync();
+        return true;
     }
 }

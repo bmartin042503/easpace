@@ -15,6 +15,7 @@ using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Journal.ViewModels;
 
@@ -22,6 +23,7 @@ public partial class JournalPageViewModel : PageViewModel
 {
     private readonly IJournalEntryService _journalEntryService;
     private readonly IDialogService _dialogService;
+    private readonly ILogger<JournalPageViewModel> _logger;
     private readonly List<JournalEntryViewModel> _allEntries = [];
 
     public AvaloniaList<JournalEntryViewModel> Entries { get; } = [];
@@ -39,15 +41,16 @@ public partial class JournalPageViewModel : PageViewModel
     public bool HasEntries => _allEntries.Count > 0;
     public bool HasActiveEntry => ActiveEntry is not null;
     public bool IsEditing => Editor is not null;
+    
+    private bool _isInitialized;
 
-    public JournalPageViewModel(IJournalEntryService journalEntryService, IDialogService dialogService)
+    public JournalPageViewModel(IJournalEntryService journalEntryService, IDialogService dialogService, ILogger<JournalPageViewModel> logger)
     {
         _journalEntryService = journalEntryService;
         _dialogService = dialogService;
+        _logger = logger;
 
         Page = ApplicationPage.Journal;
-
-        LoadEntries();
     }
 
     partial void OnSearchTextChanged(string value)
@@ -60,6 +63,23 @@ public partial class JournalPageViewModel : PageViewModel
         if (value is not null)
         {
             ActiveEntry = value;
+        }
+    }
+
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
+        if (_isInitialized) return;
+
+        try
+        {
+            await LoadEntries();
+            _isInitialized = true;
+        }
+        catch (Exception ex)
+        {
+            // TODO: proper logging and better exception handling
+            _logger.LogError(ex, ex.Message);
         }
     }
 
@@ -107,10 +127,10 @@ public partial class JournalPageViewModel : PageViewModel
             }
         }
 
-        if (!_journalEntryService.DeleteJournalEntry(entryToDelete.Id))
-        {
-            return;
-        }
+        var isDeleted = await _journalEntryService.DeleteJournalEntryAsync(entryToDelete.Id);
+        
+        if (!isDeleted) return;
+        
 
         _allEntries.Remove(entryToDelete);
         OnPropertyChanged(nameof(HasEntries));
@@ -125,16 +145,19 @@ public partial class JournalPageViewModel : PageViewModel
         SelectedEntry = Entries.FirstOrDefault();
     }
 
-    private void LoadEntries()
+    private async Task LoadEntries()
     {
         _allEntries.Clear();
         
-        var journalEntries = _journalEntryService.GetJournalEntries()
-            .Select(e => new JournalEntryViewModel(e));
+        var journalEntries = await _journalEntryService.GetJournalEntriesAsync();
 
-        _allEntries.AddRange(journalEntries);
+        var journalEntryViewModels = journalEntries.Select(entry => new JournalEntryViewModel(entry));
+
+        _allEntries.AddRange(journalEntryViewModels);
 
         ApplyFilter();
+        
+        OnPropertyChanged(nameof(HasEntries));
     }
 
     private void OpenEditor(JournalEntryViewModel? entry = null)

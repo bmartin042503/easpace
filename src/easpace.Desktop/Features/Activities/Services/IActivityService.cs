@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 
@@ -10,8 +11,8 @@ namespace easpace.Desktop.Features.Activities.Services;
 
 public interface IActivityService
 {
-    Activity CreateActivity(CreateActivityRequest createRequest);
-    IReadOnlyList<Activity> GetActivities();
-    Activity? UpdateActivity(Guid activityId, UpdateActivityRequest updateRequest);
-    bool DeleteActivity(Guid activityId);
+    Task<Activity> CreateActivityAsync(CreateActivityRequest createRequest);
+    Task<IReadOnlyList<Activity>> GetActivitiesAsync();
+    Task<Activity?> UpdateActivityAsync(Guid activityId, UpdateActivityRequest updateRequest);
+    Task<bool> DeleteActivityAsync(Guid activityId);
 }

@@ -40,9 +40,4 @@ public class WellnessSessionEntry
     /// Gets or sets the breathing technique used during the session, if applicable.
     /// </summary>
     public BreathingTechnique? BreathingTechnique { get; set; }
-
-    /// <summary>
-    /// Gets or sets the actual number of breathing cycles completed during the session.
-    /// </summary>
-    public int? ActualBreathingCycles { get; set; }
 }

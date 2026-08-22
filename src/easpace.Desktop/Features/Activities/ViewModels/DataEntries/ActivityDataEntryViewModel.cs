@@ -8,17 +8,17 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 
-public abstract partial class DataEntryViewModel : ViewModelBase
+public abstract partial class ActivityDataEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
     public Guid ActivityId { get; }
 
     [ObservableProperty] private DateTimeOffset _timestamp;
     
-    protected DataEntryViewModel(DataEntry dataEntry)
+    protected ActivityDataEntryViewModel(ActivityDataEntry activityDataEntry)
     {
-        Id = dataEntry.Id;
-        ActivityId = dataEntry.ActivityId;
-        Timestamp = dataEntry.Timestamp;
+        Id = activityDataEntry.Id;
+        ActivityId = activityDataEntry.ActivityId;
+        Timestamp = activityDataEntry.Timestamp;
     }
 }

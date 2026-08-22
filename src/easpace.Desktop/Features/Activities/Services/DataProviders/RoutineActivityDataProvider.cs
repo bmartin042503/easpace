@@ -44,20 +44,20 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
     public RoutineMonth BuildRoutineMonth(int year, int month, RoutineActivity routineActivity)
     {
         var daysInMonth = DateTime.DaysInMonth(year, month);
-        var monthlyEntries = new List<RoutineDataEntry>();
+        var monthlyEntries = new List<RoutineActivityDataEntry>();
 
         for (var day = 1; day <= daysInMonth; day++)
         {
             var targetDate = new DateTime(year, month, day);
             var existingEntry = routineActivity.Entries.FirstOrDefault(e => e.Timestamp.Date == targetDate);
 
-            if (existingEntry is RoutineDataEntry existingRoutineDataEntry)
+            if (existingEntry is RoutineActivityDataEntry existingRoutineDataEntry)
             {
                 monthlyEntries.Add(existingRoutineDataEntry);
             }
             else
             {
-                monthlyEntries.Add(new RoutineDataEntry
+                monthlyEntries.Add(new RoutineActivityDataEntry
                 {
                     Timestamp = targetDate,
                     State = RoutineState.None
@@ -98,8 +98,8 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
                     m.Year == currentMonthIter.Year && m.Month == currentMonthIter.Month)?.Entries
                 .Where(e => e.State != RoutineState.None);
 
-            HashSet<RoutineDataEntry> builtMonthEntriesSet = new();
-            HashSet<RoutineDataEntry> activityEntriesSet;
+            HashSet<RoutineActivityDataEntry> builtMonthEntriesSet = new();
+            HashSet<RoutineActivityDataEntry> activityEntriesSet;
 
             if (builtMonthEntries != null)
             {
@@ -112,7 +112,7 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
             var activityEntries = routineActivity
                 .Entries.Where(m =>
                     m.Timestamp.Date.Year == iter.Year && m.Timestamp.Date.Month == iter.Month)
-                .OfType<RoutineDataEntry>();
+                .OfType<RoutineActivityDataEntry>();
 
             activityEntriesSet = new(activityEntries);
 

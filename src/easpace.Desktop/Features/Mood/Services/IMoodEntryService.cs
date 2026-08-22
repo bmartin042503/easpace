@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using easpace.Desktop.Features.Mood.Contracts;
 using easpace.Desktop.Features.Mood.Entities;
 
@@ -10,8 +11,8 @@ namespace easpace.Desktop.Features.Mood.Services;
 
 public interface IMoodEntryService
 {
-    MoodEntry CreateMoodEntry(UpsertMoodEntryRequest upsertRequest);
-    IReadOnlyList<MoodEntry> GetMoodEntries();
-    MoodEntry? UpdateMoodEntry(Guid entryId, UpsertMoodEntryRequest upsertRequest);
-    bool DeleteMoodEntry(Guid entryId);
+    Task<MoodEntry> CreateMoodEntryAsync(UpsertMoodEntryRequest upsertRequest);
+    Task<IReadOnlyList<MoodEntry>> GetMoodEntriesAsync();
+    Task<MoodEntry?> UpdateMoodEntryAsync(Guid entryId, UpsertMoodEntryRequest upsertRequest);
+    Task<bool> DeleteMoodEntryAsync(Guid entryId);
 }

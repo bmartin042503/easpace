@@ -1,11 +1,9 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
-using easpace.Desktop.Features.Activities.Constants;
-
 namespace easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-public class RoutineDataEntry : DataEntry
+public class NumericActivityDataEntry : ActivityDataEntry
 {
-    public RoutineState State { get; set; }
+    public double Value { get; set; }
 }

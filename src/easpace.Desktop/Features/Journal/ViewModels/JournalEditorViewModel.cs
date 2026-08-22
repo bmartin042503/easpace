@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Journal.Entities;
@@ -41,15 +42,15 @@ public partial class JournalEditorViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
         var title = string.IsNullOrWhiteSpace(Title)
             ? GetFormattedNow()
             : Title.Trim();
 
         var savedEntry = IsCreatingNew
-            ? _journalEntryService.CreateJournalEntry(title, Content)
-            : _journalEntryService.UpdateJournalEntry(_editingEntryId!.Value, title, Content);
+            ? await _journalEntryService.CreateJournalEntryAsync(title, Content)
+            : await _journalEntryService.UpdateJournalEntryAsync(_editingEntryId!.Value, title, Content);
 
         // A deleted entry cannot normally be edited, but do not close the editor
         // as if it had been saved if its backing entity no longer exists.

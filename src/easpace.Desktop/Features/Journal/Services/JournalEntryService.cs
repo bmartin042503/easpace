@@ -4,48 +4,72 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using easpace.Desktop.Data;
 using easpace.Desktop.Features.Journal.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Features.Journal.Services;
 
-// Temporary in-memory implementation.
 public class JournalEntryService : IJournalEntryService
 {
-    private readonly List<JournalEntry> _journalEntries = [];
+    private readonly AppDbContext _dbContext;
 
-    public JournalEntry CreateJournalEntry(string title, string content)
+    public JournalEntryService(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<JournalEntry> CreateJournalEntryAsync(string title, string content)
     {
         var entry = new JournalEntry
         {
+            Id = Guid.NewGuid(),
             Title = title,
             Content = content,
             CreatedAt = DateTimeOffset.Now,
         };
 
-        _journalEntries.Add(entry);
+        _dbContext.JournalEntries.Add(entry);
+        await _dbContext.SaveChangesAsync();
+        
         return entry;
     }
 
-    public IReadOnlyList<JournalEntry> GetJournalEntries() =>
-        _journalEntries
-            .OrderByDescending(entry => entry.CreatedAt)
-            .ToList();
-
-    public JournalEntry? UpdateJournalEntry(Guid entryId, string title, string content)
+    public async Task<IReadOnlyList<JournalEntry>> GetJournalEntriesAsync()
     {
-        var entry = _journalEntries.FirstOrDefault(entry => entry.Id == entryId);
+        // don't use OrderByDescending on dbContext with the CreatedAt column
+        // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
+        
+        var entries = await _dbContext.JournalEntries
+            .AsNoTracking()
+            .ToListAsync();
+        
+        return entries.OrderByDescending(e => e.CreatedAt).ToList();
+    }
+
+    public async Task<JournalEntry?> UpdateJournalEntryAsync(Guid entryId, string title, string content)
+    {
+        var entry = await _dbContext.JournalEntries.FindAsync(entryId);
         
         if (entry is null) return null;
 
         entry.Title = title;
         entry.Content = content;
+        
+        await _dbContext.SaveChangesAsync();
 
         return entry;
     }
 
-    public bool DeleteJournalEntry(Guid entryId)
+    public async Task<bool> DeleteJournalEntryAsync(Guid entryId)
     {
-        var entry = _journalEntries.FirstOrDefault(entry => entry.Id == entryId);
-        return entry is not null && _journalEntries.Remove(entry);
+        var entry = await _dbContext.JournalEntries.FindAsync(entryId);
+        if (entry is null) return false;
+        
+        _dbContext.JournalEntries.Remove(entry);
+        await _dbContext.SaveChangesAsync();
+
+        return true;
     }
 }

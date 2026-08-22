@@ -13,5 +13,5 @@ public abstract class Activity
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
     public string Name { get; set; } = string.Empty;
     public bool IsArchived { get; set; }
-    public ICollection<DataEntry> Entries { get; set; } = [];
+    public ICollection<ActivityDataEntry> Entries { get; set; } = [];
 }

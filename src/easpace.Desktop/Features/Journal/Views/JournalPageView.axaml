@@ -9,12 +9,14 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Journal.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Journal.Views.JournalPageView"
              x:DataType="vm:JournalPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{DynamicResource Haven.Sem.Canvas}"
+             utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <Border Classes="card"
             Classes.gradient="{Binding !IsEditing}"

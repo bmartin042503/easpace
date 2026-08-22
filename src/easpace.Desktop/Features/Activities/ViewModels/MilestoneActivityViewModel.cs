@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
@@ -21,23 +22,25 @@ public partial class MilestoneActivityViewModel : NumericActivityViewModel
 
     [ObservableProperty] private DateTimeOffset? _startDate;
     
-    public double EntriesSum => Entries.OfType<NumericDataEntryViewModel>().Sum(entry => entry.Value);
+    public double EntriesSum => Entries.OfType<NumericActivityDataEntryViewModel>().Sum(entry => entry.Value);
     public bool HasValidTargetDate => TargetDate.HasValue && TargetDate.Value != DateTimeOffset.MinValue;
     
     public MilestoneActivityViewModel(
         MilestoneActivity milestoneActivity,
-        IDataEntryService dataEntryService,
+        IActivityDataEntryService activityDataEntryService,
         IActivityService activityService,
-        IDialogService dialogService) : base(milestoneActivity, dataEntryService, dialogService)
+        IDialogService dialogService) : base(milestoneActivity, activityDataEntryService, dialogService)
     {
         _activityService = activityService;
         StartDate = milestoneActivity.CreatedAt;
         TargetDate = milestoneActivity.TargetDate;
+        
+        LoadEntries();
     }
 
-    public override Activity? UpdateFrom(UpdateActivityRequest updateRequest)
+    public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = _activityService.UpdateActivity(Id, updateRequest);
+        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is null) return null;
         

@@ -8,7 +8,7 @@ namespace easpace.Desktop.Features.Activities.Contracts;
 
 public sealed record CreateDataEntryRequest(
     DateTimeOffset? Timestamp,
-    DataEntryType Type,
+    ActivityDataEntryType Type,
     double? Value,
     RoutineState? State
 );

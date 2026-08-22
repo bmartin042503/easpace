@@ -12,7 +12,7 @@ namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
 public class TrendActivityDataProvider : ITrendActivityDataProvider
 {
-    public List<TrendChartDataPoint> GetChartData(ChartTimeRange chartTimeRange, List<NumericDataEntry> numericEntries)
+    public List<TrendChartDataPoint> GetChartData(ChartTimeRange chartTimeRange, List<NumericActivityDataEntry> numericEntries)
     {
         if (numericEntries.Count == 0) return [];
 

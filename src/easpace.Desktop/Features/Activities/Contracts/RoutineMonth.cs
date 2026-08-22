@@ -11,5 +11,5 @@ public class RoutineMonth
     public int Year { get; set; }
     public int Month { get; set; }
     
-    public IEnumerable<RoutineDataEntry> Entries { get; set; } = [];
+    public IEnumerable<RoutineActivityDataEntry> Entries { get; set; } = [];
 }

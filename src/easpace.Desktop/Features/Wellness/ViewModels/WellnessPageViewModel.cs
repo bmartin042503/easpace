@@ -3,8 +3,10 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -25,6 +27,8 @@ public partial class WellnessPageViewModel : PageViewModel
     private WellnessStartViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
     private WellnessEndingViewModel? _endingViewModel;
+    
+    private bool _isInitialized;
 
     public AvaloniaList<WellnessSessionEntryViewModel> SessionEntries { get; } = [];
 
@@ -44,19 +48,39 @@ public partial class WellnessPageViewModel : PageViewModel
         _breathingTechniqueService = breathingTechniqueService;
 
         SetConfigurationView();
-        LoadSessionEntries();
     }
 
+    #endregion
+    
+    #region Commands
+
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
+        if (_isInitialized) return;
+
+        try
+        {
+            await LoadSessionEntries();
+            _isInitialized = true;
+        }
+        catch (Exception)
+        {
+            // TODO: proper logging
+        }
+    }
+    
     #endregion
 
     #region Private Helper Methods
 
-    private void LoadSessionEntries()
+    private async Task LoadSessionEntries()
     {
         SessionEntries.Clear();
 
-        var entryViewModels = _wellnessSessionEntryService.GetWellnessSessionEntries()
-            .Select(se => new WellnessSessionEntryViewModel(se)).ToList();
+        var entries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
+        
+        var entryViewModels = entries.Select(entry => new WellnessSessionEntryViewModel(entry));
 
         SessionEntries.AddRange(entryViewModels);
     }

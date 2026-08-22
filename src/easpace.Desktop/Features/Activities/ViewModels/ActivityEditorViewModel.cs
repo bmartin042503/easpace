@@ -56,7 +56,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     public event EventHandler<Activity>? Saved;
     public event EventHandler? Canceled;
 
-    public AvaloniaList<DataEntryViewModel> DataEntries { get; } = [];
+    public AvaloniaList<ActivityDataEntryViewModel> DataEntries { get; } = [];
     
     public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
 
@@ -120,14 +120,14 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanSubmit))]
-    private void Save()
+    private async Task Save()
     {
         ValidateAllProperties();
         if (HasErrors) return;
 
         if (IsCreatingNew)
         {
-            var savedEntry = _activityService.CreateActivity(GetCreateRequest());
+            var savedEntry = await _activityService.CreateActivityAsync(GetCreateRequest());
             Saved?.Invoke(this, savedEntry);
         }
         else
@@ -135,7 +135,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
             if (_activity == null) return;
             
             var updateRequest = GetUpdateRequest();
-            var updatedEntry = _activity.UpdateFrom(updateRequest);
+            var updatedEntry = await _activity.UpdateFrom(updateRequest);
             
             if (updatedEntry == null) return;
             
@@ -150,11 +150,11 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     }
 
     [RelayCommand]
-    private void DeleteDataEntry(object? parameter)
+    private async Task DeleteDataEntry(object? parameter)
     {
-        if (parameter is not DataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
+        if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
         
-        var deleted = _activity.DeleteDataEntry(dataEntryVm.Id);
+        var deleted = await _activity.DeleteDataEntryAsync(dataEntryVm.Id);
 
         if (deleted)
         {
@@ -165,7 +165,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     [RelayCommand]
     private async Task EditDataEntry(object? parameter)
     {
-        if (parameter is not DataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
+        if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
 
         await _activity.EditDataEntry(dataEntryVm.Id);
     }

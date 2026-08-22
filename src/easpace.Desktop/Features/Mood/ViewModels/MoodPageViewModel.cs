@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,12 +15,14 @@ using easpace.Desktop.Features.Mood.Entities;
 using easpace.Desktop.Features.Mood.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Mood.ViewModels;
 
 public partial class MoodPageViewModel : PageViewModel
 {
     private readonly IMoodEntryService _moodEntryService;
+    private readonly ILogger<MoodPageViewModel> _logger;
 
     private readonly List<MoodLabelViewModel> _allMoodLabels = [];
 
@@ -36,6 +39,8 @@ public partial class MoodPageViewModel : PageViewModel
     public bool HasMoodEntries => MoodEntries.Count > 0;
 
     public bool IsLoadMoreButtonVisible => MoodLabels.Count < _allMoodLabels.Count;
+    
+    private bool _isInitialized;
 
     public double MoodSliderValue
     {
@@ -63,9 +68,10 @@ public partial class MoodPageViewModel : PageViewModel
         }
     }
 
-    public MoodPageViewModel(IMoodEntryService moodEntryService)
+    public MoodPageViewModel(IMoodEntryService moodEntryService,  ILogger<MoodPageViewModel> logger)
     {
         _moodEntryService = moodEntryService;
+        _logger = logger;
 
         Page = ApplicationPage.Mood;
 
@@ -110,6 +116,37 @@ public partial class MoodPageViewModel : PageViewModel
         MoodLabels.Clear();
         MoodLabels.AddRange(labelsToShow);
     }
+    
+    private async Task LoadEntries()
+    {
+        MoodEntries.Clear();
+        
+        var moodEntries = await _moodEntryService.GetMoodEntriesAsync();
+
+        var moodEntryViewModels = moodEntries.Select(entry => new MoodEntryViewModel(entry))
+            .ToList();
+
+        MoodEntries.AddRange(moodEntryViewModels);
+        
+        OnPropertyChanged(nameof(HasMoodEntries));
+    }
+
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
+        if (_isInitialized) return;
+
+        try
+        {
+            await LoadEntries();
+            _isInitialized = true;
+        }
+        catch (Exception ex)
+        {
+            // TODO: proper logging and better exception handling
+            _logger.LogError(ex, ex.Message);
+        }
+    }
 
     [RelayCommand]
     private void LoadAllLabels()
@@ -119,7 +156,7 @@ public partial class MoodPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void Save()
+    private async Task Save()
     {
         var timestamp = DateTimeOffset.Now;
 
@@ -135,7 +172,7 @@ public partial class MoodPageViewModel : PageViewModel
             Description: Description
         );
         
-        var savedEntry = _moodEntryService.CreateMoodEntry(createEntryRequest);
+        var savedEntry = await _moodEntryService.CreateMoodEntryAsync(createEntryRequest);
 
         var entryViewModel = new MoodEntryViewModel(savedEntry);
 
@@ -145,11 +182,11 @@ public partial class MoodPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private void DeleteEntry(object? parameter)
+    private async Task DeleteEntry(object? parameter)
     {
         if (parameter is not MoodEntryViewModel entryViewModel) return;
 
-        var deleted = _moodEntryService.DeleteMoodEntry(entryViewModel.Id);
+        var deleted = await _moodEntryService.DeleteMoodEntryAsync(entryViewModel.Id);
 
         if (deleted)
         {

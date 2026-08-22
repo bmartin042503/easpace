@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 
@@ -10,7 +11,7 @@ namespace easpace.Desktop.Features.Wellness.Services;
 
 public interface IWellnessSessionEntryService
 {
-    WellnessSessionEntry CreateWellnessSessionEntry(CreateWellnessSessionEntryRequest createEntryRequest);
-    IReadOnlyList<WellnessSessionEntry> GetWellnessSessionEntries();
-    bool DeleteWellnessSessionEntry(Guid entryId);
+    Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createEntryRequest);
+    Task<IReadOnlyList<WellnessSessionEntry>> GetWellnessSessionEntriesAsync();
+    Task<bool> DeleteWellnessSessionEntryAsync(Guid entryId);
 }

@@ -77,7 +77,7 @@ public partial class WellnessEndingViewModel : ViewModelBase
     {
         AskToSaveSession = false;
 
-        _sessionEntryService.CreateWellnessSessionEntry(_createEntryRequest);
+        _sessionEntryService.CreateWellnessSessionEntryAsync(_createEntryRequest);
 
         SessionSaved = true;
 

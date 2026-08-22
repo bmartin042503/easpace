@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using easpace.Desktop.Features.Journal.Entities;
 
 namespace easpace.Desktop.Features.Journal.Services;
 
 public interface IJournalEntryService
 {
-    JournalEntry CreateJournalEntry(string title, string content);
-    IReadOnlyList<JournalEntry> GetJournalEntries();
-    JournalEntry? UpdateJournalEntry(Guid entryId, string title, string content);
-    bool DeleteJournalEntry(Guid entryId);
+    Task<JournalEntry> CreateJournalEntryAsync(string title, string content);
+    Task<IReadOnlyList<JournalEntry>> GetJournalEntriesAsync();
+    Task<JournalEntry?> UpdateJournalEntryAsync(Guid entryId, string title, string content);
+    Task<bool> DeleteJournalEntryAsync(Guid entryId);
 }

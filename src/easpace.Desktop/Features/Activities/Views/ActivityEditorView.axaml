@@ -189,7 +189,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                     <!-- NumericDataEntry template -->
                                     <DataTemplate x:Key="NumericDataEntryViewModel"
-                                                  x:DataType="vmDataEntries:NumericDataEntryViewModel">
+                                                  x:DataType="vmDataEntries:NumericActivityDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
                                             Value="{Binding Value}"
@@ -202,7 +202,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                     <!-- RoutineDataEntry template -->
                                     <DataTemplate x:Key="RoutineDataEntryViewModel"
-                                                  x:DataType="vmDataEntries:RoutineDataEntryViewModel">
+                                                  x:DataType="vmDataEntries:RoutineActivityDataEntryViewModel">
                                         
                                         <templatedControls:DataEntryListItem
                                             Value="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}"
@@ -217,7 +217,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </ItemsRepeater.Resources>
 
                             <ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="vmDataEntries:DataEntryViewModel">
+                                <DataTemplate x:DataType="vmDataEntries:ActivityDataEntryViewModel">
                                     <ContentControl Content="{Binding .}"
                                                     ContentTemplate="{StaticResource DataEntrySelector}" />
                                 </DataTemplate>

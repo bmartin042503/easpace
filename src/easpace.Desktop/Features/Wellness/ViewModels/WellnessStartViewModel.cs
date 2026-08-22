@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -31,6 +32,8 @@ public partial class WellnessStartViewModel : ViewModelBase
     [ObservableProperty] private bool _isBreathingChecked = true;
     [ObservableProperty] private bool _isMeditationChecked;
     [ObservableProperty] private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
+
+    private bool _isInitialized;
     
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
     
@@ -107,9 +110,6 @@ public partial class WellnessStartViewModel : ViewModelBase
     {
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _breathingTechniqueService = breathingTechniqueService;
-        
-        LoadWellnessSessionEntries();
-        LoadBreathingTechniques();
 
         WellnessSessionEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSessionEntries));
     }
@@ -117,6 +117,23 @@ public partial class WellnessStartViewModel : ViewModelBase
     #endregion
 
     #region Commands
+
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
+        if (_isInitialized) return;
+
+        try
+        {
+            await LoadWellnessSessionEntries();
+            await LoadBreathingTechniques();
+            _isInitialized = true;
+        }
+        catch (Exception)
+        {
+            // TODO: proper logging
+        }
+    }
 
     /// <summary>
     /// Constructs the session configuration and triggers the session start event.
@@ -179,19 +196,20 @@ public partial class WellnessStartViewModel : ViewModelBase
 
     #region Private Helper Methods
 
-    private void LoadWellnessSessionEntries()
+    private async Task LoadWellnessSessionEntries()
     {
-        var sessionEntryViewModels = 
-            _wellnessSessionEntryService.GetWellnessSessionEntries()
-                .Select(se => new WellnessSessionEntryViewModel(se));
+        var sessionEntries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
+        
+        var sessionEntryViewModels = sessionEntries.Select(sessionEntry => new WellnessSessionEntryViewModel(sessionEntry));
         
         WellnessSessionEntries.AddRange(sessionEntryViewModels);
     }
 
-    private void LoadBreathingTechniques()
+    private async Task LoadBreathingTechniques()
     {
-        var techniqueViewModels = _breathingTechniqueService.GetBreathingTechniques()
-            .Select(t => new BreathingTechniqueViewModel(t)).ToList();
+        var techniques = await _breathingTechniqueService.GetBreathingTechniquesAsync();
+        
+        var techniqueViewModels = techniques.Select(t => new BreathingTechniqueViewModel(t));
         
         BreathingTechniques.AddRange(techniqueViewModels);
         

@@ -38,6 +38,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(DotNetVersion)" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="$(DotNetVersion)" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(DotNetVersion)">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         
         <!-- Other packages -->
         <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.4.0" />
