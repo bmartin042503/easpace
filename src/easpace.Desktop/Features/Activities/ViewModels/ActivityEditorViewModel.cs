@@ -22,7 +22,6 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 public partial class ActivityEditorViewModel : ValidatorViewModelBase
 {
-    private readonly IActivityEditorService _editorService;
     private readonly IActivityService _activityService;
     private ActivityViewModel? _activity;
 
@@ -45,7 +44,12 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private double? _target;
 
-    [ObservableProperty] private DateTime? _targetDate;
+    
+    [ObservableProperty] 
+    [NotifyDataErrorInfo]
+    [SafeDateRange(ErrorMessage = "FormValidation.TargetDate.Invalid")]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private DateTime? _targetDate;
 
     private bool CanSubmit() => !HasErrors;
 
@@ -74,11 +78,8 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         }
     }
 
-    public ActivityEditorViewModel(
-        IActivityEditorService editorService, 
-        IActivityService activityService)
+    public ActivityEditorViewModel(IActivityService activityService)
     {
-        _editorService = editorService;
         _activityService = activityService;
         IsCreatingNew = true;
         SelectedType = ActivityType.Trend;
@@ -93,12 +94,11 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         IActivityService activityService,
         ActivityViewModel activity)
     {
-        _editorService = editorService;
         _activityService = activityService;
         _activity = activity;
         IsCreatingNew = false;
 
-        var updateRequest = _editorService.GetUpdateRequest(_activity);
+        var updateRequest = editorService.GetUpdateRequest(_activity);
         SetFormDataFromUpdateRequest(updateRequest);
 
         SelectedType = _activity switch
@@ -110,6 +110,8 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         };
         
         DataEntries.AddRange(activity.Entries);
+        
+        DataEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(DataEntriesLabel));
 
         TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), _activity.Name);
         

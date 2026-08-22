@@ -268,6 +268,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Target.Required" xml:space="preserve">
         <value>Please set a goal value.</value>
     </data>
+    <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
+        <value>Please enter a valid date.</value>
+    </data>
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Very unpleasant</value>
     </data>

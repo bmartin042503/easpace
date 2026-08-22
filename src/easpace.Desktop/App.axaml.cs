@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -15,7 +14,7 @@ namespace easpace.Desktop;
 
 public partial class App : Application
 {
-    public const string Version = "0.1.0";
+    public Version Version = new(0,1,0);
     private static IServiceProvider? _services;
 
     public static void ConfigureServices(IServiceProvider services)

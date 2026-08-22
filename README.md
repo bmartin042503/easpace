@@ -22,11 +22,11 @@ Will be available for Windows, macOS and Linux (also for iOS and Android in late
 
 ## Use of AI
 
-The vast majority of the codebase is written by hand. However, to accelerate the development process, AI tools are being utilized as coding assistants in areas like:
+The vast majority of the codebase is written by hand. However, to accelerate the development process, AI tools are being utilized as coding assistants in the following areas:
 
-- Organizing project files
+- Organizing source code
 - Adding and refining documentation
-- Writing tests
+- Testing
 - Assisting with complex UI controls and custom components
 
 **100% of the source code is reviewed, understood, and verified by a human developer.**
@@ -34,6 +34,17 @@ The vast majority of the codebase is written by hand. However, to accelerate the
 ## Contributing
 
 Contributions are currently closed until the first version is released.
+
+## Acknowledgements
+
+**easpace** is made possible thanks to these open-source projects:
+
+- [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) - Cross-platform UI framework
+- [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) - MVVM architecture toolkit
+- [Entity Framework Core](https://github.com/dotnet/efcore) - Object-relational mapper
+- [SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers) - Database encryption
+- [Devlooped.CredentialManager](https://github.com/devlooped/CredentialManager) - Secure local key storage
+- [Phosphor Icons](https://phosphoricons.com/) - Iconography
 
 ## License
 

@@ -99,7 +99,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
         if (_editorViewModel is not null) return;
 
         var editor = activity is null
-            ? new ActivityEditorViewModel(_activityEditorService, _activityService)
+            ? new ActivityEditorViewModel(_activityService)
             : new ActivityEditorViewModel(_activityEditorService, _activityService, activity);
 
         editor.Saved += OnEditorSaved;

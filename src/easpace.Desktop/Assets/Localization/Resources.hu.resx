@@ -268,6 +268,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Target.Required" xml:space="preserve">
         <value>Kérlek, adj meg egy cél értéket.</value>
     </data>
+    <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
+        <value>Kérlek, adj meg egy érvényes dátumot.</value>
+    </data>
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Nagyon kellemetlen</value>
     </data>
