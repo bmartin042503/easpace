@@ -31,15 +31,12 @@ public partial class MainWindow : Window
             }
         };
         
-        // TODO: implement custom window manager buttons for Windows and Linux
-        
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
             // Windows specific settings
 
             // Remove title bar
             ExtendClientAreaToDecorationsHint = true;
-            ExtendClientAreaTitleBarHeightHint = 0;
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {

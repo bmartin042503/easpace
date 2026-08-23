@@ -22,7 +22,9 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         var password = SecureKeyManager.GetOrGenerateDbPassword();
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseSqlite($"Data Source=file:{dbPath};Password={password}");
+        
+        var connectionString = $"Data Source={dbPath};Password={password};";
+        optionsBuilder.UseSqlite(connectionString, o => o.MigrationsAssembly("easpace.Desktop"));
 
         return new AppDbContext(optionsBuilder.Options);
     }

@@ -107,7 +107,7 @@ public static class ServiceCollectionExtensions
             collection.AddDbContext<AppDbContext>(options =>
             {
                 var connectionString = $"Data Source={dbPath};Password={password};";
-                options.UseSqlite(connectionString);
+                options.UseSqlite(connectionString, o => o.MigrationsAssembly("easpace.Desktop"));
             });
             
             collection.AddTransient<DbSeeder>();
