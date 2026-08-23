@@ -50,7 +50,19 @@ public class DbSeeder
                     ],
                     IsLocalized = true,
                     Cycles = 4
-                }
+                },
+                new BreathingTechnique
+                {
+                    Name = "BreathingTechnique.FourSixBreathing.Name",
+                    Description = "BreathingTechnique.FourSixBreathing.Description",
+                    Phases =
+                    [
+                        new BreathingPhase { Type = BreathingPhaseType.Inhale, DurationSeconds = 4, Order = 1 },
+                        new BreathingPhase { Type = BreathingPhaseType.Exhale, DurationSeconds = 6, Order = 2 }
+                    ],
+                    IsLocalized = true,
+                    Cycles = 5
+                },
             };
             
             await _dbContext.BreathingTechniques.AddRangeAsync(defaultTechniques);

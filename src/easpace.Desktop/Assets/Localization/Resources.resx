@@ -490,6 +490,24 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.History" xml:space="preserve">
         <value>History</value>
     </data>
+    <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
+        <value>Gently bring your attention to your breath.</value>
+    </data>
+        <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
+        <value>Notice the sensations in your body without judging them.</value>
+    </data>
+        <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
+        <value>If your mind wanders, gently return to the present moment.</value>
+    </data>
+        <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
+        <value>Let your thoughts come and go without holding on to them.</value>
+    </data>
+        <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
+        <value>Relax your shoulders and allow your breathing to feel natural.</value>
+    </data>
+        <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
+        <value>Take a moment to simply be here, without needing to do anything.</value>
+    </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>No breathing techniques available.</value>
     </data>
@@ -504,5 +522,11 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
         <value>Ease into deep relaxation. Place the tip of your tongue behind your upper teeth. Inhale for 4 seconds, hold your breath for 7, and exhale fully with a "whoosh" sound for 8 seconds.</value>
+    </data>
+    <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
+        <value>4-6 Breathing</value>
+    </data>
+    <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
+        <value>Slow down and release tension with a longer exhale. Inhale for 4 seconds, then exhale gently for 6.</value>
     </data>
 </root>

@@ -490,6 +490,24 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.History" xml:space="preserve">
         <value>Előzmények</value>
     </data>
+    <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
+        <value>Finoman irányítsd a figyelmed a légzésedre.</value>
+    </data>
+        <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
+        <value>Figyeld meg a tested érzéseit anélkül, hogy megítélnéd őket.</value>
+    </data>
+        <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
+        <value>Ha elkalandozik a figyelmed, finoman térj vissza a jelen pillanathoz.</value>
+    </data>
+        <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
+        <value>Engedd, hogy a gondolatok jöjjenek és menjenek anélkül, hogy kapaszkodnál beléjük.</value>
+    </data>
+        <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
+        <value>Lazítsd el a vállaidat, és hagyd, hogy a légzésed természetes legyen.</value>
+    </data>
+        <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
+        <value>Szánj egy pillanatot arra, hogy egyszerűen csak jelen legyél.</value>
+    </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>Nincsenek légzőgyakorlatok.</value>
     </data>
@@ -504,5 +522,11 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
         <value>Csendesítsd le az elméd és engedd el a feszültséget. Pihentesd a nyelved hegyét lazán a felső fogsorod mögött. Lélegezz be lágyan 4 másodpercig, tartsd bent 7-ig, majd egy hosszú, 8 másodperces sóhajjal fújd ki az összes levegőt.</value>
+    </data>
+    <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
+        <value>4-6 légzés</value>
+    </data>
+    <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
+        <value>Lassítsd a légzésed és engedd el a feszültséget. Lélegezz be 4 másodpercig, majd lassan fújd ki 6 másodperc alatt.</value>
     </data>
 </root>
