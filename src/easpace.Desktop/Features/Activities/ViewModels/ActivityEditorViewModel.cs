@@ -17,12 +17,16 @@ using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services;
 using easpace.Desktop.ValidationAttributes;
 using easpace.Desktop.ViewModels;
+using easpace.Desktop.ViewModels.Dialogs;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
 public partial class ActivityEditorViewModel : ValidatorViewModelBase
 {
     private readonly IActivityService _activityService;
+    private readonly IDialogService _dialogService;
+    private readonly ILogger<ActivityEditorViewModel> _logger;
     private ActivityViewModel? _activity;
 
     [ObservableProperty] private string _titleText = string.Empty;
@@ -78,9 +82,14 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         }
     }
 
-    public ActivityEditorViewModel(IActivityService activityService)
+    public ActivityEditorViewModel(
+        IActivityService activityService, 
+        IDialogService dialogService, 
+        ILogger<ActivityEditorViewModel> logger)
     {
         _activityService = activityService;
+        _dialogService = dialogService;
+        _logger = logger;
         IsCreatingNew = true;
         SelectedType = ActivityType.Trend;
         TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
@@ -94,9 +103,13 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     public ActivityEditorViewModel(
         IActivityEditorService editorService, 
         IActivityService activityService,
-        ActivityViewModel activity)
+        IDialogService dialogService,
+        ActivityViewModel activity,
+        ILogger<ActivityEditorViewModel> logger)
     {
         _activityService = activityService;
+        _dialogService = dialogService;
+        _logger = logger;
         _activity = activity;
         IsCreatingNew = false;
 
@@ -127,21 +140,38 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
         ValidateAllProperties();
         if (HasErrors) return;
 
-        if (IsCreatingNew)
+        try
         {
-            var savedEntry = await _activityService.CreateActivityAsync(GetCreateRequest());
-            Saved?.Invoke(this, savedEntry);
+            if (IsCreatingNew)
+            {
+                _logger.LogInformation("Saving new activity from editor");
+                var savedEntry = await _activityService.CreateActivityAsync(GetCreateRequest());
+                Saved?.Invoke(this, savedEntry);
+            }
+            else
+            {
+                if (_activity == null) return;
+            
+                _logger.LogInformation("Updating existing activity with ID {Id} from editor", _activity.Id);
+                var updateRequest = GetUpdateRequest();
+                var updatedEntry = await _activity.UpdateFrom(updateRequest);
+            
+                if (updatedEntry == null) return;
+            
+                Saved?.Invoke(this, updatedEntry);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            if (_activity == null) return;
+            _logger.LogError(ex, "Failed to save activity from editor (IsCreatingNew: {IsCreatingNew})", IsCreatingNew);
             
-            var updateRequest = GetUpdateRequest();
-            var updatedEntry = await _activity.UpdateFrom(updateRequest);
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.SaveFailed")
+            };
             
-            if (updatedEntry == null) return;
-            
-            Saved?.Invoke(this, updatedEntry);
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 
@@ -155,12 +185,28 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
     private async Task DeleteDataEntry(object? parameter)
     {
         if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
-        
-        var deleted = await _activity.DeleteDataEntryAsync(dataEntryVm.Id);
 
-        if (deleted)
+        try
         {
-            DataEntries.Remove(dataEntryVm);
+            var deleted = await _activity.DeleteDataEntryAsync(dataEntryVm.Id);
+
+            if (deleted)
+            {
+                DataEntries.Remove(dataEntryVm);
+                _logger.LogInformation("Data entry {EntryId} removed successfully via editor", dataEntryVm.Id);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to delete data entry {EntryId} via editor", dataEntryVm.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.EntryDeleteFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 

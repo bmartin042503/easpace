@@ -13,24 +13,29 @@ using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
 public partial class WellnessPageViewModel : PageViewModel
 {
     #region Fields
-    
+
     private readonly IMessenger _messenger;
     private readonly IWindowService _windowService;
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IBreathingTechniqueService _breathingTechniqueService;
+    private readonly IDialogService _dialogService;
+    private readonly ILogger<WellnessPageViewModel> _logger;
+    private readonly ILogger<WellnessStartViewModel> _startLogger;
+    private readonly ILogger<WellnessEndingViewModel> _endingLogger;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
 
     private WellnessStartViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
     private WellnessEndingViewModel? _endingViewModel;
-    
+
     private bool _isInitialized;
 
     public AvaloniaList<WellnessSessionEntryViewModel> SessionEntries { get; } = [];
@@ -46,19 +51,28 @@ public partial class WellnessPageViewModel : PageViewModel
         IMessenger messenger,
         IWindowService windowService,
         IWellnessSessionEntryService wellnessSessionEntryService,
-        IBreathingTechniqueService breathingTechniqueService)
+        IBreathingTechniqueService breathingTechniqueService,
+        IDialogService dialogService,
+        ILogger<WellnessPageViewModel> logger,
+        ILogger<WellnessStartViewModel> startLogger,
+        ILogger<WellnessEndingViewModel> endingLogger)
     {
         Page = ApplicationPage.Wellness;
         _messenger = messenger;
         _windowService = windowService;
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _breathingTechniqueService = breathingTechniqueService;
+        _dialogService = dialogService;
+
+        _logger = logger;
+        _startLogger = startLogger;
+        _endingLogger = endingLogger;
 
         SetConfigurationView();
     }
 
     #endregion
-    
+
     #region Commands
 
     [RelayCommand]
@@ -71,12 +85,12 @@ public partial class WellnessPageViewModel : PageViewModel
             await LoadSessionEntries();
             _isInitialized = true;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO: proper logging
+            _logger.LogError(ex, "Failed to initialize wellness page and load entries");
         }
     }
-    
+
     #endregion
 
     #region Private Helper Methods
@@ -86,7 +100,7 @@ public partial class WellnessPageViewModel : PageViewModel
         SessionEntries.Clear();
 
         var entries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
-        
+
         var entryViewModels = entries.Select(entry => new WellnessSessionEntryViewModel(entry));
 
         SessionEntries.AddRange(entryViewModels);
@@ -123,7 +137,7 @@ public partial class WellnessPageViewModel : PageViewModel
     {
         _windowService.ExitFullScreen();
         _messenger.Send(new ApplicationMessage.SidebarVisibility(true));
-        
+
         SetConfigurationView();
         CleanUpEndingView();
     }
@@ -136,7 +150,9 @@ public partial class WellnessPageViewModel : PageViewModel
         // initialize configuration view model if it doesn't exist
         if (_configurationViewModel == null)
         {
-            _configurationViewModel = new WellnessStartViewModel(_wellnessSessionEntryService, _breathingTechniqueService);
+            _configurationViewModel = new WellnessStartViewModel(
+                _wellnessSessionEntryService, _breathingTechniqueService, _dialogService, _startLogger);
+
             _configurationViewModel.SessionStarted += OnSessionStarted;
         }
 
@@ -151,7 +167,7 @@ public partial class WellnessPageViewModel : PageViewModel
     {
         _windowService.EnterFullScreen();
         _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
-        
+
         _sessionViewModel = new WellnessSessionViewModel(sessionConfiguration);
         _sessionViewModel.SessionEnded += OnSessionEnded;
 
@@ -164,7 +180,7 @@ public partial class WellnessPageViewModel : PageViewModel
     /// <param name="createEntryRequest">A create request to pass to the ending view model for saving.</param>
     private void SetEndingView(CreateWellnessSessionEntryRequest createEntryRequest)
     {
-        _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, createEntryRequest);
+        _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, _dialogService, createEntryRequest, _endingLogger);
         _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
 
         ContentViewModel = _endingViewModel;

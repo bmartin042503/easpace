@@ -42,8 +42,10 @@ public class ViewLocator : IDataTemplate
             // Activity editor
             ActivityEditorViewModel vm => CreateView(new ActivityEditorView(), vm),
             
-            // Dialogs
+            // Dialogs (make sure Info is initialized under Error, as Error is derived from Info)
             ConfirmDialogViewModel vm => CreateView(new ConfirmDialogView(), vm),
+            ErrorDialogViewModel vm => CreateView(new ErrorDialogView(), vm),
+            InfoDialogViewModel vm => CreateView(new InfoDialogView(), vm),
             NumericEntryDialogViewModel vm => CreateView(new NumericEntryDialogView(), vm),
             RoutineEntryDialogViewModel vm => CreateView(new RoutineEntryDialogView(), vm),
             

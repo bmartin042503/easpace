@@ -12,6 +12,8 @@ using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
+using easpace.Desktop.ViewModels.Dialogs;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
@@ -21,6 +23,8 @@ public partial class WellnessStartViewModel : ViewModelBase
 
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IBreathingTechniqueService _breathingTechniqueService;
+    private readonly IDialogService _dialogService;
+    private readonly ILogger<WellnessStartViewModel> _logger;
 
     [NotifyPropertyChangedFor(nameof(DurationText))] [ObservableProperty]
     private double _selectedSeconds = 300;
@@ -124,10 +128,14 @@ public partial class WellnessStartViewModel : ViewModelBase
     /// </summary>
     public WellnessStartViewModel(
         IWellnessSessionEntryService wellnessSessionEntryService,
-        IBreathingTechniqueService breathingTechniqueService)
+        IBreathingTechniqueService breathingTechniqueService,
+        IDialogService dialogService,
+        ILogger<WellnessStartViewModel> logger)
     {
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _breathingTechniqueService = breathingTechniqueService;
+        _dialogService = dialogService;
+        _logger = logger;
 
         WellnessSessionEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSessionEntries));
         BreathingTechniques.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasBreathingTechniques));
@@ -150,9 +158,17 @@ public partial class WellnessStartViewModel : ViewModelBase
             
             UpdateSlider();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // TODO: proper logging
+            _logger.LogError(ex, "Failed to load configuration data and initialize wellness start view");
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Wellness.Error.LoadFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 

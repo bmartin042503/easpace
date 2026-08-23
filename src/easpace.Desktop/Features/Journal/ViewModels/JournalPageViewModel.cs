@@ -24,6 +24,7 @@ public partial class JournalPageViewModel : PageViewModel
     private readonly IJournalEntryService _journalEntryService;
     private readonly IDialogService _dialogService;
     private readonly ILogger<JournalPageViewModel> _logger;
+    private readonly ILogger<JournalEditorViewModel> _editorLogger;
     private readonly List<JournalEntryViewModel> _allEntries = [];
 
     public AvaloniaList<JournalEntryViewModel> Entries { get; } = [];
@@ -44,11 +45,16 @@ public partial class JournalPageViewModel : PageViewModel
     
     private bool _isInitialized;
 
-    public JournalPageViewModel(IJournalEntryService journalEntryService, IDialogService dialogService, ILogger<JournalPageViewModel> logger)
+    public JournalPageViewModel(
+        IJournalEntryService journalEntryService, 
+        IDialogService dialogService, 
+        ILogger<JournalPageViewModel> logger,
+        ILogger<JournalEditorViewModel> editorLogger)
     {
         _journalEntryService = journalEntryService;
         _dialogService = dialogService;
         _logger = logger;
+        _editorLogger = editorLogger;
 
         Page = ApplicationPage.Journal;
     }
@@ -78,8 +84,15 @@ public partial class JournalPageViewModel : PageViewModel
         }
         catch (Exception ex)
         {
-            // TODO: proper logging and better exception handling
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Failed to initialize journal page and load entries");
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Journal.Error.LoadFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 
@@ -121,28 +134,38 @@ public partial class JournalPageViewModel : PageViewModel
 
             await _dialogService.ShowDialogAsync(confirmation);
 
-            if (!confirmation.Confirmed)
-            {
-                return;
-            }
+            if (!confirmation.Confirmed) return;
         }
 
-        var isDeleted = await _journalEntryService.DeleteJournalEntryAsync(entryToDelete.Id);
-        
-        if (!isDeleted) return;
-        
-
-        _allEntries.Remove(entryToDelete);
-        OnPropertyChanged(nameof(HasEntries));
-
-        if (ActiveEntry?.Id == entryToDelete.Id)
+        try
         {
-            ActiveEntry = null;
+            var isDeleted = await _journalEntryService.DeleteJournalEntryAsync(entryToDelete.Id);
+        
+            if (!isDeleted) return;
+
+            _allEntries.Remove(entryToDelete);
+            OnPropertyChanged(nameof(HasEntries));
+
+            if (ActiveEntry?.Id == entryToDelete.Id)
+            {
+                ActiveEntry = null;
+            }
+
+            ApplyFilter();
+            SelectedEntry = Entries.FirstOrDefault();
         }
-
-        ApplyFilter();
-
-        SelectedEntry = Entries.FirstOrDefault();
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while attempting to delete journal entry {EntryId}", entryToDelete.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Journal.Error.DeleteFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
+        }
     }
 
     private async Task LoadEntries()
@@ -168,8 +191,8 @@ public partial class JournalPageViewModel : PageViewModel
         }
 
         var editor = entry is null
-            ? new JournalEditorViewModel(_journalEntryService)
-            : new JournalEditorViewModel(_journalEntryService, entry);
+            ? new JournalEditorViewModel(_journalEntryService, _dialogService, _editorLogger)
+            : new JournalEditorViewModel(_journalEntryService, _dialogService, entry, _editorLogger);
 
         editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;

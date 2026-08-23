@@ -15,6 +15,7 @@ using easpace.Desktop.Features.Mood.Entities;
 using easpace.Desktop.Features.Mood.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
+using easpace.Desktop.ViewModels.Dialogs;
 using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Mood.ViewModels;
@@ -22,6 +23,7 @@ namespace easpace.Desktop.Features.Mood.ViewModels;
 public partial class MoodPageViewModel : PageViewModel
 {
     private readonly IMoodEntryService _moodEntryService;
+    private readonly IDialogService _dialogService;
     private readonly ILogger<MoodPageViewModel> _logger;
 
     private readonly List<MoodLabelViewModel> _allMoodLabels = [];
@@ -39,7 +41,7 @@ public partial class MoodPageViewModel : PageViewModel
     public bool HasMoodEntries => MoodEntries.Count > 0;
 
     public bool IsLoadMoreButtonVisible => MoodLabels.Count < _allMoodLabels.Count;
-    
+
     private bool _isInitialized;
 
     public double MoodSliderValue
@@ -68,9 +70,13 @@ public partial class MoodPageViewModel : PageViewModel
         }
     }
 
-    public MoodPageViewModel(IMoodEntryService moodEntryService,  ILogger<MoodPageViewModel> logger)
+    public MoodPageViewModel(
+        IMoodEntryService moodEntryService,
+        IDialogService dialogService,
+        ILogger<MoodPageViewModel> logger)
     {
         _moodEntryService = moodEntryService;
+        _dialogService = dialogService;
         _logger = logger;
 
         Page = ApplicationPage.Mood;
@@ -116,18 +122,18 @@ public partial class MoodPageViewModel : PageViewModel
         MoodLabels.Clear();
         MoodLabels.AddRange(labelsToShow);
     }
-    
+
     private async Task LoadEntries()
     {
         MoodEntries.Clear();
-        
+
         var moodEntries = await _moodEntryService.GetMoodEntriesAsync();
 
         var moodEntryViewModels = moodEntries.Select(entry => new MoodEntryViewModel(entry))
             .ToList();
 
         MoodEntries.AddRange(moodEntryViewModels);
-        
+
         OnPropertyChanged(nameof(HasMoodEntries));
     }
 
@@ -143,8 +149,15 @@ public partial class MoodPageViewModel : PageViewModel
         }
         catch (Exception ex)
         {
-            // TODO: proper logging and better exception handling
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Failed to initialize mood page and load entries");
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Mood.Error.LoadFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 
@@ -158,27 +171,43 @@ public partial class MoodPageViewModel : PageViewModel
     [RelayCommand]
     private async Task Save()
     {
-        var timestamp = DateTimeOffset.Now;
+        try
+        {
+            var timestamp = DateTimeOffset.Now;
 
-        var selectedLabels = _allMoodLabels
-            .Where(l => l.IsChecked)
-            .Select(l => l.State)
-            .ToList();
+            var selectedLabels = _allMoodLabels
+                .Where(l => l.IsChecked)
+                .Select(l => l.State)
+                .ToList();
 
-        var createEntryRequest = new UpsertMoodEntryRequest(
-            Timestamp: timestamp,    
-            Value: MoodSliderValue,
-            Labels: selectedLabels,
-            Description: Description
-        );
-        
-        var savedEntry = await _moodEntryService.CreateMoodEntryAsync(createEntryRequest);
+            var createEntryRequest = new UpsertMoodEntryRequest(
+                Timestamp: timestamp,
+                Value: MoodSliderValue,
+                Labels: selectedLabels,
+                Description: Description
+            );
 
-        var entryViewModel = new MoodEntryViewModel(savedEntry);
+            _logger.LogInformation("Saving new mood entry from UI");
+            var savedEntry = await _moodEntryService.CreateMoodEntryAsync(createEntryRequest);
 
-        MoodEntries.Insert(0, entryViewModel);
+            var entryViewModel = new MoodEntryViewModel(savedEntry);
 
-        ResetForm();
+            MoodEntries.Insert(0, entryViewModel);
+
+            ResetForm();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to save mood entry from UI");
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Mood.Error.SaveFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
+        }
     }
 
     [RelayCommand]
@@ -186,11 +215,27 @@ public partial class MoodPageViewModel : PageViewModel
     {
         if (parameter is not MoodEntryViewModel entryViewModel) return;
 
-        var deleted = await _moodEntryService.DeleteMoodEntryAsync(entryViewModel.Id);
-
-        if (deleted)
+        try
         {
-            MoodEntries.Remove(entryViewModel);
+            var deleted = await _moodEntryService.DeleteMoodEntryAsync(entryViewModel.Id);
+
+            if (deleted)
+            {
+                MoodEntries.Remove(entryViewModel);
+                _logger.LogInformation("Mood entry {EntryId} removed from UI successfully", entryViewModel.Id);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to delete mood entry {EntryId} from UI", entryViewModel.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Mood.Error.DeleteFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 

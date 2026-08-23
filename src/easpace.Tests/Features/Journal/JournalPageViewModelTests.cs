@@ -37,7 +37,7 @@ public class JournalPageViewModelTests
         journalPageVm.IsEditing.Should().BeTrue();
         journalPageVm.Editor.Should().NotBeNull();
         journalPageVm.Entries.Should().BeEmpty();
-        
+
         mockService.Verify(s => s.CreateJournalEntryAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
     }
 
@@ -67,17 +67,17 @@ public class JournalPageViewModelTests
     {
         var mockService = new Mock<IJournalEntryService>();
         var emptyEntry = new JournalEntry { Id = Guid.NewGuid(), Title = "Title", Content = "   " };
-        
+
         mockService.Setup(s => s.GetJournalEntriesAsync()).ReturnsAsync(new List<JournalEntry> { emptyEntry });
         mockService.Setup(s => s.DeleteJournalEntryAsync(emptyEntry.Id)).ReturnsAsync(true);
-        
+
         var journalPageVm = CreatePage(mockService, out var dialogService);
         await journalPageVm.InitializeAsync();
 
         journalPageVm.SelectedEntry = journalPageVm.Entries.First();
 
         await journalPageVm.DeleteEntryCommand.ExecuteAsync(null);
-        
+
         dialogService.Verify(s => s.ShowDialogAsync(It.IsAny<DialogViewModel>()), Times.Never);
         mockService.Verify(s => s.DeleteJournalEntryAsync(emptyEntry.Id), Times.Once);
 
@@ -89,7 +89,7 @@ public class JournalPageViewModelTests
     {
         var mockService = new Mock<IJournalEntryService>();
         var entry = new JournalEntry { Id = Guid.NewGuid(), Title = "Title", Content = "Meaningful content" };
-        
+
         mockService.Setup(s => s.GetJournalEntriesAsync()).ReturnsAsync(new List<JournalEntry> { entry });
         var sut = CreatePage(mockService, out var dialogService);
         await sut.InitializeAsync();
@@ -111,11 +111,13 @@ public class JournalPageViewModelTests
     public async Task SearchText_FiltersByTitleAndContent()
     {
         var mockService = new Mock<IJournalEntryService>();
-        var entry1 = new JournalEntry { Id = Guid.NewGuid(), Title = "Morning reflection", Content = "Coffee and a walk" };
-        var entry2 = new JournalEntry { Id = Guid.NewGuid(), Title = "Evening note", Content = "Read an excellent book" };
-        
+        var entry1 = new JournalEntry
+            { Id = Guid.NewGuid(), Title = "Morning reflection", Content = "Coffee and a walk" };
+        var entry2 = new JournalEntry
+            { Id = Guid.NewGuid(), Title = "Evening note", Content = "Read an excellent book" };
+
         mockService.Setup(s => s.GetJournalEntriesAsync()).ReturnsAsync(new List<JournalEntry> { entry1, entry2 });
-        
+
         var journalPageVm = CreatePage(mockService, out _);
         await journalPageVm.InitializeAsync();
 
@@ -128,10 +130,13 @@ public class JournalPageViewModelTests
         journalPageVm.Entries.Single().Title.Should().Be("Morning reflection");
     }
 
-    private static JournalPageViewModel CreatePage(Mock<IJournalEntryService> mockService, out Mock<IDialogService> dialogService)
+    private static JournalPageViewModel CreatePage(Mock<IJournalEntryService> mockService,
+        out Mock<IDialogService> dialogService)
     {
         dialogService = new Mock<IDialogService>();
         var mockLogger = new Mock<ILogger<JournalPageViewModel>>();
-        return new JournalPageViewModel(mockService.Object, dialogService.Object, mockLogger.Object);
+        var mockEditorLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        return new JournalPageViewModel(mockService.Object, dialogService.Object, mockLogger.Object,
+            mockEditorLogger.Object);
     }
 }

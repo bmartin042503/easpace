@@ -41,82 +41,127 @@ Licensed under the MIT License. See LICENSE file for details.
     </UserControl.Resources>
 
     <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" MinWidth="200" MaxWidth="450" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
-        <!-- History -->
+        
         <Border Grid.Column="0" Classes="card">
 
-            <Grid RowDefinitions="Auto,*"
-                  RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
-                  IsVisible="{Binding HasSessionEntries}">
+            <Grid>
 
-                <TextBlock Grid.Row="0" Text="{services:LocalizationService Key='Wellness.Title.History'}"
-                           Classes="neutral fs3" TextAlignment="Center" />
+                <!-- No history view -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            IsVisible="{Binding !HasSessionEntries}">
 
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
-                    <ItemsRepeater ItemsSource="{Binding WellnessSessionEntries}">
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                                HorizontalAlignment="Center">
 
-                        <ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
+                        <!-- Wind icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Wind}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" >
 
-                                <Grid ColumnDefinitions="Auto,*"
-                                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="-10" />
+                            </PathIcon.RenderTransform>
 
-                                    <!-- Icon -->
-                                    <ContentControl Grid.Column="0" Content="{Binding SessionType}"
-                                                    ContentTemplate="{StaticResource WellnessSessionEntrySelector}"
-                                                    VerticalAlignment="Center" />
+                        </PathIcon>
+                        
+                        <!-- Sparkle icon -->
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
+                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
+                            
+                            <PathIcon.RenderTransform>
+                                <RotateTransform Angle="10" />
+                            </PathIcon.RenderTransform>
+                            
+                        </PathIcon>
 
-                                    <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
+                    </StackPanel>
 
-                                        <!-- Session type name -->
-                                        <TextBlock
-                                            Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
-                                            Classes="neutral fs5" />
+                    <!-- 'Add entries' message -->
+                    <TextBlock Text="{services:LocalizationService Key='Wellness.Empty.Message'}"
+                               Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
+                </StackPanel>
 
-                                        <!-- Breathing session details -->
-                                        <TextBlock Classes="subtle neutral fs6" IsVisible="{Binding IsTypeBreathing}"
-                                                   TextWrapping="Wrap">
-                                            <Run Text="{Binding BreathingTechniqueName}" />
-                                            <Run Text="•"/>
-                                            <Run Text="{Binding DurationMinutesText}" />
-                                            <Run Text="•"/>
-                                            <Run Text="{Binding CyclesText}" />
-                                        </TextBlock>
+                <!-- History -->
+                <Grid RowDefinitions="Auto,*"
+                      RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                      IsVisible="{Binding HasSessionEntries}">
 
-                                        <!-- Meditation session details -->
-                                        <TextBlock Classes="subtle neutral fs6"
-                                                   IsVisible="{Binding IsTypeMeditation}"
-                                                   Text="{Binding DurationMinutesText}" />
+                    <TextBlock Grid.Row="0" Text="{services:LocalizationService Key='Wellness.Title.History'}"
+                               Classes="neutral fs3" TextAlignment="Center" />
 
-                                        <!-- Start date -->
-                                        <TextBlock Classes="subtle neutral fs6"
-                                                   Text="{Binding StartDate, Converter={StaticResource RelativeDateConverter}}" />
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                        <ItemsRepeater ItemsSource="{Binding WellnessSessionEntries}">
 
-                                    </StackPanel>
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
 
-                                </Grid>
+                                    <Grid ColumnDefinitions="Auto,*"
+                                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
-                            </DataTemplate>
-                        </ItemsRepeater.ItemTemplate>
+                                        <!-- Icon -->
+                                        <ContentControl Grid.Column="0" Content="{Binding SessionType}"
+                                                        ContentTemplate="{StaticResource WellnessSessionEntrySelector}"
+                                                        VerticalAlignment="Center" />
 
-                        <ItemsRepeater.Layout>
-                            <StackLayout Orientation="Vertical"
-                                         Spacing="{StaticResource Haven.Scale.Spacing.Md}" />
-                        </ItemsRepeater.Layout>
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
 
-                    </ItemsRepeater>
-                </ScrollViewer>
+                                            <!-- Session type name -->
+                                            <TextBlock
+                                                Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
+                                                Classes="neutral fs5" />
+
+                                            <!-- Breathing session details -->
+                                            <TextBlock Classes="subtle neutral fs6"
+                                                       IsVisible="{Binding IsTypeBreathing}"
+                                                       TextWrapping="Wrap">
+                                                <Run Text="{Binding BreathingTechniqueName}" />
+                                                <Run Text="•" />
+                                                <Run Text="{Binding DurationMinutesText}" />
+                                                <Run Text="•" />
+                                                <Run Text="{Binding CyclesText}" />
+                                            </TextBlock>
+
+                                            <!-- Meditation session details -->
+                                            <TextBlock Classes="subtle neutral fs6"
+                                                       IsVisible="{Binding IsTypeMeditation}"
+                                                       Text="{Binding DurationMinutesText}" />
+
+                                            <!-- Start date -->
+                                            <TextBlock Classes="subtle neutral fs6"
+                                                       Text="{Binding StartDate, Converter={StaticResource RelativeDateConverter}}" />
+
+                                        </StackPanel>
+
+                                    </Grid>
+
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="{StaticResource Haven.Scale.Spacing.Md}" />
+                            </ItemsRepeater.Layout>
+
+                        </ItemsRepeater>
+                    </ScrollViewer>
+
+                </Grid>
 
             </Grid>
 
         </Border>
-        
+
         <!-- Horizontal splitter -->
         <GridSplitter Grid.Column="1"
                       Background="{StaticResource Haven.Scale.Transparent}"

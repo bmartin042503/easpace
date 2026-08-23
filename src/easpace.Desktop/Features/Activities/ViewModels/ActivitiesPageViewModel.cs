@@ -26,6 +26,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
     private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly IDialogService _dialogService;
     private readonly ILogger<ActivitiesPageViewModel> _logger;
+    private readonly ILogger<ActivityEditorViewModel> _editorLogger;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
 
@@ -59,6 +60,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
         IActivityDataEntryService activityDataEntryService,
         IDialogService dialogService,
         ILogger<ActivitiesPageViewModel> logger,
+        ILogger<ActivityEditorViewModel> editorLogger,
         ITrendActivityDataProvider trendActivityDataProvider,
         IRoutineActivityDataProvider routineActivityDataProvider)
     {
@@ -69,6 +71,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
         _activityDataEntryService = activityDataEntryService;
         _dialogService = dialogService;
         _logger = logger;
+        _editorLogger = editorLogger;
         _trendActivityDataProvider = trendActivityDataProvider;
         _routineActivityDataProvider = routineActivityDataProvider;
     }
@@ -76,21 +79,21 @@ public partial class ActivitiesPageViewModel : PageViewModel
     private async Task LoadActivities()
     {
         var activities = await _activityService.GetActivitiesAsync();
-        
+
         var activityViewModels = activities
             .Select(CreateViewModel)
             .ToList();
-        
+
         activityViewModels.ForEach(SubscribeToActivityEvents);
-        
+
         _allActivities.AddRange(activityViewModels);
         Activities.AddRange(activityViewModels);
-        
+
         FilterActivities();
-        
+
         SelectedActivity = activityViewModels.FirstOrDefault();
-            
-        OnPropertyChanged(nameof(HasActivities)); 
+
+        OnPropertyChanged(nameof(HasActivities));
     }
 
     partial void OnSelectedActivityChanged(ActivityViewModel? value)
@@ -113,8 +116,15 @@ public partial class ActivitiesPageViewModel : PageViewModel
         }
         catch (Exception ex)
         {
-            // TODO: proper logging and better exception handling
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "Failed to initialize activities page and load activities");
+
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.LoadFailed")
+            };
+
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 
@@ -129,14 +139,15 @@ public partial class ActivitiesPageViewModel : PageViewModel
         if (_editorViewModel is not null) return;
 
         var editor = activity is null
-            ? new ActivityEditorViewModel(_activityService)
-            : new ActivityEditorViewModel(_activityEditorService, _activityService, activity);
+            ? new ActivityEditorViewModel(_activityService, _dialogService, _editorLogger)
+            : new ActivityEditorViewModel(_activityEditorService, _activityService, _dialogService, activity,
+                _editorLogger);
 
         editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;
 
         ContentViewModel = editor;
-        
+
         IsEditing = true;
     }
 
@@ -148,7 +159,7 @@ public partial class ActivitiesPageViewModel : PageViewModel
         }
 
         ContentViewModel = SelectedActivity;
-        
+
         IsEditing = false;
 
         if (_editorViewModel == null) return;
@@ -164,15 +175,15 @@ public partial class ActivitiesPageViewModel : PageViewModel
         if (sender is ActivityEditorViewModel { IsCreatingNew: true })
         {
             var vm = CreateViewModel(activity);
-            
+
             _allActivities.Add(vm);
             Activities.Insert(0, vm);
             SubscribeToActivityEvents(vm);
-            
+
             OnPropertyChanged(nameof(HasActivities));
-            
+
             FilterActivities();
-            
+
             if (Activities.Contains(vm))
             {
                 SelectedActivity = vm;
@@ -190,19 +201,21 @@ public partial class ActivitiesPageViewModel : PageViewModel
         {
             case TrendActivity trendActivity:
                 return new TrendActivityViewModel(
-                    trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
+                    trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService,
+                    _dialogService
                 );
-            
+
             case MilestoneActivity milestoneActivity:
                 return new MilestoneActivityViewModel(
                     milestoneActivity, _activityDataEntryService, _activityService, _dialogService
                 );
-            
+
             case RoutineActivity routineActivity:
                 return new RoutineActivityViewModel(
-                    routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService, _dialogService
+                    routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService,
+                    _dialogService
                 );
-            
+
             default:
                 throw new NotSupportedException("Undefined activity type");
         }
@@ -247,15 +260,23 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
             _allActivities.Remove(activityViewModel);
             Activities.Remove(activityViewModel);
-            
+
             OnPropertyChanged(nameof(HasActivities));
 
             SelectedActivity = Activities.FirstOrDefault();
         }
         catch (Exception ex)
         {
-            // TODO: proper logging
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "An error occurred while attempting to delete activity {ActivityId}",
+                activityViewModel.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.DeleteFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 
@@ -285,10 +306,18 @@ public partial class ActivitiesPageViewModel : PageViewModel
         }
         catch (Exception ex)
         {
-            // TODO: proper logging
-            _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, "An error occurred while toggling archive status for activity {ActivityId}",
+                activityViewModel.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.ArchiveFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
-        
+
         FilterActivities();
     }
 

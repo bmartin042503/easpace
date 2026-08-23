@@ -4,7 +4,9 @@
 using easpace.Desktop.Features.Journal.Entities;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Features.Journal.ViewModels;
+using easpace.Desktop.Services;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace easpace.Tests.Features.Journal;
@@ -15,7 +17,9 @@ public class JournalEditorViewModelTests
     public void NewEditor_StartsAsAnIndependentDraft()
     {
         var mockService = new Mock<IJournalEntryService>();
-        var editor = new JournalEditorViewModel(mockService.Object);
+        var mockLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        var mockDialog = new Mock<IDialogService>();
+        var editor = new JournalEditorViewModel(mockService.Object, mockDialog.Object, mockLogger.Object);
 
         editor.IsCreatingNew.Should().BeTrue();
         editor.Title.Should().NotBeNullOrWhiteSpace();
@@ -26,7 +30,9 @@ public class JournalEditorViewModelTests
     public async Task SaveCommand_WhenCreatingNew_CreatesEntryAndRaisesSaved()
     {
         var mockService = new Mock<IJournalEntryService>();
-        var editor = new JournalEditorViewModel(mockService.Object)
+        var mockLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        var mockDialog = new Mock<IDialogService>();
+        var editor = new JournalEditorViewModel(mockService.Object, mockDialog.Object, mockLogger.Object)
         {
             Title = "A clear title",
             Content = "A clear thought",
@@ -49,7 +55,9 @@ public class JournalEditorViewModelTests
     public async Task SaveCommand_WhenTitleIsWhitespace_GeneratesADefaultTitle()
     {
         var mockService = new Mock<IJournalEntryService>();
-        var editor = new JournalEditorViewModel(mockService.Object)
+        var mockLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        var mockDialog = new Mock<IDialogService>();
+        var editor = new JournalEditorViewModel(mockService.Object, mockDialog.Object, mockLogger.Object)
         {
             Title = "   ",
             Content = "Some content"
@@ -69,10 +77,12 @@ public class JournalEditorViewModelTests
     public void ExistingEditor_DoesNotMutateTheEntryUntilSave()
     {
         var mockService = new Mock<IJournalEntryService>();
+        var mockLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        var mockDialog = new Mock<IDialogService>();
         var entry = new JournalEntry { Id = Guid.NewGuid(), Title = "Original", Content = "Original content" };
         var entryViewModel = new JournalEntryViewModel(entry);
         
-        var editor = new JournalEditorViewModel(mockService.Object, entryViewModel)
+        var editor = new JournalEditorViewModel(mockService.Object, mockDialog.Object, entryViewModel, mockLogger.Object)
         {
             Title = "Changed",
             Content = "Changed content",
@@ -86,7 +96,9 @@ public class JournalEditorViewModelTests
     public void CancelCommand_RaisesCanceledWithoutChangingTheService()
     {
         var mockService = new Mock<IJournalEntryService>();
-        var editor = new JournalEditorViewModel(mockService.Object);
+        var mockLogger = new Mock<ILogger<JournalEditorViewModel>>();
+        var mockDialog = new Mock<IDialogService>();
+        var editor = new JournalEditorViewModel(mockService.Object, mockDialog.Object, mockLogger.Object);
         var canceled = false;
         editor.Canceled += (_, _) => canceled = true;
 

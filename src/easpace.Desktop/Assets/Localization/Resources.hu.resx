@@ -106,6 +106,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Back" xml:space="preserve">
         <value>Vissza</value>
     </data>
+    <data name="Common.Button.Close" xml:space="preserve">
+        <value>Bezárás</value>
+    </data>
+    <data name="Common.Error.Title" xml:space="preserve">
+        <value>Hiba történt</value>
+    </data>
+    <data name="Common.Error.General" xml:space="preserve">
+        <value>Váratlan hiba lépett fel. Kérlek, próbáld újra később.</value>
+    </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
@@ -126,6 +135,15 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Journal.DeleteDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
+    </data>
+    <data name="Journal.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a naplóbejegyzéseket. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Journal.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a naplóbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Journal.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a naplóbejegyzést. Kérlek, próbáld újra.</value>
     </data>
     <data name="Activities.Empty.Message" xml:space="preserve">
         <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
@@ -216,6 +234,21 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Activities.Filter.Archived" xml:space="preserve">
         <value>Archivált</value>
+    </data>
+    <data name="Activities.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a tevékenységeket. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Activities.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a tevékenységet. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a tevékenységet. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.ArchiveFailed" xml:space="preserve">
+        <value>Nem sikerült módosítani az archiválást. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
     </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Hét</value>
@@ -427,6 +460,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Empty.Message" xml:space="preserve">
         <value>Nincsenek bejegyzések</value>
     </data>
+    <data name="Mood.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a hangulat bejegyzéseket. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Mood.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a bejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Mood.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a bejegyzést. Kérlek, próbáld újra.</value>
+    </data>
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Szánj egy percet magadra</value>
     </data>
@@ -490,23 +532,32 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.History" xml:space="preserve">
         <value>Előzmények</value>
     </data>
+    <data name="Wellness.Empty.Message" xml:space="preserve">
+        <value>Nincsenek gyakorlatok</value>
+    </data>
     <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
         <value>Finoman irányítsd a figyelmed a légzésedre.</value>
     </data>
-        <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
+    <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
         <value>Figyeld meg a tested érzéseit anélkül, hogy megítélnéd őket.</value>
     </data>
-        <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
+    <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
         <value>Ha elkalandozik a figyelmed, finoman térj vissza a jelen pillanathoz.</value>
     </data>
-        <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
+    <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
         <value>Engedd, hogy a gondolatok jöjjenek és menjenek anélkül, hogy kapaszkodnál beléjük.</value>
     </data>
-        <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
+    <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
         <value>Lazítsd el a vállaidat, és hagyd, hogy a légzésed természetes legyen.</value>
     </data>
-        <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
+    <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
         <value>Szánj egy pillanatot arra, hogy egyszerűen csak jelen legyél.</value>
+    </data>
+    <data name="Wellness.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a wellness adatokat. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Wellness.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>Nincsenek légzőgyakorlatok.</value>
