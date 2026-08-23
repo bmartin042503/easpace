@@ -16,6 +16,7 @@ using easpace.Desktop.Features.Mood.Services;
 using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels;
+using easpace.Desktop.Security;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -101,8 +102,7 @@ public static class ServiceCollectionExtensions
             Directory.CreateDirectory(folderPath);
             var dbPath = Path.Combine(folderPath, "easpace.db");
 
-            // this will be changed later and integrated with the Credentials Manager
-            var password = "TemporaryPassword12345";
+            var password = SecureKeyManager.GetOrGenerateDbPassword();
 
             collection.AddDbContext<AppDbContext>(options =>
             {

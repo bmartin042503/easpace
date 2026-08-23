@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using easpace.Desktop.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -18,8 +19,7 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         
         var dbPath = Path.Combine(folderPath, "easpace.db");
         
-        // this will be changed later and integrated with the Credentials Manager
-        var password = "TemporaryPassword12345";
+        var password = SecureKeyManager.GetOrGenerateDbPassword();
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         optionsBuilder.UseSqlite($"Data Source=file:{dbPath};Password={password}");
