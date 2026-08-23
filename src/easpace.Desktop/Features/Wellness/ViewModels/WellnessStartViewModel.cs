@@ -147,6 +147,8 @@ public partial class WellnessStartViewModel : ViewModelBase
             await LoadWellnessSessionEntries();
             await LoadBreathingTechniques();
             _isInitialized = true;
+            
+            UpdateSlider();
         }
         catch (Exception)
         {
@@ -287,6 +289,7 @@ public partial class WellnessStartViewModel : ViewModelBase
         }
 
         SelectedSeconds = newSelectedSeconds;
+        OnPropertyChanged(nameof(DurationText));
     }
 
     #endregion
