@@ -14,5 +14,6 @@ public interface IActivityService
     Task<Activity> CreateActivityAsync(CreateActivityRequest createRequest);
     Task<IReadOnlyList<Activity>> GetActivitiesAsync();
     Task<Activity?> UpdateActivityAsync(Guid activityId, UpdateActivityRequest updateRequest);
+    Task<Activity?> ToggleArchiveAsync(Guid activityId);
     Task<bool> DeleteActivityAsync(Guid activityId);
 }

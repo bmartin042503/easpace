@@ -37,6 +37,11 @@ public class WellnessSessionEntry
     public WellnessSessionType Type { get; set; }
 
     /// <summary>
+    /// Gets or sets the breathing technique id used during the session, if applicable.
+    /// </summary>
+    public Guid? BreathingTechniqueId { get; set; }
+    
+    /// <summary>
     /// Gets or sets the breathing technique used during the session, if applicable.
     /// </summary>
     public BreathingTechnique? BreathingTechnique { get; set; }

@@ -105,7 +105,9 @@ public static class ServiceCollectionExtensions
             {
                 var connectionString = $"Data Source={dbPath};Password={password};";
                 options.UseSqlite(connectionString);
-            }, ServiceLifetime.Singleton);
+            });
+            
+            collection.AddTransient<DbSeeder>();
         }
     }
 }

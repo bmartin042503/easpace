@@ -490,4 +490,19 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.History" xml:space="preserve">
         <value>History</value>
     </data>
+    <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
+        <value>No breathing techniques available.</value>
+    </data>
+    <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
+        <value>Box Breathing</value>
+    </data>
+    <data name="BreathingTechnique.BoxBreathing.Description" xml:space="preserve">
+        <value>A simple technique to calm your nervous system and regain focus. Inhale, hold, exhale, and hold for four seconds each.</value>
+    </data>
+    <data name="BreathingTechnique.FourSevenEightBreathing.Name" xml:space="preserve">
+        <value>4-7-8 Breathing</value>
+    </data>
+    <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
+        <value>Ease into deep relaxation. Place the tip of your tongue behind your upper teeth. Inhale for 4 seconds, hold your breath for 7, and exhale fully with a "whoosh" sound for 8 seconds.</value>
+    </data>
 </root>

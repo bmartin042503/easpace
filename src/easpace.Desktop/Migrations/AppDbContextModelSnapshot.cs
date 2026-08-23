@@ -134,6 +134,9 @@ namespace easpace.Desktop.Migrations
                     b.Property<int>("DurationSeconds")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
@@ -158,10 +161,15 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsLocalized")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

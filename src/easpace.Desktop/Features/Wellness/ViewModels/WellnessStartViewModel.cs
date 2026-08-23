@@ -29,15 +29,33 @@ public partial class WellnessStartViewModel : ViewModelBase
     [ObservableProperty] private double _maximumSeconds = 30 * 60;
     [ObservableProperty] private double _minimumSeconds = 60;
     [ObservableProperty] private bool _isTimerChecked = true;
-    [ObservableProperty] private bool _isBreathingChecked = true;
-    [ObservableProperty] private bool _isMeditationChecked;
-    [ObservableProperty] private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
+    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    private bool _isBreathingChecked = true;
+    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    private bool _isMeditationChecked;
+    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
 
     private bool _isInitialized;
     
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
     
     public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
+    
+    public bool HasBreathingTechniques => BreathingTechniques.Count > 0;
+
+    private bool CanStartSession()
+    {
+        if (IsMeditationChecked) return true;
+
+        return IsBreathingChecked && SelectedBreathingTechniqueViewModel != null;
+    }
 
     #endregion
 
@@ -112,6 +130,7 @@ public partial class WellnessStartViewModel : ViewModelBase
         _breathingTechniqueService = breathingTechniqueService;
 
         WellnessSessionEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSessionEntries));
+        BreathingTechniques.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasBreathingTechniques));
     }
 
     #endregion
@@ -138,7 +157,7 @@ public partial class WellnessStartViewModel : ViewModelBase
     /// <summary>
     /// Constructs the session configuration and triggers the session start event.
     /// </summary>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanStartSession))]
     private void StartSession()
     {
         TimeSpan targetDuration;

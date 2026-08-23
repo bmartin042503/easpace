@@ -252,9 +252,10 @@ public partial class ActivitiesPageViewModel : PageViewModel
 
             SelectedActivity = Activities.FirstOrDefault();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             // TODO: proper logging
+            _logger.LogError(ex, ex.Message);
         }
     }
 
@@ -273,8 +274,21 @@ public partial class ActivitiesPageViewModel : PageViewModel
         SelectedActivity = Activities.FirstOrDefault();
     }
 
-    private void OnActivityArchiveToggled(object? sender, EventArgs e)
+    private async void OnActivityArchiveToggled(object? sender, EventArgs e)
     {
+        if (sender is not ActivityViewModel activityViewModel) return;
+
+        try
+        {
+            await _activityService.ToggleArchiveAsync(activityViewModel.Id);
+            activityViewModel.IsArchived = !activityViewModel.IsArchived;
+        }
+        catch (Exception ex)
+        {
+            // TODO: proper logging
+            _logger.LogError(ex, ex.Message);
+        }
+        
         FilterActivities();
     }
 

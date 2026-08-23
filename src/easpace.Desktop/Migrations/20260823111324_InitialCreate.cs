@@ -1,7 +1,4 @@
-﻿// Copyright (c) 2026 Martin Bartos
-// Licensed under the MIT License. See LICENSE file for details.
-
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -38,8 +35,9 @@ namespace easpace.Desktop.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
+                    IsLocalized = table.Column<bool>(type: "INTEGER", nullable: false),
                     Cycles = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -105,6 +103,7 @@ namespace easpace.Desktop.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     DurationSeconds = table.Column<int>(type: "INTEGER", nullable: false),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false),
                     BreathingTechniqueId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

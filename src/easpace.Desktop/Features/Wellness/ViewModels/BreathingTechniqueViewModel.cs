@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
@@ -23,8 +24,18 @@ public class BreathingTechniqueViewModel : ViewModelBase
     {
         Id = breathingTechnique.Id;
         CreatedAt = breathingTechnique.CreatedAt;
-        Name = breathingTechnique.Name;
-        Description = breathingTechnique.Description;
+
+        if (breathingTechnique.IsLocalized)
+        {
+            Name = LocalizationService.GetString(breathingTechnique.Name);
+            Description = LocalizationService.GetString(breathingTechnique.Description);
+        }
+        else
+        {
+            Name = breathingTechnique.Name;
+            Description = breathingTechnique.Description;
+        }
+        
         Phases = breathingTechnique.Phases.ToList();
         Cycles = breathingTechnique.Cycles;
         BreathingTechnique = breathingTechnique;

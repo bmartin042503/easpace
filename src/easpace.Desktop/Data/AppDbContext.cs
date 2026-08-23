@@ -50,14 +50,24 @@ public class AppDbContext : DbContext
             .HasValue<NumericActivityDataEntry>("Numeric")
             .HasValue<RoutineActivityDataEntry>("Routine");
         
-        modelBuilder.Entity<BreathingTechnique>()
-            .HasMany(t => t.Phases)
-            .WithOne()
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<BreathingTechnique>(entity =>
+        {
+
+            entity.HasMany(t => t.Phases)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            entity.Property(t => t.Name)
+                .HasMaxLength(64);
+            
+            entity.Property(t => t.Description)
+                .HasMaxLength(256);
+        });
         
         modelBuilder.Entity<WellnessSessionEntry>()
             .HasOne(s => s.BreathingTechnique)
             .WithMany()
+            .HasForeignKey(s => s.BreathingTechniqueId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

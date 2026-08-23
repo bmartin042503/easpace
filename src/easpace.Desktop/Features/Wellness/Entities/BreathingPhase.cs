@@ -25,4 +25,9 @@ public class BreathingPhase
     /// Gets or sets the duration of the phase in seconds.
     /// </summary>
     public int DurationSeconds { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the sequential order of this phase within the breathing cycle.
+    /// </summary>
+    public int Order { get; set; }
 }

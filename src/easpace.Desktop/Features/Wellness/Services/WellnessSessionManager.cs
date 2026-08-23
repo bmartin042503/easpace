@@ -127,7 +127,10 @@ public class WellnessSessionManager : IWellnessSessionManager
             
             _currentPhaseIndex = 0;
             _currentPhaseElapsedSeconds = 0;
-            _phases = _sessionConfiguration.BreathingTechniqueConfiguration.BreathingTechnique.Phases.ToList();
+            
+            _phases = _sessionConfiguration.BreathingTechniqueConfiguration.BreathingTechnique.Phases
+                .OrderBy(p => p.Order)
+                .ToList();
 
             UpdateBreathingInstruction();
             UpdatePhaseAnimation(_phases[_currentPhaseIndex]);
@@ -136,12 +139,11 @@ public class WellnessSessionManager : IWellnessSessionManager
     
     private void ProcessBreathingPhase()
     {
-        var phases = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases.ToList();
-        if (phases == null || phases.Count == 0) return;
+        if (_phases.Count == 0) return;
 
         _currentPhaseElapsedSeconds++;
 
-        var currentPhase = phases[_currentPhaseIndex];
+        var currentPhase = _phases[_currentPhaseIndex];
 
         // check if the current phase duration has elapsed
         if (_currentPhaseElapsedSeconds >= currentPhase.DurationSeconds)
@@ -150,12 +152,12 @@ public class WellnessSessionManager : IWellnessSessionManager
             _currentPhaseElapsedSeconds = 0;
 
             // check if a full breathing cycle is completed
-            if (_currentPhaseIndex >= phases.Count)
+            if (_currentPhaseIndex >= _phases.Count)
             {
                 _currentPhaseIndex = 0;
             }
 
-            var newPhase = phases[_currentPhaseIndex];
+            var newPhase = _phases[_currentPhaseIndex];
             UpdatePhaseAnimation(newPhase);
         }
 
@@ -188,10 +190,9 @@ public class WellnessSessionManager : IWellnessSessionManager
     {
         if (_sessionConfiguration.SessionType != WellnessSessionType.Breathing) return;
 
-        var phases = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases.ToList();
-        if (phases == null || phases.Count == 0) return;
+        if (_phases.Count == 0) return;
 
-        var currentPhase = phases[_currentPhaseIndex];
+        var currentPhase = _phases[_currentPhaseIndex];
 
         var remainingPhaseSeconds = currentPhase.DurationSeconds - _currentPhaseElapsedSeconds;
 

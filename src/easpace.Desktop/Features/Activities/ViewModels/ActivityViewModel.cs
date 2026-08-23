@@ -46,6 +46,7 @@ public abstract partial class ActivityViewModel : ViewModelBase
         Id = _activity.Id;
         Name = _activity.Name;
         CreatedAt = _activity.CreatedAt;
+        IsArchived = _activity.IsArchived;
 
         Entries.CollectionChanged += (s, e) =>
         {
@@ -60,9 +61,8 @@ public abstract partial class ActivityViewModel : ViewModelBase
     public abstract Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId);
 
     [RelayCommand]
-    private async Task ToggleArchive()
+    private void ToggleArchive()
     {
-        IsArchived = !IsArchived;
         ArchiveToggled?.Invoke(this, EventArgs.Empty);
     }
 

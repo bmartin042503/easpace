@@ -15,7 +15,7 @@ public class BreathingTechnique
     /// Gets or sets the unique identifier for the breathing technique.
     /// </summary>
     public Guid Id { get; set; } = Guid.NewGuid();
-    
+
     /// <summary>
     /// Gets or sets the creation date of the breathing technique.
     /// </summary>
@@ -35,6 +35,11 @@ public class BreathingTechnique
     /// Gets or sets the sequence of phases that make up a single cycle of this technique.
     /// </summary>
     public ICollection<BreathingPhase> Phases { get; set; } = [];
+
+    /// <summary>
+    /// Gets or sets whether the technique has localization keys to use for the name and the description.
+    /// </summary>
+    public bool IsLocalized { get; set; }
 
     /// <summary>
     /// Gets or sets the default or target number of cycles for this technique.

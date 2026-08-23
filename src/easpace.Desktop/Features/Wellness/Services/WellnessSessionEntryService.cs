@@ -21,7 +21,8 @@ public class WellnessSessionEntryService : IWellnessSessionEntryService
         _dbContext = dbContext;
     }
 
-    public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createEntryRequest)
+    public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(
+        CreateWellnessSessionEntryRequest createEntryRequest)
     {
         var wellnessSession = new WellnessSessionEntry
         {
@@ -30,12 +31,12 @@ public class WellnessSessionEntryService : IWellnessSessionEntryService
             Type = createEntryRequest.SessionType,
             TargetDuration = createEntryRequest.TargetDuration,
             ActualDuration = createEntryRequest.ActualDuration,
-            BreathingTechnique = createEntryRequest.BreathingTechnique
+            BreathingTechniqueId = createEntryRequest.BreathingTechnique?.Id
         };
 
         _dbContext.WellnessSessionEntries.Add(wellnessSession);
         await _dbContext.SaveChangesAsync();
-        
+
         return wellnessSession;
     }
 
@@ -43,11 +44,13 @@ public class WellnessSessionEntryService : IWellnessSessionEntryService
     {
         // don't use OrderByDescending on dbContext with the CreatedAt column
         // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
-        
+
         var sessionEntries = await _dbContext.WellnessSessionEntries
+            .Include(e => e.BreathingTechnique)
+            .ThenInclude(t => t.Phases.OrderBy(p => p.Order))
             .AsNoTracking()
             .ToListAsync();
-        
+
         return sessionEntries.OrderByDescending(e => e.StartDate).ToList();
     }
 
@@ -58,7 +61,7 @@ public class WellnessSessionEntryService : IWellnessSessionEntryService
 
         _dbContext.WellnessSessionEntries.Remove(entry);
         await _dbContext.SaveChangesAsync();
-        
+
         return true;
     }
 }

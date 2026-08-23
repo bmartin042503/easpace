@@ -46,7 +46,7 @@ public class BreathingTechniqueService : IBreathingTechniqueService
         // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
         
         var techniques = await _dbContext.BreathingTechniques
-            .Include(t => t.Phases)
+            .Include(t => t.Phases.OrderBy(p => p.Order))
             .AsNoTracking()
             .ToListAsync();
         

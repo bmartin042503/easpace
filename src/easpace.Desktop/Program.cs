@@ -31,13 +31,13 @@ sealed class Program
 
         using (var scope = host.Services.CreateScope())
         {
+            // migrate db if there are changes
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
             await dbContext.Database.MigrateAsync();
             
-            // TODO:
-            // implement database seeder (for saving a couple of breathing techniques) and call it here
-            // with localization support (?)
+            // seed the db with default values
+            var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+            await seeder.SeedAsync();
         }
         
         App.ConfigureServices(host.Services);

@@ -87,6 +87,16 @@ public class ActivityService : IActivityService
         return activity;
     }
 
+    public async Task<Activity?> ToggleArchiveAsync(Guid activityId)
+    {
+        var activity = await _dbContext.Activities.FindAsync(activityId);
+        if (activity == null) return null;
+        
+        activity.IsArchived = !activity.IsArchived;
+        await _dbContext.SaveChangesAsync();
+        return activity;
+    }
+
     public async Task<bool> DeleteActivityAsync(Guid activityId)
     {
         var activity = await _dbContext.Activities.FindAsync(activityId);

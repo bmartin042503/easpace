@@ -22,8 +22,9 @@ public class WellnessSessionEntryViewModel : ViewModelBase
     public bool IsTypeBreathing => SessionType == WellnessSessionType.Breathing;
     public bool IsTypeMeditation => SessionType == WellnessSessionType.Meditation;
     
+    public string? BreathingTechniqueName { get; init; }
     public string DurationMinutesText { get; init; }
-    public string CyclesText { get; init; }
+    public string? CyclesText { get; init; }
     
     public WellnessSessionEntryViewModel(WellnessSessionEntry wellnessSessionEntry)
     {
@@ -33,18 +34,25 @@ public class WellnessSessionEntryViewModel : ViewModelBase
         ActualDuration = wellnessSessionEntry.ActualDuration;
         SessionType = wellnessSessionEntry.Type;
         BreathingTechnique = wellnessSessionEntry.BreathingTechnique;
+
+        if (wellnessSessionEntry is { Type: WellnessSessionType.Breathing, BreathingTechnique: not null })
+        {
+            BreathingTechniqueName = BreathingTechnique!.IsLocalized
+                ? LocalizationService.GetString(wellnessSessionEntry.BreathingTechnique.Name)
+                : wellnessSessionEntry.BreathingTechnique.Name;
+            
+            var cycles = ActualDuration.Seconds / BreathingTechnique?.Phases.Sum(p => p.DurationSeconds);
+
+            CyclesText = cycles == 1
+                ? LocalizationService.GetString("Wellness.Session.OneCycle")
+                : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
+        }
         
         var minutes = ActualDuration.Minutes;
         
         DurationMinutesText = minutes == 1
             ? LocalizationService.GetString("Common.Time.OneMinute")
             : string.Format(LocalizationService.GetString("Common.Time.Minutes"), minutes);
-
-        var cycles = ActualDuration.Seconds / BreathingTechnique?.Phases.Sum(p => p.DurationSeconds);
-
-        CyclesText = cycles == 1
-            ? LocalizationService.GetString("Wellness.Session.OneCycle")
-            : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
 
     }
 }

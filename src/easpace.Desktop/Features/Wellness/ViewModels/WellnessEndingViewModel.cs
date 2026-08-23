@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Wellness.Constants;
@@ -26,11 +27,11 @@ public partial class WellnessEndingViewModel : ViewModelBase
     [ObservableProperty] private bool _sessionSaved;
     [ObservableProperty] private string _titleText = string.Empty;
 
-    public string DurationText { get; set; }
-    public WellnessSessionType SessionType { get; set; }
-    public bool IsBreathingType { get; set; }
-    public string BreathingTechniqueName { get; set; } = string.Empty;
-    public int CycleCount { get; set; }
+    [ObservableProperty] private string _durationText = string.Empty;
+    [ObservableProperty] private WellnessSessionType _sessionType;
+    [ObservableProperty] private bool _isBreathingType;
+    [ObservableProperty] private string _breathingTechniqueName = string.Empty;
+    [ObservableProperty] private int _cycleCount;
 
     public WellnessEndingViewModel(
         IWellnessSessionEntryService sessionEntryService,
@@ -38,10 +39,14 @@ public partial class WellnessEndingViewModel : ViewModelBase
     {
         _sessionEntryService = sessionEntryService;
         _createEntryRequest = createWellnessSessionEntryRequest;
+    }
 
+    [RelayCommand]
+    public async Task InitializeAsync()
+    {
         if (_createEntryRequest.ActualDuration == _createEntryRequest.TargetDuration)
         {
-            SaveSession();
+            await SaveSession();
         }
         else
         {
@@ -60,7 +65,10 @@ public partial class WellnessEndingViewModel : ViewModelBase
 
         if (IsBreathingType && _createEntryRequest.BreathingTechnique != null)
         {
-            BreathingTechniqueName = _createEntryRequest.BreathingTechnique.Name;
+            BreathingTechniqueName = _createEntryRequest.BreathingTechnique.IsLocalized
+                ? LocalizationService.GetString(_createEntryRequest.BreathingTechnique.Name)
+                : _createEntryRequest.BreathingTechnique.Name;
+
             CycleCount = _createEntryRequest.ActualDuration.Seconds /
                          _createEntryRequest.BreathingTechnique.Phases.Sum(p => p.DurationSeconds);
         }
@@ -73,11 +81,11 @@ public partial class WellnessEndingViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void SaveSession()
+    private async Task SaveSession()
     {
         AskToSaveSession = false;
 
-        _sessionEntryService.CreateWellnessSessionEntryAsync(_createEntryRequest);
+        await _sessionEntryService.CreateWellnessSessionEntryAsync(_createEntryRequest);
 
         SessionSaved = true;
 

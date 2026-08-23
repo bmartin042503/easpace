@@ -71,7 +71,11 @@ public partial class WellnessSessionViewModel : ViewModelBase
         if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
         {
             IsBreathing = true;
-            var firstPhase = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases.ToList()[0];
+            
+            var firstPhase = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases
+                .OrderBy(p => p.Order)
+                .FirstOrDefault();
+            
             InstructionText = firstPhase?.Type switch
             {
                 BreathingPhaseType.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
