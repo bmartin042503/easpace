@@ -12,4 +12,10 @@ public static class ApplicationMessage
     {
         public ApplicationPage Page { get; } = page;
     }
+    
+    // sets the sidebar visibility in MainWindow
+    public class SidebarVisibility(bool isVisible) : ValueChangedMessage<bool>(true)
+    {
+        public bool IsVisible { get; } = isVisible;
+    }
 }

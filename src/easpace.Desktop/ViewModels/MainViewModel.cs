@@ -43,6 +43,11 @@ public partial class MainViewModel : ViewModelBase
         {
             SetPage(msg.Page);
         });
+        
+        messenger.Register<ApplicationMessage.SidebarVisibility>(this, (_, msg) =>
+        {
+            IsSidebarVisible = msg.IsVisible;
+        });
 
         _isBoarded = _preferencesService.ReadPreference<bool>(PreferenceKey.Boarded);
 

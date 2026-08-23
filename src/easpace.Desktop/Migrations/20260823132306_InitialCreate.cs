@@ -17,7 +17,7 @@ namespace easpace.Desktop.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
                     ActivityType = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
                     TargetDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
@@ -51,8 +51,8 @@ namespace easpace.Desktop.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false)
+                    Title = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Content = table.Column<string>(type: "TEXT", maxLength: 12800, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace easpace.Desktop.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Timestamp = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     Value = table.Column<double>(type: "REAL", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
                     Labels = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

@@ -21,7 +21,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid ColumnDefinitions="Auto,*">
 
         <!-- Sidebar -->
-        <Border Grid.Column="0" Classes="sidebar">
+        <Border Grid.Column="0" Classes="sidebar" IsVisible="{Binding IsSidebarVisible}">
 
             <ListBox Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
 
@@ -58,8 +58,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
-                              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                              IsVisible="{Binding IsSidebarVisible}" />
+                              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 

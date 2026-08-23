@@ -36,6 +36,9 @@ public static class ServiceCollectionExtensions
 
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
+            
+            collection.AddSingleton<WindowService>();
+            collection.AddSingleton<IWindowService>(sp => sp.GetRequiredService<WindowService>());
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());

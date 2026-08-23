@@ -10,10 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
-    
     // Activities
     public DbSet<Activity> Activities { get; set; }
     public DbSet<ActivityDataEntry> ActivityDataEntries { get; set; }
@@ -31,11 +29,16 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Activity>()
-            .HasMany(a => a.Entries)
-            .WithOne()
-            .HasForeignKey(a => a.ActivityId)
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Activity>(entity => 
+        {
+            entity.HasMany(a => a.Entries)
+                .WithOne()
+                .HasForeignKey(a => a.ActivityId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            entity.Property(a => a.Name)
+                .HasMaxLength(128); 
+        });
 
         modelBuilder.Entity<Activity>()
             .UseTphMappingStrategy()
@@ -49,6 +52,21 @@ public class AppDbContext : DbContext
             .HasDiscriminator<string>("EntryType")
             .HasValue<NumericActivityDataEntry>("Numeric")
             .HasValue<RoutineActivityDataEntry>("Routine");
+        
+        modelBuilder.Entity<JournalEntry>(entity =>
+        {
+            entity.Property(e => e.Title)
+                .HasMaxLength(128);
+            
+            entity.Property(e => e.Content)
+                .HasMaxLength(12800); 
+        });
+        
+        modelBuilder.Entity<MoodEntry>(entity =>
+        {
+            entity.Property(m => m.Description)
+                .HasMaxLength(512);
+        });
         
         modelBuilder.Entity<BreathingTechnique>(entity =>
         {

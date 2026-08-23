@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -17,12 +19,11 @@ namespace easpace.Desktop.Features.Wellness.ViewModels;
 public partial class WellnessSessionViewModel : ViewModelBase
 {
     #region Fields
-    
+
     private DateTimeOffset _startDate;
     
-    private WellnessSessionConfiguration _sessionConfiguration;
-    
-    private IWellnessSessionManager _wellnessSessionManager;
+    private readonly WellnessSessionConfiguration _sessionConfiguration;
+    private readonly IWellnessSessionManager _wellnessSessionManager;
 
     [ObservableProperty] private bool _isPaused;
     [ObservableProperty] private string _instructionText = string.Empty;
@@ -32,7 +33,7 @@ public partial class WellnessSessionViewModel : ViewModelBase
 
     [ObservableProperty]
     private string _timerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");
-    
+
     public bool IsBreathing { get; set; }
 
     #endregion
@@ -55,7 +56,7 @@ public partial class WellnessSessionViewModel : ViewModelBase
     public WellnessSessionViewModel(WellnessSessionConfiguration sessionConfiguration)
     {
         _sessionConfiguration = sessionConfiguration;
-        
+
         _wellnessSessionManager = new WellnessSessionManager(sessionConfiguration);
 
         _wellnessSessionManager.TimerTick += OnSessionManagerTimerTick;
@@ -71,11 +72,11 @@ public partial class WellnessSessionViewModel : ViewModelBase
         if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
         {
             IsBreathing = true;
-            
+
             var firstPhase = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases
                 .OrderBy(p => p.Order)
                 .FirstOrDefault();
-            
+
             InstructionText = firstPhase?.Type switch
             {
                 BreathingPhaseType.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
@@ -89,7 +90,7 @@ public partial class WellnessSessionViewModel : ViewModelBase
         {
             IsBreathing = false;
         }
-        
+
         // configure specific session type properties
         _wellnessSessionManager.StartSession();
         _startDate = DateTimeOffset.Now;
@@ -171,7 +172,7 @@ public partial class WellnessSessionViewModel : ViewModelBase
             SessionType: _sessionConfiguration.SessionType,
             BreathingTechnique: _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique
         );
-        
+
         SessionEnded?.Invoke(this, request);
     }
 

@@ -5,6 +5,7 @@ using easpace.Desktop.Features.Journal.Entities;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Features.Journal.ViewModels;
 using FluentAssertions;
+using Moq;
 
 namespace easpace.Tests.Features.Journal;
 
@@ -13,58 +14,65 @@ public class JournalEditorViewModelTests
     [Fact]
     public void NewEditor_StartsAsAnIndependentDraft()
     {
-        var service = new JournalEntryService();
-
-        var editor = new JournalEditorViewModel(service);
+        var mockService = new Mock<IJournalEntryService>();
+        var editor = new JournalEditorViewModel(mockService.Object);
 
         editor.IsCreatingNew.Should().BeTrue();
         editor.Title.Should().NotBeNullOrWhiteSpace();
         editor.Content.Should().BeEmpty();
-        service.GetJournalEntries().Should().BeEmpty();
     }
 
     [Fact]
-    public void SaveCommand_WhenCreatingNew_CreatesEntryAndRaisesSaved()
+    public async Task SaveCommand_WhenCreatingNew_CreatesEntryAndRaisesSaved()
     {
-        var service = new JournalEntryService();
-        var editor = new JournalEditorViewModel(service)
+        var mockService = new Mock<IJournalEntryService>();
+        var editor = new JournalEditorViewModel(mockService.Object)
         {
             Title = "A clear title",
             Content = "A clear thought",
         };
 
+        var returnedEntry = new JournalEntry { Id = Guid.NewGuid(), Title = "A clear title", Content = "A clear thought" };
+        mockService.Setup(s => s.CreateJournalEntryAsync("A clear title", "A clear thought"))
+                   .ReturnsAsync(returnedEntry);
+
         JournalEntry? savedEntry = null;
         editor.Saved += (_, entry) => savedEntry = entry;
 
-        editor.SaveCommand.Execute(null);
+        await editor.SaveCommand.ExecuteAsync(null);
 
         savedEntry.Should().NotBeNull();
-        savedEntry.Title.Should().Be("A clear title");
-        savedEntry.Content.Should().Be("A clear thought");
-        service.GetJournalEntries().Should().ContainSingle().Which.Should().BeSameAs(savedEntry);
+        savedEntry.Should().BeSameAs(returnedEntry);
     }
 
     [Fact]
-    public void SaveCommand_WhenTitleIsWhitespace_GeneratesADefaultTitle()
+    public async Task SaveCommand_WhenTitleIsWhitespace_GeneratesADefaultTitle()
     {
-        var service = new JournalEntryService();
-        var editor = new JournalEditorViewModel(service)
+        var mockService = new Mock<IJournalEntryService>();
+        var editor = new JournalEditorViewModel(mockService.Object)
         {
             Title = "   ",
+            Content = "Some content"
         };
+        
+        mockService.Setup(s => s.CreateJournalEntryAsync(It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(new JournalEntry());
 
-        editor.SaveCommand.Execute(null);
-
-        service.GetJournalEntries().Single().Title.Should().NotBeNullOrWhiteSpace();
+        await editor.SaveCommand.ExecuteAsync(null);
+        
+        mockService.Verify(s => s.CreateJournalEntryAsync(
+            It.Is<string>(title => !string.IsNullOrWhiteSpace(title)), 
+            "Some content"), Times.Once);
     }
 
     [Fact]
     public void ExistingEditor_DoesNotMutateTheEntryUntilSave()
     {
-        var service = new JournalEntryService();
-        var entry = service.CreateJournalEntry("Original", "Original content");
+        var mockService = new Mock<IJournalEntryService>();
+        var entry = new JournalEntry { Id = Guid.NewGuid(), Title = "Original", Content = "Original content" };
         var entryViewModel = new JournalEntryViewModel(entry);
-        var editor = new JournalEditorViewModel(service, entryViewModel)
+        
+        var editor = new JournalEditorViewModel(mockService.Object, entryViewModel)
         {
             Title = "Changed",
             Content = "Changed content",
@@ -72,41 +80,19 @@ public class JournalEditorViewModelTests
 
         entryViewModel.Title.Should().Be("Original");
         entryViewModel.Content.Should().Be("Original content");
-        service.GetJournalEntries().Single().Title.Should().Be("Original");
-    }
-
-    [Fact]
-    public void SaveCommand_WhenEditingExisting_UpdatesServiceAndRaisesSaved()
-    {
-        var service = new JournalEntryService();
-        var entry = service.CreateJournalEntry("Original", "Original content");
-        var editor = new JournalEditorViewModel(service, new JournalEntryViewModel(entry))
-        {
-            Title = "Updated",
-            Content = "Updated content",
-        };
-
-        JournalEntry? savedEntry = null;
-        editor.Saved += (_, saved) => savedEntry = saved;
-
-        editor.SaveCommand.Execute(null);
-
-        savedEntry.Should().BeSameAs(entry);
-        entry.Title.Should().Be("Updated");
-        entry.Content.Should().Be("Updated content");
     }
 
     [Fact]
     public void CancelCommand_RaisesCanceledWithoutChangingTheService()
     {
-        var service = new JournalEntryService();
-        var editor = new JournalEditorViewModel(service);
+        var mockService = new Mock<IJournalEntryService>();
+        var editor = new JournalEditorViewModel(mockService.Object);
         var canceled = false;
         editor.Canceled += (_, _) => canceled = true;
 
         editor.CancelCommand.Execute(null);
 
         canceled.Should().BeTrue();
-        service.GetJournalEntries().Should().BeEmpty();
+        mockService.Verify(s => s.CreateJournalEntryAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
     }
 }

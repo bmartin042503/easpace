@@ -36,6 +36,7 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -83,6 +84,7 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
+                        .HasMaxLength(12800)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -90,6 +92,7 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -105,6 +108,7 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT");
 
                     b.PrimitiveCollection<string>("Labels")

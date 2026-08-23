@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
-using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
@@ -19,6 +20,8 @@ public partial class WellnessPageViewModel : PageViewModel
 {
     #region Fields
     
+    private readonly IMessenger _messenger;
+    private readonly IWindowService _windowService;
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IBreathingTechniqueService _breathingTechniqueService;
 
@@ -40,10 +43,14 @@ public partial class WellnessPageViewModel : PageViewModel
     /// Initializes a new instance of the <see cref="WellnessPageViewModel"/> class.
     /// </summary>
     public WellnessPageViewModel(
+        IMessenger messenger,
+        IWindowService windowService,
         IWellnessSessionEntryService wellnessSessionEntryService,
         IBreathingTechniqueService breathingTechniqueService)
     {
         Page = ApplicationPage.Wellness;
+        _messenger = messenger;
+        _windowService = windowService;
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _breathingTechniqueService = breathingTechniqueService;
 
@@ -114,6 +121,9 @@ public partial class WellnessPageViewModel : PageViewModel
     /// <param name="e">Event arguments.</param>
     private void OnNavigatedToConfiguration(object? sender, EventArgs e)
     {
+        _windowService.ExitFullScreen();
+        _messenger.Send(new ApplicationMessage.SidebarVisibility(true));
+        
         SetConfigurationView();
         CleanUpEndingView();
     }
@@ -139,6 +149,9 @@ public partial class WellnessPageViewModel : PageViewModel
     /// <param name="sessionConfiguration">The configuration details to pass to the session view model.</param>
     private void SetSessionView(WellnessSessionConfiguration sessionConfiguration)
     {
+        _windowService.EnterFullScreen();
+        _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
+        
         _sessionViewModel = new WellnessSessionViewModel(sessionConfiguration);
         _sessionViewModel.SessionEnded += OnSessionEnded;
 

@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
-using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services;
 using easpace.Desktop.ViewModels;
@@ -69,8 +68,8 @@ public partial class WellnessEndingViewModel : ViewModelBase
                 ? LocalizationService.GetString(_createEntryRequest.BreathingTechnique.Name)
                 : _createEntryRequest.BreathingTechnique.Name;
 
-            CycleCount = _createEntryRequest.ActualDuration.Seconds /
-                         _createEntryRequest.BreathingTechnique.Phases.Sum(p => p.DurationSeconds);
+            CycleCount = (int)(_createEntryRequest.ActualDuration.TotalSeconds /
+                         _createEntryRequest.BreathingTechnique.Phases.Sum(p => p.DurationSeconds));
         }
     }
 

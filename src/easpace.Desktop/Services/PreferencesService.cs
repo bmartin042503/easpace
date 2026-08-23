@@ -9,12 +9,6 @@ using System.Threading;
 
 namespace easpace.Desktop.Services;
 
-public interface IPreferencesService
-{
-    T ReadPreference<T>(string key, T defaultValue = default!);
-    void SavePreference<T>(string key, T value);
-}
-
 public class PreferencesService : IPreferencesService
 {
     private readonly Dictionary<string, JsonElement> _preferences = new();
