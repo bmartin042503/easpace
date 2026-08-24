@@ -11,7 +11,6 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
-using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services;
@@ -193,6 +192,7 @@ public partial class ActivityEditorViewModel : ValidatorViewModelBase
             if (deleted)
             {
                 DataEntries.Remove(dataEntryVm);
+                _activity.Entries.Remove(dataEntryVm);
                 _logger.LogInformation("Data entry {EntryId} removed successfully via editor", dataEntryVm.Id);
             }
         }

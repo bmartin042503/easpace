@@ -53,6 +53,16 @@ public partial class RoutineActivityViewModel : ActivityViewModel
 
     protected override void OnEntryCollectionChanged()
     {
+        var currentVmIds = Entries.Select(e => e.Id).ToHashSet();
+        var entriesToRemove = _routineActivity.Entries
+            .Where(e => !currentVmIds.Contains(e.Id))
+            .ToList();
+
+        foreach (var entryToRemove in entriesToRemove)
+        {
+            _routineActivity.Entries.Remove(entryToRemove);
+        }
+
         base.OnEntryCollectionChanged();
         OnPropertyChanged(nameof(TodayEntry));
 
@@ -112,8 +122,9 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                     State: routineEntryDialog.SelectedState,
                     Value: null
                 );
-                
-                var updatedDataEntry = await _activityDataEntryService.UpdateDataEntryAsync(existingEntry.Id, updateEntryRequest);
+
+                var updatedDataEntry =
+                    await _activityDataEntryService.UpdateDataEntryAsync(existingEntry.Id, updateEntryRequest);
 
                 if (updatedDataEntry is RoutineActivityDataEntry routineDataEntry)
                 {
@@ -123,7 +134,7 @@ public partial class RoutineActivityViewModel : ActivityViewModel
                     {
                         routineDataEntryVm.Timestamp = routineEntryDialog.GetTimestamp();
                         routineDataEntryVm.State = routineEntryDialog.SelectedState;
-                        
+
                         var entryVmReplaceIndex = Entries.IndexOf(routineDataEntryVm);
                         Entries.Remove(routineDataEntryVm);
                         Entries.Insert(entryVmReplaceIndex, routineDataEntryVm);
@@ -217,52 +228,54 @@ public partial class RoutineActivityViewModel : ActivityViewModel
         }
     }
 
-    private (DateTime builtStartDate, DateTime builtEndDate, DateTime entriesStartDate, DateTime entriesEndDate)
-        GetBounds()
-    {
-        var builtMonthStartDate =
-            RoutineMonths
-                .GroupBy(m => new DateTime(m.Year, m.Month, 1))
-                .MinBy(g => g.Key)!.Key;
-
-        var builtMonthEndDate =
-            RoutineMonths
-                .GroupBy(m => new DateTime(m.Year, m.Month, 1))
-                .MaxBy(g => g.Key)!.Key;
-
-        var routineEntriesStartDate = _routineActivity.Entries.Min(e => e.Timestamp.Date);
-        var routineEntriesEndDate = _routineActivity.Entries.Max(e => e.Timestamp.Date);
-
-        routineEntriesStartDate = new DateTime(routineEntriesStartDate.Year, routineEntriesStartDate.Month, 1);
-        routineEntriesEndDate = new DateTime(routineEntriesEndDate.Year, routineEntriesEndDate.Month, 1);
-
-        return (builtMonthStartDate, builtMonthEndDate, routineEntriesStartDate, routineEntriesEndDate);
-    }
-
     private void UpdateMonths()
     {
-        var bounds = GetBounds();
-
-        if (bounds.entriesStartDate < bounds.builtStartDate || bounds.entriesEndDate > bounds.builtEndDate)
+        if (RoutineMonths.Count == 0)
         {
             LoadRoutineMonths();
+            return;
         }
-        else
+
+        var expectedStartDate = _routineActivity.CreatedAt.Date;
+        var expectedEndDate = DateTime.Today;
+
+        if (_routineActivity.Entries.Any())
         {
-            var affectedMonthsDates =
-                _routineActivityDataProvider.GetAffectedMonths(RoutineMonths.ToList(), _routineActivity);
+            var firstEntryDate = _routineActivity.Entries.Min(e => e.Timestamp.Date);
+            if (firstEntryDate < expectedStartDate) expectedStartDate = firstEntryDate;
 
-            List<RoutineMonth> builtAffectedMonths = [];
-
-            foreach (var affectedMonthDate in affectedMonthsDates)
-            {
-                var builtMonth = _routineActivityDataProvider.BuildRoutineMonth(affectedMonthDate.Year,
-                    affectedMonthDate.Month, _routineActivity);
-
-                builtAffectedMonths.Add(builtMonth);
-            }
-
-            ReplaceRoutineMonths(builtAffectedMonths);
+            var lastEntryDate = _routineActivity.Entries.Max(e => e.Timestamp.Date);
+            if (lastEntryDate > expectedEndDate) expectedEndDate = lastEntryDate;
         }
+
+        var expectedStartMonth = new DateTime(expectedStartDate.Year, expectedStartDate.Month, 1);
+        var expectedEndMonth = new DateTime(expectedEndDate.Year, expectedEndDate.Month, 1);
+
+        var currentStartMonthData = RoutineMonths.MinBy(m => new DateTime(m.Year, m.Month, 1));
+        var currentEndMonthData = RoutineMonths.MaxBy(m => new DateTime(m.Year, m.Month, 1));
+
+        var currentStartMonth = new DateTime(currentStartMonthData!.Year, currentStartMonthData.Month, 1);
+        var currentEndMonth = new DateTime(currentEndMonthData!.Year, currentEndMonthData.Month, 1);
+
+        if (expectedStartMonth != currentStartMonth || expectedEndMonth != currentEndMonth)
+        {
+            LoadRoutineMonths();
+            return;
+        }
+
+        var affectedMonthsDates =
+            _routineActivityDataProvider.GetAffectedMonths(RoutineMonths.ToList(), _routineActivity);
+
+        List<RoutineMonth> builtAffectedMonths = [];
+
+        foreach (var affectedMonthDate in affectedMonthsDates)
+        {
+            var builtMonth = _routineActivityDataProvider.BuildRoutineMonth(affectedMonthDate.Year,
+                affectedMonthDate.Month, _routineActivity);
+
+            builtAffectedMonths.Add(builtMonth);
+        }
+
+        ReplaceRoutineMonths(builtAffectedMonths);
     }
 }

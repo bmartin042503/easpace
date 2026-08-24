@@ -75,54 +75,44 @@ public class RoutineActivityDataProvider : IRoutineActivityDataProvider
 
     public List<DateTime> GetAffectedMonths(List<RoutineMonth> builtMonths, RoutineActivity routineActivity)
     {
-        if (routineActivity.Entries.Count <= 0 || builtMonths.Count <= 0) return [];
-
-        var startDate = routineActivity.Entries.MinBy(e => e.Timestamp.Date)?.Timestamp.Date;
-        var endDate = routineActivity.Entries.MaxBy(e => e.Timestamp.Date)?.Timestamp.Date;
-
-        var currentMonthIter = new DateTime(startDate!.Value.Year, startDate.Value.Month, 1);
-        var endMonthIter = new DateTime(endDate!.Value.Year, endDate.Value.Month, 1);
+        if (builtMonths.Count <= 0) return [];
 
         List<DateTime> affectedMonths = [];
 
-        while (currentMonthIter <= endMonthIter)
+        foreach (var month in builtMonths)
         {
-            if (!routineActivity.Entries.Any(e =>
-                    e.Timestamp.Date.Year == currentMonthIter.Year && e.Timestamp.Date.Month == currentMonthIter.Month))
+            var actualEntries = routineActivity.Entries
+                .OfType<RoutineActivityDataEntry>()
+                .Where(e => e.Timestamp.Year == month.Year && e.Timestamp.Month == month.Month)
+                .ToList();
+
+            var renderedEntries = month.Entries
+                .Where(e => e.State != RoutineState.None)
+                .ToList();
+
+            var requiresUpdate = false;
+
+            if (actualEntries.Count != renderedEntries.Count)
             {
-                currentMonthIter = currentMonthIter.AddMonths(1);
-                continue;
+                requiresUpdate = true;
+            }
+            else
+            {
+                foreach (var actual in actualEntries)
+                {
+                    var rendered = renderedEntries.FirstOrDefault(e => e.Timestamp.Date == actual.Timestamp.Date);
+                    if (rendered == null || rendered.State != actual.State)
+                    {
+                        requiresUpdate = true;
+                        break;
+                    }
+                }
             }
 
-            var builtMonthEntries = builtMonths.FirstOrDefault(m =>
-                    m.Year == currentMonthIter.Year && m.Month == currentMonthIter.Month)?.Entries
-                .Where(e => e.State != RoutineState.None);
-
-            HashSet<RoutineActivityDataEntry> builtMonthEntriesSet = new();
-            HashSet<RoutineActivityDataEntry> activityEntriesSet;
-
-            if (builtMonthEntries != null)
+            if (requiresUpdate)
             {
-                var routineDataEntries = builtMonthEntries.ToList();
-                builtMonthEntriesSet = new(routineDataEntries);
+                affectedMonths.Add(new DateTime(month.Year, month.Month, 1));
             }
-
-            var iter = currentMonthIter;
-
-            var activityEntries = routineActivity
-                .Entries.Where(m =>
-                    m.Timestamp.Date.Year == iter.Year && m.Timestamp.Date.Month == iter.Month)
-                .OfType<RoutineActivityDataEntry>();
-
-            activityEntriesSet = new(activityEntries);
-
-            var affectedMonthEntries = activityEntriesSet.Except(builtMonthEntriesSet);
-            if (affectedMonthEntries.Any())
-            {
-                affectedMonths.Add(new DateTime(iter.Year, iter.Month, 1));
-            }
-
-            currentMonthIter = currentMonthIter.AddMonths(1);
         }
 
         return affectedMonths;
