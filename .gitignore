@@ -40,3 +40,7 @@ Thumbs.db
 # Avalonia-specific files
 *.g.cs
 *.g.i.cs
+
+# Local VM config
+Directory.Build.props
+

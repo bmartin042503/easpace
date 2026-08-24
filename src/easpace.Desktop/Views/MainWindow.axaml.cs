@@ -33,14 +33,11 @@ public partial class MainWindow : Window
         
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            // Windows specific settings
-
-            // Remove title bar
             ExtendClientAreaToDecorationsHint = true;
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            // Remove title bar on macOS, but keep window control buttons in the top left corner
+            // removes title bar on macOS, but keep window control buttons in the top left corner
             ExtendClientAreaToDecorationsHint = true;
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))

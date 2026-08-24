@@ -14,8 +14,8 @@ Licensed under the MIT License. See LICENSE file for details.
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Assets\Fonts\*" />
-        <AvaloniaResource Include="Assets\**" />
+        <Folder Include="Assets\Fonts\*"/>
+        <AvaloniaResource Include="Assets\**"/>
     </ItemGroup>
 
     <!-- Versions -->
@@ -25,89 +25,35 @@ Licensed under the MIT License. See LICENSE file for details.
     </PropertyGroup>
 
     <ItemGroup>
-        
+
         <!-- Avalonia packages -->
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="12.0.0" />
-        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
-        
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="12.0.0"/>
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3"/>
+
         <!-- .NET packages -->
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(DotNetVersion)" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="$(DotNetVersion)" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="$(DotNetVersion)"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="$(DotNetVersion)"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="$(DotNetVersion)">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        
+
         <!-- Other packages -->
-        <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.4.0" />
-        <PackageReference Include="Devlooped.CredentialManager" Version="2.7.0" />
-        
+        <PackageReference Include="SQLite3MC.PCLRaw.bundle" Version="2.4.0"/>
+        <PackageReference Include="Devlooped.CredentialManager" Version="2.7.0"/>
+
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Assets\Localization\Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Assets\Localization\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
-    <ItemGroup>
-      <Compile Update="Features\Journal\Views\JournalPageView.axaml.cs">
-        <DependentUpon>JournalView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\ActivitiesPageView.axaml.cs">
-        <DependentUpon>ActivitiesView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\ActivityEditorView.axaml.cs">
-        <DependentUpon>ActivityEditorView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\MilestoneActivityView.axaml.cs">
-        <DependentUpon>MilestoneActivityView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\RoutineActivityView.axaml.cs">
-        <DependentUpon>RoutineActivityView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\TrendActivityView.axaml.cs">
-        <DependentUpon>TrendActivityView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\Dialogs\NumericEntryDialogView.axaml.cs">
-        <DependentUpon>NumericEntryDialogView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Activities\Views\Dialogs\RoutineEntryDialogView.axaml.cs">
-        <DependentUpon>RoutineEntryDialogView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Mood\Views\MoodPageView.axaml.cs">
-        <DependentUpon>MoodView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Wellness\Views\WellnessStartView.axaml.cs">
-        <DependentUpon>WellnessConfigurationView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Wellness\Views\WellnessEndingView.axaml.cs">
-        <DependentUpon>WellnessEndingView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Wellness\Views\WellnessSessionView.axaml.cs">
-        <DependentUpon>WellnessSessionView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Features\Wellness\Views\WellnessPageView.axaml.cs">
-        <DependentUpon>WellnessView.axaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

@@ -14,9 +14,8 @@ Licensed under the MIT License. See LICENSE file for details.
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
-        Title="easpace"
-        MinHeight="450"
-        MinWidth="700">
+        Background="{DynamicResource Haven.Sem.Canvas}"
+        Title="easpace" MinHeight="450" MinWidth="700">
 
     <Grid ColumnDefinitions="Auto,*">
 
@@ -27,8 +26,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <ListBoxItem Grid.Row="0">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
-                                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
-                                                 Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
+                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                                                          Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="1">
@@ -65,11 +64,11 @@ Licensed under the MIT License. See LICENSE file for details.
             </ListBox>
 
         </Border>
-
+        
         <!-- Selected page content -->
-        <ContentControl Grid.Column="1"
-                        x:Name="PageContent"
-                        Content="{Binding CurrentPageViewModel}" />
+        <ContentControl Grid.Column="1" x:Name="PageContent"
+                        Content="{Binding CurrentPageViewModel}"
+                        Margin="{OnPlatform Windows='0,10,0,0', Linux='0,10,0,0' }" />
 
         <!-- Dialog host -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2"

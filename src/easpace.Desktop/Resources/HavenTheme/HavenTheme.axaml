@@ -30,6 +30,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="/Resources/HavenTheme/PhosphorIcons.axaml" />
 
                 <!-- Control themes -->
+                <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/WindowDrawnDecorations.axaml" />
                 <ResourceInclude Source="/Resources/HavenTheme/ControlThemes/DataValidationErrors.axaml" />
 
             </ResourceDictionary.MergedDictionaries>

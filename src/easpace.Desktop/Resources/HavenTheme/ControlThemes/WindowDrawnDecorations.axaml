@@ -1,0 +1,91 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:ClassModifier="internal">
+
+    <ControlTheme x:Key="Haven.ControlTheme.CaptionButton" TargetType="Button">
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  Background="{StaticResource Haven.Scale.Transparent}"
+                                  Content="{TemplateBinding Content}"
+                                  Padding="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        </Style>
+        
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+        </Style>
+        
+        <Style Selector="^#PART_CloseButton:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
+        </Style>
+        
+        <Style Selector="^#PART_CloseButton:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Danger}" />
+        </Style>
+
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type WindowDrawnDecorations}" TargetType="WindowDrawnDecorations">
+        <Setter Property="Template">
+            <WindowDrawnDecorationsTemplate>
+                <WindowDrawnDecorationsContent>
+
+                    <WindowDrawnDecorationsContent.Overlay>
+                        <Panel x:Name="PART_OverlayWrapper" VerticalAlignment="Top">
+
+                            <StackPanel x:Name="PART_OverlayPanel" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                                <!-- Minimize button -->
+                                <Button x:Name="PART_MinimizeButton"
+                                        Theme="{StaticResource Haven.ControlTheme.CaptionButton}"
+                                        WindowDecorationProperties.ElementRole="MinimizeButton">
+                                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.Minus}"
+                                              Width="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              Height="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              IsHitTestVisible="False" />
+                                </Button>
+
+                                <!-- Maximize/Minimize button -->
+                                <Button x:Name="PART_MaximizeButton"
+                                        Theme="{StaticResource Haven.ControlTheme.CaptionButton}"
+                                        WindowDecorationProperties.ElementRole="MaximizeButton">
+                                    <PathIcon Name="RestoreButtonPathIcon"
+                                              Data="{StaticResource Haven.PhosphorIcons.Square}"
+                                              Width="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              Height="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              IsHitTestVisible="False" />
+                                </Button>
+
+                                <!-- Close button -->
+                                <Button x:Name="PART_CloseButton"
+                                        Theme="{StaticResource Haven.ControlTheme.CaptionButton}"
+                                        WindowDecorationProperties.ElementRole="CloseButton">
+                                    
+                                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}"
+                                              Width="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              Height="{StaticResource Haven.Scale.Icon.Size.Xxs}"
+                                              IsHitTestVisible="False" />
+                                    
+                                </Button>
+
+                            </StackPanel>
+                        </Panel>
+                    </WindowDrawnDecorationsContent.Overlay>
+
+                </WindowDrawnDecorationsContent>
+            </WindowDrawnDecorationsTemplate>
+        </Setter>
+
+        <Style Selector="^:maximized /template/ PathIcon#RestoreButtonPathIcon">
+            <Setter Property="Data"
+                    Value="{StaticResource Haven.PhosphorIcons.CopySimple}" />
+        </Style>
+
+    </ControlTheme>
+</ResourceDictionary>
