@@ -11,53 +11,73 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessSessionView"
-             x:DataType="vm:WellnessSessionViewModel">
-    
+             x:DataType="vm:WellnessSessionViewModel"
+             Background="{StaticResource Haven.Scale.Transparent}">
+
+    <!-- Session view -->
     <Grid RowDefinitions="*,*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
-        
+
         <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             
-            <!-- Instruction -->
-            <TextBlock Classes="neutral fs1" Text="{Binding InstructionText}"
-                       HorizontalAlignment="Center" />
-        
-            <!-- Phase seconds -->
-            <TextBlock Classes="neutral fs1" Text="{Binding PhaseSecondsText}"
-                       HorizontalAlignment="Center" />
+            <!-- TODO: make this reusable (with behaviors ?) -->
+            <!-- Animated instruction text -->
+            <TransitioningContentControl Content="{Binding InstructionText}"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center">
             
+                <TransitioningContentControl.PageTransition>
+                    <CompositePageTransition>
+                        <CrossFade Duration="0:0:0.5" />
+                        <PageSlide Duration="0:0:0.5" Orientation="Vertical" SlideInEasing="CubicEaseOut" />
+                    </CompositePageTransition>
+                </TransitioningContentControl.PageTransition>
+            
+                <TransitioningContentControl.ContentTemplate>
+                    <DataTemplate DataType="x:String">
+                        <TextBlock Text="{Binding}" Classes="strong accent fs1"
+                                   HorizontalAlignment="Center" TextAlignment="Center" />
+                    </DataTemplate>
+                </TransitioningContentControl.ContentTemplate>
+            
+            </TransitioningContentControl>
+
+            <!-- Phase seconds -->
+            <TextBlock Classes="strong accent fs1" Text="{Binding PhaseSecondsText}"
+                       HorizontalAlignment="Center" />
+
         </StackPanel>
-        
+
         <!-- Ellipses (for breathing animation) -->
         <Grid Grid.Row="1" Width="128" Height="128" IsVisible="{Binding IsBreathing}">
-            <Ellipse Width="32" Height="32" 
-                     Fill="{DynamicResource Haven.Sem.Accent}" 
-                     Opacity="1"/>
-            
-            <Ellipse Width="{Binding BreathingCircleSize}" 
-                     Height="{Binding BreathingCircleSize}" 
-                     Fill="{DynamicResource Haven.Sem.Accent}" 
+            <Ellipse Width="32" Height="32"
+                     Fill="{DynamicResource Haven.Sem.Accent}"
+                     Opacity="1" />
+
+            <Ellipse Width="{Binding BreathingCircleSize}"
+                     Height="{Binding BreathingCircleSize}"
+                     Fill="{DynamicResource Haven.Sem.Accent}"
                      Opacity="0.4" />
         </Grid>
-        
+
         <!-- Timer -->
-        <TextBlock Grid.Row="2" Classes="subtle neutral fs3" Text="{Binding TimerText}"
+        <TextBlock Grid.Row="2" Classes="strong accent fs3" Text="{Binding TimerText}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
-        
+
         <!-- Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"
                     Spacing="{StaticResource Haven.Scale.Spacing.Xl}">
-            
+
             <!-- Pause/Resume -->
             <Button Classes="tertiary regular" Content="{Binding TimerToggleButtonText}"
                     Command="{Binding ToggleSessionTimerCommand}" />
-            
+
             <!-- Stop -->
-            <Button Classes="tertiary regular" Content="{services:LocalizationService Key='Wellness.Button.EndSession'}"
+            <Button Classes="tertiary regular"
+                    Content="{services:LocalizationService Key='Wellness.Button.EndSession'}"
                     Command="{Binding StopSessionCommand}" />
-            
+
         </StackPanel>
-        
+
     </Grid>
-        
+
 </UserControl>

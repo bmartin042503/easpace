@@ -9,12 +9,28 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessPageView"
              x:DataType="viewModels:WellnessPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}"
+             Background="{StaticResource Haven.Scale.Transparent}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
     
-    <ContentControl Content="{Binding ContentViewModel}" />
+    <Grid>
+        
+        <!-- Blobs gradient background -->
+        <controls:BlobsGradientBackground
+            BackgroundBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            FromBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
+            EllipseCount="7"
+            Speed="0.4"
+            Opacity="0.75"
+            IsVisible="{Binding IsBlobBackgroundVisible}" />
+        
+        <!-- Wellness content -->
+        <ContentControl Content="{Binding ContentViewModel}" />
+        
+    </Grid>
 
 </UserControl>

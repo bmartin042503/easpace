@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{StaticResource Haven.Scale.Transparent}">
 
     <UserControl.Resources>
 
@@ -47,8 +47,8 @@ Licensed under the MIT License. See LICENSE file for details.
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <Border Grid.Column="0" Classes="card">
+
+        <Border Grid.Column="0" Classes="translucent card">
 
             <Grid>
 
@@ -65,24 +65,24 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Wind}"
                                   Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
                                   Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" >
+                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
 
                             <PathIcon.RenderTransform>
                                 <RotateTransform Angle="-10" />
                             </PathIcon.RenderTransform>
 
                         </PathIcon>
-                        
+
                         <!-- Sparkle icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
                                   Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
                                   Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
-                            
+
                             <PathIcon.RenderTransform>
                                 <RotateTransform Angle="10" />
                             </PathIcon.RenderTransform>
-                            
+
                         </PathIcon>
 
                     </StackPanel>
@@ -169,7 +169,8 @@ Licensed under the MIT License. See LICENSE file for details.
                       ResizeDirection="Columns" />
 
         <!-- Configuration -->
-        <Border Grid.Column="2" Classes="card" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
+        <Border Grid.Column="2" Classes="translucent card"
+                Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
 
             <Grid RowDefinitions="*,*,*,*,*,*">
 

@@ -13,6 +13,4 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="vm:SettingsViewModel"
              Background="{DynamicResource Haven.Sem.Canvas}">
     
-    <TextBlock Text="Settings"/>
-    
 </UserControl>

@@ -13,12 +13,13 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessEndingView"
              x:DataType="vm:WellnessEndingViewModel"
-             utils:ViewInitialization.Command="{Binding InitializeAsync}">
+             utils:ViewInitialization.Command="{Binding InitializeAsync}"
+             Background="{StaticResource Haven.Scale.Transparent}">
 
     <Grid RowDefinitions="*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
 
         <!-- Title -->
-        <TextBlock Grid.Row="0" Classes="neutral fs1"
+        <TextBlock Grid.Row="0" Classes="strong accent fs1"
                    Text="{Binding TitleText}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
 
@@ -27,23 +28,23 @@ Licensed under the MIT License. See LICENSE file for details.
                     HorizontalAlignment="Center" Spacing="{StaticResource Haven.Scale.FontSize.Sm}">
 
             <!-- Type -->
-            <TextBlock Classes="neutral fs3"
+            <TextBlock Classes="strong accent fs3"
                        Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
                        TextAlignment="Center" />
 
             <!-- Actual duration / Target duration -->
-            <TextBlock Classes="neutral fs3" TextAlignment="Center">
+            <TextBlock Classes="strong accent fs3" TextAlignment="Center">
                 <Run Text="{services:LocalizationService Key='Wellness.Label.Duration'}" />:
                 <Run Text="{Binding DurationText}" />
             </TextBlock>
 
             <!-- Breathing technique name (if the type is breathing) -->
-            <TextBlock Classes="neutral fs3" TextAlignment="Center"
+            <TextBlock Classes="strong accent fs3" TextAlignment="Center"
                        IsVisible="{Binding IsBreathingType}"
                        Text="{Binding BreathingTechniqueName}" />
 
             <!-- Cycle count (if the type is breathing) -->
-            <TextBlock Classes="neutral fs3" TextAlignment="Center"
+            <TextBlock Classes="strong accent fs3" TextAlignment="Center"
                        IsVisible="{Binding IsBreathingType}">
                 <Run Text="{services:LocalizationService Key='Wellness.Label.Cycles'}" />:
                 <Run Text="{Binding CycleCount}" />

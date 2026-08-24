@@ -31,6 +31,7 @@ public partial class WellnessPageViewModel : PageViewModel
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
+    [ObservableProperty] private bool _isBlobBackgroundVisible;
 
     private WellnessStartViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
@@ -147,6 +148,8 @@ public partial class WellnessPageViewModel : PageViewModel
     /// </summary>
     private void SetConfigurationView()
     {
+        IsBlobBackgroundVisible = false;
+        
         // initialize configuration view model if it doesn't exist
         if (_configurationViewModel == null)
         {
@@ -165,6 +168,8 @@ public partial class WellnessPageViewModel : PageViewModel
     /// <param name="sessionConfiguration">The configuration details to pass to the session view model.</param>
     private void SetSessionView(WellnessSessionConfiguration sessionConfiguration)
     {
+        IsBlobBackgroundVisible = true;
+        
         _windowService.EnterFullScreen();
         _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
 
@@ -180,6 +185,8 @@ public partial class WellnessPageViewModel : PageViewModel
     /// <param name="createEntryRequest">A create request to pass to the ending view model for saving.</param>
     private void SetEndingView(CreateWellnessSessionEntryRequest createEntryRequest)
     {
+        IsBlobBackgroundVisible = true;
+        
         _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, _dialogService, createEntryRequest, _endingLogger);
         _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
 
