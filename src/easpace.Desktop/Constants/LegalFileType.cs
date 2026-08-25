@@ -3,10 +3,11 @@
 
 namespace easpace.Desktop.Constants;
 
-public enum LegalFileType
+internal enum LegalFileType
 {
     PrivacyPolicy,
     TermsOfUse,
+    EaspaceLicense,
     AvaloniaLicense,
     DotNetLicense,
     Sqlite3MultipleCiphersLicense,

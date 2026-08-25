@@ -24,7 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace easpace.Desktop.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     extension(IServiceCollection collection)
     {
@@ -32,12 +32,18 @@ public static class ServiceCollectionExtensions
         {
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
 
+            collection.AddSingleton<ApplicationService>();
+            collection.AddSingleton<IApplicationService>(sp => sp.GetRequiredService<ApplicationService>());
+            
+            collection.AddSingleton<DataWipeService>();
+            collection.AddSingleton<IDataWipeService>(sp => sp.GetRequiredService<DataWipeService>());
+
             collection.AddSingleton<PreferencesService>();
             collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
 
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
-            
+
             collection.AddSingleton<WindowService>();
             collection.AddSingleton<IWindowService>(sp => sp.GetRequiredService<WindowService>());
 
@@ -109,7 +115,7 @@ public static class ServiceCollectionExtensions
                 var connectionString = $"Data Source={dbPath};Password={password};";
                 options.UseSqlite(connectionString, o => o.MigrationsAssembly("easpace.Desktop"));
             });
-            
+
             collection.AddTransient<DbSeeder>();
         }
     }

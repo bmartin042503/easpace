@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Wellness.Entities;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public interface IWellnessSessionEntryService
+internal interface IWellnessSessionEntryService
 {
     Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createEntryRequest);
     Task<IReadOnlyList<WellnessSessionEntry>> GetWellnessSessionEntriesAsync();

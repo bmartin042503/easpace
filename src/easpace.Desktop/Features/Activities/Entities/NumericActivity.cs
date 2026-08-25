@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Entities;
 
-public abstract class NumericActivity : Activity
+internal abstract class NumericActivity : Activity
 {
     public double? Target { get; set; }
     public string? Unit { get; set; }

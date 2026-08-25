@@ -10,7 +10,7 @@ namespace easpace.Desktop.Controls;
 /// <summary>
 /// An animated liquid gradient background control that uses moving blurred ellipses.
 /// </summary>
-public class BlobsGradientBackground : Control
+internal class BlobsGradientBackground : Control
 {
     private readonly DispatcherTimer _timer;
     private readonly Random _rnd = new();

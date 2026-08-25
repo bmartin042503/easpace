@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public partial class ActivitiesPageViewModel : PageViewModel
+internal partial class ActivitiesPageViewModel : PageViewModel
 {
     private readonly IActivityService _activityService;
     private readonly IActivityEditorService _activityEditorService;

@@ -16,7 +16,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public partial class WellnessSessionViewModel : ViewModelBase
+internal partial class WellnessSessionViewModel : ViewModelBase
 {
     #region Fields
 

@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Mood.ViewModels;
 
-public partial class MoodPageViewModel : PageViewModel
+internal partial class MoodPageViewModel : PageViewModel
 {
     private readonly IMoodEntryService _moodEntryService;
     private readonly IDialogService _dialogService;

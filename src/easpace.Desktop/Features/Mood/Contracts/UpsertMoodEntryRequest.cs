@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Mood.Constants;
 
 namespace easpace.Desktop.Features.Mood.Contracts;
 
-public sealed record UpsertMoodEntryRequest(
+internal sealed record UpsertMoodEntryRequest(
     DateTimeOffset Timestamp,
     double Value,
     string Description,

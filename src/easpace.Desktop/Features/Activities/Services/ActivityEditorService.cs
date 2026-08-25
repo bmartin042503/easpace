@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Activities.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-public class ActivityEditorService : IActivityEditorService
+internal class ActivityEditorService : IActivityEditorService
 {
     public UpdateActivityRequest GetUpdateRequest(ActivityViewModel activity)
     {

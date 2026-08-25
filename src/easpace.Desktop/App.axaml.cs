@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace easpace.Desktop;
 
-public partial class App : Application
+internal partial class App : Application
 {
     public static Version Version = new(0,1,0);
     private static IServiceProvider? _services;

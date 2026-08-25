@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-public class ActivityDataEntryService : IActivityDataEntryService
+internal class ActivityDataEntryService : IActivityDataEntryService
 {
     private readonly AppDbContext _dbContext;
     private readonly ILogger<ActivityDataEntryService> _logger;

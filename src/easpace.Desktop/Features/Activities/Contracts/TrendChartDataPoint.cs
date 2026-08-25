@@ -5,4 +5,4 @@ using System;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public record TrendChartDataPoint(DateTimeOffset? Timestamp, double Value);
+internal record TrendChartDataPoint(DateTimeOffset? Timestamp, double Value);

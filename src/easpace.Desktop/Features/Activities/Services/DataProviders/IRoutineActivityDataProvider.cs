@@ -8,7 +8,7 @@ using easpace.Desktop.Features.Activities.Entities;
 
 namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
-public interface IRoutineActivityDataProvider
+internal interface IRoutineActivityDataProvider
 {
     List<RoutineMonth> GetRoutineMonths(RoutineActivity routineActivity);
     RoutineMonth BuildRoutineMonth(int year, int month, RoutineActivity routineActivity);

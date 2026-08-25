@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace easpace.Desktop.Data;
 
-public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+internal class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {

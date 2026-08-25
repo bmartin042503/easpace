@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Constants;
 
-public enum ApplicationPage
+internal enum ApplicationPage
 {
     Intro,
     Journal,

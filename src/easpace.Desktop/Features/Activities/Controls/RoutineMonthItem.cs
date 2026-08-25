@@ -12,7 +12,7 @@ using easpace.Desktop.Features.Activities.Contracts;
 
 namespace easpace.Desktop.Features.Activities.Controls;
 
-public class RoutineMonthItem : Control
+internal class RoutineMonthItem : Control
 {
     #region Fields
 

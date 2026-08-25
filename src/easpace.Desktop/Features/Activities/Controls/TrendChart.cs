@@ -15,7 +15,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Activities.Controls;
 
-public class TrendChart : Control
+internal class TrendChart : Control
 {
     #region Fields
 

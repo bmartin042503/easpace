@@ -658,4 +658,10 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Felhasználási feltételek</value>
     </data>
+    <data name="Data.DeleteAllDataDialog.Title" xml:space="preserve">
+        <value>Biztosan törölni szeretnél minden adatot?</value>
+    </data>
+    <data name="Data.DeleteAllDataDialog.Description" xml:space="preserve">
+        <value>Ezzel törölnél minden adatot (naplóbejegyzések, hangulatrögzítések, tevékenységi és wellness gyakorlati adatok, titkosítási kulcs, beállítások) VÉGLEGESEN. Ez a művelet nem vonható vissza.</value>
+    </data>
 </root>

@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views.Dialogs;
 
-public partial class NumericEntryDialogView : UserControl
+internal partial class NumericEntryDialogView : UserControl
 {
     public NumericEntryDialogView()
     {

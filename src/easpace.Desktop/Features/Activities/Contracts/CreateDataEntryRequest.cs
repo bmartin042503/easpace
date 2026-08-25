@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public sealed record CreateDataEntryRequest(
+internal sealed record CreateDataEntryRequest(
     DateTimeOffset? Timestamp,
     ActivityDataEntryType Type,
     double? Value,

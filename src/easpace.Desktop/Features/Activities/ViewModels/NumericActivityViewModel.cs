@@ -17,7 +17,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public abstract partial class NumericActivityViewModel : ActivityViewModel
+internal abstract partial class NumericActivityViewModel : ActivityViewModel
 {
     private readonly NumericActivity _numericActivity;
     private readonly IActivityDataEntryService _activityDataEntryService;

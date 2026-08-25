@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Entities;
 
-public abstract class Activity
+internal abstract class Activity
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;

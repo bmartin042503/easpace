@@ -7,7 +7,7 @@ using Avalonia.Media;
 
 namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
-public class IconListItem : TemplatedControl
+internal class IconListItem : TemplatedControl
 {
     public static readonly StyledProperty<StreamGeometry> IconProperty =
         AvaloniaProperty.Register<IconListItem, StreamGeometry>(nameof(Icon));

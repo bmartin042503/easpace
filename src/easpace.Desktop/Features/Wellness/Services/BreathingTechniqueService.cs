@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public class BreathingTechniqueService : IBreathingTechniqueService
+internal class BreathingTechniqueService : IBreathingTechniqueService
 {
     private readonly AppDbContext _dbContext;
     private readonly ILogger<BreathingTechniqueService> _logger;

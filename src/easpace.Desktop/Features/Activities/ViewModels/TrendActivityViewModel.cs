@@ -19,7 +19,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public partial class TrendActivityViewModel : NumericActivityViewModel
+internal partial class TrendActivityViewModel : NumericActivityViewModel
 {
     private readonly TrendActivity _trendActivity;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;

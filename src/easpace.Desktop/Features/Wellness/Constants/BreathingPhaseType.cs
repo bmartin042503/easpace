@@ -6,7 +6,7 @@ namespace easpace.Desktop.Features.Wellness.Constants;
 /// <summary>
 /// Defines the various phases involved in a breathing technique.
 /// </summary>
-public enum BreathingPhaseType
+internal enum BreathingPhaseType
 {
     /// <summary>
     /// The phase where breath is drawn into the lungs.

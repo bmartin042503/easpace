@@ -15,7 +15,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public partial class MilestoneActivityViewModel : NumericActivityViewModel
+internal partial class MilestoneActivityViewModel : NumericActivityViewModel
 {
     private readonly IActivityService _activityService;
     [ObservableProperty] private DateTimeOffset? _targetDate;

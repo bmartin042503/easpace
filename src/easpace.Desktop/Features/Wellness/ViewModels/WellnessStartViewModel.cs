@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public partial class WellnessStartViewModel : ViewModelBase
+internal partial class WellnessStartViewModel : ViewModelBase
 {
     #region Fields
 

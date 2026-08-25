@@ -15,7 +15,7 @@ namespace easpace.Desktop.Behaviors;
 /// Provides an attached behavior for the TextBlock control that animates the text change
 /// by fading out the old text and fading in the new one.
 /// </summary>
-public class AnimatedTextBehavior : AvaloniaObject
+internal class AnimatedTextBehavior : AvaloniaObject
 {
     /// <summary>
     /// Identifies the AnimatedText attached property.

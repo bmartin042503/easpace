@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace easpace.Desktop.Services;
 
-public class PreferencesService : IPreferencesService
+internal class PreferencesService : IPreferencesService
 {
     private readonly Dictionary<string, JsonElement> _preferences = new();
     private readonly Lock _lock = new();

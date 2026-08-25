@@ -10,7 +10,7 @@ using Avalonia.Media;
 
 namespace easpace.Desktop.Views;
 
-public partial class MainWindow : Window
+internal partial class MainWindow : Window
 {
     private bool _isDragging;
     private Point _dragStartPoint;

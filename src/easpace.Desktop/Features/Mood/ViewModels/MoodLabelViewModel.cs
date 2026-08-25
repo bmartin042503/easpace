@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Mood.Constants;
 
 namespace easpace.Desktop.Features.Mood.ViewModels;
 
-public partial class MoodLabelViewModel : ObservableObject
+internal partial class MoodLabelViewModel : ObservableObject
 {
     public MoodLabelState State { get; }
     

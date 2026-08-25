@@ -8,7 +8,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 
-public abstract partial class ActivityDataEntryViewModel : ViewModelBase
+internal abstract partial class ActivityDataEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
     public Guid ActivityId { get; }

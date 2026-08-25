@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Mood.Views;
 
-public partial class MoodPageView : UserControl
+internal partial class MoodPageView : UserControl
 {
     public MoodPageView()
     {

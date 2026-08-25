@@ -33,6 +33,12 @@ public class SecureKeyManager
         return newPassword;
     }
 
+    public static void DeleteDbPassword()
+    {
+        var store = CredentialManager.Create(AppNamespace);
+        store.Remove(KeyResource, KeyAccount);
+    }
+
     private static string GenerateCryptographicKey()
     {
         var bytes = new byte[128];

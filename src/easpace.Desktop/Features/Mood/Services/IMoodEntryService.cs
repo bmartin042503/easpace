@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Mood.Entities;
 
 namespace easpace.Desktop.Features.Mood.Services;
 
-public interface IMoodEntryService
+internal interface IMoodEntryService
 {
     Task<MoodEntry> CreateMoodEntryAsync(UpsertMoodEntryRequest upsertRequest);
     Task<IReadOnlyList<MoodEntry>> GetMoodEntriesAsync();

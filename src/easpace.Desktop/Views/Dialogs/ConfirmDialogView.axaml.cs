@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Views.Dialogs;
 
-public partial class ConfirmDialogView : UserControl
+internal partial class ConfirmDialogView : UserControl
 {
     public ConfirmDialogView()
     {

@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Wellness.Entities;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public interface IBreathingTechniqueService
+internal interface IBreathingTechniqueService
 {
     Task<BreathingTechnique> CreateBreathingTechniqueAsync(UpsertBreathingTechniqueRequest upsertRequest);
     Task<IReadOnlyList<BreathingTechnique>> GetBreathingTechniquesAsync();

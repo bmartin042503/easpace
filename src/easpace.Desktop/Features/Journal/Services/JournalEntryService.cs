@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Journal.Services;
 
-public class JournalEntryService : IJournalEntryService
+internal class JournalEntryService : IJournalEntryService
 {
     private readonly AppDbContext _dbContext;
     private readonly ILogger<JournalEntryService> _logger;

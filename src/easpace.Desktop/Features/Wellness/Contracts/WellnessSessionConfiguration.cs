@@ -13,7 +13,7 @@ namespace easpace.Desktop.Features.Wellness.Contracts;
 /// <param name="IsTimerSet">Indicates whether a specific duration timer is set.</param>
 /// <param name="TargetDuration">The target duration for the session.</param>
 /// <param name="BreathingTechniqueConfiguration">The configuration details for the breathing technique, if applicable.</param>
-public record WellnessSessionConfiguration(
+internal record WellnessSessionConfiguration(
     WellnessSessionType SessionType,
     bool IsTimerSet,
     TimeSpan? TargetDuration,

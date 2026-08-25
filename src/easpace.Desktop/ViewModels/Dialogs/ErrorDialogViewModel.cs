@@ -3,4 +3,4 @@
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
-public class ErrorDialogViewModel : InfoDialogViewModel;
+internal class ErrorDialogViewModel : InfoDialogViewModel;

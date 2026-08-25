@@ -6,9 +6,9 @@ using easpace.Desktop.Constants;
 
 namespace easpace.Desktop.Features.Mood.Constants;
 
-public static class MoodCategoryMap
+internal static class MoodCategoryMap
 {
-    public static readonly Dictionary<MoodLabelState, HashSet<MoodState>> Categories = new()
+    private static readonly Dictionary<MoodLabelState, HashSet<MoodState>> Categories = new()
     {
         // SlightlyPleasant or VeryPleasant
         { MoodLabelState.Happiness, [MoodState.SlightlyPleasant, MoodState.VeryPleasant] },

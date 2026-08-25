@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
-public class LegalInfoDialogViewModel : InfoDialogViewModel
+internal class LegalInfoDialogViewModel : InfoDialogViewModel
 {
     private readonly ILogger<LegalInfoDialogViewModel> _logger;
 
@@ -23,6 +23,7 @@ public class LegalInfoDialogViewModel : InfoDialogViewModel
         {
             LegalFileType.PrivacyPolicy => LocalizationService.GetString("Credits.Text.PrivacyPolicy"),
             LegalFileType.TermsOfUse => LocalizationService.GetString("Credits.Text.TermsOfUse"),
+            LegalFileType.EaspaceLicense => "easpace • MIT License",
             LegalFileType.AvaloniaLicense => "Avalonia UI • MIT License",
             LegalFileType.DotNetLicense => "CommunityToolkit.Mvvm / Entity Framework Core • MIT License",
             LegalFileType.Sqlite3MultipleCiphersLicense => "SQLite3 Multiple Ciphers • MIT License",
@@ -42,6 +43,7 @@ public class LegalInfoDialogViewModel : InfoDialogViewModel
         {
             LegalFileType.PrivacyPolicy => "privacy-policy",
             LegalFileType.TermsOfUse => "terms-of-use",
+            LegalFileType.EaspaceLicense => "easpace",
             LegalFileType.AvaloniaLicense => "avalonia",
             LegalFileType.DotNetLicense => "dotnet",
             LegalFileType.Sqlite3MultipleCiphersLicense => "sqlite3-multiple-ciphers",
@@ -52,7 +54,7 @@ public class LegalInfoDialogViewModel : InfoDialogViewModel
 
         var legalFileUri = legalFileType is LegalFileType.PrivacyPolicy or LegalFileType.TermsOfUse
             ? new Uri($"avares://easpace.Desktop/Assets/Legal/{legalFileName}-{currentLanguage}.txt")
-            : new Uri($"avares://easpace.Desktop/Assets/Legal/ThirdPartyLibs/{legalFileName}-license.txt");
+            : new Uri($"avares://easpace.Desktop/Assets/Legal/Licenses/{legalFileName}-license.txt");
 
         if (!AssetLoader.Exists(legalFileUri)) return string.Empty;
 

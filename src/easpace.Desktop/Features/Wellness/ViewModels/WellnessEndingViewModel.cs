@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public partial class WellnessEndingViewModel : ViewModelBase
+internal partial class WellnessEndingViewModel : ViewModelBase
 {
     private readonly IWellnessSessionEntryService _sessionEntryService;
     private readonly IDialogService _dialogService;

@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public sealed record UpdateDataEntryRequest(
+internal sealed record UpdateDataEntryRequest(
     DateTimeOffset? Timestamp,
     double? Value,
     RoutineState? State

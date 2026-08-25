@@ -20,7 +20,7 @@ using easpace.Desktop.Views.Dialogs;
 
 namespace easpace.Desktop.DataTemplates;
 
-public class ViewLocator : IDataTemplate
+internal class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {

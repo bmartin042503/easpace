@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace easpace.Desktop.ValidationAttributes;
 
-public class SafeDateRangeAttribute : ValidationAttribute
+internal class SafeDateRangeAttribute : ValidationAttribute
 {
     private readonly int _minYear;
     private readonly int _maxYear;

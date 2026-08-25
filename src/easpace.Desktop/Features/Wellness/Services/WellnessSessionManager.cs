@@ -12,7 +12,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public class WellnessSessionManager : IWellnessSessionManager
+internal class WellnessSessionManager : IWellnessSessionManager
 {
     private DispatcherTimer? _timer;
     private TimeSpan _timeLeft;

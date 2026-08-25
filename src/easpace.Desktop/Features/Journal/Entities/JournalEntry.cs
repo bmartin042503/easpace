@@ -5,7 +5,7 @@ using System;
 
 namespace easpace.Desktop.Features.Journal.Entities;
 
-public class JournalEntry
+internal class JournalEntry
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset CreatedAt { get; set; }

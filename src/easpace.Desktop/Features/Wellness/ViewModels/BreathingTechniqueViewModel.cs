@@ -10,7 +10,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public class BreathingTechniqueViewModel : ViewModelBase
+internal class BreathingTechniqueViewModel : ViewModelBase
 {
     public Guid Id { get; }
     public DateTimeOffset CreatedAt { get; }

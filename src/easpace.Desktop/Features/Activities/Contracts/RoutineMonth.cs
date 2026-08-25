@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public class RoutineMonth
+internal class RoutineMonth
 {
     public int Year { get; set; }
     public int Month { get; set; }

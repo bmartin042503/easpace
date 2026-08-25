@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     // Activities
     public DbSet<Activity> Activities { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace easpace.Desktop.Data;
 
-public class DbSeeder
+internal class DbSeeder
 {
     private readonly AppDbContext _dbContext;
 

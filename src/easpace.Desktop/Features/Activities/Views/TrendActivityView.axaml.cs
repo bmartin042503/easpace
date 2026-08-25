@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views;
 
-public partial class TrendActivityView : UserControl
+internal partial class TrendActivityView : UserControl
 {
     public TrendActivityView()
     {

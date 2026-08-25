@@ -9,7 +9,7 @@ namespace easpace.Desktop.Features.Wellness.Entities;
 /// <summary>
 /// Represents a single phase within a breathing technique cycle.
 /// </summary>
-public class BreathingPhase
+internal class BreathingPhase
 {
     /// <summary>
     /// Gets or sets the unique identifier for the breathing phase.

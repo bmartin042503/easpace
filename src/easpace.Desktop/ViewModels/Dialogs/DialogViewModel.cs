@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
-public partial class DialogViewModel : ViewModelBase
+internal partial class DialogViewModel : ViewModelBase
 {
     [ObservableProperty] private bool _isOpen;
     

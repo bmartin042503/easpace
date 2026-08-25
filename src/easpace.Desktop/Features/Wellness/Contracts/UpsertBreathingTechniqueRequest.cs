@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Wellness.Entities;
 
 namespace easpace.Desktop.Features.Wellness.Contracts;
 
-public sealed record UpsertBreathingTechniqueRequest(
+internal sealed record UpsertBreathingTechniqueRequest(
     string Name,
     string Description,
     ICollection<BreathingPhase> Phases,

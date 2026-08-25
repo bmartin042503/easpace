@@ -11,7 +11,7 @@ using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels;
 
-public partial class MainViewModel : ViewModelBase
+internal partial class MainViewModel : ViewModelBase
 {
     private readonly PageFactory _pageFactory;
     private readonly IPreferencesService _preferencesService;

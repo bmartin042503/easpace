@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public sealed record CreateActivityRequest(
+internal sealed record CreateActivityRequest(
     string Name,
     ActivityType Type,
     double? Target,

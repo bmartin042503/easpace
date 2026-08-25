@@ -20,7 +20,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public abstract partial class ActivityViewModel : ViewModelBase
+internal abstract partial class ActivityViewModel : ViewModelBase
 {
     private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly Activity _activity;

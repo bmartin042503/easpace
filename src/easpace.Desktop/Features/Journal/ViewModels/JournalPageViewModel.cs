@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Journal.ViewModels;
 
-public partial class JournalPageViewModel : PageViewModel
+internal partial class JournalPageViewModel : PageViewModel
 {
     private readonly IJournalEntryService _journalEntryService;
     private readonly IDialogService _dialogService;

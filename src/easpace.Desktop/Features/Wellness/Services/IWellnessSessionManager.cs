@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Wellness.Contracts;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public interface IWellnessSessionManager
+internal interface IWellnessSessionManager
 {
     TimeSpan ElapsedTime { get; }
     

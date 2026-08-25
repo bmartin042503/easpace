@@ -8,7 +8,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Journal.ViewModels;
 
-public partial class JournalEntryViewModel : ViewModelBase
+internal partial class JournalEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
 

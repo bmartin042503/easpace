@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace easpace.Desktop.ValidationAttributes;
 
-public class RequiredIfAttribute : ValidationAttribute
+internal class RequiredIfAttribute : ValidationAttribute
 {
     private readonly string _otherPropertyName;
     private readonly object _desiredValue;

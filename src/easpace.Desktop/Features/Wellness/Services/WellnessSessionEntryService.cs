@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-public class WellnessSessionEntryService : IWellnessSessionEntryService
+internal class WellnessSessionEntryService : IWellnessSessionEntryService
 {
     private readonly AppDbContext _dbContext;
     private readonly ILogger<WellnessSessionEntryService> _logger;

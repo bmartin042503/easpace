@@ -5,4 +5,4 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace easpace.Desktop.ViewModels;
 
-public class ValidatorViewModelBase : ObservableValidator;
+internal class ValidatorViewModelBase : ObservableValidator;

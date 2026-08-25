@@ -7,7 +7,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 
 namespace easpace.Desktop.Services;
 
-public class WindowService : IWindowService
+internal class WindowService : IWindowService
 {
     private WindowState _previousWindowState = WindowState.Normal;
 

@@ -5,7 +5,7 @@ using System;
 
 namespace easpace.Desktop.Features.Activities.Contracts;
 
-public record UpdateActivityRequest(
+internal record UpdateActivityRequest(
     string Name,
     double? Target,
     string? Unit,

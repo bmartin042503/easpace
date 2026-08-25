@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Constants;
 
-public static class PreferenceKey
+internal static class PreferenceKey
 {
     public const string Boarded = "boarded";
     public const string Language = "language";

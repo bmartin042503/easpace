@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Wellness.Entities;
 
 namespace easpace.Desktop.Features.Wellness.Contracts;
 
-public sealed record CreateWellnessSessionEntryRequest(
+internal sealed record CreateWellnessSessionEntryRequest(
     DateTimeOffset StartDate,
     TimeSpan? TargetDuration,
     TimeSpan ActualDuration,

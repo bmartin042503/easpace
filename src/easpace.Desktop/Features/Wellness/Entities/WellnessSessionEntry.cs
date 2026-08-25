@@ -9,7 +9,7 @@ namespace easpace.Desktop.Features.Wellness.Entities;
 /// <summary>
 /// Represents a recorded wellness session.
 /// </summary>
-public class WellnessSessionEntry
+internal class WellnessSessionEntry
 {
     /// <summary>
     /// Gets or sets the unique identifier for the session.

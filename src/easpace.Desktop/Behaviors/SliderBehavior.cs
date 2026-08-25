@@ -18,7 +18,7 @@ namespace easpace.Desktop.Behaviors;
 /// to the clicked position on the track. It also enables continuous dragging if the pointer
 /// is held down after the jump.
 /// </summary>
-public class SliderBehavior : AvaloniaObject
+internal class SliderBehavior : AvaloniaObject
 {
     /// <summary>
     /// Identifies the JumpToClick attached property.

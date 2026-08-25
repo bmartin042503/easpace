@@ -21,7 +21,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public partial class ActivityEditorViewModel : ValidatorViewModelBase
+internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 {
     private readonly IActivityService _activityService;
     private readonly IDialogService _dialogService;

@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Mood.Constants;
 
 namespace easpace.Desktop.Features.Mood.Entities;
 
-public class MoodEntry
+internal class MoodEntry
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.Now;

@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Constants;
 
-public enum ActivityType
+internal enum ActivityType
 {
     Trend,
     Milestone,

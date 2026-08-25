@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Activities.Entities;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-public interface IActivityService
+internal interface IActivityService
 {
     Task<Activity> CreateActivityAsync(CreateActivityRequest createRequest);
     Task<IReadOnlyList<Activity>> GetActivitiesAsync();

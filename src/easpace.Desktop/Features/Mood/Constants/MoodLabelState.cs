@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Mood.Constants;
 
-public enum MoodLabelState
+internal enum MoodLabelState
 {
     Worry,
     Amazement,

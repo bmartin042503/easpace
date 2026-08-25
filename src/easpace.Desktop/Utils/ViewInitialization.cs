@@ -13,7 +13,7 @@ namespace easpace.Desktop.Utils;
 /// <remarks>
 /// Use this class to bind ViewModel commands to the loading event of a View (UserControl or Window).
 /// </remarks>
-public static class ViewInitialization
+internal static class ViewInitialization
 {
     static ViewInitialization()
     {

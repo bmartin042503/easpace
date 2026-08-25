@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Journal.Views;
 
-public partial class JournalPageView : UserControl
+internal partial class JournalPageView : UserControl
 {
     public JournalPageView()
     {

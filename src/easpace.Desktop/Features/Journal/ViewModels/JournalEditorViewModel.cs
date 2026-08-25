@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Journal.ViewModels;
 
-public partial class JournalEditorViewModel : ViewModelBase
+internal partial class JournalEditorViewModel : ViewModelBase
 {
     private readonly IJournalEntryService _journalEntryService;
     private readonly IDialogService _dialogService;

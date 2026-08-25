@@ -6,7 +6,7 @@ using Avalonia;
 
 namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
-public class ActivityListItem : IconListItem
+internal class ActivityListItem : IconListItem
 {
     protected override Type StyleKeyOverride => typeof(ActivityListItem);
     

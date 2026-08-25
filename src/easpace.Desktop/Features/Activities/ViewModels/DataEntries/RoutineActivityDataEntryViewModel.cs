@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 
-public partial class RoutineActivityDataEntryViewModel : ActivityDataEntryViewModel
+internal partial class RoutineActivityDataEntryViewModel : ActivityDataEntryViewModel
 {
     [ObservableProperty] private RoutineState _state;
     

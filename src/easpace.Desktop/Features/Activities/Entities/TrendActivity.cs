@@ -3,4 +3,4 @@
 
 namespace easpace.Desktop.Features.Activities.Entities;
 
-public class TrendActivity : NumericActivity;
+internal class TrendActivity : NumericActivity;

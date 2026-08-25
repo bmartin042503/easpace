@@ -7,7 +7,7 @@ using easpace.Desktop.Constants;
 
 namespace easpace.Desktop.ViewModels;
 
-public partial class IntroViewModel : PageViewModel
+internal partial class IntroViewModel : PageViewModel
 {
     private readonly IMessenger _messenger;
     

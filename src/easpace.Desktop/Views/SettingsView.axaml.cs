@@ -7,7 +7,7 @@ using Avalonia.Interactivity;
 
 namespace easpace.Desktop.Views;
 
-public partial class SettingsView : UserControl
+internal partial class SettingsView : UserControl
 {
     public SettingsView()
     {

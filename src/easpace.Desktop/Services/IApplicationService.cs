@@ -3,8 +3,8 @@
 
 namespace easpace.Desktop.Services;
 
-internal interface IWindowService
+internal interface IApplicationService
 {
-    void EnterFullScreen();
-    void ExitFullScreen();
+    void Restart();
+    void Shutdown();
 }

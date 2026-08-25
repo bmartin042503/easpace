@@ -10,7 +10,7 @@ using Avalonia.Threading;
 
 namespace easpace.Desktop.Features.Activities.Controls;
 
-public class MilestoneChart : Control
+internal class MilestoneChart : Control
 {
     #region Fields
 

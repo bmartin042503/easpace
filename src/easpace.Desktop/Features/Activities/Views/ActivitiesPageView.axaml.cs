@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views;
 
-public partial class ActivitiesPageView : UserControl
+internal partial class ActivitiesPageView : UserControl
 {
     public ActivitiesPageView()
     {

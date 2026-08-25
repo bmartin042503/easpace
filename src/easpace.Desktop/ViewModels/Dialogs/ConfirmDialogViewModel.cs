@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
-public partial class ConfirmDialogViewModel : DialogViewModel
+internal partial class ConfirmDialogViewModel : DialogViewModel
 {
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _message = string.Empty;

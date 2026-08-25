@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views;
 
-public partial class MilestoneActivityView : UserControl
+internal partial class MilestoneActivityView : UserControl
 {
     public MilestoneActivityView()
     {

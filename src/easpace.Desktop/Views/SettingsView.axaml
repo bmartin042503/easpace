@@ -169,7 +169,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Delete all data button -->
                         <Button Grid.Row="1" Grid.Column="1" Classes="danger regular"
-                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Command="{Binding DeleteAllDataCommand}">
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -237,7 +238,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Copyright button + easpace MIT license -->
                     <Button Classes="tertiary" Padding="0"
-                            Content="{services:LocalizationService Key='Credits.Text.Copyright'}" />
+                            Content="{services:LocalizationService Key='Credits.Text.Copyright'}"
+                            Command="{Binding ShowLegalFileCommand}">
+
+                        <Button.CommandParameter>
+                            <constants:LegalFileType>EaspaceLicense</constants:LegalFileType>
+                        </Button.CommandParameter>
+                        
+                    </Button>
 
                     <!-- Horizontal separator -->
                     <Separator Height="1" Background="{DynamicResource Haven.Sem.Accent}"
@@ -266,7 +274,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Command="{Binding ShowLegalFileCommand}">
-                            
+
                             <Button.CommandParameter>
                                 <constants:LegalFileType>PrivacyPolicy</constants:LegalFileType>
                             </Button.CommandParameter>
@@ -288,7 +296,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Command="{Binding ShowLegalFileCommand}">
-                            
+
                             <Button.CommandParameter>
                                 <constants:LegalFileType>TermsOfUse</constants:LegalFileType>
                             </Button.CommandParameter>

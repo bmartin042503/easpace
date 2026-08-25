@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 
-public partial class NumericEntryDialogViewModel : EntryDialogViewModel
+internal partial class NumericEntryDialogViewModel : EntryDialogViewModel
 {
     [ObservableProperty] private string? _unitText = string.Empty;
     [ObservableProperty] private double? _numericValue;

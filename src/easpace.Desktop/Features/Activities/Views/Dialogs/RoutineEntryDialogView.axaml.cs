@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views.Dialogs;
 
-public partial class RoutineEntryDialogView : UserControl
+internal partial class RoutineEntryDialogView : UserControl
 {
     public RoutineEntryDialogView()
     {

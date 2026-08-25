@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Constants;
 
-public enum RoutineState
+internal enum RoutineState
 {
     Completed,
     NotCompleted,

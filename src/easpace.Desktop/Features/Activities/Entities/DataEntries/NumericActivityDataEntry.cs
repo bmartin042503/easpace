@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-public class NumericActivityDataEntry : ActivityDataEntry
+internal class NumericActivityDataEntry : ActivityDataEntry
 {
     public double Value { get; set; }
 }

@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 
-public partial class RoutineEntryDialogViewModel : EntryDialogViewModel
+internal partial class RoutineEntryDialogViewModel : EntryDialogViewModel
 {
     [ObservableProperty] private IEnumerable<RoutineState> _states = [RoutineState.Completed, RoutineState.NotCompleted];
     [ObservableProperty] private RoutineState _selectedState;

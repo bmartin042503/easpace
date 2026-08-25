@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Activities.Views;
 
-public partial class RoutineActivityView : UserControl
+internal partial class RoutineActivityView : UserControl
 {
     public RoutineActivityView()
     {

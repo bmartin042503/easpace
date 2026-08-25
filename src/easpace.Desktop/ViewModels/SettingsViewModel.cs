@@ -11,17 +11,25 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.ViewModels;
 
-public partial class SettingsViewModel : PageViewModel
+internal partial class SettingsViewModel : PageViewModel
 {
+    private readonly IApplicationService _applicationService;
+    private readonly IDataWipeService _dataWipeService;
     private readonly IDialogService _dialogService;
     private readonly ILogger<LegalInfoDialogViewModel> _logger;
-    
+
     [ObservableProperty] private string _versionText = string.Empty;
-    
-    public SettingsViewModel(IDialogService dialogService, ILogger<LegalInfoDialogViewModel> logger)
+
+    public SettingsViewModel(
+        IApplicationService applicationService,
+        IDataWipeService dataWipeService,
+        IDialogService dialogService,
+        ILogger<LegalInfoDialogViewModel> logger)
     {
         Page = ApplicationPage.Settings;
-        
+
+        _applicationService = applicationService;
+        _dataWipeService = dataWipeService;
         _dialogService = dialogService;
         _logger = logger;
 
@@ -41,6 +49,29 @@ public partial class SettingsViewModel : PageViewModel
     [RelayCommand]
     private async Task DeleteAllData()
     {
+        var confirmDeletionDialog = new ConfirmDialogViewModel
+        {
+            Title = string.Format(LocalizationService.GetString("Data.DeleteAllDataDialog.Title")),
+            Message = LocalizationService.GetString("Data.DeleteAllDataDialog.Description"),
+            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+            ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
+            IsDestructive = true,
+        };
+
+        await _dialogService.ShowDialogAsync(confirmDeletionDialog);
+
+        if (!confirmDeletionDialog.Confirmed) return;
+
+        // wiping all data
+        _dataWipeService.DeleteDatabaseFile();
+        _dataWipeService.DeleteEncryptionKey();
+        _dataWipeService.DeletePreferencesFile();
+
+#if DEBUG
+        _applicationService.Shutdown();
+#elif RELEASE
+        _applicationService.Restart();
+#endif
         
     }
 }

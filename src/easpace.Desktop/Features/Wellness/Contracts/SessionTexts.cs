@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Wellness.Contracts;
 
-public sealed record SessionTexts(
+internal sealed record SessionTexts(
     string TimerText,    
     string InstructionText,
     string? PhaseSecondsText

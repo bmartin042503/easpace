@@ -10,7 +10,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Mood.ViewModels;
 
-public partial class MoodEntryViewModel : ViewModelBase
+internal partial class MoodEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
 

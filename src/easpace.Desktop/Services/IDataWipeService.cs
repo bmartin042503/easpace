@@ -3,8 +3,9 @@
 
 namespace easpace.Desktop.Services;
 
-internal interface IWindowService
+internal interface IDataWipeService
 {
-    void EnterFullScreen();
-    void ExitFullScreen();
+    void DeleteEncryptionKey();
+    void DeleteDatabaseFile();
+    void DeletePreferencesFile();
 }

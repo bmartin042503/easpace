@@ -10,7 +10,7 @@ namespace easpace.Desktop.Features.Wellness.Contracts;
 /// </summary>
 /// <param name="BreathingTechnique">The breathing technique selected for the session.</param>
 /// <param name="Cycles">The number of cycles to be performed.</param>
-public record BreathingTechniqueConfiguration(
+internal record BreathingTechniqueConfiguration(
     BreathingTechnique? BreathingTechnique,
     int Cycles
 );

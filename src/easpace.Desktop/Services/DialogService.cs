@@ -7,7 +7,7 @@ using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.Services;
 
-public class DialogService : IDialogService
+internal class DialogService : IDialogService
 {
     public event Action<DialogViewModel?>? CurrentDialogChanged;
 

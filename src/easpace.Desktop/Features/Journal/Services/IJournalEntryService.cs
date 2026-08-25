@@ -8,7 +8,7 @@ using easpace.Desktop.Features.Journal.Entities;
 
 namespace easpace.Desktop.Features.Journal.Services;
 
-public interface IJournalEntryService
+internal interface IJournalEntryService
 {
     Task<JournalEntry> CreateJournalEntryAsync(string title, string content);
     Task<IReadOnlyList<JournalEntry>> GetJournalEntriesAsync();

@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Services;
 
-public interface IPreferencesService
+internal interface IPreferencesService
 {
     T ReadPreference<T>(string key, T defaultValue = default!);
     void SavePreference<T>(string key, T value);

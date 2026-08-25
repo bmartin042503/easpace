@@ -8,7 +8,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
-public interface ITrendActivityDataProvider
+internal interface ITrendActivityDataProvider
 {
     List<TrendChartDataPoint> GetChartData(ChartTimeRange chartTimeRange, List<NumericActivityDataEntry> numericEntries);
 }

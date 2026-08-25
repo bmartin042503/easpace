@@ -8,7 +8,7 @@ using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 
-public partial class EntryDialogViewModel : DialogViewModel
+internal partial class EntryDialogViewModel : DialogViewModel
 {
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _confirmText = string.Empty;

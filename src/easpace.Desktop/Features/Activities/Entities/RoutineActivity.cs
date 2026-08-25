@@ -3,4 +3,4 @@
 
 namespace easpace.Desktop.Features.Activities.Entities;
 
-public class RoutineActivity : Activity;
+internal class RoutineActivity : Activity;

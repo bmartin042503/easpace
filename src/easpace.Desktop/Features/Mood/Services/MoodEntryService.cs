@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Mood.Services;
 
-public class MoodEntryService : IMoodEntryService
+internal class MoodEntryService : IMoodEntryService
 {
     private readonly AppDbContext _dbContext;
     private readonly ILogger<MoodEntryService> _logger;

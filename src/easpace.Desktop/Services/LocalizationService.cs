@@ -7,7 +7,7 @@ using Avalonia.Markup.Xaml;
 
 namespace easpace.Desktop.Services;
 
-public class LocalizationService : MarkupExtension
+internal class LocalizationService : MarkupExtension
 {
     // Key naming convention: Category.Component.Function
     

@@ -10,7 +10,7 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-public class WellnessSessionEntryViewModel : ViewModelBase
+internal class WellnessSessionEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
     public DateTimeOffset StartDate { get; }

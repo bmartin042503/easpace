@@ -5,7 +5,7 @@ using easpace.Desktop.Features.Activities.Constants;
 
 namespace easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-public class RoutineActivityDataEntry : ActivityDataEntry
+internal class RoutineActivityDataEntry : ActivityDataEntry
 {
     public RoutineState State { get; set; }
 }

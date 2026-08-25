@@ -8,7 +8,7 @@ using Avalonia.Controls.Primitives;
 
 namespace easpace.Desktop.Resources.HavenTheme.TemplatedControls;
 
-public class DataEntryListItem : TemplatedControl
+internal class DataEntryListItem : TemplatedControl
 {
     protected override Type StyleKeyOverride => typeof(DataEntryListItem);
     

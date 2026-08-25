@@ -14,7 +14,7 @@ namespace easpace.Desktop.DataTemplates;
 /// <summary>
 /// A data template selector that dynamically resolves templates based on the string representation of the data context.
 /// </summary>
-public class TemplateSelector : IDataTemplate
+internal class TemplateSelector : IDataTemplate
 {
     /// <summary>
     /// Gets the dictionary of available data templates mapped by their string keys.

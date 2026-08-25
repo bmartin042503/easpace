@@ -11,7 +11,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 
-public class RoutineActivityDataProvider : IRoutineActivityDataProvider
+internal class RoutineActivityDataProvider : IRoutineActivityDataProvider
 {
     public List<RoutineMonth> GetRoutineMonths(RoutineActivity routineActivity)
     {

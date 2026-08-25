@@ -19,7 +19,7 @@ using easpace.Desktop.Services;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-public partial class RoutineActivityViewModel : ActivityViewModel
+internal partial class RoutineActivityViewModel : ActivityViewModel
 {
     private readonly RoutineActivity _routineActivity;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;

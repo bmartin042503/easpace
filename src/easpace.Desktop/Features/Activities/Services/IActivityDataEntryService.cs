@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-public interface IActivityDataEntryService
+internal interface IActivityDataEntryService
 {
     Task<ActivityDataEntry?> CreateDataEntryAsync(Guid activityId, CreateDataEntryRequest createRequest);
     Task<IReadOnlyList<ActivityDataEntry>> GetDataEntriesAsync(Guid activityId);
