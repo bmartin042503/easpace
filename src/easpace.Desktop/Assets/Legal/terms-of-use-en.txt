@@ -1,0 +1,83 @@
+Terms of Use
+
+Last updated: 25 August 2026
+
+
+easpace is open-source software provided free of charge. By installing, accessing, or using the application, you agree to these Terms of Use.
+
+
+1. Purpose of the Application
+
+easpace is software intended for personal self-reflection, journaling, mood and activity tracking, and wellbeing exercises.
+
+easpace is not a medical device and does not provide medical, psychiatric, or psychological diagnosis, treatment, or personalised healthcare advice.
+
+Information and exercises provided through the application do not replace professional medical or mental-health assessment, advice, or treatment.
+
+easpace is not an emergency or crisis-response service. In a serious or urgent mental-health situation, appropriate professional or emergency assistance should be sought.
+
+
+2. Local Data and Data Loss
+
+easpace stores application data locally on the user's own device.
+
+easpace does not provide central cloud storage or synchronisation for user-generated application content. The developer does not have access to the local application database, its contents, or its encryption key.
+
+The user is responsible for properly managing their own access credentials, encryption keys, device, and backups.
+
+The developer cannot restore locally stored data that the user has lost or deleted, and cannot recover lost passwords or encryption keys.
+
+Users are responsible for maintaining any backups and recovery mechanisms they consider necessary.
+
+
+3. Updates
+
+easpace may provide an update-checking function. This function is disabled by default and may use a network connection to retrieve version information.
+
+The update check does not transmit user-created application content, the local database, or its encryption key.
+
+The availability, operation, and accessibility of update infrastructure may depend on services operated by third parties.
+
+
+4. Software Status and Disclaimer of Liability
+
+easpace is provided on an “AS IS” and “AS AVAILABLE” basis, to the maximum extent permitted by applicable law, excluding warranties that may lawfully be excluded.
+
+easpace is actively developed software and may contain bugs, operational issues, compatibility problems, or incomplete functionality.
+
+The developer does not warrant that:
+- the application will operate without errors on every device or operating system;
+- the application will always be available or operate without interruption;
+- all defects will be corrected;
+- data stored by the application will remain available under all circumstances.
+
+To the maximum extent permitted by applicable law, the developer shall not be liable for indirect, consequential, or other losses arising from the use of, or inability to use, the application where such liability may lawfully be excluded.
+
+Nothing in these Terms excludes or limits liability that cannot lawfully be excluded or limited under applicable law.
+
+
+5. User Responsibility
+
+Users are responsible for using easpace in accordance with their own circumstances and applicable law.
+
+Users are specifically responsible for the security of their device and user accounts, the preservation of access credentials, and the creation of any backups they require.
+
+
+6. Open-Source License
+
+The easpace source code is licensed under the MIT License as specified by the project.
+
+These Terms of Use do not restrict rights granted under the MIT License. The use and distribution of the software are also governed by the terms of the MIT License.
+
+
+7. Changes to These Terms
+
+These Terms of Use may be updated, in particular when the operation of the application, its infrastructure, or applicable legal requirements change.
+
+Updated terms may be published on the easpace website and, where appropriate, included with a new application release.
+
+
+8. Contact
+
+For questions, technical issues, or bug reports:
+E-mail: bmartin@easpace.eu

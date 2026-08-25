@@ -1,0 +1,163 @@
+Adatkezelési tájékoztató
+
+Utolsó frissítés: 2026. augusztus 25.
+
+
+1. Az adatkezelő
+
+Az easpace egy nyílt forráskódú, ingyenesen használható, elsősorban lokálisan működő alkalmazás
+
+Az adatkezelő:
+
+Bartos Martin
+E-mail: bmartin@easpace.eu
+Weboldal: https://easpace.eu
+
+Jelen adatkezelési tájékoztató azt mutatja be, hogy milyen személyes adatok kezelése történhet az easpace használatával, valamint a fejlesztővel történő e-mailes kapcsolatfelvétellel összefüggésben.
+
+
+2. Az easpace által tárolt adatok
+
+Az easpace naplóbejegyzések, hangulatadatok, tevékenységi adatok, wellness-adatok és egyéb, a felhasználó által létrehozott személyes tartalmak helyi tárolására szolgál.
+
+Ezek az adatok a felhasználó saját eszközén kerülnek tárolásra. Az easpace alkalmazás ezeket az adatokat nem továbbítja a fejlesztőnek, az easpace üzemeltetőjének vagy harmadik fél online szolgáltatásának.
+
+Az easpace nem rendelkezik a felhasználói alkalmazási tartalmak tárolására vagy szinkronizálására szolgáló központi szerverrel vagy backend szolgáltatással. A fejlesztő ezért nem fér hozzá a felhasználó helyben tárolt alkalmazási tartalmaihoz.
+
+Az alkalmazásban rögzített adatok egy része – tartalmától függően – egészségre, mentális állapotra vagy jóllétre vonatkozó információt tartalmazhat, és emiatt egyes esetekben a GDPR 9. cikke szerinti különleges adatkategóriába tartozhat.
+
+Ezeket a helyben tárolt tartalmakat a fejlesztő nem kapja meg, ezért a fejlesztő által ezekre az adatokra kiterjedő központi adatbázis, analitikai rendszer, reklámrendszer vagy felhasználói profilalkotás nem működik.
+
+
+3. Helyi titkosítás és kulcstárolás
+
+Az easpace helyi alkalmazási adatbázisa titkosított formában kerül tárolásra.
+
+Az alkalmazás adatbázis-titkosítási mechanizmust használ, amely ChaCha20-Poly1305 alapú titkosítást alkalmaz. A titkosítási kulcs az alkalmazás működéséhez szükséges mértékben helyben kerül létrehozásra és kezelésre, és az operációs rendszer által biztosított biztonságos kulcs- vagy hitelesítőadat-tárolóban kerül megőrzésre, ahol ez az adott platformon támogatott.
+
+A titkosítási kulcs nem kerül továbbításra az easpace részére vagy központi szolgáltatásba.
+
+A titkosítás nem jelent abszolút védelmet: az eszköz, az operációs rendszer, a felhasználói fiók vagy a biztonsági mentések sérülékenysége hatással lehet a helyi adatok biztonságára.
+
+
+4. Adatgyűjtés, analitika és követés
+
+Az easpace alkalmazás nem használ reklámokat, reklámprofilozást vagy viselkedéskövetést.
+
+Az alkalmazás nem továbbítja a felhasználó által létrehozott naplóbejegyzéseket, hangulatadatokat, tevékenységi adatokat, wellness-adatokat vagy az alkalmazás helyi adatbázisának tartalmát online analitikai vagy reklámszolgáltatásoknak.
+
+Az easpace működésének részeként nincs központi felhasználói fiók- vagy felhasználói tartalomszolgáltatás.
+
+
+5 . Frissítések ellenőrzése
+
+Az easpace lehetőséget biztosít annak ellenőrzésére, hogy elérhető-e újabb alkalmazásverzió.
+
+A frissítésellenőrzés alapértelmezés szerint ki van kapcsolva. Ha a felhasználó engedélyezi, az alkalmazás hálózati kapcsolatot létesít a beállított frissítési végponttal, és lekéri a szükséges verzióinformációkat.
+
+A frissítésellenőrzés során az easpace nem küldi el:
+- a naplóbejegyzéseket;
+- a hangulatadatokat;
+- a tevékenységi adatokat;
+- a wellness-adatokat;
+- a helyi adatbázis tartalmát;
+- a titkosítási kulcsot;
+- a felhasználó által létrehozott egyéb alkalmazási tartalmat.
+
+A hálózati kapcsolat miatt a kérést kiszolgáló infrastruktúra technikailag kezelhet olyan adatokat, amelyek egy internetes kapcsolat esetében szokásosan rendelkezésre állnak, például IP-címet, időpontot, hálózati és hibakeresési adatokat. Ezek kezelését elsősorban a frissítési infrastruktúra üzemeltetőjének adatkezelési gyakorlata határozza meg.
+
+Az easpace a frissítésellenőrzéshez kapcsolódó adatokat nem használja fel felhasználói profilalkotásra vagy reklámozásra.
+
+
+6. E-mailes kapcsolat és technikai támogatás
+
+Amennyiben a felhasználó e-mailben kapcsolatba lép a fejlesztővel, a megkeresés során megadott személyes adatok – például a feladó e-mail-címe, neve, az üzenet tartalma és a kapcsolódó kommunikációs adatok – kezelhetők.
+
+Az adatkezelés célja különösen:
+- a megkeresés megválaszolása;
+- technikai támogatás nyújtása;
+- hibák kivizsgálása;
+- biztonsági problémák kezelése;
+- a szoftver működésével kapcsolatos kommunikáció.
+
+Az adatkezelés jogalapja főszabály szerint a GDPR 6. cikk (1) bekezdés f) pontja szerinti jogos érdek: a megkeresések kezelése, a technikai támogatás biztosítása, valamint a szoftver biztonságának és megfelelő működésének fenntartása. Olyan esetben, amikor más jogalap alkalmazandó, az adatkezelés annak megfelelően történik.
+
+A felhasználót kérjük, hogy e-mailben lehetőleg ne küldjön naplóbejegyzéseket, részletes mentális vagy egészségügyi információkat, jelszavakat, titkosítási kulcsokat vagy más olyan adatokat, amelyek a hiba bejelentéséhez nem szükségesek.
+
+A támogatási levelezést az adott megkeresés kezeléséhez, az esetleges kapcsolódó hibakereséshez vagy biztonsági vizsgálathoz szükséges ideig őrizzük meg, illetve addig, ameddig jogi igények érvényesítéséhez vagy jogi kötelezettség teljesítéséhez szükséges. Ezt követően az adatokat töröljük vagy biztonságosan megsemmisítjük, amennyiben további megőrzésüknek nincs jogalapja.
+
+
+7. Harmadik felek és adatfeldolgozók
+
+Az easpace helyi alkalmazási tartalmait harmadik fél nem kapja meg.
+
+A szoftver terjesztéséhez, a frissítések biztosításához, a weboldal működtetéséhez vagy az e-mailes kommunikációhoz harmadik fél infrastruktúrája is igénybe vehető.
+
+Ilyen szolgáltatók a szolgáltatás működésével összefüggésben technikai adatokat kezelhetnek. Amennyiben egy szolgáltató a fejlesztő nevében és utasításai alapján személyes adatokat kezel, az alkalmazandó adatvédelmi jogszabályoknak megfelelő szerződéses és technikai garanciák kerülnek alkalmazásra.
+
+A harmadik felek saját adatkezelésére az adott szolgáltató saját adatvédelmi tájékoztatója is vonatkozhat.
+
+
+8. Nemzetközi adattovábbítás
+
+A felhasználó által az easpace-ben létrehozott helyi alkalmazási tartalmak nem kerülnek az easpace fejlesztőjének vagy üzemeltetőjének központi szerverére.
+
+A frissítési infrastruktúra, a weboldal, a tárhelyszolgáltatás vagy az e-mail-szolgáltatás használata során azonban előfordulhat, hogy technikai vagy kapcsolattartási adatok az Európai Gazdasági Térségen kívüli szolgáltatónál is kezelésre kerülnek.
+
+Ilyen esetben az adattovábbításra a GDPR alkalmazandó rendelkezései, így különösen az V. fejezet szerinti megfelelő garanciák vonatkoznak.
+
+
+9. Az érintett jogai
+
+A fejlesztő által kezelt személyes adatok tekintetében – a GDPR alkalmazandó rendelkezései szerint – az érintett jogosult lehet:
+- hozzáférést kérni személyes adataihoz;
+- kérni pontatlan személyes adatainak helyesbítését;
+- kérni személyes adatainak törlését;
+- kérni az adatkezelés korlátozását;
+- tiltakozni a jogos érdeken alapuló adatkezelés ellen;
+- kérni az adathordozhatóságot, amennyiben annak jogszabályi feltételei fennállnak;
+- a hozzájáruláson alapuló adatkezeléshez adott hozzájárulását visszavonni, amennyiben az adatkezelés ilyen jogalapon történik;
+- panaszt tenni az illetékes adatvédelmi felügyeleti hatóságnál.
+
+Az adatvédelmi kérelmek az alábbi címen nyújthatók be:
+E-mail: bmartin@easpace.eu
+
+A kérelmekre főszabály szerint indokolatlan késedelem nélkül, legkésőbb a kérelem beérkezésétől számított egy hónapon belül válaszolunk. A GDPR-ban meghatározott feltételek mellett ez a határidő további két hónappal meghosszabbítható.
+
+A fejlesztő által nem hozzáférhető helyi easpace-adatok tekintetében a fejlesztő nem tud hozzáférést biztosítani, helyesbítést vagy törlést végrehajtani, illetve helyi adatokat visszaállítani. Ezeket a műveleteket a felhasználó az alkalmazáson és saját eszközén keresztül végezheti el.
+
+
+10. Felügyeleti hatóság
+
+Magyarországon az illetékes adatvédelmi felügyeleti hatóság:
+
+Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH)
+1055 Budapest, Falk Miksa utca 9–11.
+Postai cím: 1363 Budapest, Pf. 9.
+E-mail: ugyfelszolgalat@naih.hu
+Weboldal: https://www.naih.hu/
+
+Az érintett jogosult panaszt tenni a felügyeleti hatóságnál, ha álláspontja szerint személyes adatainak kezelése sérti a GDPR rendelkezéseit.
+
+
+11. Adatok törlése
+
+Az easpace alkalmazásban a felhasználó az alkalmazás által biztosított funkciókon keresztül törölheti a helyben tárolt adatait.
+
+A helyi adatok törlése nem feltétlenül törli azokat a másolatokat, amelyeket az operációs rendszer, biztonsági mentési rendszer, fájlszinkronizációs szolgáltatás vagy a felhasználó más módon önállóan hozott létre.
+
+A fejlesztő nem rendelkezik a felhasználó helyi alkalmazási adatbázisának másolatával, ezért az alkalmazásból vagy az eszközről törölt adatok visszaállítását nem tudja elvégezni.
+
+
+12. Biztonság
+
+Az easpace technikai intézkedésekkel védi a helyben tárolt alkalmazási adatokat, beleértve az adatbázis titkosítását és – az adott platform lehetőségeitől függően – az operációs rendszer biztonságos kulcstárolójának használatát.
+
+A biztonság azonban nem garantálható abszolút mértékben. A felhasználó felelős saját eszközének, operációs rendszerének, felhasználói fiókjának, jelszavainak és biztonsági mentéseinek védelméért.
+
+
+13. A tájékoztató módosítása
+
+Ez a tájékoztató módosulhat, ha az easpace működése, a kapcsolódó infrastruktúra vagy az alkalmazandó jogszabályok változnak.
+
+A módosítások az easpace weboldalán, illetve szükség szerint új alkalmazásverzióval kerülhetnek közzétételre.

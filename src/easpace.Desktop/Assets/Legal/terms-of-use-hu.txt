@@ -1,0 +1,83 @@
+Felhasználási feltételek
+
+Utolsó frissítés: 2026. augusztus 25.
+
+
+Az easpace nyílt forráskódú, ingyenesen használható alkalmazás. Az alkalmazás telepítésével, elérésével vagy használatával a felhasználó elfogadja az alábbi feltételeket.
+
+
+1. Az alkalmazás rendeltetése
+
+Az easpace személyes önreflexióra, naplózásra, hangulat- és tevékenységkövetésre, valamint jólléti gyakorlatok használatára szolgáló szoftver.
+
+Az easpace nem orvostechnikai eszköz, és nem nyújt orvosi, pszichiátriai vagy pszichológiai diagnózist, kezelést vagy személyre szabott egészségügyi tanácsadást.
+
+Az alkalmazásban megjelenő információk és gyakorlatok nem helyettesítik egészségügyi szakember tanácsát, vizsgálatát vagy kezelését.
+
+Az easpace nem sürgősségi vagy kríziskezelési szolgáltatás. Súlyos vagy sürgős mentális-egészségügyi helyzetben megfelelő egészségügyi vagy sürgősségi segítséget kell igénybe venni.
+
+
+2. Helyi adatok és adatvesztés
+
+Az easpace a felhasználó alkalmazási adatait helyben, a felhasználó saját eszközén tárolja.
+
+Az easpace nem biztosít központi felhőalapú tárhelyet vagy szinkronizációt a felhasználói tartalmakhoz. A fejlesztő nem fér hozzá a helyi alkalmazási adatbázishoz, annak tartalmához vagy titkosítási kulcsához.
+
+A felhasználó felelős saját hozzáférési adatai, titkosítási kulcsai, eszköze és biztonsági mentései megfelelő kezeléséért.
+
+A fejlesztő nem tudja helyreállítani a felhasználó által elveszített vagy törölt helyi adatokat, és nem tudja visszaállítani az elvesztett jelszavakat vagy titkosítási kulcsokat.
+
+A felhasználónak saját felelőssége gondoskodni azokról a biztonsági mentésekről és helyreállítási lehetőségekről, amelyekre szüksége van.
+
+
+3. Frissítések
+
+Az easpace frissítésellenőrzési funkciót biztosíthat. Ez alapértelmezés szerint kikapcsolt, és hálózati kapcsolatot használhat a verzióinformációk lekérésére.
+
+A frissítésellenőrzés nem továbbítja a felhasználó által létrehozott alkalmazási tartalmakat, a helyi adatbázist vagy annak titkosítási kulcsát.
+
+A frissítési infrastruktúra rendelkezésre állása, működése és elérhetősége harmadik fél által biztosított szolgáltatásoktól is függhet.
+
+
+4. A szoftver állapota és felelősség
+
+Az easpace „AS IS” és „AS AVAILABLE” alapon kerül rendelkezésre bocsátásra, a jogszabály által megengedett legnagyobb mértékben kizárva minden olyan kifejezett vagy vélelmezett garanciát, amelyet a jogszabály nem tesz kötelezővé.
+
+Az easpace aktív fejlesztés alatt álló szoftver, ezért hibákat, működési problémákat, kompatibilitási problémákat vagy hiányos funkciókat tartalmazhat.
+
+A fejlesztő nem garantálja, hogy:
+- az alkalmazás minden eszközön vagy operációs rendszeren hibamentesen működik;
+- az alkalmazás minden esetben megszakítás nélkül elérhető vagy használható;
+- minden hiba javításra kerül;
+- az alkalmazás által tárolt adatok minden körülmények között megmaradnak.
+
+A jogszabály által megengedett mértékben a fejlesztő nem felel az alkalmazás használatából vagy használhatatlanságából eredő közvetett, következményi vagy egyéb olyan kárért, amelyért a felelősség jogszerűen kizárható.
+
+Semmilyen rendelkezés nem zárja ki vagy korlátozza a fejlesztő olyan felelősségét, amelynek kizárását vagy korlátozását az alkalmazandó jog nem engedi meg.
+
+
+5. Felhasználói felelősség
+
+A felhasználó felelős azért, hogy az easpace-t saját körülményei és az alkalmazandó jogszabályok szerint használja.
+
+A felhasználó különösen felelős az eszközének és felhasználói fiókjának biztonságáért, a hozzáférési adatok megőrzéséért, valamint a számára szükséges biztonsági mentések elkészítéséért.
+
+
+6. Nyílt forráskódú licensz
+
+Az easpace forráskódja a projektben meghatározott MIT License feltételei szerint kerül licenszelésre.
+
+A jelen Felhasználási Feltételek nem korlátozzák az MIT License alapján biztosított jogokat. A szoftver felhasználására és terjesztésére az MIT License rendelkezései is irányadók.
+
+
+7. A feltételek módosítása
+
+A Felhasználási Feltételek módosulhatnak, különösen az alkalmazás működésének, infrastruktúrájának vagy a vonatkozó jogszabályoknak a változása esetén.
+
+A módosított feltételek az easpace weboldalán, illetve szükség szerint új alkalmazásverzióval kerülhetnek közzétételre.
+
+
+8. Kapcsolat
+
+Kérdések, technikai problémák vagy hibabejelentések esetén:
+E-mail: bmartin@easpace.eu

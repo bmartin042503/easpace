@@ -1,0 +1,164 @@
+Privacy Policy
+
+Last updated: 25 August 2026
+
+
+1. Data Controller
+
+easpace is an open-source, free-to-use application designed to operate locally on the user's device.
+
+The data controller is:
+
+Martin Bartos
+Email: bmartin@easpace.eu
+Website: https://easpace.eu
+
+This Privacy Policy explains what personal data may be processed in connection with the use of easpace and communication with the developer by email.
+
+
+2. Local easpace Data
+
+easpace allows users to store journal entries, mood data, activity data, wellness data, and other personal content locally.
+
+This data is stored on the user's own device. The easpace application does not transmit this data to the developer, the operator of easpace, or third-party online services.
+
+easpace does not operate a central server or backend service for storing or synchronising users' application content. The developer therefore has no access to users' locally stored application content.
+
+Some information recorded in easpace may, depending on its content, concern a person's physical or mental health or wellbeing and may therefore constitute a special category of personal data under Article 9 of the GDPR.
+
+The developer does not receive these locally stored contents. There is therefore no central developer-operated database, analytics system, advertising system, or user profiling system containing the user's local application content.
+
+
+3. Local Encryption and Key Storage
+
+The local easpace application database is stored in encrypted form.
+
+The application uses a database-encryption mechanism based on ChaCha20-Poly1305. The encryption key is generated and handled locally as required for the operation of the application and, where supported by the relevant platform, stored using the operating system's secure key or credential storage.
+
+The encryption key is not transmitted to easpace or to a central service.
+
+Encryption does not provide absolute protection. The security of the user's device, operating system, user account, or backups may affect the security of locally stored data.
+
+
+4. Analytics, Advertising and Tracking
+
+The easpace application does not use advertising, advertising profiling, or behavioral tracking.
+
+The application does not transmit journal entries, mood data, activity data, wellness data, or the contents of the local application database to online analytics or advertising services.
+
+easpace does not provide a central user-account or user-content service as part of its local application operation.
+
+
+5. Update Checks
+
+easpace provides a function for checking whether a newer version of the application is available.
+
+Update checks are disabled by default. When enabled by the user, the application establishes a network connection to the configured update endpoint and retrieves the version information required for the update check.
+
+During an update check, easpace does not send:
+- journal entries;
+- mood data;
+- activity data;
+- wellness data;
+- the contents of the local database;
+- the encryption key;
+- user-account information;
+- other user-created application content.
+
+Because the request is made over the Internet, the infrastructure receiving the request may technically process information ordinarily available in connection with an Internet request, such as an IP address, timestamp, network information, and diagnostic data. The handling of such technical data is primarily governed by the privacy practices of the operator of the update infrastructure.
+
+easpace does not use update-check data for user profiling or advertising.
+
+
+6. Email Communication and Technical Support
+
+When a user contacts the developer by email, personal data contained in the communication may be processed, including the sender's email address, name, message content, and related communication metadata.
+
+The purposes of this processing include:
+- responding to the enquiry;
+- providing technical support;
+- investigating software issues;
+- handling security issues;
+- communicating about the operation of the software.
+
+The legal basis for this processing is generally the legitimate interest under Article 6(1)(f) GDPR in handling enquiries, providing technical support, and maintaining the security and proper operation of the software. Where another legal basis applies, the processing will be carried out on that basis.
+
+Users should avoid sending journal entries, detailed mental-health or medical information, passwords, encryption keys, or other sensitive information by email unless it is necessary for resolving the reported issue.
+
+Support correspondence is retained for as long as reasonably necessary to handle the enquiry, investigate related technical or security issues, establish, exercise, or defend legal claims, or comply with a legal obligation. It is then deleted or securely disposed of when there is no longer a legal basis for retaining it.
+
+
+7. Third Parties and Processors
+
+Users' locally stored easpace application content is not provided to third parties.
+
+Third-party infrastructure may be used for software distribution, update delivery, website hosting, or email communication.
+
+Such providers may process technical data necessary to provide their respective services. Where a provider processes personal data on behalf of the developer, appropriate contractual and technical safeguards are applied as required by applicable data protection law.
+
+Third parties may also process data under their own privacy policies where they act as independent controllers.
+
+
+8. International Data Transfers
+
+User-created easpace application content stored locally is not transferred to a central server operated by the developer or by easpace for application-content storage.
+
+However, the use of update infrastructure, website hosting, storage providers, or email services may result in technical or contact data being processed by service providers outside the European Economic Area.
+
+Where such a transfer occurs, the applicable requirements of the GDPR, including the safeguards of Chapter V, apply.
+
+
+9. Data Subject Rights
+
+With regard to personal data processed by the developer, and subject to the conditions set out in the GDPR, you may have the right to:
+- request access to your personal data;
+- request rectification of inaccurate personal data;
+- request erasure of personal data;
+- request restriction of processing;
+- object to processing based on legitimate interests;
+- request data portability where the statutory conditions are met;
+- withdraw consent where processing is based on consent;
+- lodge a complaint with a competent data protection supervisory authority.
+
+Requests concerning personal data processed by the developer can be submitted to:
+Email: bmartin@easpace.eu
+
+Requests will generally be answered without undue delay and, in principle, within one month of receipt. Where permitted by the GDPR, this period may be extended by a further two months.
+
+The developer cannot provide access to, modify, delete, or restore locally stored easpace application data to which the developer has no access. Such operations must be carried out by the user through the application or on the user's own device.
+
+
+10. Supervisory Authority
+
+The competent data protection supervisory authority in Hungary is:
+
+National Authority for Data Protection and Freedom of Information (NAIH)
+1055 Budapest, Falk Miksa utca 9–11, Hungary
+Postal address: 1363 Budapest, Pf. 9., Hungary
+Email: ugyfelszolgalat@naih.hu
+Website: https://www.naih.hu/
+
+You have the right to lodge a complaint with a supervisory authority if you consider that the processing of your personal data infringes the GDPR.
+
+
+11. Deletion of Data
+
+Users can delete locally stored easpace data using the deletion functionality provided by the application.
+
+Deleting data from easpace does not necessarily delete copies created independently by the operating system, backup software, file-synchronisation services, or the user.
+
+The developer does not maintain a cloud copy of the user's local application database and therefore cannot restore data deleted from the application or the user's device.
+
+
+12. Security
+
+easpace uses technical measures intended to protect locally stored application data, including database encryption and, where supported by the relevant platform, the use of the operating system's secure key storage.
+
+No software or security measure can provide absolute protection. Users are responsible for protecting their own devices, operating systems, user accounts, passwords, and backups.
+
+
+13. Changes to This Privacy Policy
+
+This Privacy Policy may be updated when the operation of easpace, its related infrastructure, or applicable legal requirements change.
+
+Updates may be published on the easpace website and, where appropriate, included with a new application release.
