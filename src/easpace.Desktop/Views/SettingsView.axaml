@@ -263,7 +263,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Privacy policy button -->
                         <Button Classes="primary regular"
-                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Command="{Binding ShowPrivacyPolicyCommand}">
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -272,7 +273,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{services:LocalizationService Key='Credits.Button.PrivacyPolicy'}" />
+                                           Text="{services:LocalizationService Key='Credits.Text.PrivacyPolicy'}" />
 
                             </StackPanel>
 
@@ -280,7 +281,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Terms of use button -->
                         <Button Classes="primary regular"
-                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Command="{Binding ShowTermsOfUseCommand}">
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -289,7 +291,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{services:LocalizationService Key='Credits.Button.TermsOfUse'}" />
+                                           Text="{services:LocalizationService Key='Credits.Text.TermsOfUse'}" />
 
                             </StackPanel>
 

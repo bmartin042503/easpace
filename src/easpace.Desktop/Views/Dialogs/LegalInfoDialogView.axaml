@@ -1,0 +1,63 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
+             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             x:DataType="vm:LegalInfoDialogViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Views.Dialogs.LegalInfoDialogView">
+
+    <Border x:Name="DialogRootBorder" Classes="card"
+            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            BorderThickness="0"
+            MaxWidth="800" MaxHeight="600">
+
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
+                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                <!-- Info icon -->
+                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                          Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                          Data="{StaticResource Haven.PhosphorIcons.Info.Fill}"
+                          VerticalAlignment="Top"
+                          Margin="0,4,0,0" />
+
+                <!-- Title -->
+                <TextBlock x:Name="DialogRootTitle" Grid.Column="1"
+                           Classes="neutral fs3 trm-ellipsis" Text="{Binding Title}"
+                           TextWrapping="Wrap" VerticalAlignment="Center" />
+
+            </Grid>
+
+            <Border Grid.Row="1" Classes="elevated card">
+                <ScrollViewer>
+                    <!-- Message -->
+                    <SelectableTextBlock Classes="neutral fs4 trm-ellipsis"
+                               Text="{Binding Message}"
+                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                               TextWrapping="Wrap" TextAlignment="Left" />
+                </ScrollViewer>
+            </Border>
+
+            <!-- Close button -->
+            <Button Grid.Row="2" Classes="primary regular"
+                    HorizontalAlignment="Right"
+                    Content="{services:LocalizationService Key='Common.Button.Close'}"
+                    Command="{Binding CloseDialogCommand}" />
+            
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

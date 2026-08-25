@@ -652,10 +652,10 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Credits.Text.ThirdPartyLibraries" xml:space="preserve">
         <value>Harmadik féltől származó könyvtárak</value>
     </data>
-    <data name="Credits.Button.PrivacyPolicy" xml:space="preserve">
+    <data name="Credits.Text.PrivacyPolicy" xml:space="preserve">
         <value>Adatvédelmi tájékoztató</value>
     </data>
-    <data name="Credits.Button.TermsOfUse" xml:space="preserve">
+    <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Felhasználási feltételek</value>
     </data>
 </root>
