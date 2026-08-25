@@ -6,5 +6,10 @@ namespace easpace.Desktop.Constants;
 public enum LegalFileType
 {
     PrivacyPolicy,
-    TermsOfUse
+    TermsOfUse,
+    AvaloniaLicense,
+    DotNetLicense,
+    Sqlite3MultipleCiphersLicense,
+    DevloopedCredentialManagerLicense,
+    PhosphorIconsLicense
 }

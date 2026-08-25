@@ -9,6 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:constants="clr-namespace:easpace.Desktop.Constants"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.SettingsView"
              x:DataType="vm:SettingsViewModel"
@@ -211,7 +212,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="4">
 
                         <!-- Version -->
-                        <TextBlock Classes="strong accent fs5 trm-ellipsis" 
+                        <TextBlock Classes="strong accent fs5 trm-ellipsis"
                                    Text="{Binding VersionText}" />
 
                         <!-- Developers -->
@@ -264,7 +265,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Privacy policy button -->
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Command="{Binding ShowPrivacyPolicyCommand}">
+                                Command="{Binding ShowLegalFileCommand}">
+                            
+                            <Button.CommandParameter>
+                                <constants:LegalFileType>PrivacyPolicy</constants:LegalFileType>
+                            </Button.CommandParameter>
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -282,7 +287,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Terms of use button -->
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Command="{Binding ShowTermsOfUseCommand}">
+                                Command="{Binding ShowLegalFileCommand}">
+                            
+                            <Button.CommandParameter>
+                                <constants:LegalFileType>TermsOfUse</constants:LegalFileType>
+                            </Button.CommandParameter>
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -309,23 +318,58 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
-                                    Content="Avalonia UI • MIT License" />
+                                    Content="Avalonia UI • MIT License"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>AvaloniaLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
-                                    Content="CommunityToolkit.Mvvm / Entity Framework Core • MIT License" />
+                                    Content="CommunityToolkit.Mvvm / Entity Framework Core • MIT License"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>DotNetLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
-                                    Content="SQLite3 Multiple Ciphers • MIT License" />
+                                    Content="SQLite3 Multiple Ciphers • MIT License"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>Sqlite3MultipleCiphersLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
-                                    Content="Devlooped.CredentialManager • MIT License" />
+                                    Content="Devlooped.CredentialManager • MIT License"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>DevloopedCredentialManagerLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
-                                    Content="Phosphor Icons • MIT License" />
+                                    Content="Phosphor Icons • MIT License"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>PhosphorIconsLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                         </StackPanel>
 

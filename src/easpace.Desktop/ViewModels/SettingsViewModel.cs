@@ -29,18 +29,18 @@ public partial class SettingsViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private async Task ShowPrivacyPolicy()
+    private async Task ShowLegalFile(object parameter)
     {
-        var legalInfoDialog = new LegalInfoDialogViewModel(_logger, LegalFileType.PrivacyPolicy);
+        if (parameter is not LegalFileType legalFileType) return;
+
+        var legalInfoDialog = new LegalInfoDialogViewModel(_logger, legalFileType);
 
         await _dialogService.ShowDialogAsync(legalInfoDialog);
     }
-    
-    [RelayCommand]
-    private async Task ShowTermsOfUse()
-    {
-        var legalInfoDialog = new LegalInfoDialogViewModel(_logger, LegalFileType.TermsOfUse);
 
-        await _dialogService.ShowDialogAsync(legalInfoDialog);
+    [RelayCommand]
+    private async Task DeleteAllData()
+    {
+        
     }
 }
