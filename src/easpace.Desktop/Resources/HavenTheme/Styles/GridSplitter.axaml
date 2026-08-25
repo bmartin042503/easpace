@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <Border Padding="20" Background="{DynamicResource Neutral100}">
 
                 <Grid ColumnDefinitions="*,Auto,*" Height="300">
-                    <GridSplitter Grid.Column="1" Classes="horizontal" />
+                    <GridSplitter Grid.Column="1" Classes="vertical" />
                 </Grid>
 
             </Border>
@@ -20,7 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.PreviewWith>
 
     <!-- GridSplitter template & styling -->
-    <Style Selector="GridSplitter.horizontal">
+    <Style Selector="GridSplitter.vertical">
 
         <Setter Property="Width" Value="{StaticResource Haven.Scale.Spacing.Xs}" />
 

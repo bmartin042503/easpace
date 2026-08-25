@@ -580,4 +580,82 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
         <value>Lassítsd a légzésed és engedd el a feszültséget. Lélegezz be 4 másodpercig, majd lassan fújd ki 6 másodperc alatt.</value>
     </data>
+    <data name="Settings.Category.General" xml:space="preserve">
+        <value>Általános</value>
+    </data>
+    <data name="Settings.Category.Wellness" xml:space="preserve">
+        <value>Wellness</value>
+    </data>
+    <data name="Settings.Category.SystemAndPrivacy" xml:space="preserve">
+        <value>Rendszer és adatvédelem</value>
+    </data>
+    <data name="Settings.Language.Label" xml:space="preserve">
+        <value>Nyelv</value>
+    </data>
+    <data name="Settings.Language.Description" xml:space="preserve">
+        <value>Válaszd ki az alkalmazás nyelvét.</value>
+    </data>
+    <data name="Settings.ColorScheme.Label" xml:space="preserve">
+        <value>Színséma</value>
+    </data>
+    <data name="Settings.ColorScheme.Description" xml:space="preserve">
+        <value>Válassz a környezetedhez illő színsémát.</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.System" xml:space="preserve">
+        <value>Rendszer</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.Light" xml:space="preserve">
+        <value>Világos</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.Dark" xml:space="preserve">
+        <value>Sötét</value>
+    </data>
+    <data name="Settings.AnimatedBackground.Label" xml:space="preserve">
+        <value>Animált háttér</value>
+    </data>
+    <data name="Settings.AnimatedBackground.Description" xml:space="preserve">
+        <value>Animált színátmenetek bekapcsolása a gyakorlatok alatt.</value>
+    </data>
+    <data name="Settings.FullScreen.Label" xml:space="preserve">
+        <value>Teljes képernyő</value>
+    </data>
+    <data name="Settings.FullScreen.Description" xml:space="preserve">
+        <value>Teljes képernyős mód bekapcsolása a gyakorlatok alatt.</value>
+    </data>
+    <data name="Settings.CheckForUpdates.Label" xml:space="preserve">
+        <value>Frissítések keresése</value>
+    </data>
+    <data name="Settings.CheckForUpdates.Description" xml:space="preserve">
+        <value>Új verziók automatikus keresésének bekapcsolása.</value>
+    </data>
+    <data name="Settings.DeleteAllData.Label" xml:space="preserve">
+        <value>Minden adat törlése</value>
+    </data>
+    <data name="Settings.DeleteAllData.Description" xml:space="preserve">
+        <value>Minden adat végleges törlése. Ez a művelet nem vonható vissza.</value>
+    </data>
+    <data name="Credits.Text.Version" xml:space="preserve">
+        <value>Verzió: v{0}</value>
+    </data>
+    <data name="Credits.Text.Copyright" xml:space="preserve">
+        <value>Copyright © 2025-2026 Bartos Martin • MIT Licensz</value>
+    </data>
+    <data name="Credits.Text.Developers" xml:space="preserve">
+        <value>Fejlesztők: Bartos Martin</value>
+    </data>
+    <data name="Credits.Text.Contact" xml:space="preserve">
+        <value>Kapcsolat: bmartin@easpace.eu</value>
+    </data>
+    <data name="Credits.Text.BuiltWith" xml:space="preserve">
+        <value>.NET és Avalonia UI alapokon készült</value>
+    </data>
+    <data name="Credits.Text.ThirdPartyLibraries" xml:space="preserve">
+        <value>Harmadik féltől származó könyvtárak</value>
+    </data>
+    <data name="Credits.Button.PrivacyPolicy" xml:space="preserve">
+        <value>Adatvédelmi tájékoztató</value>
+    </data>
+    <data name="Credits.Button.TermsOfUse" xml:space="preserve">
+        <value>Felhasználási feltételek</value>
+    </data>
 </root>

@@ -52,6 +52,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
     </Style>
 
     <Style Selector="Button.primary">

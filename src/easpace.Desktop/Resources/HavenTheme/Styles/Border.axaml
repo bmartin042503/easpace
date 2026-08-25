@@ -48,6 +48,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Sm}" />
     </Style>
     
+    <Style Selector="Border.settings.card">
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Lg}" />
+    </Style>
+    
     <Style Selector="Border.translucent.card">
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Translucent}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />

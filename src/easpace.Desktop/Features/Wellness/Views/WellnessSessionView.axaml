@@ -9,6 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessSessionView"
              x:DataType="vm:WellnessSessionViewModel"
@@ -20,30 +21,15 @@ Licensed under the MIT License. See LICENSE file for details.
         <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             
-            <!-- TODO: make this reusable (with behaviors ?) -->
             <!-- Animated instruction text -->
-            <TransitioningContentControl Content="{Binding InstructionText}"
-                                         HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-                <TransitioningContentControl.PageTransition>
-                    <CompositePageTransition>
-                        <CrossFade Duration="0:0:0.5" />
-                        <PageSlide Duration="0:0:0.5" Orientation="Vertical" SlideInEasing="CubicEaseOut" />
-                    </CompositePageTransition>
-                </TransitioningContentControl.PageTransition>
-            
-                <TransitioningContentControl.ContentTemplate>
-                    <DataTemplate DataType="x:String">
-                        <TextBlock Text="{Binding}" Classes="strong accent fs1"
-                                   HorizontalAlignment="Center" TextAlignment="Center" />
-                    </DataTemplate>
-                </TransitioningContentControl.ContentTemplate>
-            
-            </TransitioningContentControl>
+            <TextBlock Classes="strong accent fs1"
+                       behaviors:AnimatedTextBehavior.AnimatedText="{Binding InstructionText}"
+                       TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
             <!-- Phase seconds -->
-            <TextBlock Classes="strong accent fs1" Text="{Binding PhaseSecondsText}"
-                       HorizontalAlignment="Center" />
+            <TextBlock Classes="strong accent fs1"
+                       behaviors:AnimatedTextBehavior.AnimatedText="{Binding PhaseSecondsText}"
+                       HorizontalAlignment="Center" IsVisible="{Binding IsBreathing}" />
 
         </StackPanel>
 

@@ -15,9 +15,9 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="viewModels:WellnessPageViewModel"
              Background="{StaticResource Haven.Scale.Transparent}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
-    
+
     <Grid>
-        
+
         <!-- Blobs gradient background -->
         <controls:BlobsGradientBackground
             BackgroundBrush="{DynamicResource Haven.Sem.Accent.Muted}"
@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
             Speed="0.4"
             Opacity="0.75"
             IsVisible="{Binding IsBlobBackgroundVisible}" />
-        
+
         <!-- Wellness content -->
         <ContentControl Content="{Binding ContentViewModel}" />
         

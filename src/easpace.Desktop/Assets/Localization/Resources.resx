@@ -580,4 +580,82 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
         <value>Slow down and release tension with a longer exhale. Inhale for 4 seconds, then exhale gently for 6.</value>
     </data>
+    <data name="Settings.Category.General" xml:space="preserve">
+        <value>General</value>
+    </data>
+    <data name="Settings.Category.Wellness" xml:space="preserve">
+        <value>Wellness</value>
+    </data>
+    <data name="Settings.Category.SystemAndPrivacy" xml:space="preserve">
+        <value>System &amp; Privacy</value>
+    </data>
+    <data name="Settings.Language.Label" xml:space="preserve">
+        <value>Language</value>
+    </data>
+    <data name="Settings.Language.Description" xml:space="preserve">
+        <value>Choose your preferred language for the application.</value>
+    </data>
+    <data name="Settings.ColorScheme.Label" xml:space="preserve">
+        <value>Color Scheme</value>
+    </data>
+    <data name="Settings.ColorScheme.Description" xml:space="preserve">
+        <value>Select a color scheme that suits your environment.</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.System" xml:space="preserve">
+        <value>System</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.Light" xml:space="preserve">
+        <value>Light</value>
+    </data>
+    <data name="Settings.ColorSchemeSetting.Dark" xml:space="preserve">
+        <value>Dark</value>
+    </data>
+    <data name="Settings.AnimatedBackground.Label" xml:space="preserve">
+        <value>Animated Background</value>
+    </data>
+    <data name="Settings.AnimatedBackground.Description" xml:space="preserve">
+        <value>Enables animated blobs gradient during your sessions.</value>
+    </data>
+    <data name="Settings.FullScreen.Label" xml:space="preserve">
+        <value>Full Screen</value>
+    </data>
+    <data name="Settings.FullScreen.Description" xml:space="preserve">
+        <value>Enables full screen mode during your sessions.</value>
+    </data>
+    <data name="Settings.CheckForUpdates.Label" xml:space="preserve">
+        <value>Check For Updates</value>
+    </data>
+    <data name="Settings.CheckForUpdates.Description" xml:space="preserve">
+        <value>Enables checks for new versions automatically.</value>
+    </data>
+    <data name="Settings.DeleteAllData.Label" xml:space="preserve">
+        <value>Delete All Data</value>
+    </data>
+    <data name="Settings.DeleteAllData.Description" xml:space="preserve">
+        <value>Permanently erases all your data. This action cannot be undone.</value>
+    </data>
+    <data name="Credits.Text.Version" xml:space="preserve">
+        <value>Version: v{0}</value>
+    </data>
+    <data name="Credits.Text.Copyright" xml:space="preserve">
+        <value>Copyright © 2025-2026 Martin Bartos • MIT Licensz</value>
+    </data>
+    <data name="Credits.Text.Developers" xml:space="preserve">
+        <value>Developers: Martin Bartos</value>
+    </data>
+    <data name="Credits.Text.Contact" xml:space="preserve">
+        <value>Contact: bmartin@easpace.eu</value>
+    </data>
+    <data name="Credits.Text.BuiltWith" xml:space="preserve">
+        <value>Built with .NET and Avalonia UI</value>
+    </data>
+    <data name="Credits.Text.ThirdPartyLibraries" xml:space="preserve">
+        <value>Third-party libraries</value>
+    </data>
+    <data name="Credits.Button.PrivacyPolicy" xml:space="preserve">
+        <value>Privacy Policy</value>
+    </data>
+    <data name="Credits.Button.TermsOfUse" xml:space="preserve">
+        <value>Terms of Use</value>
+    </data>
 </root>
