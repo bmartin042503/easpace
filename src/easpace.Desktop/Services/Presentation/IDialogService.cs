@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using easpace.Desktop.ViewModels.Dialogs;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Presentation;
 
 internal interface IDialogService
 {

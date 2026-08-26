@@ -7,7 +7,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -30,7 +30,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Start date -->
                 <TextBlock Classes="neutral fs4" VerticalAlignment="Center">
-                    <Run Text="{services:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
+                    <Run Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
                     <Run Text=": " />
                     <Run Text="{Binding StartDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                 </TextBlock>
@@ -38,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Target date -->
                 <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
                            IsVisible="{Binding HasValidTargetDate}">
-                    <Run Text="{services:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
+                    <Run Text="{core:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
                     <Run Text=": " />
                     <Run Text="{Binding TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
                 </TextBlock>
@@ -55,7 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Delete button -->
             <Button Classes="tertiary danger icon"
                     Command="{Binding DeleteCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
             </Button>
 
@@ -66,11 +66,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                               IsVisible="{Binding !IsArchived}"
-                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
+                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}" />
 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
                               IsVisible="{Binding IsArchived}"
-                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
+                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}" />
 
                 </Panel>
             </Button>
@@ -78,14 +78,14 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Edit button -->
             <Button Classes="tertiary icon"
                     Command="{Binding EditCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
             </Button>
 
             <!-- Add button -->
             <Button Classes="tertiary icon"
                     Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
             </Button>
 

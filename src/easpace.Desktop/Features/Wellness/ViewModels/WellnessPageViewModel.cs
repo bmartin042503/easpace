@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
 using Microsoft.Extensions.Logging;
 

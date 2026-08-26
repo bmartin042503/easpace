@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using Avalonia.Platform;
 using easpace.Desktop.Constants;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.ViewModels.Dialogs;

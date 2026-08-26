@@ -7,11 +7,11 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
@@ -82,7 +82,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
                                 Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
                                 Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
-                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Active'}" />
+                                ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
                         </ListBoxItem>
 
                         <!-- Archive -->
@@ -92,7 +92,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                                 Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
                                 Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
-                                ToolTip.Tip="{services:LocalizationService Key='Activities.Filter.Archived'}" />
+                                ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
                         </ListBoxItem>
 
                         <ListBox.ItemsPanel>
@@ -106,7 +106,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Add button -->
                     <Button Grid.Row="0" Grid.Column="2" Classes="primary icon" HorizontalAlignment="Right"
                             Command="{Binding AddActivityCommand}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}"
                             IsEnabled="{Binding !IsEditing}"
                             Margin="0,1">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
@@ -164,7 +164,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- 'Add entries' message -->
-                    <TextBlock Text="{services:LocalizationService Key='Activities.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Activities.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
 

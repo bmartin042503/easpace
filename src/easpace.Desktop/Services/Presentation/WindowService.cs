@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Presentation;
 
 internal class WindowService : IWindowService
 {

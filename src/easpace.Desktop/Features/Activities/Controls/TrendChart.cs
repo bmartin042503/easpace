@@ -10,8 +10,7 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using easpace.Desktop.Features.Activities.Contracts;
-using easpace.Desktop.Features.Activities.Entities.DataEntries;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Features.Activities.Controls;
 

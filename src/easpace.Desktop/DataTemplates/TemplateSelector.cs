@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Metadata;
+using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Features.Wellness.Constants;

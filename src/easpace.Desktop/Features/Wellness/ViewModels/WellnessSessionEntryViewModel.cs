@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;

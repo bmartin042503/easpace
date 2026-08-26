@@ -8,7 +8,7 @@ using Avalonia.Threading;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 

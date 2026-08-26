@@ -19,7 +19,7 @@ internal class DbSeeder
 
     public async Task SeedAsync()
     {
-        // add default breathing techniques
+        // add default breathing techniques if there's none
         if (!await _dbContext.BreathingTechniques.AnyAsync())
         {
             var defaultTechniques = new[]

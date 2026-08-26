@@ -5,7 +5,7 @@ using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Journal.Entities;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Features.Journal.ViewModels;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels.Dialogs;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;

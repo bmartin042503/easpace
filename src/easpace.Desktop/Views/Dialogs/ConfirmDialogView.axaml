@@ -18,7 +18,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <vm:ConfirmDialogViewModel />
     </Design.DataContext>
 
-    <Border x:Name="DialogRootBorder" Classes="card"
+    <Border x:Name="DialogRootBorder" Classes.danger="{Binding IsCritical}" Classes="card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
@@ -56,7 +56,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Message -->
             <TextBlock Grid.Row="1" Classes="neutral fs4 trm-ellipsis"
                        Text="{Binding Message}"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" HorizontalAlignment="Left"
                        TextWrapping="Wrap" TextAlignment="Left" />
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"

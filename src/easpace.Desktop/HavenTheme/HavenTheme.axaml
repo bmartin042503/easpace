@@ -1,0 +1,85 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<!--
+HavenTheme is a custom design system based on Avalonia's FluentTheme, using Phosphor Icons for iconography. 
+It follows a three-tier token architecture: Scale tokens define raw UI values, while Semantic tokens map them to context-aware roles for Light and Dark modes. 
+Component files located in the `Styles` directory apply these tokens to style individual controls.
+-->
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:easpace.Desktop.Converters">
+
+    <Styles.Resources>
+        <ResourceDictionary>
+
+            <!-- Merged Dictionaries -->
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- Scales -->
+                <ResourceInclude Source="Scales/Colors.axaml" />
+                <ResourceInclude Source="Scales/Border.axaml" />
+                <ResourceInclude Source="Scales/Radius.axaml" />
+                <ResourceInclude Source="Scales/Spacing.axaml" />
+                <ResourceInclude Source="Scales/Typography.axaml" />
+                <ResourceInclude Source="Scales/Sizes.axaml" />
+
+                <!-- Phosphor Icons -->
+                <ResourceInclude Source="PhosphorIcons.axaml" />
+
+                <!-- Control themes -->
+                <ResourceInclude Source="ControlThemes/WindowDrawnDecorations.axaml" />
+                <ResourceInclude Source="ControlThemes/DataValidationErrors.axaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Theme Dictionaries -->
+            <ResourceDictionary.ThemeDictionaries>
+
+                <!-- Semantics -->
+                <ResourceInclude x:Key="Light" Source="ColorSchemes/Light.axaml" />
+                <ResourceInclude x:Key="Dark" Source="ColorSchemes/Dark.axaml" />
+
+            </ResourceDictionary.ThemeDictionaries>
+
+        </ResourceDictionary>
+
+        <!-- Poppins font -->
+        <FontFamily x:Key="Haven.FontFamily.Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
+
+        <!-- Converters -->
+        <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
+        <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />
+        <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
+        <converters:ValidationResultToLocalizedConverter x:Key="ValidationResultToLocalizedConverter" />
+        <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
+
+    </Styles.Resources>
+
+    <!-- Styles -->
+    <StyleInclude Source="Styles/Border.axaml" />
+    <StyleInclude Source="Styles/Button.axaml" />
+    <StyleInclude Source="Styles/GridSplitter.axaml" />
+    <StyleInclude Source="Styles/ListBox.axaml" />
+    <StyleInclude Source="Styles/ListBoxItem.axaml" />
+    <StyleInclude Source="Styles/Path.axaml" />
+    <StyleInclude Source="Styles/Slider.axaml" />
+    <StyleInclude Source="Styles/TextBlock.axaml" />
+    <StyleInclude Source="Styles/TextBox.axaml" />
+    <StyleInclude Source="Styles/ComboBox.axaml" />
+    <StyleInclude Source="Styles/ToggleButton.axaml" />
+    <StyleInclude Source="Styles/PathIcon.axaml" />
+    <StyleInclude Source="Styles/DataValidationErrors.axaml" />
+    <StyleInclude Source="Styles/TrendChart.axaml" />
+    <StyleInclude Source="Styles/MilestoneChart.axaml" />
+    <StyleInclude Source="Styles/RoutineMonthItem.axaml" />
+
+    <!-- Templated controls -->
+    <StyleInclude Source="TemplatedControls/IconListItem.axaml" />
+    <StyleInclude Source="TemplatedControls/NavigationListItem.axaml" />
+    <StyleInclude Source="TemplatedControls/ActivityListItem.axaml" />
+    <StyleInclude Source="TemplatedControls/DataEntryListItem.axaml" />
+
+</Styles>

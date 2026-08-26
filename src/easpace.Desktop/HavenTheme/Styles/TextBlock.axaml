@@ -17,10 +17,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="accent" Text="Accent" />
                     <TextBlock Classes="strong accent" Text="Strong Accent" />
                     <TextBlock Classes="subtle accent" Text="Subtle Accent" />
+                    <TextBlock Classes="warning" Text="Warning" />
+                    <TextBlock Classes="strong warning" Text="Strong Warning" />
                     <TextBlock Classes="danger" Text="Danger" />
                     <TextBlock Classes="strong danger" Text="Strong Danger" />
                     <TextBlock Classes="success" Text="Success" />
                     <TextBlock Classes="strong success" Text="Strong Success" />
+                    <TextBlock Classes="info" Text="Info" />
+                    <TextBlock Classes="strong info" Text="Strong Info" />
                 </StackPanel>
                 
                 <!-- FontSize -->
@@ -104,6 +108,22 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="TextBlock.strong.success, SelectableTextBlock.strong.success">
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+    </Style>
+    
+    <Style Selector="TextBlock.info, SelectableTextBlock.info">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info}" />
+    </Style>
+    
+    <Style Selector="TextBlock.strong.info, SelectableTextBlock.strong.info">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
+    </Style>
+    
+    <Style Selector="TextBlock.warning, SelectableTextBlock.warning">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning}" />
+    </Style>
+    
+    <Style Selector="TextBlock.strong.warning, SelectableTextBlock.strong.warning">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
     </Style>
 
     <!-- FontSize -->

@@ -19,7 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <FluentTheme />
         
         <!-- Haven Theme -->
-        <StyleInclude Source="Resources/HavenTheme/HavenTheme.axaml" />
+        <StyleInclude Source="HavenTheme/HavenTheme.axaml" />
         
     </Application.Styles>
 </Application>

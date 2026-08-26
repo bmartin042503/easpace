@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Converters;
 

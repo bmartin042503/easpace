@@ -64,7 +64,7 @@ internal class WellnessSessionEntryService : IWellnessSessionEntryService
 
             var sessionEntries = await _dbContext.WellnessSessionEntries
                 .Include(e => e.BreathingTechnique)
-                .ThenInclude(t => t.Phases.OrderBy(p => p.Order))
+                .ThenInclude(t => t!.Phases.OrderBy(p => p.Order))
                 .AsNoTracking()
                 .ToListAsync();
 

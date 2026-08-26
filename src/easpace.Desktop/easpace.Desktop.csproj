@@ -5,7 +5,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -61,11 +61,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <InternalsVisibleTo Include="easpace.Tests"/>
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Compile Remove="bin\**" />
-        <Compile Remove="obj\**" />
     </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
@@ -88,7 +88,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- 'Add entries' message -->
-                    <TextBlock Text="{services:LocalizationService Key='Wellness.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
 
@@ -97,7 +97,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
                       IsVisible="{Binding HasSessionEntries}">
 
-                    <TextBlock Grid.Row="0" Text="{services:LocalizationService Key='Wellness.Title.History'}"
+                    <TextBlock Grid.Row="0" Text="{core:LocalizationService Key='Wellness.Title.History'}"
                                Classes="neutral fs3" TextAlignment="Center" />
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
@@ -176,7 +176,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Title -->
                 <TextBlock Grid.Row="0" Classes="neutral fs1"
-                           Text="{services:LocalizationService Key='Wellness.Title.Start'}"
+                           Text="{core:LocalizationService Key='Wellness.Title.Start'}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
 
                 <!-- Radio buttons -->
@@ -186,13 +186,13 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Breathing -->
                     <RadioButton GroupName="session-type"
                                  IsChecked="{Binding IsBreathingChecked}"
-                                 Content="{services:LocalizationService Key='Wellness.SessionType.Breathing'}"
+                                 Content="{core:LocalizationService Key='Wellness.SessionType.Breathing'}"
                                  HorizontalAlignment="Center" />
 
                     <!-- Meditation -->
                     <RadioButton GroupName="session-type"
                                  IsChecked="{Binding IsMeditationChecked}"
-                                 Content="{services:LocalizationService Key='Wellness.SessionType.Meditation'}"
+                                 Content="{core:LocalizationService Key='Wellness.SessionType.Meditation'}"
                                  HorizontalAlignment="Center" />
 
                 </StackPanel>
@@ -225,14 +225,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- 'No breathing techniques available' text -->
                         <TextBlock IsVisible="{Binding !HasBreathingTechniques}"
-                                   Text="{services:LocalizationService Key='BreathingTechnique.Empty.Message'}"
+                                   Text="{core:LocalizationService Key='BreathingTechnique.Empty.Message'}"
                                    Classes="strong danger fs5" TextAlignment="Center" />
                     </Grid>
 
                 </StackPanel>
 
                 <!-- Timer checkbox -->
-                <CheckBox Grid.Row="3" Content="{services:LocalizationService Key='Wellness.Label.Duration'}"
+                <CheckBox Grid.Row="3" Content="{core:LocalizationService Key='Wellness.Label.Duration'}"
                           IsChecked="{Binding IsTimerChecked}"
                           VerticalAlignment="Center" HorizontalAlignment="Center" />
 
@@ -255,7 +255,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Begin session button -->
                 <Button Grid.Row="5" Classes="primary regular"
-                        Content="{services:LocalizationService Key='Wellness.Button.BeginSession'}"
+                        Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
                         Command="{Binding StartSessionCommand}"
                         HorizontalAlignment="Center" />
 

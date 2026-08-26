@@ -7,7 +7,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Data;
 
 internal class PreferencesService : IPreferencesService
 {

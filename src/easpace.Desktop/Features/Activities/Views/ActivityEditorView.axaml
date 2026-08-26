@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:converters="clr-namespace:easpace.Desktop.Converters"
              xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
@@ -27,25 +27,25 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                     <TextBlock Classes="neutral fs4"
-                               Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
+                               Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
-                             PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                             PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
                              HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
                 </StackPanel>
 
                 <!-- Target checkbox -->
-                <CheckBox Content="{services:LocalizationService Key='Activities.CheckBox.Target'}"
+                <CheckBox Content="{core:LocalizationService Key='Activities.CheckBox.Target'}"
                           IsChecked="{Binding IsTargetChecked}" />
 
                 <!-- Target value input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
                             IsVisible="{Binding IsTargetChecked}">
                     <TextBlock Classes="neutral fs4"
-                               Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
+                               Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
                                    HorizontalAlignment="Left" Increment="1" FormatString="0.##"
-                                   PlaceholderText="{services:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
+                                   PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
                 </StackPanel>
 
             </StackPanel>
@@ -60,29 +60,29 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                     <TextBlock Classes="neutral fs4"
-                               Text="{services:LocalizationService Key='Activities.Label.Unit'}" />
+                               Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
-                             PlaceholderText="{services:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                             PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
                              HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
                 </StackPanel>
 
                 <!-- Target value input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                     <TextBlock Classes="neutral fs4"
-                               Text="{services:LocalizationService Key='Activities.Label.TargetValue'}" />
+                               Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
                                    Width="{StaticResource Haven.Scale.Input.MinWidth}"
                                    HorizontalAlignment="Left" Increment="1" FormatString="0.##"
-                                   PlaceholderText="{services:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
+                                   PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
                 </StackPanel>
 
                 <!-- Target date input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                     <TextBlock Classes="neutral fs4"
-                               Text="{services:LocalizationService Key='Activities.Label.TargetDate'}" />
+                               Text="{core:LocalizationService Key='Activities.Label.TargetDate'}" />
                     <CalendarDatePicker SelectedDate="{Binding TargetDate}"
                                         Width="{StaticResource Haven.Scale.Input.MinWidth}"
-                                        PlaceholderText="{services:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                                        PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
                 </StackPanel>
 
             </StackPanel>
@@ -115,13 +115,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Cancel button -->
             <Button Classes="secondary icon" Command="{Binding CancelCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Cancel'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
             </Button>
 
             <!-- Save button -->
             <Button Classes="primary icon" Command="{Binding SaveCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Save'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
             </Button>
 
@@ -135,9 +135,9 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Name input -->
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                         <TextBlock Classes="neutral fs4"
-                                   Text="{services:LocalizationService Key='Activities.Label.Name'}" />
+                                   Text="{core:LocalizationService Key='Activities.Label.Name'}" />
                         <TextBox Text="{Binding Name}"
-                                 PlaceholderText="{services:LocalizationService Key='Activities.Input.NamePlaceholder'}"
+                                 PlaceholderText="{core:LocalizationService Key='Activities.Input.NamePlaceholder'}"
                                  Width="{StaticResource Haven.Scale.Input.MaxWidth}"
                                  HorizontalAlignment="Left" />
                     </StackPanel>
@@ -146,7 +146,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                         <TextBlock Classes="neutral fs4"
-                                   Text="{services:LocalizationService Key='Activities.Label.Type'}" />
+                                   Text="{core:LocalizationService Key='Activities.Label.Type'}" />
 
                         <ComboBox ItemsSource="{Binding ActivityTypes}"
                                   SelectedItem="{Binding SelectedType}"

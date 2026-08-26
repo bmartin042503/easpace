@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:constants="clr-namespace:easpace.Desktop.Constants"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.SettingsView"
@@ -35,7 +35,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
-                               Text="{services:LocalizationService Key='Settings.Category.General'}" />
+                               Text="{core:LocalizationService Key='Settings.Category.General'}" />
 
                     <!-- Settings content -->
                     <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto"
@@ -45,16 +45,17 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.Language.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.Language.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.Language.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.Language.Description'}" />
                         </StackPanel>
 
                         <!-- Language combo box -->
                         <ComboBox Grid.Row="0" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}">
+                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  SelectedIndex="{Binding SelectedLanguageIndex}">
                             <ComboBoxItem>English</ComboBoxItem>
                             <ComboBoxItem>Magyar</ComboBoxItem>
                         </ComboBox>
@@ -63,22 +64,23 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.ColorScheme.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.ColorScheme.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Description'}" />
                         </StackPanel>
 
                         <!-- Color scheme combo box -->
                         <ComboBox Grid.Row="1" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}">
+                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  SelectedIndex="{Binding SelectedColorSchemeIndex}">
                             <ComboBoxItem
-                                Content="{services:LocalizationService Key='Settings.ColorSchemeSetting.System'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeSetting.System'}" />
                             <ComboBoxItem
-                                Content="{services:LocalizationService Key='Settings.ColorSchemeSetting.Light'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeSetting.Light'}" />
                             <ComboBoxItem
-                                Content="{services:LocalizationService Key='Settings.ColorSchemeSetting.Dark'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeSetting.Dark'}" />
                         </ComboBox>
 
                     </Grid>
@@ -94,7 +96,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
-                               Text="{services:LocalizationService Key='Settings.Category.Wellness'}" />
+                               Text="{core:LocalizationService Key='Settings.Category.Wellness'}" />
 
                     <!-- Settings content -->
                     <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto"
@@ -104,27 +106,29 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.FullScreen.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.FullScreen.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.FullScreen.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.FullScreen.Description'}" />
                         </StackPanel>
 
                         <!-- FullScreen toggle switch -->
                         <ToggleSwitch Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                                      HorizontalAlignment="Right" />
+                                      HorizontalAlignment="Right"
+                                      IsChecked="{Binding IsWellnessFullScreenEnabled}" />
 
                         <!-- Animated background label & description -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.AnimatedBackground.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.AnimatedBackground.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Description'}" />
                         </StackPanel>
 
                         <!-- Animated background toggle switch -->
                         <ToggleSwitch Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
-                                      HorizontalAlignment="Right" />
+                                      HorizontalAlignment="Right"
+                                      IsChecked="{Binding IsWellnessAnimatedBackgroundEnabled}" />
 
                     </Grid>
 
@@ -139,7 +143,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
-                               Text="{services:LocalizationService Key='Settings.Category.SystemAndPrivacy'}" />
+                               Text="{core:LocalizationService Key='Settings.Category.SystemAndPrivacy'}" />
 
                     <!-- Settings content -->
                     <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto"
@@ -149,22 +153,23 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.CheckForUpdates.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.CheckForUpdates.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Description'}" />
                         </StackPanel>
 
                         <!-- Check for updates toggle switch -->
                         <ToggleSwitch Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
-                                      HorizontalAlignment="Right" />
+                                      HorizontalAlignment="Right"
+                                      IsChecked="{Binding IsCheckForUpdatesEnabled}" />
 
                         <!-- Delete all data label & description -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.DeleteAllData.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{services:LocalizationService Key='Settings.DeleteAllData.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Description'}" />
                         </StackPanel>
 
                         <!-- Delete all data button -->
@@ -179,7 +184,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{services:LocalizationService Key='Settings.DeleteAllData.Label'}" />
+                                           Text="{core:LocalizationService Key='Settings.DeleteAllData.Label'}" />
 
                             </StackPanel>
 
@@ -205,7 +210,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Built with .NET and Avalonia UI -->
                         <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{services:LocalizationService Key='Credits.Text.BuiltWith'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
 
                     </StackPanel>
 
@@ -218,11 +223,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Developers -->
                         <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{services:LocalizationService Key='Credits.Text.Developers'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.Developers'}" />
 
                         <!-- Contact -->
                         <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{services:LocalizationService Key='Credits.Text.Contact'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
 
                     </StackPanel>
 
@@ -238,7 +243,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Copyright button + easpace MIT license -->
                     <Button Classes="tertiary" Padding="0"
-                            Content="{services:LocalizationService Key='Credits.Text.Copyright'}"
+                            Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
                             Command="{Binding ShowLegalFileCommand}">
 
                         <Button.CommandParameter>
@@ -286,7 +291,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{services:LocalizationService Key='Credits.Text.PrivacyPolicy'}" />
+                                           Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}" />
 
                             </StackPanel>
 
@@ -308,7 +313,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{services:LocalizationService Key='Credits.Text.TermsOfUse'}" />
+                                           Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}" />
 
                             </StackPanel>
 
@@ -320,7 +325,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
                         <TextBlock Classes="strong accent fs4 medium"
-                                   Text="{services:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
 
                         <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 

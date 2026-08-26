@@ -19,14 +19,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>1.3</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
-            PublicKeyToken=b77a5c561934e089
-        </value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Journal</value>
@@ -634,6 +630,27 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.DeleteAllData.Description" xml:space="preserve">
         <value>Permanently erases all your data. This action cannot be undone.</value>
     </data>
+    <data name="Settings.DeleteAllDataDialog.Title" xml:space="preserve">
+        <value>Are you sure you want to delete all data?</value>
+    </data>
+    <data name="Settings.DeleteAllDataDialog.Description" xml:space="preserve">
+        <value>This deletes all your data (journals, mood entries, activity and wellness sessions' data, encryption key, user preferences) PERMANENTLY. This action cannot be undone. The app will restart after the deletion.</value>
+    </data>
+    <data name="Settings.RestartDialog.Title" xml:space="preserve">
+        <value>Changes will take effect after restarting the application</value>
+    </data>
+    <data name="Settings.RestartDialog.Description" xml:space="preserve">
+        <value>Would you like to restart the application now?</value>
+    </data>
+    <data name="Settings.RestartDialog.Later" xml:space="preserve">
+        <value>Later</value>
+    </data>
+    <data name="Settings.RestartDialog.RestartNow" xml:space="preserve">
+        <value>Restart Now</value>
+    </data>
+    <data name="Settings.ToastMessage.SettingsSaved" xml:space="preserve">
+        <value>Settings saved.</value>
+    </data>
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Version: v{0}</value>
     </data>
@@ -657,11 +674,5 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Terms of Use</value>
-    </data>
-    <data name="Data.DeleteAllDataDialog.Title" xml:space="preserve">
-        <value>Are you sure you want to delete all data?</value>
-    </data>
-    <data name="Data.DeleteAllDataDialog.Description" xml:space="preserve">
-        <value>This deletes all your data (journals, mood entries, activity and wellness sessions' data, encryption key, user preferences) PERMANENTLY. This action cannot be undone.</value>
     </data>
 </root>

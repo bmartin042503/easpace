@@ -13,6 +13,7 @@ internal partial class ConfirmDialogViewModel : DialogViewModel
     [ObservableProperty] private string _confirmText = string.Empty;
     [ObservableProperty] private string _cancelText = string.Empty;
     [ObservableProperty] private bool _isDestructive;
+    [ObservableProperty] private bool _isCritical;
     
     [ObservableProperty] private bool _confirmed;
     

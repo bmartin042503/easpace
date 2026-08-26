@@ -42,6 +42,11 @@ internal class ViewLocator : IDataTemplate
             // Activity editor
             ActivityEditorViewModel vm => CreateView(new ActivityEditorView(), vm),
             
+            // Wellness
+            WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
+            WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
+            WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
+            
             // Dialogs (make sure dialogs are set in the correct order)
             LegalInfoDialogViewModel vm => CreateView(new LegalInfoDialogView(), vm),
             ConfirmDialogViewModel vm => CreateView(new ConfirmDialogView(), vm),
@@ -50,10 +55,8 @@ internal class ViewLocator : IDataTemplate
             NumericEntryDialogViewModel vm => CreateView(new NumericEntryDialogView(), vm),
             RoutineEntryDialogViewModel vm => CreateView(new RoutineEntryDialogView(), vm),
             
-            // Wellness
-            WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
-            WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
-            WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
+            // Toast messages
+            ToastMessageViewModel vm => CreateView(new ToastMessageView(), vm),
             
             _ => null
         };

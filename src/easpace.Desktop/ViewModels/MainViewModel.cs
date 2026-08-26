@@ -1,12 +1,14 @@
 ﻿// Copyright (c) 2025 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Factories;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Data;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.ViewModels;
@@ -16,27 +18,52 @@ internal partial class MainViewModel : ViewModelBase
     private readonly PageFactory _pageFactory;
     private readonly IPreferencesService _preferencesService;
     private readonly IDialogService _dialogService;
+    private readonly IToastMessageService _toastMessageService;
     private readonly bool _isBoarded;
 
     [ObservableProperty] private PageViewModel _currentPageViewModel;
     [ObservableProperty] private bool _isSidebarVisible = true;
     [ObservableProperty] private int _selectedNavIndex;
     [ObservableProperty] private DialogViewModel? _currentDialog;
+    [ObservableProperty] private ToastMessageViewModel? _currentToastMessage;
+    [ObservableProperty] private bool _isToastMessageVisible;
     
     public MainViewModel(
         PageFactory pageFactory,
         IPreferencesService preferencesService,
         IDialogService dialogService,
+        IToastMessageService toastMessageService,
         IMessenger messenger
     )
     {
         _pageFactory = pageFactory;
         _preferencesService = preferencesService;
         _dialogService = dialogService;
+        _toastMessageService = toastMessageService;
 
-        _dialogService.CurrentDialogChanged += (dialog) =>
+        _dialogService.CurrentDialogChanged += dialog =>
         {
             CurrentDialog = dialog;
+        };
+
+        _toastMessageService.ToastMessageRaised += async toastMessage =>
+        {
+            if (toastMessage != null)
+            {
+                CurrentToastMessage = toastMessage;
+                IsToastMessageVisible = true;
+            }
+            else
+            {
+                IsToastMessageVisible = false;
+
+                await Task.Delay(300);
+                
+                if (!IsToastMessageVisible)
+                {
+                    CurrentToastMessage = null;
+                }
+            }
         };
         
         messenger.Register<ApplicationMessage.RequestPage>(this, (_, msg) =>

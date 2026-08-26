@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
@@ -12,7 +11,8 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Journal.Entities;
 using easpace.Desktop.Features.Journal.Services;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
 using Microsoft.Extensions.Logging;

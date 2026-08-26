@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              x:DataType="vm:InfoDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.Dialogs.InfoDialogView">
@@ -51,7 +51,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Close button -->
             <Button Grid.Row="2" Classes="primary regular"
                     HorizontalAlignment="Right"
-                    Content="{services:LocalizationService Key='Common.Button.Close'}"
+                    Content="{core:LocalizationService Key='Common.Button.Close'}"
                     Command="{Binding CloseDialogCommand}" />
             
 

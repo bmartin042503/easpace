@@ -7,7 +7,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:constants="clr-namespace:easpace.Desktop.Features.Mood.Constants"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Mood.ViewModels"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
@@ -75,7 +75,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- 'Add entries' message -->
-                    <TextBlock Text="{services:LocalizationService Key='Mood.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Mood.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
 
@@ -102,7 +102,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                             <Button Grid.Column="1" Classes="tertiary danger icon"
                                                     Command="{Binding $parent[UserControl].((vm:MoodPageViewModel)DataContext).DeleteEntryCommand}"
                                                     CommandParameter="{Binding .}" VerticalAlignment="Top"
-                                                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                                                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
                                             </Button>
 
@@ -173,7 +173,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Form title -->
                         <TextBlock Grid.Row="0" Classes="neutral fs2"
-                                   Text="{services:LocalizationService Key='Mood.Form.Title'}"
+                                   Text="{core:LocalizationService Key='Mood.Form.Title'}"
                                    TextAlignment="Center" VerticalAlignment="Top" />
 
                         <!-- Slider -->
@@ -218,7 +218,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Load more button -->
                         <Button Grid.Row="1" Classes="regular tertiary"
-                                Content="{services:LocalizationService Key='Common.Button.More'}"
+                                Content="{core:LocalizationService Key='Common.Button.More'}"
                                 Command="{Binding LoadAllLabelsCommand}"
                                 IsVisible="{Binding IsLoadMoreButtonVisible}"
                                 HorizontalAlignment="Center" />
@@ -227,13 +227,13 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Description text box -->
                     <TextBox Grid.Row="2" Classes="large-text-area" Text="{Binding Description}"
                              HorizontalAlignment="Stretch" Height="100"
-                             PlaceholderText="{services:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
+                             PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
 
                 </Grid>
 
                 <!-- Save button -->
                 <Button Grid.Row="1" Classes="regular primary" Command="{Binding SaveCommand}"
-                        Content="{services:LocalizationService Key='Common.Button.Save'}"
+                        Content="{core:LocalizationService Key='Common.Button.Save'}"
                         HorizontalAlignment="Right" />
 
             </Grid>

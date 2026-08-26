@@ -13,7 +13,8 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
+using easpace.Desktop.Services.Presentation;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 

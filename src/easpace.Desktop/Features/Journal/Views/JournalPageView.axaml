@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Journal.ViewModels"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d"
              d:DesignWidth="800"
@@ -41,7 +41,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Search box -->
                     <TextBox Grid.Column="0"
                              Text="{Binding SearchText, Mode=TwoWay}"
-                             PlaceholderText="{services:LocalizationService Key='Journal.Search.Placeholder'}"
+                             PlaceholderText="{core:LocalizationService Key='Journal.Search.Placeholder'}"
                              MinWidth="140">
                         <TextBox.InnerRightContent>
                             <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
@@ -53,7 +53,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             Classes="primary icon"
                             Command="{Binding AddEntryCommand}"
                             IsEnabled="{Binding !IsEditing}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
                     
@@ -69,7 +69,7 @@ Licensed under the MIT License. See LICENSE file for details.
                               Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
                               Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
-                    <TextBlock Text="{services:LocalizationService Key='Journal.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Journal.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis"
                                TextAlignment="Center"
                                TextWrapping="Wrap" />
@@ -134,14 +134,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Delete button -->
                     <Button Classes="tertiary danger icon"
                             Command="{Binding DeleteEntryCommand}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                         <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
                     </Button>
 
                     <!-- Edit button -->
                     <Button Classes="tertiary icon"
                             Command="{Binding EditEntryCommand}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
                         <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
                     
@@ -168,7 +168,7 @@ Licensed under the MIT License. See LICENSE file for details.
                          Grid.Column="0"
                          Text="{Binding Editor.Title, Mode=TwoWay}"
                          Classes="journal-edit fs2"
-                         PlaceholderText="{services:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
                          VerticalAlignment="Center" />
 
                 <StackPanel Grid.Row="0"
@@ -179,14 +179,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Cancel button -->
                     <Button Classes="secondary icon"
                             Command="{Binding Editor.CancelCommand}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Cancel'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
                     </Button>
 
                     <!-- Save button -->
                     <Button Classes="primary icon"
                             Command="{Binding Editor.SaveCommand}"
-                            ToolTip.Tip="{services:LocalizationService Key='Common.Button.Save'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
                     </Button>
                     
@@ -196,7 +196,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                          Text="{Binding Editor.Content, Mode=TwoWay}"
                          Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
-                         PlaceholderText="{services:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
                          VerticalAlignment="Stretch" />
             </Grid>
         </Grid>

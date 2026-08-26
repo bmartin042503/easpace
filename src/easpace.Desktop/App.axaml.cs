@@ -6,6 +6,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
+using easpace.Desktop.Constants;
+using easpace.Desktop.Services.Data;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +35,18 @@ internal partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // set color scheme
+        var preferencesService = _services?.GetRequiredService<IPreferencesService>();
+        var colorScheme = preferencesService?.ReadPreference<string>(PreferenceKey.ColorScheme);
+        
+        RequestedThemeVariant = colorScheme switch
+        {
+            "system" => ThemeVariant.Default,
+            "light" => ThemeVariant.Light,
+            "dark" => ThemeVariant.Dark,
+            _ => ThemeVariant.Default
+        };
+        
         if (Avalonia.Controls.Design.IsDesignMode)
         {
             base.OnFrameworkInitializationCompleted();

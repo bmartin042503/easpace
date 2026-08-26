@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Data;
 using System.IO;
 using easpace.Desktop.Data;
 using easpace.Desktop.Security;
@@ -10,7 +9,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Data;
 
 internal class DataWipeService(AppDbContext dbContext, ILogger<DataWipeService> logger) : IDataWipeService
 {
@@ -24,6 +23,8 @@ internal class DataWipeService(AppDbContext dbContext, ILogger<DataWipeService> 
         logger.LogInformation("Closing database connection");
 
         dbContext.Database.CloseConnection();
+        
+        // clear all pools, otherwise we got an SQLite exception (database file is used by another process)
         SqliteConnection.ClearAllPools();
 
         try

@@ -17,7 +17,9 @@ using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels;
 using easpace.Desktop.Security;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
+using easpace.Desktop.Services.Data;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,6 +45,9 @@ internal static class ServiceCollectionExtensions
 
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
+            
+            collection.AddSingleton<ToastMessageService>();
+            collection.AddSingleton<IToastMessageService>(sp => sp.GetRequiredService<ToastMessageService>());
 
             collection.AddSingleton<WindowService>();
             collection.AddSingleton<IWindowService>(sp => sp.GetRequiredService<WindowService>());

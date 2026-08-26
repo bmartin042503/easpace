@@ -1,0 +1,107 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             x:DataType="vm:ToastMessageViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Views.ToastMessageView">
+
+    <!-- Toast message styles -->
+    <UserControl.Styles>
+
+        <!-- Base -->
+        <Style Selector="Border.toast-msg">
+            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+            <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Circular}" />
+            <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Sm}" />
+            
+            <Style Selector="^ PathIcon">
+                <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+                <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+            </Style>
+        </Style>
+
+        <!-- Success -->
+        <Style Selector="Border.toast-msg[Tag=Success]">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Success}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+
+            <Style Selector="^ TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+            </Style>
+            
+            <Style Selector="^ PathIcon">
+                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.CheckCircle.Fill}" />
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+            </Style>
+            
+        </Style>
+
+        <!-- Info -->
+        <Style Selector="Border.toast-msg[Tag=Info]">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Info}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Info.Strong}" />
+
+            <Style Selector="^ TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
+            </Style>
+            <Style Selector="^ PathIcon">
+                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Info.Fill}" />
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
+            </Style>
+        </Style>
+
+        <!-- Error -->
+        <Style Selector="Border.toast-msg[Tag=Error]">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Danger}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+
+            <Style Selector="^ TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+            </Style>
+            <Style Selector="^ PathIcon">
+                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Warning.Fill}" />
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+            </Style>
+        </Style>
+
+        <!-- Warning -->
+        <Style Selector="Border.toast-msg[Tag=Warning]">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Warning}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
+
+            <Style Selector="^ TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
+            </Style>
+            <Style Selector="^ PathIcon">
+                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Warning.Fill}" />
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
+            </Style>
+        </Style>
+
+    </UserControl.Styles>
+
+    <!-- Toast message -->
+    <Border Tag="{Binding MessageType}" Classes="toast-msg">
+
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+            <!-- Icon -->
+            <PathIcon Grid.Column="0" />
+
+            <!-- Message -->
+            <TextBlock Grid.Column="1" Classes="fs4"
+                       Text="{Binding Message}"
+                       VerticalAlignment="Center" />
+
+        </Grid>
+
+    </Border>
+
+</UserControl>

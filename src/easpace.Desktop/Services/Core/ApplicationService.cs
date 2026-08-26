@@ -5,15 +5,19 @@ using System;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Core;
 
-internal class ApplicationService(ILogger<ApplicationService> logger) : IApplicationService
+internal class ApplicationService : IApplicationService
 {
     public void Restart()
     {
-        logger.LogInformation("Restarting application");
+        
+#if DEBUG
+        Shutdown();
+        return;
+#endif
+        
         var processPath = Environment.ProcessPath;
 
         // start another instance of the app
@@ -22,8 +26,6 @@ internal class ApplicationService(ILogger<ApplicationService> logger) : IApplica
             FileName = processPath,
             UseShellExecute = false
         });
-        
-        logger.LogInformation("Application restarted with PID: {PID}", process?.Id);
         
         Shutdown();
     }
@@ -34,7 +36,6 @@ internal class ApplicationService(ILogger<ApplicationService> logger) : IApplica
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopApp)
         {
             desktopApp.Shutdown();
-            logger.LogInformation("Application shut down with PID: {PID}", Environment.ProcessId);
         }
         else
         {

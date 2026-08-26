@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:vm="using:easpace.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:services="clr-namespace:easpace.Desktop.Services"
+        xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
         xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
@@ -27,31 +27,31 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ListBoxItem Grid.Row="0">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
-                                                          Text="{services:LocalizationService Key='Navigation.Item.Journal'}" />
+                                                          Text="{core:LocalizationService Key='Navigation.Item.Journal'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="1">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
-                                                          Text="{services:LocalizationService Key='Navigation.Item.Activities'}" />
+                                                          Text="{core:LocalizationService Key='Navigation.Item.Activities'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="2">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
-                                                          Text="{services:LocalizationService Key='Navigation.Item.Mood'}" />
+                                                          Text="{core:LocalizationService Key='Navigation.Item.Mood'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="3">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
-                                                          Text="{services:LocalizationService Key='Navigation.Item.Wellness'}" />
+                                                          Text="{core:LocalizationService Key='Navigation.Item.Wellness'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="5">
                     <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
-                                                          Text="{services:LocalizationService Key='Navigation.Item.Settings'}" />
+                                                          Text="{core:LocalizationService Key='Navigation.Item.Settings'}" />
                 </ListBoxItem>
 
                 <ListBox.ItemsPanel>
@@ -64,7 +64,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </ListBox>
 
         </Border>
-        
+
         <!-- Selected page content -->
         <ContentControl Grid.Column="1" x:Name="PageContent"
                         Content="{Binding CurrentPageViewModel}"
@@ -84,6 +84,35 @@ Licensed under the MIT License. See LICENSE file for details.
                 </ContentControl.RenderTransform>
             </ContentControl>
         </Grid>
+
+        <!-- Toast message host -->
+        <ContentControl Grid.Column="0" Grid.ColumnSpan="2"
+                        MaxHeight="48" MaxWidth="800"
+                        Content="{Binding CurrentToastMessage}"
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                        Margin="0,0,0,50"
+                        IsHitTestVisible="{Binding IsToastMessageVisible}"
+                        Classes.visible="{Binding IsToastMessageVisible}">
+            
+            <ContentControl.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.3" Easing="CubicEaseOut" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3" Easing="CubicEaseOut" />
+                </Transitions>
+            </ContentControl.Transitions>
+            
+            <ContentControl.Styles>
+                <Style Selector="ContentControl">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="RenderTransform" Value="translateY(16px)" />
+                </Style>
+                <Style Selector="ContentControl.visible">
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="RenderTransform" Value="translateY(0)" />
+                </Style>
+            </ContentControl.Styles>
+            
+        </ContentControl>
 
     </Grid>
 

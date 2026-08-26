@@ -7,7 +7,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -29,7 +29,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Delete button -->
             <Button Classes="tertiary danger icon"
                     Command="{Binding DeleteCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Delete'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
             </Button>
             
@@ -40,11 +40,11 @@ Licensed under the MIT License. See LICENSE file for details.
                     
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                               IsVisible="{Binding !IsArchived}"
-                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Archive'}" />
+                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}" />
                 
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
                               IsVisible="{Binding IsArchived}"
-                              ToolTip.Tip="{services:LocalizationService Key='Common.Button.Restore'}" />
+                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}" />
                     
                 </Panel>
             </Button>
@@ -52,14 +52,14 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Edit button -->
             <Button Classes="tertiary icon"
                     Command="{Binding EditCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Edit'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Pencil.Fill}" />
             </Button>
 
             <!-- Add button -->
             <Button Classes="tertiary icon"
                     Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{services:LocalizationService Key='Common.Button.Add'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
                 <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
             </Button>
 
@@ -76,19 +76,19 @@ Licensed under the MIT License. See LICENSE file for details.
                     BorderBrush="{DynamicResource Haven.Sem.Border}">
                 <UniformGrid Rows="1" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Bottom.Xxs}">
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.TuesdayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.TuesdayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.WednesdayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.WednesdayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.ThursdayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.ThursdayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.FridayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.FridayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SaturdayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.SaturdayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{services:LocalizationService Key='RoutineActivity.CalendarDay.SundayShort'}" />
+                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.SundayShort'}" />
                 </UniformGrid>
             </Border>
 
@@ -122,21 +122,21 @@ Licensed under the MIT License. See LICENSE file for details.
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
+                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
             </StackPanel>
 
             <!-- Not completed legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box not-completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
+                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
             </StackPanel>
 
             <!-- Today legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box today" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{services:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />
+                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />
             </StackPanel>
 
         </StackPanel>

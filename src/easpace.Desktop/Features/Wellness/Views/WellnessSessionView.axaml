@@ -7,7 +7,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:easpace.Desktop.Services"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -59,7 +59,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Stop -->
             <Button Classes="tertiary regular"
-                    Content="{services:LocalizationService Key='Wellness.Button.EndSession'}"
+                    Content="{core:LocalizationService Key='Wellness.Button.EndSession'}"
                     Command="{Binding StopSessionCommand}" />
 
         </StackPanel>

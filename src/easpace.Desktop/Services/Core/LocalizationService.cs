@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using Avalonia.Markup.Xaml;
 
-namespace easpace.Desktop.Services;
+namespace easpace.Desktop.Services.Core;
 
 internal class LocalizationService : MarkupExtension
 {

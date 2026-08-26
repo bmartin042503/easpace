@@ -8,7 +8,7 @@ using Avalonia.Data.Converters;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Mood.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
-using easpace.Desktop.Services;
+using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Converters;
 
