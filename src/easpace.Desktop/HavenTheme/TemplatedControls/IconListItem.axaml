@@ -5,9 +5,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:easpace.Desktop.Resources.HavenTheme.TemplatedControls">
+        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls">
 
-    <Style Selector="controls|IconListItem">
+    <Style Selector="templatedControls|IconListItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <PathIcon x:Name="PART_Icon"

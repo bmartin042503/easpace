@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-        xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
+        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"

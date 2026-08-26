@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Styling;
 
 namespace easpace.Desktop.Services.Core;
 
@@ -41,5 +42,10 @@ internal class ApplicationService : IApplicationService
         {
             Environment.Exit(0);
         }
+    }
+
+    public void SetThemeVariant(ThemeVariant themeVariant)
+    {
+        Application.Current?.RequestedThemeVariant = themeVariant;
     }
 }

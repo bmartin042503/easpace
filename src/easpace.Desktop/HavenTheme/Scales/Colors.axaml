@@ -72,7 +72,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Color x:Key="Haven.Scale.Neutral600">#41585E</Color>
     <Color x:Key="Haven.Scale.Neutral700">#253A40</Color>
     <Color x:Key="Haven.Scale.Neutral800">#15262A</Color>
-    <Color x:Key="Haven.Scale.Neutral900">#040F12</Color>
+    <Color x:Key="Haven.Scale.Neutral900">#07191E</Color>
     
     <!-- White -->
     <Color x:Key="Haven.Scale.White">#FFFFFF</Color>

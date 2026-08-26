@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
@@ -149,7 +150,7 @@ internal partial class SettingsViewModel : PageViewModel
         _preferencesService.SavePreference(PreferenceKey.WellnessAnimatedBackground, IsWellnessAnimatedBackgroundEnabled);
         _preferencesService.SavePreference(PreferenceKey.CheckForUpdates, IsCheckForUpdatesEnabled);
         
-        // restart required
+        // restart required dialog when the language setting has changed
         if (previousLanguage != language)
         {
             var restartConfirmDialog = new ConfirmDialogViewModel
@@ -167,6 +168,17 @@ internal partial class SettingsViewModel : PageViewModel
                 _applicationService.Restart();
             }
         }
+        
+        // set theme variant
+        var themeVariant = colorScheme switch
+        {
+            "system" => ThemeVariant.Default,
+            "light" => ThemeVariant.Light,
+            "dark" => ThemeVariant.Dark,
+            _ => ThemeVariant.Default
+        };
+        
+        _applicationService.SetThemeVariant(themeVariant);
         
         _toastMessageService.ShowToastMessage(
             LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),

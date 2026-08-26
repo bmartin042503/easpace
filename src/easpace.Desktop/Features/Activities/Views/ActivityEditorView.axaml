@@ -10,9 +10,9 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:converters="clr-namespace:easpace.Desktop.Converters"
-             xmlns:templatedControls="clr-namespace:easpace.Desktop.Resources.HavenTheme.TemplatedControls"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:vmDataEntries="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.DataEntries"
+             xmlns:templatedControls1="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivityEditorViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivityEditorView">
@@ -191,7 +191,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <DataTemplate x:Key="NumericActivityDataEntryViewModel"
                                                   x:DataType="vmDataEntries:NumericActivityDataEntryViewModel">
                                         
-                                        <templatedControls:DataEntryListItem
+                                        <templatedControls1:DataEntryListItem
                                             Value="{Binding Value}"
                                             Timestamp="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}"
                                             DeleteCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"
@@ -204,7 +204,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <DataTemplate x:Key="RoutineActivityDataEntryViewModel"
                                                   x:DataType="vmDataEntries:RoutineActivityDataEntryViewModel">
                                         
-                                        <templatedControls:DataEntryListItem
+                                        <templatedControls1:DataEntryListItem
                                             Value="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}"
                                             Timestamp="{Binding Timestamp, StringFormat='{}{0:yyyy. MM. dd. HH:mm:ss}'}"
                                             DeleteCommand="{Binding $parent[UserControl].((vm:ActivityEditorViewModel)DataContext).DeleteDataEntryCommand}"

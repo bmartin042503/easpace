@@ -58,8 +58,6 @@ internal partial class App : Application
             throw new InvalidOperationException("Services are not initialized.");
         }
 
-        RequestedThemeVariant = ThemeVariant.Light;
-
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

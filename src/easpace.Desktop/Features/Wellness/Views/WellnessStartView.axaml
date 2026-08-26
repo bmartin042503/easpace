@@ -48,7 +48,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Classes="translucent card">
+        <Border Grid.Column="0" Classes="card">
 
             <Grid>
 
@@ -169,7 +169,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       ResizeDirection="Columns" />
 
         <!-- Configuration -->
-        <Border Grid.Column="2" Classes="translucent card"
+        <Border Grid.Column="2" Classes="card"
                 Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
 
             <Grid RowDefinitions="*,*,*,*,*,*">
