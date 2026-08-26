@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Avalonia.Styling;
@@ -22,7 +23,7 @@ internal partial class SettingsViewModel : PageViewModel
     private readonly IDataWipeService _dataWipeService;
     private readonly IDialogService _dialogService;
     private readonly IToastMessageService _toastMessageService;
-    private readonly ILogger<LegalInfoDialogViewModel> _logger;
+    private readonly ILogger<LegalInfoDialogViewModel> _legalDialogLogger;
 
     [ObservableProperty] private string _versionText = string.Empty;
 
@@ -41,7 +42,7 @@ internal partial class SettingsViewModel : PageViewModel
         IDataWipeService dataWipeService,
         IDialogService dialogService,
         IToastMessageService toastMessageService,
-        ILogger<LegalInfoDialogViewModel> logger)
+        ILogger<LegalInfoDialogViewModel> legalDialogLogger)
     {
         Page = ApplicationPage.Settings;
 
@@ -50,7 +51,7 @@ internal partial class SettingsViewModel : PageViewModel
         _dataWipeService = dataWipeService;
         _dialogService = dialogService;
         _toastMessageService = toastMessageService;
-        _logger = logger;
+        _legalDialogLogger = legalDialogLogger;
 
         VersionText = string.Format(LocalizationService.GetString("Credits.Text.Version"), App.Version.ToString());
 
@@ -64,7 +65,7 @@ internal partial class SettingsViewModel : PageViewModel
     {
         if (parameter is not LegalFileType legalFileType) return;
 
-        var legalInfoDialog = new LegalInfoDialogViewModel(_logger, legalFileType);
+        var legalInfoDialog = new LegalInfoDialogViewModel(_preferencesService, _legalDialogLogger, legalFileType);
 
         await _dialogService.ShowDialogAsync(legalInfoDialog);
     }
@@ -92,6 +93,12 @@ internal partial class SettingsViewModel : PageViewModel
         _dataWipeService.DeletePreferencesFile();
 
         _applicationService.Restart();
+    }
+
+    [RelayCommand]
+    private async Task OpenGitHubAsync()
+    {
+        await _applicationService.LaunchUriAsync(new Uri("https://github.com/bmartin042503/easpace"));
     }
 
     private void LoadSettings()
@@ -157,7 +164,7 @@ internal partial class SettingsViewModel : PageViewModel
             {
                 Title = string.Format(LocalizationService.GetString("Settings.RestartDialog.Title")),
                 Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Description")),
-                CancelText = LocalizationService.GetString("Settings.RestartDialog.Later"),
+                CancelText = LocalizationService.GetString("Common.Button.Later"),
                 ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow"),
             };
             

@@ -37,20 +37,23 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<ApplicationService>();
             collection.AddSingleton<IApplicationService>(sp => sp.GetRequiredService<ApplicationService>());
             
+            collection.AddSingleton<ToastMessageService>();
+            collection.AddSingleton<IToastMessageService>(sp => sp.GetRequiredService<ToastMessageService>());
+            
+            collection.AddSingleton<DialogService>();
+            collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
+            
             collection.AddSingleton<DataWipeService>();
             collection.AddSingleton<IDataWipeService>(sp => sp.GetRequiredService<DataWipeService>());
 
             collection.AddSingleton<PreferencesService>();
             collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
-
-            collection.AddSingleton<DialogService>();
-            collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
             
-            collection.AddSingleton<ToastMessageService>();
-            collection.AddSingleton<IToastMessageService>(sp => sp.GetRequiredService<ToastMessageService>());
+            collection.AddTransient<UpdateService>();
+            collection.AddTransient<IUpdateService>(sp => sp.GetRequiredService<UpdateService>());
 
-            collection.AddSingleton<WindowService>();
-            collection.AddSingleton<IWindowService>(sp => sp.GetRequiredService<WindowService>());
+            collection.AddTransient<WindowService>();
+            collection.AddTransient<IWindowService>(sp => sp.GetRequiredService<WindowService>());
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());

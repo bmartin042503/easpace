@@ -4,6 +4,7 @@
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace easpace.Desktop.Utils;
 
@@ -44,23 +45,39 @@ internal static class ViewInitialization
         // if there was a previous value, unsubscribe to prevent memory leaks
         if (args.OldValue.Value is not null)
         {
-            control.AttachedToVisualTree -= HandleAttachedToVisualTree;
+            control.Loaded -= HandleLoaded;
         }
 
         // if there is a new value, subscribe to the event
         if (args.NewValue.Value is not null)
         {
-            control.AttachedToVisualTree += HandleAttachedToVisualTree;
+            if (control.IsLoaded)
+            {
+                ExecuteCommand(control);
+            }
+            else
+            {
+                control.Loaded += HandleLoaded;
+            }
         }
     }
 
     /// <summary>
-    /// The actual event handler that executes the command.
+    /// The actual event handler that executes the command when the View has loaded.
     /// </summary>
-    private static void HandleAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    private static void HandleLoaded(object? sender, RoutedEventArgs e)
     {
-        if (sender is not Control control) return;
-
+        if (sender is Control control)
+        {
+            ExecuteCommand(control);
+        }
+    }
+    
+    /// <summary>
+    /// Executes the Command that is passed to the View via binding.
+    /// </summary>
+    private static void ExecuteCommand(Control control)
+    {
         var command = GetCommand(control);
         var parameter = GetCommandParameter(control);
 

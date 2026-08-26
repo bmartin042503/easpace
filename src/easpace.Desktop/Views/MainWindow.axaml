@@ -10,12 +10,14 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
         xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
+        xmlns:utils="clr-namespace:easpace.Desktop.Utils"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Haven.Sem.Canvas}"
-        Title="easpace" MinHeight="450" MinWidth="700">
+        Title="easpace" MinHeight="450" MinWidth="700"
+        utils:ViewInitialization.Command="{Binding InitializeCommand}">
 
     <Grid ColumnDefinitions="Auto,*">
 
@@ -73,7 +75,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Dialog host -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2"
               IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}">
-            <Border Background="{StaticResource Haven.Scale.Black}" Opacity="0.15" />
+            <Border Background="{StaticResource Haven.Scale.Black}" Opacity="0.35" />
             <ContentControl x:Name="DialogHost" Content="{Binding CurrentDialog}"
                             PointerPressed="DialogHost_PointerPressed"
                             PointerMoved="DialogHost_PointerMoved"

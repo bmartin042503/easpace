@@ -206,7 +206,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                         <!-- Title -->
-                        <TextBlock Classes="strong accent fs3 medium trm-ellipsis" Text="easpace" />
+                        <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
 
                         <!-- Built with .NET and Avalonia UI -->
                         <TextBlock Classes="strong accent fs5 trm-ellipsis"
@@ -261,7 +261,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- GitHub button -->
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Click="GitHubButton_OnClick">
+                                Command="{Binding OpenGitHubCommand}">
 
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -324,7 +324,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Third-party libraries -->
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
-                        <TextBlock Classes="strong accent fs4 medium"
+                        <TextBlock Classes="accent fs4 medium"
                                    Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
 
                         <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">

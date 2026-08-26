@@ -15,8 +15,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <Color x:Key="Haven.Scale.Turquoise500">#38B4D7</Color>
     <Color x:Key="Haven.Scale.Turquoise600">#1591B3</Color>
     <Color x:Key="Haven.Scale.Turquoise700">#08637D</Color>
-    <Color x:Key="Haven.Scale.Turquoise800">#034355</Color>
-    <Color x:Key="Haven.Scale.Turquoise900">#00303D</Color>
+    <Color x:Key="Haven.Scale.Turquoise800">#033F50</Color>
+    <Color x:Key="Haven.Scale.Turquoise900">#002631</Color>
 
     <!-- Green -->
     <Color x:Key="Haven.Scale.Green100">#ECFFEB</Color>

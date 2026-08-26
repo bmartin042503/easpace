@@ -3,7 +3,9 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
 
@@ -47,5 +49,18 @@ internal class ApplicationService : IApplicationService
     public void SetThemeVariant(ThemeVariant themeVariant)
     {
         Application.Current?.RequestedThemeVariant = themeVariant;
+    }
+
+    public async Task LaunchUriAsync(Uri uri)
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            var topLevel = TopLevel.GetTopLevel(desktop.MainWindow);
+    
+            if (topLevel?.Launcher != null)
+            {
+                await topLevel.Launcher.LaunchUriAsync(uri);
+            }
+        }
     }
 }

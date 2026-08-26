@@ -55,9 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
     </ItemGroup>
-
-    <!-- easpace projects -->
-
+    
     <ItemGroup>
         <InternalsVisibleTo Include="easpace.Tests"/>
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>

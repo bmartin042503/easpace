@@ -7,16 +7,22 @@ using System.IO;
 using Avalonia.Platform;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Services.Core;
+using easpace.Desktop.Services.Data;
 using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
 internal class LegalInfoDialogViewModel : InfoDialogViewModel
 {
+    private readonly IPreferencesService _preferencesService;
     private readonly ILogger<LegalInfoDialogViewModel> _logger;
 
-    public LegalInfoDialogViewModel(ILogger<LegalInfoDialogViewModel> logger, LegalFileType legalFileType)
+    public LegalInfoDialogViewModel(
+        IPreferencesService preferencesService,
+        ILogger<LegalInfoDialogViewModel> logger, 
+        LegalFileType legalFileType)
     {
+        _preferencesService = preferencesService;
         _logger = logger;
 
         Title = legalFileType switch
@@ -37,7 +43,7 @@ internal class LegalInfoDialogViewModel : InfoDialogViewModel
 
     private string LoadLegalFile(LegalFileType legalFileType)
     {
-        var currentLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var currentLanguage = _preferencesService.ReadPreference<string>(PreferenceKey.Language);
 
         var legalFileName = legalFileType switch
         {

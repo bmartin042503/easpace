@@ -105,6 +105,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Close" xml:space="preserve">
         <value>Close</value>
     </data>
+    <data name="Common.Button.Later" xml:space="preserve">
+        <value>Later</value>
+    </data>
+    <data name="Common.Button.Download" xml:space="preserve">
+        <value>Download</value>
+    </data>
     <data name="Common.Error.Title" xml:space="preserve">
         <value>Something went wrong</value>
     </data>
@@ -622,7 +628,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Check For Updates</value>
     </data>
     <data name="Settings.CheckForUpdates.Description" xml:space="preserve">
-        <value>Enables checks for new versions automatically.</value>
+        <value>Enables checks for new updates automatically.</value>
     </data>
     <data name="Settings.DeleteAllData.Label" xml:space="preserve">
         <value>Delete All Data</value>
@@ -642,9 +648,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.RestartDialog.Description" xml:space="preserve">
         <value>Would you like to restart the application now?</value>
     </data>
-    <data name="Settings.RestartDialog.Later" xml:space="preserve">
-        <value>Later</value>
-    </data>
     <data name="Settings.RestartDialog.RestartNow" xml:space="preserve">
         <value>Restart Now</value>
     </data>
@@ -655,7 +658,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Version: v{0}</value>
     </data>
     <data name="Credits.Text.Copyright" xml:space="preserve">
-        <value>Copyright © 2025-2026 Martin Bartos • MIT Licensz</value>
+        <value>Copyright © 2025-2026 Martin Bartos • MIT License</value>
     </data>
     <data name="Credits.Text.Developers" xml:space="preserve">
         <value>Developers: Martin Bartos</value>
@@ -674,5 +677,11 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Terms of Use</value>
+    </data>
+    <data name="NewUpdate.Dialog.Title" xml:space="preserve">
+        <value>Update Available</value>
+    </data>
+    <data name="NewUpdate.Dialog.Description" xml:space="preserve">
+        <value>A new version of the app is available (v{0} -> v{1}). Would you like to open GitHub to download the latest release?</value>
     </data>
 </root>
