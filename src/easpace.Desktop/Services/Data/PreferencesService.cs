@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
+using easpace.Desktop.Constants;
 
 namespace easpace.Desktop.Services.Data;
 
@@ -38,10 +39,24 @@ internal class PreferencesService : IPreferencesService
         }
     }
 
+    private void SetDefaultPreferences()
+    {
+        var wellnessFullScreenSetting = JsonSerializer.SerializeToElement(true);
+        _preferences[PreferenceKey.WellnessFullScreen] = wellnessFullScreenSetting;
+        
+        var wellnessAnimatedBgSetting = JsonSerializer.SerializeToElement(true);
+        _preferences[PreferenceKey.WellnessAnimatedBackground] = wellnessAnimatedBgSetting;
+    }
+
     private void SavePreferences()
     {
         lock (_lock)
         {
+            if (!File.Exists(_preferencesPath))
+            {
+                SetDefaultPreferences();
+            }
+            
             var json = JsonSerializer.Serialize(_preferences, _jsonOptions);
             File.WriteAllText(_preferencesPath, json);
         }

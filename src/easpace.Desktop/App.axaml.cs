@@ -46,6 +46,11 @@ internal partial class App : Application
             "dark" => ThemeVariant.Dark,
             _ => ThemeVariant.Default
         };
+
+        if (string.IsNullOrEmpty(colorScheme))
+        {
+            preferencesService?.SavePreference(PreferenceKey.ColorScheme, "system");
+        }
         
         if (Avalonia.Controls.Design.IsDesignMode)
         {

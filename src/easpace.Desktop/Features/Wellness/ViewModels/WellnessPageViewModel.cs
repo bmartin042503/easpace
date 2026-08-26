@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.Services.Data;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
 using Microsoft.Extensions.Logging;
@@ -23,6 +24,7 @@ internal partial class WellnessPageViewModel : PageViewModel
 
     private readonly IMessenger _messenger;
     private readonly IWindowService _windowService;
+    private readonly IPreferencesService _preferencesService;
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IBreathingTechniqueService _breathingTechniqueService;
     private readonly IDialogService _dialogService;
@@ -38,6 +40,8 @@ internal partial class WellnessPageViewModel : PageViewModel
     private WellnessEndingViewModel? _endingViewModel;
 
     private bool _isInitialized;
+    private bool _isFullScreenSettingOn;
+    private bool _isAnimatedBgSettingOn;
 
     public AvaloniaList<WellnessSessionEntryViewModel> SessionEntries { get; } = [];
 
@@ -51,6 +55,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     public WellnessPageViewModel(
         IMessenger messenger,
         IWindowService windowService,
+        IPreferencesService preferencesService,
         IWellnessSessionEntryService wellnessSessionEntryService,
         IBreathingTechniqueService breathingTechniqueService,
         IDialogService dialogService,
@@ -61,6 +66,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         Page = ApplicationPage.Wellness;
         _messenger = messenger;
         _windowService = windowService;
+        _preferencesService = preferencesService;
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _breathingTechniqueService = breathingTechniqueService;
         _dialogService = dialogService;
@@ -69,6 +75,8 @@ internal partial class WellnessPageViewModel : PageViewModel
         _startLogger = startLogger;
         _endingLogger = endingLogger;
 
+        LoadWellnessSettings();
+        
         SetConfigurationView();
     }
 
@@ -79,6 +87,8 @@ internal partial class WellnessPageViewModel : PageViewModel
     [RelayCommand]
     public async Task InitializeAsync()
     {
+        LoadWellnessSettings();
+        
         if (_isInitialized) return;
 
         try
@@ -105,6 +115,12 @@ internal partial class WellnessPageViewModel : PageViewModel
         var entryViewModels = entries.Select(entry => new WellnessSessionEntryViewModel(entry));
 
         SessionEntries.AddRange(entryViewModels);
+    }
+
+    private void LoadWellnessSettings()
+    {
+        _isAnimatedBgSettingOn = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessAnimatedBackground);
+        _isFullScreenSettingOn = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
     }
 
     /// <summary>
@@ -136,7 +152,11 @@ internal partial class WellnessPageViewModel : PageViewModel
     /// <param name="e">Event arguments.</param>
     private void OnNavigatedToConfiguration(object? sender, EventArgs e)
     {
-        _windowService.ExitFullScreen();
+        if (_isFullScreenSettingOn)
+        {
+            _windowService.ExitFullScreen();
+        }
+        
         _messenger.Send(new ApplicationMessage.SidebarVisibility(true));
 
         SetConfigurationView();
@@ -148,6 +168,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     /// </summary>
     private void SetConfigurationView()
     {
+        // always false
         IsBlobBackgroundVisible = false;
         
         // initialize configuration view model if it doesn't exist
@@ -168,9 +189,13 @@ internal partial class WellnessPageViewModel : PageViewModel
     /// <param name="sessionConfiguration">The configuration details to pass to the session view model.</param>
     private void SetSessionView(WellnessSessionConfiguration sessionConfiguration)
     {
-        IsBlobBackgroundVisible = true;
+        IsBlobBackgroundVisible = _isAnimatedBgSettingOn;
+
+        if (_isFullScreenSettingOn)
+        {
+            _windowService.EnterFullScreen();
+        }
         
-        _windowService.EnterFullScreen();
         _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
 
         _sessionViewModel = new WellnessSessionViewModel(sessionConfiguration);
@@ -185,7 +210,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     /// <param name="createEntryRequest">A create request to pass to the ending view model for saving.</param>
     private void SetEndingView(CreateWellnessSessionEntryRequest createEntryRequest)
     {
-        IsBlobBackgroundVisible = true;
+        IsBlobBackgroundVisible = _isAnimatedBgSettingOn;
         
         _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, _dialogService, createEntryRequest, _endingLogger);
         _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
