@@ -12,7 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Color x:Key="Haven.Scale.Turquoise200">#C5EAF4</Color>
     <Color x:Key="Haven.Scale.Turquoise300">#A3E1F3</Color>
     <Color x:Key="Haven.Scale.Turquoise400">#67D0EE</Color>
-    <Color x:Key="Haven.Scale.Turquoise500">#2AAED3</Color>
+    <Color x:Key="Haven.Scale.Turquoise500">#38B4D7</Color>
     <Color x:Key="Haven.Scale.Turquoise600">#1591B3</Color>
     <Color x:Key="Haven.Scale.Turquoise700">#08637D</Color>
     <Color x:Key="Haven.Scale.Turquoise800">#034355</Color>
@@ -65,14 +65,26 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Neutral -->
     <Color x:Key="Haven.Scale.Neutral50">#F7F7F7</Color>
     <Color x:Key="Haven.Scale.Neutral100">#EDEFF0</Color>
-    <Color x:Key="Haven.Scale.Neutral200">#CFD6D8</Color>
-    <Color x:Key="Haven.Scale.Neutral300">#A9B6BA</Color>
-    <Color x:Key="Haven.Scale.Neutral400">#879AA0</Color>
-    <Color x:Key="Haven.Scale.Neutral500">#5E7379</Color>
-    <Color x:Key="Haven.Scale.Neutral600">#41585E</Color>
-    <Color x:Key="Haven.Scale.Neutral700">#253A40</Color>
-    <Color x:Key="Haven.Scale.Neutral800">#15262A</Color>
-    <Color x:Key="Haven.Scale.Neutral900">#07191E</Color>
+    <Color x:Key="Haven.Scale.Neutral200">#D5D7D7</Color>
+    <Color x:Key="Haven.Scale.Neutral300">#B4B8BA</Color>
+    <Color x:Key="Haven.Scale.Neutral400">#999E9F</Color>
+    <Color x:Key="Haven.Scale.Neutral500">#717879</Color>
+    <Color x:Key="Haven.Scale.Neutral600">#515C5E</Color>
+    <Color x:Key="Haven.Scale.Neutral700">#333D40</Color>
+    <Color x:Key="Haven.Scale.Neutral800">#1E2729</Color>
+    <Color x:Key="Haven.Scale.Neutral900">#111C1F</Color>
+    
+    <!-- A little bit desaturated neutral colors (for Dark mode) -->
+    <Color x:Key="Haven.Scale.DesatNeutral50">#F7F7F7</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral100">#EDEFF0</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral200">#D3D6D7</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral300">#B2B8BA</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral400">#969D9F</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral500">#6D7779</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral600">#4C5A5E</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral700">#2E3C40</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral800">#1A2629</Color>
+    <Color x:Key="Haven.Scale.DesatNeutral900">#0C1B1F</Color>
     
     <!-- White -->
     <Color x:Key="Haven.Scale.White">#FFFFFF</Color>
