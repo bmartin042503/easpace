@@ -60,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <!-- Accent -->
     <SolidColorBrush x:Key="Haven.Sem.Accent" Color="{StaticResource Haven.Scale.Turquoise400}" />
-    <SolidColorBrush x:Key="Haven.Sem.Accent.Hover" Color="{StaticResource Haven.Scale.Turquoise400}" />
+    <SolidColorBrush x:Key="Haven.Sem.Accent.Hover" Color="{StaticResource Haven.Scale.Turquoise500}" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Muted" Color="{StaticResource Haven.Scale.Turquoise800}" Opacity="0.5" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Muted.Hover" Color="{StaticResource Haven.Scale.Turquoise900}" Opacity="0.5" />
     <SolidColorBrush x:Key="Haven.Sem.Accent.Subtle" Color="{StaticResource Haven.Scale.Turquoise500}" />

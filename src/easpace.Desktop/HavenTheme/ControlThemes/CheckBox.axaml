@@ -1,0 +1,140 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:ClassModifier="internal">
+    
+    <Design.PreviewWith>
+        <Border Padding="20"
+                Background="{DynamicResource Haven.Sem.Canvas}">
+            <StackPanel Spacing="20">
+                <CheckBox Content="Unchecked" />
+                <CheckBox IsChecked="True" Content="Checked"/>
+                <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Indeterminate" />
+                <CheckBox Width="120" Content="Checkbox should wrap its text"/>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <x:Double x:Key="CheckBoxMinHeight">32</x:Double>
+
+    <ControlTheme x:Key="{x:Type CheckBox}"
+                  TargetType="CheckBox">
+
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="{DynamicResource CheckBoxMinHeight}" />
+
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+
+        <!-- Template -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid x:Name="RootGrid" ColumnDefinitions="20,*"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+                    <Border x:Name="PART_Border"
+                            Grid.ColumnSpan="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+
+
+                    <!-- Checkbox indicator -->
+                    <Grid Grid.Column="0" Height="{DynamicResource CheckBoxMinHeight}"
+                          VerticalAlignment="Top">
+
+                        <Border x:Name="NormalRectangle"
+                                Width="20"
+                                Height="20"
+                                Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                BorderBrush="{DynamicResource Haven.Sem.Border}"
+                                BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                UseLayoutRounding="False" />
+
+                        <Viewbox UseLayoutRounding="False">
+                            <Panel>
+                                <Panel Width="16"
+                                       Height="16" />
+
+                                <PathIcon x:Name="CheckGlyph"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          Foreground="{DynamicResource Haven.Sem.OnAccent}"
+                                          Opacity="0" />
+                            </Panel>
+                        </Viewbox>
+
+                    </Grid>
+
+
+                    <!-- Content -->
+                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                      Grid.Column="1"
+                                      FontFamily="{StaticResource Haven.FontFamily.Poppins}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      TextWrapping="Wrap"
+                                      RecognizesAccessKey="True" />
+
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Selected state -->
+        <Style
+            Selector="^:checked /template/ Border#NormalRectangle, ^:indeterminate /template/ Border#NormalRectangle">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        </Style>
+
+
+        <!-- Selected + PointerOver / Pressed -->
+        <Style
+            Selector="^:checked:pointerover /template/ Border#NormalRectangle,
+                         ^:checked:pressed /template/ Border#NormalRectangle,
+                         ^:indeterminate:pointerover /template/ Border#NormalRectangle,
+                         ^:indeterminate:pressed /template/ Border#NormalRectangle">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+        </Style>
+
+        <!-- Checked glyph -->
+        <Style Selector="^:checked /template/ PathIcon#CheckGlyph">
+            <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Check.Bold}" />
+            <Setter Property="Width" Value="9" />
+            <Setter Property="Height" Value="9" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+
+        <!-- Indeterminate glyph -->
+        <Style Selector="^:indeterminate /template/ PathIcon#CheckGlyph">
+            <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Minus.Bold}" />
+            <Setter Property="Width" Value="8" />
+            <Setter Property="Height" Value="8" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <!-- Disabled -->
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -31,6 +31,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Icons/PhosphorIcons.axaml" />
 
                 <!-- Control themes -->
+                <ResourceInclude Source="ControlThemes/CheckBox.axaml" />
                 <ResourceInclude Source="ControlThemes/WindowDrawnDecorations.axaml" />
                 <ResourceInclude Source="ControlThemes/DataValidationErrors.axaml" />
 
