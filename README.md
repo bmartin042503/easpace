@@ -11,6 +11,12 @@ It is built around a simple idea:
 
 easpace is not designed to diagnose you, judge your progress, or replace professional mental-health care. Instead, it gives you a private place to notice what is happening in your own life, reflect on it, and build a better understanding of your personal patterns.
 
+There are **no subscriptions, paywalls, ads, or analytics**. **All your data is stored locally** on your device **encrypted** with ChaCha20-Poly1305. 
+
+It's all yours, **for free, forever**.
+
+It will be available for **Windows, macOS, and Linux**, with **iOS and Android** support planned for later versions.
+
 ## Features
 
 * **Journaling:** Write down your thoughts and reflections in a simple, private journal.

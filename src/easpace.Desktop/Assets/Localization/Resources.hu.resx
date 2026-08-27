@@ -711,4 +711,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Onboarding.Text.Developer" xml:space="preserve">
         <value>fejlesztő</value>
     </data>
+    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
+        <value>Bartos Martin (bmartin@easpace.eu)</value>
+    </data>
 </root>

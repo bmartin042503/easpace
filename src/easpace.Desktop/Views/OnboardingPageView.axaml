@@ -24,21 +24,33 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Welcome - view -->
             <DataTemplate x:Key="Welcome" x:DataType="constants:OnboardingContent">
 
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="80"
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="128"
                       VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
-                    <!-- Titles -->
-                    <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
-
-                        <TextBlock Classes="strong accent fs1" Text="easpace"
-                                   HorizontalAlignment="Center" />
-                        <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
-                                   HorizontalAlignment="Center" />
+                        <!-- easpace logo -->
+                        <Viewbox Stretch="Uniform" MaxHeight="80">
+                            <Path Data="{StaticResource Haven.AppIcons.Easpace}"
+                                  Fill="{DynamicResource Haven.Sem.Accent.Strong}" />
+                        </Viewbox>
+                        
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
+                            
+                            <!-- easpace title -->
+                            <TextBlock Classes="strong accent fs1" Text="easpace"
+                                       HorizontalAlignment="Center" />
+                        
+                            <!-- subtitle -->
+                            <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
+                                       HorizontalAlignment="Center" />
+                            
+                        </StackPanel>
 
                     </StackPanel>
 
                     <!-- Continue button -->
-                    <Button Classes="primary regular" Grid.Row="1"
+                    <Button Classes="primary regular" Grid.Row="2"
                             Content="{core:LocalizationService Key='Onboarding.Welcome.GetStarted'}"
                             HorizontalAlignment="Center"
                             Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
@@ -202,7 +214,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     
                     <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="2">
                         
-                        <TextBlock Classes="accent fs4 trm-ellipsis" Text="bmartin (bmartin@easpace.eu)"
+                        <TextBlock Classes="accent fs4 trm-ellipsis" 
+                                   Text="{core:LocalizationService Key='Onboarding.Text.DeveloperNameAndContact'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
                         
                         <TextBlock Classes="neutral fs5 trm-ellipsis"

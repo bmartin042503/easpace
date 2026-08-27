@@ -26,8 +26,9 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Scales/Typography.axaml" />
                 <ResourceInclude Source="Scales/Sizes.axaml" />
 
-                <!-- Phosphor Icons -->
-                <ResourceInclude Source="PhosphorIcons.axaml" />
+                <!-- Icons -->
+                <ResourceInclude Source="Icons/AppIcons.axaml" />
+                <ResourceInclude Source="Icons/PhosphorIcons.axaml" />
 
                 <!-- Control themes -->
                 <ResourceInclude Source="ControlThemes/WindowDrawnDecorations.axaml" />
