@@ -6,6 +6,7 @@ namespace easpace.Desktop.Constants;
 internal static class PreferenceKey
 {
     public const string Boarded = "boarded";
+    public const string TermsOfUseAccepted = "terms-of-use-accepted";
     public const string Language = "language";
     public const string ColorScheme = "color-scheme";
     public const string WellnessFullScreen = "wellness-full-screen";

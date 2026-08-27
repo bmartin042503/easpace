@@ -90,7 +90,7 @@ internal static class ServiceCollectionExtensions
 
             collection.AddSingleton<MainViewModel>();
 
-            collection.AddSingleton<IntroViewModel>();
+            collection.AddSingleton<OnboardingPageViewModel>();
             collection.AddSingleton<JournalPageViewModel>();
             collection.AddSingleton<ActivitiesPageViewModel>();
             collection.AddSingleton<MoodPageViewModel>();
@@ -99,7 +99,7 @@ internal static class ServiceCollectionExtensions
 
             collection.AddSingleton<Func<ApplicationPage, PageViewModel>>(serviceProvider => page => page switch
             {
-                ApplicationPage.Intro => serviceProvider.GetRequiredService<IntroViewModel>(),
+                ApplicationPage.Intro => serviceProvider.GetRequiredService<OnboardingPageViewModel>(),
                 ApplicationPage.Journal => serviceProvider.GetRequiredService<JournalPageViewModel>(),
                 ApplicationPage.Activities => serviceProvider.GetRequiredService<ActivitiesPageViewModel>(),
                 ApplicationPage.Mood => serviceProvider.GetRequiredService<MoodPageViewModel>(),

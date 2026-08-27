@@ -27,7 +27,7 @@ internal class ViewLocator : IDataTemplate
         return param switch
         {
             // Pages
-            IntroViewModel vm => CreateView(new IntroView(), vm),
+            OnboardingPageViewModel vm => CreateView(new OnboardingPageView(), vm),
             JournalPageViewModel vm => CreateView(new JournalPageView(), vm),
             ActivitiesPageViewModel vm => CreateView(new ActivitiesPageView(), vm),
             MoodPageViewModel vm => CreateView(new MoodPageView(), vm),

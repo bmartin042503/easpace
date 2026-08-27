@@ -1,0 +1,258 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:easpace.Desktop.ViewModels"
+             xmlns:controls="clr-namespace:easpace.Desktop.Controls"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:constants="clr-namespace:easpace.Desktop.Constants"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Views.OnboardingPageView"
+             x:DataType="vm:OnboardingPageViewModel"
+             Background="{DynamicResource Haven.Sem.Canvas}">
+
+    <UserControl.Resources>
+
+        <dataTemplates:TemplateSelector x:Key="OnboardingContentSelector">
+
+            <!-- Welcome - view -->
+            <DataTemplate x:Key="Welcome" x:DataType="constants:OnboardingContent">
+
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="80"
+                      VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <!-- Titles -->
+                    <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+
+                        <TextBlock Classes="strong accent fs1" Text="easpace"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
+                                   HorizontalAlignment="Center" />
+
+                    </StackPanel>
+
+                    <!-- Continue button -->
+                    <Button Classes="primary regular" Grid.Row="1"
+                            Content="{core:LocalizationService Key='Onboarding.Welcome.GetStarted'}"
+                            HorizontalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+
+            <!-- Terms of Use - view -->
+            <DataTemplate x:Key="TermsOfUse" x:DataType="constants:OnboardingContent">
+
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                      RowDefinitions="Auto,*,Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+
+                    <!-- Navigate back button -->
+                    <Button Grid.Row="0" Grid.Column="0" Classes="primary icon"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                    </Button>
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Classes="strong accent fs1"
+                               Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Legal content -->
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="elevated card" MaxWidth="900"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ScrollViewer>
+                            <SelectableTextBlock Classes="neutral fs4 trm-ellipsis"
+                                                 Text="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).LegalContent}"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                 TextWrapping="Wrap" TextAlignment="Left" />
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- Accept terms of use checkbox -->
+                    <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" 
+                              Content="{core:LocalizationService Key='Onboarding.TermsOfUse.Accept'}"
+                              VerticalAlignment="Center" HorizontalAlignment="Left"
+                              IsChecked="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTermsOfUseAccepted}" />
+
+                    <!-- Continue button -->
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Classes="primary regular"
+                            Content="{core:LocalizationService Key='Common.Button.Continue'}"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTermsOfUseAccepted}"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+
+            <!-- Privacy Policy - view -->
+            <DataTemplate x:Key="PrivacyPolicy" x:DataType="constants:OnboardingContent">
+
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                      RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+
+                    <!-- Navigate back button -->
+                    <Button Grid.Row="0" Grid.Column="0" Classes="primary icon"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                    </Button>
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
+                               Classes="strong accent fs1 trm-ellipsis"
+                               Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Legal content -->
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="elevated card" MaxWidth="900"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ScrollViewer>
+                            <SelectableTextBlock Classes="neutral fs4 trm-ellipsis"
+                                                 Text="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).LegalContent}"
+                                                 VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                 TextWrapping="Wrap" TextAlignment="Left" />
+                        </ScrollViewer>
+                    </Border>
+
+                    <!-- Continue button -->
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Classes="primary regular"
+                            Content="{core:LocalizationService Key='Common.Button.Continue'}"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTermsOfUseAccepted}"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+
+            <!-- Beta software warning - view -->
+            <DataTemplate x:Key="BetaSoftwareWarning" x:DataType="constants:OnboardingContent">
+
+                <Grid RowDefinitions="*,Auto,Auto,Auto,Auto"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                      RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxl}">
+
+                    <!-- Navigate back button -->
+                    <Button Grid.Row="0" Classes="primary icon"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                    </Button>
+
+                    <!-- Title -->
+                    <TextBlock Grid.Row="1"
+                               Classes="strong danger fs2 medium trm-ellipsis"
+                               Text="{core:LocalizationService Key='Onboarding.BetaWarning.Title'}"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Description -->
+                    <TextBlock Grid.Row="2" MaxWidth="640"
+                               Classes="danger fs4 trm-ellipsis"
+                               Text="{core:LocalizationService Key='Onboarding.BetaWarning.Description'}"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Accept beta software warning checkbox -->
+                    <CheckBox Grid.Row="3" Content="{core:LocalizationService Key='Onboarding.BetaWarning.Accept'}" 
+                              VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="600" HorizontalContentAlignment="Center"
+                              IsChecked="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsBetaSoftwareWarningAccepted}" />
+
+                    <!-- Continue button -->
+                    <Button Grid.Row="4" Classes="primary regular"
+                            Content="{core:LocalizationService Key='Common.Button.Continue'}"
+                            HorizontalAlignment="Center"
+                            IsEnabled="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsBetaSoftwareWarningAccepted}"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+            
+            <!-- Thank you - view -->
+            <DataTemplate x:Key="ThankYou" x:DataType="constants:OnboardingContent">
+
+                <Grid RowDefinitions="Auto,Auto,Auto"
+                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                      RowSpacing="80"
+                      VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <!-- Title -->
+                    <TextBlock Grid.Row="0" Classes="strong accent fs2 medium trm-ellipsis" MaxWidth="800"
+                               Text="{core:LocalizationService Key='Onboarding.ThankYou.Title'}" TextAlignment="Center"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    
+                    <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="2">
+                        
+                        <TextBlock Classes="accent fs4 trm-ellipsis" Text="bmartin (bmartin@easpace.eu)"
+                                   TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        
+                        <TextBlock Classes="neutral fs5 trm-ellipsis"
+                                   Text="{core:LocalizationService Key='Onboarding.Text.Developer'}"
+                                   TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        
+                    </StackPanel>
+                    
+
+                    <!-- Continue button -->
+                    <Button Grid.Row="2" Classes="primary regular"
+                            Content="{core:LocalizationService Key='Common.Button.Continue'}"
+                            HorizontalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+
+        </dataTemplates:TemplateSelector>
+
+    </UserControl.Resources>
+
+    <!-- Page content -->
+    <Grid>
+
+        <!-- Blobs gradient background -->
+        <controls:BlobsGradientBackground
+            BackgroundBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            FromBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
+            EllipseCount="7"
+            Speed="0.4"
+            Opacity="0.38" />
+
+        <!-- Transitioning onboarding content -->
+        <TransitioningContentControl HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     Content="{Binding CurrentContent}"
+                                     ContentTemplate="{StaticResource OnboardingContentSelector}">
+
+            <TransitioningContentControl.PageTransition>
+                <CrossFade Duration="0:00:00.3" />
+            </TransitioningContentControl.PageTransition>
+
+        </TransitioningContentControl>
+        
+        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="0.5"
+                   Classes="accent fs5" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                   Text="{Binding VersionText}" />
+
+    </Grid>
+
+</UserControl>

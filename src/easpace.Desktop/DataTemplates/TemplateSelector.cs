@@ -62,6 +62,7 @@ internal class TemplateSelector : IDataTemplate
     {
         var key = data switch
         {
+            OnboardingContent content => content.ToString(),
             ActivityViewModel activity => activity.GetType().Name,
             ActivityDataEntryViewModel dataEntry => dataEntry.GetType().Name,
             WellnessSessionType sessionType => sessionType.ToString(),

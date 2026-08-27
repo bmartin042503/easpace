@@ -1,30 +1,17 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
-using System;
-using System.Globalization;
-using System.IO;
-using Avalonia.Platform;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Services.Core;
-using easpace.Desktop.Services.Data;
-using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
 internal class LegalInfoDialogViewModel : InfoDialogViewModel
 {
-    private readonly IPreferencesService _preferencesService;
-    private readonly ILogger<LegalInfoDialogViewModel> _logger;
-
     public LegalInfoDialogViewModel(
-        IPreferencesService preferencesService,
-        ILogger<LegalInfoDialogViewModel> logger, 
+        IApplicationService applicationService,
         LegalFileType legalFileType)
     {
-        _preferencesService = preferencesService;
-        _logger = logger;
-
         Title = legalFileType switch
         {
             LegalFileType.PrivacyPolicy => LocalizationService.GetString("Credits.Text.PrivacyPolicy"),
@@ -38,43 +25,6 @@ internal class LegalInfoDialogViewModel : InfoDialogViewModel
             _ => string.Empty
         };
 
-        Message = LoadLegalFile(legalFileType);
-    }
-
-    private string LoadLegalFile(LegalFileType legalFileType)
-    {
-        var currentLanguage = _preferencesService.ReadPreference<string>(PreferenceKey.Language);
-
-        var legalFileName = legalFileType switch
-        {
-            LegalFileType.PrivacyPolicy => "privacy-policy",
-            LegalFileType.TermsOfUse => "terms-of-use",
-            LegalFileType.EaspaceLicense => "easpace",
-            LegalFileType.AvaloniaLicense => "avalonia",
-            LegalFileType.DotNetLicense => "dotnet",
-            LegalFileType.Sqlite3MultipleCiphersLicense => "sqlite3-multiple-ciphers",
-            LegalFileType.DevloopedCredentialManagerLicense => "devlooped-credential-manager",
-            LegalFileType.PhosphorIconsLicense => "phosphor-icons",
-            _ => string.Empty
-        };
-
-        var legalFileUri = legalFileType is LegalFileType.PrivacyPolicy or LegalFileType.TermsOfUse
-            ? new Uri($"avares://easpace.Desktop/Assets/Legal/{legalFileName}-{currentLanguage}.txt")
-            : new Uri($"avares://easpace.Desktop/Assets/Legal/Licenses/{legalFileName}-license.txt");
-
-        if (!AssetLoader.Exists(legalFileUri)) return string.Empty;
-
-        try
-        {
-            using var stream = AssetLoader.Open(legalFileUri);
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error has occurred while loading the legal file");
-        }
-
-        return string.Empty;
+        Message = applicationService.LoadLegalFile(legalFileType);
     }
 }

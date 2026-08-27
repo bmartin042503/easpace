@@ -68,9 +68,15 @@ Licensed under the MIT License. See LICENSE file for details.
         </Border>
 
         <!-- Selected page content -->
-        <ContentControl Grid.Column="1" x:Name="PageContent"
-                        Content="{Binding CurrentPageViewModel}"
-                        Margin="{OnPlatform Windows='0,10,0,0', Linux='0,10,0,0' }" />
+        <TransitioningContentControl Grid.Column="1" x:Name="PageContent"
+                                     Content="{Binding CurrentPageViewModel}"
+                                     Margin="{OnPlatform Windows='0,10,0,0', Linux='0,10,0,0' }">
+
+            <TransitioningContentControl.PageTransition>
+                <utils:SmartPageTransition />
+            </TransitioningContentControl.PageTransition>
+            
+        </TransitioningContentControl>
 
         <!-- Dialog host -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2"
@@ -95,14 +101,14 @@ Licensed under the MIT License. See LICENSE file for details.
                         Margin="0,0,0,50"
                         IsHitTestVisible="{Binding IsToastMessageVisible}"
                         Classes.visible="{Binding IsToastMessageVisible}">
-            
+
             <ContentControl.Transitions>
                 <Transitions>
                     <DoubleTransition Property="Opacity" Duration="0:0:0.3" Easing="CubicEaseOut" />
                     <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.3" Easing="CubicEaseOut" />
                 </Transitions>
             </ContentControl.Transitions>
-            
+
             <ContentControl.Styles>
                 <Style Selector="ContentControl">
                     <Setter Property="Opacity" Value="0" />
@@ -113,7 +119,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Setter Property="RenderTransform" Value="translateY(0)" />
                 </Style>
             </ContentControl.Styles>
-            
+
         </ContentControl>
 
     </Grid>

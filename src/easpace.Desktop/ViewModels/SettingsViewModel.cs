@@ -23,7 +23,6 @@ internal partial class SettingsViewModel : PageViewModel
     private readonly IDataWipeService _dataWipeService;
     private readonly IDialogService _dialogService;
     private readonly IToastMessageService _toastMessageService;
-    private readonly ILogger<LegalInfoDialogViewModel> _legalDialogLogger;
 
     [ObservableProperty] private string _versionText = string.Empty;
 
@@ -51,7 +50,6 @@ internal partial class SettingsViewModel : PageViewModel
         _dataWipeService = dataWipeService;
         _dialogService = dialogService;
         _toastMessageService = toastMessageService;
-        _legalDialogLogger = legalDialogLogger;
 
         VersionText = string.Format(LocalizationService.GetString("Credits.Text.Version"), App.Version.ToString());
 
@@ -65,7 +63,7 @@ internal partial class SettingsViewModel : PageViewModel
     {
         if (parameter is not LegalFileType legalFileType) return;
 
-        var legalInfoDialog = new LegalInfoDialogViewModel(_preferencesService, _legalDialogLogger, legalFileType);
+        var legalInfoDialog = new LegalInfoDialogViewModel(_applicationService, legalFileType);
 
         await _dialogService.ShowDialogAsync(legalInfoDialog);
     }

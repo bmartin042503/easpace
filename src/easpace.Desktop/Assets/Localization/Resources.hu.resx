@@ -111,6 +111,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Download" xml:space="preserve">
         <value>Letöltés</value>
     </data>
+    <data name="Common.Button.Continue" xml:space="preserve">
+        <value>Tovább</value>
+    </data>
     <data name="Common.Error.Title" xml:space="preserve">
         <value>Hiba történt</value>
     </data>
@@ -683,5 +686,29 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="NewUpdate.Dialog.Description" xml:space="preserve">
         <value>Új frissítés érhető el az alkalmazáshoz (v{0} -> v{1}). Szeretnéd megnyitni a GitHubot a legújabb kiadás letöltéséhez?</value>
+    </data>
+    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
+        <value>Egy biztonságos hely a gondolataidnak.</value>
+    </data>
+    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
+        <value>Kezdjük el</value>
+    </data>
+    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
+        <value>Elolvastam és elfogadom a Felhasználási feltételeket.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
+        <value>Ez egy béta verzió</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
+        <value>Az easpace jelenleg aktív fejlesztés alatt áll, és még nem készült fel általános használatra. Egyes funkciók nem működhetnek megfelelően, és adatvesztés is előfordulhat. A folytatással tudomásul veszed, hogy az easpace-t saját felelősségedre használod, és a fontos adataid biztonsági mentéséről neked kell gondoskodnod.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
+        <value>Tudomásul veszem, hogy az easpace béta szoftver, és elfogadom a használatával járó kockázatokat, beleértve az esetleges adatvesztést is.</value>
+    </data>
+    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
+        <value>Köszönöm, hogy kipróbálod az easpacet. Remélem, hogy egy hasznos, biztonságos teret nyújt számodra. A visszajelzéseket mindig szívesen fogadom.</value>
+    </data>
+    <data name="Onboarding.Text.Developer" xml:space="preserve">
+        <value>fejlesztő</value>
     </data>
 </root>

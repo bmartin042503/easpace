@@ -230,5 +230,9 @@ SOFTWARE.
     <StreamGeometry x:Key="Haven.PhosphorIcons.CheckCircle.Fill">
         M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z
     </StreamGeometry>
+    
+    <StreamGeometry x:Key="Haven.PhosphorIcons.ArrowLeft.Bold">
+        M228,128a12,12,0,0,1-12,12H69l51.52,51.51a12,12,0,0,1-17,17l-72-72a12,12,0,0,1,0-17l72-72a12,12,0,0,1,17,17L69,116H216A12,12,0,0,1,228,128Z
+    </StreamGeometry>
 
 </ResourceDictionary>

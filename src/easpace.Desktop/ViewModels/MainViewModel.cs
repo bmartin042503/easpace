@@ -79,6 +79,8 @@ internal partial class MainViewModel : ViewModelBase
             (_, msg) => { IsSidebarVisible = msg.IsVisible; });
 
         _isBoarded = _preferencesService.ReadPreference<bool>(PreferenceKey.Boarded);
+        
+        IsSidebarVisible = _isBoarded;
 
         if (_isBoarded)
         {
@@ -140,11 +142,8 @@ internal partial class MainViewModel : ViewModelBase
             {
                 _preferencesService.SavePreference(PreferenceKey.Boarded, true);
             }
+
             IsSidebarVisible = true;
-        }
-        else
-        {
-            IsSidebarVisible = false;
         }
 
         CurrentPageViewModel = _pageFactory.GetPageViewModel(page);

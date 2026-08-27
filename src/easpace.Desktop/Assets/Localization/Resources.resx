@@ -111,6 +111,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Download" xml:space="preserve">
         <value>Download</value>
     </data>
+    <data name="Common.Button.Continue" xml:space="preserve">
+        <value>Continue</value>
+    </data>
     <data name="Common.Error.Title" xml:space="preserve">
         <value>Something went wrong</value>
     </data>
@@ -683,5 +686,29 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="NewUpdate.Dialog.Description" xml:space="preserve">
         <value>A new version of the app is available (v{0} -> v{1}). Would you like to open GitHub to download the latest release?</value>
+    </data>
+    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
+        <value>A private space for your thoughts.</value>
+    </data>
+    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
+        <value>Get Started</value>
+    </data>
+    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
+        <value>I have read and agree to the Terms of Use.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
+        <value>This is beta software</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
+        <value>easpace is still in active development and is not yet ready for general use. Some features may not work as expected, and data could be lost. By continuing you understand that you are using easpace at your own risk and are responsible for keeping your own backups of important data.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
+        <value>I understand that easpace is beta software and accept the risks associated with using it, including possible data loss.</value>
+    </data>
+    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
+        <value>Thank you for giving easpace a try. I hope it can become a useful, private space for you. Your feedback is always welcome.</value>
+    </data>
+    <data name="Onboarding.Text.Developer" xml:space="preserve">
+        <value>developer</value>
     </data>
 </root>
