@@ -1,0 +1,136 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System"
+                    x:ClassModifier="internal">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Spacing="20">
+                <ButtonSpinner Content="Right spinner" />
+                <ButtonSpinner ButtonSpinnerLocation="Left" Content="Left spinner" />
+                <ButtonSpinner Content="Right disabled" AllowSpin="False" />
+                <ButtonSpinner ButtonSpinnerLocation="Left" Content="Left disabled" AllowSpin="False" />
+                <ButtonSpinner ShowButtonSpinner="False" Content="Hide spinner" />
+                <ButtonSpinner Content="Error">
+                    <DataValidationErrors.Error>
+                        <sys:Exception>
+                            <x:Arguments>
+                                <x:String>Error</x:String>
+                            </x:Arguments>
+                        </sys:Exception>
+                    </DataValidationErrors.Error>
+                </ButtonSpinner>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="FluentButtonSpinnerRepeatButton" TargetType="RepeatButton">
+        <Setter Property="MinWidth" Value="34" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                      Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type ButtonSpinner}" TargetType="ButtonSpinner">
+        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Xs}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
+        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Border Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                            BorderBrush="{DynamicResource Haven.Sem.Border}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Haven.Scale.Radius.Xs}"
+                            MinHeight="{TemplateBinding MinHeight}">
+                        <DockPanel>
+                            <StackPanel Name="PART_SpinnerPanel"
+                                        TabIndex="2"
+                                        DockPanel.Dock="Right"
+                                        Orientation="Horizontal"
+                                        Spacing="4"
+                                        Margin="4"
+                                        IsVisible="{TemplateBinding ShowButtonSpinner}">
+                                <RepeatButton Name="PART_IncreaseButton"
+                                              IsTabStop="{TemplateBinding IsTabStop}"
+                                              Theme="{StaticResource FluentButtonSpinnerRepeatButton}"
+                                              VerticalAlignment="Stretch"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center">
+                                    <PathIcon Width="14"
+                                              Height="14"
+                                              Foreground="{DynamicResource Haven.Sem.OnAccent}"
+                                              Data="{StaticResource Haven.PhosphorIcons.CaretUp.Bold}" />
+                                </RepeatButton>
+
+                                <RepeatButton Name="PART_DecreaseButton"
+                                              IsTabStop="{TemplateBinding IsTabStop}"
+                                              Theme="{StaticResource FluentButtonSpinnerRepeatButton}"
+                                              VerticalAlignment="Stretch"
+                                              VerticalContentAlignment="Center"
+                                              HorizontalContentAlignment="Center">
+                                    <PathIcon Width="14"
+                                              Height="14"
+                                              Foreground="{DynamicResource Haven.Sem.OnAccent}"
+                                              Data="{StaticResource Haven.PhosphorIcons.CaretDown.Bold}" />
+                                </RepeatButton>
+                            </StackPanel>
+
+                            <ContentPresenter Name="PART_ContentPresenter"
+                                              TabIndex="1"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Padding="{TemplateBinding Padding}" />
+                        </DockPanel>
+                    </Border>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:left /template/ StackPanel#PART_SpinnerPanel">
+            <Setter Property="DockPanel.Dock" Value="Left" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -31,9 +31,11 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Icons/PhosphorIcons.axaml" />
 
                 <!-- Control themes -->
-                <ResourceInclude Source="ControlThemes/CheckBox.axaml" />
                 <ResourceInclude Source="ControlThemes/WindowDrawnDecorations.axaml" />
                 <ResourceInclude Source="ControlThemes/DataValidationErrors.axaml" />
+                <ResourceInclude Source="ControlThemes/CheckBox.axaml" />
+                <ResourceInclude Source="ControlThemes/ButtonSpinner.axaml" />
+                <ResourceInclude Source="ControlThemes/NumericUpDown.axaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
@@ -73,7 +75,6 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="Styles/ComboBox.axaml" />
     <StyleInclude Source="Styles/ToggleButton.axaml" />
     <StyleInclude Source="Styles/PathIcon.axaml" />
-    <StyleInclude Source="Styles/DataValidationErrors.axaml" />
     <StyleInclude Source="Styles/TrendChart.axaml" />
     <StyleInclude Source="Styles/MilestoneChart.axaml" />
     <StyleInclude Source="Styles/RoutineMonthItem.axaml" />

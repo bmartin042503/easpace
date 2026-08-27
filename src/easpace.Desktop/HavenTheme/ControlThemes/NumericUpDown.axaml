@@ -1,0 +1,99 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    x:ClassModifier="internal">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Spacing="20">
+                <NumericUpDown Minimum="0" Maximum="10" Increment="0.5" PlaceholderText="Enter text" />
+                <NumericUpDown Minimum="0" Maximum="10" Increment="0.5"
+                               VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Center"
+                               ButtonSpinnerLocation="Left"
+                               PlaceholderText="Enter text" />
+                <NumericUpDown ButtonSpinnerLocation="Left">
+                    <NumericUpDown.InnerLeftContent>
+                        <TextBlock Text="m" TextAlignment="Center" VerticalAlignment="Center" />
+                    </NumericUpDown.InnerLeftContent>
+                    <NumericUpDown.InnerRightContent>
+                        <Button Content="X" />
+                    </NumericUpDown.InnerRightContent>
+                </NumericUpDown>
+                <NumericUpDown ButtonSpinnerLocation="Right">
+                    <NumericUpDown.InnerLeftContent>
+                        <Button Content="X" />
+                    </NumericUpDown.InnerLeftContent>
+                    <NumericUpDown.InnerRightContent>
+                        <TextBlock Text="m" TextAlignment="Center" VerticalAlignment="Center" />
+                    </NumericUpDown.InnerRightContent>
+                </NumericUpDown>
+                <NumericUpDown>
+                    <DataValidationErrors.Error>
+                        <sys:Exception>
+                            <x:Arguments>
+                                <x:String>Error</x:String>
+                            </x:Arguments>
+                        </sys:Exception>
+                    </DataValidationErrors.Error>
+                </NumericUpDown>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <ControlTheme x:Key="{x:Type NumericUpDown}" TargetType="NumericUpDown">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
+        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+
+                    <ButtonSpinner Name="PART_Spinner"
+                                   Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                   BorderThickness="{TemplateBinding BorderThickness}"
+                                   BorderBrush="{DynamicResource Haven.Sem.Border}"
+                                   CornerRadius="{StaticResource Haven.Scale.Radius.Xs}"
+                                   IsTabStop="False"
+                                   Padding="0"
+                                   MinWidth="0"
+                                   HorizontalContentAlignment="Stretch"
+                                   VerticalContentAlignment="Stretch"
+                                   AllowSpin="{TemplateBinding AllowSpin}"
+                                   ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+                                   ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}">
+
+                        <TextBox Name="PART_TextBox"
+                                 Classes="numeric-up-down"
+                                 Background="Transparent"
+                                 BorderBrush="Transparent"
+                                 BorderThickness="0"
+                                 Padding="10,0"
+                                 Foreground="{TemplateBinding Foreground}"
+                                 PlaceholderText="{TemplateBinding PlaceholderText}"
+                                 PlaceholderForeground="{TemplateBinding PlaceholderForeground}"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"
+                                 VerticalContentAlignment="Center"
+                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                 Text="{TemplateBinding Text}"
+                                 TextAlignment="{TemplateBinding TextAlignment}"
+                                 AcceptsReturn="False"
+                                 TextWrapping="NoWrap"
+                                 InnerLeftContent="{Binding InnerLeftContent, RelativeSource={RelativeSource TemplatedParent}}"
+                                 InnerRightContent="{Binding InnerRightContent, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                    </ButtonSpinner>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+        
+    </ControlTheme>
+</ResourceDictionary>
