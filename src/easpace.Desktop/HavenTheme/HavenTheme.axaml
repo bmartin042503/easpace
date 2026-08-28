@@ -36,7 +36,8 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="ControlThemes/CheckBox.axaml" />
                 <ResourceInclude Source="ControlThemes/ButtonSpinner.axaml" />
                 <ResourceInclude Source="ControlThemes/NumericUpDown.axaml" />
-
+                <ResourceInclude Source="ControlThemes/RadioButton.axaml" />
+                
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Theme Dictionaries -->
@@ -74,6 +75,7 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="Styles/TextBox.axaml" />
     <StyleInclude Source="Styles/ComboBox.axaml" />
     <StyleInclude Source="Styles/ToggleButton.axaml" />
+    <StyleInclude Source="Styles/ToggleSwitch.axaml" />
     <StyleInclude Source="Styles/PathIcon.axaml" />
     <StyleInclude Source="Styles/TrendChart.axaml" />
     <StyleInclude Source="Styles/MilestoneChart.axaml" />

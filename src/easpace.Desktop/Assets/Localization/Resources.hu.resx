@@ -114,6 +114,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Continue" xml:space="preserve">
         <value>Tovább</value>
     </data>
+    <data name="Common.ToggleSwitch.Off" xml:space="preserve">
+        <value>Ki</value>
+    </data>
+    <data name="Common.ToggleSwitch.On" xml:space="preserve">
+        <value>Be</value>
+    </data>
     <data name="Common.Error.Title" xml:space="preserve">
         <value>Hiba történt</value>
     </data>

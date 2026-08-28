@@ -1,0 +1,40 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:services="clr-namespace:easpace.Desktop.Services.Core">
+
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+            <ToggleSwitch />
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="ToggleSwitch">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="OffContent" Value="{services:LocalizationService Key='Common.ToggleSwitch.Off'}" />
+        <Setter Property="OnContent" Value="{services:LocalizationService Key='Common.ToggleSwitch.On'}" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+        
+        <Style Selector="^:checked /template/ Border#SwitchKnobBounds">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+        </Style>
+
+        <Style Selector="^:checked /template/ Ellipse#SwitchKnobOn">
+            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        </Style>
+        
+        <Style Selector="^:unchecked /template/ Border#OuterBorder">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        </Style>
+
+        <Style Selector="^:unchecked /template/ Ellipse#SwitchKnobOff">
+            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.Foreground}" />
+        </Style>
+        
+    </Style>
+</Styles>
