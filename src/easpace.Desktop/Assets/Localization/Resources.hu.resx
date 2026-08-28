@@ -186,6 +186,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Input.DatePlaceholder" xml:space="preserve">
         <value>Dátum...</value>
     </data>
+    <data name="Activities.Label.Archived" xml:space="preserve">
+        <value>(Archivált)</value>
+    </data>
     <data name="Activities.Label.Name" xml:space="preserve">
         <value>Név</value>
     </data>

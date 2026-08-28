@@ -203,54 +203,69 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
 
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
-                        <!-- Title -->
-                        <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
 
-                        <!-- Built with .NET and Avalonia UI -->
-                        <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
-                    </StackPanel>
+                                <!-- Title -->
+                                <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
 
-                    <!-- Texts -->
-                    <StackPanel Orientation="Vertical" Spacing="4">
+                                <!-- Built with .NET and Avalonia UI -->
+                                <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                                           Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
 
-                        <!-- Version -->
-                        <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{Binding VersionText}" />
+                            </StackPanel>
 
-                        <!-- Developers -->
-                        <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Credits.Text.Developers'}" />
+                            <!-- Texts -->
+                            <StackPanel Orientation="Vertical" Spacing="4">
 
-                        <!-- Contact -->
-                        <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
+                                <!-- Version -->
+                                <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                                           Text="{Binding VersionText}" />
 
-                    </StackPanel>
+                                <!-- Developers -->
+                                <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                                           Text="{core:LocalizationService Key='Credits.Text.Developers'}" />
 
-                    <!-- Made with <3 in Hungary -->
-                    <StackPanel Orientation="Horizontal" Spacing="4">
-                        <TextBlock Classes="strong accent fs5" Text="Made with" />
-                        <PathIcon Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
-                                  Data="{StaticResource Haven.PhosphorIcons.Heart.Fill}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
-                        <TextBlock Classes="strong accent fs5" Text="in Hungary" />
-                    </StackPanel>
+                                <!-- Contact -->
+                                <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                                           Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
 
-                    <!-- Copyright button + easpace MIT license -->
-                    <Button Classes="tertiary" Padding="0"
-                            Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
-                            Command="{Binding ShowLegalFileCommand}">
+                            </StackPanel>
 
-                        <Button.CommandParameter>
-                            <constants:LegalFileType>EaspaceLicense</constants:LegalFileType>
-                        </Button.CommandParameter>
-                        
-                    </Button>
+                            <!-- Made with <3 in Hungary -->
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Classes="strong accent fs5" Text="Made with" />
+                                <PathIcon Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                                          Data="{StaticResource Haven.PhosphorIcons.Heart.Fill}"
+                                          Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
+                                          Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                <TextBlock Classes="strong accent fs5" Text="in Hungary" />
+                            </StackPanel>
+
+                            <!-- Copyright button + easpace MIT license -->
+                            <Button Classes="tertiary" Padding="0"
+                                    Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>EaspaceLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
+
+                        </StackPanel>
+
+                        <!-- easpace logo -->
+                        <Viewbox Grid.Column="1" Stretch="Uniform" MaxHeight="90"
+                                 HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Path Data="{StaticResource Haven.AppIcons.Easpace}"
+                                  Fill="{DynamicResource Haven.Sem.Accent}" />
+                        </Viewbox>
+
+                    </Grid>
 
                     <!-- Horizontal separator -->
                     <Separator Height="1" Background="{DynamicResource Haven.Sem.Accent}"

@@ -1,13 +1,15 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace easpace.Desktop.Views.Dialogs;
 
-internal partial class LegalInfoDialogView : UserControl
+public partial class DetailedConfirmDialogView : UserControl
 {
-    public LegalInfoDialogView()
+    public DetailedConfirmDialogView()
     {
         InitializeComponent();
     }

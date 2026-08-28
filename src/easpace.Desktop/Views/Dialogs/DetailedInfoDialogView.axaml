@@ -9,9 +9,9 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-             x:DataType="vm:LegalInfoDialogViewModel"
+             x:DataType="vm:DetailedInfoDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Views.Dialogs.LegalInfoDialogView">
+             x:Class="easpace.Desktop.Views.Dialogs.DetailedInfoDialogView">
 
     <Border x:Name="DialogRootBorder" Classes="card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
@@ -28,7 +28,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
                           Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
                           Foreground="{DynamicResource Haven.Sem.Foreground}"
-                          Data="{StaticResource Haven.PhosphorIcons.Scale.Fill}"
+                          Data="{StaticResource Haven.PhosphorIcons.Info.Fill}"
                           VerticalAlignment="Top"
                           Margin="0,4,0,0" />
 

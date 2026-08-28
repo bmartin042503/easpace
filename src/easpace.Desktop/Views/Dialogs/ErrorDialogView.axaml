@@ -12,10 +12,6 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="vm:ErrorDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.Dialogs.ErrorDialogView">
-    
-    <Design.DataContext>
-        <vm:ErrorDialogViewModel />
-    </Design.DataContext>
 
     <Border x:Name="DialogRootBorder" Classes="danger card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"

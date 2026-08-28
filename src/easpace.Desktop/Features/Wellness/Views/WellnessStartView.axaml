@@ -243,8 +243,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
                                Text="{Binding DurationText}" />
 
-                    <Slider Classes="haven"
-                            Minimum="{Binding MinimumSeconds}"
+                    <Slider Minimum="{Binding MinimumSeconds}"
                             Maximum="{Binding MaximumSeconds}"
                             Value="{Binding SelectedSeconds}"
                             TickFrequency="{Binding StepSeconds}"

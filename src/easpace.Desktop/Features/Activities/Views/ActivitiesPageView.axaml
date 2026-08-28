@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-             xmlns:templatedControls1="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
+             xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
@@ -24,7 +24,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Template of Trend Activity -->
             <DataTemplate x:Key="TrendActivityViewModel" DataType="vm:TrendActivityViewModel">
-                <templatedControls1:ActivityListItem Title="{Binding Name}"
+                <templatedControls:ActivityListItem Title="{Binding Name}"
                                                     Status="{Binding LastEntry.Value}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
@@ -32,7 +32,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Template of Routine Activity -->
             <DataTemplate x:Key="RoutineActivityViewModel" DataType="vm:RoutineActivityViewModel">
-                <templatedControls1:ActivityListItem Title="{Binding Name}"
+                <templatedControls:ActivityListItem Title="{Binding Name}"
                                                     Status="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
@@ -40,16 +40,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Template of Milestone Activity -->
             <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vm:MilestoneActivityViewModel">
-                <templatedControls1:ActivityListItem Title="{Binding Name}"
+                <templatedControls:ActivityListItem Title="{Binding Name}"
                                                     Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
-                    <templatedControls1:ActivityListItem.Status>
+                    <templatedControls:ActivityListItem.Status>
                         <MultiBinding StringFormat="{}{0}/{1}">
                             <Binding Path="EntriesSum" />
                             <Binding Path="Target" />
                         </MultiBinding>
-                    </templatedControls1:ActivityListItem.Status>
-                </templatedControls1:ActivityListItem>
+                    </templatedControls:ActivityListItem.Status>
+                </templatedControls:ActivityListItem>
             </DataTemplate>
 
         </dataTemplates:TemplateSelector>
@@ -77,7 +77,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Active -->
                         <ListBoxItem>
-                            <templatedControls1:IconListItem
+                            <templatedControls:IconListItem
                                 Icon="{StaticResource Haven.PhosphorIcons.Target}"
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
                                 Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
@@ -87,7 +87,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Archive -->
                         <ListBoxItem>
-                            <templatedControls1:IconListItem
+                            <templatedControls:IconListItem
                                 Icon="{StaticResource Haven.PhosphorIcons.Archive}"
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                                 Width="{StaticResource Haven.Scale.Icon.Size.Sm}"

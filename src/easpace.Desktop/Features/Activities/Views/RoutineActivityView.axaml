@@ -17,9 +17,21 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
-        <!-- Title -->
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}"
-                   Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
+        <StackPanel Grid.Row="0" Grid.Column="0"
+                    Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+            <!-- Title -->
+            <TextBlock Text="{Binding Name}"
+                       Classes="neutral fs2 trm-ellipsis"
+                       VerticalAlignment="Center" />
+
+            <!-- Archive status -->
+            <TextBlock IsVisible="{Binding IsArchived}"
+                       Text="{core:LocalizationService Key='Activities.Label.Archived'}"
+                       Classes="subtle neutral fs3 trm-ellipsis"
+                       VerticalAlignment="Center" />
+
+        </StackPanel>
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
@@ -32,20 +44,20 @@ Licensed under the MIT License. See LICENSE file for details.
                     ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                 <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
             </Button>
-            
+
             <!-- Archive/Restore button -->
             <Button Classes="tertiary icon"
                     Command="{Binding ToggleArchiveCommand}">
                 <Panel>
-                    
+
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                               IsVisible="{Binding !IsArchived}"
                               ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}" />
-                
+
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.BoxArrowUp.Fill}"
                               IsVisible="{Binding IsArchived}"
                               ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}" />
-                    
+
                 </Panel>
             </Button>
 

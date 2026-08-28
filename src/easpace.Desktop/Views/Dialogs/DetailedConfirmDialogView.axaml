@@ -8,15 +8,15 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
-             x:DataType="vm:ConfirmDialogViewModel"
+             x:DataType="vm:DetailedConfirmDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             MaxWidth="550" MaxHeight="400"
              Background="{StaticResource Haven.Scale.Transparent}"
-             x:Class="easpace.Desktop.Views.Dialogs.ConfirmDialogView">
+             x:Class="easpace.Desktop.Views.Dialogs.DetailedConfirmDialogView">
 
     <Border x:Name="DialogRootBorder" Classes.danger="{Binding IsCritical}" Classes="card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
-            BorderThickness="0">
+            BorderThickness="0"
+            MaxWidth="800" MaxHeight="600">
 
         <Grid RowDefinitions="Auto,*,Auto"
               RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
@@ -49,11 +49,15 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </Grid>
 
-            <!-- Message -->
-            <TextBlock Grid.Row="1" Classes="neutral fs4 trm-ellipsis"
-                       Text="{Binding Message}"
-                       VerticalAlignment="Center" HorizontalAlignment="Left"
-                       TextWrapping="Wrap" TextAlignment="Left" />
+            <Border Grid.Row="1" Classes="elevated card">
+                <ScrollViewer>
+                    <!-- Message -->
+                    <SelectableTextBlock Classes="neutral fs4 trm-ellipsis"
+                                         Text="{Binding Message}"
+                                         VerticalAlignment="Center" HorizontalAlignment="Left"
+                                         TextWrapping="Wrap" TextAlignment="Left" />
+                </ScrollViewer>
+            </Border>
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
                         HorizontalAlignment="Right">

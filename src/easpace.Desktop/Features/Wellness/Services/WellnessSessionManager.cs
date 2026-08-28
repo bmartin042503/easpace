@@ -43,7 +43,7 @@ internal class WellnessSessionManager : IWellnessSessionManager
     public event EventHandler<double>? BreathingCircleAnimationTimerTick;
 
     private int _meditationInstructElapsedSeconds;
-    private int _meditationInstructSwitchIntervalSeconds = 3 * 60;
+    private const int MeditationInstructSwitchIntervalSeconds = 2 * 60;
 
     private List<string> _meditationInstructTexts = [
         LocalizationService.GetString("Wellness.Instruction1.Meditation"),
@@ -221,7 +221,7 @@ internal class WellnessSessionManager : IWellnessSessionManager
         }
         else if (_sessionConfiguration.SessionType == WellnessSessionType.Meditation)
         {
-            if (_meditationInstructElapsedSeconds == _meditationInstructSwitchIntervalSeconds)
+            if (_meditationInstructElapsedSeconds == MeditationInstructSwitchIntervalSeconds)
             {
                 var randomIndex = new Random().Next(0, _meditationInstructTexts.Count - 1);
                 _instructionText = _meditationInstructTexts[randomIndex];

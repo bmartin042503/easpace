@@ -21,9 +21,20 @@ Licensed under the MIT License. See LICENSE file for details.
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
                     Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
-            <!-- Title -->
-            <TextBlock Text="{Binding Name}"
-                       Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                <!-- Title -->
+                <TextBlock Text="{Binding Name}"
+                           Classes="neutral fs2 trm-ellipsis"
+                           VerticalAlignment="Center" />
+
+                <!-- Archive status -->
+                <TextBlock IsVisible="{Binding IsArchived}"
+                           Text="{core:LocalizationService Key='Activities.Label.Archived'}"
+                           Classes="subtle neutral fs3 trm-ellipsis"
+                           VerticalAlignment="Center" />
+
+            </StackPanel>
 
             <!-- Details -->
             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">

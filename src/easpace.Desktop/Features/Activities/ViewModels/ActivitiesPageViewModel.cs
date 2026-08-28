@@ -92,7 +92,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
         FilterActivities();
 
-        SelectedActivity = activityViewModels.FirstOrDefault();
+        SelectedActivity = activityViewModels.FirstOrDefault(vm => !vm.IsArchived);
 
         OnPropertyChanged(nameof(HasActivities));
     }

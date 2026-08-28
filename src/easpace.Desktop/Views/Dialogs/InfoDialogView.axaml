@@ -13,10 +13,6 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.Dialogs.InfoDialogView">
 
-    <Design.DataContext>
-        <vm:InfoDialogViewModel />
-    </Design.DataContext>
-
     <Border x:Name="DialogRootBorder" Classes="card"
             Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
             BorderThickness="0">

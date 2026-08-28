@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <!-- Animated instruction text -->
-            <TextBlock Classes="strong accent fs1 trm-ellipsis" TextWrapping="Wrap"
+            <TextBlock Classes="strong accent fs1 trm-ellipsis" TextWrapping="Wrap" MaxWidth="750"
                        behaviors:AnimatedTextBehavior.AnimatedText="{Binding InstructionText}"
                        TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
 

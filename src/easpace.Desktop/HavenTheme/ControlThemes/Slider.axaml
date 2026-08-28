@@ -3,19 +3,20 @@ Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
+    
     <Design.PreviewWith>
         <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
-            <Slider Classes="haven" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+            <Slider Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
         </Border>
     </Design.PreviewWith>
-    
-    <Style Selector="Slider.haven">
-        
+
+    <ControlTheme x:Key="{x:Type Slider}"
+                  TargetType="Slider">
+
         <Setter Property="behaviors:SliderBehavior.JumpToClick" Value="True" />
-        
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
@@ -97,5 +98,7 @@ Licensed under the MIT License. See LICENSE file for details.
                  ^ /template/ Thumb#thumb:pressed">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
         </Style>
-    </Style>
-</Styles>
+
+    </ControlTheme>
+
+</ResourceDictionary>

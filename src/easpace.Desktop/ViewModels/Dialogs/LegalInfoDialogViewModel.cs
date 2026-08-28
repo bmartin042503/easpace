@@ -6,7 +6,7 @@ using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.ViewModels.Dialogs;
 
-internal class LegalInfoDialogViewModel : InfoDialogViewModel
+internal class LegalInfoDialogViewModel : DetailedInfoDialogViewModel
 {
     public LegalInfoDialogViewModel(
         IApplicationService applicationService,

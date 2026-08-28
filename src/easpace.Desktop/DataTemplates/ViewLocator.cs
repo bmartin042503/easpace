@@ -48,7 +48,8 @@ internal class ViewLocator : IDataTemplate
             WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
             
             // Dialogs (make sure dialogs are set in the correct order)
-            LegalInfoDialogViewModel vm => CreateView(new LegalInfoDialogView(), vm),
+            LegalInfoDialogViewModel vm => CreateView(new DetailedInfoDialogView(), vm),
+            DetailedConfirmDialogViewModel vm => CreateView(new DetailedConfirmDialogView(), vm),
             ConfirmDialogViewModel vm => CreateView(new ConfirmDialogView(), vm),
             ErrorDialogViewModel vm => CreateView(new ErrorDialogView(), vm),
             InfoDialogViewModel vm => CreateView(new InfoDialogView(), vm),

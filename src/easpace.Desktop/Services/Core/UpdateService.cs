@@ -6,11 +6,17 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace easpace.Desktop.Services.Core;
 
-internal record UpdateCheckResult(bool IsUpdateAvailable, Version? LatestVersion, string? ReleaseUrl);
+internal record UpdateCheckResult(
+    bool IsUpdateAvailable,
+    Version? LatestVersion,
+    string? ReleaseUrl,
+    string? ReleaseTitle,
+    string? ReleaseDescription);
 
 internal class UpdateService : IUpdateService
 {
@@ -19,68 +25,94 @@ internal class UpdateService : IUpdateService
     public UpdateService()
     {
         _httpClient = new HttpClient();
-        
         _httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("easpace", App.Version.ToString()));
-        
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
-        _httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2022-11-28");
+        _httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
+        _httpClient.DefaultRequestHeaders.Add("X-GitHub-Api-Version", "2026-03-10");
     }
 
     public async Task<UpdateCheckResult> CheckForUpdatesAsync()
     {
         const string owner = "bmartin042503";
         const string repo = "easpace";
-        
-        const string url = $"https://api.github.com/repos/{owner}/{repo}/releases/latest";
+
+        const string url =
+            $"https://api.github.com/repos/{owner}/{repo}/releases/latest";
 
         try
         {
-            using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(10));
-            
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
             var response = await _httpClient.GetAsync(url, cts.Token);
-            
+
             if (!response.IsSuccessStatusCode)
             {
-                return new UpdateCheckResult(false, null, null);
+                return NoUpdate;
             }
 
-            var jsonString = await response.Content.ReadAsStringAsync(cts.Token);
-            var release = JsonSerializer.Deserialize<GitHubRelease>(jsonString);
+            var jsonString =
+                await response.Content.ReadAsStringAsync(cts.Token);
 
-            if (release != null && !string.IsNullOrEmpty(release.TagName))
+            var release =
+                JsonSerializer.Deserialize<GitHubRelease>(jsonString);
+
+            if (release is null ||
+                string.IsNullOrWhiteSpace(release.TagName))
             {
-                var cleanVersion = release.TagName.TrimStart('v', 'V');
-
-                if (Version.TryParse(cleanVersion, out var latestVersion))
-                {
-                    var isUpdateAvailable = latestVersion > App.Version;
-                    
-                    return new UpdateCheckResult(isUpdateAvailable, latestVersion, release.HtmlUrl);
-                }
+                return NoUpdate;
             }
+
+            var cleanVersion =
+                release.TagName.TrimStart('v', 'V');
+
+            if (!Version.TryParse(cleanVersion, out var latestVersion))
+            {
+                return NoUpdate;
+            }
+
+            var isUpdateAvailable =
+                latestVersion > App.Version;
+
+            return new UpdateCheckResult(
+                IsUpdateAvailable: isUpdateAvailable,
+                LatestVersion: latestVersion,
+                ReleaseUrl: release.HtmlUrl,
+                ReleaseTitle: release.Name,
+                ReleaseDescription: release.Body);
         }
         catch (HttpRequestException)
         {
-            // no internet or GitHub isn't available - ignored
+            // No internet or GitHub isn't available - ignored
         }
         catch (TaskCanceledException)
         {
-            // timeout - ignored
+            // Timeout - ignored
         }
         catch (Exception)
         {
-            // ignored
+            // Ignored
         }
-        
-        return new UpdateCheckResult(false, null, null);
+
+        return NoUpdate;
     }
     
+    private static UpdateCheckResult NoUpdate =>
+        new(
+            IsUpdateAvailable: false,
+            LatestVersion: null,
+            ReleaseUrl: null,
+            ReleaseTitle: null,
+            ReleaseDescription: null);
+
+
     private class GitHubRelease
     {
-        [JsonPropertyName("tag_name")]
-        public string TagName { get; set; } = string.Empty;
+        [JsonPropertyName("tag_name")] public string TagName { get; set; } = string.Empty;
 
-        [JsonPropertyName("html_url")]
-        public string HtmlUrl { get; set; } = string.Empty;
+        [JsonPropertyName("html_url")] public string HtmlUrl { get; set; } = string.Empty;
+
+        [JsonPropertyName("name")] public string? Name { get; init; }
+
+        [JsonPropertyName("body")] public string? Body { get; init; }
     }
 }

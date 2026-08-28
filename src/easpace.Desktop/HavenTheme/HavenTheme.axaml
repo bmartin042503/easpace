@@ -37,6 +37,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="ControlThemes/ButtonSpinner.axaml" />
                 <ResourceInclude Source="ControlThemes/NumericUpDown.axaml" />
                 <ResourceInclude Source="ControlThemes/RadioButton.axaml" />
+                <ResourceInclude Source="ControlThemes/Slider.axaml" />
                 
             </ResourceDictionary.MergedDictionaries>
 
@@ -70,7 +71,6 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="Styles/ListBox.axaml" />
     <StyleInclude Source="Styles/ListBoxItem.axaml" />
     <StyleInclude Source="Styles/Path.axaml" />
-    <StyleInclude Source="Styles/Slider.axaml" />
     <StyleInclude Source="Styles/TextBlock.axaml" />
     <StyleInclude Source="Styles/TextBox.axaml" />
     <StyleInclude Source="Styles/ComboBox.axaml" />

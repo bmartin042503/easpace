@@ -13,7 +13,6 @@ namespace easpace.Desktop.ViewModels;
 internal partial class OnboardingPageViewModel : PageViewModel
 {
     private readonly IPreferencesService _preferencesService;
-    private readonly IApplicationService _applicationService;
     private readonly IMessenger _messenger;
 
     [ObservableProperty] private OnboardingContent _currentContent;
@@ -23,6 +22,9 @@ internal partial class OnboardingPageViewModel : PageViewModel
 
     [ObservableProperty] private string _legalContent = string.Empty;
     
+    private readonly string _termsOfUseContent;
+    private readonly string _privacyPolicyContent;
+    
     public string VersionText { get; init; }
 
     public OnboardingPageViewModel(
@@ -31,13 +33,15 @@ internal partial class OnboardingPageViewModel : PageViewModel
         IMessenger messenger)
     {
         _preferencesService = preferencesService;
-        _applicationService = applicationService;
         _messenger = messenger;
         Page = ApplicationPage.Intro;
 
         CurrentContent = OnboardingContent.Welcome;
 
         VersionText = "v" + App.Version.ToString(3);
+        
+        _termsOfUseContent = applicationService.LoadLegalFile(LegalFileType.TermsOfUse);
+        _privacyPolicyContent = applicationService.LoadLegalFile(LegalFileType.PrivacyPolicy);
     }
 
     // navigation could be done with a stack or separate views/viewmodels
@@ -50,7 +54,7 @@ internal partial class OnboardingPageViewModel : PageViewModel
         {
             case OnboardingContent.Welcome:
                 CurrentContent = OnboardingContent.TermsOfUse;
-                LegalContent = _applicationService.LoadLegalFile(LegalFileType.TermsOfUse);
+                LegalContent = _termsOfUseContent;
                 break;
 
             case OnboardingContent.TermsOfUse:
@@ -58,7 +62,7 @@ internal partial class OnboardingPageViewModel : PageViewModel
                 {
                     _preferencesService.SavePreference(PreferenceKey.TermsOfUseAccepted, true);
                     CurrentContent = OnboardingContent.PrivacyPolicy;
-                    LegalContent = _applicationService.LoadLegalFile(LegalFileType.PrivacyPolicy);
+                    LegalContent = _privacyPolicyContent;
                 }
 
                 break;
@@ -91,10 +95,12 @@ internal partial class OnboardingPageViewModel : PageViewModel
             
             case OnboardingContent.PrivacyPolicy:
                 CurrentContent = OnboardingContent.TermsOfUse;
+                LegalContent = _termsOfUseContent;
                 break;
 
             case OnboardingContent.BetaSoftwareWarning:
                 CurrentContent = OnboardingContent.PrivacyPolicy;
+                LegalContent = _privacyPolicyContent;
                 break;
         }
     }

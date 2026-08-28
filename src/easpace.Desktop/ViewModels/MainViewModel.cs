@@ -41,8 +41,7 @@ internal partial class MainViewModel : ViewModelBase
         IPreferencesService preferencesService,
         IDialogService dialogService,
         IToastMessageService toastMessageService,
-        IMessenger messenger
-    )
+        IMessenger messenger)
     {
         _pageFactory = pageFactory;
         _applicationService = applicationService;
@@ -79,7 +78,7 @@ internal partial class MainViewModel : ViewModelBase
             (_, msg) => { IsSidebarVisible = msg.IsVisible; });
 
         _isBoarded = _preferencesService.ReadPreference<bool>(PreferenceKey.Boarded);
-        
+
         IsSidebarVisible = _isBoarded;
 
         if (_isBoarded)
@@ -104,7 +103,7 @@ internal partial class MainViewModel : ViewModelBase
         if (!isCheckForUpdatesSettingOn) return;
 
         var updateCheckResult = await _updateService.CheckForUpdatesAsync();
-        
+
 
         if (updateCheckResult.IsUpdateAvailable && updateCheckResult.LatestVersion != null)
         {
@@ -113,15 +112,20 @@ internal partial class MainViewModel : ViewModelBase
 
             var dialogMessage = string.Format(LocalizationService.GetString("NewUpdate.Dialog.Description"),
                 currentVersion, newVersion);
-            
-            var confirmDialog = new ConfirmDialogViewModel
+
+            dialogMessage += "\n\n------\n";
+
+            dialogMessage += $"\n{updateCheckResult.ReleaseTitle}\n";
+            dialogMessage += $"{updateCheckResult.ReleaseDescription}\n";
+
+            var confirmDialog = new DetailedConfirmDialogViewModel
             {
                 Title = LocalizationService.GetString("NewUpdate.Dialog.Title"),
                 Message = dialogMessage,
                 ConfirmText = LocalizationService.GetString("Common.Button.Download"),
                 CancelText = LocalizationService.GetString("Common.Button.Later")
             };
-            
+
             await _dialogService.ShowDialogAsync(confirmDialog);
 
             if (confirmDialog.Confirmed && !string.IsNullOrWhiteSpace(updateCheckResult.ReleaseUrl))

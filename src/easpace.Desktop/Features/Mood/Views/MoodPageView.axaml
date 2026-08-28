@@ -182,7 +182,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
                                        Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
                                        HorizontalAlignment="Center" />
-                            <Slider Classes="haven" Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
+                            <Slider Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
                                     HorizontalAlignment="Stretch" />
                         </StackPanel>
 
