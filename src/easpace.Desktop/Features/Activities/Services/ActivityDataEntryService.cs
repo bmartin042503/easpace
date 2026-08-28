@@ -14,25 +14,18 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-internal class ActivityDataEntryService : IActivityDataEntryService
+internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<ActivityDataEntryService> logger)
+    : IActivityDataEntryService
 {
-    private readonly AppDbContext _dbContext;
-    private readonly ILogger<ActivityDataEntryService> _logger;
-
-    public ActivityDataEntryService(AppDbContext dbContext, ILogger<ActivityDataEntryService> logger)
-    {
-        _dbContext = dbContext;
-        _logger = logger;
-    }
-
     public async Task<ActivityDataEntry?> CreateDataEntryAsync(Guid activityId, CreateDataEntryRequest createRequest)
     {
         if (activityId == Guid.Empty) return null;
 
         try
         {
-            _logger.LogInformation("Creating data entry of type {Type} for activity ID {ActivityId}", createRequest.Type, activityId);
-            
+            logger.LogInformation("Creating data entry of type {Type} for activity ID {ActivityId}", createRequest.Type,
+                activityId);
+
             ActivityDataEntry newEntry;
 
             switch (createRequest.Type)
@@ -50,7 +43,31 @@ internal class ActivityDataEntryService : IActivityDataEntryService
                     break;
 
                 case ActivityDataEntryType.Routine:
-                    if (createRequest.State is null) return null;
+                    
+                    if (createRequest.State is null or RoutineState.None)
+                    {
+                        return null;
+                    }
+                    
+                    var timestamp = createRequest.Timestamp ?? DateTimeOffset.Now;
+
+                    var existingRoutineEntries = await dbContext.ActivityDataEntries
+                        .OfType<RoutineActivityDataEntry>()
+                        .Where(e => e.ActivityId == activityId)
+                        .ToListAsync();
+
+                    var existingRoutineEntry = existingRoutineEntries
+                        .FirstOrDefault(e => e.Timestamp.Date == timestamp.Date);
+
+                    if (existingRoutineEntry is not null)
+                    {
+                        existingRoutineEntry.Timestamp = timestamp;
+                        existingRoutineEntry.State = createRequest.State.Value;
+
+                        await dbContext.SaveChangesAsync();
+
+                        return existingRoutineEntry;
+                    }
 
                     newEntry = new RoutineActivityDataEntry
                     {
@@ -65,15 +82,16 @@ internal class ActivityDataEntryService : IActivityDataEntryService
                     throw new NotSupportedException($"Undefined data entry type: {createRequest.Type}");
             }
 
-            _dbContext.ActivityDataEntries.Add(newEntry);
+            dbContext.ActivityDataEntries.Add(newEntry);
 
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Data entry {EntryId} successfully created for activity {ActivityId}", newEntry.Id, activityId);
+            await dbContext.SaveChangesAsync();
+            logger.LogInformation("Data entry {EntryId} successfully created for activity {ActivityId}", newEntry.Id,
+                activityId);
             return newEntry;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to create data entry for activity ID {ActivityId}", activityId);
+            logger.LogError(ex, "Failed to create data entry for activity ID {ActivityId}", activityId);
             throw;
         }
     }
@@ -82,12 +100,12 @@ internal class ActivityDataEntryService : IActivityDataEntryService
     {
         try
         {
-            _logger.LogInformation("Fetching all data entries from database for activity ID {ActivityId}", activityId);
-            
+            logger.LogInformation("Fetching all data entries from database for activity ID {ActivityId}", activityId);
+
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
 
-            var dataEntries = await _dbContext.ActivityDataEntries
+            var dataEntries = await dbContext.ActivityDataEntries
                 .Where(e => e.ActivityId == activityId)
                 .AsNoTracking()
                 .ToListAsync();
@@ -96,7 +114,7 @@ internal class ActivityDataEntryService : IActivityDataEntryService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to fetch data entries from database for activity ID {ActivityId}", activityId);
+            logger.LogError(ex, "Failed to fetch data entries from database for activity ID {ActivityId}", activityId);
             throw;
         }
     }
@@ -105,11 +123,11 @@ internal class ActivityDataEntryService : IActivityDataEntryService
     {
         try
         {
-            var entry = await _dbContext.ActivityDataEntries.FindAsync(entryId);
-            
+            var entry = await dbContext.ActivityDataEntries.FindAsync(entryId);
+
             if (entry == null)
             {
-                _logger.LogWarning("Attempted to update non-existent data entry with ID {Id}", entryId);
+                logger.LogWarning("Attempted to update non-existent data entry with ID {Id}", entryId);
                 return null;
             }
 
@@ -131,6 +149,12 @@ internal class ActivityDataEntryService : IActivityDataEntryService
 
                 case RoutineActivityDataEntry routineDataEntry:
 
+                    if (updateRequest.State == RoutineState.None)
+                    {
+                        return null;
+                    }
+
+
                     if (updateRequest.Timestamp is not null)
                     {
                         routineDataEntry.Timestamp = updateRequest.Timestamp.Value;
@@ -144,13 +168,13 @@ internal class ActivityDataEntryService : IActivityDataEntryService
                     break;
             }
 
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Data entry with ID {Id} successfully updated", entryId);
+            await dbContext.SaveChangesAsync();
+            logger.LogInformation("Data entry with ID {Id} successfully updated", entryId);
             return entry;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to update data entry with ID {Id}", entryId);
+            logger.LogError(ex, "Failed to update data entry with ID {Id}", entryId);
             throw;
         }
     }
@@ -159,23 +183,23 @@ internal class ActivityDataEntryService : IActivityDataEntryService
     {
         try
         {
-            var dataEntry = await _dbContext.ActivityDataEntries.FindAsync(entryId);
-            
+            var dataEntry = await dbContext.ActivityDataEntries.FindAsync(entryId);
+
             if (dataEntry is null)
             {
-                _logger.LogWarning("Attempted to delete non-existent data entry with ID {Id}", entryId);
+                logger.LogWarning("Attempted to delete non-existent data entry with ID {Id}", entryId);
                 return false;
             }
 
-            _dbContext.ActivityDataEntries.Remove(dataEntry);
+            dbContext.ActivityDataEntries.Remove(dataEntry);
 
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Data entry with ID {Id} successfully deleted", entryId);
+            await dbContext.SaveChangesAsync();
+            logger.LogInformation("Data entry with ID {Id} successfully deleted", entryId);
             return true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete data entry with ID {Id}", entryId);
+            logger.LogError(ex, "Failed to delete data entry with ID {Id}", entryId);
             throw;
         }
     }

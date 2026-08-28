@@ -242,7 +242,7 @@ internal class MilestoneChart : Control
         context.DrawEllipse(null, trackPen, center, radius, radius);
 
         // calculate a safe progress ratio between 0.0 and 1.0 using the animated value
-        var max = Math.Max(Maximum, 1);
+        var max = Maximum > 0 ? Maximum : 1;
         var val = Math.Clamp(_animatedValue, 0, max);
         var progressPercentage = val / max;
 
@@ -293,7 +293,7 @@ internal class MilestoneChart : Control
         }
 
         // format main text. using "0" format so it doesn't show crazy decimals during animation
-        var mainTextString = $"{_animatedValue:0}/{Maximum}";
+        var mainTextString = $"{_animatedValue:0.##}/{Maximum:0.##}";
         
         var mainTextLayout = new TextLayout(
             mainTextString,

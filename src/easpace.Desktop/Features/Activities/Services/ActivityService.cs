@@ -100,18 +100,21 @@ internal class ActivityService : IActivityService
                     trendActivity.Name = updateRequest.Name;
                     trendActivity.Unit = updateRequest.Unit;
                     trendActivity.Target = updateRequest.Target;
-                    return trendActivity;
+                    activity = trendActivity;
+                    break;
             
                 case MilestoneActivity milestoneActivity:
                     milestoneActivity.Name = updateRequest.Name;
                     milestoneActivity.Unit = updateRequest.Unit;
                     milestoneActivity.Target = updateRequest.Target;
                     milestoneActivity.TargetDate = updateRequest.TargetDate;
-                    return milestoneActivity;
+                    activity = milestoneActivity;
+                    break;
             
                 case RoutineActivity routineActivity:
                     routineActivity.Name = updateRequest.Name;
-                    return routineActivity;
+                    activity = routineActivity;
+                    break;
             }
         
             await _dbContext.SaveChangesAsync();

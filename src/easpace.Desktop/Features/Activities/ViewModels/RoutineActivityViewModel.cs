@@ -109,59 +109,87 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
 
         await _dialogService.ShowDialogAsync(routineEntryDialog);
 
-        if (routineEntryDialog is { Confirmed: true })
+        if (routineEntryDialog is not { Confirmed: true })
         {
-            var existingEntry = _routineActivity.Entries.FirstOrDefault(e =>
-                e.Timestamp.Date.Year == routineEntryDialog.SelectedDate.Value.Year
-                && e.Timestamp.Date.Month == routineEntryDialog.SelectedDate.Value.Month
-                && e.Timestamp.Date.Day == routineEntryDialog.SelectedDate.Value.Day);
-
-            if (existingEntry is not null)
-            {
-                var updateEntryRequest = new UpdateDataEntryRequest(
-                    Timestamp: routineEntryDialog.GetTimestamp(),
-                    State: routineEntryDialog.SelectedState,
-                    Value: null
-                );
-
-                var updatedDataEntry =
-                    await _activityDataEntryService.UpdateDataEntryAsync(existingEntry.Id, updateEntryRequest);
-
-                if (updatedDataEntry is RoutineActivityDataEntry routineDataEntry)
-                {
-                    var dataEntryVm = Entries.FirstOrDefault(e => e.Id == routineDataEntry.Id);
-
-                    if (dataEntryVm is RoutineActivityDataEntryViewModel routineDataEntryVm)
-                    {
-                        routineDataEntryVm.Timestamp = routineEntryDialog.GetTimestamp();
-                        routineDataEntryVm.State = routineEntryDialog.SelectedState;
-
-                        var entryVmReplaceIndex = Entries.IndexOf(routineDataEntryVm);
-                        Entries.Remove(routineDataEntryVm);
-                        Entries.Insert(entryVmReplaceIndex, routineDataEntryVm);
-                    }
-                }
-            }
-            else
-            {
-                var createEntryRequest = new CreateDataEntryRequest(
-                    Timestamp: routineEntryDialog.GetTimestamp(),
-                    State: routineEntryDialog.SelectedState,
-                    Value: null,
-                    Type: ActivityDataEntryType.Routine
-                );
-
-                var dataEntry = await _activityDataEntryService.CreateDataEntryAsync(Id, createEntryRequest);
-
-                if (dataEntry is not RoutineActivityDataEntry routineDataEntry) return;
-
-                _routineActivity.Entries.Add(routineDataEntry);
-
-                var dataEntryVm = new RoutineActivityDataEntryViewModel(routineDataEntry);
-
-                Entries.Add(dataEntryVm);
-            }
+            return;
         }
+
+        var selectedDate = routineEntryDialog.SelectedDate.Value.Date;
+        var timestamp = routineEntryDialog.GetTimestamp();
+
+        var existingEntry = _routineActivity.Entries
+            .OfType<RoutineActivityDataEntry>()
+            .FirstOrDefault(e => e.Timestamp.Date == selectedDate);
+
+        if (existingEntry is not null)
+        {
+            var updateEntryRequest = new UpdateDataEntryRequest(
+                Timestamp: timestamp,
+                State: routineEntryDialog.SelectedState,
+                Value: null
+            );
+
+            var updatedDataEntry =
+                await _activityDataEntryService.UpdateDataEntryAsync(
+                    existingEntry.Id,
+                    updateEntryRequest);
+
+            if (updatedDataEntry is not RoutineActivityDataEntry routineDataEntry)
+            {
+                return;
+            }
+
+            // synchronize the backing entity
+            existingEntry.Timestamp = routineDataEntry.Timestamp;
+            existingEntry.State = routineDataEntry.State;
+
+            // synchronize the view model
+            var dataEntryVm = Entries
+                .OfType<RoutineActivityDataEntryViewModel>()
+                .FirstOrDefault(e => e.Id == routineDataEntry.Id);
+
+            if (dataEntryVm is not null)
+            {
+                dataEntryVm.Timestamp = routineDataEntry.Timestamp;
+                dataEntryVm.State = routineDataEntry.State;
+            }
+
+            // only the affected calendar month needs rebuilding
+            var updatedMonth = _routineActivityDataProvider.BuildRoutineMonth(
+                routineDataEntry.Timestamp.Year,
+                routineDataEntry.Timestamp.Month,
+                _routineActivity);
+
+            ReplaceRoutineMonths([updatedMonth]);
+
+            OnPropertyChanged(nameof(TodayEntry));
+
+            return;
+        }
+
+        var createEntryRequest = new CreateDataEntryRequest(
+            Timestamp: timestamp,
+            State: routineEntryDialog.SelectedState,
+            Value: null,
+            Type: ActivityDataEntryType.Routine
+        );
+
+        var dataEntry =
+            await _activityDataEntryService.CreateDataEntryAsync(
+                Id,
+                createEntryRequest);
+
+        if (dataEntry is not RoutineActivityDataEntry newRoutineDataEntry)
+        {
+            return;
+        }
+
+        _routineActivity.Entries.Add(newRoutineDataEntry);
+
+        var newDataEntryVm =
+            new RoutineActivityDataEntryViewModel(newRoutineDataEntry);
+
+        Entries.Add(newDataEntryVm);
     }
 
     public override async Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId)

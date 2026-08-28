@@ -44,7 +44,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                     Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
                                                     SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
                     <templatedControls:ActivityListItem.Status>
-                        <MultiBinding StringFormat="{}{0}/{1}">
+                        <MultiBinding StringFormat="{}{0:0.##}/{1:0.##}">
                             <Binding Path="EntriesSum" />
                             <Binding Path="Target" />
                         </MultiBinding>

@@ -183,7 +183,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                        Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
                                        HorizontalAlignment="Center" />
                             <Slider Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
-                                    HorizontalAlignment="Stretch" />
+                                    HorizontalAlignment="Stretch" SmallChange="0.25" />
                         </StackPanel>
 
                     </Grid>

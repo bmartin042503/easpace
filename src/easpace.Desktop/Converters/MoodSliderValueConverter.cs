@@ -16,12 +16,11 @@ public class MoodSliderValueConverter : IValueConverter
         if (value is not double sliderValue) return null;
         var localizedValue = sliderValue switch
         {
-            < 0.2 => LocalizationService.GetString("Mood.State.VeryUnpleasant"),
-            < 0.4 => LocalizationService.GetString("Mood.State.SlightlyUnpleasant"),
-            < 0.6 => LocalizationService.GetString("Mood.State.Neutral"),
-            < 0.8 => LocalizationService.GetString("Mood.State.SlightlyPleasant"),
-            <= 1.0 => LocalizationService.GetString("Mood.State.VeryPleasant"),
-            _ => string.Empty
+            < 0.125 => LocalizationService.GetString("Mood.State.VeryUnpleasant"),
+            < 0.375 => LocalizationService.GetString("Mood.State.SlightlyUnpleasant"),
+            < 0.625 => LocalizationService.GetString("Mood.State.Neutral"),
+            < 0.875 => LocalizationService.GetString("Mood.State.SlightlyPleasant"),
+            _ => LocalizationService.GetString("Mood.State.VeryPleasant")
         };
 
         return localizedValue;

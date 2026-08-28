@@ -104,7 +104,6 @@ internal partial class MainViewModel : ViewModelBase
 
         var updateCheckResult = await _updateService.CheckForUpdatesAsync();
 
-
         if (updateCheckResult.IsUpdateAvailable && updateCheckResult.LatestVersion != null)
         {
             var currentVersion = App.Version.ToString();

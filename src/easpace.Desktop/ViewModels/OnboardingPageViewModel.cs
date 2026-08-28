@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -61,6 +62,7 @@ internal partial class OnboardingPageViewModel : PageViewModel
                 if (IsTermsOfUseAccepted)
                 {
                     _preferencesService.SavePreference(PreferenceKey.TermsOfUseAccepted, true);
+                    _preferencesService.SavePreference(PreferenceKey.TermsOfUseAcceptedDate, DateTimeOffset.Now);
                     CurrentContent = OnboardingContent.PrivacyPolicy;
                     LegalContent = _privacyPolicyContent;
                 }

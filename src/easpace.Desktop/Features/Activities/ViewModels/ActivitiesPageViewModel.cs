@@ -132,6 +132,9 @@ internal partial class ActivitiesPageViewModel : PageViewModel
     [RelayCommand]
     private void AddActivity()
     {
+        // toggle the filter to show the active activity list
+        SelectedFilterIndex = 0;
+        SelectedActivity = null;
         OpenEditor();
     }
 
@@ -224,6 +227,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
     private void OnEditorCanceled(object? sender, EventArgs e)
     {
+        SelectedActivity = Activities.FirstOrDefault();
         CloseEditor();
     }
 
@@ -331,8 +335,8 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
     private void UnsubscribeFromActivityEvents(ActivityViewModel activityViewModel)
     {
-        activityViewModel.EditRequested += OnActivityEditRequested;
-        activityViewModel.DeleteRequested += OnActivityDeleteRequested;
-        activityViewModel.ArchiveToggled += OnActivityArchiveToggled;
+        activityViewModel.EditRequested -= OnActivityEditRequested;
+        activityViewModel.DeleteRequested -= OnActivityDeleteRequested;
+        activityViewModel.ArchiveToggled -= OnActivityArchiveToggled;
     }
 }
