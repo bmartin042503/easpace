@@ -36,7 +36,7 @@ internal class ToastMessageService : IToastMessageService, IDisposable
     
     private void OnDisplayTimerElapsed(object? sender, ElapsedEventArgs e)
     {
-        // hide null by raising the event with a null ToastMessageViewModel
+        // hide by raising the event with a null ToastMessageViewModel
         Dispatcher.UIThread.Post(() => ToastMessageRaised?.Invoke(null));
     }
     

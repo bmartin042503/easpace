@@ -213,11 +213,14 @@ namespace easpace.Desktop.Migrations
                 {
                     b.HasBaseType("easpace.Desktop.Features.Activities.Entities.Activity");
 
+                    b.Property<DateOnly?>("StartDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<double?>("Target")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("REAL");
 
-                    b.Property<DateTimeOffset?>("TargetDate")
+                    b.Property<DateOnly?>("TargetDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Unit")

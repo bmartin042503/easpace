@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Data;
-using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
-using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
-using easpace.Desktop.Services;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 

@@ -20,7 +20,8 @@ namespace easpace.Desktop.Migrations
                     Name = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
                     IsArchived = table.Column<bool>(type: "INTEGER", nullable: false),
                     ActivityType = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
-                    TargetDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    StartDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
+                    TargetDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
                     Target = table.Column<double>(type: "REAL", nullable: true),
                     Unit = table.Column<string>(type: "TEXT", nullable: true)
                 },

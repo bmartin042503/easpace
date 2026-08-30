@@ -11,5 +11,6 @@ internal sealed record CreateActivityRequest(
     ActivityType Type,
     double? Target,
     string? Unit,
-    DateTimeOffset? TargetDate
+    DateOnly? StartDate,
+    DateOnly? TargetDate
 );

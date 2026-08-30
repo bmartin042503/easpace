@@ -16,12 +16,16 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 internal partial class MilestoneActivityViewModel : NumericActivityViewModel
 {
     private readonly IActivityService _activityService;
-    [ObservableProperty] private DateTimeOffset? _targetDate;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasTargetDate))]
 
-    [ObservableProperty] private DateTimeOffset? _startDate;
+    private DateOnly? _targetDate;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasStartDate))]
+    private DateOnly? _startDate;
     
     public double EntriesSum => Entries.OfType<NumericActivityDataEntryViewModel>().Sum(entry => entry.Value);
-    public bool HasValidTargetDate => TargetDate.HasValue && TargetDate.Value != DateTimeOffset.MinValue;
     
     public MilestoneActivityViewModel(
         MilestoneActivity milestoneActivity,
@@ -30,24 +34,29 @@ internal partial class MilestoneActivityViewModel : NumericActivityViewModel
         IDialogService dialogService) : base(milestoneActivity, activityDataEntryService, dialogService)
     {
         _activityService = activityService;
-        StartDate = milestoneActivity.CreatedAt;
+        StartDate = milestoneActivity.StartDate;
         TargetDate = milestoneActivity.TargetDate;
         
         LoadEntries();
     }
 
+    public bool HasTargetDate => TargetDate.HasValue && TargetDate.Value != DateOnly.MinValue;
+    public bool HasStartDate => StartDate.HasValue && StartDate.Value != DateOnly.MinValue;
+
     public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
         var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
-        if (updated is null) return null;
-        
-        Name = updated.Name;
-        Unit = ((MilestoneActivity)updated).Unit;
-        Target = ((MilestoneActivity)updated).Target;
-        TargetDate = ((MilestoneActivity)updated).TargetDate;
-        
-        return updated;
+        if (updated is not MilestoneActivity milestone)
+            return null;
+
+        Name = milestone.Name;
+        Unit = milestone.Unit;
+        Target = milestone.Target;
+        StartDate = milestone.StartDate;
+        TargetDate = milestone.TargetDate;
+
+        return milestone;
     }
 
     protected override void OnEntryCollectionChanged()

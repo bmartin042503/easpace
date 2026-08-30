@@ -11,7 +11,7 @@ using easpace.Desktop.Data;
 namespace easpace.Desktop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260823132306_InitialCreate")]
+    [Migration("20260830181220_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -216,11 +216,14 @@ namespace easpace.Desktop.Migrations
                 {
                     b.HasBaseType("easpace.Desktop.Features.Activities.Entities.Activity");
 
+                    b.Property<DateOnly?>("StartDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<double?>("Target")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("REAL");
 
-                    b.Property<DateTimeOffset?>("TargetDate")
+                    b.Property<DateOnly?>("TargetDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Unit")

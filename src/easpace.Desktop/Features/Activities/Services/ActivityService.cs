@@ -35,16 +35,23 @@ internal class ActivityService : IActivityService
             {
                 ActivityType.Trend => new TrendActivity
                 {
-                    Name = createRequest.Name, Unit = createRequest.Unit, Target = createRequest.Target
+                    Name = createRequest.Name, 
+                    Unit = createRequest.Unit, 
+                    Target = createRequest.Target
                 },
                 ActivityType.Milestone => new MilestoneActivity
                 {
-                    Name = createRequest.Name, Unit = createRequest.Unit, Target = createRequest.Target,
+                    Name = createRequest.Name,
+                    Unit = createRequest.Unit, 
+                    Target = createRequest.Target,
+                    StartDate = createRequest.StartDate,
                     TargetDate = createRequest.TargetDate
                 },
                 ActivityType.Routine => new RoutineActivity { Name = createRequest.Name },
                 _ => throw new NotSupportedException()
             };
+            
+            newActivity.CreatedAt = DateTimeOffset.Now;
 
             _dbContext.Activities.Add(newActivity);
             
@@ -107,7 +114,9 @@ internal class ActivityService : IActivityService
                     milestoneActivity.Name = updateRequest.Name;
                     milestoneActivity.Unit = updateRequest.Unit;
                     milestoneActivity.Target = updateRequest.Target;
+                    milestoneActivity.StartDate = updateRequest.StartDate;
                     milestoneActivity.TargetDate = updateRequest.TargetDate;
+                    
                     activity = milestoneActivity;
                     break;
             

@@ -9,5 +9,6 @@ internal record UpdateActivityRequest(
     string Name,
     double? Target,
     string? Unit,
-    DateTimeOffset? TargetDate
+    DateOnly? StartDate,
+    DateOnly? TargetDate
 );

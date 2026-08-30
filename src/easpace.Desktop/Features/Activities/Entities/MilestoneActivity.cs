@@ -7,5 +7,6 @@ namespace easpace.Desktop.Features.Activities.Entities;
 
 internal class MilestoneActivity : NumericActivity
 {
-    public DateTimeOffset? TargetDate { get; set; }
+    public DateOnly? StartDate { get; set; }
+    public DateOnly? TargetDate { get; set; }
 }

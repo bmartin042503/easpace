@@ -50,28 +50,23 @@ internal class UpdateService : IUpdateService
                 return NoUpdate;
             }
 
-            var jsonString =
-                await response.Content.ReadAsStringAsync(cts.Token);
+            var jsonString = await response.Content.ReadAsStringAsync(cts.Token);
 
-            var release =
-                JsonSerializer.Deserialize<GitHubRelease>(jsonString);
+            var release = JsonSerializer.Deserialize<GitHubRelease>(jsonString);
 
-            if (release is null ||
-                string.IsNullOrWhiteSpace(release.TagName))
+            if (release is null || string.IsNullOrWhiteSpace(release.TagName))
             {
                 return NoUpdate;
             }
 
-            var cleanVersion =
-                release.TagName.TrimStart('v', 'V');
+            var cleanVersion = release.TagName.TrimStart('v', 'V');
 
             if (!Version.TryParse(cleanVersion, out var latestVersion))
             {
                 return NoUpdate;
             }
 
-            var isUpdateAvailable =
-                latestVersion > App.Version;
+            var isUpdateAvailable = latestVersion > App.Version;
 
             return new UpdateCheckResult(
                 IsUpdateAvailable: isUpdateAvailable,
@@ -95,10 +90,9 @@ internal class UpdateService : IUpdateService
 
         return NoUpdate;
     }
-    
+
     private static UpdateCheckResult NoUpdate =>
-        new(
-            IsUpdateAvailable: false,
+        new(IsUpdateAvailable: false,
             LatestVersion: null,
             ReleaseUrl: null,
             ReleaseTitle: null,

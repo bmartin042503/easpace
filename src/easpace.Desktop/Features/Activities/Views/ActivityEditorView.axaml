@@ -75,12 +75,21 @@ Licensed under the MIT License. See LICENSE file for details.
                                    HorizontalAlignment="Left" Increment="1" FormatString="0.##"
                                    PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
                 </StackPanel>
+                
+                <!-- Start date input -->
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <TextBlock Classes="neutral fs4"
+                               Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
+                    <CalendarDatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                        Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                        PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                </StackPanel>
 
                 <!-- Target date input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
                     <TextBlock Classes="neutral fs4"
                                Text="{core:LocalizationService Key='Activities.Label.TargetDate'}" />
-                    <CalendarDatePicker SelectedDate="{Binding TargetDate}"
+                    <CalendarDatePicker SelectedDate="{Binding TargetDate, Mode=TwoWay}"
                                         Width="{StaticResource Haven.Scale.Input.MinWidth}"
                                         PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
                 </StackPanel>

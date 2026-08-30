@@ -19,7 +19,8 @@ internal class ActivityEditorService : IActivityEditorService
                     Name: trendActivity.Name,
                     Target: trendActivity.Target,
                     Unit: trendActivity.Unit,
-                    TargetDate: null
+                    TargetDate: null,
+                    StartDate: null
                 );
 
             case MilestoneActivityViewModel milestoneActivity:
@@ -28,6 +29,7 @@ internal class ActivityEditorService : IActivityEditorService
                     Name: milestoneActivity.Name,
                     Target: milestoneActivity.Target,
                     Unit: milestoneActivity.Unit,
+                    StartDate: milestoneActivity.StartDate,
                     TargetDate: milestoneActivity.TargetDate
                 );
 
@@ -35,6 +37,7 @@ internal class ActivityEditorService : IActivityEditorService
                 
                 return new UpdateActivityRequest(
                     Name: routineActivity.Name,
+                    null,
                     null,
                     null,
                     null

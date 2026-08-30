@@ -47,13 +47,9 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private double? _target;
-
     
-    [ObservableProperty] 
-    [NotifyDataErrorInfo]
-    [SafeDateRange(ErrorMessage = "FormValidation.TargetDate.Invalid")]
-    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    private DateTime? _targetDate;
+    [ObservableProperty] private DateTime? _targetDate;
+    [ObservableProperty] private DateTime? _startDate;
 
     private bool CanSubmit() => !HasErrors;
 
@@ -192,8 +188,6 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
             if (deleted)
             {
-                DataEntries.Remove(dataEntryVm);
-                _activity.Entries.Remove(dataEntryVm);
                 _logger.LogInformation("Data entry {EntryId} removed successfully via editor", dataEntryVm.Id);
             }
         }
@@ -217,19 +211,89 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
 
         await _activity.EditDataEntry(dataEntryVm.Id);
-        
-        OnPropertyChanged(nameof(MilestoneActivityViewModel.EntriesSum));
     }
 
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)
     {
+        _logger.LogInformation(
+            "Loading editor dates. StartDate={StartDate}, TargetDate={TargetDate}",
+            updateRequest.StartDate?.ToString("yyyy-MM-dd") ?? "<null>",
+            updateRequest.TargetDate?.ToString("yyyy-MM-dd") ?? "<null>");
+        
         Name = updateRequest.Name;
         Unit = updateRequest.Unit;
         Target = updateRequest.Target;
         IsTargetChecked = updateRequest.Target.HasValue;
-        TargetDate = updateRequest.TargetDate?.Date;
+        StartDate = ToDateTime(updateRequest.StartDate);
+        TargetDate = ToDateTime(updateRequest.TargetDate);
+        
+        _logger.LogInformation(
+            "Editor dates loaded. StartDate={StartDate}, TargetDate={TargetDate}",
+            StartDate?.ToString("yyyy-MM-dd") ?? "<null>",
+            TargetDate?.ToString("yyyy-MM-dd") ?? "<null>");
     }
 
-    private CreateActivityRequest GetCreateRequest() => new (Name, SelectedType, Target, Unit, TargetDate);
-    private UpdateActivityRequest GetUpdateRequest() => new(Name, Target, Unit, TargetDate);
+    private CreateActivityRequest GetCreateRequest()
+    {
+        return new CreateActivityRequest(
+            Name: Name,
+            Type: SelectedType,
+
+            Target: SelectedType switch
+            {
+                ActivityType.Milestone => Target,
+                ActivityType.Trend when IsTargetChecked => Target,
+                _ => null
+            },
+
+            Unit: SelectedType is ActivityType.Trend or ActivityType.Milestone
+                ? Unit
+                : null,
+
+            StartDate: SelectedType == ActivityType.Milestone
+                ? ToDateOnly(StartDate)
+                : null,
+
+            TargetDate: SelectedType == ActivityType.Milestone
+                ? ToDateOnly(TargetDate)
+                : null
+        );
+    }
+
+    private UpdateActivityRequest GetUpdateRequest()
+    {
+        if (_activity == null)
+        {
+            throw new InvalidOperationException(
+                "Cannot create an update request without an activity.");
+        }
+
+        return new UpdateActivityRequest(
+            Name: Name,
+            Target: Target,
+            Unit: Unit,
+            StartDate: ToDateOnly(StartDate),
+            TargetDate: ToDateOnly(TargetDate)
+        );
+    }
+
+    private static DateOnly? ToDateOnly(DateTime? dateTime)
+    {
+        if (!dateTime.HasValue || dateTime.Value == DateTime.MinValue)
+        {
+            return null;
+        }
+
+        return DateOnly.FromDateTime(dateTime.Value);
+    }
+
+    private static DateTime? ToDateTime(DateOnly? dateOnly)
+    {
+        if (!dateOnly.HasValue || dateOnly.Value == DateOnly.MinValue)
+        {
+            return null;
+        }
+
+        return dateOnly.Value.ToDateTime(TimeOnly.MinValue);
+    }
 }
