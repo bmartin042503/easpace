@@ -22,6 +22,7 @@ internal class LegalInfoDialogViewModel : DetailedInfoDialogViewModel
             LegalFileType.Sqlite3MultipleCiphersLicense => "SQLite3 Multiple Ciphers • MIT License",
             LegalFileType.DevloopedCredentialManagerLicense => "Devlooped.CredentialManager • MIT License",
             LegalFileType.PhosphorIconsLicense => "Phosphor Icons • MIT License",
+            LegalFileType.MicrosoftPublicLicense => "Microsoft Public License (Ms-PL)",
             _ => string.Empty
         };
 

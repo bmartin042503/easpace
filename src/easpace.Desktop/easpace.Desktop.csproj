@@ -16,6 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <Folder Include="Assets\Fonts\*"/>
         <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Remove="Controls\TimePicker\**" />
     </ItemGroup>
 
     <!-- Versions -->
@@ -52,6 +53,26 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <InternalsVisibleTo Include="easpace.Tests"/>
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <AvaloniaXaml Remove="Controls\TimePicker\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="Controls\TimePicker\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="Controls\TimePicker\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <AdditionalFiles Remove="Controls\TimePicker\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Remove="Controls\TimePicker\**" />
     </ItemGroup>
     
 </Project>

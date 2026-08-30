@@ -154,6 +154,14 @@ SOFTWARE.
     <StreamGeometry x:Key="Haven.PhosphorIcons.CaretUp.Bold">
         M216.49,168.49a12,12,0,0,1-17,0L128,97,56.49,168.49a12,12,0,0,1-17-17l80-80a12,12,0,0,1,17,0l80,80A12,12,0,0,1,216.49,168.49Z
     </StreamGeometry>
+    
+    <StreamGeometry x:Key="Haven.PhosphorIcons.CaretLeft.Bold">
+        M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z
+    </StreamGeometry>
+    
+    <StreamGeometry x:Key="Haven.PhosphorIcons.CaretRight.Bold">
+        M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z
+    </StreamGeometry>
 
     <StreamGeometry x:Key="Haven.PhosphorIcons.CalendarBlank">
         M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Z

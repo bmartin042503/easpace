@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls"
+        xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
         xmlns:utils="clr-namespace:easpace.Desktop.Utils"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
@@ -27,31 +27,31 @@ Licensed under the MIT License. See LICENSE file for details.
             <ListBox Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
 
                 <ListBoxItem Grid.Row="0">
-                    <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Journal'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="1">
-                    <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Activities'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="2">
-                    <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Mood'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="3">
-                    <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Wellness'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="5">
-                    <templatedControls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
+                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
                                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Settings'}" />
                 </ListBoxItem>

@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 
-namespace easpace.Desktop.HavenTheme.TemplatedControls;
+namespace easpace.Desktop.HavenTheme.Controls;
 
 internal class DataEntryListItem : TemplatedControl
 {

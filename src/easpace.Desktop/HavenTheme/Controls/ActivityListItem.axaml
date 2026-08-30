@@ -3,11 +3,11 @@ Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
-<Styles xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls">
+        xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
 
-    <Style Selector="templatedControls|ActivityListItem">
+    <ControlTheme x:Key="{x:Type controls:ActivityListItem}" TargetType="controls:ActivityListItem">
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -56,6 +56,6 @@ Licensed under the MIT License. See LICENSE file for details.
             </ControlTemplate>
         </Setter>
         
-    </Style>
+    </ControlTheme>
 
-</Styles>
+</ResourceDictionary>

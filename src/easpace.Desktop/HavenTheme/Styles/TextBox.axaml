@@ -121,7 +121,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="AcceptsReturn" Value="True" />
     </Style>
     
-    <Style Selector="TextBox.numeric-up-down">
+    <Style Selector="TextBox.numeric-up-down, TextBox.date-picker">
         
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{StaticResource Haven.Scale.Transparent}" />

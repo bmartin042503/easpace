@@ -1,0 +1,203 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System">
+
+    <x:Double x:Key="Haven.CalendarDatePicker.MinHeight">40</x:Double>
+    <x:Double x:Key="Haven.CalendarDatePicker.GlyphDayFontSize">8</x:Double>
+
+    <ControlTheme x:Key="Haven.CalendarDatePicker.DropDownButton" TargetType="Button">
+
+        <Setter Property="Width" Value="34" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="2,0,3,0" />
+        <Setter Property="Padding" Value="7" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="Root" Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid Width="18" Height="18" RowDefinitions="6,*"
+                          HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <PathIcon Grid.RowSpan="2" Width="18" Height="18"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  Data="{StaticResource Haven.PhosphorIcons.CalendarBlank}" />
+                        <TextBlock Grid.Row="1"
+                                   Text="{Binding Source={x:Static sys:DateTime.Today}, Path=Day}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontSize="{StaticResource Haven.CalendarDatePicker.GlyphDayFontSize}"
+                                   FontWeight="{StaticResource Haven.Scale.FontWeight.Medium}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
+        </Style>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        </Style>
+
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+        </Style>
+
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type CalendarDatePicker}" TargetType="CalendarDatePicker">
+
+        <Setter Property="MinWidth" Value="{StaticResource Haven.Scale.Input.MinWidth}" />
+        <Setter Property="MinHeight" Value="{StaticResource Haven.CalendarDatePicker.MinHeight}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Panel Name="LayoutRoot" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Border Name="Background" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Name="PART_TextBox" Classes="date-picker" Grid.Column="0"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                     CornerRadius="{TemplateBinding CornerRadius}"
+                                     Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+                                     PlaceholderText="{TemplateBinding PlaceholderText}"
+                                     PlaceholderForeground="{TemplateBinding PlaceholderForeground}"
+                                     UseFloatingPlaceholder="{TemplateBinding UseFloatingPlaceholder}"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+
+                                <TextBox.Styles>
+
+                                    <Style Selector="TextBox#PART_TextBox:focus /template/ Border#PART_BorderElement">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="BorderBrush" Value="Transparent" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                    </Style>
+
+                                    <Style Selector="TextBox#PART_TextBox:disabled">
+
+                                        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+
+                                        <Style Selector="^ /template/ Border#PART_BorderElement">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderBrush" Value="Transparent" />
+                                        </Style>
+
+                                        <Style Selector="^ /template/ TextBlock#PART_Placeholder, ^ TextBlock#PART_FloatingPlaceholder">
+                                            <Setter Property="TextElement.Foreground"
+                                                    Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                                        </Style>
+
+                                    </Style>
+
+                                </TextBox.Styles>
+
+                            </TextBox>
+
+                            <Button Name="PART_Button" Grid.Column="1"
+                                    Theme="{StaticResource Haven.CalendarDatePicker.DropDownButton}"
+                                    Focusable="False" />
+
+                            <Popup Name="PART_Popup" PlacementTarget="{TemplateBinding}"
+                                   IsLightDismissEnabled="True">
+                                <Border Name="PART_PopupBorder" Margin="0,4,0,0"
+                                        Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xs}"
+                                        Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                        BorderBrush="{DynamicResource Haven.Sem.Border}"
+                                        BorderThickness="{StaticResource Haven.Scale.Border.Thickness}"
+                                        CornerRadius="{StaticResource Haven.Scale.Radius.Md}"
+                                        ClipToBounds="True">
+                                    <Calendar Name="PART_Calendar"
+                                              Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                              BorderThickness="0"
+                                              CornerRadius="{StaticResource Haven.Scale.Radius.Md}"
+                                              FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
+                                              IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
+                                              SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedDate, Mode=TwoWay}"
+                                              DisplayDate="{TemplateBinding DisplayDate}"
+                                              DisplayDateStart="{TemplateBinding DisplayDateStart}"
+                                              DisplayDateEnd="{TemplateBinding DisplayDateEnd}" />
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Panel>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Background">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        </Style>
+
+        <Style Selector="^:focus-within:not(CalendarDatePicker:focus) /template/ Border#Background">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
+        </Style>
+
+        <Style Selector="^:error /template/ Border#Background">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger}" />
+            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
+        </Style>
+
+        <Style Selector="^:disabled">
+
+            <Style Selector="^ /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+            </Style>
+
+            <Style Selector="^ /template/ TextBox#PART_TextBox">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            </Style>
+
+            <Style Selector="^ /template/ Button#PART_Button">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            </Style>
+
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

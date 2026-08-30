@@ -205,7 +205,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
-                        <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+                        <StackPanel Grid.Column="0" Orientation="Vertical"
+                                    Spacing="{StaticResource Haven.Scale.Spacing.Md}">
 
                             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
@@ -337,7 +338,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- Third-party libraries -->
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                         <TextBlock Classes="accent fs4 medium"
                                    Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
@@ -395,6 +397,17 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                 <Button.CommandParameter>
                                     <constants:LegalFileType>PhosphorIconsLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
+                            
+                            <Button Classes="tertiary" Padding="0"
+                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    Content="DatePicker components override • Microsoft Public License (Ms-PL)"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>MicrosoftPublicLicense</constants:LegalFileType>
                                 </Button.CommandParameter>
 
                             </Button>

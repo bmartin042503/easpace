@@ -5,7 +5,7 @@ using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 
-namespace easpace.Desktop.HavenTheme.TemplatedControls;
+namespace easpace.Desktop.HavenTheme.Controls;
 
 internal class IconListItem : TemplatedControl
 {

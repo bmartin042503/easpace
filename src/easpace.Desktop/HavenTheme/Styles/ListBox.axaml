@@ -5,7 +5,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:templatedControls1="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls">
+        xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
     
     <Design.PreviewWith>
         <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}"
@@ -33,7 +33,7 @@ Licensed under the MIT License. See LICENSE file for details.
                          SelectedIndex="0">
                 
                     <ListBoxItem>
-                        <templatedControls1:IconListItem
+                        <controls:IconListItem
                             Icon="{StaticResource Haven.PhosphorIcons.Target}"
                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
                             Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
@@ -41,7 +41,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </ListBoxItem>
                     
                     <ListBoxItem>
-                        <templatedControls1:IconListItem
+                        <controls:IconListItem
                             Icon="{StaticResource Haven.PhosphorIcons.Archive}"
                             SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
                             Width="{StaticResource Haven.Scale.Icon.Size.Sm}"

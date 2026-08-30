@@ -3,12 +3,11 @@ Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
 
-    <Style Selector="templatedControls|NavigationListItem">
-        
+    <ControlTheme x:Key="{x:Type controls:NavigationListItem}" TargetType="controls:NavigationListItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
@@ -30,6 +29,6 @@ Licensed under the MIT License. See LICENSE file for details.
             </ControlTemplate>
         </Setter>
         
-    </Style>
+    </ControlTheme>
 
-</Styles>
+</ResourceDictionary>

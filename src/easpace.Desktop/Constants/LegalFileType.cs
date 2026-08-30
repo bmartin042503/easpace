@@ -12,5 +12,6 @@ internal enum LegalFileType
     DotNetLicense,
     Sqlite3MultipleCiphersLicense,
     DevloopedCredentialManagerLicense,
-    PhosphorIconsLicense
+    PhosphorIconsLicense,
+    MicrosoftPublicLicense
 }

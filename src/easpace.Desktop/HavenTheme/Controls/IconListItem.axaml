@@ -3,11 +3,11 @@ Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:templatedControls="clr-namespace:easpace.Desktop.HavenTheme.TemplatedControls">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
 
-    <Style Selector="templatedControls|IconListItem">
+    <ControlTheme x:Key="{x:Type controls:IconListItem}" TargetType="controls:IconListItem">
         <Setter Property="Template">
             <ControlTemplate>
                 <PathIcon x:Name="PART_Icon"
@@ -17,6 +17,6 @@ Licensed under the MIT License. See LICENSE file for details.
                           Height="{TemplateBinding Height}" />
             </ControlTemplate>
         </Setter>
-    </Style>
+    </ControlTheme>
 
-</Styles>
+</ResourceDictionary>

@@ -30,24 +30,32 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Icons/AppIcons.axaml" />
                 <ResourceInclude Source="Icons/PhosphorIcons.axaml" />
 
-                <!-- Control themes -->
-                <ResourceInclude Source="ControlThemes/WindowDrawnDecorations.axaml" />
-                <ResourceInclude Source="ControlThemes/DataValidationErrors.axaml" />
-                <ResourceInclude Source="ControlThemes/CheckBox.axaml" />
-                <ResourceInclude Source="ControlThemes/ButtonSpinner.axaml" />
-                <ResourceInclude Source="ControlThemes/NumericUpDown.axaml" />
-                <ResourceInclude Source="ControlThemes/RadioButton.axaml" />
-                <ResourceInclude Source="ControlThemes/Slider.axaml" />
+                <!-- FluentTheme overriden control themes -->
+                <ResourceInclude Source="Overrides/WindowDrawnDecorations.axaml" />
+                <ResourceInclude Source="Overrides/DataValidationErrors.axaml" />
+                <ResourceInclude Source="Overrides/CheckBox.axaml" />
+                <ResourceInclude Source="Overrides/ButtonSpinner.axaml" />
+                <ResourceInclude Source="Overrides/NumericUpDown.axaml" />
+                <ResourceInclude Source="Overrides/RadioButton.axaml" />
+                <ResourceInclude Source="Overrides/Slider.axaml" />
+                <ResourceInclude Source="Overrides/Calendar.axaml" />
+                <ResourceInclude Source="Overrides/CalendarButton.axaml" />
+                <ResourceInclude Source="Overrides/CalendarDatePicker.axaml" />
+                <ResourceInclude Source="Overrides/CalendarDayButton.axaml" />
+                <ResourceInclude Source="Overrides/CalendarItem.axaml" />
+                
+                <!-- Custom control themes -->
+                <ResourceInclude Source="Controls/IconListItem.axaml" />
+                <ResourceInclude Source="Controls/NavigationListItem.axaml" />
+                <ResourceInclude Source="Controls/ActivityListItem.axaml" />
+                <ResourceInclude Source="Controls/DataEntryListItem.axaml" />
                 
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- Theme Dictionaries -->
+            <!-- Color schemes -->
             <ResourceDictionary.ThemeDictionaries>
-
-                <!-- Semantics -->
                 <ResourceInclude x:Key="Light" Source="ColorSchemes/Light.axaml" />
                 <ResourceInclude x:Key="Dark" Source="ColorSchemes/Dark.axaml" />
-
             </ResourceDictionary.ThemeDictionaries>
 
         </ResourceDictionary>
@@ -80,11 +88,5 @@ Component files located in the `Styles` directory apply these tokens to style in
     <StyleInclude Source="Styles/TrendChart.axaml" />
     <StyleInclude Source="Styles/MilestoneChart.axaml" />
     <StyleInclude Source="Styles/RoutineMonthItem.axaml" />
-
-    <!-- Templated controls -->
-    <StyleInclude Source="TemplatedControls/IconListItem.axaml" />
-    <StyleInclude Source="TemplatedControls/NavigationListItem.axaml" />
-    <StyleInclude Source="TemplatedControls/ActivityListItem.axaml" />
-    <StyleInclude Source="TemplatedControls/DataEntryListItem.axaml" />
 
 </Styles>

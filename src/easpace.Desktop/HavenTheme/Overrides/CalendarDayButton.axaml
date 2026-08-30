@@ -1,0 +1,150 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<!--
+(c) Copyright Microsoft Corporation.
+This source is subject to the Microsoft Public License (Ms-PL).
+Please see https://go.microsoft.com/fwlink/?LinkID=131993 for details.
+All other rights reserved.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme x:Key="{x:Type CalendarDayButton}" TargetType="CalendarDayButton">
+
+        <Setter Property="ClickMode" Value="Release" />
+        <Setter Property="MinWidth" Value="38" />
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
+        <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Sm}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="False" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border Name="Root" Background="{TemplateBinding Background}"
+                            CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                        <ContentPresenter Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
+        </Style>
+
+        <Style Selector="^:pointerover /template/ Border#Border">
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
+        </Style>
+
+        <Style Selector="^:pressed /template/ Border#Border">
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="^:inactive">
+
+            <Style Selector="^ /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+            </Style>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            </Style>
+
+        </Style>
+
+        <Style Selector="^:blackout /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+        </Style>
+
+        <Style Selector="^:selected">
+
+            <Style Selector="^ /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
+            </Style>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+                <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+            </Style>
+
+            <Style Selector="^:pointerover /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            </Style>
+
+        </Style>
+
+        <Style Selector="^:today">
+
+            <Style Selector="^ /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+            </Style>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+                <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
+            </Style>
+
+            <Style Selector="^:pointerover /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            </Style>
+
+            <Style Selector="^:pressed /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            </Style>
+
+        </Style>
+
+        <Style Selector="^:disabled">
+
+            <Style Selector="^ /template/ Border#Root">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            </Style>
+
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -94,6 +94,7 @@ internal class ApplicationService : IApplicationService
             LegalFileType.Sqlite3MultipleCiphersLicense => "sqlite3-multiple-ciphers",
             LegalFileType.DevloopedCredentialManagerLicense => "devlooped-credential-manager",
             LegalFileType.PhosphorIconsLicense => "phosphor-icons",
+            LegalFileType.MicrosoftPublicLicense => "microsoft-public",
             _ => string.Empty
         };
 
