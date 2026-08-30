@@ -528,8 +528,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
         <value>Lélegezz ki...</value>
     </data>
-    <data name="Wellness.Instruction.Meditation" xml:space="preserve">
-        <value>Wellness.Instruction.Meditation</value>
+    <data name="Wellness.Warning.Breathing" xml:space="preserve">
+        <value>Ha szédülést, légszomjat vagy kellemetlenséget érzel, állj meg és térj vissza a természetes légzésedhez.</value>
     </data>
     <data name="Wellness.Question.SaveSession" xml:space="preserve">
         <value>Szeretnéd elmenteni ezt a gyakorlatot?</value>
@@ -580,19 +580,25 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Dobozlégzés</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Description" xml:space="preserve">
-        <value>Egyszerű légzőgyakorlat az idegrendszer megnyugtatására. Belégzés, benntartás, kilégzés, benntartás. Mind egyenként 4 másodpercig.</value>
+        <value>Egyenletes légzési ritmus, amely segíthet lelassulni és újra összpontosítani. Lélegezz be 4 másodpercig, tartsd bent 4-ig, lélegezz ki 4 másodperc alatt, majd tartsd kint 4-ig.</value>
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Name" xml:space="preserve">
         <value>4-7-8 légzés</value>
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
-        <value>Csendesítsd le az elméd és engedd el a feszültséget. Pihentesd a nyelved hegyét lazán a felső fogsorod mögött. Lélegezz be lágyan 4 másodpercig, tartsd bent 7-ig, majd egy hosszú, 8 másodperces sóhajjal fújd ki az összes levegőt.</value>
+        <value>Lassú légzőgyakorlat az ellazuláshoz és a feszültség elengedéséhez. Lélegezz be 4 másodpercig, tartsd bent 7-ig, majd lassan lélegezz ki 8 másodperc alatt.</value>
     </data>
     <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
         <value>4-6 légzés</value>
     </data>
     <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
-        <value>Lassítsd a légzésed és engedd el a feszültséget. Lélegezz be 4 másodpercig, majd lassan fújd ki 6 másodperc alatt.</value>
+        <value>Kíméletes légzési ritmus a lelassuláshoz és a feszültség oldásához. Lélegezz be 4 másodpercig, majd lassan lélegezz ki 6 másodperc alatt.</value>
+    </data>
+    <data name="BreathingTechnique.TriangleBreathing.Name" xml:space="preserve">
+        <value>Háromszög-légzés</value>
+    </data>
+    <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
+        <value>Egyszerű légzési ritmus a lelassuláshoz és a figyelem légzésre irányításához. Lélegezz be 3 másodpercig, tartsd bent 3-ig, majd lélegezz ki 3 másodperc alatt.</value>
     </data>
     <data name="Settings.Category.General" xml:space="preserve">
         <value>Általános</value>

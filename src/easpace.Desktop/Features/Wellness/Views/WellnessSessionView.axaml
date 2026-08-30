@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
              Background="{StaticResource Haven.Scale.Transparent}">
 
     <!-- Session view -->
-    <Grid RowDefinitions="*,*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
+    <Grid RowDefinitions="*,*,*,*,Auto" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxl}">
 
         <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -63,6 +63,11 @@ Licensed under the MIT License. See LICENSE file for details.
                     Command="{Binding StopSessionCommand}" />
 
         </StackPanel>
+        
+        <TextBlock Grid.Row="4" Classes="subtle neutral fs4 trm-ellipsis" IsVisible="{Binding IsBreathing}"
+                   Text="{core:LocalizationService Key='Wellness.Warning.Breathing'}" TextWrapping="Wrap"
+                   TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="600"
+                   Opacity="0.8"/>
 
     </Grid>
 

@@ -528,8 +528,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Instruction.BreatheOut" xml:space="preserve">
         <value>Breathe out...</value>
     </data>
-    <data name="Wellness.Instruction.Meditation" xml:space="preserve">
-        <value>Wellness.Instruction.Meditation</value>
+    <data name="Wellness.Warning.Breathing" xml:space="preserve">
+        <value>If you feel dizzy, short of breath or uncomfortable, stop and return to your natural breathing.</value>
     </data>
     <data name="Wellness.Question.SaveSession" xml:space="preserve">
         <value>Would you like to save this session?</value>
@@ -580,19 +580,25 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Box Breathing</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Description" xml:space="preserve">
-        <value>A simple technique to calm your nervous system and regain focus. Inhale, hold, exhale, and hold for four seconds each.</value>
+        <value>A steady breathing rhythm that can help you slow down and refocus. Inhale for 4 seconds, hold for 4, exhale for 4, then hold for 4.</value>
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Name" xml:space="preserve">
         <value>4-7-8 Breathing</value>
     </data>
     <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
-        <value>Ease into deep relaxation. Place the tip of your tongue behind your upper teeth. Inhale for 4 seconds, hold your breath for 7, and exhale fully with a "whoosh" sound for 8 seconds.</value>
+        <value>A slow breathing exercise for relaxing and releasing tension. Inhale for 4 seconds, hold for 7, then exhale slowly for 8.</value>
     </data>
     <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
         <value>4-6 Breathing</value>
     </data>
     <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
-        <value>Slow down and release tension with a longer exhale. Inhale for 4 seconds, then exhale gently for 6.</value>
+        <value>A gentle breathing rhythm for slowing down and easing tension. Inhale for 4 seconds, then exhale slowly for 6.</value>
+    </data>
+    <data name="BreathingTechnique.TriangleBreathing.Name" xml:space="preserve">
+        <value>Triangle Breathing</value>
+    </data>
+    <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
+        <value>A simple breathing rhythm for slowing down and bringing attention to your breath. Inhale for 3 seconds, hold for 3, then exhale for 3.</value>
     </data>
     <data name="Settings.Category.General" xml:space="preserve">
         <value>General</value>

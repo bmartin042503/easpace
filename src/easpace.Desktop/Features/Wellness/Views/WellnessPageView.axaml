@@ -24,7 +24,7 @@ Licensed under the MIT License. See LICENSE file for details.
             FromBrush="{DynamicResource Haven.Sem.Accent.Muted}"
             ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
             EllipseCount="7"
-            Speed="0.4"
+            Speed="0.2"
             Opacity="0.75"
             IsVisible="{Binding IsBlobBackgroundVisible}" />
 

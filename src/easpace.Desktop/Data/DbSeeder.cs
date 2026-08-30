@@ -63,6 +63,34 @@ internal class DbSeeder
                     IsLocalized = true,
                     Cycles = 5
                 },
+                new BreathingTechnique
+                {
+                    Name = "BreathingTechnique.TriangleBreathing.Name",
+                    Description = "BreathingTechnique.TriangleBreathing.Description",
+                    Phases =
+                    [
+                        new BreathingPhase
+                        {
+                            Type = BreathingPhaseType.Inhale,
+                            DurationSeconds = 3,
+                            Order = 1
+                        },
+                        new BreathingPhase
+                        {
+                            Type = BreathingPhaseType.HoldIn,
+                            DurationSeconds = 3,
+                            Order = 2
+                        },
+                        new BreathingPhase
+                        {
+                            Type = BreathingPhaseType.Exhale,
+                            DurationSeconds = 3,
+                            Order = 3
+                        }
+                    ],
+                    IsLocalized = true,
+                    Cycles = 6
+                }
             };
             
             await _dbContext.BreathingTechniques.AddRangeAsync(defaultTechniques);

@@ -192,7 +192,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
             if (IsTimerChecked)
             {
-                cycles = (int)(SelectedSeconds / StepSeconds);
+                cycles = (int)Math.Round(SelectedSeconds / cycleDurationSeconds);
                 targetDuration = TimeSpan.FromSeconds(cycles * cycleDurationSeconds);
             }
             else
@@ -276,16 +276,19 @@ internal partial class WellnessStartViewModel : ViewModelBase
     {
         if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
         {
-            MaximumSeconds = 20 * 60;
             StepSeconds = SelectedBreathingTechniqueViewModel.Phases.Sum(p => p.DurationSeconds);
 
             // calculate minimum cycles required to hit at least one minute
             var minCycles = Math.Ceiling(60.0 / StepSeconds);
             MinimumSeconds = minCycles * StepSeconds;
+            
+            // calculate maximum cycles with a 10 minute limit
+            var maxCycles = Math.Floor(10 * 60.0 / StepSeconds);
+            MaximumSeconds = maxCycles * StepSeconds;
         }
         else
         {
-            MaximumSeconds = 60 * 60;
+            MaximumSeconds = 30 * 60;
             StepSeconds = 60;
             MinimumSeconds = 60;
         }
@@ -301,8 +304,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
         }
         else if (newSelectedSeconds > MaximumSeconds)
         {
-            var maxCycles = Math.Floor(MaximumSeconds / StepSeconds);
-            newSelectedSeconds = maxCycles * StepSeconds;
+            newSelectedSeconds = MaximumSeconds;
         }
 
         SelectedSeconds = newSelectedSeconds;
