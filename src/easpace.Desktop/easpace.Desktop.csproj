@@ -17,6 +17,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Folder Include="Assets\Fonts\*"/>
         <AvaloniaResource Include="Assets\**"/>
         <AvaloniaResource Remove="Controls\TimePicker\**" />
+        <Folder Include="Assets\Images\" />
     </ItemGroup>
 
     <!-- Versions -->

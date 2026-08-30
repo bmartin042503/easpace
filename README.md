@@ -17,6 +17,14 @@ It's all yours, **for free, forever**.
 
 It will be available for **Windows, macOS, and Linux**, with **iOS and Android** support planned for later versions.
 
+<p align="center">
+    <img src="src/easpace.Desktop/Assets/Images/journal.png" alt="journal page">
+    <img src="src/easpace.Desktop/Assets/Images/activities.png" alt="activities page">
+    <img src="src/easpace.Desktop/Assets/Images/mood.png" alt="mood page">
+    <img src="src/easpace.Desktop/Assets/Images/wellness-1.png" alt="wellness start page">
+    <img src="src/easpace.Desktop/Assets/Images/wellness-2.png" alt="wellness session page">
+</p>
+
 ## Features
 
 * **Journaling:** Write down your thoughts and reflections in a simple, private journal.

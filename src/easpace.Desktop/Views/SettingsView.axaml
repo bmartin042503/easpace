@@ -211,7 +211,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                                 <!-- Title -->
-                                <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
+                                <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace (beta)" />
 
                                 <!-- Built with .NET and Avalonia UI -->
                                 <TextBlock Classes="strong accent fs5 trm-ellipsis"
@@ -272,7 +272,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Separator Height="1" Background="{DynamicResource Haven.Sem.Accent}"
                                Margin="0" />
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                               LineSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
                         <!-- GitHub button -->
                         <Button Classes="primary regular"
@@ -335,7 +336,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         </Button>
 
-                    </StackPanel>
+                    </WrapPanel>
 
                     <!-- Third-party libraries -->
 
