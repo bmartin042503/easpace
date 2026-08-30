@@ -43,6 +43,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Overrides/CalendarDatePicker.axaml" />
                 <ResourceInclude Source="Overrides/CalendarDayButton.axaml" />
                 <ResourceInclude Source="Overrides/CalendarItem.axaml" />
+                <ResourceInclude Source="Overrides/TimePicker.axaml" />
                 
                 <!-- Custom control themes -->
                 <ResourceInclude Source="Controls/IconListItem.axaml" />
