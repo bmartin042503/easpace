@@ -39,6 +39,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="TextBox">
         
         <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
+        <Setter Property="MinHeight" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
@@ -123,6 +124,7 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="TextBox.numeric-up-down, TextBox.date-picker">
         
+        <Setter Property="MinHeight" Value="0" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{StaticResource Haven.Scale.Transparent}" />
         <Setter Property="BorderThickness" Value="0" />

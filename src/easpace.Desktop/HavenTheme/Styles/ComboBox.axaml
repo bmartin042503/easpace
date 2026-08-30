@@ -24,6 +24,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="ComboBox">
 
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="FontFamily" Value="{StaticResource Haven.FontFamily.Poppins}" />
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
         <Setter Property="FontSize" Value="{StaticResource Haven.Scale.FontSize.Xs}" />

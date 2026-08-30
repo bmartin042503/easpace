@@ -7,15 +7,20 @@ Licensed under the MIT License. See LICENSE file for details.
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System">
 
-    <x:Double x:Key="Haven.CalendarDatePicker.MinHeight">40</x:Double>
-    <x:Double x:Key="Haven.CalendarDatePicker.GlyphDayFontSize">8</x:Double>
+    <x:Double x:Key="Haven.CalendarDatePicker.DropDownButton.Width">30</x:Double>
+    <x:Double x:Key="Haven.CalendarDatePicker.DropDownButton.Height">26</x:Double>
+    <x:Double x:Key="Haven.CalendarDatePicker.GlyphSize">16</x:Double>
+    <x:Double x:Key="Haven.CalendarDatePicker.GlyphDayFontSize">7</x:Double>
 
-    <ControlTheme x:Key="Haven.CalendarDatePicker.DropDownButton" TargetType="Button">
+    <ControlTheme x:Key="Haven.CalendarDatePicker.DropDownButton"
+                  TargetType="Button">
 
-        <Setter Property="Width" Value="34" />
-        <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="2,0,3,0" />
-        <Setter Property="Padding" Value="7" />
+        <Setter Property="Width"
+                Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Width}" />
+        <Setter Property="Height"
+                Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Height}" />
+        <Setter Property="Margin" Value="2,3,3,3" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
@@ -26,22 +31,35 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Root" Background="{TemplateBinding Background}"
+                <Border Name="Root"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
-                    <Grid Width="18" Height="18" RowDefinitions="6,*"
-                          HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <PathIcon Grid.RowSpan="2" Width="18" Height="18"
+
+                    <Grid Width="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
+                          Height="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
+                          RowDefinitions="5,*"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+
+                        <PathIcon Grid.RowSpan="2"
+                                  Width="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
+                                  Height="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
                                   Foreground="{TemplateBinding Foreground}"
                                   Data="{StaticResource Haven.PhosphorIcons.CalendarBlank}" />
+
                         <TextBlock Grid.Row="1"
                                    Text="{Binding Source={x:Static sys:DateTime.Today}, Path=Day}"
                                    Foreground="{TemplateBinding Foreground}"
                                    FontSize="{StaticResource Haven.CalendarDatePicker.GlyphDayFontSize}"
                                    FontWeight="{StaticResource Haven.Scale.FontWeight.Medium}"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   TextAlignment="Center" />
+
                     </Grid>
+
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -68,10 +86,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type CalendarDatePicker}" TargetType="CalendarDatePicker">
+    <ControlTheme x:Key="{x:Type CalendarDatePicker}"
+                  TargetType="CalendarDatePicker">
 
         <Setter Property="MinWidth" Value="{StaticResource Haven.Scale.Input.MinWidth}" />
-        <Setter Property="MinHeight" Value="{StaticResource Haven.CalendarDatePicker.MinHeight}" />
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -87,22 +106,34 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Template">
             <ControlTemplate>
                 <DataValidationErrors>
-                    <Panel Name="LayoutRoot" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Border Name="Background" Background="{TemplateBinding Background}"
+
+                    <Panel Name="LayoutRoot"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch">
+
+                        <Border Name="Background"
+                                Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}" />
 
                         <Grid ColumnDefinitions="*,Auto">
-                            <TextBox Name="PART_TextBox" Classes="date-picker" Grid.Column="0"
+
+                            <TextBox Name="PART_TextBox"
+                                     Classes="date-picker"
+                                     Grid.Column="0"
                                      Foreground="{TemplateBinding Foreground}"
-                                     Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                     Background="Transparent"
+                                     BorderBrush="Transparent"
+                                     BorderThickness="0"
                                      CornerRadius="{TemplateBinding CornerRadius}"
-                                     Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}"
+                                     Margin="{TemplateBinding BorderThickness}"
+                                     Padding="{TemplateBinding Padding}"
                                      PlaceholderText="{TemplateBinding PlaceholderText}"
                                      PlaceholderForeground="{TemplateBinding PlaceholderForeground}"
                                      UseFloatingPlaceholder="{TemplateBinding UseFloatingPlaceholder}"
-                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Stretch"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
 
@@ -116,14 +147,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                     <Style Selector="TextBox#PART_TextBox:disabled">
 
-                                        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                                        <Setter Property="Foreground"
+                                                Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
 
                                         <Style Selector="^ /template/ Border#PART_BorderElement">
                                             <Setter Property="Background" Value="Transparent" />
                                             <Setter Property="BorderBrush" Value="Transparent" />
                                         </Style>
 
-                                        <Style Selector="^ /template/ TextBlock#PART_Placeholder, ^ TextBlock#PART_FloatingPlaceholder">
+                                        <Style
+                                            Selector="^ /template/ TextBlock#PART_Placeholder, ^ TextBlock#PART_FloatingPlaceholder">
                                             <Setter Property="TextElement.Foreground"
                                                     Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
                                         </Style>
@@ -134,19 +167,26 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             </TextBox>
 
-                            <Button Name="PART_Button" Grid.Column="1"
+                            <Button Name="PART_Button"
+                                    Grid.Column="1"
                                     Theme="{StaticResource Haven.CalendarDatePicker.DropDownButton}"
-                                    Focusable="False" />
+                                    Focusable="False"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" />
 
-                            <Popup Name="PART_Popup" PlacementTarget="{TemplateBinding}"
+                            <Popup Name="PART_Popup"
+                                   PlacementTarget="{TemplateBinding}"
                                    IsLightDismissEnabled="True">
-                                <Border Name="PART_PopupBorder" Margin="0,4,0,0"
+
+                                <Border Name="PART_PopupBorder"
+                                        Margin="0,4,0,0"
                                         Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xs}"
                                         Background="{DynamicResource Haven.Sem.Surface.Elevated}"
                                         BorderBrush="{DynamicResource Haven.Sem.Border}"
                                         BorderThickness="{StaticResource Haven.Scale.Border.Thickness}"
                                         CornerRadius="{StaticResource Haven.Scale.Radius.Md}"
                                         ClipToBounds="True">
+
                                     <Calendar Name="PART_Calendar"
                                               Background="{DynamicResource Haven.Sem.Surface.Elevated}"
                                               BorderThickness="0"
@@ -157,10 +197,15 @@ Licensed under the MIT License. See LICENSE file for details.
                                               DisplayDate="{TemplateBinding DisplayDate}"
                                               DisplayDateStart="{TemplateBinding DisplayDateStart}"
                                               DisplayDateEnd="{TemplateBinding DisplayDateEnd}" />
+
                                 </Border>
+
                             </Popup>
+
                         </Grid>
+
                     </Panel>
+
                 </DataValidationErrors>
             </ControlTemplate>
         </Setter>
@@ -173,12 +218,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style Selector="^:focus-within:not(CalendarDatePicker:focus) /template/ Border#Background">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
-            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
+            <Setter Property="BorderThickness"
+                    Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
         </Style>
 
         <Style Selector="^:error /template/ Border#Background">
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger}" />
-            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
+            <Setter Property="BorderThickness"
+                    Value="{StaticResource Haven.Scale.Border.Thickness.Medium}" />
         </Style>
 
         <Style Selector="^:disabled">
@@ -189,11 +236,13 @@ Licensed under the MIT License. See LICENSE file for details.
             </Style>
 
             <Style Selector="^ /template/ TextBox#PART_TextBox">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
             </Style>
 
             <Style Selector="^ /template/ Button#PART_Button">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
             </Style>
 
         </Style>

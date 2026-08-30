@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              x:DataType="vmDialogs:RoutineEntryDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             MaxWidth="550" MaxHeight="400"
+             MaxWidth="450" MaxHeight="400"
              Background="{StaticResource Haven.Scale.Transparent}"
              x:Class="easpace.Desktop.Features.Activities.Views.Dialogs.RoutineEntryDialogView">
 
@@ -32,7 +32,7 @@ Licensed under the MIT License. See LICENSE file for details.
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
             <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Stretch">
 
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
@@ -40,20 +40,19 @@ Licensed under the MIT License. See LICENSE file for details.
                     <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
                                         HorizontalAlignment="Stretch"
                                         PlaceholderText="{core:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
-                                        DisplayDateEnd="{Binding MaxAllowedDate}"
-                                        MinHeight="37" />
+                                        DisplayDateEnd="{Binding MaxAllowedDate}" />
 
                     <!-- Time picker -->
                     <TimePicker SelectedTime="{Binding SelectedTime}"
                                 ClockIdentifier="24HourClock"
-                                MinHeight="37" />
+                                Width="{StaticResource Haven.TimePicker.Width}" />
 
                 </StackPanel>
 
                 <!-- Routine state selection -->
                 <ComboBox ItemsSource="{Binding States}"
                           SelectedItem="{Binding SelectedState}"
-                          Width="{StaticResource Haven.Scale.Input.MinWidth}">
+                          HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock

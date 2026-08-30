@@ -8,29 +8,32 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <x:Double x:Key="Haven.TimePicker.FlyoutButtonMaxHeight">40</x:Double>
-    <x:Double x:Key="Haven.TimePicker.ItemHeight">40</x:Double>
+    <x:Double x:Key="Haven.TimePicker.Width">120</x:Double>
     <x:Double x:Key="Haven.TimePicker.ItemMinWidth">48</x:Double>
+    <x:Double x:Key="Haven.TimePicker.ItemHeight">40</x:Double>
     <x:Double x:Key="Haven.TimePicker.SpacerWidth">1</x:Double>
     <x:Double x:Key="Haven.TimePicker.PresenterMaxWidth">200</x:Double>
     <x:Double x:Key="Haven.TimePicker.PresenterMaxHeight">260</x:Double>
     <x:Double x:Key="Haven.TimePicker.ActionHeight">40</x:Double>
 
-    <ControlTheme x:Key="Haven.TimePicker.FlyoutButton" TargetType="Button">
+    <ControlTheme x:Key="Haven.TimePicker.FlyoutButton"
+                  TargetType="Button">
 
         <Setter Property="ClickMode" Value="Release" />
-        <Setter Property="MaxHeight" Value="{StaticResource Haven.TimePicker.FlyoutButtonMaxHeight}" />
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0" />
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Root" Background="{TemplateBinding Background}"
+                <Border Name="Root"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
@@ -65,11 +68,12 @@
 
     </ControlTheme>
 
-    <ControlTheme x:Key="Haven.TimePicker.Item" TargetType="ListBoxItem">
+    <ControlTheme x:Key="Haven.TimePicker.Item"
+                  TargetType="ListBoxItem">
 
-        <Setter Property="MinWidth" Value="{StaticResource Haven.TimePicker.ItemMinWidth}" />
+        <Setter Property="Width" Value="{StaticResource Haven.TimePicker.ItemMinWidth}" />
         <Setter Property="Height" Value="{StaticResource Haven.TimePicker.ItemHeight}" />
-        <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.3Xs}" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
@@ -80,14 +84,17 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Root" Background="{TemplateBinding Background}"
+                <Border Name="Root"
+                        Background="{TemplateBinding Background}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      Margin="{TemplateBinding Padding}" />
+                                      Foreground="{TemplateBinding Foreground}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      HorizontalContentAlignment="Center"
+                                      VerticalContentAlignment="Center" />
                 </Border>
             </ControlTemplate>
         </Setter>
@@ -98,15 +105,15 @@
             <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
         </Style>
 
-        <Style Selector="^:pointerover /template/ Border#Root">
+        <Style Selector="^:pointerover:not(:selected) /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
         </Style>
 
-        <Style Selector="^:pointerover">
+        <Style Selector="^:pointerover:not(:selected)">
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
         </Style>
 
-        <Style Selector="^:pressed /template/ Border#Root">
+        <Style Selector="^:pressed:not(:selected) /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
         </Style>
 
@@ -116,7 +123,8 @@
 
     </ControlTheme>
 
-    <ControlTheme x:Key="Haven.TimePicker.HiddenSpinnerButton" TargetType="RepeatButton">
+    <ControlTheme x:Key="Haven.TimePicker.HiddenSpinnerButton"
+                  TargetType="RepeatButton">
 
         <Setter Property="Width" Value="0" />
         <Setter Property="Height" Value="0" />
@@ -133,7 +141,8 @@
 
     </ControlTheme>
 
-    <ControlTheme x:Key="Haven.TimePicker.ActionButton" TargetType="Button">
+    <ControlTheme x:Key="Haven.TimePicker.ActionButton"
+                  TargetType="Button">
 
         <Setter Property="ClickMode" Value="Release" />
         <Setter Property="Height" Value="{StaticResource Haven.TimePicker.ActionHeight}" />
@@ -147,7 +156,8 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Root" Background="{TemplateBinding Background}"
+                <Border Name="Root"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
@@ -175,9 +185,12 @@
 
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type TimePicker}" TargetType="TimePicker">
+    <ControlTheme x:Key="{x:Type TimePicker}"
+                  TargetType="TimePicker">
 
+        <Setter Property="Width" Value="{StaticResource Haven.TimePicker.Width}" />
         <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
@@ -185,79 +198,120 @@
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0" />
 
         <Setter Property="Template">
             <ControlTemplate>
                 <DataValidationErrors>
-                    <Grid Name="LayoutRoot" Margin="{TemplateBinding Padding}">
+                    <Grid Name="LayoutRoot">
+
                         <Button Name="PART_FlyoutButton"
                                 Theme="{StaticResource Haven.TimePicker.FlyoutButton}"
-                                MaxHeight="{StaticResource Haven.TimePicker.FlyoutButtonMaxHeight}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 IsEnabled="{TemplateBinding IsEnabled}"
-                                HorizontalAlignment="Left" VerticalAlignment="Center">
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch">
 
-                            <Grid Name="PART_FlyoutButtonContentGrid" HorizontalAlignment="Left">
-                                <Border Name="PART_FirstPickerHost" Grid.Column="0"
-                                        HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                            <Grid Name="PART_FlyoutButtonContentGrid"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+
+                                <Border Name="PART_FirstPickerHost"
+                                        Grid.Column="0"
+                                        MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
                                     <TextBlock Name="PART_HourTextBlock"
                                                Text="{StaticResource StringTimePickerHourText}"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Padding="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
+                                               FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Padding="8,0" />
                                 </Border>
 
-                                <Rectangle Name="PART_FirstColumnDivider" Grid.Column="1"
+                                <Rectangle Name="PART_FirstColumnDivider"
+                                           Grid.Column="1"
                                            Fill="{DynamicResource Haven.Sem.Border}"
                                            HorizontalAlignment="Center"
+                                           VerticalAlignment="Stretch"
                                            Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
 
-                                <Border Name="PART_SecondPickerHost" Grid.Column="2"
-                                        HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                <Border Name="PART_SecondPickerHost"
+                                        Grid.Column="2"
+                                        MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
                                     <TextBlock Name="PART_MinuteTextBlock"
                                                Text="{StaticResource StringTimePickerMinuteText}"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Padding="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
+                                               FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Padding="8,0" />
                                 </Border>
 
-                                <Rectangle Name="PART_SecondColumnDivider" Grid.Column="3"
+                                <Rectangle Name="PART_SecondColumnDivider"
+                                           Grid.Column="3"
                                            Fill="{DynamicResource Haven.Sem.Border}"
                                            HorizontalAlignment="Center"
+                                           VerticalAlignment="Stretch"
                                            Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
 
-                                <Border Name="PART_ThirdPickerHost" Grid.Column="4"
-                                        HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                <Border Name="PART_ThirdPickerHost"
+                                        Grid.Column="4"
+                                        MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
                                     <TextBlock Name="PART_SecondTextBlock"
                                                Text="{StaticResource StringTimePickerSecondText}"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Padding="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
+                                               FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Padding="8,0" />
                                 </Border>
 
-                                <Rectangle Name="PART_ThirdColumnDivider" Grid.Column="5"
+                                <Rectangle Name="PART_ThirdColumnDivider"
+                                           Grid.Column="5"
                                            Fill="{DynamicResource Haven.Sem.Border}"
                                            HorizontalAlignment="Center"
+                                           VerticalAlignment="Stretch"
                                            Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
 
-                                <Border Name="PART_FourthPickerHost" Grid.Column="6"
-                                        HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                                <Border Name="PART_FourthPickerHost"
+                                        Grid.Column="6"
+                                        MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
                                     <TextBlock Name="PART_PeriodTextBlock"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Padding="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />
+                                               FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Padding="8,0" />
                                 </Border>
+
                             </Grid>
+
                         </Button>
 
-                        <Popup Name="PART_Popup" WindowManagerAddShadowHint="False"
-                               IsLightDismissEnabled="True" PlacementTarget="{TemplateBinding}"
+                        <Popup Name="PART_Popup"
+                               WindowManagerAddShadowHint="False"
+                               IsLightDismissEnabled="True"
+                               PlacementTarget="{TemplateBinding}"
                                Placement="Bottom">
-                            <TimePickerPresenter Name="PART_PickerPresenter" Margin="0,4,0,0"
+                            <TimePickerPresenter Name="PART_PickerPresenter"
+                                                 Margin="0,4,0,0"
                                                  MaxWidth="{StaticResource Haven.TimePicker.PresenterMaxWidth}"
                                                  MaxHeight="{StaticResource Haven.TimePicker.PresenterMaxHeight}"
                                                  HorizontalAlignment="Center" />
                         </Popup>
+
                     </Grid>
                 </DataValidationErrors>
             </ControlTemplate>
@@ -278,7 +332,8 @@
 
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type TimePickerPresenter}" TargetType="TimePickerPresenter">
+    <ControlTheme x:Key="{x:Type TimePickerPresenter}"
+                  TargetType="TimePickerPresenter">
 
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MaxWidth" Value="{StaticResource Haven.TimePicker.PresenterMaxWidth}" />
@@ -293,7 +348,8 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="Background" Background="{TemplateBinding Background}"
+                <Border Name="Background"
+                        Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}"
@@ -301,133 +357,183 @@
                         MaxWidth="{StaticResource Haven.TimePicker.PresenterMaxWidth}"
                         MaxHeight="{StaticResource Haven.TimePicker.PresenterMaxHeight}"
                         ClipToBounds="True">
-                    <Grid Name="ContentPanel" RowDefinitions="*,Auto"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                    <Grid Name="ContentPanel"
+                          RowDefinitions="*,Auto"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch">
+
                         <Grid Name="PART_PickerContainer"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+
                             <Grid.Styles>
                                 <Style Selector="DateTimePickerPanel > ListBoxItem">
                                     <Setter Property="Theme" Value="{StaticResource Haven.TimePicker.Item}" />
                                 </Style>
                             </Grid.Styles>
 
-                            <Panel Name="PART_HourHost" Grid.Column="0"
+                            <Panel Name="PART_HourHost"
+                                   Grid.Column="0"
                                    MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                               VerticalScrollBarVisibility="Hidden"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <DateTimePickerPanel Name="PART_HourSelector" PanelType="Hour"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch">
+                                    <DateTimePickerPanel Name="PART_HourSelector"
+                                                         PanelType="Hour"
                                                          ShouldLoop="True"
-                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
                                                          ItemHeight="{StaticResource Haven.TimePicker.ItemHeight}" />
                                 </ScrollViewer>
                                 <RepeatButton Name="PART_HourUpButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                                 <RepeatButton Name="PART_HourDownButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                             </Panel>
 
-                            <Panel Name="PART_MinuteHost" Grid.Column="2"
+                            <Panel Name="PART_MinuteHost"
+                                   Grid.Column="2"
                                    MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                               VerticalScrollBarVisibility="Hidden"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <DateTimePickerPanel Name="PART_MinuteSelector" PanelType="Minute"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch">
+                                    <DateTimePickerPanel Name="PART_MinuteSelector"
+                                                         PanelType="Minute"
                                                          ShouldLoop="True"
-                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
                                                          ItemHeight="{StaticResource Haven.TimePicker.ItemHeight}" />
                                 </ScrollViewer>
                                 <RepeatButton Name="PART_MinuteUpButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                                 <RepeatButton Name="PART_MinuteDownButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                             </Panel>
 
-                            <Panel Name="PART_SecondHost" Grid.Column="4"
+                            <Panel Name="PART_SecondHost"
+                                   Grid.Column="4"
                                    MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                               VerticalScrollBarVisibility="Hidden"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <DateTimePickerPanel Name="PART_SecondSelector" PanelType="Second"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch">
+                                    <DateTimePickerPanel Name="PART_SecondSelector"
+                                                         PanelType="Second"
                                                          ShouldLoop="True"
-                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
                                                          ItemHeight="{StaticResource Haven.TimePicker.ItemHeight}" />
                                 </ScrollViewer>
                                 <RepeatButton Name="PART_SecondUpButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                                 <RepeatButton Name="PART_SecondDownButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                             </Panel>
 
-                            <Panel Name="PART_PeriodHost" Grid.Column="6"
+                            <Panel Name="PART_PeriodHost"
+                                   Grid.Column="6"
                                    MinWidth="{StaticResource Haven.TimePicker.ItemMinWidth}"
-                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
                                 <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                               VerticalScrollBarVisibility="Hidden"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <DateTimePickerPanel Name="PART_PeriodSelector" PanelType="TimePeriod"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch">
+                                    <DateTimePickerPanel Name="PART_PeriodSelector"
+                                                         PanelType="TimePeriod"
                                                          ShouldLoop="False"
-                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
                                                          ItemHeight="{StaticResource Haven.TimePicker.ItemHeight}" />
                                 </ScrollViewer>
                                 <RepeatButton Name="PART_PeriodUpButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                                 <RepeatButton Name="PART_PeriodDownButton"
                                               Theme="{StaticResource Haven.TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False" IsHitTestVisible="False" />
+                                              IsVisible="False"
+                                              IsHitTestVisible="False" />
                             </Panel>
-                            
-                            <Rectangle Name="PART_FirstSpacer" Grid.Column="1"
+
+                            <Rectangle Name="PART_FirstSpacer"
+                                       Grid.Column="1"
                                        Fill="{DynamicResource Haven.Sem.Border}"
                                        HorizontalAlignment="Center"
                                        Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
-                            <Rectangle Name="PART_SecondSpacer" Grid.Column="3"
+
+                            <Rectangle Name="PART_SecondSpacer"
+                                       Grid.Column="3"
                                        Fill="{DynamicResource Haven.Sem.Border}"
                                        HorizontalAlignment="Center"
                                        Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
-                            <Rectangle Name="PART_ThirdSpacer" Grid.Column="5"
+
+                            <Rectangle Name="PART_ThirdSpacer"
+                                       Grid.Column="5"
                                        Fill="{DynamicResource Haven.Sem.Border}"
                                        HorizontalAlignment="Center"
                                        Width="{StaticResource Haven.TimePicker.SpacerWidth}" />
+
                         </Grid>
 
-                        <Grid Name="AcceptDismissGrid" Grid.Row="1" ColumnDefinitions="*,*">
+                        <Grid Name="AcceptDismissGrid"
+                              Grid.Row="1"
+                              ColumnDefinitions="*,*">
+
                             <Rectangle Height="{StaticResource Haven.TimePicker.SpacerWidth}"
                                        VerticalAlignment="Top"
                                        Fill="{DynamicResource Haven.Sem.Border}"
                                        Grid.ColumnSpan="2" />
 
-                            <Button Name="PART_AcceptButton" Grid.Column="0"
+                            <Button Name="PART_AcceptButton"
+                                    Grid.Column="0"
                                     Theme="{StaticResource Haven.TimePicker.ActionButton}"
                                     Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
                                 <PathIcon Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}"
                                           Foreground="{Binding $parent[Button].Foreground}"
                                           Data="{StaticResource Haven.PhosphorIcons.Check.Bold}" />
                             </Button>
 
-                            <Button Name="PART_DismissButton" Grid.Column="1"
+                            <Button Name="PART_DismissButton"
+                                    Grid.Column="1"
                                     Theme="{StaticResource Haven.TimePicker.ActionButton}"
                                     Foreground="{DynamicResource Haven.Sem.Danger.Strong}"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
                                 <PathIcon Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
                                           Height="{StaticResource Haven.Scale.Icon.Size.Xs}"
                                           Foreground="{Binding $parent[Button].Foreground}"
                                           Data="{StaticResource Haven.PhosphorIcons.X.Bold}" />
                             </Button>
+
                         </Grid>
+
                     </Grid>
+
                 </Border>
             </ControlTemplate>
         </Setter>

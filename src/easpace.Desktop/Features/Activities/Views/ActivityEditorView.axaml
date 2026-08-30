@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- TrendActivity edit form -->
         <DataTemplate x:Key="TrendTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
@@ -55,7 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- MilestoneActivity edit form -->
         <DataTemplate x:Key="MilestoneTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
                 <!-- Unit input -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
@@ -139,7 +139,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
 
                     <!-- Name input -->
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">

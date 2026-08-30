@@ -46,12 +46,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type NumericUpDown}" TargetType="NumericUpDown">
+        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
         <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
-        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
         <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -77,7 +77,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                  BorderBrush="Transparent"
                                  BorderThickness="0"
                                  Padding="10,0"
-                                 MinHeight="40"
+                                 MinHeight="0"
                                  Foreground="{TemplateBinding Foreground}"
                                  PlaceholderText="{TemplateBinding PlaceholderText}"
                                  PlaceholderForeground="{TemplateBinding PlaceholderForeground}"
