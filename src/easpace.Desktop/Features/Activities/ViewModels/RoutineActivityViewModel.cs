@@ -203,7 +203,8 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             SelectedState = entryVm.State,
-            SelectedDate = entryVm.Timestamp.Date
+            SelectedDate = entryVm.Timestamp.Date,
+            SelectedTime = entryVm.Timestamp.TimeOfDay
         };
 
         await _dialogService.ShowDialogAsync(routineEntryDialog);

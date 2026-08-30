@@ -84,7 +84,8 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             NumericValue = entryVm.Value,
-            SelectedDate = entryVm.Timestamp.Date
+            SelectedDate = entryVm.Timestamp.Date,
+            SelectedTime = entryVm.Timestamp.TimeOfDay
         };
 
         await _dialogService.ShowDialogAsync(numericEntryDialog);
