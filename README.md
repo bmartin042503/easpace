@@ -15,7 +15,7 @@ There are **no subscriptions, paywalls, ads, or analytics**. **All your data is 
 
 It's all yours, **for free, forever**.
 
-It will be available for **Windows, macOS, and Linux**, with **iOS and Android** support planned for later versions.
+Available for **Windows** and **macOS** (support for Linux, iOS and Android will be added in later versions).
 
 <p align="center">
     <img src="src/easpace.Desktop/Assets/Images/journal.png" alt="journal page">
@@ -33,28 +33,28 @@ It will be available for **Windows, macOS, and Linux**, with **iOS and Android**
 
 ## Installation
 
-Pre-built packages are currently available for **Windows** and **macOS**. The current release is intended primarily for development and testing rather than as a stable production release.
+The **current release is intended primarily for development and testing** rather than as a stable production release.
 
-Linux packages are **not available yet**. They're currently blocked by issues related to securely storing the database encryption key. Linux support is planned for a later version.
+The application has been tested on **Windows 11 x64, Windows 11 ARM64**, and **macOS ARM64 (Apple Silicon)**. Windows 10 has not been tested yet, so compatibility is not guaranteed.
+
+Linux packages are not available yet due to unresolved secure key-storage requirements.
 
 ### Windows
 
-Download the `.exe` installer matching your system architecture from the [releases](https://github.com/bmartin042503/easpace/releases) page.
+Download the `.exe` installer matching your system architecture from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.1.0).
 
-> [!WARNING]
-> The Windows installer is **not signed with a trusted code-signing certificate**, so Windows SmartScreen may prevent it from running. If you trust the downloaded release and wish to continue, click `More info` → `Run anyway`.
+> [!NOTE]
+> The app and the installer are **not signed with a trusted code-signing certificate**, so Windows SmartScreen may show a warning. If you trust the downloaded release and wish to continue, click `More info` → `Run anyway`.
 
 ### macOS
 
-Download the `.dmg` file matching your Mac from the [releases](https://github.com/bmartin042503/easpace/releases) page. Open it, and drag **easpace** into the `Applications` folder.
+Download the `.dmg` file matching your Mac from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.1.0). Open it, and drag **easpace** into the `Applications` folder.
 
-> [!WARNING]
+On first launch, macOS may ask permission to access your **Keychain**. Easpace uses the Keychain to securely store and retrieve the encryption key required to encrypt and decrypt its local database.
+
+> [!NOTE]
 > The application is currently **not signed with an Apple Developer ID certificate or notarized by Apple**, so macOS may prevent it from opening on some systems.
-
-If macOS keeps the downloaded application in quarantine, you can remove the quarantine attribute with:
-```bash
-xattr -cr /Applications/easpace.Desktop.app
-```
+> If this occurs the quarantine flag can be removed with: `xattr -cr /Applications/easpace.Desktop.app`
 
 ## Build from source
 
