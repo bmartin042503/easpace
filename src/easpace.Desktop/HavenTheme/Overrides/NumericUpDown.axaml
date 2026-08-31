@@ -46,7 +46,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type NumericUpDown}" TargetType="NumericUpDown">
-        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
+        <Setter Property="MinHeight" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -58,13 +58,14 @@ Licensed under the MIT License. See LICENSE file for details.
                 <DataValidationErrors>
 
                     <ButtonSpinner Name="PART_Spinner"
+                                   Height="{StaticResource Haven.Scale.Input.Height}"
                                    Background="{DynamicResource Haven.Sem.Surface.Elevated}"
                                    BorderThickness="{TemplateBinding BorderThickness}"
                                    BorderBrush="{DynamicResource Haven.Sem.Border}"
                                    CornerRadius="{StaticResource Haven.Scale.Radius.Xs}"
                                    IsTabStop="False"
                                    Padding="0"
-                                   MinWidth="0"
+                                   MinWidth="{TemplateBinding MinWidth}"
                                    HorizontalContentAlignment="Stretch"
                                    VerticalContentAlignment="Stretch"
                                    AllowSpin="{TemplateBinding AllowSpin}"

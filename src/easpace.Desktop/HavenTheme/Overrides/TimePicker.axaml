@@ -20,7 +20,7 @@
                   TargetType="Button">
 
         <Setter Property="ClickMode" Value="Release" />
-        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
+        <Setter Property="MinHeight" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
@@ -203,7 +203,9 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <DataValidationErrors>
-                    <Grid Name="LayoutRoot">
+                    <Grid Name="LayoutRoot"
+                          Height="{StaticResource Haven.Scale.Input.Height}"
+                          VerticalAlignment="Top">
 
                         <Button Name="PART_FlyoutButton"
                                 Theme="{StaticResource Haven.TimePicker.FlyoutButton}"
@@ -360,6 +362,7 @@
 
                     <Grid Name="ContentPanel"
                           RowDefinitions="*,Auto"
+                          RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch">
 

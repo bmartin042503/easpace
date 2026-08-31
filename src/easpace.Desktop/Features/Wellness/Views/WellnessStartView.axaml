@@ -56,7 +56,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
-                            IsVisible="{Binding !HasSessionEntries}">
+                            IsVisible="{Binding ShowNoSessionEntries}">
 
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
                                 HorizontalAlignment="Center">
@@ -90,6 +90,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
+                    
                 </StackPanel>
 
                 <!-- History -->
@@ -224,7 +225,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                    TextWrapping="Wrap" />
 
                         <!-- 'No breathing techniques available' text -->
-                        <TextBlock IsVisible="{Binding !HasBreathingTechniques}"
+                        <TextBlock IsVisible="{Binding ShowNoBreathingTechniques}"
                                    Text="{core:LocalizationService Key='BreathingTechnique.Empty.Message'}"
                                    Classes="strong danger fs5" TextAlignment="Center" />
                     </Grid>

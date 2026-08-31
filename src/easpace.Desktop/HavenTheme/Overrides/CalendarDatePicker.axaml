@@ -15,10 +15,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <ControlTheme x:Key="Haven.CalendarDatePicker.DropDownButton"
                   TargetType="Button">
 
-        <Setter Property="Width"
-                Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Width}" />
-        <Setter Property="Height"
-                Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Height}" />
+        <Setter Property="Width" Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Width}" />
+        <Setter Property="Height" Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Height}" />
         <Setter Property="Margin" Value="2,3,3,3" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -89,8 +87,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <ControlTheme x:Key="{x:Type CalendarDatePicker}"
                   TargetType="CalendarDatePicker">
 
-        <Setter Property="MinWidth" Value="{StaticResource Haven.Scale.Input.MinWidth}" />
-        <Setter Property="Height" Value="{StaticResource Haven.Scale.Input.Height}" />
+        <Setter Property="MinHeight" Value="{StaticResource Haven.Scale.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -108,6 +105,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <DataValidationErrors>
 
                     <Panel Name="LayoutRoot"
+                           Height="{StaticResource Haven.Scale.Input.Height}"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Stretch">
 

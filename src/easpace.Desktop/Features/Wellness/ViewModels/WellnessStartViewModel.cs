@@ -47,13 +47,24 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
     private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowNoBreathingTechniques))]
+    [NotifyPropertyChangedFor(nameof(ShowNoSessionEntries))]
     private bool _isInitialized;
+
+    [ObservableProperty] private bool _isLoading = true;
     
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
+
+    private bool _isInitializationRunning;
     
     public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
     
     public bool HasBreathingTechniques => BreathingTechniques.Count > 0;
+    
+    public bool ShowNoBreathingTechniques => IsInitialized && !HasBreathingTechniques;
+
+    public bool ShowNoSessionEntries => IsInitialized && !HasSessionEntries;
 
     private bool CanStartSession()
     {
@@ -138,8 +149,17 @@ internal partial class WellnessStartViewModel : ViewModelBase
         _dialogService = dialogService;
         _logger = logger;
 
-        WellnessSessionEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasSessionEntries));
-        BreathingTechniques.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasBreathingTechniques));
+        WellnessSessionEntries.CollectionChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(HasSessionEntries));
+            OnPropertyChanged(nameof(ShowNoSessionEntries));
+        };
+        
+        BreathingTechniques.CollectionChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(HasBreathingTechniques));
+            OnPropertyChanged(nameof(ShowNoBreathingTechniques));
+        };
     }
 
     #endregion
@@ -149,27 +169,41 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [RelayCommand]
     public async Task InitializeAsync()
     {
-        if (_isInitialized) return;
+        if (IsInitialized || _isInitializationRunning)
+        {
+            return;
+        }
+
+        _isInitializationRunning = true;
+        IsLoading = true;
 
         try
         {
             await LoadWellnessSessionEntries();
             await LoadBreathingTechniques();
-            _isInitialized = true;
-            
+
             UpdateSlider();
+
+            IsInitialized = true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to load configuration data and initialize wellness start view");
-            
+            _logger.LogError(
+                ex,
+                "Failed to load configuration data and initialize wellness start view");
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Wellness.Error.LoadFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
+        }
+        finally
+        {
+            IsLoading = false;
+            _isInitializationRunning = false;
         }
     }
 

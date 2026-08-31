@@ -38,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Date input -->
                     <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
-                                        HorizontalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch" Width="160"
                                         PlaceholderText="{core:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
                                         DisplayDateEnd="{Binding MaxAllowedDate}" />
 

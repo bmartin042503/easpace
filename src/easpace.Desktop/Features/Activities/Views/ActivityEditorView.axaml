@@ -30,7 +30,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
                              PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
-                             HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
+                             HorizontalAlignment="Left" MinWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                 </StackPanel>
 
                 <!-- Target checkbox -->
@@ -43,7 +43,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4"
                                Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
-                                   Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                   MinWidth="{StaticResource Haven.Scale.Input.MinWidth}"
                                    HorizontalAlignment="Left" Increment="1" FormatString="0.##"
                                    PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
                 </StackPanel>
@@ -63,7 +63,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
                     <TextBox Text="{Binding Unit}"
                              PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
-                             HorizontalAlignment="Left" Width="{StaticResource Haven.Scale.Input.MinWidth}" />
+                             HorizontalAlignment="Left" MinWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                 </StackPanel>
 
                 <!-- Target value input -->
@@ -71,7 +71,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4"
                                Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
                     <NumericUpDown Value="{Binding Target}"
-                                   Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                   MinWidth="{StaticResource Haven.Scale.Input.MinWidth}"
                                    HorizontalAlignment="Left" Increment="1" FormatString="0.##"
                                    PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}" />
                 </StackPanel>
@@ -81,7 +81,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4"
                                Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
                     <CalendarDatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}"
-                                        Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                        MinWidth="{StaticResource Haven.Scale.Input.MinWidth}"
                                         PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
                 </StackPanel>
 
@@ -90,7 +90,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4"
                                Text="{core:LocalizationService Key='Activities.Label.TargetDate'}" />
                     <CalendarDatePicker SelectedDate="{Binding TargetDate, Mode=TwoWay}"
-                                        Width="{StaticResource Haven.Scale.Input.MinWidth}"
+                                        MinWidth="{StaticResource Haven.Scale.Input.MinWidth}"
                                         PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
                 </StackPanel>
 
