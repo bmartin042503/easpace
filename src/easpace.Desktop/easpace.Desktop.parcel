@@ -1,0 +1,49 @@
+{
+    "GeneralSettings": {
+        "NetProjectPath": "easpace.Desktop.csproj",
+        "PackageName": {
+            "$type": "msbuild",
+            "property": "easpace"
+        },
+        "AssemblyName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        },
+        "ApplicationName": "easpace",
+        "Version": "0.1.0",
+        "Icon": "Assets/AppLogo/easpace.ico"
+    },
+    "LinuxSettings": {
+        "CreateBinSymlink": "True"
+    },
+    "Win32Settings": {
+        "InstallerIcon": "Assets/AppLogo/easpace.ico",
+        "InstallerLicense": "Assets/Legal/Licenses/easpace-license.txt",
+        "IncludeUninstaller": "True"
+    },
+    "MacOsSettings": {
+        "CreateBundle": true,
+        "BundleIdentifier": "eu.easpace.app",
+        "AppIcon": "Assets/AppLogo/actool-output/easpace.icns",
+        "DmgLayout": {
+            "X": 100,
+            "Y": 100,
+            "Width": 660,
+            "Height": 525,
+            "IconSize": 128,
+            "TextSize": 12,
+            "BundlePositionX": 171,
+            "BundlePositionY": 237,
+            "ApplicationsPositionX": 485,
+            "ApplicationsPositionY": 231
+        },
+        "SignDmg": "False",
+        "AdditionalSignPatterns": [
+            "**/*.dylib"
+        ]
+    },
+    "PublishSettings": {
+        "PublishSingleFile": "True",
+        "ExtraBuildProperties": {}
+    }
+}

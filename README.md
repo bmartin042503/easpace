@@ -20,7 +20,6 @@ It will be available for **Windows, macOS, and Linux**, with **iOS and Android**
 <p align="center">
     <img src="src/easpace.Desktop/Assets/Images/journal.png" alt="journal page">
     <img src="src/easpace.Desktop/Assets/Images/activities.png" alt="activities page">
-    <img src="src/easpace.Desktop/Assets/Images/mood.png" alt="mood page">
     <img src="src/easpace.Desktop/Assets/Images/wellness-1.png" alt="wellness start page">
     <img src="src/easpace.Desktop/Assets/Images/wellness-2.png" alt="wellness session page">
 </p>
@@ -32,11 +31,81 @@ It will be available for **Windows, macOS, and Linux**, with **iOS and Android**
 * **Activity Tracking:** Create flexible trackers for trends, milestones, and daily routines, with visualisations to help you follow your progress.
 * **Wellness:** Take a break with immersive, full-screen breathing exercises and guided meditation sessions.
 
-## Current Status: v0.1.0 (work in progress)
+## Installation
 
-**easpace is currently in early active development.** The first version is still being built and may contain bugs, incomplete features, and frequent changes.
+Pre-built packages are currently available for **Windows** and **macOS**. The current release is intended primarily for development and testing rather than as a stable production release.
 
-This first version is intended primarily for development and testing rather than as a stable production release.
+Linux packages are **not available yet**. They're currently blocked by issues related to securely storing the database encryption key. Linux support is planned for a later version.
+
+### Windows
+
+Download the `.exe` installer matching your system architecture from the [releases](https://github.com/bmartin042503/easpace/releases) page.
+
+> [!WARNING]
+> The Windows installer is **not signed with a trusted code-signing certificate**, so Windows SmartScreen may prevent it from running. If you trust the downloaded release and wish to continue, click `More info` → `Run anyway`.
+
+### macOS
+
+Download the `.dmg` file matching your Mac from the [releases](https://github.com/bmartin042503/easpace/releases) page. Open it, and drag **easpace** into the `Applications` folder.
+
+> [!WARNING]
+> The application is currently **not signed with an Apple Developer ID certificate or notarized by Apple**, so macOS may prevent it from opening on some systems.
+
+If macOS keeps the downloaded application in quarantine, you can remove the quarantine attribute with:
+```bash
+xattr -cr /Applications/easpace.Desktop.app
+```
+
+## Build from source
+
+To build easpace from source, install:
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+- [Git](https://git-scm.com/)
+
+Clone the repository, navigate to the project directory and restore the dependencies:
+
+```bash
+git clone https://github.com/bmartin042503/easpace.git
+cd easpace
+dotnet restore
+```
+
+### Run
+
+To build and run the desktop application directly from source:
+```bash
+dotnet run --project src/easpace.Desktop/easpace.Desktop.csproj
+```
+
+### Build
+
+To create a Release build:
+```bash
+dotnet build src/easpace.Desktop/easpace.Desktop.csproj -c Release
+```
+
+### Publish
+
+easpace can be published as a self-contained application, so the target system does not need to have .NET installed separately.
+
+Use the appropriate runtime identifier (RID) for the system you want to target:
+- `win-x64`
+- `win-arm64`
+- `win-x86`
+- `osx-x64`
+- `osx-arm64`
+
+```bash
+dotnet publish src/easpace.Desktop/easpace.Desktop.csproj \
+  -c Release \
+  -r osx-arm64 \
+  --self-contained true \
+  -p:PublishSingleFile=true \
+  -p:PublishTrimmed=false \
+  -p:PublishAot=false \
+  -p:PublishReadyToRun=false
+```
 
 ## Use of AI
 
@@ -56,9 +125,9 @@ AI tools are not used as a service for analysing or processing users' private da
 
 ## Contributing
 
-Contributions are currently closed while the first stable version is being developed.
+Contributions are currently closed.
 
-Once the project reaches a more mature state, contribution guidelines and the development process will be published here.
+Once the project reaches a more mature state, contribution guidelines will be published here.
 
 ## Acknowledgements
 

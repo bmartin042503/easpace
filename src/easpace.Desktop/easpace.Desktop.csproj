@@ -11,6 +11,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        
+        <Product>easpace</Product>
+        <Title>easpace</Title>
+        <ApplicationIcon>Assets\AppLogo\easpace.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -55,26 +59,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <ItemGroup>
         <InternalsVisibleTo Include="easpace.Tests"/>
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2"/>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <AvaloniaXaml Remove="Controls\TimePicker\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Compile Remove="Controls\TimePicker\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <EmbeddedResource Remove="Controls\TimePicker\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <AdditionalFiles Remove="Controls\TimePicker\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <None Remove="Controls\TimePicker\**" />
     </ItemGroup>
     
 </Project>

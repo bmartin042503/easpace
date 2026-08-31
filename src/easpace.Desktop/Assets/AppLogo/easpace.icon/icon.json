@@ -1,0 +1,80 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.33921,0.67258,0.81192,1.00000",
+      "display-p3:0.26367,0.56052,0.68836,1.00000"
+    ],
+    "orientation" : {
+      "start" : {
+        "x" : 0.5,
+        "y" : 0
+      },
+      "stop" : {
+        "x" : 0.5,
+        "y" : 0.7
+      }
+    }
+  },
+  "groups" : [
+    {
+      "blur-material" : 0.5,
+      "layers" : [
+        {
+          "glass" : true,
+          "image-name" : "easpace-s-path 2.svg",
+          "name" : "easpace-s-path",
+          "position" : {
+            "scale" : 2.2,
+            "translation-in-points" : [
+              0.00011392748842808942,
+              -0.0001697286111266294
+            ]
+          }
+        }
+      ],
+      "name" : "S",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.6
+      }
+    },
+    {
+      "blur-material" : 0.5,
+      "layers" : [
+        {
+          "glass" : true,
+          "image-name" : "easpace-e-path.svg",
+          "name" : "easpace-e-path",
+          "position" : {
+            "scale" : 2.2,
+            "translation-in-points" : [
+              -4.2578274474180944e-05,
+              0
+            ]
+          }
+        }
+      ],
+      "name" : "E",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.6
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

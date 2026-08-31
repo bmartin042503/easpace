@@ -32,15 +32,16 @@ internal class ApplicationService : IApplicationService
     public void Restart()
     {
         
+        /*
 #if DEBUG
         Shutdown();
         return;
-#endif
+#endif  */
         
         var processPath = Environment.ProcessPath;
 
         // start another instance of the app
-        var process = Process.Start(new ProcessStartInfo
+        Process.Start(new ProcessStartInfo
         {
             FileName = processPath,
             UseShellExecute = false
