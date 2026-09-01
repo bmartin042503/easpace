@@ -16,49 +16,32 @@ Licensed under the MIT License. See LICENSE file for details.
                         Padding="{TemplateBinding Padding}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        Container.Name="list-item" Container.Sizing="Width"
                         ToolTip.Tip="{TemplateBinding Name}">
 
-                    <Border.Styles>
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                          RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
-                        <ContainerQuery Name="list-item" Query="max-width:180">
-                            <Style Selector="TextBlock#PART_Value">
-                                <Setter Property="IsVisible" Value="False" />
-                            </Style>
-                        </ContainerQuery>
-                        
-                        <ContainerQuery Name="list-item" Query="max-width:250">
-                            <Style Selector="TextBlock#PART_Unit">
-                                <Setter Property="IsVisible" Value="False" />
-                            </Style>
-                        </ContainerQuery>
-
-                    </Border.Styles>
-
-                    <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
-
-                        <TextBlock Name="PART_Title" Grid.Column="0"
+                        <TextBlock Name="PART_Title" Grid.Row="0" Grid.Column="0"
                                    Text="{TemplateBinding Title}"
-                                   VerticalAlignment="Center" Classes="fs6 trm-ellipsis" />
+                                   VerticalAlignment="Center" Classes="fs5 trm-ellipsis" />
 
-                        <Grid Grid.Column="1" ColumnDefinitions="*,Auto"
-                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                        <PathIcon Name="PART_Icon" Grid.Row="0" Grid.Column="1"
+                                  Data="{TemplateBinding Icon}"
+                                  HorizontalAlignment="Right" />
 
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                                
-                                <TextBlock Name="PART_Value" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
-                                           Text="{TemplateBinding Value}" />
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
 
-                                <TextBlock Name="PART_Unit" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
-                                           Text="{TemplateBinding Unit}"
-                                           IsVisible="{TemplateBinding ShowUnit}" />
-                                
-                            </StackPanel>
+                            <TextBlock Name="PART_Value" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                       Text="{TemplateBinding Value}" />
 
-                            <PathIcon Name="PART_Icon" Grid.Column="1"
-                                      Data="{TemplateBinding Icon}" />
-                        </Grid>
+                            <TextBlock Name="PART_Unit" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                       Text="{TemplateBinding Unit}"
+                                       IsVisible="{TemplateBinding ShowUnit}" />
+
+                        </StackPanel>
+                        
                     </Grid>
                 </Border>
             </ControlTemplate>

@@ -211,7 +211,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
 
                                 <!-- Title -->
-                                <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace (beta)" />
+                                <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
 
                                 <!-- Built with .NET and Avalonia UI -->
                                 <TextBlock Classes="strong accent fs5 trm-ellipsis"
