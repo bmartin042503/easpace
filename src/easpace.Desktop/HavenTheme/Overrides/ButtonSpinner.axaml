@@ -90,7 +90,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                         Orientation="Horizontal"
                                         Spacing="4"
                                         Margin="4"
-                                        IsVisible="{TemplateBinding ShowButtonSpinner}">
+                                        IsVisible="{TemplateBinding ShowButtonSpinner}"
+                                        ZIndex="100">
                                 <RepeatButton Name="PART_IncreaseButton"
                                               IsTabStop="{TemplateBinding IsTabStop}"
                                               Theme="{StaticResource FluentButtonSpinnerRepeatButton}"

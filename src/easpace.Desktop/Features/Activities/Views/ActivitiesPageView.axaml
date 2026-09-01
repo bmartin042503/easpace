@@ -25,30 +25,32 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Template of Trend Activity -->
             <DataTemplate x:Key="TrendActivityViewModel" DataType="vm:TrendActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
-                                                    Status="{Binding LastEntry.Value}"
-                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
-                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
+                                           Value="{Binding LastEntry.Value}"
+                                           Unit="{Binding Unit}"
+                                           Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
             </DataTemplate>
 
             <!-- Template of Routine Activity -->
             <DataTemplate x:Key="RoutineActivityViewModel" DataType="vm:RoutineActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
-                                                    Status="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
-                                                    Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
-                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
+                                           Value="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
+                                           Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
             </DataTemplate>
 
             <!-- Template of Milestone Activity -->
             <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vm:MilestoneActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
-                                                    Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
-                                                    SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
-                    <controls:ActivityListItem.Status>
+                                           Unit="{Binding Unit}"
+                                           Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
+                    <controls:ActivityListItem.Value>
                         <MultiBinding StringFormat="{}{0:0.##}/{1:0.##}">
                             <Binding Path="EntriesSum" />
                             <Binding Path="Target" />
                         </MultiBinding>
-                    </controls:ActivityListItem.Status>
+                    </controls:ActivityListItem.Value>
                 </controls:ActivityListItem>
             </DataTemplate>
 

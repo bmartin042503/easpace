@@ -114,8 +114,9 @@ Licensed under the MIT License. See LICENSE file for details.
                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
         </Style>
 
-        <Style
-            Selector="^:selected controls|ActivityListItem TextBlock#PART_Title, ^:selected controls|ActivityListItem TextBlock#PART_Status">
+        <Style Selector="^:selected controls|ActivityListItem TextBlock#PART_Title, 
+                         ^:selected controls|ActivityListItem TextBlock#PART_Value,
+                         ^:selected controls|ActivityListItem TextBlock#PART_Unit">
             <Setter Property="FontWeight" Value="{StaticResource Haven.Scale.FontWeight.Medium}" />
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
         </Style>
@@ -156,7 +157,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:pointerover">
             <Setter Property="Cursor" Value="Hand" />
-            
+
             <Style Selector="^ /template/ ContentPresenter">
                 <Setter Property="Background" Value="{StaticResource Haven.Scale.Transparent}" />
             </Style>

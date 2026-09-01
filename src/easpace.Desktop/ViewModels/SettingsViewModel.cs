@@ -90,7 +90,8 @@ internal partial class SettingsViewModel : PageViewModel
         _dataWipeService.DeleteEncryptionKey();
         _dataWipeService.DeletePreferencesFile();
 
-        _applicationService.Restart();
+        // shutdown, so we don't recreate the deleted files if we'd restart
+        _applicationService.Shutdown();
     }
 
     [RelayCommand]

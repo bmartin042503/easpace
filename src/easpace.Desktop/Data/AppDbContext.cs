@@ -37,7 +37,7 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
                 .OnDelete(DeleteBehavior.Cascade);
             
             entity.Property(a => a.Name)
-                .HasMaxLength(128); 
+                .HasMaxLength(64); 
         });
 
         modelBuilder.Entity<Activity>()
@@ -46,6 +46,10 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
             .HasValue<TrendActivity>("Trend")
             .HasValue<MilestoneActivity>("Milestone")
             .HasValue<RoutineActivity>("Routine");
+        
+        modelBuilder.Entity<NumericActivity>()
+            .Property(a => a.Unit)
+            .HasMaxLength(16);
         
         modelBuilder.Entity<ActivityDataEntry>()
             .UseTphMappingStrategy()

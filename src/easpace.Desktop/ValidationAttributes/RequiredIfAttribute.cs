@@ -5,32 +5,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace easpace.Desktop.ValidationAttributes;
 
-internal class RequiredIfAttribute : ValidationAttribute
+internal class RequiredIfAttribute(string otherPropertyName, object desiredValue) : ValidationAttribute
 {
-    private readonly string _otherPropertyName;
-    private readonly object _desiredValue;
-
-    public RequiredIfAttribute(string otherPropertyName, object desiredValue)
-    {
-        _otherPropertyName = otherPropertyName;
-        _desiredValue = desiredValue;
-    }
-
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         var instance = validationContext.ObjectInstance;
         var type = instance.GetType();
         
-        var otherProperty = type.GetProperty(_otherPropertyName);
+        var otherProperty = type.GetProperty(otherPropertyName);
 
         if (otherProperty == null)
         {
-            return new ValidationResult($"{_otherPropertyName} property cannot be found.");
+            return new ValidationResult($"{otherPropertyName} property cannot be found.");
         }
         
         var otherPropertyValue = otherProperty.GetValue(instance);
 
-        if (Equals(otherPropertyValue, _desiredValue))
+        if (Equals(otherPropertyValue, desiredValue))
         {
             if (value == null || (value is string str && string.IsNullOrWhiteSpace(str)))
             {

@@ -4,8 +4,8 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls">
 
     <ControlTheme x:Key="{x:Type controls:ActivityListItem}" TargetType="controls:ActivityListItem">
 
@@ -16,24 +16,25 @@ Licensed under the MIT License. See LICENSE file for details.
                         Padding="{TemplateBinding Padding}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        Container.Name="list-item" Container.Sizing="Width">
-                    
+                        Container.Name="list-item" Container.Sizing="Width"
+                        ToolTip.Tip="{TemplateBinding Name}">
+
                     <Border.Styles>
+
+                        <ContainerQuery Name="list-item" Query="max-width:180">
+                            <Style Selector="TextBlock#PART_Value">
+                                <Setter Property="IsVisible" Value="False" />
+                            </Style>
+                        </ContainerQuery>
+                        
                         <ContainerQuery Name="list-item" Query="max-width:250">
-                            <Style Selector="TextBlock#PART_Status">
+                            <Style Selector="TextBlock#PART_Unit">
                                 <Setter Property="IsVisible" Value="False" />
                             </Style>
                         </ContainerQuery>
+
                     </Border.Styles>
-                    
-                    <Border.Styles>
-                        <ContainerQuery Query="max-width:200">
-                            <Style Selector="TextBlock#PART_Status">
-                                <Setter Property="IsVisible" Value="False" />
-                            </Style>
-                        </ContainerQuery>
-                    </Border.Styles>
-                    
+
                     <Grid ColumnDefinitions="*,Auto"
                           ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
@@ -44,9 +45,16 @@ Licensed under the MIT License. See LICENSE file for details.
                         <Grid Grid.Column="1" ColumnDefinitions="*,Auto"
                               ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
-                            <TextBlock Name="PART_Status" Grid.Column="0"
-                                       VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
-                                       Text="{TemplateBinding Status}" />
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
+                                
+                                <TextBlock Name="PART_Value" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                           Text="{TemplateBinding Value}" />
+
+                                <TextBlock Name="PART_Unit" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                           Text="{TemplateBinding Unit}"
+                                           IsVisible="{TemplateBinding ShowUnit}" />
+                                
+                            </StackPanel>
 
                             <PathIcon Name="PART_Icon" Grid.Column="1"
                                       Data="{TemplateBinding Icon}" />
@@ -55,7 +63,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </Border>
             </ControlTemplate>
         </Setter>
-        
+
     </ControlTheme>
 
 </ResourceDictionary>

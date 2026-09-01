@@ -35,15 +35,21 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "FormValidation.Name.Required")]
     [MinLength(3, ErrorMessage = "FormValidation.Name.MinLength")]
+    [MaxLength(64, ErrorMessage = "FormValidation.Name.MaxLength")]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private string _name = LocalizationService.GetString("Activities.Input.NewActivityName");
 
-    [ObservableProperty] private string? _unit;
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [MaxLength(16, ErrorMessage = "FormValidation.Unit.MaxLength")]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private string? _unit; 
 
     [ObservableProperty] private bool _isTargetChecked;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
+    [Range(0d, 10_000_000d, MinimumIsExclusive = true, ErrorMessage = "FormValidation.Target.Range")]
     [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private double? _target;
@@ -128,6 +134,15 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         
         ValidateAllProperties();
         SaveCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnIsTargetCheckedChanged(bool value)
+    {
+        if (!value)
+        {
+            // we make sure to set target value to null if the target option is not checked
+            Target = null;
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanSubmit))]
@@ -215,22 +230,12 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)
     {
-        _logger.LogInformation(
-            "Loading editor dates. StartDate={StartDate}, TargetDate={TargetDate}",
-            updateRequest.StartDate?.ToString("yyyy-MM-dd") ?? "<null>",
-            updateRequest.TargetDate?.ToString("yyyy-MM-dd") ?? "<null>");
-        
         Name = updateRequest.Name;
         Unit = updateRequest.Unit;
         Target = updateRequest.Target;
         IsTargetChecked = updateRequest.Target.HasValue;
         StartDate = ToDateTime(updateRequest.StartDate);
         TargetDate = ToDateTime(updateRequest.TargetDate);
-        
-        _logger.LogInformation(
-            "Editor dates loaded. StartDate={StartDate}, TargetDate={TargetDate}",
-            StartDate?.ToString("yyyy-MM-dd") ?? "<null>",
-            TargetDate?.ToString("yyyy-MM-dd") ?? "<null>");
     }
 
     private CreateActivityRequest GetCreateRequest()

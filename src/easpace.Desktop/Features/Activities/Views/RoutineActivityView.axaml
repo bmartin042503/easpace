@@ -17,21 +17,22 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
           RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
-        <StackPanel Grid.Row="0" Grid.Column="0"
-                    Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+        <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,Auto" 
+              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
             <!-- Title -->
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Grid.Column="0" Text="{Binding Name}"
                        Classes="neutral fs2 trm-ellipsis"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       ToolTip.Tip="{Binding Name}" />
 
             <!-- Archive status -->
-            <TextBlock IsVisible="{Binding IsArchived}"
+            <TextBlock Grid.Column="1" IsVisible="{Binding IsArchived}"
                        Text="{core:LocalizationService Key='Activities.Label.Archived'}"
                        Classes="subtle neutral fs3 trm-ellipsis"
                        VerticalAlignment="Center" />
 
-        </StackPanel>
+        </Grid>
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
