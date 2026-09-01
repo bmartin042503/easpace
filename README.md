@@ -50,7 +50,7 @@ Download the `.exe` installer matching your system architecture from [here](http
 
 Download the `.dmg` file matching your Mac from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.1.0). Open it, and drag **easpace** into the `Applications` folder.
 
-On first launch, macOS may ask permission to access your **Keychain**. Easpace uses the Keychain to securely store and retrieve the encryption key required to encrypt and decrypt its local database.
+MacOS may ask permission to access your **Keychain**. Easpace uses the Keychain to securely store and retrieve the encryption key required to encrypt and decrypt its local database.
 
 > [!NOTE]
 > The application is currently **not signed with an Apple Developer ID certificate or notarized by Apple**, so macOS may prevent it from opening on some systems.

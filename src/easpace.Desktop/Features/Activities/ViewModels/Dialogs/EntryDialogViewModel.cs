@@ -14,7 +14,11 @@ internal partial class EntryDialogViewModel : DialogViewModel
     [ObservableProperty] private string _confirmText = string.Empty;
     [ObservableProperty] private string _cancelText = string.Empty;
     [ObservableProperty] private bool _confirmed;
-    [ObservableProperty] private DateTime? _selectedDate = DateTime.Now;
+    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConfirmCommand))]
+    private DateTime? _selectedDate = DateTime.Now;
+    
     [ObservableProperty] private TimeSpan? _selectedTime = DateTime.Now.TimeOfDay;
     
     public DateTime MaxAllowedDate => DateTime.Today.AddDays(1);
@@ -26,15 +30,27 @@ internal partial class EntryDialogViewModel : DialogViewModel
             SelectedDate = MaxAllowedDate;
         }
     }
+
+    protected virtual bool CanConfirm()
+    {
+        return SelectedDate.HasValue;
+    }
     
     public DateTimeOffset GetTimestamp()
     {
+        if (!SelectedDate.HasValue)
+        {
+            throw new InvalidOperationException(
+                "A timestamp cannot be created without a selected date.");
+        }
+        
         var date = SelectedDate?.Date ?? DateTime.Today;
         var time = SelectedTime ?? DateTime.Now.TimeOfDay;
+        
         return new DateTimeOffset(date.Add(time));
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanConfirm))]
     private void Confirm()
     {
         Confirmed = true;
