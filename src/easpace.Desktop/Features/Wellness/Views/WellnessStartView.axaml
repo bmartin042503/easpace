@@ -107,7 +107,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
 
-                                    <Grid ColumnDefinitions="Auto,*"
+                                    <Grid ColumnDefinitions="Auto,*,Auto"
                                           ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
 
                                         <!-- Icon -->
@@ -143,6 +143,14 @@ Licensed under the MIT License. See LICENSE file for details.
                                                        Text="{Binding StartDate, Converter={StaticResource RelativeDateConverter}}" />
 
                                         </StackPanel>
+                                        
+                                        <!-- Delete button -->
+                                        <Button Grid.Column="2" Classes="tertiary danger icon"
+                                                Command="{Binding $parent[UserControl].((vm:WellnessStartViewModel)DataContext).DeleteEntryCommand}"
+                                                CommandParameter="{Binding .}" VerticalAlignment="Top"
+                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
+                                            <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                        </Button>
 
                                     </Grid>
 

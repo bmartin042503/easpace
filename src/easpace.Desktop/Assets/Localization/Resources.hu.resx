@@ -573,6 +573,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Error.SaveFailed" xml:space="preserve">
         <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a gyakorlatot. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
+        <value>Törlöd a gyakorlatot?</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza</value>
+    </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>Nincsenek légzőgyakorlatok.</value>
     </data>

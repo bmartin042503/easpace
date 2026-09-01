@@ -13,23 +13,15 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-internal class WellnessSessionEntryService : IWellnessSessionEntryService
+internal class WellnessSessionEntryService(AppDbContext dbContext, ILogger<WellnessSessionEntryService> logger)
+    : IWellnessSessionEntryService
 {
-    private readonly AppDbContext _dbContext;
-    private readonly ILogger<WellnessSessionEntryService> _logger;
-
-    public WellnessSessionEntryService(AppDbContext dbContext, ILogger<WellnessSessionEntryService> logger)
-    {
-        _dbContext = dbContext;
-        _logger = logger;
-    }
-
     public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(
         CreateWellnessSessionEntryRequest createEntryRequest)
     {
         try
         {
-            _logger.LogInformation("Creating new wellness session entry of type {Type}", createEntryRequest.SessionType);
+            logger.LogInformation("Creating new wellness session entry of type {Type}", createEntryRequest.SessionType);
             
             var wellnessSession = new WellnessSessionEntry
             {
@@ -41,14 +33,14 @@ internal class WellnessSessionEntryService : IWellnessSessionEntryService
                 BreathingTechniqueId = createEntryRequest.BreathingTechnique?.Id
             };
 
-            _dbContext.WellnessSessionEntries.Add(wellnessSession);
-            await _dbContext.SaveChangesAsync();
+            dbContext.WellnessSessionEntries.Add(wellnessSession);
+            await dbContext.SaveChangesAsync();
 
             return wellnessSession;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to create wellness session entry");
+            logger.LogError(ex, "Failed to create wellness session entry");
             throw;
         }
     }
@@ -57,12 +49,12 @@ internal class WellnessSessionEntryService : IWellnessSessionEntryService
     {
         try
         {
-            _logger.LogInformation("Fetching all wellness session entries from database");
+            logger.LogInformation("Fetching all wellness session entries from database");
             
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
 
-            var sessionEntries = await _dbContext.WellnessSessionEntries
+            var sessionEntries = await dbContext.WellnessSessionEntries
                 .Include(e => e.BreathingTechnique)
                 .ThenInclude(t => t!.Phases.OrderBy(p => p.Order))
                 .AsNoTracking()
@@ -72,7 +64,7 @@ internal class WellnessSessionEntryService : IWellnessSessionEntryService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to fetch wellness session entries from database");
+            logger.LogError(ex, "Failed to fetch wellness session entries from database");
             throw;
         }
     }
@@ -81,22 +73,22 @@ internal class WellnessSessionEntryService : IWellnessSessionEntryService
     {
         try
         {
-            var entry = await _dbContext.WellnessSessionEntries.FindAsync(entryId);
+            var entry = await dbContext.WellnessSessionEntries.FindAsync(entryId);
             
             if (entry is null)
             {
-                _logger.LogWarning("Attempted to delete non-existent wellness session entry with ID {Id}", entryId);
+                logger.LogWarning("Attempted to delete non-existent wellness session entry with ID {Id}", entryId);
                 return false;
             }
 
-            _dbContext.WellnessSessionEntries.Remove(entry);
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Wellness session entry with ID {Id} successfully deleted", entryId);
+            dbContext.WellnessSessionEntries.Remove(entry);
+            await dbContext.SaveChangesAsync();
+            logger.LogInformation("Wellness session entry with ID {Id} successfully deleted", entryId);
             return true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete wellness session entry with ID {Id}", entryId);
+            logger.LogError(ex, "Failed to delete wellness session entry with ID {Id}", entryId);
             throw;
         }
     }

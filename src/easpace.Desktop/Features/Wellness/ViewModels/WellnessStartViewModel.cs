@@ -207,6 +207,48 @@ internal partial class WellnessStartViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private async Task DeleteEntry(object parameter)
+    {
+        if (parameter is not WellnessSessionEntryViewModel entry) return;
+        
+        try
+        {
+            
+            var confirmation = new ConfirmDialogViewModel
+            {
+                Title = LocalizationService.GetString("Wellness.DeleteSessionDialog.Title"),
+                Message = LocalizationService.GetString("Wellness.DeleteSessionDialog.Message"),
+                CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+                ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
+                IsDestructive = true,
+            };
+        
+            await _dialogService.ShowDialogAsync(confirmation);
+
+            if (confirmation.Confirmed)
+            {
+                var isDeleted = await _wellnessSessionEntryService.DeleteWellnessSessionEntryAsync(entry.Id);
+        
+                if (!isDeleted) return;
+
+                WellnessSessionEntries.Remove(entry);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while attempting to delete wellness session entry {EntryId}", entry.Id);
+            
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Wellness.Error.DeleteFailed")
+            };
+            
+            await _dialogService.ShowDialogAsync(errorDialog);
+        }
+    }
+
     /// <summary>
     /// Constructs the session configuration and triggers the session start event.
     /// </summary>
