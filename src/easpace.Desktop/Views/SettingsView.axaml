@@ -17,7 +17,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <UserControl.Resources>
         <x:Double x:Key="InputSettingMinimumWidth">180</x:Double>
-        <x:Double x:Key="SettingsCardRowSpacing">16</x:Double>
+        <x:Double x:Key="SettingsCardRowSpacing">20</x:Double>
     </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"

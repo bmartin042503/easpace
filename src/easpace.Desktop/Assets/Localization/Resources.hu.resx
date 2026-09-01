@@ -580,7 +580,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Törlöd a gyakorlatot?</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza</value>
+        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
     </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>Nincsenek légzőgyakorlatok.</value>
@@ -655,7 +655,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Frissítések keresése</value>
     </data>
     <data name="Settings.CheckForUpdates.Description" xml:space="preserve">
-        <value>Új frissítések automatikus keresésének bekapcsolása.</value>
+        <value>Engedélyezi az új frissítések keresését az easpace indításakor.</value>
     </data>
     <data name="Settings.DeleteAllData.Label" xml:space="preserve">
         <value>Minden adat törlése</value>

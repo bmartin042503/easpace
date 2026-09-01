@@ -655,7 +655,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Check For Updates</value>
     </data>
     <data name="Settings.CheckForUpdates.Description" xml:space="preserve">
-        <value>Enables checks for new updates automatically.</value>
+        <value>Enables checking for new updates when easpace is launched.</value>
     </data>
     <data name="Settings.DeleteAllData.Label" xml:space="preserve">
         <value>Delete All Data</value>
