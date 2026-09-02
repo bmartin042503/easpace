@@ -50,6 +50,7 @@ Component files located in the `Styles` directory apply these tokens to style in
                 <ResourceInclude Source="Controls/NavigationListItem.axaml" />
                 <ResourceInclude Source="Controls/ActivityListItem.axaml" />
                 <ResourceInclude Source="Controls/DataEntryListItem.axaml" />
+                <ResourceInclude Source="Controls/ChartNavigator.axaml" />
                 
             </ResourceDictionary.MergedDictionaries>
 

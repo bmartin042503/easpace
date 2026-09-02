@@ -102,15 +102,19 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
             if (updatedEntry is not NumericActivityDataEntry numericDataEntry) return null;
 
-            if (updateRequest.Timestamp is not null)
+            var entityEntry = _numericActivity.Entries
+                .OfType<NumericActivityDataEntry>()
+                .FirstOrDefault(e => e.Id == entryId);
+
+            if (entityEntry is not null)
             {
-                entryVm.Timestamp = numericDataEntry.Timestamp;
+                entityEntry.Timestamp = numericDataEntry.Timestamp;
+                entityEntry.Value = numericDataEntry.Value;
             }
 
-            if (updateRequest.Value is not null)
-            {
-                entryVm.Value = numericDataEntry.Value;
-            }
+            entryVm.Timestamp = numericDataEntry.Timestamp;
+            entryVm.Value = numericDataEntry.Value;
+
             OnDataEntryUpdated();
         }
 

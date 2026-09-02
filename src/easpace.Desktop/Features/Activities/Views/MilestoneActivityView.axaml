@@ -62,7 +62,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                    Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
                     VerticalAlignment="Top">
 
             <!-- Delete button -->

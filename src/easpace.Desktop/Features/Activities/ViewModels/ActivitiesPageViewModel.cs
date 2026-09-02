@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Activities.Entities;
+using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.Services.DataProviders;
 using easpace.Desktop.Services.Core;

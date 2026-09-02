@@ -102,6 +102,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Back" xml:space="preserve">
         <value>Vissza</value>
     </data>
+    <data name="Common.Button.Forward" xml:space="preserve">
+        <value>Előre</value>
+    </data>
     <data name="Common.Button.Close" xml:space="preserve">
         <value>Bezárás</value>
     </data>

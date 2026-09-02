@@ -47,16 +47,16 @@ internal partial class MilestoneActivityViewModel : NumericActivityViewModel
     {
         var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
-        if (updated is not MilestoneActivity milestone)
+        if (updated is not MilestoneActivity milestoneActivity)
             return null;
 
-        Name = milestone.Name;
-        Unit = milestone.Unit;
-        Target = milestone.Target;
-        StartDate = milestone.StartDate;
-        TargetDate = milestone.TargetDate;
+        Name = milestoneActivity.Name;
+        Unit = milestoneActivity.Unit;
+        Target = milestoneActivity.Target;
+        StartDate = milestoneActivity.StartDate;
+        TargetDate = milestoneActivity.TargetDate;
 
-        return milestone;
+        return milestoneActivity;
     }
 
     protected override void OnEntryCollectionChanged()

@@ -26,7 +26,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Unit input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -47,7 +47,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Target value input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}"
                       IsVisible="{Binding IsTargetChecked}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -59,7 +59,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                    HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
                                    PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
                                    Minimum="1" Maximum="10000000" />
-                    
+
                 </Grid>
 
             </StackPanel>
@@ -73,7 +73,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Unit input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -84,12 +84,12 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBox Grid.Row="1" Text="{Binding Unit}"
                              PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
                              HorizontalAlignment="Stretch" MaxLength="16" />
-                    
+
                 </Grid>
 
                 <!-- Target value input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -101,12 +101,12 @@ Licensed under the MIT License. See LICENSE file for details.
                                    HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
                                    PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
                                    Minimum="1" Maximum="10000000" />
-                    
+
                 </Grid>
 
                 <!-- Start date input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -118,12 +118,12 @@ Licensed under the MIT License. See LICENSE file for details.
                                         SelectedDate="{Binding StartDate, Mode=TwoWay}"
                                         HorizontalAlignment="Stretch"
                                         PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
-                    
+
                 </Grid>
 
                 <!-- Target date input -->
                 <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
                     </Grid.ColumnDefinitions>
@@ -134,7 +134,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <CalendarDatePicker Grid.Row="1" SelectedDate="{Binding TargetDate, Mode=TwoWay}"
                                         HorizontalAlignment="Stretch"
                                         PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
-                    
+
                 </Grid>
 
             </StackPanel>
@@ -189,7 +189,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Name input -->
                     <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                        
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
@@ -200,7 +200,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <TextBox Grid.Row="1" Text="{Binding Name}"
                                  PlaceholderText="{core:LocalizationService Key='Activities.Input.NamePlaceholder'}"
                                  HorizontalAlignment="Stretch" MaxLength="64" />
-                        
+
                     </Grid>
 
                     <!-- Type selection -->
@@ -218,13 +218,13 @@ Licensed under the MIT License. See LICENSE file for details.
                                   SelectedItem="{Binding SelectedType}"
                                   IsEnabled="{Binding IsCreatingNew}"
                                   HorizontalAlignment="Stretch">
-                            
+
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
-                            
+
                         </ComboBox>
 
                     </Grid>
@@ -294,17 +294,15 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <DataTemplate
                                     x:DataType="vmDataEntries:ActivityDataEntryViewModel">
 
-                                    <ContentControl
-                                        Content="{Binding .}"
-                                        ContentTemplate="{StaticResource DataEntrySelector}" />
+                                    <ContentControl Content="{Binding .}"
+                                                    ContentTemplate="{StaticResource DataEntrySelector}" />
 
                                 </DataTemplate>
                             </ItemsRepeater.ItemTemplate>
 
                             <ItemsRepeater.Layout>
-                                <StackLayout
-                                    Orientation="Vertical"
-                                    Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
                             </ItemsRepeater.Layout>
 
                         </ItemsRepeater>

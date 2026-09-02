@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
+using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Services.Core;
 
@@ -92,6 +94,25 @@ internal class TrendChart : Control
             (o, v) => o.Unit = v,
             string.Empty
         );
+
+    public static readonly DirectProperty<TrendChart, DateTimeOffset?> RangeStartProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, DateTimeOffset?>(
+            nameof(RangeStart),
+            o => o.RangeStart,
+            (o, v) => o.RangeStart = v);
+
+    public static readonly DirectProperty<TrendChart, DateTimeOffset?> RangeEndProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, DateTimeOffset?>(
+            nameof(RangeEnd),
+            o => o.RangeEnd,
+            (o, v) => o.RangeEnd = v);
+
+    public static readonly DirectProperty<TrendChart, ChartTimeRange> TimeRangeProperty =
+        AvaloniaProperty.RegisterDirect<TrendChart, ChartTimeRange>(
+            nameof(TimeRange),
+            o => o.TimeRange,
+            (o, v) => o.TimeRange = v,
+            ChartTimeRange.Day);
 
     #endregion
 
@@ -208,6 +229,33 @@ internal class TrendChart : Control
         }
     }
 
+    public DateTimeOffset? RangeStart
+    {
+        get;
+        set
+        {
+            if (SetAndRaise(RangeStartProperty, ref field, value)) InvalidateVisual();
+        }
+    }
+
+    public DateTimeOffset? RangeEnd
+    {
+        get;
+        set
+        {
+            if (SetAndRaise(RangeEndProperty, ref field, value)) InvalidateVisual();
+        }
+    }
+
+    public ChartTimeRange TimeRange
+    {
+        get;
+        set
+        {
+            if (SetAndRaise(TimeRangeProperty, ref field, value)) InvalidateVisual();
+        }
+    }
+
     #endregion
 
     #region Initialization
@@ -229,7 +277,10 @@ internal class TrendChart : Control
             TooltipDateForegroundProperty,
             TooltipBorderBrushProperty,
             TooltipBorderThicknessProperty,
-            DataPointsProperty
+            DataPointsProperty,
+            RangeStartProperty,
+            RangeEndProperty,
+            TimeRangeProperty
         );
     }
 
@@ -239,13 +290,16 @@ internal class TrendChart : Control
 
     public override void Render(DrawingContext context)
     {
-        // create a safe list and check if there is any data
-        var dataPoints = DataPoints?.ToList() ?? [];
+        // create a safe, ordered list and check if there is any data
+        var dataPoints = DataPoints?
+            .Where(e => e.Timestamp.HasValue)
+            .OrderBy(e => e.Timestamp)
+            .ToList() ?? [];
         var hasDataPoints = dataPoints.Count > 0;
-        
+
         // base values
         var padding = Padding ?? 12;
-        var ticksCount = Ticks ?? 3;
+        var ticksCount = Math.Max(Ticks ?? 3, 2);
         var tickWidth = TickWidth ?? 10;
         var strokeThickness = StrokeThickness ?? 2.0;
         var axisPen = new Pen(AxisStroke, strokeThickness);
@@ -266,14 +320,14 @@ internal class TrendChart : Control
             exactMin = Target.Value - 10;
             exactMax = Target.Value + 10;
         }
-        
+
         if (Target.HasValue)
         {
             // ensure the target fits inside the calculated boundaries
             exactMin = Math.Min(exactMin, Target.Value);
             exactMax = Math.Max(exactMax, Target.Value);
         }
-        
+
         // add a 10% breathing room (padding) so lines and target don't overlap the chart edges
         if (Math.Abs(exactMin - exactMax) < 0.1)
         {
@@ -291,29 +345,40 @@ internal class TrendChart : Control
         }
 
         // calculate nicely rounded boundaries for the y-axis
+        // independently round both ends so every actual value stays inside the visible range
         var niceInterval = CalculateNiceInterval(exactMax - exactMin, ticksCount);
+        var graphMin = Math.Floor(exactMin / niceInterval) * niceInterval;
         var graphMax = Math.Ceiling(exactMax / niceInterval) * niceInterval;
-        var graphMin = graphMax - (ticksCount - 1) * niceInterval;
         var valueRange = graphMax - graphMin;
 
         // calculate time range for the x-axis
         long timeMin, timeMax;
-        
-        if (hasDataPoints)
+
+        if (RangeStart.HasValue && RangeEnd.HasValue && RangeEnd.Value > RangeStart.Value)
         {
-            timeMin = dataPoints.First().Timestamp!.Value.Ticks;
-            timeMax = dataPoints.Last().Timestamp!.Value.Ticks;
+            // use the explicitly selected interval
+            timeMin = RangeStart.Value.UtcDateTime.Ticks;
+            timeMax = RangeEnd.Value.UtcDateTime.Ticks;
+        }
+        else if (hasDataPoints)
+        {
+            // "all" view has no fixed interval, so use the actual data boundaries
+            timeMin = dataPoints.First().Timestamp!.Value.UtcDateTime.Ticks;
+            timeMax = dataPoints.Last().Timestamp!.Value.UtcDateTime.Ticks;
         }
         else
         {
-            // draw a visual 1-day fallback range for empty charts
-            timeMax = DateTime.Now.Ticks;
-            timeMin = DateTime.Now.AddDays(-1).Ticks;
+            // empty "all" view fallback
+            var now = DateTimeOffset.Now;
+
+            timeMin = now.AddDays(-1).UtcDateTime.Ticks;
+            timeMax = now.UtcDateTime.Ticks;
         }
 
         var timeRange = timeMax - timeMin;
 
-        // create a fictional time window (+/- 12 hours) if there is only 1 data point
+        // only an onbounded view such as "all" can end up with a single instant
+        // create a fictional time window (+/- 12 hours)
         if (timeRange == 0)
         {
             timeMin -= TimeSpan.FromHours(12).Ticks;
@@ -326,16 +391,21 @@ internal class TrendChart : Control
         const double yTickPadding = 20.0;
         var graphHeight = Bounds.Height - padding * 2 - xAxisHeight;
         var drawableHeight = graphHeight - yTickPadding * 2;
-        
+
         if (graphHeight <= 0 || drawableHeight <= 0) return;
 
         // measure y-axis texts to determine left margin
         var tickTexts = new List<(double Value, TextLayout Layout)>();
         var maxTextWidth = 0.0;
 
-        for (var i = 0; i < ticksCount; i++)
+        // the configured tick count is an approximate target;
+        // rounding the axis boundaries may require one additional tick
+        var actualTicksCount = Math.Max(2, (int)Math.Round((graphMax - graphMin) / niceInterval) + 1);
+
+        for (var i = 0; i < actualTicksCount; i++)
         {
             var val = graphMax - i * niceInterval;
+            
             var textLayout = new TextLayout(
                 val.ToString("0.#"),
                 new Typeface(_fontFamily),
@@ -356,23 +426,25 @@ internal class TrendChart : Control
         var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
 
         // rendering order (z-index): back to front
-        
+
         // 1. draw the data series first so everything else sits on top of it
         if (hasDataPoints)
         {
-            DrawDataSeries(context, graphArea, dataPoints, graphMin, valueRange, timeMin, timeRange, yTickPadding, drawableHeight);
+            DrawDataSeries(context, graphArea, dataPoints, graphMin, valueRange, timeMin, timeRange, yTickPadding,
+                drawableHeight);
         }
         else
         {
             // clear the hit-test points if there are no entries
-            _dataPoints.Clear(); 
+            _dataPoints.Clear();
         }
 
         // 2. draw grid, axes and target lines over the data
         DrawGridAndXAxis(context, graphArea, axisPen, timeMin, timeRange);
         DrawTargetLine(context, graphArea, axisPen, graphMin, valueRange, yTickPadding, drawableHeight);
-        DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight, padding, textRightMargin, tickEnd, axisLineX);
-        
+        DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight, padding,
+            textRightMargin, tickEnd, axisLineX);
+
         // 3. draw tooltip absolutely last to always stay on top
         if (hasDataPoints)
         {
@@ -380,19 +452,18 @@ internal class TrendChart : Control
         }
     }
 
-    private void DrawGridAndXAxis(
-        DrawingContext context, 
-        Rect graphArea, 
-        Pen axisPen, 
-        long timeMin, 
-        long timeRange)
+    private void DrawGridAndXAxis(DrawingContext context, Rect graphArea, Pen axisPen, long timeMin, long timeRange)
     {
         // base x-axis line
-        context.DrawLine(axisPen, new Point(graphArea.Left, graphArea.Bottom), new Point(graphArea.Right, graphArea.Bottom));
+        context.DrawLine(
+            axisPen,
+            new Point(graphArea.Left, graphArea.Bottom),
+            new Point(graphArea.Right, graphArea.Bottom));
 
-        var gridLines = GridLines ?? 7;
-        var totalDays = new TimeSpan(timeRange).TotalDays;
-        var dateFormat = totalDays > 365 ? "yyyy. MM." : "MM. dd.";
+        // at least two lines are required to calculate the ratios safely
+        var gridLines = Math.Max(GridLines ?? 7, 2);
+
+        var visibleTimeRange = new TimeSpan(timeRange);
         var gridPen = new Pen(GridLineBrush) { DashStyle = DashStyle.Dash };
 
         for (var i = 0; i < gridLines; i++)
@@ -401,13 +472,19 @@ internal class TrendChart : Control
             var x = graphArea.Left + ratio * graphArea.Width;
 
             // draw vertical grid line (skip the first one to avoid overlapping the y-axis)
-            if (i > 0) context.DrawLine(gridPen, new Point(x, graphArea.Top), new Point(x, graphArea.Bottom));
+            if (i > 0)
+            {
+                context.DrawLine(
+                    gridPen,
+                    new Point(x, graphArea.Top),
+                    new Point(x, graphArea.Bottom));
+            }
 
             var tickTicks = timeMin + (long)(timeRange * ratio);
-            var tickDate = new DateTime(tickTicks);
+            var tickDate = new DateTimeOffset(tickTicks, TimeSpan.Zero).ToLocalTime();
 
             var xText = new TextLayout(
-                tickDate.ToString(dateFormat),
+                FormatXAxisLabel(tickDate, visibleTimeRange),
                 new Typeface(_fontFamily),
                 11,
                 AxisStroke,
@@ -415,6 +492,7 @@ internal class TrendChart : Control
 
             // align text to prevent clipping on edges
             var textX = x - xText.Width / 2;
+
             if (i == 0) textX = x;
             if (i == gridLines - 1) textX = x - xText.Width;
 
@@ -423,14 +501,14 @@ internal class TrendChart : Control
     }
 
     private static void DrawYAxis(
-        DrawingContext context, 
-        Rect graphArea, 
-        Pen axisPen, 
+        DrawingContext context,
+        Rect graphArea,
+        Pen axisPen,
         List<(double Value, TextLayout Layout)> tickTexts,
-        double graphMin, 
-        double valueRange, 
-        double yTickPadding, 
-        double drawableHeight, 
+        double graphMin,
+        double valueRange,
+        double yTickPadding,
+        double drawableHeight,
         double padding,
         double textRightMargin,
         double tickEnd,
@@ -451,12 +529,12 @@ internal class TrendChart : Control
     }
 
     private void DrawTargetLine(
-        DrawingContext context, 
-        Rect graphArea, 
-        Pen axisPen, 
-        double graphMin, 
-        double valueRange, 
-        double yTickPadding, 
+        DrawingContext context,
+        Rect graphArea,
+        Pen axisPen,
+        double graphMin,
+        double valueRange,
+        double yTickPadding,
         double drawableHeight)
     {
         if (!Target.HasValue || string.IsNullOrEmpty(Unit)) return;
@@ -475,10 +553,10 @@ internal class TrendChart : Control
 
         // prevent the text from clipping at the top of the control
         var textY = targetY - targetText.Height - 2;
-        if (textY < graphArea.Top) 
+        if (textY < graphArea.Top)
         {
             // move the text below the line if there is no space above
-            textY = targetY + 2; 
+            textY = targetY + 2;
         }
 
         targetText.Draw(context, new Point(graphArea.Left + 4, textY));
@@ -510,14 +588,16 @@ internal class TrendChart : Control
             {
                 var dataPoint = dataPoints[i];
 
-                var xRatio = (double)(dataPoint.Timestamp!.Value.Ticks - timeMin) / timeRange;
+                var timestampTicks = dataPoint.Timestamp!.Value.UtcDateTime.Ticks;
+
+                var xRatio = (double)(timestampTicks - timeMin) / timeRange;
                 var x = graphArea.X + xRatio * graphArea.Width;
 
                 var yRatio = (dataPoint.Value - graphMin) / valueRange;
                 var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
 
                 var currentPoint = new Point(x, y);
-                
+
                 // store calculated points for hover hit-testing
                 _dataPoints.Add((currentPoint, dataPoint));
 
@@ -573,8 +653,18 @@ internal class TrendChart : Control
             TooltipValueForeground,
             TextAlignment.Center);
 
+        var tooltipTimestamp = _hoveredDataPoint.Timestamp!.Value.ToLocalTime();
+
+        var tooltipDateText = TimeRange == ChartTimeRange.Day
+            ? tooltipTimestamp.ToString(
+                "yyyy. MM. dd. HH:mm:ss",
+                CultureInfo.CurrentUICulture)
+            : tooltipTimestamp.ToString(
+                "yyyy. MM. dd.",
+                CultureInfo.CurrentUICulture);
+
         var dateText = new TextLayout(
-            $"{_hoveredDataPoint.Timestamp:yyyy. MM. dd. hh:mm:ss}",
+            tooltipDateText,
             new Typeface(_fontFamily),
             10,
             TooltipDateForeground ?? AxisStroke,
@@ -612,10 +702,35 @@ internal class TrendChart : Control
 
     #region Helpers
 
+    private string FormatXAxisLabel(DateTimeOffset timestamp, TimeSpan visibleTimeRange)
+    {
+        var culture = CultureInfo.CurrentUICulture;
+
+        return TimeRange switch
+        {
+            // a day view is primarily about the time of day
+            ChartTimeRange.Day => timestamp.ToString("HH:mm", culture),
+
+            // shorter ranges only need the month and day
+            ChartTimeRange.Week => timestamp.ToString("MM. dd.", culture),
+
+            ChartTimeRange.Month => timestamp.ToString("MM. dd.", culture),
+
+            // a year view is easier to scan by month
+            ChartTimeRange.Year => timestamp.ToString("yyyy. MM.", culture),
+
+            // the year must always be visible in the all view,
+            // otherwise dates from different years would be ambiguous
+            ChartTimeRange.All when visibleTimeRange.TotalDays > 366 => timestamp.ToString("yyyy. MM.", culture),
+
+            _ => timestamp.ToString("yyyy. MM. dd.", culture)
+        };
+    }
+
     private static double CalculateNiceInterval(double exactRange, int ticks)
     {
         var exactInterval = exactRange / (ticks - 1);
-        
+
         // find the closest power of 10 to determine the magnitude of the interval
         var magnitude = Math.Pow(10, Math.Floor(Math.Log10(exactInterval)));
         var fraction = exactInterval / magnitude;

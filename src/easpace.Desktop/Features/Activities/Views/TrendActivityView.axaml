@@ -9,7 +9,8 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
-             xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
+             xmlns:activityControls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
+             xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:TrendActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.TrendActivityView">
@@ -69,8 +70,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                    VerticalAlignment="Top">
+                    Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                    VerticalAlignment="Top" HorizontalAlignment="Right">
 
             <!-- Delete button -->
             <Button Classes="tertiary danger icon"
@@ -110,32 +112,46 @@ Licensed under the MIT License. See LICENSE file for details.
             </Button>
 
         </StackPanel>
+        
+        <!-- Chart interactions -->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*"
+              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+            
+            <!-- Time Range Selection (segmented control) -->
+            <ListBox Grid.Column="0" Classes="segmented"
+                     ItemsSource="{Binding TimeRanges}"
+                     SelectedItem="{Binding SelectedTimeRange}">
 
-        <!-- Time Range Selection (segmented control) -->
-        <ListBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="segmented"
-                 HorizontalAlignment="Left"
-                 ItemsSource="{Binding TimeRanges}"
-                 SelectedItem="{Binding SelectedTimeRange}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
 
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-
-        </ListBox>
+            </ListBox>
+            
+            <!-- Chart navigator -->
+            <controls:ChartNavigator Grid.Column="1" IsVisible="{Binding CanNavigateIntervals}"
+                                     NavigateBackCommand="{Binding PreviousIntervalCommand}"
+                                     IntervalText="{Binding VisibleRangeText}"
+                                     NavigateForwardCommand="{Binding NextIntervalCommand}" />
+            
+        </Grid>
 
         <!-- Chart -->
-        <controls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+        <activityControls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                              Target="{Binding Target}"
                              Unit="{Binding Unit}"
                              DataPoints="{Binding DataPoints}"
+                             RangeStart="{Binding VisibleRangeStart}"
+                             RangeEnd="{Binding VisibleRangeEnd}"
+                             TimeRange="{Binding SelectedTimeRange}"
                              Margin="0,0,6,0" />
 
     </Grid>

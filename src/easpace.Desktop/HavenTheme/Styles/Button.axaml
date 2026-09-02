@@ -130,6 +130,10 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
     </Style>
     
+    <Style Selector="Button.tertiary.icon">
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    
     <Style Selector="Button.regular">
         <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Xs}" />
         <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xxs}" />

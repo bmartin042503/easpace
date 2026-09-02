@@ -12,7 +12,6 @@ using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
-using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
