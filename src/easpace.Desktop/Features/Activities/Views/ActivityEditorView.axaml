@@ -40,6 +40,43 @@ Licensed under the MIT License. See LICENSE file for details.
                              MaxLength="16" />
                 </Grid>
 
+                <!-- Aggregation selection -->
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                        
+                        <!-- Label -->
+                        <TextBlock Classes="neutral fs4 trm-ellipsis"
+                                   Text="{core:LocalizationService Key='Activities.Label.Aggregation'}" />
+
+                        <!-- Info button -->
+                        <Button Classes="tertiary icon"
+                                Command="{Binding ShowAggregationInfoCommand}">
+                            <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Info.Fill}" />
+                        </Button>
+
+                    </StackPanel>
+
+                    <ComboBox Grid.Row="1"
+                              ItemsSource="{Binding Aggregations}"
+                              SelectedItem="{Binding SelectedTrendAggregation}"
+                              HorizontalAlignment="Stretch">
+
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+
+                </Grid>
+
                 <!-- Target checkbox -->
                 <CheckBox Content="{core:LocalizationService Key='Activities.CheckBox.Target'}"
                           IsChecked="{Binding IsTargetChecked}" HorizontalAlignment="Left" />

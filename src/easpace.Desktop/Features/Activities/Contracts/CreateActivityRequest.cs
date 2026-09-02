@@ -11,6 +11,7 @@ internal sealed record CreateActivityRequest(
     ActivityType Type,
     double? Target,
     string? Unit,
+    TrendAggregation? Aggregation,
     DateOnly? StartDate,
     DateOnly? TargetDate
 );

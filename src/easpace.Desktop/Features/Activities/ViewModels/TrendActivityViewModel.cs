@@ -36,6 +36,8 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     [ObservableProperty] private string _visibleRangeText = string.Empty;
     [ObservableProperty] private DateTimeOffset? _visibleRangeStart;
     [ObservableProperty] private DateTimeOffset? _visibleRangeEnd;
+    
+    [ObservableProperty] private TrendAggregation _aggregation;
 
     public int IntervalsBack => _intervalsBack;
 
@@ -59,6 +61,8 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
         _activityService = activityService;
 
         _selectedTimeRange = ChartTimeRange.Day;
+
+        Aggregation = _trendActivity.Aggregation;
 
         LoadEntries();
 

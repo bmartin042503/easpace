@@ -43,7 +43,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     [NotifyDataErrorInfo]
     [MaxLength(16, ErrorMessage = "FormValidation.Unit.MaxLength")]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    private string? _unit; 
+    private string? _unit;
 
     [ObservableProperty] private bool _isTargetChecked;
 
@@ -53,9 +53,11 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     private double? _target;
-    
+
     [ObservableProperty] private DateTime? _targetDate;
     [ObservableProperty] private DateTime? _startDate;
+
+    [ObservableProperty] private TrendAggregation? _selectedTrendAggregation;
 
     private bool CanSubmit() => !HasErrors;
 
@@ -63,11 +65,12 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     public event EventHandler? Canceled;
 
     public AvaloniaList<ActivityDataEntryViewModel> DataEntries { get; init; }
-    
+
     public IEnumerable<ActivityType> ActivityTypes { get; } = Enum.GetValues<ActivityType>();
+    public IEnumerable<TrendAggregation> Aggregations { get; } = Enum.GetValues<TrendAggregation>();
 
     public bool IsCreatingNew { get; }
-    
+
     public string DataEntriesLabel =>
         DataEntries.Count == 1
             ? LocalizationService.GetString("Activities.Label.DataEntry")
@@ -85,8 +88,8 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     }
 
     public ActivityEditorViewModel(
-        IActivityService activityService, 
-        IDialogService dialogService, 
+        IActivityService activityService,
+        IDialogService dialogService,
         ILogger<ActivityEditorViewModel> logger)
     {
         _activityService = activityService;
@@ -94,16 +97,17 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         _logger = logger;
         IsCreatingNew = true;
         SelectedType = ActivityType.Trend;
+        SelectedTrendAggregation = TrendAggregation.Average;
         TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
-        
+
         DataEntries = [];
-        
+
         ValidateAllProperties();
         SaveCommand.NotifyCanExecuteChanged();
     }
 
     public ActivityEditorViewModel(
-        IActivityEditorService editorService, 
+        IActivityEditorService editorService,
         IActivityService activityService,
         IDialogService dialogService,
         ActivityViewModel activity,
@@ -115,9 +119,6 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         _activity = activity;
         IsCreatingNew = false;
 
-        var updateRequest = editorService.GetUpdateRequest(_activity);
-        SetFormDataFromUpdateRequest(updateRequest);
-
         SelectedType = _activity switch
         {
             TrendActivityViewModel => ActivityType.Trend,
@@ -126,12 +127,15 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
             _ => SelectedType
         };
 
+        var updateRequest = editorService.GetUpdateRequest(_activity);
+        SetFormDataFromUpdateRequest(updateRequest);
+
         DataEntries = _activity.Entries;
-        
+
         DataEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(DataEntriesLabel));
 
         TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), _activity.Name);
-        
+
         ValidateAllProperties();
         SaveCommand.NotifyCanExecuteChanged();
     }
@@ -162,26 +166,26 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
             else
             {
                 if (_activity == null) return;
-            
+
                 _logger.LogInformation("Updating existing activity with ID {Id} from editor", _activity.Id);
                 var updateRequest = GetUpdateRequest();
                 var updatedEntry = await _activity.UpdateFrom(updateRequest);
-            
+
                 if (updatedEntry == null) return;
-            
+
                 Saved?.Invoke(this, updatedEntry);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to save activity from editor (IsCreatingNew: {IsCreatingNew})", IsCreatingNew);
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Activities.Error.SaveFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
@@ -209,13 +213,13 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to delete data entry {EntryId} via editor", dataEntryVm.Id);
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Activities.Error.EntryDeleteFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
@@ -228,6 +232,37 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         await _activity.EditDataEntry(dataEntryVm.Id);
     }
 
+    [RelayCommand]
+    private async Task ShowAggregationInfo()
+    {
+        var newLine = Environment.NewLine;
+
+        var aggregationOptions = string.Join($"{newLine}{newLine}",
+            $"• {LocalizationService.GetString("Activities.Aggregation.Sum")}: " +
+            LocalizationService.GetString("Activities.AggregationInfoDialog.SumDescription"),
+            $"• {LocalizationService.GetString("Activities.Aggregation.Average")}: " +
+            LocalizationService.GetString("Activities.AggregationInfoDialog.AverageDescription"),
+            $"• {LocalizationService.GetString("Activities.Aggregation.Latest")}: " +
+            LocalizationService.GetString("Activities.AggregationInfoDialog.LatestDescription"),
+            $"• {LocalizationService.GetString("Activities.Aggregation.Maximum")}: " +
+            LocalizationService.GetString("Activities.AggregationInfoDialog.MaximumDescription"));
+
+        var message = string.Join($"{newLine}{newLine}",
+            LocalizationService.GetString("Activities.AggregationInfoDialog.Introduction"),
+            LocalizationService.GetString("Activities.AggregationInfoDialog.Example"),
+            LocalizationService.GetString("Activities.AggregationInfoDialog.Selection"), 
+            aggregationOptions,
+            LocalizationService.GetString("Activities.AggregationInfoDialog.Footer"));
+
+        var infoDialog = new DetailedInfoDialogViewModel
+        {
+            Title = LocalizationService.GetString("Activities.AggregationInfoDialog.Title"),
+            Message = message
+        };
+
+        await _dialogService.ShowDialogAsync(infoDialog);
+    }
+
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)
     {
         Name = updateRequest.Name;
@@ -236,6 +271,11 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         IsTargetChecked = updateRequest.Target.HasValue;
         StartDate = ToDateTime(updateRequest.StartDate);
         TargetDate = ToDateTime(updateRequest.TargetDate);
+
+        if (SelectedType is ActivityType.Trend && updateRequest.Aggregation != null)
+        {
+            SelectedTrendAggregation = updateRequest.Aggregation;
+        }
     }
 
     private CreateActivityRequest GetCreateRequest()
@@ -243,22 +283,21 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         return new CreateActivityRequest(
             Name: Name,
             Type: SelectedType,
-
             Target: SelectedType switch
             {
                 ActivityType.Milestone => Target,
                 ActivityType.Trend when IsTargetChecked => Target,
                 _ => null
             },
-
+            Aggregation: SelectedType is ActivityType.Trend
+                ? SelectedTrendAggregation
+                : null,
             Unit: SelectedType is ActivityType.Trend or ActivityType.Milestone
                 ? Unit
                 : null,
-
             StartDate: SelectedType == ActivityType.Milestone
                 ? ToDateOnly(StartDate)
                 : null,
-
             TargetDate: SelectedType == ActivityType.Milestone
                 ? ToDateOnly(TargetDate)
                 : null
@@ -277,6 +316,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
             Name: Name,
             Target: Target,
             Unit: Unit,
+            Aggregation: SelectedTrendAggregation,
             StartDate: ToDateOnly(StartDate),
             TargetDate: ToDateOnly(TargetDate)
         );

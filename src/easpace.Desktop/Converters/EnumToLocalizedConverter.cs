@@ -52,6 +52,18 @@ public class EnumToLocalizedConverter : IValueConverter
                 _ => string.Empty
             };
         }
+
+        if (value is TrendAggregation aggregation)
+        {
+            return aggregation switch
+            {
+                TrendAggregation.Sum => LocalizationService.GetString("Activities.Aggregation.Sum"),
+                TrendAggregation.Average => LocalizationService.GetString("Activities.Aggregation.Average"),
+                TrendAggregation.Latest => LocalizationService.GetString("Activities.Aggregation.Latest"),
+                TrendAggregation.Maximum => LocalizationService.GetString("Activities.Aggregation.Maximum"),
+                _ => string.Empty
+            };
+        }
         
         return string.Empty;
     }

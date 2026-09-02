@@ -207,6 +207,48 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Label.TargetDate" xml:space="preserve">
         <value>Cél dátum</value>
     </data>
+    <data name="Activities.Label.Aggregation" xml:space="preserve">
+        <value>Több bejegyzés összevonása</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.Title" xml:space="preserve">
+        <value>Hogyan legyenek összevonva a bejegyzések?</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.Introduction" xml:space="preserve">
+        <value>Ez a beállítás határozza meg, hogy az easpace hogyan vonja össze az ugyanahhoz az időszakhoz tartozó több bejegyzést egyetlen értékké a grafikonon. Különböző tevékenységeknél eltérő összevonási mód lehet megfelelő attól függően, hogy mit szeretnél követni.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.Example" xml:space="preserve">
+        <value>Ha például egy napon két futást rögzítesz, 5 km-t és 2 km-t, akkor valószínűleg azt szeretnéd, hogy a grafikon 7 km össztávot mutasson. Más értékeknél, mint például a testsúly, az összeadás nem lenne értelmes.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.Selection" xml:space="preserve">
+        <value>Válaszd azt a lehetőséget, amelyik legjobban megfelel annak, ahogyan a tevékenységet követni szeretnéd:</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.SumDescription" xml:space="preserve">
+        <value>Összeadja az összes bejegyzést. Olyan tevékenységeknél hasznos, ahol az értékek összeadódnak.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.AverageDescription" xml:space="preserve">
+        <value>Kiszámítja az összes bejegyzés átlagát. Akkor hasznos, ha az ismétlődő tevékenységek jellemző értékét szeretnéd követni.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.LatestDescription" xml:space="preserve">
+        <value>Az adott időszak legutolsó bejegyzését használja. Akkor hasznos, ha csak a legutóbb rögzített állapot számít.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.MaximumDescription" xml:space="preserve">
+        <value>Az adott időszak legnagyobb bejegyzését használja. Akkor hasznos, ha a legjobb egyedi eredmény számít.</value>
+    </data>
+    <data name="Activities.AggregationInfoDialog.Footer" xml:space="preserve">
+        <value>A kiválasztott összevonási módot a grafikon akkor is használja, amikor nagyobb adatmennyiséget napokra, hetekre, hónapokra vagy más időszakokra csoportosít.</value>
+    </data>
+    <data name="Activities.Aggregation.Sum" xml:space="preserve">
+        <value>Összeg</value>
+    </data>
+    <data name="Activities.Aggregation.Average" xml:space="preserve">
+        <value>Átlag</value>
+    </data>
+    <data name="Activities.Aggregation.Latest" xml:space="preserve">
+        <value>Legutóbbi érték</value>
+    </data>
+    <data name="Activities.Aggregation.Maximum" xml:space="preserve">
+        <value>Legmagasabb érték</value>
+    </data>
     <data name="Activities.Label.DataEntry" xml:space="preserve">
         <value>Adatok (1 bejegyzés)</value>
     </data>

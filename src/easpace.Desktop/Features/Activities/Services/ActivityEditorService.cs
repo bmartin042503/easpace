@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.ViewModels;
 
@@ -19,6 +20,7 @@ internal class ActivityEditorService : IActivityEditorService
                     Name: trendActivity.Name,
                     Target: trendActivity.Target,
                     Unit: trendActivity.Unit,
+                    Aggregation: trendActivity.Aggregation,
                     TargetDate: null,
                     StartDate: null
                 );
@@ -29,6 +31,7 @@ internal class ActivityEditorService : IActivityEditorService
                     Name: milestoneActivity.Name,
                     Target: milestoneActivity.Target,
                     Unit: milestoneActivity.Unit,
+                    Aggregation: null,
                     StartDate: milestoneActivity.StartDate,
                     TargetDate: milestoneActivity.TargetDate
                 );
@@ -37,6 +40,7 @@ internal class ActivityEditorService : IActivityEditorService
                 
                 return new UpdateActivityRequest(
                     Name: routineActivity.Name,
+                    null,
                     null,
                     null,
                     null,

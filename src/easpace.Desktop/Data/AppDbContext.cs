@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using easpace.Desktop.Features.Journal.Entities;
@@ -50,6 +51,13 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
         modelBuilder.Entity<NumericActivity>()
             .Property(a => a.Unit)
             .HasMaxLength(16);
+
+        modelBuilder.Entity<TrendActivity>(entity =>
+        {
+            entity.Property(a => a.Aggregation)
+                .HasDefaultValue(TrendAggregation.Average)
+                .HasSentinel(TrendAggregation.Average);
+        });
         
         modelBuilder.Entity<ActivityDataEntry>()
             .UseTphMappingStrategy()
