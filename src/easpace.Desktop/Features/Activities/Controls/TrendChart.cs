@@ -20,6 +20,7 @@ internal class TrendChart : Control
 {
     #region Fields
 
+    private const double TooltipHitRadius = 40;
     private readonly FontFamily _fontFamily = new("avares://easpace.Desktop/Assets/Fonts#Poppins");
     private readonly List<(Point CanvasPoint, TrendChartDataPoint DataPoint)> _dataPoints = [];
     private TrendChartDataPoint? _hoveredDataPoint;
@@ -206,7 +207,7 @@ internal class TrendChart : Control
         get;
         set
         {
-            if (SetAndRaise(DataPointsProperty, ref field, value)) InvalidateVisual();
+            if (SetAndRaise(DataPointsProperty, ref field, value)) return;
             
             _hoveredDataPoint = null;
             InvalidateVisual();
@@ -486,6 +487,12 @@ internal class TrendChart : Control
             }
 
             var tickTicks = timeMin + (long)(timeRange * ratio);
+            
+            if (i == gridLines - 1 && timeRange > 0)
+            {
+                tickTicks--;
+            }
+            
             var tickDate = new DateTimeOffset(tickTicks, TimeSpan.Zero).ToLocalTime();
 
             var xText = new TextLayout(
@@ -659,9 +666,13 @@ internal class TrendChart : Control
         context.DrawEllipse(Stroke, null, _hoveredPoint, 5, 5);
         
         var formattedValue = _hoveredDataPoint.Value.ToString("0.##", CultureInfo.CurrentCulture);
+        
+        var tooltipValue = string.IsNullOrWhiteSpace(Unit)
+            ? formattedValue
+            : $"{formattedValue} {Unit}";
 
         var valueText = new TextLayout(
-            $"{formattedValue} {Unit}",
+            tooltipValue,
             new Typeface(_fontFamily),
             14,
             TooltipValueForeground,
@@ -760,6 +771,14 @@ internal class TrendChart : Control
 
         return niceFraction * magnitude;
     }
+    
+    private static double GetSquaredDistance(Point first, Point second)
+    {
+        var deltaX = first.X - second.X;
+        var deltaY = first.Y - second.Y;
+
+        return deltaX * deltaX + deltaY * deltaY;
+    }
 
     #endregion
 
@@ -772,9 +791,15 @@ internal class TrendChart : Control
         if (_dataPoints.Count == 0) return;
 
         var currentPosition = e.GetPosition(this);
-        var closestPoint = _dataPoints.MinBy(dp => Math.Abs(dp.CanvasPoint.X - currentPosition.X));
 
-        if (Math.Abs(closestPoint.CanvasPoint.X - currentPosition.X) < 40)
+        var closestPoint = _dataPoints
+            .MinBy(dp => GetSquaredDistance(dp.CanvasPoint, currentPosition));
+
+        var distanceSquared = GetSquaredDistance(
+            closestPoint.CanvasPoint,
+            currentPosition);
+
+        if (distanceSquared <= TooltipHitRadius * TooltipHitRadius)
         {
             if (_hoveredDataPoint != closestPoint.DataPoint)
             {
@@ -782,14 +807,14 @@ internal class TrendChart : Control
                 _hoveredPoint = closestPoint.CanvasPoint;
                 InvalidateVisual();
             }
+
+            return;
         }
-        else
+
+        if (_hoveredDataPoint != null)
         {
-            if (_hoveredDataPoint != null)
-            {
-                _hoveredDataPoint = null;
-                InvalidateVisual();
-            }
+            _hoveredDataPoint = null;
+            InvalidateVisual();
         }
     }
 

@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Constants;
 
-internal enum TrendAggregation
+public enum TrendAggregation
 {
     Sum,
     Average,

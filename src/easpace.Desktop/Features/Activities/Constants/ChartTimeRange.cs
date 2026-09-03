@@ -3,7 +3,7 @@
 
 namespace easpace.Desktop.Features.Activities.Constants;
 
-internal enum ChartTimeRange
+public enum ChartTimeRange
 {
     Day,
     Week,

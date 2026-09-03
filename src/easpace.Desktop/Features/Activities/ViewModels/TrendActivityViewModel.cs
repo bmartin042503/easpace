@@ -46,8 +46,15 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     public NumericActivityDataEntryViewModel? LastEntry =>
         Entries.OfType<NumericActivityDataEntryViewModel>().MaxBy(e => e.Timestamp);
 
-    public string CurrentValueText => string.Format(LocalizationService.GetString("TrendActivity.Details.CurrentValue"),
-        LastEntry?.Value, Unit);
+    public string CurrentValueText
+    {
+        get
+        {
+            var value = LastEntry?.Value.ToString("0.##", CultureInfo.CurrentCulture);
+
+            return string.Format(LocalizationService.GetString("TrendActivity.Details.CurrentValue"), value, Unit);
+        }
+    }
 
     public TrendActivityViewModel(
         TrendActivity trendActivity,
@@ -124,14 +131,14 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
         _intervalsBack++;
         OnPropertyChanged(nameof(IntervalsBack));
         UpdateDataPoints();
-
-        PreviousIntervalCommand.NotifyCanExecuteChanged();
-        NextIntervalCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanGoToPreviousInterval()
     {
         if (SelectedTimeRange == ChartTimeRange.All || !VisibleRangeStart.HasValue) return false;
+        
+        // always allow returning from the future interval to the current interval
+        if (_intervalsBack < 0) return true;
 
         // do not allow navigating indefinitely into intervals before the first existing entry
         return Entries.OfType<NumericActivityDataEntryViewModel>()
@@ -141,21 +148,16 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     [RelayCommand(CanExecute = nameof(CanGoToNextInterval))]
     private void NextInterval()
     {
-        if (_intervalsBack <= 0) return;
+        if (_intervalsBack <= -1) return;
         
         _intervalsBack--;
-        
         OnPropertyChanged(nameof(IntervalsBack));
-        
         UpdateDataPoints();
-        
-        PreviousIntervalCommand.NotifyCanExecuteChanged();
-        NextIntervalCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanGoToNextInterval()
     {
-        return SelectedTimeRange != ChartTimeRange.All && _intervalsBack > 0;
+        return SelectedTimeRange != ChartTimeRange.All && _intervalsBack > -1;
     }
 
     private void UpdateDataPoints()
@@ -184,13 +186,19 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
             return;
         }
 
+        var culture = CultureInfo.CurrentUICulture;
         var start = VisibleRangeStart.Value.ToLocalTime();
-        var end = VisibleRangeEnd.Value.ToLocalTime();
+
+        // range end is exclusive, so use the previous instant for display purposes
+        var end = VisibleRangeEnd.Value.AddTicks(-1).ToLocalTime();
 
         VisibleRangeText = SelectedTimeRange switch
         {
-            ChartTimeRange.Day => FormatDayRange(start, end),
-            _ => FormatDateRange(start, end)
+            ChartTimeRange.Day => start.ToString("yyyy. MMMM d.", culture),
+            ChartTimeRange.Week => FormatDateRange(start, end),
+            ChartTimeRange.Month => start.ToString("yyyy. MMMM", culture),
+            ChartTimeRange.Year => start.ToString("yyyy", culture),
+            _ => string.Empty
         };
     }
     
@@ -220,15 +228,6 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
         }
 
         return start.ToString("yyyy. MMMM d.", culture);
-    }
-    
-    private static string FormatDayRange(DateTimeOffset start, DateTimeOffset end)
-    {
-        var culture = CultureInfo.CurrentUICulture;
-
-        return
-            $"{start.ToString("yyyy. MMMM d. HH:mm", culture)} - " +
-            $"{end.ToString("MMMM d. HH:mm", culture)}";
     }
 
     protected override void OnEntryCollectionChanged()

@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="AreaBrush" Value="{DynamicResource Haven.Sem.Gradient.Accent.Subtle}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Ticks" Value="5" />
-        <Setter Property="GridLines" Value="7" />
+        <Setter Property="GridLines" Value="6" />
         <Setter Property="TickWidth" Value="12" />
         <Setter Property="GridLineBrush" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
         <Setter Property="TooltipBackground" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />

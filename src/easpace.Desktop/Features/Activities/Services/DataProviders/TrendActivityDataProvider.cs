@@ -16,6 +16,13 @@ namespace easpace.Desktop.Features.Activities.Services.DataProviders;
 internal class TrendActivityDataProvider : ITrendActivityDataProvider
 {
     private const int MaxDataPoints = 60;
+    
+    private readonly TimeProvider _timeProvider;
+
+    public TrendActivityDataProvider(TimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
 
     /// <summary>
     /// Creates chart data for the selected time range using the activity's daily aggregation mode.
@@ -26,12 +33,12 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
         TrendAggregation aggregation,
         List<NumericActivityDataEntry> numericEntries)
     {
-        if (intervalsBack < 0)
+        if (intervalsBack < -1)
         {
-            throw new ArgumentOutOfRangeException(nameof(intervalsBack), "Interval offset cannot be negative.");
+            throw new ArgumentOutOfRangeException(nameof(intervalsBack), "Interval offset cannot be less than -1.");
         }
 
-        var now = DateTimeOffset.Now;
+        var now = _timeProvider.GetLocalNow();
         var (rangeStart, rangeEnd) = GetTimeRange(chartTimeRange, intervalsBack, now);
 
         // keep all entries for the all-time view, otherwise limit them to the visible interval
@@ -41,7 +48,7 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
                 .Where(e => e.Timestamp >= rangeStart && e.Timestamp < rangeEnd)
                 .ToList();
 
-        // choose how the filtered entries should be prepared for the selected chart range
+        // prepare entries according to the semantic meaning of the selected chart range
         var dataPoints = chartTimeRange switch
         {
             ChartTimeRange.Day => GetDayData(entries, rangeStart, rangeEnd),
@@ -51,42 +58,87 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
             _ => []
         };
 
-        return new TrendChartData(DataPoints: dataPoints, RangeStart: rangeStart, RangeEnd: rangeEnd);
+        return new TrendChartData(
+            DataPoints: dataPoints,
+            RangeStart: rangeStart,
+            RangeEnd: rangeEnd);
     }
 
     /// <summary>
-    /// Calculates the visible start and end timestamps for a navigable chart interval.
+    /// Calculates calendar-aligned start and exclusive end timestamps for a navigable chart interval.
     /// </summary>
     private static (DateTimeOffset? Start, DateTimeOffset? End) GetTimeRange(
         ChartTimeRange chartTimeRange,
         int intervalsBack,
         DateTimeOffset now)
     {
-        // all-time view has no fixed interval boundaries
+        // calculate all boundaries using local calendar dates
+        var localNow = now.ToLocalTime();
+        var currentDayStart = localNow.Date;
+        var currentWeekStart = GetStartOfWeek(currentDayStart);
+        var currentMonthStart = new DateTime(localNow.Year, localNow.Month, 1);
+        var currentYearStart = new DateTime(localNow.Year, 1, 1);
+
         return chartTimeRange switch
         {
-            ChartTimeRange.Day => (
-                now.AddDays(-(intervalsBack + 1)),
-                now.AddDays(-intervalsBack)
-            ),
+            ChartTimeRange.Day => CreateLocalRange(
+                currentDayStart.AddDays(-intervalsBack),
+                currentDayStart.AddDays(1 - intervalsBack)),
 
-            ChartTimeRange.Week => (
-                now.AddDays(-7 * (intervalsBack + 1)),
-                now.AddDays(-7 * intervalsBack)
-            ),
+            ChartTimeRange.Week => CreateLocalRange(
+                currentWeekStart.AddDays(-7 * intervalsBack),
+                currentWeekStart.AddDays(7 * (1 - intervalsBack))),
 
-            ChartTimeRange.Month => (
-                now.AddMonths(-(intervalsBack + 1)),
-                now.AddMonths(-intervalsBack)
-            ),
+            ChartTimeRange.Month => CreateLocalRange(
+                currentMonthStart.AddMonths(-intervalsBack),
+                currentMonthStart.AddMonths(1 - intervalsBack)),
 
-            ChartTimeRange.Year => (
-                now.AddYears(-(intervalsBack + 1)),
-                now.AddYears(-intervalsBack)
-            ),
+            ChartTimeRange.Year => CreateLocalRange(
+                currentYearStart.AddYears(-intervalsBack),
+                currentYearStart.AddYears(1 - intervalsBack)),
 
             _ => (null, null)
         };
+    }
+
+    /// <summary>
+    /// Converts local calendar boundaries to DateTimeOffset values using the correct local UTC offset.
+    /// </summary>
+    private static (DateTimeOffset Start, DateTimeOffset End) CreateLocalRange(DateTime start, DateTime end)
+    {
+        return (CreateLocalDateTimeOffset(start), CreateLocalDateTimeOffset(end));
+    }
+
+    /// <summary>
+    /// Creates a DateTimeOffset from a local date and applies the local time zone offset.
+    /// </summary>
+    private static DateTimeOffset CreateLocalDateTimeOffset(DateTime localDateTime)
+    {
+        var unspecified = DateTime.SpecifyKind(localDateTime, DateTimeKind.Unspecified);
+        var offset = TimeZoneInfo.Local.GetUtcOffset(unspecified);
+
+        return new DateTimeOffset(unspecified, offset);
+    }
+
+    /// <summary>
+    /// Returns the visual midpoint between two timestamps.
+    /// </summary>
+    private static DateTimeOffset GetMidpoint(DateTimeOffset start, DateTimeOffset end)
+    {
+        var startTicks = start.UtcDateTime.Ticks;
+        var endTicks = end.UtcDateTime.Ticks;
+        var midpointTicks = startTicks + (endTicks - startTicks) / 2;
+
+        return new DateTimeOffset(midpointTicks, TimeSpan.Zero).ToLocalTime();
+    }
+
+    /// <summary>
+    /// Returns the midpoint of a local calendar period.
+    /// </summary>
+    private static DateTimeOffset GetLocalPeriodMidpoint(DateTime start, DateTime end)
+    {
+        var (rangeStart, rangeEnd) = CreateLocalRange(start, end);
+        return GetMidpoint(rangeStart, rangeEnd);
     }
 
     /// <summary>
@@ -146,16 +198,16 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
             return dailyData;
         }
 
-        // average daily values by week so the selected daily aggregation keeps its original meaning
+        // average semantic daily values into calendar weeks
         return dailyData
             .GroupBy(e => GetStartOfWeek(e.Timestamp!.Value))
-            .Select(CreateDownsampledDataPoint)
+            .Select(CreateWeeklyDataPoint)
             .OrderBy(e => e.Timestamp)
             .ToList();
     }
 
     /// <summary>
-    /// Creates all-time chart data and progressively compresses daily values into larger time buckets when needed.
+    /// Creates all-time chart data and progressively compresses daily values into larger calendar periods when needed.
     /// </summary>
     private static List<TrendChartDataPoint> GetAllData(
         List<NumericActivityDataEntry> entries,
@@ -174,7 +226,7 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
         // try weekly averages first
         var weeklyData = dailyData
             .GroupBy(e => GetStartOfWeek(e.Timestamp!.Value))
-            .Select(CreateDownsampledDataPoint)
+            .Select(CreateWeeklyDataPoint)
             .OrderBy(e => e.Timestamp)
             .ToList();
 
@@ -190,7 +242,7 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
                 var local = e.Timestamp!.Value.ToLocalTime();
                 return (local.Year, local.Month);
             })
-            .Select(CreateDownsampledDataPoint)
+            .Select(CreateMonthlyDataPoint)
             .OrderBy(e => e.Timestamp)
             .ToList();
 
@@ -202,7 +254,7 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
         // use yearly averages for very long histories
         var yearlyData = dailyData
             .GroupBy(e => e.Timestamp!.Value.ToLocalTime().Year)
-            .Select(CreateDownsampledDataPoint)
+            .Select(CreateYearlyDataPoint)
             .OrderBy(e => e.Timestamp)
             .ToList();
 
@@ -218,64 +270,73 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
     /// <summary>
     /// Creates a single daily data point from same-day entries using the selected aggregation mode.
     /// </summary>
-    private static TrendChartDataPoint CreateDailyDataPoint<TKey>(
-        IGrouping<TKey, NumericActivityDataEntry> group,
+    private static TrendChartDataPoint CreateDailyDataPoint(
+        IGrouping<DateTime, NumericActivityDataEntry> group,
         TrendAggregation aggregation)
     {
-        // use the latest real entry as the representative timestamp for sum, average, and latest
-        var latestEntry = group.MaxBy(e => e.Timestamp)!;
+        // place the daily value at the visual center of its local calendar day
+        var timestamp = GetLocalPeriodMidpoint(
+            group.Key,
+            group.Key.AddDays(1));
 
-        return aggregation switch
+        var value = aggregation switch
         {
-            TrendAggregation.Sum => new TrendChartDataPoint(
-                latestEntry.Timestamp,
-                group.Sum(e => e.Value)),
-
-            TrendAggregation.Average => new TrendChartDataPoint(
-                latestEntry.Timestamp,
-                group.Average(e => e.Value)),
-
-            TrendAggregation.Latest => new TrendChartDataPoint(
-                latestEntry.Timestamp,
-                latestEntry.Value),
-
-            TrendAggregation.Maximum => CreateMaximumDailyDataPoint(group),
+            TrendAggregation.Sum => group.Sum(e => e.Value),
+            TrendAggregation.Average => group.Average(e => e.Value),
+            TrendAggregation.Latest => group.MaxBy(e => e.Timestamp)!.Value,
+            TrendAggregation.Maximum => group.Max(e => e.Value),
 
             _ => throw new ArgumentOutOfRangeException(
                 nameof(aggregation),
                 aggregation,
                 "Unsupported trend aggregation type.")
         };
+
+        return new TrendChartDataPoint(timestamp, value);
     }
 
     /// <summary>
-    /// Creates a daily data point from the highest entry and preserves that entry's timestamp.
+    /// Creates a weekly chart point by averaging daily values and placing the result at the center of the week.
     /// </summary>
-    private static TrendChartDataPoint CreateMaximumDailyDataPoint<TKey>(
-        IGrouping<TKey, NumericActivityDataEntry> group)
+    private static TrendChartDataPoint CreateWeeklyDataPoint(IGrouping<DateTime, TrendChartDataPoint> group)
     {
-        // prefer the latest entry when multiple entries share the same maximum value
-        var maximumEntry = group
-            .OrderByDescending(e => e.Value)
-            .ThenByDescending(e => e.Timestamp)
-            .First();
+        // the key is the Monday that starts the represented local calendar week
+        var timestamp = GetLocalPeriodMidpoint(
+            group.Key,
+            group.Key.AddDays(7));
 
         return new TrendChartDataPoint(
-            maximumEntry.Timestamp,
-            maximumEntry.Value);
+            timestamp,
+            group.Average(e => e.Value));
     }
 
     /// <summary>
-    /// Averages already calculated daily values into a larger chart bucket.
+    /// Creates a monthly chart point by averaging daily values and placing the result at the center of the month.
     /// </summary>
-    private static TrendChartDataPoint CreateDownsampledDataPoint<TKey>(
-        IGrouping<TKey, TrendChartDataPoint> group)
+    private static TrendChartDataPoint CreateMonthlyDataPoint(
+        IGrouping<(int Year, int Month), TrendChartDataPoint> group)
     {
-        // use averaging only for visual compression, not as another daily aggregation step
-        var latestPoint = group.MaxBy(e => e.Timestamp)!;
-        var average = group.Average(e => e.Value);
+        var start = new DateTime(group.Key.Year, group.Key.Month, 1);
+        var end = start.AddMonths(1);
 
-        return latestPoint with { Value = average };
+        // place the compressed value at the visual center of the represented month
+        return new TrendChartDataPoint(
+            GetLocalPeriodMidpoint(start, end),
+            group.Average(e => e.Value));
+    }
+
+    /// <summary>
+    /// Creates a yearly chart point by averaging daily values and placing the result at the center of the year.
+    /// </summary>
+    private static TrendChartDataPoint CreateYearlyDataPoint(IGrouping<int, TrendChartDataPoint> group)
+    {
+        var start = new DateTime(group.Key, 1, 1);
+        var end = start.AddYears(1);
+
+        // place the compressed value at the visual center of the represented year
+        return new TrendChartDataPoint(
+            GetLocalPeriodMidpoint(start, end),
+            group.Average(e => e.Value));
     }
 
     /// <summary>
@@ -297,20 +358,47 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
         }
 
         // divide the entire visible interval into at most the preferred number of buckets
-        var bucketSize = Math.Max(1L, (long)Math.Ceiling(rangeTicks / (double)MaxDataPoints));
+        var bucketSize = Math.Max(
+            1L,
+            (long)Math.Ceiling(rangeTicks / (double)MaxDataPoints));
 
         return entries
             .GroupBy(e =>
             {
                 var offset = e.Timestamp.UtcDateTime.Ticks - startTicks;
-                var bucket = offset / bucketSize;
-
-                // keep edge-case timestamps inside the valid bucket range
-                return Math.Clamp(bucket, 0, MaxDataPoints - 1);
+                return Math.Clamp(offset / bucketSize, 0, MaxDataPoints - 1);
             })
-            .Select(CreateDownsampledRawDataPoint)
+            .Select(group => CreateDownsampledRawDataPoint(
+                group,
+                rangeStart,
+                rangeEnd,
+                bucketSize))
             .OrderBy(e => e.Timestamp)
             .ToList();
+    }
+
+    /// <summary>
+    /// Creates a visually downsampled point at the center of its time bucket.
+    /// </summary>
+    private static TrendChartDataPoint CreateDownsampledRawDataPoint(
+        IGrouping<long, NumericActivityDataEntry> group,
+        DateTimeOffset rangeStart,
+        DateTimeOffset rangeEnd,
+        long bucketSize)
+    {
+        var rangeStartTicks = rangeStart.UtcDateTime.Ticks;
+        var rangeEndTicks = rangeEnd.UtcDateTime.Ticks;
+
+        var bucketStartTicks = rangeStartTicks + group.Key * bucketSize;
+        var bucketEndTicks = Math.Min(bucketStartTicks + bucketSize, rangeEndTicks);
+
+        var bucketStart = new DateTimeOffset(bucketStartTicks, TimeSpan.Zero);
+        var bucketEnd = new DateTimeOffset(bucketEndTicks, TimeSpan.Zero);
+
+        // the selected daily aggregation does not affect visual day-view compression
+        return new TrendChartDataPoint(
+            GetMidpoint(bucketStart, bucketEnd),
+            group.Average(e => e.Value));
     }
 
     /// <summary>
@@ -328,7 +416,7 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
 
         var result = new List<TrendChartDataPoint>();
 
-        // average each consecutive bucket while preserving its latest timestamp
+        // average consecutive entries and place each result at the center of its represented timestamps
         for (var i = 0; i < orderedEntries.Count; i += bucketSize)
         {
             var bucket = orderedEntries
@@ -336,26 +424,19 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
                 .Take(bucketSize)
                 .ToList();
 
-            var latestEntry = bucket.MaxBy(e => e.Timestamp)!;
-            var average = bucket.Average(e => e.Value);
+            var firstEntry = bucket[0];
+            var lastEntry = bucket[^1];
 
-            result.Add(new TrendChartDataPoint(latestEntry.Timestamp, average));
+            var timestamp = bucket.Count == 1
+                ? firstEntry.Timestamp
+                : GetMidpoint(firstEntry.Timestamp, lastEntry.Timestamp);
+
+            result.Add(new TrendChartDataPoint(
+                timestamp,
+                bucket.Average(e => e.Value)));
         }
 
         return result;
-    }
-
-    /// <summary>
-    /// Creates a visually downsampled point by averaging raw entries inside a time bucket.
-    /// </summary>
-    private static TrendChartDataPoint CreateDownsampledRawDataPoint<TKey>(
-        IGrouping<TKey, NumericActivityDataEntry> group)
-    {
-        // raw day-view entries are averaged only to reduce visual density
-        var latestEntry = group.MaxBy(e => e.Timestamp)!;
-        var average = group.Average(e => e.Value);
-
-        return new TrendChartDataPoint(latestEntry.Timestamp, average);
     }
 
     /// <summary>
@@ -375,11 +456,13 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
             return orderedDataPoints;
         }
 
-        var bucketSize = Math.Max(1, (int)Math.Ceiling(orderedDataPoints.Count / (double)MaxDataPoints));
+        var bucketSize = Math.Max(
+            1,
+            (int)Math.Ceiling(orderedDataPoints.Count / (double)MaxDataPoints));
 
         var result = new List<TrendChartDataPoint>();
 
-        // average neighboring points while keeping the latest timestamp of each bucket
+        // average neighboring points and position the result at their temporal center
         for (var i = 0; i < orderedDataPoints.Count; i += bucketSize)
         {
             var bucket = orderedDataPoints
@@ -387,10 +470,16 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
                 .Take(bucketSize)
                 .ToList();
 
-            var latestPoint = bucket.MaxBy(e => e.Timestamp)!;
-            var average = bucket.Average(e => e.Value);
+            var firstTimestamp = bucket[0].Timestamp!.Value;
+            var lastTimestamp = bucket[^1].Timestamp!.Value;
 
-            result.Add(latestPoint with { Value = average });
+            var timestamp = bucket.Count == 1
+                ? firstTimestamp
+                : GetMidpoint(firstTimestamp, lastTimestamp);
+
+            result.Add(new TrendChartDataPoint(
+                timestamp,
+                bucket.Average(e => e.Value)));
         }
 
         return result;
@@ -401,11 +490,17 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
     /// </summary>
     private static DateTime GetStartOfWeek(DateTimeOffset date)
     {
-        var localDate = date.ToLocalTime();
+        return GetStartOfWeek(date.ToLocalTime().Date);
+    }
 
+    /// <summary>
+    /// Returns the Monday that starts the week containing the given local calendar date.
+    /// </summary>
+    private static DateTime GetStartOfWeek(DateTime date)
+    {
         // calculate how many days must be subtracted to reach Monday
-        var diff = (7 + (localDate.DayOfWeek - DayOfWeek.Monday)) % 7;
+        var diff = (7 + (date.DayOfWeek - DayOfWeek.Monday)) % 7;
 
-        return localDate.AddDays(-diff).Date;
+        return date.AddDays(-diff).Date;
     }
 }
