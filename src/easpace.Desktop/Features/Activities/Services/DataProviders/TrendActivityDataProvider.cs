@@ -63,6 +63,39 @@ internal class TrendActivityDataProvider : ITrendActivityDataProvider
             RangeStart: rangeStart,
             RangeEnd: rangeEnd);
     }
+    
+    /// <summary>
+    /// Calculates the aggregated value for the local calendar day containing the specified date.
+    /// </summary>
+    public double? GetDailyValue(
+        DateTimeOffset date, 
+        TrendAggregation aggregation, 
+        IEnumerable<NumericActivityDataEntry> numericEntries)
+    {
+        var localDate = date.ToLocalTime().Date;
+
+        var entries = numericEntries
+            .Where(e => e.Timestamp.ToLocalTime().Date == localDate)
+            .ToList();
+
+        if (entries.Count == 0)
+        {
+            return null;
+        }
+
+        return aggregation switch
+        {
+            TrendAggregation.Sum => entries.Sum(e => e.Value),
+            TrendAggregation.Average => entries.Average(e => e.Value),
+            TrendAggregation.Latest => entries.MaxBy(e => e.Timestamp)!.Value,
+            TrendAggregation.Maximum => entries.Max(e => e.Value),
+
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(aggregation),
+                aggregation,
+                "Unsupported trend aggregation type.")
+        };
+    }
 
     /// <summary>
     /// Calculates calendar-aligned start and exclusive end timestamps for a navigable chart interval.

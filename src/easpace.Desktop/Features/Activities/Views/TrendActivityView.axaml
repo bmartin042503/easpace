@@ -45,7 +45,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Current value -->
                 <TextBlock Classes="neutral fs4"
                            VerticalAlignment="Center" Text="{Binding CurrentValueText}"
-                           IsVisible="{Binding LastEntry, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                           IsVisible="{Binding TodayValue, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
                 <!-- Target value -->
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"

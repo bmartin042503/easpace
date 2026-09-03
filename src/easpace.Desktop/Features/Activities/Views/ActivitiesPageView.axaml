@@ -25,7 +25,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Template of Trend Activity -->
             <DataTemplate x:Key="TrendActivityViewModel" DataType="vm:TrendActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
-                                           Value="{Binding LastEntry.Value}"
+                                           Value="{Binding TodayValue}"
                                            Unit="{Binding Unit}"
                                            Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
                                            SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />

@@ -43,18 +43,21 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 
     public bool CanNavigateIntervals => SelectedTimeRange != ChartTimeRange.All;
 
-    public NumericActivityDataEntryViewModel? LastEntry =>
-        Entries.OfType<NumericActivityDataEntryViewModel>().MaxBy(e => e.Timestamp);
-
-    public string CurrentValueText
+    public string? TodayValue
     {
         get
         {
-            var value = LastEntry?.Value.ToString("0.##", CultureInfo.CurrentCulture);
+            var value = _trendActivityDataProvider.GetDailyValue(
+                DateTimeOffset.Now,
+                Aggregation,
+                _trendActivity.Entries.OfType<NumericActivityDataEntry>());
 
-            return string.Format(LocalizationService.GetString("TrendActivity.Details.CurrentValue"), value, Unit);
+            return value?.ToString("0.##", CultureInfo.CurrentCulture);
         }
     }
+
+    public string CurrentValueText => string.Format(
+        LocalizationService.GetString("TrendActivity.Details.CurrentValue"), TodayValue, Unit);
 
     public TrendActivityViewModel(
         TrendActivity trendActivity,
@@ -121,7 +124,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     {
         // keep the underlying entity synchronized with the view model
         _trendActivity.Aggregation = value;
-
+        OnPropertyChanged(nameof(TodayValue));
         UpdateDataPoints();
     }
 
@@ -244,7 +247,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 
     private void RefreshData()
     {
-        OnPropertyChanged(nameof(LastEntry));
+        OnPropertyChanged(nameof(TodayValue));
         OnPropertyChanged(nameof(CurrentValueText));
         
         UpdateDataPoints();

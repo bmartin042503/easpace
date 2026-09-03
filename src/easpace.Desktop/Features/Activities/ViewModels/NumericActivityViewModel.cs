@@ -65,7 +65,11 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
             if (dataEntry is not NumericActivityDataEntry numericDataEntry) return;
             
-            _numericActivity.Entries.Add(numericDataEntry);
+            // keep the local entity collection synchronized if EF has not already done so
+            if (_numericActivity.Entries.All(e => e.Id != numericDataEntry.Id))
+            {
+                _numericActivity.Entries.Add(numericDataEntry);
+            }
 
             var dataEntryVm = new NumericActivityDataEntryViewModel(numericDataEntry);
 

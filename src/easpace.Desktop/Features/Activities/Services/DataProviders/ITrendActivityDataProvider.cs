@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System;
 using System.Collections.Generic;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
@@ -15,4 +16,9 @@ internal interface ITrendActivityDataProvider
         int intervalsBack,
         TrendAggregation aggregation,
         List<NumericActivityDataEntry> numericEntries);
+    
+    double? GetDailyValue(
+        DateTimeOffset date,
+        TrendAggregation aggregation,
+        IEnumerable<NumericActivityDataEntry> numericEntries);
 }
