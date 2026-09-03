@@ -69,7 +69,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
             var dataEntryVm = new NumericActivityDataEntryViewModel(numericDataEntry);
 
-            Entries.Add(dataEntryVm);
+            Entries.Insert(0, dataEntryVm);
         }
     }
 

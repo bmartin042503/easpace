@@ -232,37 +232,6 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         await _activity.EditDataEntry(dataEntryVm.Id);
     }
 
-    [RelayCommand]
-    private async Task ShowAggregationInfo()
-    {
-        var newLine = Environment.NewLine;
-
-        var aggregationOptions = string.Join($"{newLine}{newLine}",
-            $"• {LocalizationService.GetString("Activities.Aggregation.Sum")}: " +
-            LocalizationService.GetString("Activities.AggregationInfoDialog.SumDescription"),
-            $"• {LocalizationService.GetString("Activities.Aggregation.Average")}: " +
-            LocalizationService.GetString("Activities.AggregationInfoDialog.AverageDescription"),
-            $"• {LocalizationService.GetString("Activities.Aggregation.Latest")}: " +
-            LocalizationService.GetString("Activities.AggregationInfoDialog.LatestDescription"),
-            $"• {LocalizationService.GetString("Activities.Aggregation.Maximum")}: " +
-            LocalizationService.GetString("Activities.AggregationInfoDialog.MaximumDescription"));
-
-        var message = string.Join($"{newLine}{newLine}",
-            LocalizationService.GetString("Activities.AggregationInfoDialog.Introduction"),
-            LocalizationService.GetString("Activities.AggregationInfoDialog.Example"),
-            LocalizationService.GetString("Activities.AggregationInfoDialog.Selection"), 
-            aggregationOptions,
-            LocalizationService.GetString("Activities.AggregationInfoDialog.Footer"));
-
-        var infoDialog = new DetailedInfoDialogViewModel
-        {
-            Title = LocalizationService.GetString("Activities.AggregationInfoDialog.Title"),
-            Message = message
-        };
-
-        await _dialogService.ShowDialogAsync(infoDialog);
-    }
-
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)
     {
         Name = updateRequest.Name;
@@ -316,7 +285,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
             Name: Name,
             Target: Target,
             Unit: Unit,
-            Aggregation: SelectedTrendAggregation,
+            Aggregation: SelectedType is ActivityType.Trend ? SelectedTrendAggregation : null,
             StartDate: ToDateOnly(StartDate),
             TargetDate: ToDateOnly(TargetDate)
         );

@@ -37,7 +37,8 @@ internal class ActivityService : IActivityService
                 {
                     Name = createRequest.Name, 
                     Unit = createRequest.Unit, 
-                    Target = createRequest.Target
+                    Target = createRequest.Target,
+                    Aggregation = createRequest.Aggregation ?? TrendAggregation.Average
                 },
                 ActivityType.Milestone => new MilestoneActivity
                 {
@@ -107,6 +108,7 @@ internal class ActivityService : IActivityService
                     trendActivity.Name = updateRequest.Name;
                     trendActivity.Unit = updateRequest.Unit;
                     trendActivity.Target = updateRequest.Target;
+                    trendActivity.Aggregation = updateRequest.Aggregation ?? TrendAggregation.Average;
                     activity = trendActivity;
                     break;
             

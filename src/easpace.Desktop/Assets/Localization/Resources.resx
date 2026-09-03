@@ -212,34 +212,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Goal date</value>
     </data>
     <data name="Activities.Label.Aggregation" xml:space="preserve">
-        <value>Combine multiple entries</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.Title" xml:space="preserve">
-        <value>How are multiple entries combined?</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.Introduction" xml:space="preserve">
-        <value>This setting controls how easpace combines multiple entries that belong to the same time period into a single value on the chart. This is important as different activities may need to be interpreted differently.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.Example" xml:space="preserve">
-        <value>For example, if you record two running sessions on the same day, 5 km and 2 km, you may want the chart to show a total of 7 km. For other values, such as body weight, adding values together would not make sense.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.Selection" xml:space="preserve">
-        <value>Choose the option that best represents how you want the activity to be tracked:</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.SumDescription" xml:space="preserve">
-        <value>Adds all entries together. Useful for values that accumulate over time.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.AverageDescription" xml:space="preserve">
-        <value>Calculates the average of all entries. Useful when you want to track the typical value of repeated activities.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.LatestDescription" xml:space="preserve">
-        <value>Uses the most recent entry from the period. Useful when only the latest recorded value is relevant.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.MaximumDescription" xml:space="preserve">
-        <value>Uses the largest entry from the period. Useful when your best individual result matters.</value>
-    </data>
-    <data name="Activities.AggregationInfoDialog.Footer" xml:space="preserve">
-        <value>The selected aggregation method is also used when the chart groups larger amounts of data indo days, weeks, months, or other periods.</value>
+        <value>Combine daily entries by</value>
     </data>
     <data name="Activities.Aggregation.Sum" xml:space="preserve">
         <value>Total</value>

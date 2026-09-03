@@ -62,7 +62,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 
         _selectedTimeRange = ChartTimeRange.Day;
 
-        Aggregation = _trendActivity.Aggregation;
+        _aggregation = _trendActivity.Aggregation;
 
         LoadEntries();
 
@@ -73,12 +73,12 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     {
         var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
 
-        if (updated is not TrendActivity trendActivity)
-            return null;
+        if (updated is not TrendActivity trendActivity) return null;
 
         Name = trendActivity.Name;
         Unit = trendActivity.Unit;
         Target = trendActivity.Target;
+        Aggregation = trendActivity.Aggregation;
 
         return updated;
     }
@@ -108,6 +108,14 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     partial void OnVisibleRangeEndChanged(DateTimeOffset? value)
     {
         UpdateVisibleRangeText();
+    }
+    
+    partial void OnAggregationChanged(TrendAggregation value)
+    {
+        // keep the underlying entity synchronized with the view model
+        _trendActivity.Aggregation = value;
+
+        UpdateDataPoints();
     }
 
     [RelayCommand(CanExecute = nameof(CanGoToPreviousInterval))]
@@ -157,6 +165,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
         var chartData = _trendActivityDataProvider.GetChartData(
             SelectedTimeRange,
             _intervalsBack,
+            Aggregation,
             numericEntries);
 
         DataPoints = chartData.DataPoints;

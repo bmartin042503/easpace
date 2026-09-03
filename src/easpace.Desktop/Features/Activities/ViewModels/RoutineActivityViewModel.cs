@@ -189,7 +189,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
         var newDataEntryVm =
             new RoutineActivityDataEntryViewModel(newRoutineDataEntry);
 
-        Entries.Add(newDataEntryVm);
+        Entries.Insert(0, newDataEntryVm);
     }
 
     public override async Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId)

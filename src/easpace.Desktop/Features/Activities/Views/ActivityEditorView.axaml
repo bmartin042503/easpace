@@ -22,82 +22,84 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- TrendActivity edit form -->
         <DataTemplate x:Key="TrendTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                        HorizontalAlignment="Stretch">
 
                 <!-- Unit input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
 
-                    <TextBox Grid.Row="1" Text="{Binding Unit}"
-                             PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
-                             HorizontalAlignment="Stretch"
-                             MaxLength="16" />
-                </Grid>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Text="{Binding Unit}"
+                                 HorizontalAlignment="Stretch"
+                                 PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                                 MaxLength="16" />
+                    </Grid>
+
+                </StackPanel>
 
                 <!-- Aggregation selection -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
+                    <!-- Label -->
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
+                               Text="{core:LocalizationService Key='Activities.Label.Aggregation'}" />
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal"
-                                Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
-                        
-                        <!-- Label -->
-                        <TextBlock Classes="neutral fs4 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Activities.Label.Aggregation'}" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                        <!-- Info button -->
-                        <Button Classes="tertiary icon"
-                                Command="{Binding ShowAggregationInfoCommand}">
-                            <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Info.Fill}" />
-                        </Button>
+                        <ComboBox Grid.Column="0" ItemsSource="{Binding Aggregations}"
+                                  SelectedItem="{Binding SelectedTrendAggregation}"
+                                  HorizontalAlignment="Stretch">
 
-                    </StackPanel>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
 
-                    <ComboBox Grid.Row="1"
-                              ItemsSource="{Binding Aggregations}"
-                              SelectedItem="{Binding SelectedTrendAggregation}"
-                              HorizontalAlignment="Stretch">
+                        </ComboBox>
+                    </Grid>
 
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-
-                    </ComboBox>
-
-                </Grid>
+                </StackPanel>
 
                 <!-- Target checkbox -->
                 <CheckBox Content="{core:LocalizationService Key='Activities.CheckBox.Target'}"
                           IsChecked="{Binding IsTargetChecked}" HorizontalAlignment="Left" />
 
                 <!-- Target value input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}"
-                      IsVisible="{Binding IsTargetChecked}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch" IsVisible="{Binding IsTargetChecked}">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
 
-                    <NumericUpDown Grid.Row="1" Value="{Binding Target}"
-                                   HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
-                                   PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
-                                   Minimum="1" Maximum="10000000" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                        <NumericUpDown Grid.Column="0" Value="{Binding Target}"
+                                       HorizontalAlignment="Stretch"
+                                       Increment="1" FormatString="0.##"
+                                       PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
+                                       Minimum="1" Maximum="10000000" />
+                    </Grid>
+
+                </StackPanel>
 
             </StackPanel>
 
@@ -106,73 +108,91 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- MilestoneActivity edit form -->
         <DataTemplate x:Key="MilestoneTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                        HorizontalAlignment="Stretch">
 
                 <!-- Unit input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.Label.Unit'}" />
 
-                    <TextBox Grid.Row="1" Text="{Binding Unit}"
-                             PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
-                             HorizontalAlignment="Stretch" MaxLength="16" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                        <TextBox Grid.Column="0" Text="{Binding Unit}"
+                                 HorizontalAlignment="Stretch"
+                                 PlaceholderText="{core:LocalizationService Key='Activities.Input.UnitPlaceholder'}"
+                                 MaxLength="16" />
+                    </Grid>
+
+                </StackPanel>
 
                 <!-- Target value input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.Label.TargetValue'}" />
 
-                    <NumericUpDown Grid.Row="1" Value="{Binding Target}"
-                                   HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
-                                   PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
-                                   Minimum="1" Maximum="10000000" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                        <NumericUpDown Grid.Column="0" Value="{Binding Target}"
+                                       HorizontalAlignment="Stretch"
+                                       Increment="1" FormatString="0.##"
+                                       PlaceholderText="{core:LocalizationService Key='Activities.Input.TargetPlaceholder'}"
+                                       Minimum="1" Maximum="10000000" />
+                    </Grid>
+
+                </StackPanel>
 
                 <!-- Start date input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
 
-                    <CalendarDatePicker Grid.Row="1"
-                                        SelectedDate="{Binding StartDate, Mode=TwoWay}"
-                                        HorizontalAlignment="Stretch"
-                                        PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                        <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                            HorizontalAlignment="Stretch"
+                                            PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                    </Grid>
+
+                </StackPanel>
 
                 <!-- Target date input -->
-                <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                            HorizontalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                    <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                               HorizontalAlignment="Stretch"
                                Text="{core:LocalizationService Key='Activities.Label.TargetDate'}" />
 
-                    <CalendarDatePicker Grid.Row="1" SelectedDate="{Binding TargetDate, Mode=TwoWay}"
-                                        HorizontalAlignment="Stretch"
-                                        PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                        </Grid.ColumnDefinitions>
 
-                </Grid>
+                        <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding TargetDate, Mode=TwoWay}"
+                                            HorizontalAlignment="Stretch"
+                                            PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                    </Grid>
+
+                </StackPanel>
 
             </StackPanel>
 
@@ -217,78 +237,83 @@ Licensed under the MIT License. See LICENSE file for details.
 
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <StackPanel Orientation="Vertical"
-                        Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                        HorizontalAlignment="Stretch">
 
-                <StackPanel Orientation="Vertical"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                            HorizontalAlignment="Stretch">
 
                     <!-- Name input -->
-                    <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                HorizontalAlignment="Stretch">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                        <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                                   HorizontalAlignment="Stretch"
                                    Text="{core:LocalizationService Key='Activities.Label.Name'}" />
 
-                        <TextBox Grid.Row="1" Text="{Binding Name}"
-                                 PlaceholderText="{core:LocalizationService Key='Activities.Input.NamePlaceholder'}"
-                                 HorizontalAlignment="Stretch" MaxLength="64" />
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            </Grid.ColumnDefinitions>
 
-                    </Grid>
+                            <TextBox Grid.Column="0" Text="{Binding Name}"
+                                     HorizontalAlignment="Stretch"
+                                     PlaceholderText="{core:LocalizationService Key='Activities.Input.NamePlaceholder'}"
+                                     MaxLength="64" />
+                        </Grid>
+
+                    </StackPanel>
 
                     <!-- Type selection -->
-                    <Grid RowDefinitions="Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                                HorizontalAlignment="Stretch">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MinWidth}" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                        <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
+                                   HorizontalAlignment="Stretch"
                                    Text="{core:LocalizationService Key='Activities.Label.Type'}" />
 
-                        <ComboBox Grid.Row="1"
-                                  ItemsSource="{Binding ActivityTypes}"
-                                  SelectedItem="{Binding SelectedType}"
-                                  IsEnabled="{Binding IsCreatingNew}"
-                                  HorizontalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            </Grid.ColumnDefinitions>
 
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
+                            <ComboBox Grid.Column="0" ItemsSource="{Binding ActivityTypes}"
+                                      SelectedItem="{Binding SelectedType}"
+                                      IsEnabled="{Binding IsCreatingNew}"
+                                      HorizontalAlignment="Stretch">
 
-                        </ComboBox>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
 
-                    </Grid>
+                            </ComboBox>
+                        </Grid>
+
+                    </StackPanel>
 
                     <!-- Rest of the form -->
-                    <ContentControl
-                        Content="{Binding .}"
-                        HorizontalContentAlignment="Stretch"
-                        ContentTemplate="{Binding SelectedType, Converter={StaticResource ActivityTypeToTemplateConverter}}" />
+                    <ContentControl Content="{Binding .}"
+                                    HorizontalContentAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    ContentTemplate="{Binding SelectedType, Converter={StaticResource ActivityTypeToTemplateConverter}}" />
 
                 </StackPanel>
 
                 <!-- Separator line -->
-                <Separator Height="1"
-                           Background="{DynamicResource Haven.Sem.Border}"
+                <Separator Height="1" Background="{DynamicResource Haven.Sem.Border}"
                            IsVisible="{Binding !IsCreatingNew}" />
 
                 <!-- Data entries -->
-                <Border Classes="card"
-                        Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                <Border Classes="card" Background="{DynamicResource Haven.Sem.Surface.Elevated}"
                         IsVisible="{Binding !IsCreatingNew}">
-                    <StackPanel Orientation="Vertical"
-                                Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
 
                         <!-- Label -->
-                        <TextBlock Classes="neutral fs4"
-                                   Text="{Binding DataEntriesLabel}" />
+                        <TextBlock Classes="neutral fs4" Text="{Binding DataEntriesLabel}" />
 
                         <!-- Items -->
                         <ItemsRepeater ItemsSource="{Binding DataEntries}">
@@ -297,9 +322,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <dataTemplates:TemplateSelector x:Key="DataEntrySelector">
 
                                     <!-- NumericDataEntry template -->
-                                    <DataTemplate
-                                        x:Key="NumericActivityDataEntryViewModel"
-                                        x:DataType="vmDataEntries:NumericActivityDataEntryViewModel">
+                                    <DataTemplate x:Key="NumericActivityDataEntryViewModel"
+                                                  x:DataType="vmDataEntries:NumericActivityDataEntryViewModel">
 
                                         <controls:DataEntryListItem
                                             Value="{Binding Value}"
@@ -311,9 +335,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                     </DataTemplate>
 
                                     <!-- RoutineDataEntry template -->
-                                    <DataTemplate
-                                        x:Key="RoutineActivityDataEntryViewModel"
-                                        x:DataType="vmDataEntries:RoutineActivityDataEntryViewModel">
+                                    <DataTemplate x:Key="RoutineActivityDataEntryViewModel"
+                                                  x:DataType="vmDataEntries:RoutineActivityDataEntryViewModel">
 
                                         <controls:DataEntryListItem
                                             Value="{Binding State, Converter={StaticResource EnumToLocalizedConverter}}"
@@ -328,8 +351,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </ItemsRepeater.Resources>
 
                             <ItemsRepeater.ItemTemplate>
-                                <DataTemplate
-                                    x:DataType="vmDataEntries:ActivityDataEntryViewModel">
+                                <DataTemplate x:DataType="vmDataEntries:ActivityDataEntryViewModel">
 
                                     <ContentControl Content="{Binding .}"
                                                     ContentTemplate="{StaticResource DataEntrySelector}" />

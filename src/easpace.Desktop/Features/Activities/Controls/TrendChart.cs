@@ -75,8 +75,7 @@ internal class TrendChart : Control
         AvaloniaProperty.RegisterDirect<TrendChart, double?>(
             nameof(Target),
             o => o.Target,
-            (o, v) => o.Target = v,
-            0.0
+            (o, v) => o.Target = v
         );
 
     public static readonly DirectProperty<TrendChart, IEnumerable<TrendChartDataPoint>?> DataPointsProperty =
@@ -208,6 +207,9 @@ internal class TrendChart : Control
         set
         {
             if (SetAndRaise(DataPointsProperty, ref field, value)) InvalidateVisual();
+            
+            _hoveredDataPoint = null;
+            InvalidateVisual();
         }
     }
 
@@ -423,6 +425,9 @@ internal class TrendChart : Control
 
         // compute the actual drawing area for the chart data
         var graphWidth = Bounds.Width - axisLineX - padding;
+
+        if (graphWidth <= 0) return;
+        
         var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
 
         // rendering order (z-index): back to front
@@ -523,7 +528,8 @@ internal class TrendChart : Control
             var yRatio = (tick.Value - graphMin) / valueRange;
             var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
 
-            tick.Layout.Draw(context, new Point(padding, y - tick.Layout.Height / 2));
+            var textX = textRightMargin - 6 - tick.Layout.Width;
+            tick.Layout.Draw(context, new Point(textX, y - tick.Layout.Height / 2));
             context.DrawLine(axisPen, new Point(textRightMargin, y), new Point(tickEnd, y));
         }
     }
@@ -537,15 +543,21 @@ internal class TrendChart : Control
         double yTickPadding,
         double drawableHeight)
     {
-        if (!Target.HasValue || string.IsNullOrEmpty(Unit)) return;
+        if (!Target.HasValue) return;
 
         var yRatio = (Target.Value - graphMin) / valueRange;
         var targetY = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
 
         context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
+        
+        var formattedTarget = Target.Value.ToString("0.##", CultureInfo.CurrentCulture);
+        
+        var targetValue = string.IsNullOrWhiteSpace(Unit)
+            ? formattedTarget
+            : $"{formattedTarget} {Unit}";
 
         var targetText = new TextLayout(
-            $"{LocalizationService.GetString("Activities.NumericActivity.Target")}: {Target.Value} {Unit}",
+            $"{LocalizationService.GetString("Activities.NumericActivity.Target")}: {targetValue}",
             new Typeface(_fontFamily),
             12,
             axisPen.Brush
@@ -645,9 +657,11 @@ internal class TrendChart : Control
 
         // highlight the hovered data point
         context.DrawEllipse(Stroke, null, _hoveredPoint, 5, 5);
+        
+        var formattedValue = _hoveredDataPoint.Value.ToString("0.##", CultureInfo.CurrentCulture);
 
         var valueText = new TextLayout(
-            $"{_hoveredDataPoint.Value} {Unit}",
+            $"{formattedValue} {Unit}",
             new Typeface(_fontFamily),
             14,
             TooltipValueForeground,

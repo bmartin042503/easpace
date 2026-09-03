@@ -87,6 +87,7 @@ internal abstract partial class ActivityViewModel : ViewModelBase
 
                 var numericVms = numericActivity.Entries
                     .OfType<NumericActivityDataEntry>()
+                    .OrderByDescending(e => e.Timestamp)
                     .Select(e => new NumericActivityDataEntryViewModel(e));
 
                 Entries.Clear();
@@ -98,6 +99,7 @@ internal abstract partial class ActivityViewModel : ViewModelBase
 
                 var routineVms = routineActivity.Entries
                     .OfType<RoutineActivityDataEntry>()
+                    .OrderByDescending(e => e.Timestamp)
                     .Select(e => new RoutineActivityDataEntryViewModel(e));
 
                 Entries.Clear();

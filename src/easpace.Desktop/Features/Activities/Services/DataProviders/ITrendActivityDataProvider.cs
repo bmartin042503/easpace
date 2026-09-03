@@ -13,5 +13,6 @@ internal interface ITrendActivityDataProvider
     TrendChartData GetChartData(
         ChartTimeRange chartTimeRange,
         int intervalsBack,
+        TrendAggregation aggregation,
         List<NumericActivityDataEntry> numericEntries);
 }
