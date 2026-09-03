@@ -5,10 +5,10 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls">
+        xmlns:trend="clr-namespace:easpace.Desktop.Features.Activities.Controls.Trend">
 
     <!-- TrendChart styling -->
-    <Style Selector="controls|TrendChart">
+    <Style Selector="trend|TrendChart">
         <Setter Property="AxisStroke" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
         <Setter Property="StrokeThickness" Value="{StaticResource Haven.Scale.Border.Thickness.Double.Thick}" />
         <Setter Property="Stroke" Value="{DynamicResource Haven.Sem.Accent}" />

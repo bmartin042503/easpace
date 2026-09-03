@@ -3,28 +3,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
-using easpace.Desktop.Services.Core;
 
-namespace easpace.Desktop.Features.Activities.Controls;
+namespace easpace.Desktop.Features.Activities.Controls.Trend;
 
-internal class TrendChart : Control
+internal partial class TrendChart : Control
 {
     #region Fields
 
     private const double TooltipHitRadius = 40;
+    private static readonly TimeSpan DataAnimationDuration = TimeSpan.FromMilliseconds(700);
+
     private readonly FontFamily _fontFamily = new("avares://easpace.Desktop/Assets/Fonts#Poppins");
     private readonly List<(Point CanvasPoint, TrendChartDataPoint DataPoint)> _dataPoints = [];
+
     private TrendChartDataPoint? _hoveredDataPoint;
     private Point _hoveredPoint;
+
+    private int _animationVersion;
+    private TimeSpan? _animationStartTime;
+    private double _animationProgress = 1;
 
     #endregion
 
@@ -111,8 +115,7 @@ internal class TrendChart : Control
         AvaloniaProperty.RegisterDirect<TrendChart, ChartTimeRange>(
             nameof(TimeRange),
             o => o.TimeRange,
-            (o, v) => o.TimeRange = v,
-            ChartTimeRange.Day);
+            (o, v) => o.TimeRange = v);
 
     #endregion
 
@@ -207,10 +210,14 @@ internal class TrendChart : Control
         get;
         set
         {
-            if (SetAndRaise(DataPointsProperty, ref field, value)) return;
-            
+            var dataPoints = value?.ToList();
+
+            if (!SetAndRaise(DataPointsProperty, ref field, dataPoints)) return;
+
             _hoveredDataPoint = null;
-            InvalidateVisual();
+            _dataPoints.Clear();
+
+            StartDataAnimation(dataPoints?.Count(e => e.Timestamp.HasValue) ?? 0);
         }
     }
 
@@ -380,7 +387,7 @@ internal class TrendChart : Control
 
         var timeRange = timeMax - timeMin;
 
-        // only an onbounded view such as "all" can end up with a single instant
+        // only an unbounded view such as "all" can end up with a single instant
         // create a fictional time window (+/- 12 hours)
         if (timeRange == 0)
         {
@@ -408,7 +415,7 @@ internal class TrendChart : Control
         for (var i = 0; i < actualTicksCount; i++)
         {
             var val = graphMax - i * niceInterval;
-            
+
             var textLayout = new TextLayout(
                 val.ToString("0.#"),
                 new Typeface(_fontFamily),
@@ -428,7 +435,7 @@ internal class TrendChart : Control
         var graphWidth = Bounds.Width - axisLineX - padding;
 
         if (graphWidth <= 0) return;
-        
+
         var graphArea = new Rect(axisLineX, padding, graphWidth, graphHeight);
 
         // rendering order (z-index): back to front
@@ -448,384 +455,13 @@ internal class TrendChart : Control
         // 2. draw grid, axes and target lines over the data
         DrawGridAndXAxis(context, graphArea, axisPen, timeMin, timeRange);
         DrawTargetLine(context, graphArea, axisPen, graphMin, valueRange, yTickPadding, drawableHeight);
-        DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight, padding,
+        DrawYAxis(context, graphArea, axisPen, tickTexts, graphMin, valueRange, yTickPadding, drawableHeight,
             textRightMargin, tickEnd, axisLineX);
 
         // 3. draw tooltip absolutely last to always stay on top
         if (hasDataPoints)
         {
             DrawTooltip(context);
-        }
-    }
-
-    private void DrawGridAndXAxis(DrawingContext context, Rect graphArea, Pen axisPen, long timeMin, long timeRange)
-    {
-        // base x-axis line
-        context.DrawLine(
-            axisPen,
-            new Point(graphArea.Left, graphArea.Bottom),
-            new Point(graphArea.Right, graphArea.Bottom));
-
-        // at least two lines are required to calculate the ratios safely
-        var gridLines = Math.Max(GridLines ?? 7, 2);
-
-        var visibleTimeRange = new TimeSpan(timeRange);
-        var gridPen = new Pen(GridLineBrush) { DashStyle = DashStyle.Dash };
-
-        for (var i = 0; i < gridLines; i++)
-        {
-            var ratio = (double)i / (gridLines - 1);
-            var x = graphArea.Left + ratio * graphArea.Width;
-
-            // draw vertical grid line (skip the first one to avoid overlapping the y-axis)
-            if (i > 0)
-            {
-                context.DrawLine(
-                    gridPen,
-                    new Point(x, graphArea.Top),
-                    new Point(x, graphArea.Bottom));
-            }
-
-            var tickTicks = timeMin + (long)(timeRange * ratio);
-            
-            if (i == gridLines - 1 && timeRange > 0)
-            {
-                tickTicks--;
-            }
-            
-            var tickDate = new DateTimeOffset(tickTicks, TimeSpan.Zero).ToLocalTime();
-
-            var xText = new TextLayout(
-                FormatXAxisLabel(tickDate, visibleTimeRange),
-                new Typeface(_fontFamily),
-                11,
-                AxisStroke,
-                TextAlignment.Center);
-
-            // align text to prevent clipping on edges
-            var textX = x - xText.Width / 2;
-
-            if (i == 0) textX = x;
-            if (i == gridLines - 1) textX = x - xText.Width;
-
-            xText.Draw(context, new Point(textX, graphArea.Bottom + 4));
-        }
-    }
-
-    private static void DrawYAxis(
-        DrawingContext context,
-        Rect graphArea,
-        Pen axisPen,
-        List<(double Value, TextLayout Layout)> tickTexts,
-        double graphMin,
-        double valueRange,
-        double yTickPadding,
-        double drawableHeight,
-        double padding,
-        double textRightMargin,
-        double tickEnd,
-        double axisLineX)
-    {
-        // base y-axis line
-        context.DrawLine(axisPen, new Point(axisLineX, graphArea.Top), new Point(axisLineX, graphArea.Bottom));
-
-        foreach (var tick in tickTexts)
-        {
-            // calculate vertical ratio based on value
-            var yRatio = (tick.Value - graphMin) / valueRange;
-            var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-
-            var textX = textRightMargin - 6 - tick.Layout.Width;
-            tick.Layout.Draw(context, new Point(textX, y - tick.Layout.Height / 2));
-            context.DrawLine(axisPen, new Point(textRightMargin, y), new Point(tickEnd, y));
-        }
-    }
-
-    private void DrawTargetLine(
-        DrawingContext context,
-        Rect graphArea,
-        Pen axisPen,
-        double graphMin,
-        double valueRange,
-        double yTickPadding,
-        double drawableHeight)
-    {
-        if (!Target.HasValue) return;
-
-        var yRatio = (Target.Value - graphMin) / valueRange;
-        var targetY = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-
-        context.DrawLine(axisPen, new Point(graphArea.Left, targetY), new Point(graphArea.Right, targetY));
-        
-        var formattedTarget = Target.Value.ToString("0.##", CultureInfo.CurrentCulture);
-        
-        var targetValue = string.IsNullOrWhiteSpace(Unit)
-            ? formattedTarget
-            : $"{formattedTarget} {Unit}";
-
-        var targetText = new TextLayout(
-            $"{LocalizationService.GetString("Activities.NumericActivity.Target")}: {targetValue}",
-            new Typeface(_fontFamily),
-            12,
-            axisPen.Brush
-        );
-
-        // prevent the text from clipping at the top of the control
-        var textY = targetY - targetText.Height - 2;
-        if (textY < graphArea.Top)
-        {
-            // move the text below the line if there is no space above
-            textY = targetY + 2;
-        }
-
-        targetText.Draw(context, new Point(graphArea.Left + 4, textY));
-    }
-
-    private void DrawDataSeries(
-        DrawingContext context,
-        Rect graphArea,
-        List<TrendChartDataPoint> dataPoints,
-        double graphMin,
-        double valueRange,
-        long timeMin,
-        long timeRange,
-        double yTickPadding,
-        double drawableHeight)
-    {
-        var fillGeometry = new StreamGeometry();
-        var strokeGeometry = new StreamGeometry();
-
-        _dataPoints.Clear();
-
-        // build geometric paths for the gradient area and the stroke line
-        using (var fillContext = fillGeometry.Open())
-        using (var strokeContext = strokeGeometry.Open())
-        {
-            var isFirstPoint = true;
-
-            for (var i = 0; i < dataPoints.Count; i++)
-            {
-                var dataPoint = dataPoints[i];
-
-                var timestampTicks = dataPoint.Timestamp!.Value.UtcDateTime.Ticks;
-
-                var xRatio = (double)(timestampTicks - timeMin) / timeRange;
-                var x = graphArea.X + xRatio * graphArea.Width;
-
-                var yRatio = (dataPoint.Value - graphMin) / valueRange;
-                var y = graphArea.Bottom - yTickPadding - yRatio * drawableHeight;
-
-                var currentPoint = new Point(x, y);
-
-                // store calculated points for hover hit-testing
-                _dataPoints.Add((currentPoint, dataPoint));
-
-                if (isFirstPoint)
-                {
-                    fillContext.BeginFigure(new Point(x, graphArea.Bottom));
-                    fillContext.LineTo(currentPoint);
-
-                    strokeContext.BeginFigure(currentPoint, false);
-                    isFirstPoint = false;
-                }
-                else
-                {
-                    fillContext.LineTo(currentPoint);
-                    strokeContext.LineTo(currentPoint);
-                }
-
-                if (i == dataPoints.Count - 1)
-                {
-                    fillContext.LineTo(new Point(x, graphArea.Bottom));
-                }
-            }
-        }
-
-        context.DrawGeometry(AreaBrush, null, fillGeometry);
-
-        var linePen = new Pen(Stroke, StrokeThickness ?? 6)
-        {
-            LineCap = PenLineCap.Round,
-            LineJoin = PenLineJoin.Round
-        };
-
-        context.DrawGeometry(null, linePen, strokeGeometry);
-
-        // draw data markers (dots)
-        foreach (var dp in _dataPoints)
-        {
-            context.DrawEllipse(Stroke, null, dp.CanvasPoint, 3, 3);
-        }
-    }
-
-    private void DrawTooltip(DrawingContext context)
-    {
-        if (_hoveredDataPoint == null) return;
-
-        // highlight the hovered data point
-        context.DrawEllipse(Stroke, null, _hoveredPoint, 5, 5);
-        
-        var formattedValue = _hoveredDataPoint.Value.ToString("0.##", CultureInfo.CurrentCulture);
-        
-        var tooltipValue = string.IsNullOrWhiteSpace(Unit)
-            ? formattedValue
-            : $"{formattedValue} {Unit}";
-
-        var valueText = new TextLayout(
-            tooltipValue,
-            new Typeface(_fontFamily),
-            14,
-            TooltipValueForeground,
-            TextAlignment.Center);
-
-        var tooltipTimestamp = _hoveredDataPoint.Timestamp!.Value.ToLocalTime();
-
-        var tooltipDateText = TimeRange == ChartTimeRange.Day
-            ? tooltipTimestamp.ToString(
-                "yyyy. MM. dd. HH:mm:ss",
-                CultureInfo.CurrentUICulture)
-            : tooltipTimestamp.ToString(
-                "yyyy. MM. dd.",
-                CultureInfo.CurrentUICulture);
-
-        var dateText = new TextLayout(
-            tooltipDateText,
-            new Typeface(_fontFamily),
-            10,
-            TooltipDateForeground ?? AxisStroke,
-            TextAlignment.Center);
-
-        const int paddingX = 8;
-        const int paddingY = 6;
-        const int spacing = 2;
-
-        var tooltipWidth = Math.Max(valueText.Width, dateText.Width) + paddingX * 2;
-        var tooltipHeight = valueText.Height + spacing + dateText.Height + paddingY * 2;
-
-        // center tooltip above the hovered point
-        var tooltipX = _hoveredPoint.X - tooltipWidth / 2;
-        var tooltipY = _hoveredPoint.Y - tooltipHeight - 12;
-
-        // keep tooltip within control boundaries
-        if (tooltipX < 0) tooltipX = 0;
-        if (tooltipX + tooltipWidth > Bounds.Width) tooltipX = Bounds.Width - tooltipWidth;
-        if (tooltipY < 0) tooltipY = _hoveredPoint.Y + 12;
-
-        var tooltipRect = new Rect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
-        var borderPen = new Pen(TooltipBorderBrush, TooltipBorderThickness);
-
-        context.DrawRectangle(TooltipBackground, borderPen, new RoundedRect(tooltipRect, 6, 6));
-
-        var valueTextX = tooltipX + (tooltipWidth - valueText.Width) / 2;
-        var dateTextX = tooltipX + (tooltipWidth - dateText.Width) / 2;
-
-        valueText.Draw(context, new Point(valueTextX, tooltipY + paddingY));
-        dateText.Draw(context, new Point(dateTextX, tooltipY + paddingY + valueText.Height + spacing));
-    }
-
-    #endregion
-
-    #region Helpers
-
-    private string FormatXAxisLabel(DateTimeOffset timestamp, TimeSpan visibleTimeRange)
-    {
-        var culture = CultureInfo.CurrentUICulture;
-
-        return TimeRange switch
-        {
-            // a day view is primarily about the time of day
-            ChartTimeRange.Day => timestamp.ToString("HH:mm", culture),
-
-            // shorter ranges only need the month and day
-            ChartTimeRange.Week => timestamp.ToString("MM. dd.", culture),
-
-            ChartTimeRange.Month => timestamp.ToString("MM. dd.", culture),
-
-            // a year view is easier to scan by month
-            ChartTimeRange.Year => timestamp.ToString("yyyy. MM.", culture),
-
-            // the year must always be visible in the all view,
-            // otherwise dates from different years would be ambiguous
-            ChartTimeRange.All when visibleTimeRange.TotalDays > 366 => timestamp.ToString("yyyy. MM.", culture),
-
-            _ => timestamp.ToString("yyyy. MM. dd.", culture)
-        };
-    }
-
-    private static double CalculateNiceInterval(double exactRange, int ticks)
-    {
-        var exactInterval = exactRange / (ticks - 1);
-
-        // find the closest power of 10 to determine the magnitude of the interval
-        var magnitude = Math.Pow(10, Math.Floor(Math.Log10(exactInterval)));
-        var fraction = exactInterval / magnitude;
-
-        // snap to nice, human-readable numbers
-        var niceFraction = fraction switch
-        {
-            <= 1.0 => 1.0,
-            <= 2.0 => 2.0,
-            <= 5.0 => 5.0,
-            _ => 10.0
-        };
-
-        return niceFraction * magnitude;
-    }
-    
-    private static double GetSquaredDistance(Point first, Point second)
-    {
-        var deltaX = first.X - second.X;
-        var deltaY = first.Y - second.Y;
-
-        return deltaX * deltaX + deltaY * deltaY;
-    }
-
-    #endregion
-
-    #region Interaction
-
-    protected override void OnPointerMoved(PointerEventArgs e)
-    {
-        base.OnPointerMoved(e);
-
-        if (_dataPoints.Count == 0) return;
-
-        var currentPosition = e.GetPosition(this);
-
-        var closestPoint = _dataPoints
-            .MinBy(dp => GetSquaredDistance(dp.CanvasPoint, currentPosition));
-
-        var distanceSquared = GetSquaredDistance(
-            closestPoint.CanvasPoint,
-            currentPosition);
-
-        if (distanceSquared <= TooltipHitRadius * TooltipHitRadius)
-        {
-            if (_hoveredDataPoint != closestPoint.DataPoint)
-            {
-                _hoveredDataPoint = closestPoint.DataPoint;
-                _hoveredPoint = closestPoint.CanvasPoint;
-                InvalidateVisual();
-            }
-
-            return;
-        }
-
-        if (_hoveredDataPoint != null)
-        {
-            _hoveredDataPoint = null;
-            InvalidateVisual();
-        }
-    }
-
-    protected override void OnPointerExited(PointerEventArgs e)
-    {
-        base.OnPointerExited(e);
-
-        if (_hoveredDataPoint != null)
-        {
-            _hoveredDataPoint = null;
-            InvalidateVisual();
         }
     }
 

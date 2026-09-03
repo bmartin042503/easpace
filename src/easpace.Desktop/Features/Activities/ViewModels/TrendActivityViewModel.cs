@@ -172,10 +172,12 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
             _intervalsBack,
             Aggregation,
             numericEntries);
-
-        DataPoints = chartData.DataPoints;
+        
         VisibleRangeStart = chartData.RangeStart;
         VisibleRangeEnd = chartData.RangeEnd;
+        
+        // set datapoints as last so the chart will animate with the new ranges
+        DataPoints = chartData.DataPoints;
         
         PreviousIntervalCommand.NotifyCanExecuteChanged();
         NextIntervalCommand.NotifyCanExecuteChanged();

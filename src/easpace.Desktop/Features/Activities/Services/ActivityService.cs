@@ -9,6 +9,7 @@ using easpace.Desktop.Data;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
+using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -29,21 +30,22 @@ internal class ActivityService : IActivityService
     {
         try
         {
-            _logger.LogInformation("Creating new activity of type {Type} with name '{Name}'", createRequest.Type, createRequest.Name);
-            
+            _logger.LogInformation("Creating new activity of type {Type} with name '{Name}'", createRequest.Type,
+                createRequest.Name);
+
             Activity newActivity = createRequest.Type switch
             {
                 ActivityType.Trend => new TrendActivity
                 {
-                    Name = createRequest.Name, 
-                    Unit = createRequest.Unit, 
+                    Name = createRequest.Name,
+                    Unit = createRequest.Unit,
                     Target = createRequest.Target,
                     Aggregation = createRequest.Aggregation ?? TrendAggregation.Average
                 },
                 ActivityType.Milestone => new MilestoneActivity
                 {
                     Name = createRequest.Name,
-                    Unit = createRequest.Unit, 
+                    Unit = createRequest.Unit,
                     Target = createRequest.Target,
                     StartDate = createRequest.StartDate,
                     TargetDate = createRequest.TargetDate
@@ -51,11 +53,11 @@ internal class ActivityService : IActivityService
                 ActivityType.Routine => new RoutineActivity { Name = createRequest.Name },
                 _ => throw new NotSupportedException()
             };
-            
+
             newActivity.CreatedAt = DateTimeOffset.Now;
 
             _dbContext.Activities.Add(newActivity);
-            
+
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity successfully created with ID {Id}", newActivity.Id);
             return newActivity;
@@ -72,7 +74,7 @@ internal class ActivityService : IActivityService
         try
         {
             _logger.LogInformation("Fetching all activities from database");
-            
+
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
 
@@ -101,7 +103,7 @@ internal class ActivityService : IActivityService
                 _logger.LogWarning("Attempted to update non-existent activity with ID {Id}", activityId);
                 return null;
             }
-        
+
             switch (activity)
             {
                 case TrendActivity trendActivity:
@@ -111,23 +113,23 @@ internal class ActivityService : IActivityService
                     trendActivity.Aggregation = updateRequest.Aggregation ?? TrendAggregation.Average;
                     activity = trendActivity;
                     break;
-            
+
                 case MilestoneActivity milestoneActivity:
                     milestoneActivity.Name = updateRequest.Name;
                     milestoneActivity.Unit = updateRequest.Unit;
                     milestoneActivity.Target = updateRequest.Target;
                     milestoneActivity.StartDate = updateRequest.StartDate;
                     milestoneActivity.TargetDate = updateRequest.TargetDate;
-                    
+
                     activity = milestoneActivity;
                     break;
-            
+
                 case RoutineActivity routineActivity:
                     routineActivity.Name = updateRequest.Name;
                     activity = routineActivity;
                     break;
             }
-        
+
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity with ID {Id} successfully updated", activityId);
             return activity;
@@ -149,10 +151,11 @@ internal class ActivityService : IActivityService
                 _logger.LogWarning("Attempted to toggle archive for non-existent activity with ID {Id}", activityId);
                 return null;
             }
-        
+
             activity.IsArchived = !activity.IsArchived;
             await _dbContext.SaveChangesAsync();
-            _logger.LogInformation("Activity {Id} archive status changed to {IsArchived}", activityId, activity.IsArchived);
+            _logger.LogInformation("Activity {Id} archive status changed to {IsArchived}", activityId,
+                activity.IsArchived);
             return activity;
         }
         catch (Exception ex)
@@ -167,15 +170,15 @@ internal class ActivityService : IActivityService
         try
         {
             var activity = await _dbContext.Activities.FindAsync(activityId);
-            
+
             if (activity is null)
             {
                 _logger.LogWarning("Attempted to delete non-existent activity with ID {Id}", activityId);
                 return false;
             }
-        
+
             _dbContext.Activities.Remove(activity);
-        
+
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity with ID {Id} successfully deleted", activityId);
             return true;

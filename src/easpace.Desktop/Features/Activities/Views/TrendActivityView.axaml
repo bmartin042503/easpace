@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
-             xmlns:activityControls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
+             xmlns:trend="clr-namespace:easpace.Desktop.Features.Activities.Controls.Trend"
              xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:TrendActivityViewModel"
@@ -145,7 +145,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </Grid>
 
         <!-- Chart -->
-        <activityControls:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+        <trend:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                              Target="{Binding Target}"
                              Unit="{Binding Unit}"
                              DataPoints="{Binding DataPoints}"
