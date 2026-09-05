@@ -1,7 +1,4 @@
-<p align="center">
-  <img src="src/easpace.Desktop/Assets/logo.png" alt="easpace logo" width="70" height="70">
-</p>
-<h1 align="center">easpace</h1>
+## easpace
 
 **easpace** is a cross-platform, open-source application built with **.NET** and **Avalonia UI**, designed to be a quiet, private space for self-reflection, personal tracking, and wellbeing.
 
@@ -106,22 +103,6 @@ dotnet publish src/easpace.Desktop/easpace.Desktop.csproj \
   -p:PublishAot=false \
   -p:PublishReadyToRun=false
 ```
-
-## Use of AI
-
-The vast majority of the codebase is written by hand.
-
-AI tools may be used as development assistants for tasks such as:
-
-* organising source code;
-* improving documentation;
-* assisting with testing;
-* exploring implementation approaches;
-* assisting with complex UI controls and custom components.
-
-**All generated or AI-assisted code is reviewed, understood, and verified by a human developer before being accepted into the project.**
-
-AI tools are not used as a service for analysing or processing users' private data.
 
 ## Contributing
 

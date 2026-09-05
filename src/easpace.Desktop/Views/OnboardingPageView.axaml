@@ -27,26 +27,16 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="128"
                       VerticalAlignment="Center" HorizontalAlignment="Center">
                     
-                    <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
-
-                        <!-- easpace logo -->
-                        <Viewbox Stretch="Uniform" MaxHeight="80">
-                            <Path Data="{StaticResource Haven.AppIcons.Easpace}"
-                                  Fill="{DynamicResource Haven.Sem.Accent.Strong}" />
-                        </Viewbox>
-                        
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
+                    <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
                             
-                            <!-- easpace title -->
-                            <TextBlock Classes="strong accent fs1" Text="easpace"
-                                       HorizontalAlignment="Center" />
+                        <!-- easpace title -->
+                        <TextBlock Classes="strong accent fs1" Text="easpace"
+                                   HorizontalAlignment="Center" />
                         
-                            <!-- subtitle -->
-                            <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
-                                       HorizontalAlignment="Center" />
+                        <!-- subtitle -->
+                        <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
+                                   HorizontalAlignment="Center" />
                             
-                        </StackPanel>
-
                     </StackPanel>
 
                     <!-- Continue button -->
