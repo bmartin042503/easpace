@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Journal.Entities;
 using easpace.Desktop.Features.Journal.Services;
 using easpace.Desktop.Services.Core;
@@ -25,6 +26,11 @@ internal partial class JournalEditorViewModel : ViewModelBase
 
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _content = string.Empty;
+    
+    public string WordCountText =>
+        Content.GetWordCount() == 1
+            ? LocalizationService.GetString("Journal.WordCount.OneWord")
+            : string.Format(LocalizationService.GetString("Journal.WordCount.Words"), Content.GetWordCount());
 
     public bool IsCreatingNew => !_editingEntryId.HasValue;
 
@@ -57,6 +63,11 @@ internal partial class JournalEditorViewModel : ViewModelBase
         Title = entry.Title;
         Content = entry.Content;
     }
+
+    partial void OnContentChanged(string value)
+    {
+        OnPropertyChanged(nameof(WordCountText));
+    } 
 
     [RelayCommand]
     private async Task Save()

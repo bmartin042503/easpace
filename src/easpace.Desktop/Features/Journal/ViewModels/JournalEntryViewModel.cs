@@ -3,7 +3,9 @@
 
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
+using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Journal.Entities;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Journal.ViewModels;
@@ -15,6 +17,11 @@ internal partial class JournalEntryViewModel : ViewModelBase
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _content = string.Empty;
     [ObservableProperty] private DateTimeOffset _createdAt;
+
+    public string WordCountText =>
+        Content.GetWordCount() == 1
+            ? LocalizationService.GetString("Journal.WordCount.OneWord")
+            : string.Format(LocalizationService.GetString("Journal.WordCount.Words"), Content.GetWordCount());
 
     public JournalEntryViewModel(JournalEntry entry)
     {
@@ -32,5 +39,7 @@ internal partial class JournalEntryViewModel : ViewModelBase
         Title = entry.Title;
         Content = entry.Content;
         CreatedAt = entry.CreatedAt;
+
+        OnPropertyChanged(nameof(WordCountText));
     }
 }

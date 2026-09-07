@@ -163,6 +163,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Journal.Error.DeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt a naplóbejegyzést. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Journal.WordCount.OneWord" xml:space="preserve">
+        <value>1 szó</value>
+    </data>
+    <data name="Journal.WordCount.Words" xml:space="preserve">
+        <value>{0} szó</value>
+    </data>
     <data name="Activities.Empty.Message" xml:space="preserve">
         <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
     </data>

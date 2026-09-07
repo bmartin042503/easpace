@@ -37,7 +37,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Grid Grid.Row="0"
                       ColumnDefinitions="*,Auto"
                       ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
-                    
+
                     <!-- Search box -->
                     <TextBox Grid.Column="0"
                              Text="{Binding SearchText, Mode=TwoWay}"
@@ -56,7 +56,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
                     </Button>
-                    
+
                 </Grid>
 
                 <!-- No entries view -->
@@ -77,12 +77,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Entries -->
                 <ScrollViewer Grid.Row="1" IsVisible="{Binding HasEntries}">
-                    
+
                     <ListBox Classes="journal list"
                              ItemsSource="{Binding Entries}"
                              SelectedItem="{Binding SelectedEntry, Mode=TwoWay}"
                              IsEnabled="{Binding !IsEditing}">
-                        
+
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="vm:JournalEntryViewModel">
                                 <StackPanel Orientation="Vertical">
@@ -100,9 +100,9 @@ Licensed under the MIT License. See LICENSE file for details.
                                             Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-                        
+
                     </ListBox>
-                    
+
                 </ScrollViewer>
             </Grid>
 
@@ -113,12 +113,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Reading view -->
             <Grid Grid.Column="2"
-                  RowDefinitions="Auto,*"
+                  RowDefinitions="Auto,*,Auto"
                   ColumnDefinitions="*,Auto"
                   RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
                   ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
                   IsVisible="{Binding !IsEditing}">
-                
+
                 <!-- Title -->
                 <SelectableTextBlock Grid.Row="0"
                                      Grid.Column="0"
@@ -129,7 +129,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
                             Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
                             IsVisible="{Binding HasActiveEntry}">
-                    
+
                     <!-- Delete button -->
                     <Button Classes="tertiary danger icon"
                             Command="{Binding DeleteEntryCommand}"
@@ -143,7 +143,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
                         <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Pencil.Fill}" />
                     </Button>
-                    
+
                 </StackPanel>
 
                 <!-- Content -->
@@ -152,16 +152,21 @@ Licensed under the MIT License. See LICENSE file for details.
                                          Classes="neutral fs4 trm-ellipsis"
                                          Text="{Binding ActiveEntry.Content}" />
                 </ScrollViewer>
+
+                <!-- Word count -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                           Classes="accent fs4 medium"
+                           Text="{Binding ActiveEntry.WordCountText}" />
             </Grid>
 
             <!-- Editor view -->
             <Grid Grid.Column="2"
-                  RowDefinitions="Auto,*"
+                  RowDefinitions="Auto,*,Auto"
                   ColumnDefinitions="*,Auto"
                   RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
                   ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
                   IsVisible="{Binding IsEditing}">
-                
+
                 <!-- Title -->
                 <TextBox Grid.Row="0"
                          Grid.Column="0"
@@ -174,7 +179,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             Grid.Column="1"
                             Orientation="Horizontal"
                             Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
-                    
+
                     <!-- Cancel button -->
                     <Button Classes="secondary icon"
                             Command="{Binding Editor.CancelCommand}"
@@ -188,15 +193,22 @@ Licensed under the MIT License. See LICENSE file for details.
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
                     </Button>
-                    
+
                 </StackPanel>
 
                 <!-- Content -->
-                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                         Text="{Binding Editor.Content, Mode=TwoWay}"
-                         Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
-                         PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
-                         VerticalAlignment="Stretch" />
+                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <TextBox Text="{Binding Editor.Content, Mode=TwoWay}"
+                             Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
+                             PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
+                             VerticalAlignment="Stretch" />
+                </ScrollViewer>
+
+                <!-- Word count -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                           Classes="accent fs4 medium"
+                           Text="{Binding Editor.WordCountText}" />
+
             </Grid>
         </Grid>
     </Border>
