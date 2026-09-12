@@ -1,0 +1,27 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:trend="clr-namespace:easpace.Desktop.Features.Activities.Controls.Trend">
+
+    <!-- TrendChart styling -->
+    <Style Selector="trend|TrendChart">
+        <Setter Property="AxisStroke" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="StrokeThickness" Value="{StaticResource Metrics.Border.Thickness.Double.Thick}" />
+        <Setter Property="Stroke" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="AreaBrush" Value="{DynamicResource Haven.Sem.Gradient.Accent.Subtle}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Ticks" Value="5" />
+        <Setter Property="GridLines" Value="6" />
+        <Setter Property="TickWidth" Value="12" />
+        <Setter Property="GridLineBrush" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="TooltipBackground" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="TooltipDateForeground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="TooltipValueForeground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="TooltipBorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="TooltipBorderThickness" Value="{StaticResource Metrics.Border.Thickness.Double}" />
+    </Style>
+</Styles>

@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="{StaticResource Haven.Scale.Transparent}">
+             Background="{StaticResource Metrics.Transparent}">
 
     <UserControl.Resources>
 
@@ -25,22 +25,22 @@ Licensed under the MIT License. See LICENSE file for details.
             <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
                 <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Wind}"
                           Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
-                          Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                          Height="{StaticResource Haven.Scale.Icon.Size.Md}" />
+                          Width="{StaticResource Metrics.Icon.Size.Md}"
+                          Height="{StaticResource Metrics.Icon.Size.Md}" />
             </DataTemplate>
 
             <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
                 <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
                           Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
-                          Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                          Height="{StaticResource Haven.Scale.Icon.Size.Md}" />
+                          Width="{StaticResource Metrics.Icon.Size.Md}"
+                          Height="{StaticResource Metrics.Icon.Size.Md}" />
             </DataTemplate>
 
         </dataTemplates:TemplateSelector>
 
     </UserControl.Resources>
 
-    <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+    <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" MinWidth="200" MaxWidth="450" />
@@ -55,16 +55,16 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- No history view -->
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding ShowNoSessionEntries}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
                                 HorizontalAlignment="Center">
 
                         <!-- Wind icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Wind}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
+                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
 
                             <PathIcon.RenderTransform>
@@ -75,8 +75,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Sparkle icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
+                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
 
                             <PathIcon.RenderTransform>
@@ -95,7 +95,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- History -->
                 <Grid RowDefinitions="Auto,*"
-                      RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                      RowSpacing="{StaticResource Metrics.Spacing.Sm}"
                       IsVisible="{Binding HasSessionEntries}">
 
                     <TextBlock Grid.Row="0" Text="{core:LocalizationService Key='Wellness.Title.History'}"
@@ -108,7 +108,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
 
                                     <Grid ColumnDefinitions="Auto,*,Auto"
-                                          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                                          ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                                         <!-- Icon -->
                                         <ContentControl Grid.Column="0" Content="{Binding SessionType}"
@@ -159,7 +159,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <ItemsRepeater.Layout>
                                 <StackLayout Orientation="Vertical"
-                                             Spacing="{StaticResource Haven.Scale.Spacing.Md}" />
+                                             Spacing="{StaticResource Metrics.Spacing.Md}" />
                             </ItemsRepeater.Layout>
 
                         </ItemsRepeater>
@@ -173,13 +173,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Horizontal splitter -->
         <GridSplitter Grid.Column="1"
-                      Background="{StaticResource Haven.Scale.Transparent}"
-                      Width="{StaticResource Haven.Scale.Spacing.Lg}"
+                      Background="{StaticResource Metrics.Transparent}"
+                      Width="{StaticResource Metrics.Spacing.Lg}"
                       ResizeDirection="Columns" />
 
         <!-- Configuration -->
         <Border Grid.Column="2" Classes="card"
-                Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
+                Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
             <Grid RowDefinitions="*,*,*,*,*,*">
 
@@ -208,7 +208,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Breathing techniques -->
                 <StackPanel Grid.Row="2" Orientation="Vertical"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                            Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <ComboBox MaxWidth="240"
                               IsEnabled="{Binding HasBreathingTechniques}"
@@ -246,7 +246,7 @@ Licensed under the MIT License. See LICENSE file for details.
                           VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <!-- Duration slider -->
-                <StackPanel Grid.Row="4" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Grid.Row="4" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             VerticalAlignment="Center" IsVisible="{Binding IsTimerChecked}">
 
                     <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"

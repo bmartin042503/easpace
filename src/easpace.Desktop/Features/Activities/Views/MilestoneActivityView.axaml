@@ -14,14 +14,14 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="viewModels:MilestoneActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.MilestoneActivityView">
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          RowDefinitions="Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
         <!-- Top bar -->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                 <!-- Title -->
                 <TextBlock Grid.Column="0" Text="{Binding Name}"
@@ -38,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </Grid>
 
             <!-- Details -->
-            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                 <!-- Start date -->
                 <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
@@ -62,8 +62,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
-                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                    Spacing="{StaticResource Metrics.Spacing.Lg}"
+                    Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                     VerticalAlignment="Top">
 
             <!-- Delete button -->

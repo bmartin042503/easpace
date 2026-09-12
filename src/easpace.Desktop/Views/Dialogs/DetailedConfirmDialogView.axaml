@@ -10,23 +10,23 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
              x:DataType="vm:DetailedConfirmDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             Background="{StaticResource Haven.Scale.Transparent}"
+             Background="{StaticResource Metrics.Transparent}"
              x:Class="easpace.Desktop.Views.Dialogs.DetailedConfirmDialogView">
 
     <Border x:Name="DialogRootBorder" Classes.danger="{Binding IsCritical}" Classes="card"
-            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0"
             MaxWidth="800" MaxHeight="600">
 
         <Grid RowDefinitions="Auto,*,Auto"
-              RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+              RowSpacing="{StaticResource Metrics.Spacing.Lg}">
 
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
-                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                  ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
 
                 <!-- Warning icon -->
-                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
-                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
+                          Width="{StaticResource Metrics.Icon.Size.Lg}"
                           Foreground="{DynamicResource Haven.Sem.Foreground}"
                           Data="{StaticResource Haven.PhosphorIcons.Warning.Fill}"
                           IsVisible="{Binding IsDestructive}"
@@ -34,8 +34,8 @@ Licensed under the MIT License. See LICENSE file for details.
                           Margin="0,4,0,0" />
 
                 <!-- Info icon -->
-                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
-                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
+                          Width="{StaticResource Metrics.Icon.Size.Lg}"
                           Foreground="{DynamicResource Haven.Sem.Foreground}"
                           Data="{StaticResource Haven.PhosphorIcons.Info.Fill}"
                           IsVisible="{Binding !IsDestructive}"
@@ -59,7 +59,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </ScrollViewer>
             </Border>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
                         HorizontalAlignment="Right">
 
                 <!-- Cancel button -->

@@ -13,12 +13,12 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessSessionView"
              x:DataType="vm:WellnessSessionViewModel"
-             Background="{StaticResource Haven.Scale.Transparent}">
+             Background="{StaticResource Metrics.Transparent}">
 
     <!-- Session view -->
-    <Grid RowDefinitions="*,*,*,*,Auto" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxl}">
+    <Grid RowDefinitions="*,*,*,*,Auto" Margin="{StaticResource Metrics.Spacing.Thickness.Xxl}">
 
-        <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+        <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <!-- Animated instruction text -->
@@ -51,7 +51,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xl}">
+                    Spacing="{StaticResource Metrics.Spacing.Xl}">
 
             <!-- Pause/Resume -->
             <Button Classes="tertiary regular" Content="{Binding TimerToggleButtonText}"

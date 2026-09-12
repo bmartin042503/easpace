@@ -7,6 +7,14 @@ using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.Services.Presentation;
 
+internal interface IDialogService
+{
+    event Action<DialogViewModel?>? CurrentDialogChanged;
+    
+    Task ShowDialogAsync<TDialogViewModel>(TDialogViewModel dialogViewModel)
+        where TDialogViewModel : DialogViewModel;
+}
+
 internal class DialogService : IDialogService
 {
     public event Action<DialogViewModel?>? CurrentDialogChanged;

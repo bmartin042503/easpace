@@ -12,7 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="vmDialogs:RoutineEntryDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
              MaxWidth="450" MaxHeight="400"
-             Background="{StaticResource Haven.Scale.Transparent}"
+             Background="{StaticResource Metrics.Transparent}"
              x:Class="easpace.Desktop.Features.Activities.Views.Dialogs.RoutineEntryDialogView">
 
     <Design.DataContext>
@@ -20,21 +20,21 @@ Licensed under the MIT License. See LICENSE file for details.
     </Design.DataContext>
 
     <Border x:Name="DialogRootBorder" Classes="card"
-            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
         <Grid RowDefinitions="Auto,*,Auto"
-              RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+              RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
             <!-- Title -->
             <TextBlock x:Name="DialogRootTitle" Grid.Row="0" Classes="neutral fs3 trm-ellipsis"
                        Text="{Binding Title}"
                        TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" />
 
-            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+            <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}"
                         HorizontalAlignment="Stretch">
 
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <!-- Date input -->
                     <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
@@ -63,7 +63,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </StackPanel>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}"
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
                         HorizontalAlignment="Right">
 
                 <!-- Cancel button -->

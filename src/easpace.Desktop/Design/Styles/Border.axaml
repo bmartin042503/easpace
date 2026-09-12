@@ -1,0 +1,91 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Background="{DynamicResource Haven.Sem.Canvas}">
+                <StackPanel Orientation="Horizontal">
+
+                    <!-- Sidebar -->
+                    <Border Width="100" Height="400"
+                            Classes="sidebar" />
+
+                    <!-- Gradient card -->
+                    <Border Width="300" Height="400"
+                            Classes="gradient card"
+                            Margin="{StaticResource Metrics.Spacing.Thickness.Lg}" />
+
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Styles.Resources>
+        <Thickness x:Key="Haven.Sidebar.MacOs.Padding">10,48,10,10</Thickness>
+    </Styles.Resources>
+
+    <Style Selector="Border.sidebar">
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Right}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+
+        <Setter Property="Padding"
+                Value="{OnPlatform Default={StaticResource Metrics.Spacing.Thickness.Xs}, macOS={StaticResource Haven.Sidebar.MacOs.Padding}}" />
+
+    </Style>
+
+    <Style Selector="Border.card">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Md}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+        <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Sm}" />
+    </Style>
+    
+    <Style Selector="Border.settings.card">
+        <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Lg}" />
+    </Style>
+    
+    <Style Selector="Border.elevated.card">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+    </Style>
+
+    <Style Selector="Border.gradient.card">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
+    </Style>
+    
+    <Style Selector="Border.danger.card">
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger.Subtle}" />
+    </Style>
+
+    <Style Selector="Border.calendar-legend-box">
+        <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xxs}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Container.Size.Sm}" />
+        <Setter Property="Height" Value="{StaticResource Metrics.Container.Size.Sm}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+
+        <Style Selector="^.completed">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Success}" />
+        </Style>
+
+        <Style Selector="^.not-completed">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Danger}" />
+        </Style>
+
+        <Style Selector="^.today">
+            <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        </Style>
+
+    </Style>
+
+</Styles>

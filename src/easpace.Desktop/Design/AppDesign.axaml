@@ -1,0 +1,80 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:easpace.Desktop.Converters">
+
+    <Styles.Resources>
+        <ResourceDictionary>
+            
+            <!-- Fonts -->
+            <FontFamily x:Key="FontFamily.Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
+            
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- Metrics -->
+                <ResourceInclude Source="Metrics/Border.axaml" />
+                <ResourceInclude Source="Metrics/Radius.axaml" />
+                <ResourceInclude Source="Metrics/Spacing.axaml" />
+                <ResourceInclude Source="Metrics/Typography.axaml" />
+                <ResourceInclude Source="Metrics/Sizes.axaml" />
+
+                <!-- Icons -->
+                <ResourceInclude Source="Icons/AppIcons.axaml" />
+                <ResourceInclude Source="Icons/PhosphorIcons.axaml" />
+
+                <!-- Overridden Control Themes -->
+                <ResourceInclude Source="Controls/Overrides/WindowDrawnDecorations.axaml" />
+                <ResourceInclude Source="Controls/Overrides/DataValidationErrors.axaml" />
+                <ResourceInclude Source="Controls/Overrides/CheckBox.axaml" />
+                <ResourceInclude Source="Controls/Overrides/ButtonSpinner.axaml" />
+                <ResourceInclude Source="Controls/Overrides/NumericUpDown.axaml" />
+                <ResourceInclude Source="Controls/Overrides/RadioButton.axaml" />
+                <ResourceInclude Source="Controls/Overrides/Slider.axaml" />
+                <ResourceInclude Source="Controls/Overrides/Calendar.axaml" />
+                <ResourceInclude Source="Controls/Overrides/CalendarButton.axaml" />
+                <ResourceInclude Source="Controls/Overrides/CalendarDatePicker.axaml" />
+                <ResourceInclude Source="Controls/Overrides/CalendarDayButton.axaml" />
+                <ResourceInclude Source="Controls/Overrides/CalendarItem.axaml" />
+                <ResourceInclude Source="Controls/Overrides/TimePicker.axaml" />
+
+                <!-- Custom Control Themes-->
+                <ResourceInclude Source="Controls/IconListItem.axaml" />
+                <ResourceInclude Source="Controls/NavigationListItem.axaml" />
+                <ResourceInclude Source="Controls/ActivityListItem.axaml" />
+                <ResourceInclude Source="Controls/DataEntryListItem.axaml" />
+                <ResourceInclude Source="Controls/ChartNavigator.axaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Converters -->
+            <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
+            <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />
+            <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
+            <converters:ValidationResultToLocalizedConverter x:Key="ValidationResultToLocalizedConverter" />
+            <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
+
+        </ResourceDictionary>
+    </Styles.Resources>
+
+    <!-- Styles -->
+    <StyleInclude Source="Styles/Border.axaml" />
+    <StyleInclude Source="Styles/Button.axaml" />
+    <StyleInclude Source="Styles/GridSplitter.axaml" />
+    <StyleInclude Source="Styles/ListBox.axaml" />
+    <StyleInclude Source="Styles/ListBoxItem.axaml" />
+    <StyleInclude Source="Styles/Path.axaml" />
+    <StyleInclude Source="Styles/TextBlock.axaml" />
+    <StyleInclude Source="Styles/TextBox.axaml" />
+    <StyleInclude Source="Styles/ComboBox.axaml" />
+    <StyleInclude Source="Styles/ToggleButton.axaml" />
+    <StyleInclude Source="Styles/ToggleSwitch.axaml" />
+    <StyleInclude Source="Styles/PathIcon.axaml" />
+    <StyleInclude Source="Styles/TrendChart.axaml" />
+    <StyleInclude Source="Styles/MilestoneChart.axaml" />
+    <StyleInclude Source="Styles/RoutineMonthItem.axaml" />
+
+</Styles>

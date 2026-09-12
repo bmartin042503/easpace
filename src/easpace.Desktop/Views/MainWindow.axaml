@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-        xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
+        xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
         xmlns:utils="clr-namespace:easpace.Desktop.Utils"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="easpace.Desktop.Views.MainWindow"
@@ -17,6 +17,7 @@ Licensed under the MIT License. See LICENSE file for details.
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Haven.Sem.Canvas}"
         Title="easpace" MinHeight="450" MinWidth="700"
+        ExtendClientAreaToDecorationsHint="True"
         utils:ViewInitialization.Command="{Binding InitializeCommand}">
 
     <Grid ColumnDefinitions="Auto,*">
@@ -59,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
-                              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                              RowSpacing="{StaticResource Metrics.Spacing.Xs}" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
@@ -81,7 +82,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Dialog host -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2"
               IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}">
-            <Border Background="{StaticResource Haven.Scale.Black}" Opacity="0.35" />
+            <Border Background="{StaticResource Metrics.Black}" Opacity="0.35" />
             <ContentControl x:Name="DialogHost" Content="{Binding CurrentDialog}"
                             PointerPressed="DialogHost_PointerPressed"
                             PointerMoved="DialogHost_PointerMoved"

@@ -11,7 +11,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-             xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
@@ -57,9 +57,9 @@ Licensed under the MIT License. See LICENSE file for details.
         </dataTemplates:TemplateSelector>
     </UserControl.Resources>
 
-    <Border Classes="card" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+    <Border Classes="card" Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+        <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
@@ -68,7 +68,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </Grid.ColumnDefinitions>
 
             <!-- Sidebar -->
-            <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+            <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Metrics.Spacing.Md}">
 
                 <!-- Top bar -->
                 <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
@@ -82,8 +82,8 @@ Licensed under the MIT License. See LICENSE file for details.
                             <controls:IconListItem
                                 Icon="{StaticResource Haven.PhosphorIcons.Target}"
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
-                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
-                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Width="{StaticResource Metrics.Icon.Size.Sm}"
+                                Height="{StaticResource Metrics.Icon.Size.Sm}"
                                 ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
                         </ListBoxItem>
 
@@ -92,14 +92,14 @@ Licensed under the MIT License. See LICENSE file for details.
                             <controls:IconListItem
                                 Icon="{StaticResource Haven.PhosphorIcons.Archive}"
                                 SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
-                                Width="{StaticResource Haven.Scale.Icon.Size.Sm}"
-                                Height="{StaticResource Haven.Scale.Icon.Size.Sm}"
+                                Width="{StaticResource Metrics.Icon.Size.Sm}"
+                                Height="{StaticResource Metrics.Icon.Size.Sm}"
                                 ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
                         </ListBoxItem>
 
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
 
@@ -123,16 +123,16 @@ Licensed under the MIT License. See LICENSE file for details.
                 <StackPanel Grid.Row="2"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding !HasActivities}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
                                 HorizontalAlignment="Center">
 
                         <!-- Chart line icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartLine}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Width="{StaticResource Metrics.Icon.Size.Md}"
+                                  Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
@@ -145,14 +145,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Chart pie slice icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
+                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
 
                         <!-- Check square offset icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Width="{StaticResource Metrics.Icon.Size.Md}"
+                                  Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
@@ -186,7 +186,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
 

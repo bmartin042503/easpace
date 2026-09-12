@@ -20,9 +20,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Border Classes="card"
             Classes.gradient="{Binding !IsEditing}"
-            Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+            Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-        <Grid ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+        <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
                 <ColumnDefinition Width="Auto" />
@@ -32,11 +32,11 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Sidebar -->
             <Grid Grid.Column="0"
                   RowDefinitions="Auto,*"
-                  RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+                  RowSpacing="{StaticResource Metrics.Spacing.Lg}">
 
                 <Grid Grid.Row="0"
                       ColumnDefinitions="*,Auto"
-                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <!-- Search box -->
                     <TextBox Grid.Column="0"
@@ -63,11 +63,11 @@ Licensed under the MIT License. See LICENSE file for details.
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding !HasEntries}">
                     <PathIcon Data="{StaticResource Haven.PhosphorIcons.File}"
-                              Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                              Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                              Width="{StaticResource Metrics.Icon.Size.Xl}"
+                              Height="{StaticResource Metrics.Icon.Size.Xl}"
                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
                     <TextBlock Text="{core:LocalizationService Key='Journal.Empty.Message'}"
                                Classes="subtle neutral trm-ellipsis"
@@ -97,7 +97,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical"
-                                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}" />
+                                            Spacing="{StaticResource Metrics.Spacing.Sm}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
 
@@ -115,8 +115,8 @@ Licensed under the MIT License. See LICENSE file for details.
             <Grid Grid.Column="2"
                   RowDefinitions="Auto,*,Auto"
                   ColumnDefinitions="*,Auto"
-                  RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+                  RowSpacing="{StaticResource Metrics.Spacing.Md}"
+                  ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
                   IsVisible="{Binding !IsEditing}">
 
                 <!-- Title -->
@@ -126,8 +126,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                      Text="{Binding ActiveEntry.Title}" />
 
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
-                            Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                            Spacing="{StaticResource Metrics.Spacing.Lg}"
+                            Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                             IsVisible="{Binding HasActiveEntry}">
 
                     <!-- Delete button -->
@@ -163,8 +163,8 @@ Licensed under the MIT License. See LICENSE file for details.
             <Grid Grid.Column="2"
                   RowDefinitions="Auto,*,Auto"
                   ColumnDefinitions="*,Auto"
-                  RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
+                  RowSpacing="{StaticResource Metrics.Spacing.Md}"
+                  ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
                   IsVisible="{Binding IsEditing}">
 
                 <!-- Title -->
@@ -178,7 +178,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <StackPanel Grid.Row="0"
                             Grid.Column="1"
                             Orientation="Horizontal"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                            Spacing="{StaticResource Metrics.Spacing.Xs}">
 
                     <!-- Cancel button -->
                     <Button Classes="secondary icon"

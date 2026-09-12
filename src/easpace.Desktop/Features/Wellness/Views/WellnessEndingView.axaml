@@ -14,9 +14,9 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessEndingView"
              x:DataType="vm:WellnessEndingViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="{StaticResource Haven.Scale.Transparent}">
+             Background="{StaticResource Metrics.Transparent}">
 
-    <Grid RowDefinitions="*,*,*" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
+    <Grid RowDefinitions="*,*,*" Margin="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
         <!-- Title -->
         <TextBlock Grid.Row="0" Classes="strong accent fs1"
@@ -25,7 +25,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Session details -->
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Spacing="{StaticResource Haven.Scale.FontSize.Sm}">
+                    HorizontalAlignment="Center" Spacing="{StaticResource Metrics.FontSize.Sm}">
 
             <!-- Type -->
             <TextBlock Classes="strong accent fs3"
@@ -53,7 +53,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </StackPanel>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xl}"
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xl}"
                     VerticalAlignment="Center" HorizontalAlignment="Center" IsVisible="{Binding AskToSaveSession}">
 
             <!-- Discard -->

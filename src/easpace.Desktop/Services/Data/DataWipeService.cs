@@ -11,6 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Services.Data;
 
+internal interface IDataWipeService
+{
+    void DeleteEncryptionKey();
+    void DeleteDatabaseFile();
+    void DeletePreferencesFile();
+}
+
 internal class DataWipeService(AppDbContext dbContext, ILogger<DataWipeService> logger) : IDataWipeService
 {
     public void DeleteEncryptionKey()

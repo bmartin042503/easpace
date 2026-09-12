@@ -10,6 +10,12 @@ using easpace.Desktop.Constants;
 
 namespace easpace.Desktop.Services.Data;
 
+internal interface IPreferencesService
+{
+    T ReadPreference<T>(string key, T defaultValue = default!);
+    void SavePreference<T>(string key, T value);
+}
+
 internal class PreferencesService : IPreferencesService
 {
     private readonly Dictionary<string, JsonElement> _preferences = new();

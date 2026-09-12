@@ -1,0 +1,142 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
+        <ThemeVariantScope RequestedThemeVariant="Light">
+            <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+                <StackPanel Orientation="Vertical" Spacing="20">
+
+                    <TextBox PlaceholderText="Search..." MinWidth="140">
+                        <TextBox.InnerRightContent>
+                            <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
+                        </TextBox.InnerRightContent>
+                    </TextBox>
+
+                    <TextBox Text="Edit Journal Entry Title"
+                             Classes="journal-edit fs2"
+                             VerticalAlignment="Center" />
+
+                    <TextBox Classes="journal-edit fs4" Height="200"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             PlaceholderText="Write down your thoughts here..."
+                             VerticalAlignment="Stretch" />
+
+                    <TextBox Text="Text box" />
+                    
+                    <TextBox Classes="large-text-area" Text="Description" />
+
+                </StackPanel>
+            </Border>
+        </ThemeVariantScope>
+    </Design.PreviewWith>
+
+    <Style Selector="TextBox">
+        
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Poppins}" />
+        <Setter Property="MinHeight" Value="{StaticResource Metrics.Input.Height}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xs}" />
+        <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Xxs}" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        
+        <Style Selector="^:error /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+        </Style>
+
+        <Style Selector="^ PathIcon">
+            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+            <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+        </Style>
+
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+            </Style>
+        </Style>
+
+    </Style>
+    
+    <Style Selector="TextBox.journal-edit">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </Style>
+
+    </Style>
+
+    <Style Selector="TextBox.fs1">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xxl}" />
+    </Style>
+
+    <Style Selector="TextBox.fs2">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xl}" />
+    </Style>
+
+    <Style Selector="TextBox.fs3">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Lg}" />
+    </Style>
+
+    <Style Selector="TextBox.fs4">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Md}" />
+    </Style>
+
+    <Style Selector="TextBox.fs5">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Sm}" />
+    </Style>
+
+    <Style Selector="TextBox.fs6">
+        <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xs}" />
+    </Style>
+    
+    <Style Selector="TextBox.large-text-area">
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="AcceptsReturn" Value="True" />
+    </Style>
+    
+    <Style Selector="TextBox.numeric-up-down, TextBox.date-picker">
+        
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        
+        <Style Selector="^:focus, ^:pointerover">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+        </Style>
+        
+    </Style>
+
+</Styles>

@@ -9,6 +9,13 @@ using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Services.Presentation;
 
+internal interface IToastMessageService
+{
+    event Action<ToastMessageViewModel?>? ToastMessageRaised;
+    
+    void ShowToastMessage(string message, ToastMessageType messageType);
+}
+
 internal class ToastMessageService : IToastMessageService, IDisposable
 {
     public event Action<ToastMessageViewModel?>? ToastMessageRaised;

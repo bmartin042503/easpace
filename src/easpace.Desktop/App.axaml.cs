@@ -17,6 +17,8 @@ namespace easpace.Desktop;
 internal partial class App : Application
 {
     public static Version Version = new(0,1,0);
+    public static string VersionName = "VersionName";
+    
     private static IServiceProvider? _services;
 
     public static void ConfigureServices(IServiceProvider services)

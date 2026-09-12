@@ -17,7 +17,7 @@ Licensed under the MIT License. See LICENSE file for details.
              Background="{DynamicResource Haven.Sem.Canvas}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
-    <Grid Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+    <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400" MinWidth="200" MaxWidth="600" />
@@ -32,16 +32,16 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- No entries view -->
                 <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Center"
-                            Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                            Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding !HasMoodEntries}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
                                 HorizontalAlignment="Center">
 
                         <!-- Smiley sad icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.SmileySad}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Width="{StaticResource Metrics.Icon.Size.Md}"
+                                  Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
@@ -54,14 +54,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- Smiley meh icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.SmileyMeh}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Xl}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Xl}"
+                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
+                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
 
                         <!-- Smiley icon -->
                         <PathIcon Data="{StaticResource Haven.PhosphorIcons.Smiley}"
-                                  Width="{StaticResource Haven.Scale.Icon.Size.Md}"
-                                  Height="{StaticResource Haven.Scale.Icon.Size.Md}"
+                                  Width="{StaticResource Metrics.Icon.Size.Md}"
+                                  Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
@@ -88,10 +88,10 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <Border Classes="elevated card">
 
                                     <StackPanel Orientation="Vertical"
-                                                Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                                                Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                                         <Grid ColumnDefinitions="*,Auto"
-                                              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                                              ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                                             <!-- Mood state -->
                                             <TextBlock Grid.Column="0" Classes="neutral fs4 trm-ellipsis"
@@ -128,8 +128,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"
-                                                               ItemSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                                                               LineSpacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                                                               ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                               LineSpacing="{StaticResource Metrics.Spacing.Xxs}" />
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
 
@@ -147,7 +147,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <ItemsRepeater.Layout>
                             <StackLayout Orientation="Vertical"
-                                         Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                         Spacing="{StaticResource Metrics.Spacing.Xs}" />
                         </ItemsRepeater.Layout>
 
                     </ItemsRepeater>
@@ -159,15 +159,15 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Horizontal splitter -->
         <GridSplitter Grid.Column="1"
-                      Background="{StaticResource Haven.Scale.Transparent}"
-                      Width="{StaticResource Haven.Scale.Spacing.Lg}"
+                      Background="{StaticResource Metrics.Transparent}"
+                      Width="{StaticResource Metrics.Spacing.Lg}"
                       ResizeDirection="Columns" />
 
         <!-- New mood entry form -->
-        <Border Classes="card" Grid.Column="2" Padding="{StaticResource Haven.Scale.Spacing.Thickness.Xl}">
-            <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}">
+        <Border Classes="card" Grid.Column="2" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
+            <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}">
 
-                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
                     <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
 
@@ -188,7 +188,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     </Grid>
 
-                    <Grid Grid.Row="1" RowDefinitions="*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <Grid Grid.Row="1" RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Sm}">
 
                         <!-- Labels -->
                         <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
@@ -198,8 +198,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                                   ItemSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                                                   LineSpacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                                   ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
 

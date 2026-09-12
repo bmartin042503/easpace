@@ -23,15 +23,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Hidden">
 
-        <StackPanel Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
-                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}"
+        <StackPanel Spacing="{StaticResource Metrics.Spacing.Lg}"
+                    Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
                     HorizontalAlignment="Stretch" VerticalAlignment="Top"
                     MaxWidth="800">
 
             <!-- General -->
             <Border Classes="settings card">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}">
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
@@ -92,7 +92,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Wellness -->
             <Border Classes="settings card">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}">
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
@@ -139,7 +139,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- System & Privacy -->
             <Border Classes="settings card">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}">
 
                     <!-- Title -->
                     <TextBlock Classes="neutral fs3 trm-ellipsis"
@@ -177,11 +177,11 @@ Licensed under the MIT License. See LICENSE file for details.
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Command="{Binding DeleteAllDataCommand}">
 
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Trash.Fill}"
-                                          Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                          Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}"
+                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
                                            Text="{core:LocalizationService Key='Settings.DeleteAllData.Label'}" />
@@ -201,12 +201,12 @@ Licensed under the MIT License. See LICENSE file for details.
                     BorderBrush="{DynamicResource Haven.Sem.Accent}"
                     Background="{DynamicResource Haven.Sem.Surface.Accent}">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
                     <StackPanel Grid.Column="0" Orientation="Vertical"
-                                Spacing="{StaticResource Haven.Scale.Spacing.Md}">
+                                Spacing="{StaticResource Metrics.Spacing.Md}">
 
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                             <!-- Title -->
                             <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
@@ -238,9 +238,9 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <TextBlock Classes="strong accent fs5" Text="Made with" />
                             <PathIcon Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
-                                      Data="{StaticResource Haven.PhosphorIcons.Heart.Fill}"
-                                      Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                      Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                      Data="{StaticResource PhosphorIcons.Heart.Fill}"
+                                      Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                      Height="{StaticResource Metrics.Icon.Size.Xs}" />
                             <TextBlock Classes="strong accent fs5" Text="in Hungary" />
                         </StackPanel>
 
@@ -261,19 +261,19 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Separator Height="1" Background="{DynamicResource Haven.Sem.Accent}"
                                Margin="0" />
 
-                    <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Haven.Scale.Spacing.Sm}"
-                               LineSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Sm}"
+                               LineSpacing="{StaticResource Metrics.Spacing.Sm}">
 
                         <!-- GitHub button -->
                         <Button Classes="primary regular"
                                 HorizontalAlignment="Left" VerticalAlignment="Center"
                                 Command="{Binding OpenGitHubCommand}">
 
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.GitHubLogo.Fill}"
-                                          Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                          Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                <PathIcon Data="{StaticResource PhosphorIcons.GitHubLogo.Fill}"
+                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium" Text="GitHub" />
 
@@ -290,11 +290,11 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <constants:LegalFileType>PrivacyPolicy</constants:LegalFileType>
                             </Button.CommandParameter>
 
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.ShieldCheck.Fill}"
-                                          Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                          Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                <PathIcon Data="{StaticResource PhosphorIcons.ShieldCheck.Fill}"
+                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
                                            Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}" />
@@ -312,11 +312,11 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <constants:LegalFileType>TermsOfUse</constants:LegalFileType>
                             </Button.CommandParameter>
 
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                                <PathIcon Data="{StaticResource Haven.PhosphorIcons.FileText.Fill}"
-                                          Width="{StaticResource Haven.Scale.Icon.Size.Xs}"
-                                          Height="{StaticResource Haven.Scale.Icon.Size.Xs}" />
+                                <PathIcon Data="{StaticResource PhosphorIcons.FileText.Fill}"
+                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
                                            Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}" />
@@ -329,15 +329,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Third-party libraries -->
 
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Classes="accent fs4 medium"
                                    Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
 
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                        <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="Avalonia UI • MIT License"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -348,7 +349,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </Button>
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="CommunityToolkit.Mvvm / Entity Framework Core • MIT License"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -359,7 +360,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </Button>
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="SQLite3 Multiple Ciphers • MIT License"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -370,7 +371,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </Button>
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="Devlooped.CredentialManager • MIT License"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -381,7 +382,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </Button>
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="Phosphor Icons • MIT License"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -392,7 +393,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             </Button>
 
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Haven.Scale.FontSize.Xs}"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="DatePicker components override • Microsoft Public License (Ms-PL)"
                                     Command="{Binding ShowLegalFileCommand}">
 
@@ -402,7 +403,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             </Button>
 
-                        </StackPanel>
+                        </WrapPanel>
 
                     </StackPanel>
 

@@ -1,0 +1,68 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <StackPanel Orientation="Vertical" Spacing="30">
+                    <PathIcon Classes="sidebar journal"
+                              Data="{StaticResource PhosphorIcons.Notebook}" />
+                    <PathIcon Classes="sidebar mood"
+                              Data="{StaticResource PhosphorIcons.Brain}" />
+                    <PathIcon Classes="sidebar activities"
+                              Data="{StaticResource PhosphorIcons.Target}" />
+                    <PathIcon Classes="sidebar wellness"
+                              Data="{StaticResource PhosphorIcons.FlowerLotus}" />
+                    <PathIcon Classes="sidebar settings"
+                              Data="{StaticResource PhosphorIcons.Gear}" />
+                </StackPanel>
+
+                <PathIcon Classes="target"
+                          Data="{StaticResource PhosphorIcons.Target.Fill}"
+                          VerticalAlignment="Center" />
+
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="PathIcon.sidebar.journal">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Md}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.mood">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Lg}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Lg}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.activities">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Md}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.wellness">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Lg}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Lg}" />
+    </Style>
+
+    <Style Selector="PathIcon.sidebar.settings">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Md}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Md}" />
+    </Style>
+
+    <Style Selector="PathIcon.activity-entry">
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+    </Style>
+
+    <Style Selector="PathIcon.target">
+        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+    </Style>
+
+</Styles>

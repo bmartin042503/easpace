@@ -1,0 +1,54 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <x:Double x:Key="Metrics.Spacing.Xxs">6</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Xs">12</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Sm">18</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Md">22</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Lg">26</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Xl">32</x:Double>
+    <x:Double x:Key="Metrics.Spacing.Xxl">48</x:Double>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Xxs">6</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Xs">10</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Sm">18</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Md">22</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Lg">26</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Xl">32</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Xxl">48</Thickness>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.3Xs">8,4</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Xxs">12,6</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Xs">14,8</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Sm">18,10</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Md">22,18</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Lg">26,22</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Xl">32,26</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Wide.Xxl">48,32</Thickness>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Left.Xs">10,0,0,0</Thickness>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Bottom.Xxs">0,0,0,6</Thickness>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Xxs">6,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Xs">10,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Sm">18,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Md">22,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Lg">26,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Xl">32,0</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Horizontal.Xxl">48,0</Thickness>
+    
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xxs">0,6</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xs">0,10</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Sm">0,18</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Md">0,22</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Lg">0,26</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xl">0,32</Thickness>
+    <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xxl">0,48</Thickness>
+    
+</ResourceDictionary>

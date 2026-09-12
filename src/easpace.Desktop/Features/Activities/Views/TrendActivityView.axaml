@@ -10,19 +10,19 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:trend="clr-namespace:easpace.Desktop.Features.Activities.Controls.Trend"
-             xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:TrendActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.TrendActivityView">
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Haven.Scale.Spacing.Xl}">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
         <!-- Top bar -->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+                    Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                 <!-- Title -->
                 <TextBlock Grid.Column="0" Text="{Binding Name}"
@@ -40,7 +40,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Details -->
             <StackPanel Orientation="Horizontal"
-                        Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                        Spacing="{StaticResource Metrics.Spacing.Xs}">
 
                 <!-- Current value -->
                 <TextBlock Classes="neutral fs4"
@@ -48,7 +48,7 @@ Licensed under the MIT License. See LICENSE file for details.
                            IsVisible="{Binding TodayValue, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
                 <!-- Target value -->
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             IsVisible="{Binding Target, Converter={x:Static ObjectConverters.IsNotNull}}">
                     <TextBlock Classes="accent fs5 medium"
                                VerticalAlignment="Center">
@@ -70,8 +70,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
-                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                    Spacing="{StaticResource Metrics.Spacing.Lg}"
+                    Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                     VerticalAlignment="Top" HorizontalAlignment="Right">
 
             <!-- Delete button -->
@@ -115,7 +115,7 @@ Licensed under the MIT License. See LICENSE file for details.
         
         <!-- Chart interactions -->
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*"
-              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+              ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
             
             <!-- Time Range Selection (segmented control) -->
             <ListBox Grid.Column="0" Classes="segmented"
@@ -130,7 +130,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 

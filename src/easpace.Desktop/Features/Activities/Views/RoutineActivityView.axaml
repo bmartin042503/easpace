@@ -14,11 +14,11 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="viewModels:RoutineActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.RoutineActivityView">
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Sm}">
 
         <Grid Grid.Row="0" Grid.Column="0" ColumnDefinitions="*,Auto" 
-              ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}">
+              ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
             <!-- Title -->
             <TextBlock Grid.Column="0" Text="{Binding Name}"
@@ -36,8 +36,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
-                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                    Spacing="{StaticResource Metrics.Spacing.Lg}"
+                    Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                     VerticalAlignment="Top">
 
             <!-- Delete button -->
@@ -81,14 +81,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Calendar days -->
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" RowDefinitions="Auto,*"
-              RowSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+              RowSpacing="{StaticResource Metrics.Spacing.Xs}"
               MinWidth="500">
 
             <!-- Day names -->
             <Border Grid.Row="0"
-                    BorderThickness="{StaticResource Haven.Scale.Border.Thickness.Bottom}"
+                    BorderThickness="{StaticResource Metrics.Border.Thickness.Bottom}"
                     BorderBrush="{DynamicResource Haven.Sem.Border}">
-                <UniformGrid Rows="1" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Bottom.Xxs}">
+                <UniformGrid Rows="1" Margin="{StaticResource Metrics.Spacing.Thickness.Bottom.Xxs}">
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
@@ -113,13 +113,13 @@ Licensed under the MIT License. See LICENSE file for details.
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate>
                             <controls:RoutineMonthItem MonthData="{Binding}"
-                                                       Margin="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}" />
+                                                       Margin="{StaticResource Metrics.Spacing.Thickness.Wide.Xs}" />
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
 
                     <ItemsRepeater.Layout>
                         <StackLayout Orientation="Vertical"
-                                     Spacing="{StaticResource Haven.Scale.Spacing.Xs}" />
+                                     Spacing="{StaticResource Metrics.Spacing.Xs}" />
                     </ItemsRepeater.Layout>
 
                 </ItemsRepeater>
@@ -129,25 +129,25 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Calendar legend -->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Sm}"
-                    Margin="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Xs}">
+                    Spacing="{StaticResource Metrics.Spacing.Sm}"
+                    Margin="{StaticResource Metrics.Spacing.Thickness.Wide.Xs}">
 
             <!-- Completed legend -->
-            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box completed" />
                 <TextBlock Classes="neutral fs6"
                            Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
             </StackPanel>
 
             <!-- Not completed legend -->
-            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box not-completed" />
                 <TextBlock Classes="neutral fs6"
                            Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
             </StackPanel>
 
             <!-- Today legend -->
-            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}">
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box today" />
                 <TextBlock Classes="neutral fs6"
                            Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />

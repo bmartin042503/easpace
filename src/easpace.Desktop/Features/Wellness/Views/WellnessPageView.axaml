@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessPageView"
              x:DataType="viewModels:WellnessPageViewModel"
-             Background="{StaticResource Haven.Scale.Transparent}"
+             Background="{StaticResource Metrics.Transparent}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <Grid>

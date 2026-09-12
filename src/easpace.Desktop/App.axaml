@@ -19,8 +19,8 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Avalonia Fluent Theme -->
         <FluentTheme />
         
-        <!-- Haven Theme -->
-        <StyleInclude Source="HavenTheme/HavenTheme.axaml" />
+        <!-- App Design -->
+        <StyleInclude Source="Design/AppDesign.axaml" />
         
     </Application.Styles>
     

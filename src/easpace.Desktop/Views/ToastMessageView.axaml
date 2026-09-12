@@ -17,13 +17,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Base -->
         <Style Selector="Border.toast-msg">
-            <Setter Property="BorderThickness" Value="{StaticResource Haven.Scale.Border.Thickness}" />
-            <Setter Property="CornerRadius" Value="{StaticResource Haven.Scale.Radius.Circular}" />
-            <Setter Property="Padding" Value="{StaticResource Haven.Scale.Spacing.Thickness.Wide.Sm}" />
+            <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+            <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Circular}" />
+            <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Sm}" />
             
             <Style Selector="^ PathIcon">
-                <Setter Property="Width" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
-                <Setter Property="Height" Value="{StaticResource Haven.Scale.Icon.Size.Md}" />
+                <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Md}" />
+                <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Md}" />
             </Style>
         </Style>
 
@@ -90,7 +90,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Toast message -->
     <Border Tag="{Binding MessageType}" Classes="toast-msg">
 
-        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
 
             <!-- Icon -->
             <PathIcon Grid.Column="0" />

@@ -1,0 +1,52 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls">
+
+    <ControlTheme x:Key="{x:Type controls:ActivityListItem}" TargetType="controls:ActivityListItem">
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        ToolTip.Tip="{TemplateBinding Name}">
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="{StaticResource Metrics.Spacing.Sm}"
+                          RowSpacing="{StaticResource Metrics.Spacing.Sm}">
+
+                        <TextBlock Name="PART_Title" Grid.Row="0" Grid.Column="0"
+                                   Text="{TemplateBinding Title}"
+                                   VerticalAlignment="Center" Classes="fs5 trm-ellipsis" />
+
+                        <PathIcon Name="PART_Icon" Grid.Row="0" Grid.Column="1"
+                                  Data="{TemplateBinding Icon}"
+                                  HorizontalAlignment="Right" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
+
+                            <TextBlock Name="PART_Value" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                       Text="{TemplateBinding Value}" />
+
+                            <TextBlock Name="PART_Unit" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
+                                       Text="{TemplateBinding Unit}"
+                                       IsVisible="{TemplateBinding ShowUnit}" />
+
+                        </StackPanel>
+                        
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace easpace.Desktop.Services.Core;
 
+internal interface IUpdateService
+{
+    Task<UpdateCheckResult> CheckForUpdatesAsync();
+}
+
 internal record UpdateCheckResult(
     bool IsUpdateAvailable,
     Version? LatestVersion,

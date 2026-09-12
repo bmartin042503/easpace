@@ -52,10 +52,10 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Terms of Use - view -->
             <DataTemplate x:Key="TermsOfUse" x:DataType="constants:OnboardingContent">
 
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                      RowDefinitions="Auto,*,Auto,Auto" RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+                      RowDefinitions="Auto,*,Auto,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+                      Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
                     <!-- Navigate back button -->
                     <Button Grid.Row="0" Grid.Column="0" Classes="primary icon"
@@ -102,10 +102,10 @@ Licensed under the MIT License. See LICENSE file for details.
             <DataTemplate x:Key="PrivacyPolicy" x:DataType="constants:OnboardingContent">
 
                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto"
-                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                      RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+                      RowSpacing="{StaticResource Metrics.Spacing.Xxl}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Lg}">
+                      Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
                     <!-- Navigate back button -->
                     <Button Grid.Row="0" Grid.Column="0" Classes="primary icon"
@@ -147,10 +147,10 @@ Licensed under the MIT License. See LICENSE file for details.
             <DataTemplate x:Key="BetaSoftwareWarning" x:DataType="constants:OnboardingContent">
 
                 <Grid RowDefinitions="*,Auto,Auto,Auto,Auto"
-                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
-                      RowSpacing="{StaticResource Haven.Scale.Spacing.Xxl}"
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+                      RowSpacing="{StaticResource Metrics.Spacing.Xxl}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
-                      Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxl}">
+                      Margin="{StaticResource Metrics.Spacing.Thickness.Xxl}">
 
                     <!-- Navigate back button -->
                     <Button Grid.Row="0" Classes="primary icon"
@@ -193,7 +193,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <DataTemplate x:Key="ThankYou" x:DataType="constants:OnboardingContent">
 
                 <Grid RowDefinitions="Auto,Auto,Auto"
-                      ColumnSpacing="{StaticResource Haven.Scale.Spacing.Xs}"
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
                       RowSpacing="80"
                       VerticalAlignment="Center" HorizontalAlignment="Center">
                     
@@ -253,7 +253,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </TransitioningContentControl>
         
         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="0.5"
-                   Classes="accent fs5" Margin="{StaticResource Haven.Scale.Spacing.Thickness.Xxs}"
+                   Classes="accent fs5" Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                    Text="{Binding VersionText}" />
 
     </Grid>

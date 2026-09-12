@@ -30,20 +30,6 @@ internal partial class MainWindow : Window
                 }
             }
         };
-        
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            ExtendClientAreaToDecorationsHint = true;
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            // removes title bar on macOS, but keep window control buttons in the top left corner
-            ExtendClientAreaToDecorationsHint = true;
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            
-        }
     }
     
     protected override void OnPointerPressed(PointerPressedEventArgs e)

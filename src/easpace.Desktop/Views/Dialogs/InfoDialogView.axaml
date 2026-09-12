@@ -14,18 +14,18 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Views.Dialogs.InfoDialogView">
 
     <Border x:Name="DialogRootBorder" Classes="card"
-            Padding="{StaticResource Haven.Scale.Spacing.Thickness.Sm}"
+            Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
         <Grid RowDefinitions="Auto,*,Auto"
-              RowSpacing="{StaticResource Haven.Scale.Spacing.Lg}">
+              RowSpacing="{StaticResource Metrics.Spacing.Lg}">
 
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*"
-                  ColumnSpacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                  ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
 
                 <!-- Info icon -->
-                <PathIcon Grid.Column="0" Height="{StaticResource Haven.Scale.Icon.Size.Lg}"
-                          Width="{StaticResource Haven.Scale.Icon.Size.Lg}"
+                <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
+                          Width="{StaticResource Metrics.Icon.Size.Lg}"
                           Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
                           Data="{StaticResource Haven.PhosphorIcons.Info.Fill}"
                           VerticalAlignment="Top"

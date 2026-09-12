@@ -7,6 +7,12 @@ using Avalonia.Controls.ApplicationLifetimes;
 
 namespace easpace.Desktop.Services.Presentation;
 
+internal interface IWindowService
+{
+    void EnterFullScreen();
+    void ExitFullScreen();
+}
+
 internal class WindowService : IWindowService
 {
     private WindowState _previousWindowState = WindowState.Normal;

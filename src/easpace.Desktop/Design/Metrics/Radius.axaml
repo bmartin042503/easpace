@@ -1,0 +1,17 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <CornerRadius x:Key="Metrics.Radius.Xxs">2</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Xs">6</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Sm">8</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Md">10</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Lg">12</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Xl">14</CornerRadius>
+    <CornerRadius x:Key="Metrics.Radius.Circular">999</CornerRadius>
+    
+</ResourceDictionary>

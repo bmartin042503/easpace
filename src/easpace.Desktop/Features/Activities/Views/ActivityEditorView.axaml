@@ -12,7 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:converters="clr-namespace:easpace.Desktop.Converters"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:vmDataEntries="clr-namespace:easpace.Desktop.Features.Activities.ViewModels.DataEntries"
-             xmlns:controls="clr-namespace:easpace.Desktop.HavenTheme.Controls"
+             xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivityEditorViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivityEditorView">
@@ -22,11 +22,11 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- TrendActivity edit form -->
         <DataTemplate x:Key="TrendTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
                         HorizontalAlignment="Stretch">
 
                 <!-- Unit input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -35,7 +35,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <TextBox Grid.Column="0" Text="{Binding Unit}"
@@ -47,7 +47,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Aggregation selection -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <!-- Label -->
@@ -57,7 +57,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <ComboBox Grid.Column="0" ItemsSource="{Binding Aggregations}"
@@ -80,7 +80,7 @@ Licensed under the MIT License. See LICENSE file for details.
                           IsChecked="{Binding IsTargetChecked}" HorizontalAlignment="Left" />
 
                 <!-- Target value input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch" IsVisible="{Binding IsTargetChecked}">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -89,7 +89,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <NumericUpDown Grid.Column="0" Value="{Binding Target}"
@@ -108,11 +108,11 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- MilestoneActivity edit form -->
         <DataTemplate x:Key="MilestoneTemplate" x:DataType="vm:ActivityEditorViewModel">
 
-            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
                         HorizontalAlignment="Stretch">
 
                 <!-- Unit input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -121,7 +121,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <TextBox Grid.Column="0" Text="{Binding Unit}"
@@ -133,7 +133,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Target value input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -142,7 +142,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <NumericUpDown Grid.Column="0" Value="{Binding Target}"
@@ -155,7 +155,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Start date input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -164,7 +164,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding StartDate, Mode=TwoWay}"
@@ -175,7 +175,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Target date input -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             HorizontalAlignment="Stretch">
 
                     <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -184,7 +184,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                            <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                         </Grid.ColumnDefinitions>
 
                         <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding TargetDate, Mode=TwoWay}"
@@ -212,8 +212,8 @@ Licensed under the MIT License. See LICENSE file for details.
     </UserControl.Resources>
 
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto"
-          RowSpacing="{StaticResource Haven.Scale.Spacing.Md}"
-          ColumnSpacing="{StaticResource Haven.Scale.Spacing.Md}">
+          RowSpacing="{StaticResource Metrics.Spacing.Md}"
+          ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
         <!-- Title -->
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding TitleText}"
@@ -221,7 +221,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Haven.Scale.Spacing.Xs}">
+                    Spacing="{StaticResource Metrics.Spacing.Xs}">
 
             <!-- Cancel button -->
             <Button Classes="secondary icon" Command="{Binding CancelCommand}"
@@ -239,14 +239,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                       HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
                         HorizontalAlignment="Stretch">
 
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Lg}"
+                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
                             HorizontalAlignment="Stretch">
 
                     <!-- Name input -->
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                                 HorizontalAlignment="Stretch">
 
                         <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -255,7 +255,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                             </Grid.ColumnDefinitions>
 
                             <TextBox Grid.Column="0" Text="{Binding Name}"
@@ -267,7 +267,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- Type selection -->
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Xxs}"
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                                 HorizontalAlignment="Stretch">
 
                         <TextBlock Classes="neutral fs4" TextWrapping="Wrap"
@@ -276,7 +276,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <Grid HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Haven.Scale.Input.MaxWidth}" />
+                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
                             </Grid.ColumnDefinitions>
 
                             <ComboBox Grid.Column="0" ItemsSource="{Binding ActivityTypes}"
@@ -310,7 +310,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Data entries -->
                 <Border Classes="card" Background="{DynamicResource Haven.Sem.Surface.Elevated}"
                         IsVisible="{Binding !IsCreatingNew}">
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Haven.Scale.Spacing.Sm}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                         <!-- Label -->
                         <TextBlock Classes="neutral fs4" Text="{Binding DataEntriesLabel}" />
@@ -361,7 +361,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <ItemsRepeater.Layout>
                                 <StackLayout Orientation="Vertical"
-                                             Spacing="{StaticResource Haven.Scale.Spacing.Xxs}" />
+                                             Spacing="{StaticResource Metrics.Spacing.Xxs}" />
                             </ItemsRepeater.Layout>
 
                         </ItemsRepeater>
