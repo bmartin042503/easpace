@@ -27,24 +27,24 @@ Licensed under the MIT License. See LICENSE file for details.
                 <controls:ActivityListItem Title="{Binding Name}"
                                            Value="{Binding TodayValue}"
                                            Unit="{Binding Unit}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.ChartLine}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartLine.Fill}" />
+                                           Icon="{StaticResource PhosphorIcons.ChartLine}"
+                                           SelectedIcon="{StaticResource PhosphorIcons.ChartLine.Fill}" />
             </DataTemplate>
 
             <!-- Template of Routine Activity -->
             <DataTemplate x:Key="RoutineActivityViewModel" DataType="vm:RoutineActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
                                            Value="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.CheckSquareOffset.Fill}" />
+                                           Icon="{StaticResource PhosphorIcons.CheckSquareOffset}"
+                                           SelectedIcon="{StaticResource PhosphorIcons.CheckSquareOffset.Fill}" />
             </DataTemplate>
 
             <!-- Template of Milestone Activity -->
             <DataTemplate x:Key="MilestoneActivityViewModel" DataType="vm:MilestoneActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
                                            Unit="{Binding Unit}"
-                                           Icon="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
-                                           SelectedIcon="{StaticResource Haven.PhosphorIcons.ChartPieSlice.Fill}">
+                                           Icon="{StaticResource PhosphorIcons.ChartPieSlice}"
+                                           SelectedIcon="{StaticResource PhosphorIcons.ChartPieSlice.Fill}">
                     <controls:ActivityListItem.Value>
                         <MultiBinding StringFormat="{}{0:0.##}/{1:0.##}">
                             <Binding Path="EntriesSum" />
@@ -80,8 +80,8 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Active -->
                         <ListBoxItem>
                             <controls:IconListItem
-                                Icon="{StaticResource Haven.PhosphorIcons.Target}"
-                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                                Icon="{StaticResource PhosphorIcons.Target}"
+                                SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
                                 Width="{StaticResource Metrics.Icon.Size.Sm}"
                                 Height="{StaticResource Metrics.Icon.Size.Sm}"
                                 ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
@@ -90,8 +90,8 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Archive -->
                         <ListBoxItem>
                             <controls:IconListItem
-                                Icon="{StaticResource Haven.PhosphorIcons.Archive}"
-                                SelectedIcon="{StaticResource Haven.PhosphorIcons.Archive.Fill}"
+                                Icon="{StaticResource PhosphorIcons.Archive}"
+                                SelectedIcon="{StaticResource PhosphorIcons.Archive.Fill}"
                                 Width="{StaticResource Metrics.Icon.Size.Sm}"
                                 Height="{StaticResource Metrics.Icon.Size.Sm}"
                                 ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
@@ -111,7 +111,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}"
                             IsEnabled="{Binding !IsEditing}"
                             Margin="0,1">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
                     </Button>
 
                 </Grid>
@@ -130,7 +130,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 HorizontalAlignment="Center">
 
                         <!-- Chart line icon -->
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartLine}"
+                        <PathIcon Data="{StaticResource PhosphorIcons.ChartLine}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
@@ -144,13 +144,13 @@ Licensed under the MIT License. See LICENSE file for details.
                         </PathIcon>
 
                         <!-- Chart pie slice icon -->
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ChartPieSlice}"
+                        <PathIcon Data="{StaticResource PhosphorIcons.ChartPieSlice}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
 
                         <!-- Check square offset icon -->
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.CheckSquareOffset}"
+                        <PathIcon Data="{StaticResource PhosphorIcons.CheckSquareOffset}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"

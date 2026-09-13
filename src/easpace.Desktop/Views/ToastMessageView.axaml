@@ -37,7 +37,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </Style>
             
             <Style Selector="^ PathIcon">
-                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.CheckCircle.Fill}" />
+                <Setter Property="Data" Value="{StaticResource PhosphorIcons.CheckCircle.Fill}" />
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
             </Style>
             
@@ -52,7 +52,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
             </Style>
             <Style Selector="^ PathIcon">
-                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Info.Fill}" />
+                <Setter Property="Data" Value="{StaticResource PhosphorIcons.Info.Fill}" />
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
             </Style>
         </Style>
@@ -66,7 +66,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
             </Style>
             <Style Selector="^ PathIcon">
-                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Warning.Fill}" />
+                <Setter Property="Data" Value="{StaticResource PhosphorIcons.Warning.Fill}" />
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
             </Style>
         </Style>
@@ -80,7 +80,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
             </Style>
             <Style Selector="^ PathIcon">
-                <Setter Property="Data" Value="{StaticResource Haven.PhosphorIcons.Warning.Fill}" />
+                <Setter Property="Data" Value="{StaticResource PhosphorIcons.Warning.Fill}" />
                 <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
             </Style>
         </Style>

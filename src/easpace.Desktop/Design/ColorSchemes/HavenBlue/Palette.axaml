@@ -36,6 +36,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Color x:Key="Success950">#304d2d</Color> <!-- oklch(0.387 0.062 142.094) -->
     <Color x:Key="Success975">#233921</Color> <!-- oklch(0.32 0.051 142.094) -->
 
+    <!-- TODO: change warning palette as it's more vibrant than the others (?) -->
     <!-- Warning - (lightness: 72%; chroma: 0,116; hue: 109,61) -->
     <Color x:Key="Warning25">#f6f773</Color> <!-- oklch(0.95 0.154 109.614) -->
     <Color x:Key="Warning50">#e9ea6e</Color> <!-- oklch(0.912 0.147 109.614) -->

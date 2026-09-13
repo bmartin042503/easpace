@@ -40,7 +40,7 @@ Licensed under the MIT License. See LICENSE file for details.
             Selector="^ /template/ ContentPresenter,
                       ^:pointerover /template/ ContentPresenter,
                       ^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         </Style>

@@ -51,4 +51,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xl">0,32</Thickness>
     <Thickness x:Key="Metrics.Spacing.Thickness.Vertical.Xxl">0,48</Thickness>
     
+    <Thickness x:Key="Metrics.Sidebar.MacOs.Padding">10,48,10,10</Thickness>
+    
 </ResourceDictionary>

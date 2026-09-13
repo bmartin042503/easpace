@@ -9,14 +9,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     xmlns:core="clr-namespace:easpace.Desktop.Services.Core">
 
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Surface}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <controls:ChartNavigator IntervalText="Interval text" Width="250" />
         </Border>
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type controls:ChartNavigator}" TargetType="controls:ChartNavigator">
 
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
 
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Xxs}" />

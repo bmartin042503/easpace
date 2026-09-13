@@ -23,14 +23,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <dataTemplates:TemplateSelector x:Key="WellnessSessionEntrySelector">
 
             <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Wind}"
+                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Wind}"
                           Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
                           Width="{StaticResource Metrics.Icon.Size.Md}"
                           Height="{StaticResource Metrics.Icon.Size.Md}" />
             </DataTemplate>
 
             <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
+                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Sparkle}"
                           Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
                           Width="{StaticResource Metrics.Icon.Size.Md}"
                           Height="{StaticResource Metrics.Icon.Size.Md}" />
@@ -62,7 +62,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 HorizontalAlignment="Center">
 
                         <!-- Wind icon -->
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Wind}"
+                        <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
@@ -74,7 +74,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         </PathIcon>
 
                         <!-- Sparkle icon -->
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Sparkle}"
+                        <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
                                   Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
@@ -149,7 +149,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                 Command="{Binding $parent[UserControl].((vm:WellnessStartViewModel)DataContext).DeleteEntryCommand}"
                                                 CommandParameter="{Binding .}" VerticalAlignment="Top"
                                                 ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-                                            <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                                            <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
                                         </Button>
 
                                     </Grid>

@@ -62,7 +62,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             HorizontalAlignment="Left" VerticalAlignment="Center"
                             Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
                     </Button>
 
                     <!-- Title -->
@@ -112,7 +112,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             HorizontalAlignment="Left" VerticalAlignment="Center"
                             Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
                     </Button>
 
                     <!-- Title -->
@@ -157,7 +157,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             HorizontalAlignment="Left" VerticalAlignment="Center"
                             Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.ArrowLeft.Bold}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
                     </Button>
 
                     <!-- Title -->

@@ -20,7 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="DummyBackground" Value="Transparent"/>
         <Setter Property="DummyBorderBrush" Value="{DynamicResource Haven.Sem.Border}"/>
 
-        <Setter Property="NoneBackground" Value="{DynamicResource Haven.Sem.Surface.Elevated}"/>
+        <Setter Property="NoneBackground" Value="{DynamicResource Sem.Surface.Elevated}"/>
         <Setter Property="NoneBorderBrush" Value="{DynamicResource Haven.Sem.Border}"/>
         <Setter Property="NoneTextForeground" Value="{DynamicResource Haven.Sem.Foreground}"/>
 

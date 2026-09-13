@@ -33,6 +33,9 @@ internal static class ServiceCollectionExtensions
         public void AddCommonServices()
         {
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
+            
+            collection.AddSingleton<ColorSchemeService>();
+            collection.AddSingleton<IColorSchemeService>(sp => sp.GetRequiredService<ColorSchemeService>());
 
             collection.AddSingleton<ApplicationService>();
             collection.AddSingleton<IApplicationService>(sp => sp.GetRequiredService<ApplicationService>());

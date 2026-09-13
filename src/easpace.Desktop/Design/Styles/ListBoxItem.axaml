@@ -85,7 +85,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Activity items styling -->
     <Style Selector="ListBox.activity.list ListBoxItem">
 
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Xs}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
@@ -99,7 +99,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
         </Style>
 

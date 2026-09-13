@@ -38,8 +38,8 @@ internal sealed class Program
             // set language based on preferences, if it's empty save the current one
             // invariant is the default (English)
             
-            var preferences = scope.ServiceProvider.GetRequiredService<IPreferencesService>();
-            var languageSetting = preferences.ReadPreference<string>(PreferenceKey.Language);
+            var preferencesService = scope.ServiceProvider.GetRequiredService<IPreferencesService>();
+            var languageSetting = preferencesService.ReadPreference<string>(PreferenceKey.Language);
 
             if (string.IsNullOrWhiteSpace(languageSetting))
             {
@@ -48,11 +48,11 @@ internal sealed class Program
                 switch (currentCulture.TwoLetterISOLanguageName)
                 {
                     case "hu":
-                        preferences.SavePreference(PreferenceKey.Language, "hu");
+                        preferencesService.SavePreference(PreferenceKey.Language, "hu");
                         break;
                     
                     default:
-                        preferences.SavePreference(PreferenceKey.Language, "en");
+                        preferencesService.SavePreference(PreferenceKey.Language, "en");
                         break;
                 }
             }

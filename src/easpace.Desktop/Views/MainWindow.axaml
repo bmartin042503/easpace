@@ -28,32 +28,32 @@ Licensed under the MIT License. See LICENSE file for details.
             <ListBox Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
 
                 <ListBoxItem Grid.Row="0">
-                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Notebook}"
-                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.Notebook.Fill}"
+                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Notebook}"
+                                                          SelectedIcon="{StaticResource PhosphorIcons.Notebook.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Journal'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="1">
-                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Target}"
-                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.Target.Fill}"
+                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Target}"
+                                                          SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Activities'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="2">
-                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Brain}"
-                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.Brain.Fill}"
+                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Brain}"
+                                                          SelectedIcon="{StaticResource PhosphorIcons.Brain.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Mood'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="3">
-                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.FlowerLotus}"
-                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.FlowerLotus.Fill}"
+                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.FlowerLotus}"
+                                                          SelectedIcon="{StaticResource PhosphorIcons.FlowerLotus.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Wellness'}" />
                 </ListBoxItem>
 
                 <ListBoxItem Grid.Row="5">
-                    <controls:NavigationListItem Icon="{StaticResource Haven.PhosphorIcons.Gear}"
-                                                          SelectedIcon="{StaticResource Haven.PhosphorIcons.Gear.Fill}"
+                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Gear}"
+                                                          SelectedIcon="{StaticResource PhosphorIcons.Gear.Fill}"
                                                           Text="{core:LocalizationService Key='Navigation.Item.Settings'}" />
                 </ListBoxItem>
 

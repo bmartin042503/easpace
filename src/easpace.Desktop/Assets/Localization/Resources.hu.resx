@@ -661,19 +661,37 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Language.Description" xml:space="preserve">
         <value>Válaszd ki az alkalmazás nyelvét.</value>
     </data>
+    <data name="Settings.Glassmorphism.Label" xml:space="preserve">
+        <value>Üveghatás</value>
+    </data>
+    <data name="Settings.Glassmorphism.Description" xml:space="preserve">
+        <value>Engedélyezi az áttetsző, üvegszerű megjelenést a felületnek.</value>
+    </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Színséma</value>
     </data>
     <data name="Settings.ColorScheme.Description" xml:space="preserve">
         <value>Válassz a környezetedhez illő színsémát.</value>
     </data>
-    <data name="Settings.ColorSchemeSetting.System" xml:space="preserve">
+    <data name="Settings.ColorScheme.HavenBlue" xml:space="preserve">
+        <value>Haven Kék</value>
+    </data>
+    <data name="Settings.ColorScheme.AvallamaPurple" xml:space="preserve">
+        <value>Avallama Lila</value>
+    </data>
+    <data name="Settings.ColorSchemeAppearance.Label" xml:space="preserve">
+        <value>Megjelenés</value>
+    </data>
+    <data name="Settings.ColorSchemeAppearance.Description" xml:space="preserve">
+        <value>Válaszd ki a színsémához használt megjelenést.</value>
+    </data>
+    <data name="Settings.ColorSchemeAppearanceSetting.System" xml:space="preserve">
         <value>Rendszer</value>
     </data>
-    <data name="Settings.ColorSchemeSetting.Light" xml:space="preserve">
+    <data name="Settings.ColorSchemeAppearanceSetting.Light" xml:space="preserve">
         <value>Világos</value>
     </data>
-    <data name="Settings.ColorSchemeSetting.Dark" xml:space="preserve">
+    <data name="Settings.ColorSchemeAppearanceSetting.Dark" xml:space="preserve">
         <value>Sötét</value>
     </data>
     <data name="Settings.AnimatedBackground.Label" xml:space="preserve">

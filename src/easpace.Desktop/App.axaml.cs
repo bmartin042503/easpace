@@ -8,6 +8,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Services.Data;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +17,9 @@ namespace easpace.Desktop;
 
 internal partial class App : Application
 {
-    public static Version Version = new(0,1,0);
+    public static Version Version = new(0, 1, 0);
     public static string VersionName = "VersionName";
-    
+
     private static IServiceProvider? _services;
 
     public static void ConfigureServices(IServiceProvider services)
@@ -37,23 +38,6 @@ internal partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // set color scheme
-        var preferencesService = _services?.GetRequiredService<IPreferencesService>();
-        var colorScheme = preferencesService?.ReadPreference<string>(PreferenceKey.ColorScheme);
-        
-        RequestedThemeVariant = colorScheme switch
-        {
-            "system" => ThemeVariant.Default,
-            "light" => ThemeVariant.Light,
-            "dark" => ThemeVariant.Dark,
-            _ => ThemeVariant.Default
-        };
-
-        if (string.IsNullOrEmpty(colorScheme))
-        {
-            preferencesService?.SavePreference(PreferenceKey.ColorScheme, "system");
-        }
-        
         if (Avalonia.Controls.Design.IsDesignMode)
         {
             base.OnFrameworkInitializationCompleted();
@@ -64,6 +48,16 @@ internal partial class App : Application
         {
             throw new InvalidOperationException("Services are not initialized.");
         }
+
+        var preferencesService = _services.GetRequiredService<IPreferencesService>();
+        var colorSchemeService = _services.GetRequiredService<IColorSchemeService>();
+
+        colorSchemeService.Initialize();
+
+        var colorScheme = preferencesService.ReadPreference<ColorScheme>(PreferenceKey.ColorScheme);
+        var colorSchemeAppearance = preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
+
+        colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

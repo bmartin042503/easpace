@@ -20,7 +20,6 @@ internal interface IApplicationService
 {
     void Restart();
     void Shutdown();
-    void SetThemeVariant(ThemeVariant themeVariant);
     Task LaunchUriAsync(Uri uri);
     string LoadLegalFile(LegalFileType legalFileType);
 }
@@ -70,11 +69,6 @@ internal class ApplicationService : IApplicationService
         {
             Environment.Exit(0);
         }
-    }
-
-    public void SetThemeVariant(ThemeVariant themeVariant)
-    {
-        Application.Current?.RequestedThemeVariant = themeVariant;
     }
 
     public async Task LaunchUriAsync(Uri uri)

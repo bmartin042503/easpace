@@ -68,7 +68,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="ListBox.segmented">
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Xxs}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Sm}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />

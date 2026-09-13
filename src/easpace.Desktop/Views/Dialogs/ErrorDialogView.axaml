@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
                           Width="{StaticResource Metrics.Icon.Size.Lg}"
                           Foreground="{DynamicResource Haven.Sem.Danger.Strong}"
-                          Data="{StaticResource Haven.PhosphorIcons.Warning.Fill}"
+                          Data="{StaticResource PhosphorIcons.Warning.Fill}"
                           VerticalAlignment="Top"
                           Margin="0,4,0,0" />
 

@@ -29,7 +29,7 @@ Licensed under the MIT License. See LICENSE file for details.
         
         <Style Selector="^:unchecked /template/ Border#OuterBorder">
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Foreground}" />
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         </Style>
 
         <Style Selector="^:unchecked /template/ Ellipse#SwitchKnobOff">

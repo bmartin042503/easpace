@@ -226,13 +226,13 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Cancel button -->
             <Button Classes="secondary icon" Command="{Binding CancelCommand}"
                     ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
-                <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
+                <PathIcon Data="{StaticResource PhosphorIcons.X}" />
             </Button>
 
             <!-- Save button -->
             <Button Classes="primary icon" Command="{Binding SaveCommand}"
                     ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
-                <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
+                <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
             </Button>
 
         </StackPanel>
@@ -308,7 +308,7 @@ Licensed under the MIT License. See LICENSE file for details.
                            IsVisible="{Binding !IsCreatingNew}" />
 
                 <!-- Data entries -->
-                <Border Classes="card" Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                <Border Classes="card" Background="{DynamicResource Sem.Surface.Elevated}"
                         IsVisible="{Binding !IsCreatingNew}">
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
 

@@ -22,7 +22,7 @@
         <Setter Property="ClickMode" Value="Release" />
         <Setter Property="MinHeight" Value="{StaticResource Metrics.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
@@ -58,7 +58,7 @@
         </Style>
 
         <Style Selector="^:disabled /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         </Style>
 
@@ -147,7 +147,7 @@
         <Setter Property="ClickMode" Value="Release" />
         <Setter Property="Height" Value="{StaticResource Haven.TimePicker.ActionHeight}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
@@ -192,7 +192,7 @@
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="Height" Value="{StaticResource Metrics.Input.Height}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
@@ -341,7 +341,7 @@
         <Setter Property="MaxWidth" Value="{StaticResource Haven.TimePicker.PresenterMaxWidth}" />
         <Setter Property="MaxHeight" Value="{StaticResource Haven.TimePicker.PresenterMaxHeight}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Md}" />

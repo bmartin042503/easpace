@@ -25,23 +25,17 @@ Licensed under the MIT License. See LICENSE file for details.
         </ThemeVariantScope>
     </Design.PreviewWith>
 
-    <Styles.Resources>
-        <Thickness x:Key="Haven.Sidebar.MacOs.Padding">10,48,10,10</Thickness>
-    </Styles.Resources>
-
     <Style Selector="Border.sidebar">
         <Setter Property="MinWidth" Value="200" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Muted}" />
-        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Right}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Sidebar}" />
 
         <Setter Property="Padding"
-                Value="{OnPlatform Default={StaticResource Metrics.Spacing.Thickness.Xs}, macOS={StaticResource Haven.Sidebar.MacOs.Padding}}" />
+                Value="{OnPlatform Default={StaticResource Metrics.Spacing.Thickness.Xs}, macOS={StaticResource Metrics.Sidebar.MacOs.Padding}}" />
 
     </Style>
 
     <Style Selector="Border.card">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Md}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
@@ -53,7 +47,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
     
     <Style Selector="Border.elevated.card">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
     </Style>
 
     <Style Selector="Border.gradient.card">
@@ -83,7 +77,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style Selector="^.today">
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         </Style>
 
     </Style>

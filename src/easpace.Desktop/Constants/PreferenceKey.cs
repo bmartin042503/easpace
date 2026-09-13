@@ -5,12 +5,13 @@ namespace easpace.Desktop.Constants;
 
 internal static class PreferenceKey
 {
+    public const string PreferencesVersion = "preferences-version";
     public const string Boarded = "boarded";
     public const string TermsOfUseAccepted = "terms-of-use-accepted";
     public const string TermsOfUseAcceptedDate = "terms-of-use-accepted-date";
     public const string Language = "language";
     public const string ColorScheme = "color-scheme";
-    public const string Appearance = "appearance";
+    public const string ColorSchemeAppearance = "color-scheme-appearance";
     public const string Glassmorphism = "glassmorphism";
     public const string WellnessFullScreen = "wellness-full-screen";
     public const string WellnessAnimatedBackground = "wellness-animated-background";

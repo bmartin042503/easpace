@@ -18,7 +18,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="GridLines" Value="6" />
         <Setter Property="TickWidth" Value="12" />
         <Setter Property="GridLineBrush" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
-        <Setter Property="TooltipBackground" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="TooltipBackground" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="TooltipDateForeground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="TooltipValueForeground" Value="{DynamicResource Haven.Sem.Foreground}" />
         <Setter Property="TooltipBorderBrush" Value="{DynamicResource Haven.Sem.Border}" />

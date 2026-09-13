@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Haven.Sem.Surface}" Height="600" Width="600">
+            <Border Padding="20" Background="{DynamicResource Sem.Surface}" Height="600" Width="600">
                 <controls:MilestoneChart Unit="pages" Value="48" Maximum="1000"/>
             </Border>
         </ThemeVariantScope>

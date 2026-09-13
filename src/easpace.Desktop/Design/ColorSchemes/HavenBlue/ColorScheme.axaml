@@ -1,10 +1,31 @@
-<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
-        </Border>
-    </Design.PreviewWith>
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
 
-    <!-- Add Styles Here -->
-</Styles>
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Palette -->
+    <ResourceDictionary.MergedDictionaries>
+        <MergeResourceInclude Source="Palette.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Light & Dark semantic tokens -->
+    <ResourceDictionary.ThemeDictionaries>
+
+        <ResourceDictionary x:Key="Light">
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Light.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Dark">
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Dark.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

@@ -17,7 +17,7 @@ internal enum ColorScheme
     AvallamaPurple
 }
 
-internal enum AppAppearance
+internal enum ColorSchemeAppearance
 {
     Default,
     Light,
@@ -27,7 +27,7 @@ internal enum AppAppearance
 internal interface IColorSchemeService
 {
     void Initialize();
-    void SetColorScheme(ColorScheme colorScheme, AppAppearance appAppearance);
+    void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance);
 }
 
 internal class ColorSchemeService : IColorSchemeService
@@ -42,7 +42,7 @@ internal class ColorSchemeService : IColorSchemeService
             .FirstOrDefault(x => x.Source?.AbsoluteUri.Contains("/ColorSchemes/") == true);
     }
 
-    public void SetColorScheme(ColorScheme colorScheme, AppAppearance appAppearance)
+    public void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance)
     {
         var app = Application.Current ?? throw new InvalidOperationException("Application is not initialized.");
 
@@ -63,10 +63,10 @@ internal class ColorSchemeService : IColorSchemeService
         app.Resources.MergedDictionaries.Insert(0, newScheme);
         _activeColorScheme = newScheme;
 
-        app.RequestedThemeVariant = appAppearance switch
+        app.RequestedThemeVariant = colorSchemeAppearance switch
         {
-            AppAppearance.Light => ThemeVariant.Light,
-            AppAppearance.Dark => ThemeVariant.Dark,
+            ColorSchemeAppearance.Light => ThemeVariant.Light,
+            ColorSchemeAppearance.Dark => ThemeVariant.Dark,
             _ => ThemeVariant.Default
         };
     }

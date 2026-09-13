@@ -52,7 +52,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <Ellipse x:Name="OuterEllipse"
                                  Width="20"
                                  Height="20"
-                                 Fill="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                 Fill="{DynamicResource Sem.Surface.Elevated}"
                                  Stroke="{DynamicResource Haven.Sem.Foreground.Subtle}"
                                  StrokeThickness="{StaticResource Metrics.Border.Thickness.Double.Medium}"
                                  UseLayoutRounding="False" />

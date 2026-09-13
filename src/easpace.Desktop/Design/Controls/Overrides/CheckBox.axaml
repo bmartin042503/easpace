@@ -56,7 +56,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <Border x:Name="NormalRectangle"
                                 Width="20"
                                 Height="20"
-                                Background="{DynamicResource Haven.Sem.Surface.Elevated}"
+                                Background="{DynamicResource Sem.Surface.Elevated}"
                                 BorderBrush="{DynamicResource Haven.Sem.Border}"
                                 BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}"

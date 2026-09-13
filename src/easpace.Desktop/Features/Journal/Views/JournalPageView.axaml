@@ -44,7 +44,7 @@ Licensed under the MIT License. See LICENSE file for details.
                              PlaceholderText="{core:LocalizationService Key='Journal.Search.Placeholder'}"
                              MinWidth="140">
                         <TextBox.InnerRightContent>
-                            <PathIcon Data="{StaticResource Haven.PhosphorIcons.MagnifyingGlass}" />
+                            <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
                         </TextBox.InnerRightContent>
                     </TextBox>
 
@@ -54,7 +54,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             Command="{Binding AddEntryCommand}"
                             IsEnabled="{Binding !IsEditing}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Plus.Bold}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
                     </Button>
 
                 </Grid>
@@ -65,7 +65,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             HorizontalAlignment="Center"
                             Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding !HasEntries}">
-                    <PathIcon Data="{StaticResource Haven.PhosphorIcons.File}"
+                    <PathIcon Data="{StaticResource PhosphorIcons.File}"
                               Width="{StaticResource Metrics.Icon.Size.Xl}"
                               Height="{StaticResource Metrics.Icon.Size.Xl}"
                               Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
@@ -134,14 +134,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Button Classes="tertiary danger icon"
                             Command="{Binding DeleteEntryCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-                        <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Trash.Fill}" />
+                        <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
                     </Button>
 
                     <!-- Edit button -->
                     <Button Classes="tertiary icon"
                             Command="{Binding EditEntryCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
-                        <PathIcon Data="{DynamicResource Haven.PhosphorIcons.Pencil.Fill}" />
+                        <PathIcon Data="{DynamicResource PhosphorIcons.Pencil.Fill}" />
                     </Button>
 
                 </StackPanel>
@@ -184,14 +184,14 @@ Licensed under the MIT License. See LICENSE file for details.
                     <Button Classes="secondary icon"
                             Command="{Binding Editor.CancelCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.X}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.X}" />
                     </Button>
 
                     <!-- Save button -->
                     <Button Classes="primary icon"
                             Command="{Binding Editor.SaveCommand}"
                             ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
-                        <PathIcon Data="{StaticResource Haven.PhosphorIcons.Check}" />
+                        <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
                     </Button>
 
                 </StackPanel>

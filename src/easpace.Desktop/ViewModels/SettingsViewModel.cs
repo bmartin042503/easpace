@@ -19,6 +19,7 @@ namespace easpace.Desktop.ViewModels;
 internal partial class SettingsViewModel : PageViewModel
 {
     private readonly IPreferencesService _preferencesService;
+    private readonly IColorSchemeService _colorSchemeService;
     private readonly IApplicationService _applicationService;
     private readonly IDataWipeService _dataWipeService;
     private readonly IDialogService _dialogService;
@@ -29,6 +30,8 @@ internal partial class SettingsViewModel : PageViewModel
     // setting fields
     [ObservableProperty] private int _selectedLanguageIndex;
     [ObservableProperty] private int _selectedColorSchemeIndex;
+    [ObservableProperty] private int _selectedColorSchemeAppearanceIndex;
+    [ObservableProperty] private bool _isGlassmorphismEnabled;
     [ObservableProperty] private bool _isWellnessFullScreenEnabled;
     [ObservableProperty] private bool _isWellnessAnimatedBackgroundEnabled;
     [ObservableProperty] private bool _isCheckForUpdatesEnabled;
@@ -37,15 +40,16 @@ internal partial class SettingsViewModel : PageViewModel
 
     public SettingsViewModel(
         IPreferencesService preferencesService,
+        IColorSchemeService colorSchemeService,
         IApplicationService applicationService,
         IDataWipeService dataWipeService,
         IDialogService dialogService,
-        IToastMessageService toastMessageService,
-        ILogger<LegalInfoDialogViewModel> legalDialogLogger)
+        IToastMessageService toastMessageService)
     {
         Page = ApplicationPage.Settings;
 
         _preferencesService = preferencesService;
+        _colorSchemeService = colorSchemeService;
         _applicationService = applicationService;
         _dataWipeService = dataWipeService;
         _dialogService = dialogService;
@@ -103,7 +107,7 @@ internal partial class SettingsViewModel : PageViewModel
     private void LoadSettings()
     {
         _isLoading = true;
-        
+
         var language = _preferencesService.ReadPreference<string>(PreferenceKey.Language);
         SelectedLanguageIndex = language switch
         {
@@ -112,29 +116,39 @@ internal partial class SettingsViewModel : PageViewModel
             _ => 0
         };
 
-        var colorScheme = _preferencesService.ReadPreference<string>(PreferenceKey.ColorScheme);
+        var colorScheme = _preferencesService.ReadPreference<ColorScheme>(PreferenceKey.ColorScheme);
         SelectedColorSchemeIndex = colorScheme switch
         {
-            "system" => 0,
-            "light" => 1,
-            "dark" => 2,
+            ColorScheme.HavenBlue => 0,
+            ColorScheme.AvallamaPurple => 1,
             _ => 0
         };
 
-        IsWellnessFullScreenEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
+        var colorSchemeAppearance = _preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
+        SelectedColorSchemeAppearanceIndex = colorSchemeAppearance switch
+        {
+            ColorSchemeAppearance.Default => 0,
+            ColorSchemeAppearance.Light => 1,
+            ColorSchemeAppearance.Dark => 2,
+            _ => 0
+        };
         
+        IsGlassmorphismEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.Glassmorphism);
+
+        IsWellnessFullScreenEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
+
         IsWellnessAnimatedBackgroundEnabled =
             _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessAnimatedBackground);
-        
+
         IsCheckForUpdatesEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.CheckForUpdates);
-        
+
         _isLoading = false;
     }
 
     private async Task SaveSettings()
     {
         var previousLanguage = _preferencesService.ReadPreference<string>(PreferenceKey.Language);
-        
+
         var language = SelectedLanguageIndex switch
         {
             0 => "en",
@@ -144,18 +158,28 @@ internal partial class SettingsViewModel : PageViewModel
 
         var colorScheme = SelectedColorSchemeIndex switch
         {
-            0 => "system",
-            1 => "light",
-            2 => "dark",
-            _ => string.Empty
+            0 => ColorScheme.HavenBlue,
+            1 => ColorScheme.AvallamaPurple,
+            _ => ColorScheme.HavenBlue
         };
         
+        var colorSchemeAppearance = SelectedColorSchemeAppearanceIndex switch
+        {
+            0 => ColorSchemeAppearance.Default,
+            1 => ColorSchemeAppearance.Light,
+            2 => ColorSchemeAppearance.Dark,
+            _ => ColorSchemeAppearance.Default
+        };
+
         _preferencesService.SavePreference(PreferenceKey.Language, language);
         _preferencesService.SavePreference(PreferenceKey.ColorScheme, colorScheme);
+        _preferencesService.SavePreference(PreferenceKey.ColorSchemeAppearance, colorSchemeAppearance);
+        _preferencesService.SavePreference(PreferenceKey.Glassmorphism, IsGlassmorphismEnabled);
         _preferencesService.SavePreference(PreferenceKey.WellnessFullScreen, IsWellnessFullScreenEnabled);
-        _preferencesService.SavePreference(PreferenceKey.WellnessAnimatedBackground, IsWellnessAnimatedBackgroundEnabled);
+        _preferencesService.SavePreference(PreferenceKey.WellnessAnimatedBackground,
+            IsWellnessAnimatedBackgroundEnabled);
         _preferencesService.SavePreference(PreferenceKey.CheckForUpdates, IsCheckForUpdatesEnabled);
-        
+
         // restart required dialog when the language setting has changed
         if (previousLanguage != language)
         {
@@ -166,7 +190,7 @@ internal partial class SettingsViewModel : PageViewModel
                 CancelText = LocalizationService.GetString("Common.Button.Later"),
                 ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow"),
             };
-            
+
             await _dialogService.ShowDialogAsync(restartConfirmDialog);
 
             if (restartConfirmDialog.Confirmed)
@@ -175,17 +199,8 @@ internal partial class SettingsViewModel : PageViewModel
             }
         }
         
-        // set theme variant
-        var themeVariant = colorScheme switch
-        {
-            "system" => ThemeVariant.Default,
-            "light" => ThemeVariant.Light,
-            "dark" => ThemeVariant.Dark,
-            _ => ThemeVariant.Default
-        };
-        
-        _applicationService.SetThemeVariant(themeVariant);
-        
+        _colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+
         _toastMessageService.ShowToastMessage(
             LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),
             ToastMessageType.Success);
@@ -194,12 +209,12 @@ internal partial class SettingsViewModel : PageViewModel
     private async void OnSettingChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (_isLoading) return;
-        
-        if (e.PropertyName is 
-            nameof(SelectedLanguageIndex) or 
-            nameof(SelectedColorSchemeIndex) or 
-            nameof(IsWellnessFullScreenEnabled) or 
-            nameof(IsWellnessAnimatedBackgroundEnabled) or 
+
+        if (e.PropertyName is
+            nameof(SelectedLanguageIndex) or
+            nameof(SelectedColorSchemeIndex) or
+            nameof(IsWellnessFullScreenEnabled) or
+            nameof(IsWellnessAnimatedBackgroundEnabled) or
             nameof(IsCheckForUpdatesEnabled))
         {
             await SaveSettings();

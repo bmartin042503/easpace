@@ -21,7 +21,7 @@ All other rights reserved.
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Elevated}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
@@ -68,7 +68,7 @@ All other rights reserved.
         <Style Selector="^:inactive">
 
             <Style Selector="^ /template/ Border#Root">
-                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+                <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
@@ -131,7 +131,7 @@ All other rights reserved.
         <Style Selector="^:disabled">
 
             <Style Selector="^ /template/ Border#Root">
-                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface}" />
+                <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
