@@ -95,7 +95,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"
-                                        Spacing="{StaticResource Metrics.Spacing.Sm}" />
+                                        Spacing="{StaticResource Metrics.Spacing.Md}" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
 
@@ -114,7 +114,7 @@ Licensed under the MIT License. See LICENSE file for details.
               Margin="12,0,0,0"
               RowDefinitions="Auto,*,Auto"
               ColumnDefinitions="*,Auto"
-              RowSpacing="{StaticResource Metrics.Spacing.Md}"
+              RowSpacing="{StaticResource Metrics.Spacing.Sm}"
               ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
               IsVisible="{Binding !IsEditing}">
 
@@ -162,7 +162,7 @@ Licensed under the MIT License. See LICENSE file for details.
               Margin="12,0,0,0"
               RowDefinitions="Auto,*,Auto"
               ColumnDefinitions="*,Auto"
-              RowSpacing="{StaticResource Metrics.Spacing.Md}"
+              RowSpacing="{StaticResource Metrics.Spacing.Sm}"
               ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
               IsVisible="{Binding IsEditing}">
 

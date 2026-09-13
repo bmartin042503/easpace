@@ -8,38 +8,43 @@ Licensed under the MIT License. See LICENSE file for details.
     <Design.PreviewWith>
         <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
         <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Neutral100}">
+            <Border Padding="20" Background="{DynamicResource Sem.Surface}">
 
                 <StackPanel Orientation="Vertical" Spacing="20">
+
+                    <Button Classes="dots-flyout">
+                        <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}" />
+                    </Button>
 
                     <Button Classes="primary icon">
                         <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
                     </Button>
-                    
+
                     <Button Classes="secondary icon">
                         <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
                     </Button>
-                    
+
                     <Button Classes="tertiary icon">
                         <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
                     </Button>
-                    
+
                     <Button Classes="tertiary danger icon">
                         <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
                     </Button>
-                    
+
                     <Button Classes="tertiary icon" IsEnabled="False">
                         <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
                     </Button>
-                    
+
                     <Button Classes="primary icon" IsEnabled="False">
                         <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
                     </Button>
-                    
+
                     <Button Classes="secondary icon" IsEnabled="False">
                         <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
                     </Button>
-                    
+
                     <Button Classes="secondary regular" Content="Secondary Regular" />
                     <Button Classes="primary regular" Content="Primary Regular" />
                     <Button Classes="danger regular" Content="Danger Regular" />
@@ -53,22 +58,20 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontFamily" Value="{StaticResource FontFamily.Poppins}" />
         <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Sm}" />
+        <Setter Property="BorderThickness" Value="0" />
     </Style>
 
     <Style Selector="Button.primary">
         <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
-        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
-            <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
     </Style>
-    
+
     <Style Selector="Button.secondary">
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
@@ -76,13 +79,13 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand.Hover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong.Hover}" />
         </Style>
     </Style>
-    
+
     <Style Selector="Button.tertiary">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
@@ -93,27 +96,24 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
-        
+
         <Style Selector="^:disabled /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
     </Style>
-    
+
     <Style Selector="Button.regular.danger">
         <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Danger}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Danger.Strong} " />
-        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.On.Danger}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Danger.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Danger.Strong} " />
-            <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.On.Danger}" />
         </Style>
     </Style>
-    
+
     <Style Selector="Button.tertiary.danger">
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource Sem.Danger}" />
@@ -122,23 +122,23 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="Button.icon">
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Circular}" />
-        <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Xxs}" />
-        
+        <Setter Property="Padding" Value="8" />
+
         <Style Selector="^ PathIcon">
             <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
             <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
         </Style>
     </Style>
-    
+
     <Style Selector="Button.tertiary.icon">
         <Setter Property="Padding" Value="0" />
     </Style>
-    
+
     <Style Selector="Button.regular">
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Xxs}" />
     </Style>
-    
+
     <Style Selector="Button.clear">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
@@ -148,6 +148,21 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
             <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Style>
+
+    <Style Selector="Button.dots-flyout">
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+        <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
+        <Setter Property="Padding" Value="12,4" />
+
+        <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated.Hover}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
+            <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         </Style>
     </Style>
 

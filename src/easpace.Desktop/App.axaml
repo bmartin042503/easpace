@@ -9,15 +9,6 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              RequestedThemeVariant="Default"
              Name="easpace">
-    
-    <!-- Default color scheme (might be replaced but if we add a default we'll avoid IDE inspection errors) -->
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="Design/ColorSchemes/HavenBlue/ColorScheme.axaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
 
     <Application.DataTemplates>
         <dataTemplates:ViewLocator />

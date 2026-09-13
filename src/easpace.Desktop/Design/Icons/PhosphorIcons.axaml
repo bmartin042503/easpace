@@ -100,6 +100,10 @@ SOFTWARE.
     </StreamGeometry>
 
     <StreamGeometry x:Key="PhosphorIcons.DotsThree">
+        M156,128a28,28,0,1,1-28-28A28,28,0,0,1,156,128ZM48,100a28,28,0,1,0,28,28A28,28,0,0,0,48,100Zm160,0a28,28,0,1,0,28,28A28,28,0,0,0,208,100Z
+    </StreamGeometry>
+    
+    <StreamGeometry x:Key="PhosphorIcons.DotsThreeOutline.Fill">
         M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z
     </StreamGeometry>
 

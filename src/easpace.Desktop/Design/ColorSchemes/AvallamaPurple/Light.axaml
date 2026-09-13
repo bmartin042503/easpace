@@ -6,4 +6,74 @@ Licensed under the MIT License. See LICENSE file for details.
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <SolidColorBrush x:Key="Sem.Foreground" Color="{StaticResource Neutral900}" />
+    <SolidColorBrush x:Key="Sem.Foreground.Subtle" Color="{StaticResource Neutral700}" />
+    <SolidColorBrush x:Key="Sem.Foreground.Muted" Color="{StaticResource Neutral500}" />
+    <SolidColorBrush x:Key="Sem.Brand" Color="{StaticResource Brand700}" />
+    <SolidColorBrush x:Key="Sem.Brand.Subtle" Color="{StaticResource Brand600}" />
+    <SolidColorBrush x:Key="Sem.Brand.Strong" Color="{StaticResource Brand800}" />
+    <SolidColorBrush x:Key="Sem.Brand.Strong.Hover" Color="{StaticResource Brand900}" />
+    <SolidColorBrush x:Key="Sem.On.Brand" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Sem.Success" Color="{StaticResource Success700}" />
+    <SolidColorBrush x:Key="Sem.Success.Strong" Color="{StaticResource Success800}" />
+    <SolidColorBrush x:Key="Sem.Warning" Color="{StaticResource Warning700}" />
+    <SolidColorBrush x:Key="Sem.Warning.Strong" Color="{StaticResource Warning800}" />
+    <SolidColorBrush x:Key="Sem.Danger" Color="{StaticResource Danger700}" />
+    <SolidColorBrush x:Key="Sem.Danger.Strong" Color="{StaticResource Danger800}" />
+    <SolidColorBrush x:Key="Sem.On.Danger" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Sem.Info" Color="{StaticResource Info700}" />
+    <SolidColorBrush x:Key="Sem.Info.Strong" Color="{StaticResource Info800}" />
+    
+    <SolidColorBrush x:Key="Sem.Surface" Color="{StaticResource Neutral25}" />
+    <SolidColorBrush x:Key="Sem.Surface.Card" Color="{StaticResource Neutral50}" Opacity="0.5" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="#ffffff" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="#ffffff" Opacity="0.5" />
+    <SolidColorBrush x:Key="Sem.Surface.Sidebar" Color="{StaticResource Neutral50}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand" Color="{StaticResource Brand25}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand.Hover" Color="{StaticResource Brand50}" />
+    <SolidColorBrush x:Key="Sem.Surface.Success" Color="{StaticResource Success25}" />
+    <SolidColorBrush x:Key="Sem.Surface.Warning" Color="{StaticResource Warning25}" />
+    <SolidColorBrush x:Key="Sem.Surface.Danger" Color="{StaticResource Danger25}" />
+    <SolidColorBrush x:Key="Sem.Surface.Info" Color="{StaticResource Info25}" />
+    <SolidColorBrush x:Key="Sem.Surface.BlurBackground" Color="{StaticResource Neutral975}" Opacity="0.35" />
+    
+    <SolidColorBrush x:Key="Sem.Border" Color="{StaticResource Neutral400}" />
+    <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{StaticResource Neutral300}" />
+    <SolidColorBrush x:Key="Sem.Border.Brand" Color="{StaticResource Brand800}" />
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Brand600}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Brand700}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Brand700}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Brand800}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Brand25}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Brand50}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Subtle.Reversed" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Brand50}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Brand25}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Danger600}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Danger700}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Danger700}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Danger800}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{StaticResource Danger25}" Offset="0.0" />
+        <GradientStop Color="{StaticResource Danger50}" Offset="1.0" />
+    </LinearGradientBrush>
+    
 </ResourceDictionary>

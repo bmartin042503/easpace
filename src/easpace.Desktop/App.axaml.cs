@@ -5,7 +5,6 @@ using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Styling;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Services.Data;
 using easpace.Desktop.Services.Presentation;

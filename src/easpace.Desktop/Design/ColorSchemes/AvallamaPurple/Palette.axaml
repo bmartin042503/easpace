@@ -5,5 +5,96 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+    <!-- Brand - (lightness: 72%; chroma: 0,116; hue: 308,39) -->
+    <Color x:Key="Brand25">#f2ebf9</Color> <!-- oklch(0.95 0.019 308.392) -->
+    <Color x:Key="Brand50">#e8dcf4</Color> <!-- oklch(0.912 0.034 308.392) -->
+    <Color x:Key="Brand100">#decdef</Color> <!-- oklch(0.873 0.049 308.392) -->
+    <Color x:Key="Brand200">#d5beea</Color> <!-- oklch(0.835 0.065 308.392) -->
+    <Color x:Key="Brand300">#ccafe6</Color> <!-- oklch(0.797 0.082 308.392) -->
+    <Color x:Key="Brand400">#c29fe1</Color> <!-- oklch(0.758 0.099 308.392) -->
+    <Color x:Key="Brand500">#b990dc</Color> <!-- oklch(0.72 0.116 308.392) -->
+    <Color x:Key="Brand600">#aa74d4</Color> <!-- oklch(0.653 0.148 308.392) -->
+    <Color x:Key="Brand700">#9b57cd</Color> <!-- oklch(0.587 0.181 308.392) -->
+    <Color x:Key="Brand800">#8349ae</Color> <!-- oklch(0.52 0.16 308.392) -->
+    <Color x:Key="Brand900">#6c3b90</Color> <!-- oklch(0.453 0.14 308.392) -->
+    <Color x:Key="Brand950">#562e74</Color> <!-- oklch(0.387 0.119 308.392) -->
+    <Color x:Key="Brand975">#412159</Color> <!-- oklch(0.32 0.099 308.392) -->
+
+    <!-- Success - (lightness: 72%; chroma: 0,116; hue: 142,09) -->
+    <Color x:Key="Success25">#def7db</Color> <!-- oklch(0.95 0.044 142.094) -->
+    <Color x:Key="Success50">#c3f1bd</Color> <!-- oklch(0.912 0.084 142.094) -->
+    <Color x:Key="Success100">#a2eb9a</Color> <!-- oklch(0.873 0.132 142.094) -->
+    <Color x:Key="Success200">#95df8d</Color> <!-- oklch(0.835 0.134 142.094) -->
+    <Color x:Key="Success300">#8cd284</Color> <!-- oklch(0.797 0.128 142.094) -->
+    <Color x:Key="Success400">#82c47b</Color> <!-- oklch(0.758 0.122 142.094) -->
+    <Color x:Key="Success500">#79b773</Color> <!-- oklch(0.72 0.116 142.094) -->
+    <Color x:Key="Success600">#6aa064</Color> <!-- oklch(0.653 0.105 142.094) -->
+    <Color x:Key="Success700">#5b8b56</Color> <!-- oklch(0.587 0.094 142.094) -->
+    <Color x:Key="Success800">#4c7548</Color> <!-- oklch(0.52 0.083 142.094) -->
+    <Color x:Key="Success900">#3e603a</Color> <!-- oklch(0.453 0.073 142.094) -->
+    <Color x:Key="Success950">#304d2d</Color> <!-- oklch(0.387 0.062 142.094) -->
+    <Color x:Key="Success975">#233921</Color> <!-- oklch(0.32 0.051 142.094) -->
+
+    <!-- TODO: change warning palette as it's more vibrant than the others (?) -->
+    <!-- Warning - (lightness: 72%; chroma: 0,116; hue: 109,61) -->
+    <Color x:Key="Warning25">#f6f773</Color> <!-- oklch(0.95 0.154 109.614) -->
+    <Color x:Key="Warning50">#e9ea6e</Color> <!-- oklch(0.912 0.147 109.614) -->
+    <Color x:Key="Warning100">#dcdd67</Color> <!-- oklch(0.873 0.141 109.614) -->
+    <Color x:Key="Warning200">#cfd060</Color> <!-- oklch(0.835 0.135 109.614) -->
+    <Color x:Key="Warning300">#c2c45a</Color> <!-- oklch(0.797 0.129 109.614) -->
+    <Color x:Key="Warning400">#b6b753</Color> <!-- oklch(0.758 0.123 109.614) -->
+    <Color x:Key="Warning500">#aaab4e</Color> <!-- oklch(0.72 0.116 109.614) -->
+    <Color x:Key="Warning600">#949543</Color> <!-- oklch(0.653 0.106 109.614) -->
+    <Color x:Key="Warning700">#808139</Color> <!-- oklch(0.587 0.095 109.614) -->
+    <Color x:Key="Warning800">#6c6d2f</Color> <!-- oklch(0.52 0.084 109.614) -->
+    <Color x:Key="Warning900">#595926</Color> <!-- oklch(0.453 0.073 109.614) -->
+    <Color x:Key="Warning950">#46471c</Color> <!-- oklch(0.387 0.063 109.614) -->
+    <Color x:Key="Warning975">#353513</Color> <!-- oklch(0.32 0.052 109.614) -->
+
+    <!-- Danger - (lightness: 72%; chroma: 0,116; hue: 26,43) -->
+    <Color x:Key="Danger25">#faeae8</Color> <!-- oklch(0.95 0.017 26.429) -->
+    <Color x:Key="Danger50">#f6dbd7</Color> <!-- oklch(0.912 0.03 26.429) -->
+    <Color x:Key="Danger100">#f2cbc6</Color> <!-- oklch(0.873 0.045 26.429) -->
+    <Color x:Key="Danger200">#eebab4</Color> <!-- oklch(0.835 0.061 26.429) -->
+    <Color x:Key="Danger300">#ebaaa2</Color> <!-- oklch(0.797 0.078 26.429) -->
+    <Color x:Key="Danger400">#e79990</Color> <!-- oklch(0.758 0.096 26.429) -->
+    <Color x:Key="Danger500">#e4877e</Color> <!-- oklch(0.72 0.116 26.429) -->
+    <Color x:Key="Danger600">#df645b</Color> <!-- oklch(0.653 0.155 26.429) -->
+    <Color x:Key="Danger700">#c94e47</Color> <!-- oklch(0.587 0.159 26.429) -->
+    <Color x:Key="Danger800">#ab413b</Color> <!-- oklch(0.52 0.141 26.429) -->
+    <Color x:Key="Danger900">#8e342f</Color> <!-- oklch(0.453 0.123 26.429) -->
+    <Color x:Key="Danger950">#722824</Color> <!-- oklch(0.387 0.105 26.429) -->
+    <Color x:Key="Danger975">#571d1a</Color> <!-- oklch(0.32 0.087 26.429) -->
+
+    <!-- Info - (lightness: 72%; chroma: 0,116; hue: 266,49) -->
+    <Color x:Key="Info25">#e9eefc</Color> <!-- oklch(0.95 0.019 266.492) -->
+    <Color x:Key="Info50">#d8e2f9</Color> <!-- oklch(0.912 0.034 266.492) -->
+    <Color x:Key="Info100">#c6d5f7</Color> <!-- oklch(0.873 0.05 266.492) -->
+    <Color x:Key="Info200">#b5c9f5</Color> <!-- oklch(0.835 0.066 266.492) -->
+    <Color x:Key="Info300">#a5bcf3</Color> <!-- oklch(0.797 0.082 266.492) -->
+    <Color x:Key="Info400">#94aff0</Color> <!-- oklch(0.758 0.099 266.492) -->
+    <Color x:Key="Info500">#83a2ee</Color> <!-- oklch(0.72 0.116 266.492) -->
+    <Color x:Key="Info600">#668bea</Color> <!-- oklch(0.653 0.148 266.492) -->
+    <Color x:Key="Info700">#4b73e6</Color> <!-- oklch(0.587 0.181 266.492) -->
+    <Color x:Key="Info800">#3057e2</Color> <!-- oklch(0.52 0.215 266.492) -->
+    <Color x:Key="Info900">#1c36dc</Color> <!-- oklch(0.453 0.247 266.492) -->
+    <Color x:Key="Info950">#142ab2</Color> <!-- oklch(0.387 0.211 266.492) -->
+    <Color x:Key="Info975">#0d1e89</Color> <!-- oklch(0.32 0.174 266.492) -->
+
+    <!-- Neutral - (lightness: 64%; chroma: 0,025; hue: 308,39) -->
+    <Color x:Key="Neutral25">#efeef0</Color> <!-- oklch(0.95 0.003 308.39) -->
+    <Color x:Key="Neutral50">#dedce0</Color> <!-- oklch(0.898 0.006 308.39) -->
+    <Color x:Key="Neutral100">#cecbd2</Color> <!-- oklch(0.847 0.01 308.39) -->
+    <Color x:Key="Neutral200">#bebac3</Color> <!-- oklch(0.795 0.013 308.39) -->
+    <Color x:Key="Neutral300">#afa9b4</Color> <!-- oklch(0.743 0.017 308.39) -->
+    <Color x:Key="Neutral400">#a099a6</Color> <!-- oklch(0.692 0.021 308.39) -->
+    <Color x:Key="Neutral500">#908898</Color> <!-- oklch(0.64 0.025 308.39) -->
+    <Color x:Key="Neutral600">#7d7486</Color> <!-- oklch(0.573 0.029 308.39) -->
+    <Color x:Key="Neutral700">#696270</Color> <!-- oklch(0.507 0.025 308.39) -->
+    <Color x:Key="Neutral800">#564f5c</Color> <!-- oklch(0.44 0.022 308.39) -->
+    <Color x:Key="Neutral900">#433e48</Color> <!-- oklch(0.373 0.019 308.39) -->
+    <Color x:Key="Neutral950">#322e35</Color> <!-- oklch(0.307 0.015 308.39) -->
+    <Color x:Key="Neutral975">#211e24</Color> <!-- oklch(0.24 0.012 308.39) -->
+
 </ResourceDictionary>
