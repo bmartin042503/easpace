@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="Transparent">
-                    <Rectangle Fill="{DynamicResource Haven.Sem.Border}"
+                    <Rectangle Fill="{DynamicResource Sem.Border}"
                                Width="{StaticResource Metrics.Border.Thickness.Double}" />
                 </Border>
             </ControlTemplate>

@@ -740,13 +740,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Settings saved.</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
-        <value>Version: v{0}</value>
+        <value>Version</value>
     </data>
     <data name="Credits.Text.Copyright" xml:space="preserve">
         <value>Copyright © 2025-2026 Martin Bartos • MIT License</value>
-    </data>
-    <data name="Credits.Text.Developers" xml:space="preserve">
-        <value>Developers: Martin Bartos</value>
     </data>
     <data name="Credits.Text.Contact" xml:space="preserve">
         <value>Contact: bmartin@easpace.eu</value>

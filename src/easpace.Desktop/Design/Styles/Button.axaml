@@ -56,59 +56,59 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
 
     <Style Selector="Button.primary">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong} " />
+        <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong} " />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
     </Style>
     
     <Style Selector="Button.secondary">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong} " />
+        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong} " />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong} " />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
     </Style>
     
     <Style Selector="Button.tertiary">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
         <Setter Property="BorderThickness" Value="0" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
         
         <Style Selector="^:disabled /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
     </Style>
     
     <Style Selector="Button.regular.danger">
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong} " />
+        <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Danger}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Danger.Strong} " />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Danger.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Danger.Strong} " />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Danger.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Danger.Strong} " />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
             <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnDanger}" />
         </Style>
@@ -116,7 +116,7 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="Button.tertiary.danger">
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Danger}" />
         </Style>
     </Style>
 
@@ -141,12 +141,12 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Style Selector="Button.clear">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="BorderThickness" Value="0" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
     </Style>

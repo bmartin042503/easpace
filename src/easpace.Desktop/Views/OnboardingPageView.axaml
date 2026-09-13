@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.OnboardingPageView"
              x:DataType="vm:OnboardingPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{DynamicResource Sem.Surface}">
 
     <UserControl.Resources>
 
@@ -34,7 +34,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                    HorizontalAlignment="Center" />
                         
                         <!-- subtitle -->
-                        <TextBlock Classes="accent fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
+                        <TextBlock Classes="brand fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
                                    HorizontalAlignment="Center" />
                             
                     </StackPanel>
@@ -204,7 +204,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     
                     <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="2">
                         
-                        <TextBlock Classes="accent fs4 trm-ellipsis" 
+                        <TextBlock Classes="brand fs4 trm-ellipsis" 
                                    Text="{core:LocalizationService Key='Onboarding.Text.DeveloperNameAndContact'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
                         
@@ -234,8 +234,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Blobs gradient background -->
         <controls:BlobsGradientBackground
-            BackgroundBrush="{DynamicResource Haven.Sem.Accent.Muted}"
-            FromBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
+            FromBrush="{DynamicResource Sem.Surface.Brand}"
             ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
             EllipseCount="7"
             Speed="0.25"
@@ -253,7 +253,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </TransitioningContentControl>
         
         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="0.5"
-                   Classes="accent fs5" Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
+                   Classes="brand fs5" Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                    Text="{Binding VersionText}" />
 
     </Grid>

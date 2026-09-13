@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource Haven.Sem.Canvas}"
+        Background="{DynamicResource Sem.Surface}"
         Title="easpace" MinHeight="450" MinWidth="700"
         ExtendClientAreaToDecorationsHint="True"
         utils:ViewInitialization.Command="{Binding InitializeCommand}">
@@ -25,46 +25,56 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Sidebar -->
         <Border Grid.Column="0" Classes="sidebar" IsVisible="{Binding IsSidebarVisible}">
 
-            <ListBox Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
+            <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Md}"
+                  Margin="{OnPlatform Default={StaticResource Metrics.Spacing.Thickness.Xs}, macOS={StaticResource Metrics.Spacing.Sidebar.MacOs}}">
 
-                <ListBoxItem Grid.Row="0">
-                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Notebook}"
-                                                          SelectedIcon="{StaticResource PhosphorIcons.Notebook.Fill}"
-                                                          Text="{core:LocalizationService Key='Navigation.Item.Journal'}" />
-                </ListBoxItem>
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                    <TextBlock Text="easpace" Classes="strong brand fs3" />
+                    <TextBlock Text="{Binding VersionNameText}" Classes="brand fs6" />
+                </StackPanel>
 
-                <ListBoxItem Grid.Row="1">
-                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Target}"
-                                                          SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
-                                                          Text="{core:LocalizationService Key='Navigation.Item.Activities'}" />
-                </ListBoxItem>
+                <ListBox Grid.Row="1" Classes="nav list" SelectedIndex="{Binding SelectedNavIndex}">
 
-                <ListBoxItem Grid.Row="2">
-                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Brain}"
-                                                          SelectedIcon="{StaticResource PhosphorIcons.Brain.Fill}"
-                                                          Text="{core:LocalizationService Key='Navigation.Item.Mood'}" />
-                </ListBoxItem>
+                    <ListBoxItem Grid.Row="0">
+                        <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Notebook}"
+                                                     SelectedIcon="{StaticResource PhosphorIcons.Notebook.Fill}"
+                                                     Text="{core:LocalizationService Key='Navigation.Item.Journal'}" />
+                    </ListBoxItem>
 
-                <ListBoxItem Grid.Row="3">
-                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.FlowerLotus}"
-                                                          SelectedIcon="{StaticResource PhosphorIcons.FlowerLotus.Fill}"
-                                                          Text="{core:LocalizationService Key='Navigation.Item.Wellness'}" />
-                </ListBoxItem>
+                    <ListBoxItem Grid.Row="1">
+                        <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Target}"
+                                                     SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
+                                                     Text="{core:LocalizationService Key='Navigation.Item.Activities'}" />
+                    </ListBoxItem>
 
-                <ListBoxItem Grid.Row="5">
-                    <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Gear}"
-                                                          SelectedIcon="{StaticResource PhosphorIcons.Gear.Fill}"
-                                                          Text="{core:LocalizationService Key='Navigation.Item.Settings'}" />
-                </ListBoxItem>
+                    <ListBoxItem Grid.Row="2">
+                        <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Brain}"
+                                                     SelectedIcon="{StaticResource PhosphorIcons.Brain.Fill}"
+                                                     Text="{core:LocalizationService Key='Navigation.Item.Mood'}" />
+                    </ListBoxItem>
 
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
-                              RowSpacing="{StaticResource Metrics.Spacing.Xs}" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+                    <ListBoxItem Grid.Row="3">
+                        <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.FlowerLotus}"
+                                                     SelectedIcon="{StaticResource PhosphorIcons.FlowerLotus.Fill}"
+                                                     Text="{core:LocalizationService Key='Navigation.Item.Wellness'}" />
+                    </ListBoxItem>
 
-            </ListBox>
+                    <ListBoxItem Grid.Row="5">
+                        <controls:NavigationListItem Icon="{StaticResource PhosphorIcons.Gear}"
+                                                     SelectedIcon="{StaticResource PhosphorIcons.Gear.Fill}"
+                                                     Text="{core:LocalizationService Key='Navigation.Item.Settings'}" />
+                    </ListBoxItem>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
+                                  RowSpacing="{StaticResource Metrics.Spacing.Xs}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                </ListBox>
+
+            </Grid>
 
         </Border>
 
@@ -76,13 +86,13 @@ Licensed under the MIT License. See LICENSE file for details.
             <TransitioningContentControl.PageTransition>
                 <utils:SmartPageTransition />
             </TransitioningContentControl.PageTransition>
-            
+
         </TransitioningContentControl>
 
         <!-- Dialog host -->
         <Grid Grid.Column="0" Grid.ColumnSpan="2"
               IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}">
-            <Border Background="{StaticResource Metrics.Black}" Opacity="0.35" />
+            <Border Background="{DynamicResource Sem.Surface.BlurBackground}" />
             <ContentControl x:Name="DialogHost" Content="{Binding CurrentDialog}"
                             PointerPressed="DialogHost_PointerPressed"
                             PointerMoved="DialogHost_PointerMoved"

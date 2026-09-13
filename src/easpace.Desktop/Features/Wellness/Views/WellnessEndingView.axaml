@@ -14,7 +14,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessEndingView"
              x:DataType="vm:WellnessEndingViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="{StaticResource Metrics.Transparent}">
+             Background="Transparent">
 
     <Grid RowDefinitions="*,*,*" Margin="{StaticResource Metrics.Spacing.Thickness.Xl}">
 

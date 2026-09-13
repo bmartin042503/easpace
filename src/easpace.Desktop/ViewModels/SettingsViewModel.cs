@@ -55,7 +55,8 @@ internal partial class SettingsViewModel : PageViewModel
         _dialogService = dialogService;
         _toastMessageService = toastMessageService;
 
-        VersionText = string.Format(LocalizationService.GetString("Credits.Text.Version"), App.Version.ToString());
+        VersionText =
+            $"{LocalizationService.GetString("Credits.Text.Version")}: {App.VersionName} (v{App.Version.ToString()})";
 
         LoadSettings();
 
@@ -81,8 +82,7 @@ internal partial class SettingsViewModel : PageViewModel
             Message = LocalizationService.GetString("Settings.DeleteAllDataDialog.Description"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
-            IsDestructive = true,
-            IsCritical = true,
+            IsDestructive = true
         };
 
         await _dialogService.ShowDialogAsync(confirmDeletionDialog);
@@ -124,7 +124,8 @@ internal partial class SettingsViewModel : PageViewModel
             _ => 0
         };
 
-        var colorSchemeAppearance = _preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
+        var colorSchemeAppearance =
+            _preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
         SelectedColorSchemeAppearanceIndex = colorSchemeAppearance switch
         {
             ColorSchemeAppearance.Default => 0,
@@ -132,7 +133,7 @@ internal partial class SettingsViewModel : PageViewModel
             ColorSchemeAppearance.Dark => 2,
             _ => 0
         };
-        
+
         IsGlassmorphismEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.Glassmorphism);
 
         IsWellnessFullScreenEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
@@ -162,7 +163,7 @@ internal partial class SettingsViewModel : PageViewModel
             1 => ColorScheme.AvallamaPurple,
             _ => ColorScheme.HavenBlue
         };
-        
+
         var colorSchemeAppearance = SelectedColorSchemeAppearanceIndex switch
         {
             0 => ColorSchemeAppearance.Default,
@@ -198,7 +199,7 @@ internal partial class SettingsViewModel : PageViewModel
                 _applicationService.Restart();
             }
         }
-        
+
         _colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
 
         _toastMessageService.ShowToastMessage(
@@ -213,6 +214,8 @@ internal partial class SettingsViewModel : PageViewModel
         if (e.PropertyName is
             nameof(SelectedLanguageIndex) or
             nameof(SelectedColorSchemeIndex) or
+            nameof(SelectedColorSchemeAppearanceIndex) or
+            nameof(IsGlassmorphismEnabled) or
             nameof(IsWellnessFullScreenEnabled) or
             nameof(IsWellnessAnimatedBackgroundEnabled) or
             nameof(IsCheckForUpdatesEnabled))

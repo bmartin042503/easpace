@@ -10,10 +10,10 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:vm="clr-namespace:easpace.Desktop.ViewModels.Dialogs"
              x:DataType="vm:DetailedConfirmDialogViewModel"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
-             Background="{StaticResource Metrics.Transparent}"
+             Background="Transparent"
              x:Class="easpace.Desktop.Views.Dialogs.DetailedConfirmDialogView">
 
-    <Border x:Name="DialogRootBorder" Classes.danger="{Binding IsCritical}" Classes="card"
+    <Border x:Name="DialogRootBorder" Classes="dialog card"
             Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0"
             MaxWidth="800" MaxHeight="600">
@@ -27,7 +27,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Warning icon -->
                 <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
                           Width="{StaticResource Metrics.Icon.Size.Lg}"
-                          Foreground="{DynamicResource Haven.Sem.Foreground}"
+                          Foreground="{DynamicResource Sem.Foreground}"
                           Data="{StaticResource PhosphorIcons.Warning.Fill}"
                           IsVisible="{Binding IsDestructive}"
                           VerticalAlignment="Top"
@@ -36,7 +36,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Info icon -->
                 <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
                           Width="{StaticResource Metrics.Icon.Size.Lg}"
-                          Foreground="{DynamicResource Haven.Sem.Foreground}"
+                          Foreground="{DynamicResource Sem.Foreground}"
                           Data="{StaticResource PhosphorIcons.Info.Fill}"
                           IsVisible="{Binding !IsDestructive}"
                           VerticalAlignment="Top"

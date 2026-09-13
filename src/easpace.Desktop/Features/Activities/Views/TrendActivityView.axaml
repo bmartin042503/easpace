@@ -50,7 +50,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Target value -->
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             IsVisible="{Binding Target, Converter={x:Static ObjectConverters.IsNotNull}}">
-                    <TextBlock Classes="accent fs5 medium"
+                    <TextBlock Classes="brand fs5 medium"
                                VerticalAlignment="Center">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} {1}">

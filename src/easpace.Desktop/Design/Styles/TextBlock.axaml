@@ -6,7 +6,7 @@ Licensed under the MIT License. See LICENSE file for details.
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <StackPanel Orientation="Horizontal" Spacing="40">
                 
                 <!-- Foreground -->
@@ -14,9 +14,9 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral" Text="Neutral" />
                     <TextBlock Classes="subtle neutral" Text="Subtle Neutral" />
                     <TextBlock Classes="muted neutral" Text="Muted Neutral" />
-                    <TextBlock Classes="accent" Text="Accent" />
-                    <TextBlock Classes="strong accent" Text="Strong Accent" />
-                    <TextBlock Classes="subtle accent" Text="Subtle Accent" />
+                    <TextBlock Classes="brand" Text="Brand" />
+                    <TextBlock Classes="strong brand" Text="Strong Brand" />
+                    <TextBlock Classes="subtle brand" Text="Subtle Brand" />
                     <TextBlock Classes="warning" Text="Warning" />
                     <TextBlock Classes="strong warning" Text="Strong Warning" />
                     <TextBlock Classes="danger" Text="Danger" />
@@ -64,66 +64,66 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
 
     <Style Selector="SelectableTextBlock">
-        <Setter Property="SelectionBrush" Value="{DynamicResource Haven.Sem.Accent}" />
-        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Haven.Sem.OnAccent}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource Sem.Brand}" />
+        <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Sem.On.Brand}" />
     </Style>
 
     <!-- Foreground -->
 
     <Style Selector="TextBlock.neutral, SelectableTextBlock.neutral">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
     </Style>
 
     <Style Selector="TextBlock.subtle.neutral, SelectableTextBlock.subtle.neutral">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
     </Style>
 
     <Style Selector="TextBlock.muted.neutral, SelectableTextBlock.muted.neutral">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
     </Style>
     
-    <Style Selector="TextBlock.accent, SelectableTextBlock.accent">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+    <Style Selector="TextBlock.brand, SelectableTextBlock.brand">
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
     </Style>
     
-    <Style Selector="TextBlock.strong.accent, SelectableTextBlock.strong.accent">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+    <Style Selector="TextBlock.strong.brand, SelectableTextBlock.strong.brand">
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
     </Style>
     
-    <Style Selector="TextBlock.subtle.accent, SelectableTextBlock.subtle.accent">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Subtle}" />
+    <Style Selector="TextBlock.subtle.brand, SelectableTextBlock.subtle.brand">
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Subtle}" />
     </Style>
     
     <Style Selector="TextBlock.danger, SelectableTextBlock.danger">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Danger}" />
     </Style>
     
     <Style Selector="TextBlock.strong.danger, SelectableTextBlock.strong.danger">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Danger.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Danger.Strong}" />
     </Style>
     
     <Style Selector="TextBlock.success, SelectableTextBlock.success">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Success}" />
     </Style>
     
     <Style Selector="TextBlock.strong.success, SelectableTextBlock.strong.success">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Success.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Success.Strong}" />
     </Style>
     
     <Style Selector="TextBlock.info, SelectableTextBlock.info">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Info}" />
     </Style>
     
     <Style Selector="TextBlock.strong.info, SelectableTextBlock.strong.info">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Info.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Info.Strong}" />
     </Style>
     
     <Style Selector="TextBlock.warning, SelectableTextBlock.warning">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Warning}" />
     </Style>
     
     <Style Selector="TextBlock.strong.warning, SelectableTextBlock.strong.warning">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Warning.Strong}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Warning.Strong}" />
     </Style>
 
     <!-- FontSize -->

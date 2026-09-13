@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
     
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <Slider Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
         </Border>
     </Design.PreviewWith>
@@ -17,8 +17,8 @@ Licensed under the MIT License. See LICENSE file for details.
                   TargetType="Slider">
 
         <Setter Property="behaviors:SliderBehavior.JumpToClick" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
 
         <Setter Property="Template">
@@ -60,8 +60,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                         Height="24"
                                         Margin="0"
                                         Padding="0"
-                                        Background="{DynamicResource Haven.Sem.Gradient.Accent}"
-                                        BorderBrush="{DynamicResource Haven.Sem.Accent.Strong}"
+                                        Background="{DynamicResource Sem.Gradient.Brand}"
+                                        BorderBrush="{DynamicResource Sem.Brand.Strong}"
                                         BorderThickness="0.75"
                                         DataContext="{TemplateBinding Value}" />
 
@@ -79,7 +79,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style
             Selector="^:pointerover /template/ Thumb#thumb,
                          ^:pressed /template/ Thumb#thumb">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
         </Style>
 
         <Style Selector="^ /template/ Thumb#thumb">
@@ -96,7 +96,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^ /template/ Thumb#thumb:pointerover, 
                  ^ /template/ Thumb#thumb:pressed">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Gradient.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
         </Style>
 
     </ControlTheme>

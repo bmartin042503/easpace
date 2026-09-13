@@ -60,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
     </Style>
 
     <Style Selector="PathIcon.target">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
         <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
         <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
     </Style>

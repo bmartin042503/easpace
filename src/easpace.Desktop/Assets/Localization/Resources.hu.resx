@@ -674,10 +674,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Válassz a környezetedhez illő színsémát.</value>
     </data>
     <data name="Settings.ColorScheme.HavenBlue" xml:space="preserve">
-        <value>Haven Kék</value>
+        <value>Haven Blue</value>
     </data>
     <data name="Settings.ColorScheme.AvallamaPurple" xml:space="preserve">
-        <value>Avallama Lila</value>
+        <value>Avallama Purple</value>
     </data>
     <data name="Settings.ColorSchemeAppearance.Label" xml:space="preserve">
         <value>Megjelenés</value>
@@ -737,13 +737,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Beállítások mentve.</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
-        <value>Verzió: v{0}</value>
+        <value>Verzió</value>
     </data>
     <data name="Credits.Text.Copyright" xml:space="preserve">
         <value>Copyright © 2025-2026 Bartos Martin • MIT Licenc</value>
-    </data>
-    <data name="Credits.Text.Developers" xml:space="preserve">
-        <value>Fejlesztők: Bartos Martin</value>
     </data>
     <data name="Credits.Text.Contact" xml:space="preserve">
         <value>Kapcsolat: bmartin@easpace.eu</value>

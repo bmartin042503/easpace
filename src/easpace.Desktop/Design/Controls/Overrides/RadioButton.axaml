@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
     x:ClassModifier="internal">
 
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <StackPanel Spacing="10">
                 <RadioButton Content="Option 1" />
                 <RadioButton IsChecked="True" Content="Option 2" />
@@ -32,9 +32,9 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource RadioButtonMinHeight}" />
         <Setter Property="FontFamily" Value="{StaticResource FontFamily.Poppins}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
 
         <!-- Template -->
         <Setter Property="Template">
@@ -53,13 +53,13 @@ Licensed under the MIT License. See LICENSE file for details.
                                  Width="20"
                                  Height="20"
                                  Fill="{DynamicResource Sem.Surface.Elevated}"
-                                 Stroke="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                 Stroke="{DynamicResource Sem.Foreground.Subtle}"
                                  StrokeThickness="{StaticResource Metrics.Border.Thickness.Double.Medium}"
                                  UseLayoutRounding="False" />
 
                         <!-- Selected dot -->
                         <Ellipse x:Name="CheckGlyph" Width="8" Height="8" Opacity="0"
-                                 Fill="{DynamicResource Haven.Sem.Accent}"
+                                 Fill="{DynamicResource Sem.Brand}"
                                  UseLayoutRounding="False" />
 
                     </Grid>
@@ -84,11 +84,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Checked -->
         <Style Selector="^:checked /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Stroke" Value="{DynamicResource Sem.Brand}" />
         </Style>
 
         <Style Selector="^:checked /template/ Ellipse#CheckGlyph">
-            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.Brand}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
 
@@ -109,15 +109,15 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Disabled -->
         <Style Selector="^:disabled">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            <Setter Property="Stroke" Value="{DynamicResource Sem.Foreground.Muted}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#CheckGlyph">
-            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
 
     </ControlTheme>

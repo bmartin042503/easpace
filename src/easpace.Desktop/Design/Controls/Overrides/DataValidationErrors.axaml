@@ -38,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="ErrorTemplate">
             <DataTemplate>
                 <ItemsControl x:DataType="DataValidationErrors"
-                              Foreground="{DynamicResource Haven.Sem.Danger.Strong}"
+                              Foreground="{DynamicResource Sem.Danger.Strong}"
                               ItemsSource="{Binding}">
                     
                     <ItemsControl.Styles>

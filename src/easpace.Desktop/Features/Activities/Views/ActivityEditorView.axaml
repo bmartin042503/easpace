@@ -304,7 +304,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Separator line -->
-                <Separator Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                <Separator Height="1" Background="{DynamicResource Sem.Border}"
                            IsVisible="{Binding !IsCreatingNew}" />
 
                 <!-- Data entries -->

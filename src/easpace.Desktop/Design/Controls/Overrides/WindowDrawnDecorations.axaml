@@ -14,11 +14,11 @@
         </Setter>
         
         <Style Selector="^:pointerover">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
         
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
         </Style>
         
         <Style Selector="^#PART_CloseButton:pointerover">
@@ -26,7 +26,7 @@
         </Style>
         
         <Style Selector="^#PART_CloseButton:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Danger}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Danger}" />
         </Style>
 
     </ControlTheme>

@@ -6,7 +6,7 @@ Licensed under the MIT License. See LICENSE file for details.
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <Border Classes="card secondary" Padding="20">
                 <WrapPanel Orientation="Horizontal" ItemSpacing="12" LineSpacing="12" MaxWidth="200">
 
@@ -41,8 +41,8 @@ Licensed under the MIT License. See LICENSE file for details.
                       ^:pointerover /template/ ContentPresenter,
                       ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         </Style>
 
         <Style Selector="^:pointerover">
@@ -50,9 +50,9 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
 
         <Style Selector="^:checked /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
         
         <Setter Property="RenderTransform">

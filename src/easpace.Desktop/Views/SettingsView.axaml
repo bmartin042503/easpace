@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.SettingsView"
              x:DataType="vm:SettingsViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}">
+             Background="{DynamicResource Sem.Surface}">
 
     <UserControl.Resources>
         <x:Double x:Key="InputSettingMinimumWidth">180</x:Double>
@@ -228,8 +228,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <!-- Credits -->
             <Border Classes="settings card"
-                    BorderBrush="{DynamicResource Haven.Sem.Accent}"
-                    Background="{DynamicResource Haven.Sem.Surface.Accent}">
+                    BorderBrush="{DynamicResource Sem.Brand}"
+                    Background="{DynamicResource Sem.Surface.Brand}">
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
@@ -239,7 +239,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                             <!-- Title -->
-                            <TextBlock Classes="accent fs3 medium trm-ellipsis" Text="easpace" />
+                            <TextBlock Classes="brand fs3 medium trm-ellipsis" Text="easpace" />
 
                             <!-- Built with .NET and Avalonia UI -->
                             <TextBlock Classes="strong accent fs5 trm-ellipsis"
@@ -254,10 +254,6 @@ Licensed under the MIT License. See LICENSE file for details.
                             <TextBlock Classes="strong accent fs5 trm-ellipsis"
                                        Text="{Binding VersionText}" />
 
-                            <!-- Developers -->
-                            <TextBlock Classes="strong accent fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Credits.Text.Developers'}" />
-
                             <!-- Contact -->
                             <TextBlock Classes="strong accent fs5 trm-ellipsis"
                                        Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
@@ -267,7 +263,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <!-- Made with <3 in Hungary -->
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <TextBlock Classes="strong accent fs5" Text="Made with" />
-                            <PathIcon Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                            <PathIcon Foreground="{DynamicResource Sem.Brand.Strong}"
                                       Data="{StaticResource PhosphorIcons.Heart.Fill}"
                                       Width="{StaticResource Metrics.Icon.Size.Xs}"
                                       Height="{StaticResource Metrics.Icon.Size.Xs}" />
@@ -288,7 +284,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- Horizontal separator -->
-                    <Separator Height="1" Background="{DynamicResource Haven.Sem.Accent}"
+                    <Separator Height="1" Background="{DynamicResource Sem.Brand}"
                                Margin="0" />
 
                     <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Sm}"
@@ -361,7 +357,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                        <TextBlock Classes="accent fs4 medium"
+                        <TextBlock Classes="brand fs4 medium"
                                    Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
 
                         <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"

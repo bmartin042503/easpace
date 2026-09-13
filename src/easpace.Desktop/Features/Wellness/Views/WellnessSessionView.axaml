@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessSessionView"
              x:DataType="vm:WellnessSessionViewModel"
-             Background="{StaticResource Metrics.Transparent}">
+             Background="Transparent">
 
     <!-- Session view -->
     <Grid RowDefinitions="*,*,*,*,Auto" Margin="{StaticResource Metrics.Spacing.Thickness.Xxl}">
@@ -36,12 +36,12 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Ellipses (for breathing animation) -->
         <Grid Grid.Row="1" Width="128" Height="128" IsVisible="{Binding IsBreathing}">
             <Ellipse Width="32" Height="32"
-                     Fill="{DynamicResource Haven.Sem.Accent}"
+                     Fill="{DynamicResource Sem.Brand}"
                      Opacity="1" />
 
             <Ellipse Width="{Binding BreathingCircleSize}"
                      Height="{Binding BreathingCircleSize}"
-                     Fill="{DynamicResource Haven.Sem.Accent}"
+                     Fill="{DynamicResource Sem.Brand}"
                      Opacity="0.4" />
         </Grid>
 

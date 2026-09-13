@@ -19,11 +19,11 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
 
         <Style Selector="^ TextBlock.journal-list-item">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         </Style>
 
         <Style Selector="^ TextBlock.journal-sub-list-item">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
 
         <Style Selector="^ TextBlock">
@@ -32,12 +32,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:selected TextBlock">
             <Setter Property="FontWeight" Value="{StaticResource Metrics.FontWeight.Medium}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
         </Style>
 
         <Style Selector="^:selected /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
 
     </Style>
@@ -45,8 +45,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Navigation items styling -->
     <Style Selector="ListBox.nav.list ListBoxItem">
 
-        <Setter Property="Background" Value="{DynamicResource Metrics.Transparent}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Sm}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Sm}" />
         <Setter Property="Cursor" Value="Hand" />
@@ -57,18 +57,18 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
 
         <Style Selector="^ controls|NavigationListItem PathIcon#PART_Icon">
-            <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Sm}" />
-            <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Sm}" />
+            <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Xs}" />
+            <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Xs}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
 
         <Style Selector="^:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
 
         <Style Selector="^:selected controls|NavigationListItem TextBlock#PART_Text">
@@ -89,8 +89,8 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Xs}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Cursor" Value="Hand" />
 
         <Style Selector="^ controls|ActivityListItem PathIcon#PART_Icon">
@@ -100,16 +100,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         </Style>
 
         <Style Selector="^:selected /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Brand}" />
         </Style>
 
         <Style Selector="^:selected controls|ActivityListItem /template/ PathIcon#PART_Icon">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
             <Setter Property="Data"
                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIcon}" />
         </Style>
@@ -118,7 +118,7 @@ Licensed under the MIT License. See LICENSE file for details.
                          ^:selected controls|ActivityListItem TextBlock#PART_Value,
                          ^:selected controls|ActivityListItem TextBlock#PART_Unit">
             <Setter Property="FontWeight" Value="{StaticResource Metrics.FontWeight.Medium}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
 
     </Style>
@@ -128,7 +128,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.3Xs}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xs}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -136,12 +136,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         </Style>
 
         <Style Selector="^:selected /template/ ContentPresenter, ^:selected:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
 
     </Style>
@@ -152,7 +152,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Background" Value="Transparent" />
 
         <Style Selector="^ controls|IconListItem">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
         </Style>
 
         <Style Selector="^:pointerover">
@@ -163,7 +163,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </Style>
 
             <Style Selector="^ controls|IconListItem">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
             </Style>
         </Style>
 
@@ -173,7 +173,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </Style>
 
             <Style Selector="^ controls|IconListItem">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+                <Setter Property="Foreground" Value="{DynamicResource Sem.Brand.Strong}" />
             </Style>
 
             <Style Selector="^ controls|IconListItem /template/ PathIcon#PART_Icon">

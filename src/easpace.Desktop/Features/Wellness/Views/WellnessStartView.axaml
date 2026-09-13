@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="{StaticResource Metrics.Transparent}">
+             Background="Transparent">
 
     <UserControl.Resources>
 
@@ -24,14 +24,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
                 <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Wind}"
-                          Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                          Foreground="{DynamicResource Sem.Brand.Strong}"
                           Width="{StaticResource Metrics.Icon.Size.Md}"
                           Height="{StaticResource Metrics.Icon.Size.Md}" />
             </DataTemplate>
 
             <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
                 <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Sparkle}"
-                          Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                          Foreground="{DynamicResource Sem.Brand.Strong}"
                           Width="{StaticResource Metrics.Icon.Size.Md}"
                           Height="{StaticResource Metrics.Icon.Size.Md}" />
             </DataTemplate>
@@ -65,7 +65,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
 
                             <PathIcon.RenderTransform>
                                 <RotateTransform Angle="-10" />
@@ -77,7 +77,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}">
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
 
                             <PathIcon.RenderTransform>
                                 <RotateTransform Angle="10" />
@@ -173,7 +173,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Horizontal splitter -->
         <GridSplitter Grid.Column="1"
-                      Background="{StaticResource Metrics.Transparent}"
+                      Background="Transparent"
                       Width="{StaticResource Metrics.Spacing.Lg}"
                       ResizeDirection="Columns" />
 

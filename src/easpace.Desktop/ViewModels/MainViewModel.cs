@@ -33,6 +33,8 @@ internal partial class MainViewModel : ViewModelBase
     [ObservableProperty] private bool _isToastMessageVisible;
 
     private readonly TaskCompletionSource<bool> _isLoadedTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+    
+    public static string VersionNameText => App.VersionName;
 
     public MainViewModel(
         PageFactory pageFactory,

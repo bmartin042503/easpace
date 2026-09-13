@@ -9,7 +9,7 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <Design.PreviewWith>
         <Border Padding="20"
-                Background="{DynamicResource Haven.Sem.Canvas}">
+                Background="{DynamicResource Sem.Surface}">
             <StackPanel Spacing="20">
                 <CheckBox Content="Unchecked" />
                 <CheckBox IsChecked="True" Content="Checked"/>
@@ -31,9 +31,9 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource CheckBoxMinHeight}" />
 
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
 
         <!-- Template -->
         <Setter Property="Template">
@@ -57,7 +57,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 Width="20"
                                 Height="20"
                                 Background="{DynamicResource Sem.Surface.Elevated}"
-                                BorderBrush="{DynamicResource Haven.Sem.Border}"
+                                BorderBrush="{DynamicResource Sem.Border}"
                                 BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 UseLayoutRounding="False" />
@@ -70,7 +70,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <PathIcon x:Name="CheckGlyph"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
-                                          Foreground="{DynamicResource Haven.Sem.OnAccent}"
+                                          Foreground="{DynamicResource Sem.On.Brand}"
                                           Opacity="0" />
                             </Panel>
                         </Viewbox>
@@ -98,8 +98,8 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- Selected state -->
         <Style
             Selector="^:checked /template/ Border#NormalRectangle, ^:indeterminate /template/ Border#NormalRectangle">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand}" />
         </Style>
 
 

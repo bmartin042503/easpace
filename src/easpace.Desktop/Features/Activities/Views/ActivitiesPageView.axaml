@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
-             Background="{DynamicResource Haven.Sem.Canvas}"
+             Background="{DynamicResource Sem.Surface}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <UserControl.Resources>
@@ -116,7 +116,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 </Grid>
 
-                <Separator Grid.Row="1" Height="1" Background="{DynamicResource Haven.Sem.Border}"
+                <Separator Grid.Row="1" Height="1" Background="{DynamicResource Sem.Border}"
                            Margin="0" />
 
                 <!-- No entries view -->
@@ -133,7 +133,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.ChartLine}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
 
@@ -147,13 +147,13 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.ChartPieSlice}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}" />
 
                         <!-- Check square offset icon -->
                         <PathIcon Data="{StaticResource PhosphorIcons.CheckSquareOffset}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
 

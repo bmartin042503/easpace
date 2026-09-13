@@ -14,7 +14,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Mood.Views.MoodPageView"
              x:DataType="vm:MoodPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}"
+             Background="{DynamicResource Sem.Surface}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
@@ -42,7 +42,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.SmileySad}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
 
@@ -56,13 +56,13 @@ Licensed under the MIT License. See LICENSE file for details.
                         <PathIcon Data="{StaticResource PhosphorIcons.SmileyMeh}"
                                   Width="{StaticResource Metrics.Icon.Size.Xl}"
                                   Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}" />
 
                         <!-- Smiley icon -->
                         <PathIcon Data="{StaticResource PhosphorIcons.Smiley}"
                                   Width="{StaticResource Metrics.Icon.Size.Md}"
                                   Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}"
+                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
                                   RenderTransformOrigin="50%,50%"
                                   Margin="0,6,0,0">
 
@@ -159,7 +159,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Horizontal splitter -->
         <GridSplitter Grid.Column="1"
-                      Background="{StaticResource Metrics.Transparent}"
+                      Background="Transparent"
                       Width="{StaticResource Metrics.Spacing.Lg}"
                       ResizeDirection="Columns" />
 
@@ -180,7 +180,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" MaxWidth="400"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
-                                       Foreground="{DynamicResource Haven.Sem.Accent.Strong}"
+                                       Foreground="{DynamicResource Sem.Brand.Strong}"
                                        HorizontalAlignment="Center" />
                             <Slider Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
                                     HorizontalAlignment="Stretch" SmallChange="0.25" />

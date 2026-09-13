@@ -8,7 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls">
     
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}"
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
                 Width="400" Height="400">
             
             <StackPanel Orientation="Vertical" Spacing="20">
@@ -72,7 +72,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Xxs}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Sm}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
     </Style>

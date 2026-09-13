@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.Dialogs.ErrorDialogView">
 
-    <Border x:Name="DialogRootBorder" Classes="danger card"
+    <Border x:Name="DialogRootBorder" Classes="dialog card"
             Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0">
 
@@ -26,7 +26,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Warning icon -->
                 <PathIcon Grid.Column="0" Height="{StaticResource Metrics.Icon.Size.Lg}"
                           Width="{StaticResource Metrics.Icon.Size.Lg}"
-                          Foreground="{DynamicResource Haven.Sem.Danger.Strong}"
+                          Foreground="{DynamicResource Sem.Danger.Strong}"
                           Data="{StaticResource PhosphorIcons.Warning.Fill}"
                           VerticalAlignment="Top"
                           Margin="0,4,0,0" />

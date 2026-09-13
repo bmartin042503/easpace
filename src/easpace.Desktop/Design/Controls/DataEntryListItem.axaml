@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                     <TextBlock Grid.Column="0"
-                               Foreground="{DynamicResource Haven.Sem.Foreground}">
+                               Foreground="{DynamicResource Sem.Foreground}">
                         <Run Text="{TemplateBinding Value}" />
                         <Run Text="(" /><Run Text="{TemplateBinding Timestamp}" /><Run Text=")" />
                     </TextBlock>

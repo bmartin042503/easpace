@@ -15,201 +15,200 @@ Licensed under the MIT License. See LICENSE file for details.
              d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Journal.Views.JournalPageView"
              x:DataType="vm:JournalPageViewModel"
-             Background="{DynamicResource Haven.Sem.Canvas}"
+             Background="{DynamicResource Sem.Surface}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
-    <Border Classes="card"
-            Classes.gradient="{Binding !IsEditing}"
-            Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+    <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <!-- Sidebar -->
+        <Grid Grid.Column="0"
+              RowDefinitions="Auto,*"
+              RowSpacing="{StaticResource Metrics.Spacing.Lg}">
 
-            <!-- Sidebar -->
-            <Grid Grid.Column="0"
-                  RowDefinitions="Auto,*"
-                  RowSpacing="{StaticResource Metrics.Spacing.Lg}">
-
-                <Grid Grid.Row="0"
-                      ColumnDefinitions="*,Auto"
-                      ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
-
-                    <!-- Search box -->
-                    <TextBox Grid.Column="0"
-                             Text="{Binding SearchText, Mode=TwoWay}"
-                             PlaceholderText="{core:LocalizationService Key='Journal.Search.Placeholder'}"
-                             MinWidth="140">
-                        <TextBox.InnerRightContent>
-                            <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
-
-                    <!-- Add button -->
-                    <Button Grid.Column="1"
-                            Classes="primary icon"
-                            Command="{Binding AddEntryCommand}"
-                            IsEnabled="{Binding !IsEditing}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
-                    </Button>
-
-                </Grid>
-
-                <!-- No entries view -->
-                <StackPanel Grid.Row="1"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Spacing="{StaticResource Metrics.Spacing.Sm}"
-                            IsVisible="{Binding !HasEntries}">
-                    <PathIcon Data="{StaticResource PhosphorIcons.File}"
-                              Width="{StaticResource Metrics.Icon.Size.Xl}"
-                              Height="{StaticResource Metrics.Icon.Size.Xl}"
-                              Foreground="{DynamicResource Haven.Sem.Foreground.Subtle}" />
-                    <TextBlock Text="{core:LocalizationService Key='Journal.Empty.Message'}"
-                               Classes="subtle neutral trm-ellipsis"
-                               TextAlignment="Center"
-                               TextWrapping="Wrap" />
-                </StackPanel>
-
-                <!-- Entries -->
-                <ScrollViewer Grid.Row="1" IsVisible="{Binding HasEntries}">
-
-                    <ListBox Classes="journal list"
-                             ItemsSource="{Binding Entries}"
-                             SelectedItem="{Binding SelectedEntry, Mode=TwoWay}"
-                             IsEnabled="{Binding !IsEditing}">
-
-                        <ListBox.ItemTemplate>
-                            <DataTemplate x:DataType="vm:JournalEntryViewModel">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Classes="journal-list-item fs5 trm-ellipsis"
-                                               Text="{Binding Title}" />
-                                    <TextBlock Classes="journal-sub-list-item fs6 trm-ellipsis"
-                                               Text="{Binding CreatedAt, Converter={StaticResource RelativeDateConverter}}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"
-                                            Spacing="{StaticResource Metrics.Spacing.Sm}" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-
-                    </ListBox>
-
-                </ScrollViewer>
-            </Grid>
-
-            <!-- Vertical splitter -->
-            <GridSplitter Grid.Column="1"
-                          Classes="vertical"
-                          ResizeDirection="Columns" />
-
-            <!-- Reading view -->
-            <Grid Grid.Column="2"
-                  RowDefinitions="Auto,*,Auto"
+            <Grid Grid.Row="0"
                   ColumnDefinitions="*,Auto"
-                  RowSpacing="{StaticResource Metrics.Spacing.Md}"
-                  ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
-                  IsVisible="{Binding !IsEditing}">
+                  ColumnSpacing="{StaticResource Metrics.Spacing.Sm}">
 
-                <!-- Title -->
-                <SelectableTextBlock Grid.Row="0"
-                                     Grid.Column="0"
-                                     Classes="neutral fs2 trm-ellipsis"
-                                     Text="{Binding ActiveEntry.Title}" />
+                <!-- Search box -->
+                <TextBox Grid.Column="0"
+                         Text="{Binding SearchText, Mode=TwoWay}"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Search.Placeholder'}"
+                         MinWidth="140">
+                    <TextBox.InnerRightContent>
+                        <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
 
-                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                            Spacing="{StaticResource Metrics.Spacing.Lg}"
-                            Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
-                            IsVisible="{Binding HasActiveEntry}">
-
-                    <!-- Delete button -->
-                    <Button Classes="tertiary danger icon"
-                            Command="{Binding DeleteEntryCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-                        <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
-                    </Button>
-
-                    <!-- Edit button -->
-                    <Button Classes="tertiary icon"
-                            Command="{Binding EditEntryCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
-                        <PathIcon Data="{DynamicResource PhosphorIcons.Pencil.Fill}" />
-                    </Button>
-
-                </StackPanel>
-
-                <!-- Content -->
-                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <SelectableTextBlock TextWrapping="Wrap"
-                                         Classes="neutral fs4 trm-ellipsis"
-                                         Text="{Binding ActiveEntry.Content}" />
-                </ScrollViewer>
-
-                <!-- Word count -->
-                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
-                           Classes="accent fs4 medium"
-                           Text="{Binding ActiveEntry.WordCountText}" />
-            </Grid>
-
-            <!-- Editor view -->
-            <Grid Grid.Column="2"
-                  RowDefinitions="Auto,*,Auto"
-                  ColumnDefinitions="*,Auto"
-                  RowSpacing="{StaticResource Metrics.Spacing.Md}"
-                  ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
-                  IsVisible="{Binding IsEditing}">
-
-                <!-- Title -->
-                <TextBox Grid.Row="0"
-                         Grid.Column="0"
-                         Text="{Binding Editor.Title, Mode=TwoWay}"
-                         Classes="journal-edit fs2"
-                         PlaceholderText="{core:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
-                         VerticalAlignment="Center" />
-
-                <StackPanel Grid.Row="0"
-                            Grid.Column="1"
-                            Orientation="Horizontal"
-                            Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                    <!-- Cancel button -->
-                    <Button Classes="secondary icon"
-                            Command="{Binding Editor.CancelCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
-                        <PathIcon Data="{StaticResource PhosphorIcons.X}" />
-                    </Button>
-
-                    <!-- Save button -->
-                    <Button Classes="primary icon"
-                            Command="{Binding Editor.SaveCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
-                    </Button>
-
-                </StackPanel>
-
-                <!-- Content -->
-                <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBox Text="{Binding Editor.Content, Mode=TwoWay}"
-                             Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
-                             PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
-                             VerticalAlignment="Stretch" />
-                </ScrollViewer>
-
-                <!-- Word count -->
-                <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
-                           Classes="accent fs4 medium"
-                           Text="{Binding Editor.WordCountText}" />
+                <!-- Add button -->
+                <Button Grid.Column="1"
+                        Classes="primary icon"
+                        Command="{Binding AddEntryCommand}"
+                        IsEnabled="{Binding !IsEditing}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
+                </Button>
 
             </Grid>
+
+            <!-- No entries view -->
+            <StackPanel Grid.Row="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        IsVisible="{Binding !HasEntries}">
+                <PathIcon Data="{StaticResource PhosphorIcons.File}"
+                          Width="{StaticResource Metrics.Icon.Size.Xl}"
+                          Height="{StaticResource Metrics.Icon.Size.Xl}"
+                          Foreground="{DynamicResource Sem.Foreground.Subtle}" />
+                <TextBlock Text="{core:LocalizationService Key='Journal.Empty.Message'}"
+                           Classes="subtle neutral trm-ellipsis"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap" />
+            </StackPanel>
+
+            <!-- Entries -->
+            <ScrollViewer Grid.Row="1" IsVisible="{Binding HasEntries}">
+
+                <ListBox Classes="journal list"
+                         ItemsSource="{Binding Entries}"
+                         SelectedItem="{Binding SelectedEntry, Mode=TwoWay}"
+                         IsEnabled="{Binding !IsEditing}">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:JournalEntryViewModel">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Classes="journal-list-item fs5 trm-ellipsis"
+                                           Text="{Binding Title}" />
+                                <TextBlock Classes="journal-sub-list-item fs6 trm-ellipsis"
+                                           Text="{Binding CreatedAt, Converter={StaticResource RelativeDateConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"
+                                        Spacing="{StaticResource Metrics.Spacing.Sm}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                </ListBox>
+
+            </ScrollViewer>
         </Grid>
-    </Border>
+
+        <!-- Vertical splitter -->
+        <GridSplitter Grid.Column="1"
+                      Classes="vertical"
+                      ResizeDirection="Columns" />
+
+        <!-- Reading view -->
+        <Grid Grid.Column="2"
+              Margin="12,0,0,0"
+              RowDefinitions="Auto,*,Auto"
+              ColumnDefinitions="*,Auto"
+              RowSpacing="{StaticResource Metrics.Spacing.Md}"
+              ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+              IsVisible="{Binding !IsEditing}">
+
+            <!-- Title -->
+            <SelectableTextBlock Grid.Row="0"
+                                 Grid.Column="0"
+                                 Classes="neutral fs2 trm-ellipsis"
+                                 Text="{Binding ActiveEntry.Title}" />
+
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                        Spacing="{StaticResource Metrics.Spacing.Lg}"
+                        Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
+                        IsVisible="{Binding HasActiveEntry}">
+
+                <!-- Delete button -->
+                <Button Classes="tertiary danger icon"
+                        Command="{Binding DeleteEntryCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
+                    <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
+                </Button>
+
+                <!-- Edit button -->
+                <Button Classes="tertiary icon"
+                        Command="{Binding EditEntryCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
+                    <PathIcon Data="{DynamicResource PhosphorIcons.Pencil.Fill}" />
+                </Button>
+
+            </StackPanel>
+
+            <!-- Content -->
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <SelectableTextBlock TextWrapping="Wrap"
+                                     Classes="neutral fs4 trm-ellipsis"
+                                     Text="{Binding ActiveEntry.Content}" />
+            </ScrollViewer>
+
+            <!-- Word count -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                       Classes="subtle neutral fs4" Text="{Binding ActiveEntry.WordCountText}" />
+        </Grid>
+
+        <!-- Editor view -->
+        <Grid Grid.Column="2"
+              Margin="12,0,0,0"
+              RowDefinitions="Auto,*,Auto"
+              ColumnDefinitions="*,Auto"
+              RowSpacing="{StaticResource Metrics.Spacing.Md}"
+              ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+              IsVisible="{Binding IsEditing}">
+
+            <!-- Title -->
+            <TextBox Grid.Row="0"
+                     Grid.Column="0"
+                     Text="{Binding Editor.Title, Mode=TwoWay}"
+                     Classes="journal-edit fs2"
+                     PlaceholderText="{core:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
+                     VerticalAlignment="Center" />
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                <!-- Cancel button -->
+                <Button Classes="secondary icon"
+                        Command="{Binding Editor.CancelCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.X}" />
+                </Button>
+
+                <!-- Save button -->
+                <Button Classes="primary icon"
+                        Command="{Binding Editor.SaveCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
+                </Button>
+
+            </StackPanel>
+
+            <!-- Content -->
+            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBox Text="{Binding Editor.Content, Mode=TwoWay}"
+                         Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
+                         VerticalAlignment="Stretch" />
+            </ScrollViewer>
+
+            <!-- Word count -->
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"
+                       Classes="subtle neutral fs4"
+                       Text="{Binding Editor.WordCountText}" />
+
+        </Grid>
+    </Grid>
+    
 </UserControl>

@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
              MinWidth="300"
              MaxWidth="450" MaxHeight="400"
-             Background="{StaticResource Metrics.Transparent}"
+             Background="Transparent"
              x:Class="easpace.Desktop.Features.Activities.Views.Dialogs.NumericEntryDialogView">
 
     <Design.DataContext>
@@ -54,7 +54,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Unit label -->
                     <TextBlock DockPanel.Dock="Right"
                                Text="{Binding UnitText}" VerticalAlignment="Center"
-                               TextAlignment="Center" Foreground="{DynamicResource Haven.Sem.Foreground}"
+                               TextAlignment="Center" Foreground="{DynamicResource Sem.Foreground}"
                                IsVisible="{Binding UnitText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                Margin="8,0,0,0" />
 

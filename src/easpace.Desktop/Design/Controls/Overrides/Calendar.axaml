@@ -15,10 +15,10 @@ All other rights reserved.
 
     <ControlTheme x:Key="{x:Type Calendar}" TargetType="Calendar">
 
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="HeaderBackground" Value="{DynamicResource Sem.Surface.Elevated}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Md}" />
         <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Sm}" />

@@ -20,9 +20,9 @@ All other rights reserved.
         <Setter Property="MinHeight" Value="52" />
         <Setter Property="Margin" Value="3" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.3Xs}" />
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Sm}" />
@@ -50,7 +50,7 @@ All other rights reserved.
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Surface.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Border#Border">
@@ -63,7 +63,7 @@ All other rights reserved.
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Border">
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand}" />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         </Style>
 
@@ -74,28 +74,28 @@ All other rights reserved.
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
             </Style>
 
         </Style>
 
         <Style Selector="^:blackout /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
         </Style>
 
         <Style Selector="^:selected">
 
             <Style Selector="^ /template/ Border#Root">
-                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Strong}" />
                 <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.OnAccent}" />
+                <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
                 <Setter Property="FontWeight" Value="{StaticResource Metrics.FontWeight.Medium}" />
             </Style>
 
@@ -104,7 +104,7 @@ All other rights reserved.
             </Style>
 
             <Style Selector="^:pressed /template/ Border#Root">
-                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Strong}" />
+                <Setter Property="Background" Value="{DynamicResource Sem.Brand.Strong}" />
             </Style>
 
         </Style>
@@ -116,12 +116,12 @@ All other rights reserved.
             </Style>
 
             <Style Selector="^ /template/ Border#Border">
-                <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Border}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
                 <Setter Property="BorderThickness" Value="0" />
             </Style>
 
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground.Muted}" />
+                <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
             </Style>
 
         </Style>

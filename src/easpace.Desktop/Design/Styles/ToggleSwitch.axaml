@@ -8,32 +8,32 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:services="clr-namespace:easpace.Desktop.Services.Core">
 
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Haven.Sem.Canvas}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <ToggleSwitch />
         </Border>
     </Design.PreviewWith>
 
     <Style Selector="ToggleSwitch">
-        <Setter Property="Foreground" Value="{DynamicResource Haven.Sem.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="OffContent" Value="{services:LocalizationService Key='Common.ToggleSwitch.Off'}" />
         <Setter Property="OnContent" Value="{services:LocalizationService Key='Common.ToggleSwitch.On'}" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
         
         <Style Selector="^:checked /template/ Border#SwitchKnobBounds">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
         </Style>
 
         <Style Selector="^:checked /template/ Ellipse#SwitchKnobOn">
-            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.OnAccent}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.On.Brand}" />
         </Style>
         
         <Style Selector="^:unchecked /template/ Border#OuterBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Foreground}" />
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         </Style>
 
         <Style Selector="^:unchecked /template/ Ellipse#SwitchKnobOff">
-            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.Foreground}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.Foreground}" />
         </Style>
         
     </Style>

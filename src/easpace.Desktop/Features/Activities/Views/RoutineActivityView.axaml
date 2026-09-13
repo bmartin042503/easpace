@@ -87,7 +87,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Day names -->
             <Border Grid.Row="0"
                     BorderThickness="{StaticResource Metrics.Border.Thickness.Bottom}"
-                    BorderBrush="{DynamicResource Haven.Sem.Border}">
+                    BorderBrush="{DynamicResource Sem.Border}">
                 <UniformGrid Rows="1" Margin="{StaticResource Metrics.Spacing.Thickness.Bottom.Xxs}">
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
                                Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />

@@ -13,15 +13,15 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessPageView"
              x:DataType="viewModels:WellnessPageViewModel"
-             Background="{StaticResource Metrics.Transparent}"
+             Background="Transparent"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <Grid>
 
         <!-- Blobs gradient background -->
         <controls:BlobsGradientBackground
-            BackgroundBrush="{DynamicResource Haven.Sem.Accent.Muted}"
-            FromBrush="{DynamicResource Haven.Sem.Accent.Muted}"
+            BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
+            FromBrush="{DynamicResource Sem.Surface.Brand}"
             ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
             EllipseCount="7"
             Speed="0.2"
