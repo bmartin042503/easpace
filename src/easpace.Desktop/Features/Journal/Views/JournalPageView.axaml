@@ -200,6 +200,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBox Text="{Binding Editor.Content, Mode=TwoWay}"
                          Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
                          PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
+                         MaxLength="12800"
                          VerticalAlignment="Stretch" />
             </ScrollViewer>
 

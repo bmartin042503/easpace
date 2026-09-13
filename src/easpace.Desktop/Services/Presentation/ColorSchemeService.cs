@@ -2,12 +2,11 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
+using Avalonia.Threading;
 
 namespace easpace.Desktop.Services.Presentation;
 
@@ -26,48 +25,55 @@ internal enum ColorSchemeAppearance
 
 internal interface IColorSchemeService
 {
-    void Initialize();
     void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance);
 }
 
 internal class ColorSchemeService : IColorSchemeService
 {
-    private IResourceProvider? _activeColorScheme;
-
-    public void Initialize()
-    {
-        var app = Application.Current ?? throw new InvalidOperationException("Application is not initialized.");
-
-        _activeColorScheme = app.Resources.MergedDictionaries.OfType<ResourceInclude>()
-            .FirstOrDefault(x => x.Source?.AbsoluteUri.Contains("/ColorSchemes/") == true);
-    }
+    private ResourceDictionary? _activePalette;
+    private ColorScheme? _activeColorScheme;
 
     public void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance)
     {
+        Dispatcher.UIThread.VerifyAccess();
+
         var app = Application.Current ?? throw new InvalidOperationException("Application is not initialized.");
 
         var uri = colorScheme switch
         {
-            ColorScheme.HavenBlue => new Uri("avares://easpace.Desktop/Design/ColorSchemes/HavenBlue/ColorScheme.axaml"),
-            ColorScheme.AvallamaPurple => new Uri("avares://easpace.Desktop/Design/ColorSchemes/AvallamaPurple/ColorScheme.axaml"),
+            ColorScheme.HavenBlue => new Uri("avares://easpace.Desktop/Design/ColorSchemes/HavenBlue.axaml"),
+            ColorScheme.AvallamaPurple => new Uri("avares://easpace.Desktop/Design/ColorSchemes/AvallamaPurple.axaml"),
             _ => throw new ArgumentOutOfRangeException(nameof(colorScheme))
         };
 
-        var newScheme = (ResourceDictionary)AvaloniaXamlLoader.Load(uri);
-
-        if (_activeColorScheme is not null)
+        var themeVariant = colorSchemeAppearance switch
         {
-            app.Resources.MergedDictionaries.Remove(_activeColorScheme);
-        }
-
-        app.Resources.MergedDictionaries.Insert(0, newScheme);
-        _activeColorScheme = newScheme;
-
-        app.RequestedThemeVariant = colorSchemeAppearance switch
-        {
+            ColorSchemeAppearance.Default => ThemeVariant.Default,
             ColorSchemeAppearance.Light => ThemeVariant.Light,
             ColorSchemeAppearance.Dark => ThemeVariant.Dark,
-            _ => ThemeVariant.Default
+
+            _ => throw new ArgumentOutOfRangeException(nameof(colorSchemeAppearance))
         };
+
+        if (_activeColorScheme != colorScheme)
+        {
+            var newPalette = (ResourceDictionary)AvaloniaXamlLoader.Load(uri);
+            
+            var dictionaries = app.Resources.MergedDictionaries;
+
+            if (_activePalette is null)
+            {
+                dictionaries.Add(newPalette);
+            }
+            else
+            {
+                dictionaries[dictionaries.IndexOf(_activePalette)] = newPalette;
+            }
+
+            _activePalette = newPalette;
+            _activeColorScheme = colorScheme;
+        }
+
+        app.RequestedThemeVariant = themeVariant;
     }
 }

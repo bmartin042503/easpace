@@ -233,8 +233,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
-                    <StackPanel Grid.Column="0" Orientation="Vertical"
-                                Spacing="{StaticResource Metrics.Spacing.Md}">
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
                         <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
@@ -242,7 +241,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <TextBlock Classes="brand fs3 medium trm-ellipsis" Text="easpace" />
 
                             <!-- Built with .NET and Avalonia UI -->
-                            <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
                                        Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
 
                         </StackPanel>
@@ -251,23 +250,23 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Orientation="Vertical" Spacing="4">
 
                             <!-- Version -->
-                            <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
                                        Text="{Binding VersionText}" />
 
                             <!-- Contact -->
-                            <TextBlock Classes="strong accent fs5 trm-ellipsis"
+                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
                                        Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
 
                         </StackPanel>
 
                         <!-- Made with <3 in Hungary -->
                         <StackPanel Orientation="Horizontal" Spacing="4">
-                            <TextBlock Classes="strong accent fs5" Text="Made with" />
+                            <TextBlock Classes="strong brand fs5" Text="Made with" />
                             <PathIcon Foreground="{DynamicResource Sem.Brand.Strong}"
                                       Data="{StaticResource PhosphorIcons.Heart.Fill}"
                                       Width="{StaticResource Metrics.Icon.Size.Xs}"
                                       Height="{StaticResource Metrics.Icon.Size.Xs}" />
-                            <TextBlock Classes="strong accent fs5" Text="in Hungary" />
+                            <TextBlock Classes="strong brand fs5" Text="in Hungary" />
                         </StackPanel>
 
                         <!-- Copyright button + easpace MIT license -->

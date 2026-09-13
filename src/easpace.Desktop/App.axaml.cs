@@ -51,8 +51,6 @@ internal partial class App : Application
         var preferencesService = _services.GetRequiredService<IPreferencesService>();
         var colorSchemeService = _services.GetRequiredService<IColorSchemeService>();
 
-        colorSchemeService.Initialize();
-
         var colorScheme = preferencesService.ReadPreference<ColorScheme>(PreferenceKey.ColorScheme);
         var colorSchemeAppearance = preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
 

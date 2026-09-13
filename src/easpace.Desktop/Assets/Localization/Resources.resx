@@ -662,13 +662,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Choose your preferred language for the application.</value>
     </data>
     <data name="Settings.Glassmorphism.Label" xml:space="preserve">
-        <value>Glass Effect</value>
+        <value>Glassmorphism</value>
     </data>
     <data name="Settings.Glassmorphism.Description" xml:space="preserve">
         <value>Enables translucent, glass-like effect to the interface.</value>
-    </data>
-    <data name="Settings.ColorScheme.Description" xml:space="preserve">
-        <value>Select a color scheme that suits your environment.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Color Scheme</value>
@@ -686,7 +683,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Appearance</value>
     </data>
     <data name="Settings.ColorSchemeAppearance.Description" xml:space="preserve">
-        <value>Set the appearance for the color scheme.</value>
+        <value>Set the application's appearance.</value>
     </data>
     <data name="Settings.ColorSchemeAppearanceSetting.System" xml:space="preserve">
         <value>System</value>

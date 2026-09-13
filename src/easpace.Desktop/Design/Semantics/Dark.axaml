@@ -1,0 +1,79 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <SolidColorBrush x:Key="Sem.Foreground" Color="{DynamicResource Neutral50}" />
+    <SolidColorBrush x:Key="Sem.Foreground.Subtle" Color="{DynamicResource Neutral200}" />
+    <SolidColorBrush x:Key="Sem.Foreground.Muted" Color="{DynamicResource Neutral300}" />
+    <SolidColorBrush x:Key="Sem.Brand" Color="{DynamicResource Brand300}" />
+    <SolidColorBrush x:Key="Sem.Brand.Subtle" Color="{DynamicResource Brand400}" />
+    <SolidColorBrush x:Key="Sem.Brand.Strong" Color="{DynamicResource Brand200}" />
+    <SolidColorBrush x:Key="Sem.Brand.Strong.Hover" Color="{DynamicResource Brand100}" />
+    <SolidColorBrush x:Key="Sem.On.Brand" Color="{DynamicResource Neutral975}" />
+    <SolidColorBrush x:Key="Sem.Success" Color="{DynamicResource Success300}" />
+    <SolidColorBrush x:Key="Sem.Success.Strong" Color="{DynamicResource Success200}" />
+    <SolidColorBrush x:Key="Sem.Warning" Color="{DynamicResource Warning300}" />
+    <SolidColorBrush x:Key="Sem.Warning.Strong" Color="{DynamicResource Warning200}" />
+    <SolidColorBrush x:Key="Sem.Danger" Color="{DynamicResource Danger300}" />
+    <SolidColorBrush x:Key="Sem.Danger.Strong" Color="{DynamicResource Danger200}" />
+    <SolidColorBrush x:Key="Sem.On.Danger" Color="{DynamicResource Neutral975}" />
+    <SolidColorBrush x:Key="Sem.Info" Color="{DynamicResource Info300}" />
+    <SolidColorBrush x:Key="Sem.Info.Strong" Color="{DynamicResource Info200}" />
+    
+    <SolidColorBrush x:Key="Sem.Surface" Color="{DynamicResource Neutral975}" />
+    <SolidColorBrush x:Key="Sem.Surface.Card" Color="{DynamicResource Neutral950}" Opacity="0.5" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="{DynamicResource Neutral800}" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="{DynamicResource Neutral900}" />
+    <SolidColorBrush x:Key="Sem.Surface.Sidebar" Color="{DynamicResource Neutral950}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand" Color="{DynamicResource Brand975}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand.Hover" Color="{DynamicResource Brand950}" />
+    <SolidColorBrush x:Key="Sem.Surface.Success" Color="{DynamicResource Success975}" />
+    <SolidColorBrush x:Key="Sem.Surface.Warning" Color="{DynamicResource Warning975}" />
+    <SolidColorBrush x:Key="Sem.Surface.Danger" Color="{DynamicResource Danger975}" />
+    <SolidColorBrush x:Key="Sem.Surface.Info" Color="{DynamicResource Info975}" Opacity="0.35" />
+    <SolidColorBrush x:Key="Sem.Surface.BlurBackground" Color="#000000" Opacity="0.35" />
+    
+    <SolidColorBrush x:Key="Sem.Border" Color="{DynamicResource Neutral500}" />
+    <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{DynamicResource Neutral800}" />
+    <SolidColorBrush x:Key="Sem.Border.Brand" Color="{DynamicResource Brand300}" />
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Brand300}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Brand400}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Brand200}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Brand300}" Offset="1.0" />
+    </LinearGradientBrush>
+    
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Brand950}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Brand975}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Sem.Gradient.Brand.Subtle.Reversed" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Brand975}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Brand950}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Danger300}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Danger400}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Danger200}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Danger300}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Sem.Gradient.Danger.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
+        <GradientStop Color="{DynamicResource Danger950}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Danger975}" Offset="1.0" />
+    </LinearGradientBrush>
+
+</ResourceDictionary>

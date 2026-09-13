@@ -50,6 +50,23 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </ResourceDictionary.MergedDictionaries>
             
+            <!-- Semantics -->
+            <ResourceDictionary.ThemeDictionaries>
+
+                <ResourceDictionary x:Key="Light">
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceInclude Source="avares://easpace.Desktop/Design/Semantics/Light.axaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="Dark">
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceInclude Source="avares://easpace.Desktop/Design/Semantics/Dark.axaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+
+            </ResourceDictionary.ThemeDictionaries>
+            
             <!-- Converters -->
             <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
             <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />

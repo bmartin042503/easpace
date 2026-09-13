@@ -671,7 +671,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Színséma</value>
     </data>
     <data name="Settings.ColorScheme.Description" xml:space="preserve">
-        <value>Válassz a környezetedhez illő színsémát.</value>
+        <value>Válaszd ki a környezetedhez illő színsémát.</value>
     </data>
     <data name="Settings.ColorScheme.HavenBlue" xml:space="preserve">
         <value>Haven Blue</value>
@@ -683,7 +683,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Megjelenés</value>
     </data>
     <data name="Settings.ColorSchemeAppearance.Description" xml:space="preserve">
-        <value>Válaszd ki a színsémához használt megjelenést.</value>
+        <value>Válaszd ki az alkalmazás megjelenését.</value>
     </data>
     <data name="Settings.ColorSchemeAppearanceSetting.System" xml:space="preserve">
         <value>Rendszer</value>
