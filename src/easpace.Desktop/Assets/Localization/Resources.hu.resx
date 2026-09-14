@@ -100,9 +100,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Button.Restore" xml:space="preserve">
         <value>Visszaállítás</value>
     </data>
-    <data name="Common.Button.More" xml:space="preserve">
-        <value>Még több...</value>
-    </data>
     <data name="Common.Button.Back" xml:space="preserve">
         <value>Vissza</value>
     </data>
@@ -132,6 +129,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Common.Error.General" xml:space="preserve">
         <value>Váratlan hiba lépett fel. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Common.Title.History" xml:space="preserve">
+        <value>Előzmények</value>
     </data>
     <data name="Journal.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
@@ -511,6 +511,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Label.Cheerfulness" xml:space="preserve">
         <value>Vidámság</value>
     </data>
+    <data name="Mood.Labels.More" xml:space="preserve">
+        <value>További érzelmek</value>
+    </data>
     <data name="Mood.Input.DescriptionPlaceholder" xml:space="preserve">
         <value>Leírás...</value>
     </data>
@@ -588,9 +591,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Session.Cycles" xml:space="preserve">
         <value>{0} ciklus</value>
-    </data>
-    <data name="Wellness.Title.History" xml:space="preserve">
-        <value>Előzmények</value>
     </data>
     <data name="Wellness.Empty.Message" xml:space="preserve">
         <value>Nincsenek gyakorlatok</value>

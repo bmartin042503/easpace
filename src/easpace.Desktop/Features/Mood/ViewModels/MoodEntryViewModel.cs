@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Globalization;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Mood.Constants;
@@ -16,9 +17,16 @@ internal partial class MoodEntryViewModel : ViewModelBase
 
     [ObservableProperty] private double _value;
     [ObservableProperty] private string _description;
-    [ObservableProperty] private DateTimeOffset _timestamp;
+    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimestampText))]
+    private DateTimeOffset _timestamp;
 
     public AvaloniaList<MoodLabelState> Labels { get; } = [];
+    
+    public bool HasLabels => Labels.Count > 0;
+
+    public string TimestampText => Timestamp.ToLocalTime().ToString("F", CultureInfo.CurrentCulture);
     
     public MoodEntryViewModel(MoodEntry moodEntry)
     {
@@ -27,5 +35,7 @@ internal partial class MoodEntryViewModel : ViewModelBase
         Value = moodEntry.Value;
         Description = moodEntry.Description;
         Labels.AddRange(moodEntry.Labels);
+        
+        Labels.CollectionChanged += (_, _) => OnPropertyChanged(nameof(HasLabels));
     }
 }

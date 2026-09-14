@@ -61,7 +61,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
         _wellnessSessionManager.TimerFinished += OnSessionManagerTimerFinished;
 
         // setup initial timer text display based on user configuration
-        if (_sessionConfiguration is { IsTimerSet: true, TargetDuration: not null })
+        if (_sessionConfiguration is { TargetDuration: not null })
         {
             TimerText = _wellnessSessionManager.GetTimerText(_sessionConfiguration.TargetDuration.Value);
         }

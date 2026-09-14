@@ -25,7 +25,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Info.Strong" Color="{DynamicResource Info800}" />
     
     <SolidColorBrush x:Key="Sem.Surface" Color="{DynamicResource Neutral25}" />
-    <SolidColorBrush x:Key="Sem.Surface.Card" Color="{DynamicResource Neutral50}" Opacity="0.5" />
+    <SolidColorBrush x:Key="Sem.Surface.Card" Color="{DynamicResource Neutral50}" Opacity="0.35" />
     <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="#ffffff" />
     <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="#ffffff" Opacity="0.5" />
     <SolidColorBrush x:Key="Sem.Surface.Sidebar" Color="{DynamicResource Neutral50}" />

@@ -96,7 +96,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <Button Classes="dots-flyout">
 
                 <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                          Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                          Foreground="{DynamicResource Sem.Foreground.Muted}"
                           Width="{StaticResource Metrics.Icon.Size.Md}"
                           Height="{StaticResource Metrics.Icon.Size.Md}" />
 
@@ -193,7 +193,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource TimeRangeConverter}}" />
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 

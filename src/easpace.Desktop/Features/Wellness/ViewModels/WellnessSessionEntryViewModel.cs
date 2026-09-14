@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -25,6 +26,8 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
     public string? BreathingTechniqueName { get; init; }
     public string DurationMinutesText { get; init; }
     public string? CyclesText { get; init; }
+    
+    public string TimestampText => StartDate.ToLocalTime().ToString("F", CultureInfo.CurrentCulture);
 
     public WellnessSessionEntryViewModel(WellnessSessionEntry wellnessSessionEntry)
     {

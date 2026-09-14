@@ -35,8 +35,8 @@ Licensed under the MIT License. See LICENSE file for details.
             <DataTemplate x:Key="RoutineActivityViewModel" DataType="vm:RoutineActivityViewModel">
                 <controls:ActivityListItem Title="{Binding Name}"
                                            Value="{Binding TodayEntry.State, Converter={StaticResource EnumToLocalizedConverter}}"
-                                           Icon="{StaticResource PhosphorIcons.CheckSquareOffset}"
-                                           SelectedIcon="{StaticResource PhosphorIcons.CheckSquareOffset.Fill}" />
+                                           Icon="{StaticResource PhosphorIcons.CheckSquare}"
+                                           SelectedIcon="{StaticResource PhosphorIcons.CheckSquare.Fill}" />
             </DataTemplate>
 
             <!-- Template of Milestone Activity -->

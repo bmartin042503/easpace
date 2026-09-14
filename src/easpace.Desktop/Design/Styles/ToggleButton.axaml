@@ -40,13 +40,28 @@ Licensed under the MIT License. See LICENSE file for details.
             Selector="^ /template/ ContentPresenter,
                       ^:pointerover /template/ ContentPresenter,
                       ^:pressed /template/ ContentPresenter">
+            
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
             <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
+            
+            <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            <Setter Property="RenderTransform" Value="scale(1)" />
+
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                </Transitions>
+            </Setter>
+            
         </Style>
 
         <Style Selector="^:pointerover">
             <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        
+        <Style Selector="^:pressed /template/ ContentPresenter">
+            <Setter Property="RenderTransform" Value="scale(0.96)" />
         </Style>
 
         <Style Selector="^:checked /template/ ContentPresenter">

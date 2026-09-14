@@ -2,11 +2,13 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
@@ -27,24 +29,25 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _logger;
 
-    [NotifyPropertyChangedFor(nameof(DurationText))] [ObservableProperty]
+    [ObservableProperty] 
+    [NotifyPropertyChangedFor(nameof(DurationText))]
     private double _selectedSeconds = 300;
 
     [ObservableProperty] private double _stepSeconds = 60;
     [ObservableProperty] private double _maximumSeconds = 30 * 60;
     [ObservableProperty] private double _minimumSeconds = 60;
-    [ObservableProperty] private bool _isTimerChecked = true;
+    
+    public IEnumerable<WellnessSessionType> SessionTypes { get; } = Enum.GetValues<WellnessSessionType>();
     
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    private bool _isBreathingChecked = true;
-    
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    private bool _isMeditationChecked;
-    
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    [NotifyPropertyChangedFor(nameof(IsBreathingChecked))]
+    [NotifyPropertyChangedFor(nameof(IsMeditationChecked))]
+    private WellnessSessionType _selectedSessionType;
+
+    public bool IsBreathingChecked => SelectedSessionType is WellnessSessionType.Breathing;
+    public bool IsMeditationChecked => SelectedSessionType is WellnessSessionType.Meditation;
+
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
     private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
 
     [ObservableProperty]
@@ -53,17 +56,14 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private bool _isInitialized;
 
     [ObservableProperty] private bool _isLoading = true;
-    
+
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
 
     private bool _isInitializationRunning;
-    
-    public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
-    
-    public bool HasBreathingTechniques => BreathingTechniques.Count > 0;
-    
-    public bool ShowNoBreathingTechniques => IsInitialized && !HasBreathingTechniques;
 
+    public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
+    public bool HasBreathingTechniques => BreathingTechniques.Count > 0;
+    public bool ShowNoBreathingTechniques => IsInitialized && !HasBreathingTechniques;
     public bool ShowNoSessionEntries => IsInitialized && !HasSessionEntries;
 
     private bool CanStartSession()
@@ -154,7 +154,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
             OnPropertyChanged(nameof(HasSessionEntries));
             OnPropertyChanged(nameof(ShowNoSessionEntries));
         };
-        
+
         BreathingTechniques.CollectionChanged += (_, _) =>
         {
             OnPropertyChanged(nameof(HasBreathingTechniques));
@@ -211,10 +211,9 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private async Task DeleteEntry(object parameter)
     {
         if (parameter is not WellnessSessionEntryViewModel entry) return;
-        
+
         try
         {
-            
             var confirmation = new ConfirmDialogViewModel
             {
                 Title = LocalizationService.GetString("Wellness.DeleteSessionDialog.Title"),
@@ -223,13 +222,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
                 ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
                 IsDestructive = true,
             };
-        
+
             await _dialogService.ShowDialogAsync(confirmation);
 
             if (confirmation.Confirmed)
             {
                 var isDeleted = await _wellnessSessionEntryService.DeleteWellnessSessionEntryAsync(entry.Id);
-        
+
                 if (!isDeleted) return;
 
                 WellnessSessionEntries.Remove(entry);
@@ -237,14 +236,15 @@ internal partial class WellnessStartViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while attempting to delete wellness session entry {EntryId}", entry.Id);
-            
+            _logger.LogError(ex, "An error occurred while attempting to delete wellness session entry {EntryId}",
+                entry.Id);
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Wellness.Error.DeleteFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
@@ -266,16 +266,8 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
             int cycles;
 
-            if (IsTimerChecked)
-            {
-                cycles = (int)Math.Round(SelectedSeconds / cycleDurationSeconds);
-                targetDuration = TimeSpan.FromSeconds(cycles * cycleDurationSeconds);
-            }
-            else
-            {
-                cycles = SelectedBreathingTechniqueViewModel.Cycles;
-                targetDuration = TimeSpan.Zero;
-            }
+            cycles = (int)Math.Round(SelectedSeconds / cycleDurationSeconds);
+            targetDuration = TimeSpan.FromSeconds(cycles * cycleDurationSeconds);
 
             breathingTechniqueConfiguration = new BreathingTechniqueConfiguration(
                 BreathingTechnique: SelectedBreathingTechniqueViewModel.BreathingTechnique,
@@ -284,22 +276,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
         }
         else
         {
-            targetDuration = IsTimerChecked ? TimeSpan.FromSeconds(SelectedSeconds) : TimeSpan.Zero;
-        }
-
-        // determine session type
-        var sessionType = WellnessSessionType.Breathing;
-
-        if (IsMeditationChecked)
-        {
-            sessionType = WellnessSessionType.Meditation;
+            targetDuration = TimeSpan.FromSeconds(SelectedSeconds);
         }
 
         // assemble the final configuration payload
         var sessionConfiguration = new WellnessSessionConfiguration(
-            SessionType: sessionType,
+            SessionType: SelectedSessionType,
             TargetDuration: targetDuration,
-            IsTimerSet: IsTimerChecked,
             BreathingTechniqueConfiguration: breathingTechniqueConfiguration
         );
 
@@ -313,32 +296,25 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private async Task LoadWellnessSessionEntries()
     {
         var sessionEntries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
-        
-        var sessionEntryViewModels = sessionEntries.Select(sessionEntry => new WellnessSessionEntryViewModel(sessionEntry));
-        
+
+        var sessionEntryViewModels =
+            sessionEntries.Select(sessionEntry => new WellnessSessionEntryViewModel(sessionEntry));
+
         WellnessSessionEntries.AddRange(sessionEntryViewModels);
     }
 
     private async Task LoadBreathingTechniques()
     {
         var techniques = await _breathingTechniqueService.GetBreathingTechniquesAsync();
-        
         var techniqueViewModels = techniques.Select(t => new BreathingTechniqueViewModel(t));
-        
         BreathingTechniques.AddRange(techniqueViewModels);
-        
         SelectedBreathingTechniqueViewModel = BreathingTechniques.FirstOrDefault();
     }
 
     /// <summary>
-    /// Triggered automatically when the breathing radio button state changes.
+    /// Triggered automatically when the selected session type changes.
     /// </summary>
-    partial void OnIsBreathingCheckedChanged(bool value) => UpdateSlider();
-
-    /// <summary>
-    /// Triggered automatically when the meditation radio button state changes.
-    /// </summary>
-    partial void OnIsMeditationCheckedChanged(bool value) => UpdateSlider();
+    partial void OnSelectedSessionTypeChanged(WellnessSessionType value) => UpdateSlider();
 
     /// <summary>
     /// Triggered automatically when the selected breathing technique changes.
@@ -357,14 +333,14 @@ internal partial class WellnessStartViewModel : ViewModelBase
             // calculate minimum cycles required to hit at least one minute
             var minCycles = Math.Ceiling(60.0 / StepSeconds);
             MinimumSeconds = minCycles * StepSeconds;
-            
-            // calculate maximum cycles with a 10 minute limit
+
+            // calculate maximum cycles with a 10-minute limit
             var maxCycles = Math.Floor(10 * 60.0 / StepSeconds);
             MaximumSeconds = maxCycles * StepSeconds;
         }
         else
         {
-            MaximumSeconds = 30 * 60;
+            MaximumSeconds = 45 * 60;
             StepSeconds = 60;
             MinimumSeconds = 60;
         }

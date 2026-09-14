@@ -64,6 +64,18 @@ public class EnumToLocalizedConverter : IValueConverter
                 _ => string.Empty
             };
         }
+
+        if (value is ChartTimeRange timeRange)
+        {
+            return timeRange switch
+            {
+                ChartTimeRange.Year => LocalizationService.GetString("Common.Time.Year"),
+                ChartTimeRange.Week => LocalizationService.GetString("Common.Time.Week"),
+                ChartTimeRange.Month => LocalizationService.GetString("Common.Time.Month"),
+                ChartTimeRange.Day => LocalizationService.GetString("Common.Time.Day"),
+                _ => LocalizationService.GetString("Common.Time.All"),
+            };
+        }
         
         return string.Empty;
     }

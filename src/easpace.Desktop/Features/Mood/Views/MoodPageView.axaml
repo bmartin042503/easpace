@@ -20,13 +20,94 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="600" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="600" />
         </Grid.ColumnDefinitions>
 
-        
-        <Border Classes="card" Grid.Column="0">
+        <!-- New mood entry form -->
+        <Border Classes="card" Grid.Column="0" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
+            <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}">
+
+                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
+
+                        <!-- Form title -->
+                        <TextBlock Grid.Row="0" Classes="neutral fs2"
+                                   Text="{core:LocalizationService Key='Mood.Form.Title'}"
+                                   TextAlignment="Center" VerticalAlignment="Center" />
+
+                        <!-- Slider -->
+                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" MaxWidth="400"
+                                    VerticalAlignment="Center">
+                            <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
+                                       Foreground="{DynamicResource Sem.Brand.Strong}"
+                                       HorizontalAlignment="Center" />
+                            <Slider Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
+                                    HorizontalAlignment="Stretch" SmallChange="0.25" />
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1" RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Sm}">
+
+                        <!-- Labels -->
+                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding MoodLabels}" HorizontalAlignment="Center">
+
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                   ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.DataTemplates>
+                                    <DataTemplate DataType="vm:MoodLabelViewModel">
+
+                                        <ToggleButton IsChecked="{Binding IsChecked}" Classes="mood-label">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </ToggleButton>
+
+                                    </DataTemplate>
+                                </ItemsControl.DataTemplates>
+
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <!-- Load more button -->
+                        <Button Grid.Row="1" Classes="regular tertiary"
+                                Content="{core:LocalizationService Key='Mood.Labels.More'}"
+                                Command="{Binding LoadAllLabelsCommand}"
+                                IsVisible="{Binding IsLoadMoreButtonVisible}"
+                                HorizontalAlignment="Center" />
+                    </Grid>
+
+                    <!-- Description text box -->
+                    <TextBox Grid.Row="2" Classes="large-text-area" Text="{Binding Description}"
+                             HorizontalAlignment="Stretch" Height="100"
+                             PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
+
+                </Grid>
+
+                <!-- Save button -->
+                <Button Grid.Row="1" Classes="regular primary" Command="{Binding SaveCommand}"
+                        Content="{core:LocalizationService Key='Common.Button.Save'}"
+                        HorizontalAlignment="Right" />
+
+            </Grid>
+        </Border>
+
+        <!-- Horizontal splitter -->
+        <GridSplitter Grid.Column="1"
+                      Background="Transparent"
+                      Width="{StaticResource Metrics.Spacing.Lg}"
+                      ResizeDirection="Columns" />
+
+        <Border Classes="card" Grid.Column="2">
             <Grid>
 
                 <!-- No entries view -->
@@ -80,161 +161,93 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Mood entries -->
-                <ScrollViewer IsVisible="{Binding HasMoodEntries}">
-                    <ItemsRepeater ItemsSource="{Binding MoodEntries}">
+                <Grid RowDefinitions="Auto,*"
+                      RowSpacing="{StaticResource Metrics.Spacing.Sm}"
+                      IsVisible="{Binding HasMoodEntries}">
 
-                        <ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="vm:MoodEntryViewModel">
-                                <Border Classes="elevated card">
+                    <TextBlock Grid.Row="0" Text="{core:LocalizationService Key='Common.Title.History'}"
+                               Classes="neutral fs3" TextAlignment="Center" />
 
-                                    <StackPanel Orientation="Vertical"
-                                                Spacing="{StaticResource Metrics.Spacing.Sm}">
+                    <ScrollViewer Grid.Row="1">
+                        <ItemsRepeater ItemsSource="{Binding MoodEntries}">
 
-                                        <Grid ColumnDefinitions="*,Auto"
-                                              ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="vm:MoodEntryViewModel">
+                                    <Border Classes="elevated card">
 
-                                            <!-- Mood state -->
-                                            <TextBlock Grid.Column="0" Classes="neutral fs4 trm-ellipsis"
-                                                       Text="{Binding Value, Converter={StaticResource MoodSliderValueConverter}}"
-                                                       VerticalAlignment="Center" />
+                                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
+                                            
+                                            <!-- Header -->
+                                            <Grid ColumnDefinitions="*,Auto"
+                                                  ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
-                                            <!-- Delete button -->
-                                            <Button Grid.Column="1" Classes="tertiary danger icon"
-                                                    Command="{Binding $parent[UserControl].((vm:MoodPageViewModel)DataContext).DeleteEntryCommand}"
-                                                    CommandParameter="{Binding .}" VerticalAlignment="Top"
-                                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-                                                <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
-                                            </Button>
+                                                <!-- Mood state -->
+                                                <TextBlock Grid.Column="0"
+                                                           Classes="neutral fs4 trm-ellipsis"
+                                                           Text="{Binding Value, Converter={StaticResource MoodSliderValueConverter}}"
+                                                           VerticalAlignment="Center" />
 
-                                        </Grid>
+                                                <!-- Delete button -->
+                                                <Button Grid.Column="1"
+                                                        Classes="tertiary danger icon"
+                                                        Command="{Binding $parent[UserControl].((vm:MoodPageViewModel)DataContext).DeleteEntryCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        VerticalAlignment="Top"
+                                                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
+                                                    <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
+                                                </Button>
 
-                                        <!-- Description -->
-                                        <TextBlock Classes="neutral fs6 trm-ellipsis"
-                                                   Text="{Binding Description}"
-                                                   IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                                   TextWrapping="Wrap" />
+                                            </Grid>
 
-                                        <!-- Labels -->
-                                        <ItemsControl ItemsSource="{Binding Labels}"
-                                                      IsVisible="{Binding Labels, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                            <!-- Description -->
+                                            <TextBlock Classes="neutral fs6 trm-ellipsis"
+                                                       Text="{Binding Description}"
+                                                       IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                       TextWrapping="Wrap" />
 
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate x:DataType="constants:MoodLabelState">
-                                                    <TextBlock Classes="strong brand fs6 medium"
-                                                               Text="{Binding Path=., Converter={StaticResource EnumToLocalizedConverter}}" />
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
+                                            <!-- Labels -->
+                                            <ItemsControl ItemsSource="{Binding Labels}"
+                                                          IsVisible="{Binding HasLabels}">
 
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"
-                                                               ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
-                                                               LineSpacing="{StaticResource Metrics.Spacing.Xxs}" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="constants:MoodLabelState">
+                                                        <TextBlock Classes="strong brand fs6 medium"
+                                                                   Text="{Binding Path=.,Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
 
-                                        </ItemsControl>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Horizontal"
+                                                                   HorizontalAlignment="Left"
+                                                                   ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                                   LineSpacing="{StaticResource Metrics.Spacing.Xxs}" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
 
-                                        <!-- Relative date -->
-                                        <TextBlock Classes="subtle neutral fs6 trm-ellipsis"
-                                                   Text="{Binding Timestamp, Converter={StaticResource RelativeDateConverter}}" />
+                                            </ItemsControl>
 
-                                    </StackPanel>
+                                            <!-- Relative date -->
+                                            <TextBlock Classes="subtle neutral fs6 trm-ellipsis"
+                                                       Text="{Binding Timestamp, Converter={StaticResource RelativeDateConverter}}"
+                                                       ToolTip.Tip="{Binding TimestampText}" />
 
-                                </Border>
-                            </DataTemplate>
-                        </ItemsRepeater.ItemTemplate>
+                                        </StackPanel>
 
-                        <ItemsRepeater.Layout>
-                            <StackLayout Orientation="Vertical"
-                                         Spacing="{StaticResource Metrics.Spacing.Xs}" />
-                        </ItemsRepeater.Layout>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
 
-                    </ItemsRepeater>
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Vertical"
+                                             Spacing="{StaticResource Metrics.Spacing.Xs}" />
+                            </ItemsRepeater.Layout>
 
-                </ScrollViewer>
+                        </ItemsRepeater>
 
-            </Grid>
-        </Border>
-
-        <!-- Horizontal splitter -->
-        <GridSplitter Grid.Column="1"
-                      Background="Transparent"
-                      Width="{StaticResource Metrics.Spacing.Lg}"
-                      ResizeDirection="Columns" />
-
-        <!-- New mood entry form -->
-        <Border Classes="card" Grid.Column="2" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
-            <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}">
-
-                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
-
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
-
-                        <!-- Form title -->
-                        <TextBlock Grid.Row="0" Classes="neutral fs2"
-                                   Text="{core:LocalizationService Key='Mood.Form.Title'}"
-                                   TextAlignment="Center" VerticalAlignment="Top" />
-
-                        <!-- Slider -->
-                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" MaxWidth="400"
-                                    VerticalAlignment="Center">
-                            <TextBlock Classes="neutral fs3" Text="{Binding MoodStateText}"
-                                       Foreground="{DynamicResource Sem.Brand.Strong}"
-                                       HorizontalAlignment="Center" />
-                            <Slider Minimum="0" Maximum="1" Value="{Binding MoodSliderValue}"
-                                    HorizontalAlignment="Stretch" SmallChange="0.25" />
-                        </StackPanel>
-
-                    </Grid>
-
-                    <Grid Grid.Row="1" RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Sm}">
-
-                        <!-- Labels -->
-                        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled"
-                                      VerticalScrollBarVisibility="Auto">
-                            <ItemsControl ItemsSource="{Binding MoodLabels}" HorizontalAlignment="Center">
-
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                                   ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
-                                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
-                                <ItemsControl.DataTemplates>
-                                    <DataTemplate DataType="vm:MoodLabelViewModel">
-
-                                        <ToggleButton IsChecked="{Binding IsChecked}" Classes="mood-label">
-                                            <TextBlock Text="{Binding Name}" />
-                                        </ToggleButton>
-
-                                    </DataTemplate>
-                                </ItemsControl.DataTemplates>
-
-                            </ItemsControl>
-                        </ScrollViewer>
-
-                        <!-- Load more button -->
-                        <Button Grid.Row="1" Classes="regular tertiary"
-                                Content="{core:LocalizationService Key='Common.Button.More'}"
-                                Command="{Binding LoadAllLabelsCommand}"
-                                IsVisible="{Binding IsLoadMoreButtonVisible}"
-                                HorizontalAlignment="Center" />
-                    </Grid>
-
-                    <!-- Description text box -->
-                    <TextBox Grid.Row="2" Classes="large-text-area" Text="{Binding Description}"
-                             HorizontalAlignment="Stretch" Height="100"
-                             PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
+                    </ScrollViewer>
 
                 </Grid>
-
-                <!-- Save button -->
-                <Button Grid.Row="1" Classes="regular primary" Command="{Binding SaveCommand}"
-                        Content="{core:LocalizationService Key='Common.Button.Save'}"
-                        HorizontalAlignment="Right" />
 
             </Grid>
         </Border>

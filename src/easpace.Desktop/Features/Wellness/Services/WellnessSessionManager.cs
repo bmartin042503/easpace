@@ -78,11 +78,8 @@ internal class WellnessSessionManager : IWellnessSessionManager
             var randomIndex = new Random().Next(0, _meditationInstructTexts.Count - 1);
             _instructionText = _meditationInstructTexts[randomIndex];
         }
-        
-        if (_sessionConfiguration.IsTimerSet)
-        {
-            _timeLeft = _sessionConfiguration.TargetDuration ?? TimeSpan.Zero;
-        }
+
+        _timeLeft = _sessionConfiguration.TargetDuration ?? TimeSpan.Zero;
     }
     
     public void PauseSession()
@@ -232,23 +229,14 @@ internal class WellnessSessionManager : IWellnessSessionManager
             _meditationInstructElapsedSeconds++;
         }
 
-        string timerText;
-
         // evaluate timer limits if a specific duration was set
-        if (_sessionConfiguration.IsTimerSet)
-        {
-            _timeLeft = _timeLeft.Subtract(TimeSpan.FromSeconds(1));
-            timerText = GetTimerText(_timeLeft);
+        _timeLeft = _timeLeft.Subtract(TimeSpan.FromSeconds(1));
+        var timerText = GetTimerText(_timeLeft);
 
-            if (_timeLeft.TotalSeconds <= 0)
-            {
-                TimerFinished?.Invoke(this, EventArgs.Empty);
-                StopSession();
-            }
-        }
-        else
+        if (_timeLeft.TotalSeconds <= 0)
         {
-            timerText = GetTimerText(ElapsedTime);
+            TimerFinished?.Invoke(this, EventArgs.Empty);
+            StopSession();
         }
         
         TimerTick?.Invoke(this, new SessionTexts(timerText, _instructionText, _phaseSecondsText));

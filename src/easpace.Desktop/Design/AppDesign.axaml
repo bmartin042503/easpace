@@ -70,7 +70,6 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Converters -->
             <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
             <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />
-            <converters:TimeRangeConverter x:Key="TimeRangeConverter" />
             <converters:ValidationResultToLocalizedConverter x:Key="ValidationResultToLocalizedConverter" />
             <converters:MoodSliderValueConverter x:Key="MoodSliderValueConverter" />
 

@@ -20,7 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto"
                           ColumnSpacing="{StaticResource Metrics.Spacing.Sm}"
-                          RowSpacing="{StaticResource Metrics.Spacing.Sm}">
+                          RowSpacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Name="PART_Title" Grid.Row="0" Grid.Column="0"
                                    Text="{TemplateBinding Title}"
@@ -31,7 +31,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                   HorizontalAlignment="Right" />
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                    Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
+                                    Orientation="Horizontal" Spacing="4" HorizontalAlignment="Left">
 
                             <TextBlock Name="PART_Value" VerticalAlignment="Center" Classes="fs6 trm-ellipsis"
                                        Text="{TemplateBinding Value}" />
