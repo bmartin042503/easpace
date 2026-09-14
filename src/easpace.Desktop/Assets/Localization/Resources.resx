@@ -172,6 +172,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Empty.Message" xml:space="preserve">
         <value>Click the + button to create your first activity.</value>
     </data>
+    <data name="Activities.Button.Add" xml:space="preserve">
+        <value>Record value</value>
+    </data>
+    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
+        <value>Activity archived</value>
+    </data>
+    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
+        <value>Activity restored</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Search activities...</value>
     </data>
@@ -251,7 +260,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Are you sure you want to delete this activity? This action can't be undone.</value>
     </data>
     <data name="Activities.EntryDialog.Title" xml:space="preserve">
-        <value>Add new entry</value>
+        <value>Record entry</value>
     </data>
     <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
         <value>Date...</value>
@@ -734,7 +743,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Restart Now</value>
     </data>
     <data name="Settings.ToastMessage.SettingsSaved" xml:space="preserve">
-        <value>Settings saved.</value>
+        <value>Settings saved</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Version</value>

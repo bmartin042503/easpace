@@ -30,7 +30,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
                             
                         <!-- easpace title -->
-                        <TextBlock Classes="strong accent fs1" Text="easpace"
+                        <TextBlock Classes="strong brand fs1" Text="easpace"
                                    HorizontalAlignment="Center" />
                         
                         <!-- subtitle -->
@@ -66,7 +66,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </Button>
 
                     <!-- Title -->
-                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Classes="strong accent fs1"
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Classes="strong brand fs1"
                                Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}"
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
 
@@ -117,7 +117,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
-                               Classes="strong accent fs1 trm-ellipsis"
+                               Classes="strong brand fs1 trm-ellipsis"
                                Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}"
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
@@ -198,7 +198,7 @@ Licensed under the MIT License. See LICENSE file for details.
                       VerticalAlignment="Center" HorizontalAlignment="Center">
                     
                     <!-- Title -->
-                    <TextBlock Grid.Row="0" Classes="strong accent fs2 medium trm-ellipsis" MaxWidth="800"
+                    <TextBlock Grid.Row="0" Classes="strong brand fs2 medium trm-ellipsis" MaxWidth="800"
                                Text="{core:LocalizationService Key='Onboarding.ThankYou.Title'}" TextAlignment="Center"
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     
@@ -236,7 +236,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <controls:BlobsGradientBackground
             BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
             FromBrush="{DynamicResource Sem.Surface.Brand}"
-            ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
+            ToBrush="{DynamicResource Sem.Brand.Subtle}"
             EllipseCount="7"
             Speed="0.25"
             Opacity="0.38" />

@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <controls:BlobsGradientBackground
             BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
             FromBrush="{DynamicResource Sem.Surface.Brand}"
-            ToBrush="{DynamicResource Haven.Sem.Accent.Subtle}"
+            ToBrush="{DynamicResource Sem.Brand.Subtle}"
             EllipseCount="7"
             Speed="0.2"
             Opacity="0.75"

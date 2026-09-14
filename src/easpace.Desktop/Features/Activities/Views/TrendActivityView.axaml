@@ -70,53 +70,122 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Interaction buttons -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Metrics.Spacing.Lg}"
+                    Spacing="{StaticResource Metrics.Spacing.Sm}"
                     Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                     VerticalAlignment="Top" HorizontalAlignment="Right">
 
-            <!-- Delete button -->
-            <Button Classes="tertiary danger icon"
-                    Command="{Binding DeleteCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-                <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />
-            </Button>
-
-            <!-- Archive/Restore button -->
-            <Button Classes="tertiary icon"
-                    Command="{Binding ToggleArchiveCommand}">
-                <Panel>
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.Archive.Fill}"
-                              IsVisible="{Binding !IsArchived}"
-                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}" />
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.BoxArrowUp.Fill}"
-                              IsVisible="{Binding IsArchived}"
-                              ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}" />
-
-                </Panel>
-            </Button>
-
-            <!-- Edit button -->
-            <Button Classes="tertiary icon"
-                    Command="{Binding EditCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
-                <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
-            </Button>
-
             <!-- Add button -->
-            <Button Classes="tertiary icon"
+            <Button Classes="primary regular"
                     Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}">
-                <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
+                    ToolTip.Tip="{core:LocalizationService Key='Activities.Button.Add'}">
+                
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}"
+                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                    <TextBlock Classes="fs6 medium"
+                               Text="{core:LocalizationService Key='Activities.Button.Add'}" />
+
+                </StackPanel>
+                
+            </Button>
+
+            <!-- Dots Flyout -->
+            <Button Classes="dots-flyout">
+
+                <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
+                          Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                          Width="{StaticResource Metrics.Icon.Size.Md}"
+                          Height="{StaticResource Metrics.Icon.Size.Md}" />
+
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
+
+                            <!-- Edit button -->
+                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
+                                    Command="{Binding EditCommand}"
+                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
+
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}"
+                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                    <TextBlock Classes="fs6 medium"
+                                               Text="{core:LocalizationService Key='Common.Button.Edit'}" />
+
+                                </StackPanel>
+
+                            </Button>
+
+                            <!-- Archive/Restore button -->
+                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
+                                    Command="{Binding ToggleArchiveCommand}">
+
+                                <Panel>
+                                    <StackPanel IsVisible="{Binding !IsArchived}"
+                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}">
+
+                                        <PathIcon Data="{StaticResource PhosphorIcons.Archive.Fill}"
+                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                        <TextBlock Classes="fs6 medium"
+                                                   Text="{core:LocalizationService Key='Common.Button.Archive'}" />
+
+                                    </StackPanel>
+
+                                    <StackPanel IsVisible="{Binding IsArchived}"
+                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}">
+
+                                        <PathIcon Data="{StaticResource PhosphorIcons.BoxArrowUp.Fill}"
+                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                        <TextBlock Classes="fs6 medium"
+                                                   Text="{core:LocalizationService Key='Common.Button.Restore'}" />
+
+                                    </StackPanel>
+                                </Panel>
+
+                            </Button>
+
+                            <!-- Delete button -->
+                            <Button Classes="danger regular" HorizontalAlignment="Stretch"
+                                    Command="{Binding DeleteCommand}"
+                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
+
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                    <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}"
+                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                    <TextBlock Classes="fs6 medium"
+                                               Text="{core:LocalizationService Key='Common.Button.Delete'}" />
+
+                                </StackPanel>
+
+                            </Button>
+
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+
             </Button>
 
         </StackPanel>
-        
+
         <!-- Chart interactions -->
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*"
               ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
-            
+
             <!-- Time Range Selection (segmented control) -->
             <ListBox Grid.Column="0" Classes="segmented"
                      ItemsSource="{Binding TimeRanges}"
@@ -135,24 +204,24 @@ Licensed under the MIT License. See LICENSE file for details.
                 </ListBox.ItemsPanel>
 
             </ListBox>
-            
+
             <!-- Chart navigator -->
             <controls:ChartNavigator Grid.Column="1" IsVisible="{Binding CanNavigateIntervals}"
                                      NavigateBackCommand="{Binding PreviousIntervalCommand}"
                                      IntervalText="{Binding VisibleRangeText}"
                                      NavigateForwardCommand="{Binding NextIntervalCommand}" />
-            
+
         </Grid>
 
         <!-- Chart -->
         <trend:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                             Target="{Binding Target}"
-                             Unit="{Binding Unit}"
-                             DataPoints="{Binding DataPoints}"
-                             RangeStart="{Binding VisibleRangeStart}"
-                             RangeEnd="{Binding VisibleRangeEnd}"
-                             TimeRange="{Binding SelectedTimeRange}"
-                             Margin="0,0,6,0" />
+                          Target="{Binding Target}"
+                          Unit="{Binding Unit}"
+                          DataPoints="{Binding DataPoints}"
+                          RangeStart="{Binding VisibleRangeStart}"
+                          RangeEnd="{Binding VisibleRangeEnd}"
+                          TimeRange="{Binding SelectedTimeRange}"
+                          Margin="0,0,6,0" />
 
     </Grid>
 

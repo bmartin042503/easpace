@@ -4,54 +4,82 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:design="using:easpace.Desktop.Design"
+        xmlns:core="clr-namespace:easpace.Desktop.Services.Core">
     <Design.PreviewWith>
-        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
-        <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Sem.Surface}">
+        
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Light">
 
-                <StackPanel Orientation="Vertical" Spacing="20">
+            <StackPanel Orientation="Vertical" Spacing="20">
 
-                    <Button Classes="dots-flyout">
-                        <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}" />
-                    </Button>
+                <Button Classes="dots-flyout">
+            
+                    <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                              Width="{StaticResource Metrics.Icon.Size.Md}"
+                              Height="{StaticResource Metrics.Icon.Size.Md}" />
+            
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
+                        
+                                <!-- Edit button -->
+                                <Button Classes="secondary regular"
+                                        Content="{core:LocalizationService Key='Common.Button.Edit'}"
+                                        HorizontalAlignment="Stretch" />
+                        
+                                <!-- Archive/Restore button -->
+                                <Button Classes="secondary regular"
+                                        Content="{core:LocalizationService Key='Common.Button.Archive'}"
+                                        HorizontalAlignment="Stretch" />
+                        
+                                <!-- Delete button -->
+                                <Button Classes="danger regular"
+                                        Content="{core:LocalizationService Key='Common.Button.Delete'}"
+                                        HorizontalAlignment="Stretch" />
+                        
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+            
+                </Button>
 
-                    <Button Classes="primary icon">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
-                    </Button>
+                <Button Classes="primary icon">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
+                </Button>
 
-                    <Button Classes="secondary icon">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
-                    </Button>
+                <Button Classes="secondary icon">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
+                </Button>
 
-                    <Button Classes="tertiary icon">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
-                    </Button>
+                <Button Classes="tertiary icon">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
+                </Button>
 
-                    <Button Classes="tertiary danger icon">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
-                    </Button>
+                <Button Classes="tertiary danger icon">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
+                </Button>
 
-                    <Button Classes="tertiary icon" IsEnabled="False">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
-                    </Button>
+                <Button Classes="tertiary icon" IsEnabled="False">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
+                </Button>
 
-                    <Button Classes="primary icon" IsEnabled="False">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
-                    </Button>
+                <Button Classes="primary icon" IsEnabled="False">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
+                </Button>
 
-                    <Button Classes="secondary icon" IsEnabled="False">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
-                    </Button>
+                <Button Classes="secondary icon" IsEnabled="False">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
+                </Button>
 
-                    <Button Classes="secondary regular" Content="Secondary Regular" />
-                    <Button Classes="primary regular" Content="Primary Regular" />
-                    <Button Classes="danger regular" Content="Danger Regular" />
+                <Button Classes="secondary regular" Content="Secondary Regular" />
+                <Button Classes="primary regular" Content="Primary Regular" />
+                <Button Classes="danger regular" Content="Danger Regular" />
 
-                </StackPanel>
-            </Border>
-        </ThemeVariantScope>
+            </StackPanel>
+        </Border>
     </Design.PreviewWith>
 
     <Style Selector="Button">
@@ -156,7 +184,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
-        <Setter Property="Padding" Value="12,4" />
+        <Setter Property="Padding" Value="12,2" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated.Hover}" />
@@ -164,6 +192,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         </Style>
+        
     </Style>
 
 </Styles>

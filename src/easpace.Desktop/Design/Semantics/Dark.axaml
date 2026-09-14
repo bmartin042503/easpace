@@ -35,7 +35,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Surface.Warning" Color="{DynamicResource Warning975}" />
     <SolidColorBrush x:Key="Sem.Surface.Danger" Color="{DynamicResource Danger975}" />
     <SolidColorBrush x:Key="Sem.Surface.Info" Color="{DynamicResource Info975}" Opacity="0.35" />
-    <SolidColorBrush x:Key="Sem.Surface.BlurBackground" Color="#000000" Opacity="0.35" />
+    <SolidColorBrush x:Key="Sem.Surface.BlurBackground" Color="#000000" Opacity="0.45" />
     
     <SolidColorBrush x:Key="Sem.Border" Color="{DynamicResource Neutral500}" />
     <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{DynamicResource Neutral800}" />

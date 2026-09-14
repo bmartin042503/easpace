@@ -57,155 +57,152 @@ Licensed under the MIT License. See LICENSE file for details.
         </dataTemplates:TemplateSelector>
     </UserControl.Resources>
 
-    <Border Classes="card" Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+    <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-        <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <!-- Sidebar -->
+        <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Metrics.Spacing.Md}">
 
-            <!-- Sidebar -->
-            <Grid RowDefinitions="Auto,Auto,*" Grid.Column="0" RowSpacing="{StaticResource Metrics.Spacing.Md}">
+            <!-- Top bar -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
 
-                <!-- Top bar -->
-                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                <!-- List filter (Active / Archive) -->
+                <ListBox Grid.Column="0" Classes="toolbar" SelectedIndex="{Binding SelectedFilterIndex}"
+                         IsVisible="{Binding HasActivities}">
 
-                    <!-- List filter (Active / Archive) -->
-                    <ListBox Grid.Column="0" Classes="toolbar" SelectedIndex="{Binding SelectedFilterIndex}"
-                             IsVisible="{Binding HasActivities}">
+                    <!-- Active -->
+                    <ListBoxItem>
+                        <controls:IconListItem
+                            Icon="{StaticResource PhosphorIcons.Target}"
+                            SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
+                            Width="{StaticResource Metrics.Icon.Size.Sm}"
+                            Height="{StaticResource Metrics.Icon.Size.Sm}"
+                            ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
+                    </ListBoxItem>
 
-                        <!-- Active -->
-                        <ListBoxItem>
-                            <controls:IconListItem
-                                Icon="{StaticResource PhosphorIcons.Target}"
-                                SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
-                                Width="{StaticResource Metrics.Icon.Size.Sm}"
-                                Height="{StaticResource Metrics.Icon.Size.Sm}"
-                                ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
-                        </ListBoxItem>
+                    <!-- Archive -->
+                    <ListBoxItem>
+                        <controls:IconListItem
+                            Icon="{StaticResource PhosphorIcons.Archive}"
+                            SelectedIcon="{StaticResource PhosphorIcons.Archive.Fill}"
+                            Width="{StaticResource Metrics.Icon.Size.Sm}"
+                            Height="{StaticResource Metrics.Icon.Size.Sm}"
+                            ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
+                    </ListBoxItem>
 
-                        <!-- Archive -->
-                        <ListBoxItem>
-                            <controls:IconListItem
-                                Icon="{StaticResource PhosphorIcons.Archive}"
-                                SelectedIcon="{StaticResource PhosphorIcons.Archive.Fill}"
-                                Width="{StaticResource Metrics.Icon.Size.Sm}"
-                                Height="{StaticResource Metrics.Icon.Size.Sm}"
-                                ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
-                        </ListBoxItem>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
 
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                </ListBox>
 
-                    </ListBox>
-
-                    <!-- Add button -->
-                    <Button Grid.Row="0" Grid.Column="2" Classes="primary icon" HorizontalAlignment="Right"
-                            Command="{Binding AddActivityCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}"
-                            IsEnabled="{Binding !IsEditing}"
-                            Margin="0,1">
-                        <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
-                    </Button>
-
-                </Grid>
-
-                <Separator Grid.Row="1" Height="1" Background="{DynamicResource Sem.Border}"
-                           Margin="0" />
-
-                <!-- No entries view -->
-                <StackPanel Grid.Row="2"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Spacing="{StaticResource Metrics.Spacing.Sm}"
-                            IsVisible="{Binding !HasActivities}">
-
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                                HorizontalAlignment="Center">
-
-                        <!-- Chart line icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.ChartLine}"
-                                  Width="{StaticResource Metrics.Icon.Size.Md}"
-                                  Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
-                                  RenderTransformOrigin="50%,50%"
-                                  Margin="0,6,0,0">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="-10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                        <!-- Chart pie slice icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.ChartPieSlice}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}" />
-
-                        <!-- Check square offset icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.CheckSquareOffset}"
-                                  Width="{StaticResource Metrics.Icon.Size.Md}"
-                                  Height="{StaticResource Metrics.Icon.Size.Md}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}"
-                                  RenderTransformOrigin="50%,50%"
-                                  Margin="0,6,0,0">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                    </StackPanel>
-
-                    <!-- 'Add entries' message -->
-                    <TextBlock Text="{core:LocalizationService Key='Activities.Empty.Message'}"
-                               Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
-                </StackPanel>
-
-                <!-- Activity entries list -->
-                <ScrollViewer Grid.Row="2">
-                    <ListBox Classes="activity list"
-                             ItemsSource="{Binding Activities}"
-                             SelectedItem="{Binding SelectedActivity}"
-                             IsEnabled="{Binding !IsEditing}">
-
-                        <ListBox.ItemTemplate>
-                            <DataTemplate x:DataType="vm:ActivityViewModel">
-                                <ContentControl Content="{Binding .}"
-                                                ContentTemplate="{StaticResource ActivityListItemSelector}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-
-                    </ListBox>
-                </ScrollViewer>
+                <!-- Add button -->
+                <Button Grid.Row="0" Grid.Column="2" Classes="primary icon" HorizontalAlignment="Right"
+                        Command="{Binding AddActivityCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Add'}"
+                        IsEnabled="{Binding !IsEditing}"
+                        Margin="0,1">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}" />
+                </Button>
 
             </Grid>
 
-            <!-- Vertical splitter -->
-            <GridSplitter Grid.Column="1"
-                          Classes="vertical"
-                          ResizeDirection="Columns" />
+            <Separator Grid.Row="1" Height="1" Background="{DynamicResource Sem.Border}"
+                       Margin="0" />
 
-            <!-- Activity item view -->
-            <ContentControl Grid.Row="0" Grid.Column="2"
-                            Content="{Binding ContentViewModel}" />
+            <!-- No entries view -->
+            <StackPanel Grid.Row="2"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        IsVisible="{Binding !HasActivities}">
+
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
+                            HorizontalAlignment="Center">
+
+                    <!-- Chart line icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.ChartLine}"
+                              Width="{StaticResource Metrics.Icon.Size.Md}"
+                              Height="{StaticResource Metrics.Icon.Size.Md}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                              RenderTransformOrigin="50%,50%"
+                              Margin="0,6,0,0">
+
+                        <PathIcon.RenderTransform>
+                            <RotateTransform Angle="-10" />
+                        </PathIcon.RenderTransform>
+
+                    </PathIcon>
+
+                    <!-- Chart pie slice icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.ChartPieSlice}"
+                              Width="{StaticResource Metrics.Icon.Size.Xl}"
+                              Height="{StaticResource Metrics.Icon.Size.Xl}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}" />
+
+                    <!-- Check square offset icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.CheckSquareOffset}"
+                              Width="{StaticResource Metrics.Icon.Size.Md}"
+                              Height="{StaticResource Metrics.Icon.Size.Md}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                              RenderTransformOrigin="50%,50%"
+                              Margin="0,6,0,0">
+
+                        <PathIcon.RenderTransform>
+                            <RotateTransform Angle="10" />
+                        </PathIcon.RenderTransform>
+
+                    </PathIcon>
+
+                </StackPanel>
+
+                <!-- 'Add entries' message -->
+                <TextBlock Text="{core:LocalizationService Key='Activities.Empty.Message'}"
+                           Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
+            </StackPanel>
+
+            <!-- Activity entries list -->
+            <ScrollViewer Grid.Row="2">
+                <ListBox Classes="activity list"
+                         ItemsSource="{Binding Activities}"
+                         SelectedItem="{Binding SelectedActivity}"
+                         IsEnabled="{Binding !IsEditing}">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ActivityViewModel">
+                            <ContentControl Content="{Binding .}"
+                                            ContentTemplate="{StaticResource ActivityListItemSelector}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                </ListBox>
+            </ScrollViewer>
 
         </Grid>
 
-    </Border>
+        <!-- Vertical splitter -->
+        <GridSplitter Grid.Column="1"
+                      Classes="vertical"
+                      ResizeDirection="Columns" />
+
+        <!-- Activity item view -->
+        <ContentControl Grid.Row="0" Grid.Column="2"
+                        Content="{Binding ContentViewModel}" />
+
+    </Grid>
 
 </UserControl>

@@ -60,8 +60,28 @@ Licensed under the MIT License. See LICENSE file for details.
                             <ComboBoxItem>Magyar</ComboBoxItem>
                         </ComboBox>
                         
-                        <!-- Color scheme label & description -->
+                        <!-- Appearance label & description -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
+                                    VerticalAlignment="Center">
+                            <TextBlock Classes="neutral fs5 trm-ellipsis"
+                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Label'}" />
+                            <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
+                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Description'}" />
+                        </StackPanel>
+
+                        <!-- Appearance combo box -->
+                        <ComboBox Grid.Row="1" Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  SelectedIndex="{Binding SelectedColorSchemeAppearanceIndex}">
+                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
+                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
+                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
+                        </ComboBox>
+                        
+                        <!-- Color scheme label & description -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
                                        Text="{core:LocalizationService Key='Settings.ColorScheme.Label'}" />
@@ -70,33 +90,13 @@ Licensed under the MIT License. See LICENSE file for details.
                         </StackPanel>
 
                         <!-- Color scheme combo box -->
-                        <ComboBox Grid.Row="1" Grid.Column="1"
+                        <ComboBox Grid.Row="2" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
                                   Width="{StaticResource InputSettingMinimumWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeIndex}">
                             <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
                             <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
-                        </ComboBox>
-
-                        <!-- Color scheme appearance label & description -->
-                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
-                                    VerticalAlignment="Center">
-                            <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Label'}" />
-                            <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Description'}" />
-                        </StackPanel>
-
-                        <!-- Color scheme appearance combo box -->
-                        <ComboBox Grid.Row="2" Grid.Column="1"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}"
-                                  SelectedIndex="{Binding SelectedColorSchemeAppearanceIndex}">
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
                         </ComboBox>
                         
                         <!-- Glassmorphism label & description -->

@@ -7,7 +7,7 @@ using GitCredentialManager;
 
 namespace easpace.Desktop.Security;
 
-public class SecureKeyManager
+internal static class SecureKeyManager
 {
     private const string AppNamespace = "easpace_app";
     

@@ -22,12 +22,12 @@ Licensed under the MIT License. See LICENSE file for details.
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <!-- Animated instruction text -->
-            <TextBlock Classes="strong accent fs1 trm-ellipsis" TextWrapping="Wrap" MaxWidth="750"
+            <TextBlock Classes="strong brand fs1 trm-ellipsis" TextWrapping="Wrap" MaxWidth="750"
                        behaviors:AnimatedTextBehavior.AnimatedText="{Binding InstructionText}"
                        TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
             <!-- Phase seconds -->
-            <TextBlock Classes="strong accent fs1"
+            <TextBlock Classes="strong brand fs1"
                        behaviors:AnimatedTextBehavior.AnimatedText="{Binding PhaseSecondsText}"
                        HorizontalAlignment="Center" IsVisible="{Binding IsBreathing}" />
 
@@ -46,7 +46,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </Grid>
 
         <!-- Timer -->
-        <TextBlock Grid.Row="2" Classes="strong accent fs3" Text="{Binding TimerText}"
+        <TextBlock Grid.Row="2" Classes="strong brand fs3" Text="{Binding TimerText}"
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
 
         <!-- Buttons -->

@@ -120,7 +120,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="constants:MoodLabelState">
-                                                    <TextBlock Classes="strong accent fs6 medium"
+                                                    <TextBlock Classes="strong brand fs6 medium"
                                                                Text="{Binding Path=., Converter={StaticResource EnumToLocalizedConverter}}" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

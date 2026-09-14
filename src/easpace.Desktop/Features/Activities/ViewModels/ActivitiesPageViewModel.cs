@@ -31,6 +31,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
     private readonly ILogger<ActivityEditorViewModel> _editorLogger;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
+    private readonly IToastMessageService _toastMessageService;
 
     private readonly List<ActivityViewModel> _allActivities = [];
 
@@ -64,7 +65,8 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         ILogger<ActivitiesPageViewModel> logger,
         ILogger<ActivityEditorViewModel> editorLogger,
         ITrendActivityDataProvider trendActivityDataProvider,
-        IRoutineActivityDataProvider routineActivityDataProvider)
+        IRoutineActivityDataProvider routineActivityDataProvider,
+        IToastMessageService toastMessageService)
     {
         Page = ApplicationPage.Activities;
 
@@ -76,6 +78,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         _editorLogger = editorLogger;
         _trendActivityDataProvider = trendActivityDataProvider;
         _routineActivityDataProvider = routineActivityDataProvider;
+        _toastMessageService = toastMessageService;
     }
 
     private async Task LoadActivities()
@@ -309,6 +312,19 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         {
             await _activityService.ToggleArchiveAsync(activityViewModel.Id);
             activityViewModel.IsArchived = !activityViewModel.IsArchived;
+
+            if (activityViewModel.IsArchived)
+            {
+                _toastMessageService.ShowToastMessage(
+                    LocalizationService.GetString("Activities.ToastMessage.Archived"),
+                    ToastMessageType.Success);
+            }
+            else
+            {
+                _toastMessageService.ShowToastMessage(
+                    LocalizationService.GetString("Activities.ToastMessage.Restored"),
+                    ToastMessageType.Success);
+            }
         }
         catch (Exception ex)
         {

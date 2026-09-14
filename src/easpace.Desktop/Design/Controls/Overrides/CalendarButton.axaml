@@ -54,7 +54,7 @@ All other rights reserved.
         </Style>
 
         <Style Selector="^:pointerover /template/ Border#Border">
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Subtle}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Subtle}" />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         </Style>
 

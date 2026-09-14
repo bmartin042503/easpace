@@ -172,6 +172,15 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Empty.Message" xml:space="preserve">
         <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
     </data>
+    <data name="Activities.Button.Add" xml:space="preserve">
+        <value>Érték rögzítése</value>
+    </data>
+    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
+        <value>Tevékenység archiválva</value>
+    </data>
+    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
+        <value>Tevékenység visszaállítva</value>
+    </data>
     <data name="Activities.Search.Placeholder" xml:space="preserve">
         <value>Keresés...</value>
     </data>
@@ -251,7 +260,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Biztosan törölni szeretnéd ezt a tevékenységet? A művelet nem vonható vissza.</value>
     </data>
     <data name="Activities.EntryDialog.Title" xml:space="preserve">
-        <value>Új bejegyzés hozzáadása</value>
+        <value>Érték rögzítése</value>
     </data>
     <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
         <value>Dátum...</value>
@@ -734,7 +743,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Újraindítás most</value>
     </data>
     <data name="Settings.ToastMessage.SettingsSaved" xml:space="preserve">
-        <value>Beállítások mentve.</value>
+        <value>Beállítások mentve</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Verzió</value>

@@ -19,7 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <vmDialogs:RoutineEntryDialogViewModel />
     </Design.DataContext>
 
-    <Border x:Name="DialogRootBorder" Classes="card"
+    <Border x:Name="DialogRootBorder" Classes="dialog card"
             Padding="{StaticResource Metrics.Spacing.Thickness.Sm}"
             BorderThickness="0">
 

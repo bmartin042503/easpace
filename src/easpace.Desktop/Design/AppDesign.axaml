@@ -90,6 +90,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <StyleInclude Source="Styles/ToggleButton.axaml" />
     <StyleInclude Source="Styles/ToggleSwitch.axaml" />
     <StyleInclude Source="Styles/PathIcon.axaml" />
+    <StyleInclude Source="Styles/FlyoutPresenter.axaml" />
     <StyleInclude Source="Styles/TrendChart.axaml" />
     <StyleInclude Source="Styles/MilestoneChart.axaml" />
     <StyleInclude Source="Styles/RoutineMonthItem.axaml" />
