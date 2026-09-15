@@ -100,7 +100,7 @@ All other rights reserved.
             </Style>
 
             <Style Selector="^:pointerover /template/ Border#Root">
-                <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+                <Setter Property="Background" Value="{DynamicResource Sem.Brand.Hover}" />
             </Style>
 
             <Style Selector="^:pressed /template/ Border#Root">

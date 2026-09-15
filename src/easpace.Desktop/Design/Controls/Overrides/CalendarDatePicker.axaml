@@ -7,21 +7,21 @@ Licensed under the MIT License. See LICENSE file for details.
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System">
 
-    <x:Double x:Key="Haven.CalendarDatePicker.DropDownButton.Width">30</x:Double>
-    <x:Double x:Key="Haven.CalendarDatePicker.DropDownButton.Height">26</x:Double>
-    <x:Double x:Key="Haven.CalendarDatePicker.GlyphSize">16</x:Double>
-    <x:Double x:Key="Haven.CalendarDatePicker.GlyphDayFontSize">7</x:Double>
+    <x:Double x:Key="CalendarDatePicker.DropDownButton.Width">30</x:Double>
+    <x:Double x:Key="CalendarDatePicker.DropDownButton.Height">26</x:Double>
+    <x:Double x:Key="CalendarDatePicker.GlyphSize">16</x:Double>
+    <x:Double x:Key="CalendarDatePicker.GlyphDayFontSize">7</x:Double>
 
-    <ControlTheme x:Key="Haven.CalendarDatePicker.DropDownButton"
+    <ControlTheme x:Key="CalendarDatePicker.DropDownButton"
                   TargetType="Button">
 
-        <Setter Property="Width" Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Width}" />
-        <Setter Property="Height" Value="{StaticResource Haven.CalendarDatePicker.DropDownButton.Height}" />
+        <Setter Property="Width" Value="{StaticResource CalendarDatePicker.DropDownButton.Width}" />
+        <Setter Property="Height" Value="{StaticResource CalendarDatePicker.DropDownButton.Height}" />
         <Setter Property="Margin" Value="2,3,3,3" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -35,22 +35,22 @@ Licensed under the MIT License. See LICENSE file for details.
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
 
-                    <Grid Width="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
-                          Height="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
+                    <Grid Width="{StaticResource CalendarDatePicker.GlyphSize}"
+                          Height="{StaticResource CalendarDatePicker.GlyphSize}"
                           RowDefinitions="5,*"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
 
                         <PathIcon Grid.RowSpan="2"
-                                  Width="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
-                                  Height="{StaticResource Haven.CalendarDatePicker.GlyphSize}"
+                                  Width="{StaticResource CalendarDatePicker.GlyphSize}"
+                                  Height="{StaticResource CalendarDatePicker.GlyphSize}"
                                   Foreground="{TemplateBinding Foreground}"
                                   Data="{StaticResource PhosphorIcons.CalendarBlank}" />
 
                         <TextBlock Grid.Row="1"
                                    Text="{Binding Source={x:Static sys:DateTime.Today}, Path=Day}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   FontSize="{StaticResource Haven.CalendarDatePicker.GlyphDayFontSize}"
+                                   FontSize="{StaticResource CalendarDatePicker.GlyphDayFontSize}"
                                    FontWeight="{StaticResource Metrics.FontWeight.Medium}"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -91,7 +91,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Sem.Foreground.Subtle}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Wide.Xxs}" />
@@ -167,7 +167,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <Button Name="PART_Button"
                                     Grid.Column="1"
-                                    Theme="{StaticResource Haven.CalendarDatePicker.DropDownButton}"
+                                    Theme="{StaticResource CalendarDatePicker.DropDownButton}"
                                     Focusable="False"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center" />
@@ -180,7 +180,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                         Margin="0,4,0,0"
                                         Padding="{StaticResource Metrics.Spacing.Thickness.Xs}"
                                         Background="{DynamicResource Sem.Surface.Elevated}"
-                                        BorderBrush="{DynamicResource Sem.Border}"
+                                        BorderBrush="{DynamicResource Sem.Border.Input}"
                                         BorderThickness="{StaticResource Metrics.Border.Thickness}"
                                         CornerRadius="{StaticResource Metrics.Radius.Md}"
                                         ClipToBounds="True">
@@ -210,7 +210,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Style Selector="^:pointerover /template/ Border#Background">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         </Style>
 
         <Style Selector="^:focus-within:not(CalendarDatePicker:focus) /template/ Border#Background">
@@ -230,7 +230,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             <Style Selector="^ /template/ Border#Background">
                 <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
             </Style>
 
             <Style Selector="^ /template/ TextBox#PART_TextBox">

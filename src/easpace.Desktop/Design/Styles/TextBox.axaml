@@ -4,40 +4,39 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:design="using:easpace.Desktop.Design">
     <Design.PreviewWith>
-        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
-        <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Padding="20" Background="{DynamicResource Sem.Surface}">
-                <StackPanel Orientation="Vertical" Spacing="20">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Light">
+            <StackPanel Orientation="Vertical" Spacing="20">
 
-                    <TextBox PlaceholderText="Search..." MinWidth="140">
-                        <TextBox.InnerRightContent>
-                            <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
-                        </TextBox.InnerRightContent>
-                    </TextBox>
+                <TextBox PlaceholderText="Search..." MinWidth="140">
+                    <TextBox.InnerRightContent>
+                        <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
+                    </TextBox.InnerRightContent>
+                </TextBox>
 
-                    <TextBox Text="Edit Journal Entry Title"
-                             Classes="journal-edit fs2"
-                             VerticalAlignment="Center" />
+                <TextBox Text="Edit Journal Entry Title"
+                         Classes="journal-edit fs2"
+                         VerticalAlignment="Center" />
 
-                    <TextBox Classes="journal-edit fs4" Height="200"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap"
-                             PlaceholderText="Write down your thoughts here..."
-                             VerticalAlignment="Stretch" />
+                <TextBox Classes="journal-edit fs4" Height="200"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         PlaceholderText="Write down your thoughts here..."
+                         VerticalAlignment="Stretch" />
 
-                    <TextBox Text="Text box" />
-                    
-                    <TextBox Classes="large-text-area" Text="Description" />
+                <TextBox Text="Text box" />
 
-                </StackPanel>
-            </Border>
-        </ThemeVariantScope>
+                <TextBox Classes="large-text-area" Text="Description" />
+
+            </StackPanel>
+        </Border>
     </Design.PreviewWith>
 
     <Style Selector="TextBox">
-        
+
         <Setter Property="FontFamily" Value="{StaticResource FontFamily.Poppins}" />
         <Setter Property="MinHeight" Value="{StaticResource Metrics.Input.Height}" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -48,11 +47,11 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource Sem.Brand}" />
         <Setter Property="SelectionForegroundBrush" Value="{DynamicResource Sem.On.Brand}" />
-        
+
         <Style Selector="^:error /template/ Border#PART_BorderElement">
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Danger.Strong}" />
         </Style>
@@ -64,16 +63,25 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Margin" Value="0,0,8,0" />
         </Style>
 
-        <Style Selector="^:focus, ^:pointerover">
+        <Style Selector="^:pointerover">
             <Style Selector="^ /template/ Border#PART_BorderElement">
                 <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
                 <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
             </Style>
         </Style>
 
+        <Style Selector="^:focus">
+            <Style Selector="^ /template/ Border#PART_BorderElement">
+                <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Focus}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
+            </Style>
+        </Style>
+
+
     </Style>
-    
+
     <Style Selector="TextBox.journal-edit">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
@@ -113,7 +121,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="TextBox.fs6">
         <Setter Property="FontSize" Value="{StaticResource Metrics.FontSize.Xs}" />
     </Style>
-    
+
     <Style Selector="TextBox.large-text-area">
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="MinHeight" Value="120" />
@@ -121,14 +129,14 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="AcceptsReturn" Value="True" />
     </Style>
-    
+
     <Style Selector="TextBox.numeric-up-down, TextBox.date-picker">
-        
+
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        
+
         <Style Selector="^:focus, ^:pointerover">
             <Style Selector="^ /template/ Border#PART_BorderElement">
                 <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
@@ -136,7 +144,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="BorderThickness" Value="0" />
             </Style>
         </Style>
-        
+
     </Style>
 
 </Styles>

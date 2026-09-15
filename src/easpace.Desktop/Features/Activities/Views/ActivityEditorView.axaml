@@ -304,8 +304,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Separator line -->
-                <Separator Height="1" Background="{DynamicResource Sem.Border}"
-                           IsVisible="{Binding !IsCreatingNew}" />
+                <Separator Height="1" IsVisible="{Binding !IsCreatingNew}" />
 
                 <!-- Data entries -->
                 <Border Classes="card" Background="{DynamicResource Sem.Surface.Elevated}"

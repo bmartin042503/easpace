@@ -4,25 +4,61 @@ Licensed under the MIT License. See LICENSE file for details.
 -->
 
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:design="using:easpace.Desktop.Design">
     <Design.PreviewWith>
-        <!-- To change between Dark/Light mode in the Preview, change the RequestedThemeVariant value -->
-        <ThemeVariantScope RequestedThemeVariant="Light">
-            <Border Background="{DynamicResource Sem.Surface}">
-                <StackPanel Orientation="Horizontal">
+        <Border Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Dark">
+            <StackPanel Orientation="Horizontal">
 
-                    <!-- Sidebar -->
-                    <Border Width="100" Height="400"
-                            Classes="sidebar" />
+                <!-- Sidebar -->
+                <Border Classes="sidebar" />
 
-                    <!-- Gradient card -->
-                    <Border Width="300" Height="400"
-                            Classes="gradient card"
-                            Margin="{StaticResource Metrics.Spacing.Thickness.Lg}" />
+                <!-- Card -->
+                <Border Classes="card" Padding="30"
+                        Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-                </StackPanel>
-            </Border>
-        </ThemeVariantScope>
+                    <StackPanel Orientation="Horizontal" Spacing="20">
+
+                        <!-- Sem.Border.Input, Sem.Border.Focus -->
+                        <StackPanel Orientation="Vertical" Spacing="20">
+                            <Border Classes="elevated card" Height="80" VerticalAlignment="Top" />
+                            <Border VerticalAlignment="Top"
+                                    Background="{DynamicResource Sem.Surface.Elevated}"
+                                    CornerRadius="{StaticResource Metrics.Radius.Sm}"
+                                    BorderBrush="{DynamicResource Sem.Border.Focus}" BorderThickness="2"
+                                    Padding="12,6">
+                                <TextBlock Text="Focus"/>
+                            </Border>
+                            <TextBox PlaceholderText="TextBox" />
+                            <ComboBox PlaceholderText="ComboBox" HorizontalAlignment="Stretch">
+                                <ComboBoxItem>Item1</ComboBoxItem>
+                                <ComboBoxItem>Item2</ComboBoxItem>
+                                <ComboBoxItem>Item3</ComboBoxItem>
+                            </ComboBox>
+                            <NumericUpDown PlaceholderText="NumericUpDown" HorizontalAlignment="Stretch" />
+                            <CalendarDatePicker PlaceholderText="CalendarDatePicker" HorizontalAlignment="Stretch" />
+                            <CheckBox Content="CheckBox" />
+                            <Slider />
+                            <TimePicker />
+                        </StackPanel>
+
+                        <!-- Sem.Border.Divider, Sem.Border.Brand -->
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <GridSplitter Classes="vertical" />
+                            <StackPanel Orientation="Vertical" Spacing="20">
+                                <Separator Width="200" />
+                                <Separator Width="200" Classes="brand" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                    </StackPanel>
+
+                </Border>
+
+            </StackPanel>
+        </Border>
     </Design.PreviewWith>
 
     <Style Selector="Border.sidebar">
@@ -33,28 +69,25 @@ Licensed under the MIT License. See LICENSE file for details.
     <Style Selector="Border.card">
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Card}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Md}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Card}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Sm}" />
     </Style>
-    
+
     <Style Selector="Border.dialog.card">
         <Setter Property="Background" Value="{DynamicResource Sem.Surface}" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
-    
+
     <Style Selector="Border.settings.card">
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Lg}" />
     </Style>
-    
+
     <Style Selector="Border.elevated.card">
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Card.Elevated}" />
     </Style>
 
-    <Style Selector="Border.gradient.card">
-        <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand.Subtle}" />
-    </Style>
-    
     <Style Selector="Border.danger.card">
         <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Danger.Subtle}" />
     </Style>

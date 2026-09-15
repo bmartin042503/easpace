@@ -21,8 +21,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <x:Double x:Key="RadioButtonMinHeight">32</x:Double>
 
-    <ControlTheme x:Key="{x:Type RadioButton}"
-                  TargetType="RadioButton">
+    <ControlTheme x:Key="{x:Type RadioButton}" TargetType="RadioButton">
 
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -97,13 +96,13 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style
             Selector="^:checked:pointerover /template/ Ellipse#OuterEllipse,
                       ^:checked:pressed /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="Stroke" Value="{DynamicResource Sem.Brand.Hover}" />
         </Style>
 
         <Style
             Selector="^:checked:pointerover /template/ Ellipse#CheckGlyph,
                       ^:checked:pressed /template/ Ellipse#CheckGlyph">
-            <Setter Property="Fill" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.Brand.Hover}" />
         </Style>
 
 

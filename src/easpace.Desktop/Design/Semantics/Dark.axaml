@@ -10,9 +10,10 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Foreground.Subtle" Color="{DynamicResource Neutral200}" />
     <SolidColorBrush x:Key="Sem.Foreground.Muted" Color="{DynamicResource Neutral300}" />
     <SolidColorBrush x:Key="Sem.Brand" Color="{DynamicResource Brand300}" />
+    <SolidColorBrush x:Key="Sem.Brand.Hover" Color="{DynamicResource Brand400}" />
     <SolidColorBrush x:Key="Sem.Brand.Subtle" Color="{DynamicResource Brand400}" />
     <SolidColorBrush x:Key="Sem.Brand.Strong" Color="{DynamicResource Brand200}" />
-    <SolidColorBrush x:Key="Sem.Brand.Strong.Hover" Color="{DynamicResource Brand100}" />
+    <SolidColorBrush x:Key="Sem.Brand.Strong.Hover" Color="{DynamicResource Brand300}" />
     <SolidColorBrush x:Key="Sem.On.Brand" Color="{DynamicResource Neutral975}" />
     <SolidColorBrush x:Key="Sem.Success" Color="{DynamicResource Success300}" />
     <SolidColorBrush x:Key="Sem.Success.Strong" Color="{DynamicResource Success200}" />
@@ -26,11 +27,11 @@ Licensed under the MIT License. See LICENSE file for details.
     
     <SolidColorBrush x:Key="Sem.Surface" Color="{DynamicResource Neutral975}" />
     <SolidColorBrush x:Key="Sem.Surface.Card" Color="{DynamicResource Neutral950}" Opacity="0.5" />
-    <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="{DynamicResource Neutral800}" />
-    <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="{DynamicResource Neutral900}" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="{DynamicResource Neutral900}" />
+    <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="{DynamicResource Neutral950}" />
     <SolidColorBrush x:Key="Sem.Surface.Sidebar" Color="{DynamicResource Neutral950}" />
-    <SolidColorBrush x:Key="Sem.Surface.Brand" Color="{DynamicResource Brand975}" />
-    <SolidColorBrush x:Key="Sem.Surface.Brand.Hover" Color="{DynamicResource Brand950}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand" Color="{DynamicResource Brand950}" />
+    <SolidColorBrush x:Key="Sem.Surface.Brand.Hover" Color="{DynamicResource Brand975}" />
     <SolidColorBrush x:Key="Sem.Surface.Success" Color="{DynamicResource Success975}" />
     <SolidColorBrush x:Key="Sem.Surface.Warning" Color="{DynamicResource Warning975}" />
     <SolidColorBrush x:Key="Sem.Surface.Danger" Color="{DynamicResource Danger975}" />
@@ -38,8 +39,14 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Surface.BlurBackground" Color="#000000" Opacity="0.45" />
     
     <SolidColorBrush x:Key="Sem.Border" Color="{DynamicResource Neutral500}" />
-    <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{DynamicResource Neutral800}" />
+    <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{DynamicResource Neutral600}" />
     <SolidColorBrush x:Key="Sem.Border.Brand" Color="{DynamicResource Brand300}" />
+    <SolidColorBrush x:Key="Sem.Border.Brand.Divider" Color="{DynamicResource Brand900}" />
+    <SolidColorBrush x:Key="Sem.Border.Divider" Color="{DynamicResource Neutral900}" />
+    <SolidColorBrush x:Key="Sem.Border.Input" Color="{DynamicResource Neutral500}" />
+    <SolidColorBrush x:Key="Sem.Border.Card" Color="{DynamicResource Neutral800}" />
+    <SolidColorBrush x:Key="Sem.Border.Card.Elevated" Color="{DynamicResource Neutral500}" />
+    <SolidColorBrush x:Key="Sem.Border.Focus" Color="{DynamicResource Brand300}" />
     
     <LinearGradientBrush x:Key="Sem.Gradient.Brand" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{DynamicResource Brand300}" Offset="0.0" />
@@ -47,8 +54,8 @@ Licensed under the MIT License. See LICENSE file for details.
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="Sem.Gradient.Brand.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
-        <GradientStop Color="{DynamicResource Brand200}" Offset="0.0" />
-        <GradientStop Color="{DynamicResource Brand300}" Offset="1.0" />
+        <GradientStop Color="{DynamicResource Brand400}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Brand500}" Offset="1.0" />
     </LinearGradientBrush>
     
     <LinearGradientBrush x:Key="Sem.Gradient.Brand.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">
@@ -67,8 +74,8 @@ Licensed under the MIT License. See LICENSE file for details.
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="Sem.Gradient.Danger.Hover" StartPoint="50%,0%" EndPoint="50%,100%">
-        <GradientStop Color="{DynamicResource Danger200}" Offset="0.0" />
-        <GradientStop Color="{DynamicResource Danger300}" Offset="1.0" />
+        <GradientStop Color="{DynamicResource Danger400}" Offset="0.0" />
+        <GradientStop Color="{DynamicResource Danger500}" Offset="1.0" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="Sem.Gradient.Danger.Subtle" StartPoint="50%,0%" EndPoint="50%,100%">

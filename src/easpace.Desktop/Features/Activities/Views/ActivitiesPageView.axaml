@@ -114,9 +114,9 @@ Licensed under the MIT License. See LICENSE file for details.
                 </Button>
 
             </Grid>
-
-            <Separator Grid.Row="1" Height="1" Background="{DynamicResource Sem.Border}"
-                       Margin="0" />
+            
+            <!-- Separator -->
+            <Separator Grid.Row="1" Height="1" Margin="0" />
 
             <!-- No entries view -->
             <StackPanel Grid.Row="2"

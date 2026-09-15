@@ -6,9 +6,10 @@ Licensed under the MIT License. See LICENSE file for details.
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="using:System"
+                    xmlns:design="using:easpace.Desktop.Design"
                     x:ClassModifier="internal">
     <Design.PreviewWith>
-        <Border Padding="20">
+        <Border Padding="20" design:PreviewScheme.Variant="HavenBlue.Dark">
             <StackPanel Spacing="20">
                 <ButtonSpinner Content="Right spinner" />
                 <ButtonSpinner ButtonSpinnerLocation="Left" Content="Left spinner" />
@@ -28,13 +29,12 @@ Licensed under the MIT License. See LICENSE file for details.
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="FluentButtonSpinnerRepeatButton" TargetType="RepeatButton">
+    <ControlTheme x:Key="ButtonSpinner.RepeatButton" TargetType="RepeatButton">
         <Setter Property="MinWidth" Value="34" />
-        <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.On.Brand}" />
         <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
@@ -53,21 +53,19 @@ Licensed under the MIT License. See LICENSE file for details.
         </Setter>
 
         <Style Selector="^:pointerover /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand.Hover}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand.Hover}" />
         </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ButtonSpinner}" TargetType="ButtonSpinner">
-        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Xs}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
         <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
@@ -78,23 +76,24 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Template">
             <ControlTemplate>
                 <DataValidationErrors>
-                    <Border Background="{DynamicResource Sem.Surface.Elevated}"
-                            BorderBrush="{DynamicResource Sem.Border}"
+                    <Border Name="PART_SpinnerBorder"
+                            Background="{DynamicResource Sem.Surface.Elevated}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource Metrics.Radius.Xs}"
-                            MinHeight="{TemplateBinding MinHeight}">
+                            MinHeight="{TemplateBinding MinHeight}"
+                            ClipToBounds="True">
                         <DockPanel>
                             <StackPanel Name="PART_SpinnerPanel"
                                         TabIndex="2"
                                         DockPanel.Dock="Right"
                                         Orientation="Horizontal"
-                                        Spacing="4"
-                                        Margin="4"
                                         IsVisible="{TemplateBinding ShowButtonSpinner}"
-                                        ZIndex="100">
+                                        ZIndex="100"
+                                        Margin="-1">
                                 <RepeatButton Name="PART_IncreaseButton"
                                               IsTabStop="{TemplateBinding IsTabStop}"
-                                              Theme="{StaticResource FluentButtonSpinnerRepeatButton}"
+                                              Theme="{StaticResource ButtonSpinner.RepeatButton}"
                                               VerticalAlignment="Stretch"
                                               VerticalContentAlignment="Center"
                                               HorizontalContentAlignment="Center">
@@ -103,10 +102,12 @@ Licensed under the MIT License. See LICENSE file for details.
                                               Foreground="{DynamicResource Sem.On.Brand}"
                                               Data="{StaticResource PhosphorIcons.CaretUp.Bold}" />
                                 </RepeatButton>
+                                
+                                <Separator Height="NaN" Width="1" Margin="0" Classes="brand-divider" />
 
                                 <RepeatButton Name="PART_DecreaseButton"
                                               IsTabStop="{TemplateBinding IsTabStop}"
-                                              Theme="{StaticResource FluentButtonSpinnerRepeatButton}"
+                                              Theme="{StaticResource ButtonSpinner.RepeatButton}"
                                               VerticalAlignment="Stretch"
                                               VerticalContentAlignment="Center"
                                               HorizontalContentAlignment="Center">
@@ -129,9 +130,17 @@ Licensed under the MIT License. See LICENSE file for details.
                 </DataValidationErrors>
             </ControlTemplate>
         </Setter>
+        
+        <Style Selector="^:focus-within">
+            <Style Selector="^ /template/ Border#PART_SpinnerBorder">
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Focus}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
+            </Style>
+        </Style>
 
         <Style Selector="^:left /template/ StackPanel#PART_SpinnerPanel">
             <Setter Property="DockPanel.Dock" Value="Left" />
         </Style>
+        
     </ControlTheme>
 </ResourceDictionary>

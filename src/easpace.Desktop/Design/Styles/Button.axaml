@@ -8,42 +8,80 @@ Licensed under the MIT License. See LICENSE file for details.
         xmlns:design="using:easpace.Desktop.Design"
         xmlns:core="clr-namespace:easpace.Desktop.Services.Core">
     <Design.PreviewWith>
-        
+
         <Border Padding="20" Background="{DynamicResource Sem.Surface}"
                 design:PreviewScheme.Variant="HavenBlue.Light">
 
             <StackPanel Orientation="Vertical" Spacing="20">
 
+                <!-- Dots Flyout -->
                 <Button Classes="dots-flyout">
-            
+
                     <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                              Foreground="{DynamicResource Sem.Foreground.Subtle}"
-                              Width="{StaticResource Metrics.Icon.Size.Md}"
-                              Height="{StaticResource Metrics.Icon.Size.Md}" />
-            
+                              Foreground="{DynamicResource Sem.Foreground.Muted}"
+                              Width="{StaticResource Metrics.Icon.Size.Sm}"
+                              Height="{StaticResource Metrics.Icon.Size.Sm}" />
+
                     <Button.Flyout>
                         <Flyout>
-                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
-                        
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
                                 <!-- Edit button -->
-                                <Button Classes="secondary regular"
-                                        Content="{core:LocalizationService Key='Common.Button.Edit'}"
-                                        HorizontalAlignment="Stretch" />
-                        
+                                <Button Classes="primary regular" HorizontalAlignment="Stretch"
+                                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
+
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                        <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}"
+                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                        <TextBlock Classes="fs6 medium"
+                                                   Text="{core:LocalizationService Key='Common.Button.Edit'}" />
+
+                                    </StackPanel>
+
+                                </Button>
+
                                 <!-- Archive/Restore button -->
-                                <Button Classes="secondary regular"
-                                        Content="{core:LocalizationService Key='Common.Button.Archive'}"
-                                        HorizontalAlignment="Stretch" />
-                        
+                                <Button Classes="primary regular" HorizontalAlignment="Stretch">
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="{StaticResource Metrics.Spacing.Xs}"
+                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}">
+
+                                        <PathIcon Data="{StaticResource PhosphorIcons.Archive.Fill}"
+                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                        <TextBlock Classes="fs6 medium"
+                                                   Text="{core:LocalizationService Key='Common.Button.Archive'}" />
+
+                                    </StackPanel>
+
+                                </Button>
+
                                 <!-- Delete button -->
-                                <Button Classes="danger regular"
-                                        Content="{core:LocalizationService Key='Common.Button.Delete'}"
-                                        HorizontalAlignment="Stretch" />
-                        
+                                <Button Classes="danger regular" HorizontalAlignment="Stretch"
+                                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
+
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                        <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}"
+                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
+                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
+
+                                        <TextBlock Classes="fs6 medium"
+                                                   Text="{core:LocalizationService Key='Common.Button.Delete'}" />
+
+                                    </StackPanel>
+
+                                </Button>
+
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
-            
+
                 </Button>
 
                 <Button Classes="primary icon">
@@ -184,7 +222,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
-        <Setter Property="Padding" Value="12,2" />
+        <Setter Property="Padding" Value="12,5" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter, ^:pressed /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated.Hover}" />
@@ -192,7 +230,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Subtle}" />
             <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
         </Style>
-        
+
     </Style>
 
 </Styles>

@@ -32,14 +32,26 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource Sem.Foreground.Subtle}" />
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
 
         <Style Selector="^:pointerover">
             <Style Selector="^ /template/ Border#Background">
                 <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
                 <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:focus, ^:focus-within, ^:focus-visible">
+            <Style Selector="^ /template/ Border#Background">
+                <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Focus}" />
+                <Setter Property="BorderThickness" Value="{StaticResource Metrics.Border.Thickness.Medium}" />
+            </Style>
+            
+            <Style Selector="^ /template/ Border#HighlightBackground">
+                <Setter Property="IsVisible" Value="False" />
             </Style>
         </Style>
 

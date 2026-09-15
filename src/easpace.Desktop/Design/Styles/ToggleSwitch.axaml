@@ -5,10 +5,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:services="clr-namespace:easpace.Desktop.Services.Core">
+        xmlns:services="clr-namespace:easpace.Desktop.Services.Core"
+        xmlns:design="using:easpace.Desktop.Design">
 
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Light">
             <ToggleSwitch />
         </Border>
     </Design.PreviewWith>
@@ -28,12 +30,12 @@ Licensed under the MIT License. See LICENSE file for details.
         </Style>
         
         <Style Selector="^:unchecked /template/ Border#OuterBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Foreground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
         </Style>
 
         <Style Selector="^:unchecked /template/ Ellipse#SwitchKnobOff">
-            <Setter Property="Fill" Value="{DynamicResource Sem.Foreground}" />
+            <Setter Property="Fill" Value="{DynamicResource Sem.Foreground.Subtle}" />
         </Style>
         
     </Style>

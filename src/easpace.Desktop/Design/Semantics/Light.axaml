@@ -10,7 +10,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Foreground.Subtle" Color="{DynamicResource Neutral700}" />
     <SolidColorBrush x:Key="Sem.Foreground.Muted" Color="{DynamicResource Neutral500}" />
     <SolidColorBrush x:Key="Sem.Brand" Color="{DynamicResource Brand700}" />
-    <SolidColorBrush x:Key="Sem.Brand.Subtle" Color="{DynamicResource Brand600}" />
+    <SolidColorBrush x:Key="Sem.Brand.Hover" Color="{DynamicResource Brand800}" />
+    <SolidColorBrush x:Key="Sem.Brand.Subtle" Color="{DynamicResource Brand500}" />
     <SolidColorBrush x:Key="Sem.Brand.Strong" Color="{DynamicResource Brand800}" />
     <SolidColorBrush x:Key="Sem.Brand.Strong.Hover" Color="{DynamicResource Brand900}" />
     <SolidColorBrush x:Key="Sem.On.Brand" Color="#FFFFFF" />
@@ -40,6 +41,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <SolidColorBrush x:Key="Sem.Border" Color="{DynamicResource Neutral400}" />
     <SolidColorBrush x:Key="Sem.Border.Subtle" Color="{DynamicResource Neutral300}" />
     <SolidColorBrush x:Key="Sem.Border.Brand" Color="{DynamicResource Brand800}" />
+    <SolidColorBrush x:Key="Sem.Border.Brand.Divider" Color="{DynamicResource Brand900}" />
+    <SolidColorBrush x:Key="Sem.Border.Divider" Color="{DynamicResource Neutral200}" />
+    <SolidColorBrush x:Key="Sem.Border.Input" Color="{DynamicResource Neutral400}" />
+    <SolidColorBrush x:Key="Sem.Border.Card" Color="{DynamicResource Neutral300}" />
+    <SolidColorBrush x:Key="Sem.Border.Card.Elevated" Color="{DynamicResource Neutral400}" />
+    <SolidColorBrush x:Key="Sem.Border.Focus" Color="{DynamicResource Brand800}" />
     
     <LinearGradientBrush x:Key="Sem.Gradient.Brand" StartPoint="50%,0%" EndPoint="50%,100%">
         <GradientStop Color="{DynamicResource Brand600}" Offset="0.0" />

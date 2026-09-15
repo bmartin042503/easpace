@@ -1,0 +1,54 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:design="using:easpace.Desktop.Design">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Dark">
+
+            <Grid ColumnDefinitions="*,Auto,*,Auto" Height="300">
+                <GridSplitter Grid.Column="1" Classes="vertical" />
+                <StackPanel Grid.Column="3" Orientation="Vertical" Spacing="20"
+                            VerticalAlignment="Center">
+                    <Separator Width="150" />
+                    <Separator Classes="brand" Width="150" />
+                </StackPanel>
+            </Grid>
+
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- GridSplitter template & styling -->
+    <Style Selector="GridSplitter.vertical">
+
+        <Setter Property="Width" Value="{StaticResource Metrics.Spacing.Xs}" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="Transparent">
+                    <Rectangle Fill="{DynamicResource Sem.Border.Divider}"
+                               Width="{StaticResource Metrics.Border.Thickness.Double}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+    </Style>
+    
+    <!-- Separator styling -->
+    <Style Selector="Separator">
+        <Setter Property="Background" Value="{DynamicResource Sem.Border.Divider}" />
+    </Style>
+    
+    <Style Selector="Separator.brand">
+        <Setter Property="Background" Value="{DynamicResource Sem.Border.Brand}" />
+    </Style>
+    
+    <Style Selector="Separator.brand-divider">
+        <Setter Property="Background" Value="{DynamicResource Sem.Border.Brand.Divider}" />
+    </Style>
+    
+</Styles>

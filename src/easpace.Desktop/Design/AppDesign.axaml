@@ -79,7 +79,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <!-- Styles -->
     <StyleInclude Source="Styles/Border.axaml" />
     <StyleInclude Source="Styles/Button.axaml" />
-    <StyleInclude Source="Styles/GridSplitter.axaml" />
+    <StyleInclude Source="Styles/Divider.axaml" />
     <StyleInclude Source="Styles/ListBox.axaml" />
     <StyleInclude Source="Styles/ListBoxItem.axaml" />
     <StyleInclude Source="Styles/Path.axaml" />

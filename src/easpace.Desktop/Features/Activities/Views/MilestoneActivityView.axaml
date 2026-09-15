@@ -89,12 +89,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
                           Foreground="{DynamicResource Sem.Foreground.Muted}"
-                          Width="{StaticResource Metrics.Icon.Size.Md}"
-                          Height="{StaticResource Metrics.Icon.Size.Md}" />
+                          Width="{StaticResource Metrics.Icon.Size.Sm}"
+                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
 
                 <Button.Flyout>
                     <Flyout>
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
                             <!-- Edit button -->
                             <Button Classes="primary regular" HorizontalAlignment="Stretch"

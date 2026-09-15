@@ -240,7 +240,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <ItemsRepeater.Layout>
                                 <StackLayout Orientation="Vertical"
-                                             Spacing="{StaticResource Metrics.Spacing.Xs}" />
+                                             Spacing="{StaticResource Metrics.Spacing.Sm}" />
                             </ItemsRepeater.Layout>
 
                         </ItemsRepeater>

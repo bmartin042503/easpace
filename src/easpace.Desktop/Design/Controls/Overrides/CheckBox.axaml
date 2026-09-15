@@ -8,8 +8,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     x:ClassModifier="internal">
     
     <Design.PreviewWith>
-        <Border Padding="20"
-                Background="{DynamicResource Sem.Surface}">
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <StackPanel Spacing="20">
                 <CheckBox Content="Unchecked" />
                 <CheckBox IsChecked="True" Content="Checked"/>
@@ -21,8 +20,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <x:Double x:Key="CheckBoxMinHeight">32</x:Double>
 
-    <ControlTheme x:Key="{x:Type CheckBox}"
-                  TargetType="CheckBox">
+    <ControlTheme x:Key="{x:Type CheckBox}" TargetType="CheckBox">
 
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -33,7 +31,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
 
         <!-- Template -->
         <Setter Property="Template">
@@ -57,15 +55,14 @@ Licensed under the MIT License. See LICENSE file for details.
                                 Width="20"
                                 Height="20"
                                 Background="{DynamicResource Sem.Surface.Elevated}"
-                                BorderBrush="{DynamicResource Sem.Border}"
+                                BorderBrush="{DynamicResource Sem.Border.Input}"
                                 BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}"
                                 UseLayoutRounding="False" />
 
                         <Viewbox UseLayoutRounding="False">
                             <Panel>
-                                <Panel Width="16"
-                                       Height="16" />
+                                <Panel Width="16" Height="16" />
 
                                 <PathIcon x:Name="CheckGlyph"
                                           VerticalAlignment="Center"
@@ -109,8 +106,8 @@ Licensed under the MIT License. See LICENSE file for details.
                          ^:checked:pressed /template/ Border#NormalRectangle,
                          ^:indeterminate:pointerover /template/ Border#NormalRectangle,
                          ^:indeterminate:pressed /template/ Border#NormalRectangle">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Haven.Sem.Accent.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand.Hover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand.Hover}" />
         </Style>
 
         <!-- Checked glyph -->

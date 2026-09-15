@@ -6,9 +6,10 @@ Licensed under the MIT License. See LICENSE file for details.
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:design="using:easpace.Desktop.Design"
                     x:ClassModifier="internal">
     <Design.PreviewWith>
-        <Border Padding="20">
+        <Border Padding="20" design:PreviewScheme.Variant="HavenBlue.Light">
             <StackPanel Spacing="20">
                 <NumericUpDown Minimum="0" Maximum="10" Increment="0.5" PlaceholderText="Enter text" />
                 <NumericUpDown Minimum="0" Maximum="10" Increment="0.5"

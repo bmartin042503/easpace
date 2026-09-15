@@ -6,15 +6,14 @@ Licensed under the MIT License. See LICENSE file for details.
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
-    
+
     <Design.PreviewWith>
         <Border Padding="20" Background="{DynamicResource Sem.Surface}">
             <Slider Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type Slider}"
-                  TargetType="Slider">
+    <ControlTheme x:Key="{x:Type Slider}" TargetType="Slider">
 
         <Setter Property="behaviors:SliderBehavior.JumpToClick" Value="True" />
         <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
@@ -33,37 +32,32 @@ Licensed under the MIT License. See LICENSE file for details.
                               Margin="{TemplateBinding Padding}"
                               Background="Transparent">
 
-                            <Grid
-                                x:Name="HorizontalTemplate"
-                                MinHeight="6"
-                                ColumnDefinitions="Auto,Auto,*" RowDefinitions="6,Auto,6">
+                            <Grid x:Name="HorizontalTemplate" MinHeight="6"
+                                  ColumnDefinitions="Auto,Auto,*" RowDefinitions="6,Auto,6">
 
                                 <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
                                         Classes="elevated card" VerticalAlignment="Center"
-                                        Height="16">
-                                </Border>
+                                        Height="16" />
 
-                                <Track
-                                    x:Name="PART_Track"
-                                    Grid.Column="0"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="3"
-                                    Minimum="{TemplateBinding Minimum}"
-                                    Maximum="{TemplateBinding Maximum}"
-                                    Value="{TemplateBinding Value, Mode=TwoWay}"
-                                    IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
-                                    Orientation="Horizontal">
+                                <Track x:Name="PART_Track"
+                                       Grid.Column="0"
+                                       Grid.Row="1"
+                                       Grid.ColumnSpan="3"
+                                       Minimum="{TemplateBinding Minimum}"
+                                       Maximum="{TemplateBinding Maximum}"
+                                       Value="{TemplateBinding Value, Mode=TwoWay}"
+                                       IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
+                                       Orientation="Horizontal">
 
-                                    <Thumb
-                                        Name="thumb"
-                                        Width="24"
-                                        Height="24"
-                                        Margin="0"
-                                        Padding="0"
-                                        Background="{DynamicResource Sem.Gradient.Brand}"
-                                        BorderBrush="{DynamicResource Sem.Brand.Strong}"
-                                        BorderThickness="0.75"
-                                        DataContext="{TemplateBinding Value}" />
+                                    <Thumb Name="thumb"
+                                           Width="24"
+                                           Height="24"
+                                           Margin="0"
+                                           Padding="0"
+                                           Background="{DynamicResource Sem.Gradient.Brand}"
+                                           BorderBrush="{DynamicResource Sem.Brand.Strong}"
+                                           BorderThickness="0.75"
+                                           DataContext="{TemplateBinding Value}" />
 
                                 </Track>
 
@@ -76,26 +70,22 @@ Licensed under the MIT License. See LICENSE file for details.
             </ControlTemplate>
         </Setter>
 
-        <Style
-            Selector="^:pointerover /template/ Thumb#thumb,
-                         ^:pressed /template/ Thumb#thumb">
+        <Style Selector="^:pointerover /template/ Thumb#thumb, ^:pressed /template/ Thumb#thumb">
             <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
         </Style>
 
         <Style Selector="^ /template/ Thumb#thumb">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="20" />
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="20" />
                 </ControlTemplate>
             </Setter>
         </Style>
 
-        <Style Selector="^ /template/ Thumb#thumb:pointerover, 
-                 ^ /template/ Thumb#thumb:pressed">
+        <Style Selector="^ /template/ Thumb#thumb:pointerover, ^ /template/ Thumb#thumb:pressed">
             <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />
         </Style>
 

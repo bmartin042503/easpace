@@ -283,8 +283,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- Horizontal separator -->
-                    <Separator Height="1" Background="{DynamicResource Sem.Brand}"
-                               Margin="0" />
+                    <Separator Height="1" Classes="brand" Margin="0" />
 
                     <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Sm}"
                                LineSpacing="{StaticResource Metrics.Spacing.Sm}">
