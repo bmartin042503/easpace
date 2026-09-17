@@ -7,12 +7,11 @@ using Avalonia.Markup.Xaml;
 
 namespace easpace.Desktop.Services.Core;
 
-internal class LocalizationService : MarkupExtension
+internal sealed class LocalizationService : MarkupExtension
 {
     // Key naming convention: Category.Component.Function
     
     private static readonly System.Threading.Lock Lock = new();
-    private static CultureInfo _resourceCulture = CultureInfo.CurrentUICulture;
     
     private static System.Resources.ResourceManager ResourceManager {
         get {
@@ -28,12 +27,16 @@ internal class LocalizationService : MarkupExtension
 
     public static void ChangeLanguage(CultureInfo cultureInfo)
     {
-        _resourceCulture = cultureInfo;
+        CultureInfo.CurrentCulture = cultureInfo;
+        CultureInfo.CurrentUICulture = cultureInfo;
+
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
     }
     
     public static string GetString(string key)
     {
-        return ResourceManager.GetString(key, _resourceCulture) ?? $"[{key}]";
+        return ResourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? $"[{key}]";
     }
     
     public string Key { get; set; } = string.Empty;

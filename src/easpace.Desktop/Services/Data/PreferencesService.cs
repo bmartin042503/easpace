@@ -85,7 +85,7 @@ internal class PreferencesService : IPreferencesService
             SavePreference(PreferenceKey.ColorSchemeAppearance, appearance);
             SavePreference(PreferenceKey.ColorScheme, ColorScheme.HavenBlue);
             SavePreference(PreferenceKey.PreferencesVersion, Version);
-            SavePreference(PreferenceKey.Glassmorphism, false);
+            SavePreference(PreferenceKey.TransparentWindow, false);
         }
     }
 
@@ -121,8 +121,11 @@ internal class PreferencesService : IPreferencesService
         var wellnessAnimatedBgSetting = JsonSerializer.SerializeToElement(true);
         _preferences[PreferenceKey.WellnessAnimatedBackground] = wellnessAnimatedBgSetting;
         
+        var wellnessShowTimerSetting = JsonSerializer.SerializeToElement(true);
+        _preferences[PreferenceKey.WellnessShowTimer] = wellnessShowTimerSetting;
+        
         var glassMorphismSetting = JsonSerializer.SerializeToElement(false);
-        _preferences[PreferenceKey.Glassmorphism] = glassMorphismSetting;
+        _preferences[PreferenceKey.TransparentWindow] = glassMorphismSetting;
         
         var version = JsonSerializer.SerializeToElement(Version);
         _preferences[PreferenceKey.PreferencesVersion] = version;

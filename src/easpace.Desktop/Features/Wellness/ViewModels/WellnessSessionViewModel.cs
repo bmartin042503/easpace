@@ -5,10 +5,12 @@ using System;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
+using easpace.Desktop.Services.Data;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
@@ -18,7 +20,8 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     #region Fields
 
     private DateTimeOffset _startDate;
-    
+
+    private readonly IPreferencesService _preferencesService;
     private readonly WellnessSessionConfiguration _sessionConfiguration;
     private readonly IWellnessSessionManager _wellnessSessionManager;
 
@@ -32,6 +35,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     private string _timerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");
 
     public bool IsBreathing { get; set; }
+    public bool ShowWellnessTimer { get; init; }
 
     #endregion
 
@@ -49,12 +53,18 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="WellnessSessionViewModel"/> class.
     /// </summary>
+    /// <param name="preferencesService">The preferences service to load settings related to the session.</param>
     /// <param name="sessionConfiguration">The configuration parameters for the current session.</param>
-    public WellnessSessionViewModel(WellnessSessionConfiguration sessionConfiguration)
+    public WellnessSessionViewModel(
+        IPreferencesService preferencesService,
+        WellnessSessionConfiguration sessionConfiguration)
     {
+        _preferencesService = preferencesService;
         _sessionConfiguration = sessionConfiguration;
 
         _wellnessSessionManager = new WellnessSessionManager(sessionConfiguration);
+
+        ShowWellnessTimer = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
 
         _wellnessSessionManager.TimerTick += OnSessionManagerTimerTick;
         _wellnessSessionManager.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;

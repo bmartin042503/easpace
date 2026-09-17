@@ -14,14 +14,14 @@ Licensed under the MIT License. See LICENSE file for details.
         
         <Product>easpace</Product>
         <Title>easpace</Title>
-        <ApplicationIcon>Assets\AppLogo\easpace.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\AppLogo\logo-rect.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="Assets\AppLogo\Parts\" />
         <Folder Include="Assets\Fonts\*"/>
         <AvaloniaResource Include="Assets\**"/>
         <AvaloniaResource Remove="Controls\TimePicker\**" />
-        <Folder Include="Assets\Images\" />
         <Folder Include="Migrations\" />
     </ItemGroup>
 

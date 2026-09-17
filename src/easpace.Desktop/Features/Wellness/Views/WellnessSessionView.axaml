@@ -47,7 +47,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Timer -->
         <TextBlock Grid.Row="2" Classes="strong brand fs3" Text="{Binding TimerText}"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   IsVisible="{Binding ShowWellnessTimer}" />
 
         <!-- Buttons -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"

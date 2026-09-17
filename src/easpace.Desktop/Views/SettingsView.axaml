@@ -99,19 +99,19 @@ Licensed under the MIT License. See LICENSE file for details.
                             <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
                         </ComboBox>
                         
-                        <!-- Glassmorphism label & description -->
+                        <!-- Transparent window label & description -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.Glassmorphism.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Label'}" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.Glassmorphism.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Description'}" />
                         </StackPanel>
 
-                        <!-- Glassmorphism toggle switch -->
+                        <!-- Transparent window toggle switch -->
                         <ToggleSwitch Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
                                       HorizontalAlignment="Right"
-                                      IsChecked="{Binding IsGlassmorphismEnabled}" />
+                                      IsChecked="{Binding IsTransparentWindowEnabled}" />
 
                     </Grid>
 
@@ -129,7 +129,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                Text="{core:LocalizationService Key='Settings.Category.Wellness'}" />
 
                     <!-- Settings content -->
-                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto"
+                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto"
                           RowSpacing="{StaticResource SettingsCardRowSpacing}">
 
                         <!-- Full screen label & description -->
@@ -159,6 +159,20 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ToggleSwitch Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
                                       HorizontalAlignment="Right"
                                       IsChecked="{Binding IsWellnessAnimatedBackgroundEnabled}" />
+                        
+                        <!-- Show timer label & description -->
+                        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
+                                    VerticalAlignment="Center">
+                            <TextBlock Classes="neutral fs5 trm-ellipsis"
+                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Label'}" />
+                            <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
+                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Description'}" />
+                        </StackPanel>
+
+                        <!-- Show timer toggle switch -->
+                        <ToggleSwitch Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
+                                      HorizontalAlignment="Right"
+                                      IsChecked="{Binding ShowWellnessTimer}" />
 
                     </Grid>
 
@@ -256,6 +270,12 @@ Licensed under the MIT License. See LICENSE file for details.
                             <!-- Contact -->
                             <TextBlock Classes="strong brand fs5 trm-ellipsis"
                                        Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
+                            
+                            <!-- Logo -->
+                            <Button Classes="tertiary" Padding="0"
+                                    FontSize="{StaticResource Metrics.FontSize.Sm}"
+                                    Content="{core:LocalizationService Key='Credits.Text.Logo'}"
+                                    Command="{Binding OpenLogoCreatorPageCommand}" />
 
                         </StackPanel>
 

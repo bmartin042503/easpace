@@ -670,11 +670,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Language.Description" xml:space="preserve">
         <value>Choose your preferred language for the application.</value>
     </data>
-    <data name="Settings.Glassmorphism.Label" xml:space="preserve">
-        <value>Glassmorphism</value>
+    <data name="Settings.TransparentWindow.Label" xml:space="preserve">
+        <value>Transparent window</value>
     </data>
-    <data name="Settings.Glassmorphism.Description" xml:space="preserve">
-        <value>Enables translucent, glass-like effect to the interface.</value>
+    <data name="Settings.TransparentWindow.Description" xml:space="preserve">
+        <value>Makes the application window transparent with a subtle blur effect.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Color Scheme</value>
@@ -714,6 +714,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Settings.FullScreen.Description" xml:space="preserve">
         <value>Enables full screen mode during your sessions.</value>
+    </data>
+    <data name="Settings.ShowTimer.Label" xml:space="preserve">
+        <value>Session Timer</value>
+    </data>
+    <data name="Settings.ShowTimer.Description" xml:space="preserve">
+        <value>Show the timer during sessions.</value>
     </data>
     <data name="Settings.CheckForUpdates.Label" xml:space="preserve">
         <value>Check For Updates</value>
@@ -765,6 +771,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Terms of Use</value>
+    </data>
+    <data name="Credits.Text.Logo" xml:space="preserve">
+        <value>Logo: Edwin Jo</value>
     </data>
     <data name="NewUpdate.Dialog.Title" xml:space="preserve">
         <value>Update Available</value>

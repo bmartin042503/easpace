@@ -31,9 +31,10 @@ internal partial class SettingsViewModel : PageViewModel
     [ObservableProperty] private int _selectedLanguageIndex;
     [ObservableProperty] private int _selectedColorSchemeIndex;
     [ObservableProperty] private int _selectedColorSchemeAppearanceIndex;
-    [ObservableProperty] private bool _isGlassmorphismEnabled;
+    [ObservableProperty] private bool _isTransparentWindowEnabled;
     [ObservableProperty] private bool _isWellnessFullScreenEnabled;
     [ObservableProperty] private bool _isWellnessAnimatedBackgroundEnabled;
+    [ObservableProperty] private bool _showWellnessTimer;
     [ObservableProperty] private bool _isCheckForUpdatesEnabled;
 
     private bool _isLoading = true;
@@ -104,6 +105,12 @@ internal partial class SettingsViewModel : PageViewModel
         await _applicationService.LaunchUriAsync(new Uri("https://github.com/bmartin042503/easpace"));
     }
 
+    [RelayCommand]
+    private async Task OpenLogoCreatorPageAsync()
+    {
+        await _applicationService.LaunchUriAsync(new Uri("https://www.fiverr.com/l_nuge"));
+    }
+
     private void LoadSettings()
     {
         _isLoading = true;
@@ -134,12 +141,15 @@ internal partial class SettingsViewModel : PageViewModel
             _ => 0
         };
 
-        IsGlassmorphismEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.Glassmorphism);
+        IsTransparentWindowEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.TransparentWindow);
 
         IsWellnessFullScreenEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
 
         IsWellnessAnimatedBackgroundEnabled =
             _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessAnimatedBackground);
+        
+        ShowWellnessTimer =
+            _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
 
         IsCheckForUpdatesEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.CheckForUpdates);
 
@@ -175,10 +185,11 @@ internal partial class SettingsViewModel : PageViewModel
         _preferencesService.SavePreference(PreferenceKey.Language, language);
         _preferencesService.SavePreference(PreferenceKey.ColorScheme, colorScheme);
         _preferencesService.SavePreference(PreferenceKey.ColorSchemeAppearance, colorSchemeAppearance);
-        _preferencesService.SavePreference(PreferenceKey.Glassmorphism, IsGlassmorphismEnabled);
+        _preferencesService.SavePreference(PreferenceKey.TransparentWindow, IsTransparentWindowEnabled);
         _preferencesService.SavePreference(PreferenceKey.WellnessFullScreen, IsWellnessFullScreenEnabled);
         _preferencesService.SavePreference(PreferenceKey.WellnessAnimatedBackground,
             IsWellnessAnimatedBackgroundEnabled);
+        _preferencesService.SavePreference(PreferenceKey.WellnessShowTimer, ShowWellnessTimer);
         _preferencesService.SavePreference(PreferenceKey.CheckForUpdates, IsCheckForUpdatesEnabled);
 
         // restart required dialog when the language setting has changed
@@ -215,9 +226,10 @@ internal partial class SettingsViewModel : PageViewModel
             nameof(SelectedLanguageIndex) or
             nameof(SelectedColorSchemeIndex) or
             nameof(SelectedColorSchemeAppearanceIndex) or
-            nameof(IsGlassmorphismEnabled) or
+            nameof(IsTransparentWindowEnabled) or
             nameof(IsWellnessFullScreenEnabled) or
             nameof(IsWellnessAnimatedBackgroundEnabled) or
+            nameof(ShowWellnessTimer) or
             nameof(IsCheckForUpdatesEnabled))
         {
             await SaveSettings();

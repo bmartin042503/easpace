@@ -340,7 +340,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
         }
         else
         {
-            MaximumSeconds = 45 * 60;
+            MaximumSeconds = 30 * 60;
             StepSeconds = 60;
             MinimumSeconds = 60;
         }

@@ -43,30 +43,22 @@ internal sealed class Program
 
             if (string.IsNullOrWhiteSpace(languageSetting))
             {
-                var currentCulture = CultureInfo.CurrentCulture;
-                
-                switch (currentCulture.TwoLetterISOLanguageName)
+                languageSetting = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
                 {
-                    case "hu":
-                        preferencesService.SavePreference(PreferenceKey.Language, "hu");
-                        break;
-                    
-                    default:
-                        preferencesService.SavePreference(PreferenceKey.Language, "en");
-                        break;
-                }
-            }
-            else
-            {
-                var cultureInfo = languageSetting switch
-                {
-                    "en" => CultureInfo.InvariantCulture,
-                    "hu" => CultureInfo.GetCultureInfo("hu-HU"),
-                    _ => CultureInfo.InvariantCulture
+                    "hu" => "hu",
+                    _ => "en"
                 };
                 
-                LocalizationService.ChangeLanguage(cultureInfo);
+                preferencesService.SavePreference(PreferenceKey.Language, languageSetting);
             }
+            
+            var cultureInfo = languageSetting switch
+            {
+                "hu" => CultureInfo.GetCultureInfo("hu-HU"),
+                _ => CultureInfo.GetCultureInfo("en-US")
+            };
+            
+            LocalizationService.ChangeLanguage(cultureInfo);
 
             // migrate db if there are changes
             var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();

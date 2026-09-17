@@ -1,4 +1,7 @@
-## easpace
+<p align="center">
+  <img src="src/easpace.Desktop/Assets/AppLogo/logo-rect.png" alt="easpace logo" height="70">
+</p>
+<h1 align="center">easpace</h1>
 
 **easpace** is a cross-platform, open-source application built with **.NET** and **Avalonia UI**, designed to be a quiet, private space for self-reflection, personal tracking, and wellbeing.
 
@@ -13,13 +16,6 @@ There are **no subscriptions, paywalls, ads, or analytics**. **All your data is 
 It's all yours, **for free, forever**.
 
 Available for **Windows** and **macOS** (support for Linux, iOS and Android will be added in later versions).
-
-<p align="center">
-    <img src="src/easpace.Desktop/Assets/Images/journal.png" alt="journal page">
-    <img src="src/easpace.Desktop/Assets/Images/activities.png" alt="activities page">
-    <img src="src/easpace.Desktop/Assets/Images/wellness-1.png" alt="wellness start page">
-    <img src="src/easpace.Desktop/Assets/Images/wellness-2.png" alt="wellness session page">
-</p>
 
 ## Features
 

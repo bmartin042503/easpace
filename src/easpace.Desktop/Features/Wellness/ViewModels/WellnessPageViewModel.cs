@@ -198,7 +198,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         
         _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
 
-        _sessionViewModel = new WellnessSessionViewModel(sessionConfiguration);
+        _sessionViewModel = new WellnessSessionViewModel(_preferencesService, sessionConfiguration);
         _sessionViewModel.SessionEnded += OnSessionEnded;
 
         ContentViewModel = _sessionViewModel;

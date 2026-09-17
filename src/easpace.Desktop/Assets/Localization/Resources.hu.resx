@@ -670,11 +670,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Language.Description" xml:space="preserve">
         <value>Válaszd ki az alkalmazás nyelvét.</value>
     </data>
-    <data name="Settings.Glassmorphism.Label" xml:space="preserve">
-        <value>Üveghatás</value>
+    <data name="Settings.TransparentWindow.Label" xml:space="preserve">
+        <value>Áttetsző ablak</value>
     </data>
-    <data name="Settings.Glassmorphism.Description" xml:space="preserve">
-        <value>Engedélyezi az áttetsző, üvegszerű megjelenést a felületnek.</value>
+    <data name="Settings.TransparentWindow.Description" xml:space="preserve">
+        <value>Áttetszővé teszi az alkalmazás ablakát, enyhe elmosási hatással.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Színséma</value>
@@ -714,6 +714,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Settings.FullScreen.Description" xml:space="preserve">
         <value>Teljes képernyős mód bekapcsolása a gyakorlatok alatt.</value>
+    </data>
+    <data name="Settings.ShowTimer.Label" xml:space="preserve">
+        <value>Gyakorlat időzítő</value>
+    </data>
+    <data name="Settings.ShowTimer.Description" xml:space="preserve">
+        <value>Az időzítő megjelenítése gyakorlatok közben.</value>
     </data>
     <data name="Settings.CheckForUpdates.Label" xml:space="preserve">
         <value>Frissítések keresése</value>
@@ -765,6 +771,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.TermsOfUse" xml:space="preserve">
         <value>Felhasználási feltételek</value>
+    </data>
+    <data name="Credits.Text.Logo" xml:space="preserve">
+        <value>Logó: Edwin Jo</value>
     </data>
     <data name="NewUpdate.Dialog.Title" xml:space="preserve">
         <value>Frissítés elérhető</value>
