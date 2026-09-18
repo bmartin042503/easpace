@@ -40,7 +40,9 @@ Licensed under the MIT License. See LICENSE file for details.
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -152,8 +154,8 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Input}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Xs}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
 
         <Setter Property="Template">
             <ControlTemplate>
@@ -175,9 +177,9 @@ Licensed under the MIT License. See LICENSE file for details.
         <Style Selector="^:pointerover /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
         </Style>
-
-        <Style Selector="^:pressed /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Sem.Accent.Muted.Hover}" />
+        
+        <Style Selector="^.danger:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Danger}" />
         </Style>
 
         <Style Selector="^:disabled">
@@ -361,7 +363,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <Grid Name="ContentPanel"
                           RowDefinitions="*,Auto"
-                          RowSpacing="{StaticResource Metrics.Spacing.Xxs}"
+                          RowSpacing="{StaticResource Metrics.Spacing.Xs}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch">
 
@@ -466,14 +468,6 @@ Licensed under the MIT License. See LICENSE file for details.
                                                          VerticalAlignment="Stretch"
                                                          ItemHeight="{StaticResource TimePicker.ItemHeight}" />
                                 </ScrollViewer>
-                                <RepeatButton Name="PART_PeriodUpButton"
-                                              Theme="{StaticResource TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False"
-                                              IsHitTestVisible="False" />
-                                <RepeatButton Name="PART_PeriodDownButton"
-                                              Theme="{StaticResource TimePicker.HiddenSpinnerButton}"
-                                              IsVisible="False"
-                                              IsHitTestVisible="False" />
                             </Panel>
 
                             <Rectangle Name="PART_FirstSpacer" Grid.Column="1"
@@ -494,12 +488,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         </Grid>
 
                         <Grid Name="AcceptDismissGrid" Grid.Row="1"
-                              ColumnDefinitions="*,*">
-
-                            <Rectangle Height="{StaticResource TimePicker.SpacerWidth}"
-                                       VerticalAlignment="Top"
-                                       Fill="{DynamicResource Sem.Border.Input}"
-                                       Grid.ColumnSpan="2" />
+                              ColumnDefinitions="*,*" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                             <Button Name="PART_AcceptButton"
                                     Grid.Column="0"
@@ -507,21 +496,38 @@ Licensed under the MIT License. See LICENSE file for details.
                                     Foreground="{DynamicResource Sem.Brand.Strong}"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
-                                <PathIcon Width="{StaticResource Metrics.Icon.Size.Xs}"
-                                          Height="{StaticResource Metrics.Icon.Size.Xs}"
-                                          Foreground="{Binding $parent[Button].Foreground}"
-                                          Data="{StaticResource PhosphorIcons.Check.Bold}" />
+
+                                <Grid Background="Transparent">
+                                    <PathIcon
+                                        Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                        Height="{StaticResource Metrics.Icon.Size.Xs}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsHitTestVisible="False"
+                                        Foreground="{Binding $parent[Button].Foreground}"
+                                        Data="{StaticResource PhosphorIcons.Check.Bold}" />
+                                </Grid>
+
                             </Button>
 
-                            <Button Name="PART_DismissButton" Grid.Column="1"
+                            <Button Name="PART_DismissButton"
+                                    Grid.Column="1" Classes="danger"
                                     Theme="{StaticResource TimePicker.ActionButton}"
                                     Foreground="{DynamicResource Sem.Danger.Strong}"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
-                                <PathIcon Width="{StaticResource Metrics.Icon.Size.Xs}"
-                                          Height="{StaticResource Metrics.Icon.Size.Xs}"
-                                          Foreground="{Binding $parent[Button].Foreground}"
-                                          Data="{StaticResource PhosphorIcons.X.Bold}" />
+
+                                <Grid Background="Transparent">
+                                    <PathIcon
+                                        Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                        Height="{StaticResource Metrics.Icon.Size.Xs}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsHitTestVisible="False"
+                                        Foreground="{Binding $parent[Button].Foreground}"
+                                        Data="{StaticResource PhosphorIcons.X.Bold}" />
+                                </Grid>
+
                             </Button>
 
                         </Grid>
