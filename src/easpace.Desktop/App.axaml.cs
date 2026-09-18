@@ -50,11 +50,11 @@ internal partial class App : Application
 
         var preferencesService = _services.GetRequiredService<IPreferencesService>();
         var colorSchemeService = _services.GetRequiredService<IColorSchemeService>();
+        var windowAppearanceService = _services.GetRequiredService<IWindowTransparencyService>();
 
         var colorScheme = preferencesService.ReadPreference<ColorScheme>(PreferenceKey.ColorScheme);
         var colorSchemeAppearance = preferencesService.ReadPreference<ColorSchemeAppearance>(PreferenceKey.ColorSchemeAppearance);
-
-        colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+        var isTransparentWindowEnabled = preferencesService.ReadPreference<bool>(PreferenceKey.TransparentWindow);
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -63,6 +63,9 @@ internal partial class App : Application
                 DataContext = _services.GetRequiredService<MainViewModel>()
             };
         }
+        
+        colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+        windowAppearanceService.SetTransparencyEnabled(isTransparentWindowEnabled);
 
         base.OnFrameworkInitializationCompleted();
     }

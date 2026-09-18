@@ -9,10 +9,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Styles.Resources>
         <ResourceDictionary>
-            
+
             <!-- Fonts -->
             <FontFamily x:Key="FontFamily.Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
-            
+
+            <!-- Default opacity values that can be changed via WindowAppearanceService -->
+            <x:Double x:Key="Opacity.Page">1.0</x:Double>
+            <x:Double x:Key="Opacity.Sidebar">1.0</x:Double>
+
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- Metrics -->
@@ -49,7 +53,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ResourceInclude Source="Controls/ChartNavigator.axaml" />
 
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!-- Semantics -->
             <ResourceDictionary.ThemeDictionaries>
 
@@ -66,7 +70,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </ResourceDictionary>
 
             </ResourceDictionary.ThemeDictionaries>
-            
+
             <!-- Converters -->
             <converters:RelativeDateConverter x:Key="RelativeDateConverter" />
             <converters:EnumToLocalizedConverter x:Key="EnumToLocalizedConverter" />

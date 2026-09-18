@@ -63,7 +63,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Style Selector="Border.sidebar">
         <Setter Property="MinWidth" Value="200" />
-        <Setter Property="Background" Value="{DynamicResource Sem.Surface.Sidebar}" />
+        <Setter Property="Background" Value="{DynamicResource Sem.Background.Sidebar}" />
     </Style>
 
     <Style Selector="Border.card">

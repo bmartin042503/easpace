@@ -14,7 +14,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Mood.Views.MoodPageView"
              x:DataType="vm:MoodPageViewModel"
-             Background="{DynamicResource Sem.Surface}"
+             Background="{DynamicResource Sem.Background.Page}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">

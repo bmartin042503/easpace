@@ -671,10 +671,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Choose your preferred language for the application.</value>
     </data>
     <data name="Settings.TransparentWindow.Label" xml:space="preserve">
-        <value>Transparent window</value>
+        <value>Translucent window</value>
     </data>
     <data name="Settings.TransparentWindow.Description" xml:space="preserve">
-        <value>Makes the application window transparent with a subtle blur effect.</value>
+        <value>Makes the window background partially transparent, with a subtle blur where supported.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Color Scheme</value>

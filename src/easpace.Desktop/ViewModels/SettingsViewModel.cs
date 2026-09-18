@@ -19,6 +19,7 @@ namespace easpace.Desktop.ViewModels;
 internal partial class SettingsViewModel : PageViewModel
 {
     private readonly IPreferencesService _preferencesService;
+    private readonly IWindowTransparencyService _windowTransparencyService;
     private readonly IColorSchemeService _colorSchemeService;
     private readonly IApplicationService _applicationService;
     private readonly IDataWipeService _dataWipeService;
@@ -41,6 +42,7 @@ internal partial class SettingsViewModel : PageViewModel
 
     public SettingsViewModel(
         IPreferencesService preferencesService,
+        IWindowTransparencyService windowTransparencyService,
         IColorSchemeService colorSchemeService,
         IApplicationService applicationService,
         IDataWipeService dataWipeService,
@@ -50,6 +52,7 @@ internal partial class SettingsViewModel : PageViewModel
         Page = ApplicationPage.Settings;
 
         _preferencesService = preferencesService;
+        _windowTransparencyService = windowTransparencyService;
         _colorSchemeService = colorSchemeService;
         _applicationService = applicationService;
         _dataWipeService = dataWipeService;
@@ -200,7 +203,7 @@ internal partial class SettingsViewModel : PageViewModel
                 Title = string.Format(LocalizationService.GetString("Settings.RestartDialog.Title")),
                 Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Description")),
                 CancelText = LocalizationService.GetString("Common.Button.Later"),
-                ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow"),
+                ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow")
             };
 
             await _dialogService.ShowDialogAsync(restartConfirmDialog);
@@ -212,6 +215,7 @@ internal partial class SettingsViewModel : PageViewModel
         }
 
         _colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+        _windowTransparencyService.SetTransparencyEnabled(IsTransparentWindowEnabled);
 
         _toastMessageService.ShowToastMessage(
             LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),

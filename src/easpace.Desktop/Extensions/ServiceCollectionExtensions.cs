@@ -34,6 +34,9 @@ internal static class ServiceCollectionExtensions
         {
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
             
+            collection.AddSingleton<PreferencesService>();
+            collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
+            
             collection.AddSingleton<ColorSchemeService>();
             collection.AddSingleton<IColorSchemeService>(sp => sp.GetRequiredService<ColorSchemeService>());
 
@@ -48,15 +51,15 @@ internal static class ServiceCollectionExtensions
             
             collection.AddSingleton<DataWipeService>();
             collection.AddSingleton<IDataWipeService>(sp => sp.GetRequiredService<DataWipeService>());
-
-            collection.AddSingleton<PreferencesService>();
-            collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
             
             collection.AddTransient<UpdateService>();
             collection.AddTransient<IUpdateService>(sp => sp.GetRequiredService<UpdateService>());
 
             collection.AddTransient<WindowService>();
             collection.AddTransient<IWindowService>(sp => sp.GetRequiredService<WindowService>());
+            
+            collection.AddTransient<WindowTransparencyService>();
+            collection.AddTransient<IWindowTransparencyService>(sp => sp.GetRequiredService<WindowTransparencyService>());
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());

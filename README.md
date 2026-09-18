@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/easpace.Desktop/Assets/AppLogo/logo-rect.png" alt="easpace logo" height="70">
+  <img src="src/easpace.Desktop/Assets/AppLogo/logo-rect.png" alt="easpace logo" height="90">
 </p>
 <h1 align="center">easpace</h1>
 

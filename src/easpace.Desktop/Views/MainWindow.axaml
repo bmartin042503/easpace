@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
         x:Class="easpace.Desktop.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource Sem.Surface}"
+        Background="Transparent"
         Title="easpace" MinHeight="450" MinWidth="700"
         ExtendClientAreaToDecorationsHint="True"
         utils:ViewInitialization.Command="{Binding InitializeCommand}">

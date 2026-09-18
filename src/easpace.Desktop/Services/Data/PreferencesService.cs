@@ -25,7 +25,6 @@ internal class PreferencesService : IPreferencesService
     private readonly Lock _lock = new();
     private readonly string _preferencesPath;
     private readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
     public PreferencesService()
     {
         var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "easpace");

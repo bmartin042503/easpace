@@ -82,5 +82,13 @@ Licensed under the MIT License. See LICENSE file for details.
         <GradientStop Color="{DynamicResource Danger950}" Offset="0.0" />
         <GradientStop Color="{DynamicResource Danger975}" Offset="1.0" />
     </LinearGradientBrush>
+    
+    <SolidColorBrush x:Key="Sem.Background.Page" 
+                     Color="{DynamicResource Neutral975}"
+                     Opacity="{DynamicResource Opacity.Page}" />
+    
+    <SolidColorBrush x:Key="Sem.Background.Sidebar" 
+                     Color="{DynamicResource Neutral950}"
+                     Opacity="{DynamicResource Opacity.Sidebar}" />
 
 </ResourceDictionary>

@@ -16,7 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
-             Background="Transparent">
+             Background="{DynamicResource Sem.Background.Page}">
 
     <UserControl.Resources>
 

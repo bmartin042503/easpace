@@ -674,7 +674,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Áttetsző ablak</value>
     </data>
     <data name="Settings.TransparentWindow.Description" xml:space="preserve">
-        <value>Áttetszővé teszi az alkalmazás ablakát, enyhe elmosási hatással.</value>
+        <value>Részben átlátszóvá teszi az ablak hátterét, és ahol támogatott, enyhe elmosást alkalmaz.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Színséma</value>

@@ -13,7 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.SettingsView"
              x:DataType="vm:SettingsViewModel"
-             Background="{DynamicResource Sem.Surface}">
+             Background="{DynamicResource Sem.Background.Page}">
 
     <UserControl.Resources>
         <x:Double x:Key="InputSettingMinimumWidth">180</x:Double>
@@ -45,9 +45,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.Language.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.Language.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.Language.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.Language.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Language combo box -->
@@ -64,9 +66,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Appearance combo box -->
@@ -84,9 +88,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.ColorScheme.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Color scheme combo box -->
@@ -103,9 +109,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Transparent window toggle switch -->
@@ -136,9 +144,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.FullScreen.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.FullScreen.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.FullScreen.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.FullScreen.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- FullScreen toggle switch -->
@@ -150,9 +160,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.AnimatedBackground.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Animated background toggle switch -->
@@ -164,9 +176,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Show timer toggle switch -->
@@ -197,9 +211,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.CheckForUpdates.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Check for updates toggle switch -->
@@ -211,9 +227,11 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Label'}" />
+                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Label'}"
+                                       TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Description'}" />
+                                       Text="{core:LocalizationService Key='Settings.DeleteAllData.Description'}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
 
                         <!-- Delete all data button -->

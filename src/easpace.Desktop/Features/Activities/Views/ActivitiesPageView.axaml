@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
-             Background="{DynamicResource Sem.Surface}"
+             Background="{DynamicResource Sem.Background.Page}"
              utils:ViewInitialization.Command="{Binding InitializeAsync}">
 
     <UserControl.Resources>
