@@ -28,6 +28,13 @@ Licensed under the MIT License. See LICENSE file for details.
                       VerticalAlignment="Center" HorizontalAlignment="Center">
                     
                     <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
+                        
+                        <!-- App logo -->
+                        <PathIcon Height="90" Width="90" 
+                                  Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
+                                  HorizontalAlignment="Center"
+                                  Data="{StaticResource AppIcons.Easpace.V2}"
+                                  Foreground="{DynamicResource Sem.Brand}" />
                             
                         <!-- easpace title -->
                         <TextBlock Classes="strong brand fs1" Text="easpace"

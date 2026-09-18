@@ -61,7 +61,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             <ComboBoxItem>English</ComboBoxItem>
                             <ComboBoxItem>Magyar</ComboBoxItem>
                         </ComboBox>
-                        
+
                         <!-- Appearance label & description -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
@@ -79,11 +79,14 @@ Licensed under the MIT License. See LICENSE file for details.
                                   HorizontalAlignment="Right"
                                   Width="{StaticResource InputSettingMinimumWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeAppearanceIndex}">
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
                         </ComboBox>
-                        
+
                         <!-- Color scheme label & description -->
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
@@ -102,9 +105,10 @@ Licensed under the MIT License. See LICENSE file for details.
                                   Width="{StaticResource InputSettingMinimumWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeIndex}">
                             <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
                         </ComboBox>
-                        
+
                         <!-- Transparent window label & description -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
@@ -171,7 +175,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ToggleSwitch Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
                                       HorizontalAlignment="Right"
                                       IsChecked="{Binding IsWellnessAnimatedBackgroundEnabled}" />
-                        
+
                         <!-- Show timer label & description -->
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
@@ -265,60 +269,74 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
+                    <Grid ColumnDefinitions="Auto,*" HorizontalAlignment="Stretch"
+                          ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                        <!-- App details -->
+                        <StackPanel Grid.Column="0" Orientation="Vertical"
+                                    Spacing="{StaticResource Metrics.Spacing.Md}">
 
-                            <!-- Title -->
-                            <TextBlock Classes="brand fs3 medium trm-ellipsis" Text="easpace" />
+                            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                            <!-- Built with .NET and Avalonia UI -->
-                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
+                                <!-- Title -->
+                                <TextBlock Classes="brand fs3 medium trm-ellipsis" Text="easpace" />
 
-                        </StackPanel>
+                                <!-- Built with .NET and Avalonia UI -->
+                                <TextBlock Classes="strong brand fs5 trm-ellipsis"
+                                           Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
 
-                        <!-- Texts -->
-                        <StackPanel Orientation="Vertical" Spacing="4">
+                            </StackPanel>
 
-                            <!-- Version -->
-                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
-                                       Text="{Binding VersionText}" />
+                            <!-- Texts -->
+                            <StackPanel Orientation="Vertical" Spacing="4">
 
-                            <!-- Contact -->
-                            <TextBlock Classes="strong brand fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
-                            
-                            <!-- Logo -->
+                                <!-- Version -->
+                                <TextBlock Classes="strong brand fs5 trm-ellipsis"
+                                           Text="{Binding VersionText}" />
+
+                                <!-- Contact -->
+                                <TextBlock Classes="strong brand fs5 trm-ellipsis"
+                                           Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
+
+                                <!-- Logo -->
+                                <Button Classes="tertiary" Padding="0"
+                                        FontSize="{StaticResource Metrics.FontSize.Sm}"
+                                        Content="{core:LocalizationService Key='Credits.Text.Logo'}"
+                                        Command="{Binding OpenLogoCreatorPageCommand}" />
+
+                            </StackPanel>
+
+                            <!-- Made with <3 in Hungary -->
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <TextBlock Classes="strong brand fs5" Text="Made with" />
+                                <PathIcon Foreground="{DynamicResource Sem.Brand.Strong}"
+                                          Data="{StaticResource PhosphorIcons.Heart.Fill}"
+                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
+                                <TextBlock Classes="strong brand fs5" Text="in Hungary" />
+                            </StackPanel>
+
+                            <!-- Copyright button + easpace MIT license -->
                             <Button Classes="tertiary" Padding="0"
-                                    FontSize="{StaticResource Metrics.FontSize.Sm}"
-                                    Content="{core:LocalizationService Key='Credits.Text.Logo'}"
-                                    Command="{Binding OpenLogoCreatorPageCommand}" />
+                                    Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>EaspaceLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                         </StackPanel>
 
-                        <!-- Made with <3 in Hungary -->
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <TextBlock Classes="strong brand fs5" Text="Made with" />
-                            <PathIcon Foreground="{DynamicResource Sem.Brand.Strong}"
-                                      Data="{StaticResource PhosphorIcons.Heart.Fill}"
-                                      Width="{StaticResource Metrics.Icon.Size.Xs}"
-                                      Height="{StaticResource Metrics.Icon.Size.Xs}" />
-                            <TextBlock Classes="strong brand fs5" Text="in Hungary" />
-                        </StackPanel>
+                        <!-- App logo -->
+                        <PathIcon Grid.Column="1" Height="100" Width="100" 
+                                  Margin="{StaticResource Metrics.Spacing.Thickness.Xs}"
+                                  HorizontalAlignment="Right" VerticalAlignment="Top"
+                                  Data="{StaticResource AppIcons.Easpace.V2}"
+                                  Foreground="{DynamicResource Sem.Brand}" />
 
-                        <!-- Copyright button + easpace MIT license -->
-                        <Button Classes="tertiary" Padding="0"
-                                Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
-                                Command="{Binding ShowLegalFileCommand}">
-
-                            <Button.CommandParameter>
-                                <constants:LegalFileType>EaspaceLicense</constants:LegalFileType>
-                            </Button.CommandParameter>
-
-                        </Button>
-
-                    </StackPanel>
+                    </Grid>
 
                     <!-- Horizontal separator -->
                     <Separator Height="1" Classes="brand" Margin="0" />
