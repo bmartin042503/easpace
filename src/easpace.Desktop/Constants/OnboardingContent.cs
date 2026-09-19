@@ -8,6 +8,7 @@ public enum OnboardingContent
     Welcome,
     TermsOfUse,
     PrivacyPolicy,
+    Customize,
     BetaSoftwareWarning,
     ThankYou
 }

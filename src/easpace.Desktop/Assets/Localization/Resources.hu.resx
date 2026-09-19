@@ -686,7 +686,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Haven Blue</value>
     </data>
     <data name="Settings.ColorScheme.AvallamaPurple" xml:space="preserve">
-        <value>Avallama Purple</value>
+        <value>Avallama Purple</value>f
     </data>
     <data name="Settings.ColorSchemeAppearance.Label" xml:space="preserve">
         <value>Megjelenés</value>
@@ -789,6 +789,21 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
         <value>Elolvastam és elfogadom a Felhasználási feltételeket.</value>
+    </data>
+    <data name="Onboarding.Customize.Title" xml:space="preserve">
+        <value>Válaszd ki a hozzád illő megjelenést</value>
+    </data>
+    <data name="Onboarding.Customize.Description" xml:space="preserve">
+        <value>Ezeket később bármikor módosíthatod a beállításokban.</value>
+    </data>
+    <data name="Onboarding.Customize.Appearance" xml:space="preserve">
+        <value>Megjelenés</value>
+    </data>
+    <data name="Onboarding.Customize.ColorPalette" xml:space="preserve">
+        <value>Színpaletta</value>
+    </data>
+    <data name="Onboarding.Customize.Translucency" xml:space="preserve">
+        <value>Áttetszőség</value>
     </data>
     <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
         <value>Ez egy béta verzió</value>

@@ -64,7 +64,8 @@ internal partial class App : Application
             };
         }
         
-        colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+        colorSchemeService.SetColorScheme(colorScheme);
+        colorSchemeService.SetColorSchemeAppearance(colorSchemeAppearance);
         windowAppearanceService.SetTranslucencyEnabled(isTransparentWindowEnabled);
 
         base.OnFrameworkInitializationCompleted();

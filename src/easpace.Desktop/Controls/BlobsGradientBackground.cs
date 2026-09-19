@@ -19,6 +19,7 @@ internal class BlobsGradientBackground : Control
 
     private readonly Random _rnd = new();
     private readonly List<Blob> _blobs = new();
+    private readonly HashSet<SolidColorBrush> _observedBrushes = new();
 
     private readonly Border _bgBorder;
     private readonly BlobCanvas _blobsCanvas;
@@ -130,6 +131,7 @@ internal class BlobsGradientBackground : Control
         base.OnAttachedToVisualTree(e);
 
         _isAttached = true;
+        UpdateBrushSubscriptions();
 
         _bgBorder.Background = BackgroundBrush;
 
@@ -149,6 +151,7 @@ internal class BlobsGradientBackground : Control
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
         _isAttached = false;
+        ClearBrushSubscriptions();
         _previousFrameTime = null;
 
         if (_window is not null)
@@ -188,9 +191,13 @@ internal class BlobsGradientBackground : Control
             }
         }
 
-        if (change.Property == FromBrushProperty ||
-            change.Property == ToBrushProperty ||
-            change.Property == EllipseCountProperty)
+        if (change.Property == FromBrushProperty || change.Property == ToBrushProperty)
+        {
+            UpdateBrushSubscriptions();
+            UpdateBlobColors();
+        }
+
+        if (change.Property == EllipseCountProperty)
         {
             InitializeBlobs();
         }
@@ -199,6 +206,61 @@ internal class BlobsGradientBackground : Control
         {
             _bgBorder.Background = BackgroundBrush;
         }
+    }
+
+    private void UpdateBrushSubscriptions()
+    {
+        ClearBrushSubscriptions();
+
+        if (!_isAttached)
+        {
+            return;
+        }
+
+        ObserveBrush(FromBrush);
+        ObserveBrush(ToBrush);
+    }
+
+    private void ObserveBrush(IBrush? brush)
+    {
+        // immutable brushes cannot change in place, their replacement is handle by OnPropertyChanged
+        // observe mutable solid brushes only
+        if (brush is SolidColorBrush solid && _observedBrushes.Add(solid))
+        {
+            solid.PropertyChanged += OnSourceBrushPropertyChanged;
+        }
+    }
+
+    private void ClearBrushSubscriptions()
+    {
+        foreach (var brush in _observedBrushes)
+        {
+            brush.PropertyChanged -= OnSourceBrushPropertyChanged;
+        }
+
+        _observedBrushes.Clear();
+    }
+
+    private void OnSourceBrushPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+    {
+        if (e.Property == SolidColorBrush.ColorProperty)
+        {
+            UpdateBlobColors();
+        }
+    }
+
+    private void UpdateBlobColors()
+    {
+        foreach (var blob in _blobs)
+        {
+            var color = InterpolateColor(FromBrush, ToBrush, blob.Transition);
+
+            // preserve the original control's independently randomized alpha
+            blob.Brush.Color = Color.FromArgb(blob.Alpha, color.R, color.G, color.B);
+        }
+
+        // the canvas performs the drawing, so invalidate that child directly
+        _blobsCanvas.InvalidateVisual();
     }
 
     private void OnWindowPropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
@@ -320,6 +382,7 @@ internal class BlobsGradientBackground : Control
     private void InitializeBlobs()
     {
         _blobs.Clear();
+        _blobsCanvas.InvalidateVisual();
 
         var bounds = _blobsCanvas.Bounds;
 
@@ -332,19 +395,6 @@ internal class BlobsGradientBackground : Control
 
         for (var i = 0; i < count; i++)
         {
-            var transition = _rnd.NextDouble();
-
-            var interpolatedColor = InterpolateColor(
-                FromBrush,
-                ToBrush,
-                transition);
-
-            var finalColor = Color.FromArgb(
-                (byte)_rnd.Next(160, 255),
-                interpolatedColor.R,
-                interpolatedColor.G,
-                interpolatedColor.B);
-
             _blobs.Add(new Blob
             {
                 X = _rnd.NextDouble() * bounds.Width,
@@ -352,9 +402,12 @@ internal class BlobsGradientBackground : Control
                 Radius = _rnd.NextDouble() * 150 + 200,
                 Vx = (_rnd.NextDouble() - 0.5) * 5,
                 Vy = (_rnd.NextDouble() - 0.5) * 5,
-                Brush = new SolidColorBrush(finalColor)
+                Transition = _rnd.NextDouble(),
+                Alpha = (byte)_rnd.Next(160, 255)
             });
         }
+
+        UpdateBlobColors();
     }
 
     private static Color InterpolateColor(IBrush fromBrush, IBrush toBrush, double transition)
@@ -411,6 +464,9 @@ internal class BlobsGradientBackground : Control
         public double Vx { get; set; }
         public double Vy { get; set; }
 
-        public IBrush Brush { get; set; } = Brushes.Transparent;
+        public double Transition { get; init; }
+        public byte Alpha { get; init; }
+
+        public SolidColorBrush Brush { get; } = new(Colors.Transparent);
     }
 }

@@ -214,7 +214,8 @@ internal partial class SettingsViewModel : PageViewModel
             }
         }
 
-        _colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
+        _colorSchemeService.SetColorScheme(colorScheme);
+        _colorSchemeService.SetColorSchemeAppearance(colorSchemeAppearance);
         _translucencyService.SetTranslucencyEnabled(IsTranslucencyEnabled);
 
         _toastMessageService.ShowToastMessage(

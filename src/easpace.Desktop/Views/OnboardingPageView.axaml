@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.OnboardingPageView"
              x:DataType="vm:OnboardingPageViewModel"
-             Background="{DynamicResource Sem.Surface}">
+             Background="{DynamicResource Sem.Background.Blobs}">
 
     <UserControl.Resources>
 
@@ -26,24 +26,25 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="128"
                       VerticalAlignment="Center" HorizontalAlignment="Center">
-                    
+
                     <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Spacing="4">
-                        
+
                         <!-- App logo -->
-                        <PathIcon Height="90" Width="90" 
+                        <PathIcon Height="90" Width="90"
                                   Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
                                   HorizontalAlignment="Center"
                                   Data="{StaticResource AppIcons.Easpace.V2}"
                                   Foreground="{DynamicResource Sem.Brand}" />
-                            
+
                         <!-- easpace title -->
                         <TextBlock Classes="strong brand fs1" Text="easpace"
                                    HorizontalAlignment="Center" />
-                        
+
                         <!-- subtitle -->
-                        <TextBlock Classes="brand fs4" Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
+                        <TextBlock Classes="brand fs4"
+                                   Text="{core:LocalizationService Key='Onboarding.Welcome.Subtitle'}"
                                    HorizontalAlignment="Center" />
-                            
+
                     </StackPanel>
 
                     <!-- Continue button -->
@@ -89,7 +90,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </Border>
 
                     <!-- Accept terms of use checkbox -->
-                    <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" 
+                    <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
                               Content="{core:LocalizationService Key='Onboarding.TermsOfUse.Accept'}"
                               VerticalAlignment="Center" HorizontalAlignment="Left"
                               IsChecked="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTermsOfUseAccepted}" />
@@ -150,6 +151,100 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </DataTemplate>
 
+            <!-- Customize - view -->
+            <DataTemplate x:Key="Customize" x:DataType="constants:OnboardingContent">
+
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*,Auto,Auto"
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Xl}"
+                      RowSpacing="{StaticResource Metrics.Spacing.Xxl}"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+
+                    <!-- Navigate back button -->
+                    <Button Grid.Row="0" Grid.Column="0" Classes="primary icon"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).NavigateBackCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
+                    </Button>
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="1" Grid.Row="0"
+                               Classes="strong brand fs1 trm-ellipsis"
+                               Text="{core:LocalizationService Key='Onboarding.Customize.Title'}"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Customization -->
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                          RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,Auto"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          RowSpacing="{StaticResource Metrics.Spacing.Lg}"
+                          ColumnSpacing="{StaticResource Metrics.Spacing.Lg}">
+
+                        <!-- Appearance label -->
+                        <TextBlock Grid.Column="0" Grid.Row="0" Classes="neutral fs4 trm-ellipsis"
+                                   Text="{core:LocalizationService Key='Onboarding.Customize.Appearance'}"
+                                   VerticalAlignment="Center" />
+
+                        <!-- Appearance combo box -->
+                        <ComboBox Grid.Row="0" Grid.Column="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  Width="{StaticResource Metrics.Input.Setting.MinWidth}"
+                                  SelectedIndex="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).SelectedColorSchemeAppearanceIndex}">
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
+                        </ComboBox>
+
+                        <!-- Color palette label -->
+                        <TextBlock Grid.Column="0" Grid.Row="1" Classes="neutral fs4 trm-ellipsis"
+                                   Text="{core:LocalizationService Key='Onboarding.Customize.ColorPalette'}"
+                                   VerticalAlignment="Center" />
+
+                        <!-- Color scheme combo box -->
+                        <ComboBox Grid.Column="1" Grid.Row="1"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Right"
+                                  Width="{StaticResource Metrics.Input.Setting.MinWidth}"
+                                  SelectedIndex="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).SelectedColorSchemeIndex}">
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
+                        </ComboBox>
+                        
+                        <!-- Translucency label -->
+                        <TextBlock Grid.Column="0" Grid.Row="2" Classes="neutral fs4 trm-ellipsis"
+                                   Text="{core:LocalizationService Key='Onboarding.Customize.Translucency'}"
+                                   VerticalAlignment="Center" />
+                        
+                        <!-- Translucency toggle switch -->
+                        <ToggleSwitch Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                      IsChecked="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTranslucencyEnabled}" />
+
+                    </Grid>
+
+                    <!-- Description -->
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                               Classes="subtle neutral fs5 trm-ellipsis"
+                               Text="{core:LocalizationService Key='Onboarding.Customize.Description'}"
+                               TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <!-- Continue button -->
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Classes="primary regular"
+                            Content="{core:LocalizationService Key='Common.Button.Continue'}"
+                            HorizontalAlignment="Right"
+                            IsEnabled="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsTermsOfUseAccepted}"
+                            Command="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).ContinueCommand}" />
+
+                </Grid>
+
+            </DataTemplate>
+
             <!-- Beta software warning - view -->
             <DataTemplate x:Key="BetaSoftwareWarning" x:DataType="constants:OnboardingContent">
 
@@ -181,8 +276,9 @@ Licensed under the MIT License. See LICENSE file for details.
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!-- Accept beta software warning checkbox -->
-                    <CheckBox Grid.Row="3" Content="{core:LocalizationService Key='Onboarding.BetaWarning.Accept'}" 
-                              VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="600" HorizontalContentAlignment="Center"
+                    <CheckBox Grid.Row="3" Content="{core:LocalizationService Key='Onboarding.BetaWarning.Accept'}"
+                              VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="600"
+                              HorizontalContentAlignment="Center"
                               IsChecked="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).IsBetaSoftwareWarningAccepted}" />
 
                     <!-- Continue button -->
@@ -195,7 +291,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </Grid>
 
             </DataTemplate>
-            
+
             <!-- Thank you - view -->
             <DataTemplate x:Key="ThankYou" x:DataType="constants:OnboardingContent">
 
@@ -203,24 +299,24 @@ Licensed under the MIT License. See LICENSE file for details.
                       ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
                       RowSpacing="80"
                       VerticalAlignment="Center" HorizontalAlignment="Center">
-                    
+
                     <!-- Title -->
                     <TextBlock Grid.Row="0" Classes="strong brand fs2 medium trm-ellipsis" MaxWidth="800"
                                Text="{core:LocalizationService Key='Onboarding.ThankYou.Title'}" TextAlignment="Center"
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                    
+
                     <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="2">
-                        
-                        <TextBlock Classes="brand fs4 trm-ellipsis" 
+
+                        <TextBlock Classes="brand fs4 trm-ellipsis"
                                    Text="{core:LocalizationService Key='Onboarding.Text.DeveloperNameAndContact'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                        
+
                         <TextBlock Classes="neutral fs5 trm-ellipsis"
                                    Text="{core:LocalizationService Key='Onboarding.Text.Developer'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                        
+
                     </StackPanel>
-                    
+
 
                     <!-- Continue button -->
                     <Button Grid.Row="2" Classes="primary regular"
@@ -241,9 +337,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Blobs gradient background -->
         <controls:BlobsGradientBackground
-            BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
-            FromBrush="{DynamicResource Sem.Surface.Brand}"
-            ToBrush="{DynamicResource Sem.Brand.Subtle}"
+            BackgroundBrush="Transparent"
+            FromBrush="{DynamicResource Sem.Brand.Subtle}"
+            ToBrush="{DynamicResource Sem.Brand.Strong}"
             EllipseCount="7"
             Speed="0.25"
             Opacity="0.38" />
@@ -258,7 +354,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </TransitioningContentControl.PageTransition>
 
         </TransitioningContentControl>
-        
+
         <TextBlock HorizontalAlignment="Right" VerticalAlignment="Bottom" Opacity="0.5"
                    Classes="brand fs5" Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
                    Text="{Binding VersionText}" />

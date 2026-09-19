@@ -16,7 +16,6 @@ Licensed under the MIT License. See LICENSE file for details.
              Background="{DynamicResource Sem.Background.Page}">
 
     <UserControl.Resources>
-        <x:Double x:Key="InputSettingMinimumWidth">180</x:Double>
         <x:Double x:Key="SettingsCardRowSpacing">20</x:Double>
     </UserControl.Resources>
 
@@ -56,7 +55,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ComboBox Grid.Row="0" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedLanguageIndex}">
                             <ComboBoxItem>English</ComboBoxItem>
                             <ComboBoxItem>Magyar</ComboBoxItem>
@@ -77,7 +76,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ComboBox Grid.Row="1" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeAppearanceIndex}">
                             <ComboBoxItem
                                 Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
@@ -102,7 +101,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ComboBox Grid.Row="2" Grid.Column="1"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Right"
-                                  Width="{StaticResource InputSettingMinimumWidth}"
+                                  Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeIndex}">
                             <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
                             <ComboBoxItem

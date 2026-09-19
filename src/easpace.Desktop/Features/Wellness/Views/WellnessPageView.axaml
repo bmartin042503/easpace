@@ -20,9 +20,9 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Blobs gradient background -->
         <controls:BlobsGradientBackground
-            BackgroundBrush="{DynamicResource Sem.Surface.Brand}"
-            FromBrush="{DynamicResource Sem.Surface.Brand}"
-            ToBrush="{DynamicResource Sem.Brand.Subtle}"
+            BackgroundBrush="{DynamicResource Sem.Background.Blobs}"
+            FromBrush="{DynamicResource Sem.Brand.Subtle}"
+            ToBrush="{DynamicResource Sem.Brand.Strong}"
             EllipseCount="7"
             Speed="0.2"
             Opacity="0.75"

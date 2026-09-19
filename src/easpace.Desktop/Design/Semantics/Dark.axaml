@@ -30,7 +30,6 @@ Licensed under the MIT License. See LICENSE file for details.
                      Opacity="{DynamicResource Opacity.Card}" />
     <SolidColorBrush x:Key="Sem.Surface.Elevated" Color="{DynamicResource Neutral900}" />
     <SolidColorBrush x:Key="Sem.Surface.Elevated.Hover" Color="{DynamicResource Neutral950}" />
-    <SolidColorBrush x:Key="Sem.Surface.Sidebar" Color="{DynamicResource Neutral950}" />
     <SolidColorBrush x:Key="Sem.Surface.Brand" Color="{DynamicResource Brand975}" />
     <SolidColorBrush x:Key="Sem.Surface.Brand.Hover" Color="{DynamicResource Brand950}" />
     <SolidColorBrush x:Key="Sem.Surface.Success" Color="{DynamicResource Success975}" />
@@ -89,6 +88,9 @@ Licensed under the MIT License. See LICENSE file for details.
                      Opacity="{DynamicResource Opacity.Sidebar}" />
 
     <SolidColorBrush x:Key="Sem.Background.Credits" Color="{DynamicResource Brand975}"
-                     Opacity="{DynamicResource Opacity.Credits}" />
+                     Opacity="{DynamicResource Opacity.Card}" />
+    
+    <SolidColorBrush x:Key="Sem.Background.Blobs" Color="{DynamicResource Brand975}"
+                     Opacity="{DynamicResource Opacity.Page}" />
 
 </ResourceDictionary>

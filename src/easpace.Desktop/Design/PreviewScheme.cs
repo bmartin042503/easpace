@@ -55,6 +55,7 @@ internal sealed class PreviewScheme : AvaloniaObject
             _service = new ColorSchemeService();
         }
 
-        _service.SetColorScheme(scheme, appearance);
+        _service.SetColorScheme(scheme);
+        _service.SetColorSchemeAppearance(appearance);
     }
 }

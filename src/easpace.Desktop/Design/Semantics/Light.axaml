@@ -89,5 +89,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <SolidColorBrush x:Key="Sem.Background.Credits" Color="{DynamicResource Brand25}"
                      Opacity="{DynamicResource Opacity.Card}" />
+    
+    <SolidColorBrush x:Key="Sem.Background.Blobs" Color="{DynamicResource Brand25}"
+                     Opacity="{DynamicResource Opacity.Page}" />
 
 </ResourceDictionary>

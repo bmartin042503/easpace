@@ -25,7 +25,8 @@ internal enum ColorSchemeAppearance
 
 internal interface IColorSchemeService
 {
-    void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance);
+    void SetColorScheme(ColorScheme colorScheme);
+    void SetColorSchemeAppearance(ColorSchemeAppearance colorSchemeAppearance);
 }
 
 internal class ColorSchemeService : IColorSchemeService
@@ -33,7 +34,7 @@ internal class ColorSchemeService : IColorSchemeService
     private ResourceDictionary? _activePalette;
     private ColorScheme? _activeColorScheme;
 
-    public void SetColorScheme(ColorScheme colorScheme, ColorSchemeAppearance colorSchemeAppearance)
+    public void SetColorScheme(ColorScheme colorScheme)
     {
         Dispatcher.UIThread.VerifyAccess();
 
@@ -44,15 +45,6 @@ internal class ColorSchemeService : IColorSchemeService
             ColorScheme.HavenBlue => new Uri("avares://easpace.Desktop/Design/ColorSchemes/HavenBlue.axaml"),
             ColorScheme.AvallamaPurple => new Uri("avares://easpace.Desktop/Design/ColorSchemes/AvallamaPurple.axaml"),
             _ => throw new ArgumentOutOfRangeException(nameof(colorScheme))
-        };
-
-        var themeVariant = colorSchemeAppearance switch
-        {
-            ColorSchemeAppearance.Default => ThemeVariant.Default,
-            ColorSchemeAppearance.Light => ThemeVariant.Light,
-            ColorSchemeAppearance.Dark => ThemeVariant.Dark,
-
-            _ => throw new ArgumentOutOfRangeException(nameof(colorSchemeAppearance))
         };
 
         if (_activeColorScheme != colorScheme)
@@ -73,6 +65,22 @@ internal class ColorSchemeService : IColorSchemeService
             _activePalette = newPalette;
             _activeColorScheme = colorScheme;
         }
+    }
+    
+    public void SetColorSchemeAppearance(ColorSchemeAppearance colorSchemeAppearance)
+    {
+        Dispatcher.UIThread.VerifyAccess();
+
+        var app = Application.Current ?? throw new InvalidOperationException("Application is not initialized.");
+
+        var themeVariant = colorSchemeAppearance switch
+        {
+            ColorSchemeAppearance.Default => ThemeVariant.Default,
+            ColorSchemeAppearance.Light => ThemeVariant.Light,
+            ColorSchemeAppearance.Dark => ThemeVariant.Dark,
+
+            _ => throw new ArgumentOutOfRangeException(nameof(colorSchemeAppearance))
+        };
 
         app.RequestedThemeVariant = themeVariant;
     }

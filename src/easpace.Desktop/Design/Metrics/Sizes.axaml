@@ -19,4 +19,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <x:Double x:Key="Metrics.Input.Height">32</x:Double>
     <x:Double x:Key="Metrics.Input.MaxWidth">240</x:Double>
     
+    <x:Double x:Key="Metrics.Input.Setting.MinWidth">180</x:Double>
+    
 </ResourceDictionary>
