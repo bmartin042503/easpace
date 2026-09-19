@@ -12,6 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
+             xmlns:activityViews="clr-namespace:easpace.Desktop.Features.Activities.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:ActivitiesPageViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.ActivitiesPageView"
@@ -195,13 +196,18 @@ Licensed under the MIT License. See LICENSE file for details.
         </Grid>
 
         <!-- Vertical splitter -->
-        <GridSplitter Grid.Column="1"
-                      Classes="vertical"
-                      ResizeDirection="Columns" />
+        <GridSplitter Grid.Column="1" Classes="vertical" ResizeDirection="Columns" />
 
         <!-- Activity item view -->
-        <ContentControl Grid.Row="0" Grid.Column="2"
-                        Content="{Binding ContentViewModel}" />
+        <ContentControl Grid.Row="0" Grid.Column="2" Content="{Binding ContentViewModel}">
+
+            <ContentControl.ContentTemplate>
+                <DataTemplate x:DataType="vm:ActivityViewModel">
+                    <activityViews:ActivityView />
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+
+        </ContentControl>
 
     </Grid>
 

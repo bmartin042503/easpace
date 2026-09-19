@@ -109,21 +109,21 @@ Licensed under the MIT License. See LICENSE file for details.
                                 Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
                         </ComboBox>
 
-                        <!-- Transparent window label & description -->
+                        <!-- Translucency label & description -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Label'}"
+                                       Text="{core:LocalizationService Key='Settings.Translucency.Label'}"
                                        TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.TransparentWindow.Description'}"
+                                       Text="{core:LocalizationService Key='Settings.Translucency.Description'}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
 
-                        <!-- Transparent window toggle switch -->
+                        <!-- Translucency toggle switch -->
                         <ToggleSwitch Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
                                       HorizontalAlignment="Right"
-                                      IsChecked="{Binding IsTransparentWindowEnabled}" />
+                                      IsChecked="{Binding IsTranslucencyEnabled}" />
 
                     </Grid>
 
@@ -265,7 +265,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Credits -->
             <Border Classes="settings card"
                     BorderBrush="{DynamicResource Sem.Brand}"
-                    Background="{DynamicResource Sem.Surface.Brand}">
+                    Background="{DynamicResource Sem.Background.Credits}">
 
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 

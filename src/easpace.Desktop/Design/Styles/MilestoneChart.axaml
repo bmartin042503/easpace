@@ -17,8 +17,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <!-- MilestoneChart styling -->
     <Style Selector="controls|MilestoneChart">
-        <Setter Property="TrackBrush" Value="{DynamicResource Sem.Surface.Brand}"/>
-        <Setter Property="ProgressBrush" Value="{DynamicResource Sem.Brand}"/>
+        <Setter Property="TrackBrush" Value="{DynamicResource Sem.Progress.Track}"/>
+        <Setter Property="ProgressBrush" Value="{DynamicResource Sem.Progress}"/>
         <Setter Property="UnitBrush" Value="{DynamicResource Sem.Foreground.Subtle}"/>
         <Setter Property="RingThickness" Value="{StaticResource Metrics.Border.Thickness.Double.Ring}"/>
         <Setter Property="Padding" Value="{StaticResource Metrics.Spacing.Thickness.Md}" />

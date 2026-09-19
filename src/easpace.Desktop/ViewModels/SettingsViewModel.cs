@@ -19,7 +19,7 @@ namespace easpace.Desktop.ViewModels;
 internal partial class SettingsViewModel : PageViewModel
 {
     private readonly IPreferencesService _preferencesService;
-    private readonly IWindowTransparencyService _windowTransparencyService;
+    private readonly ITranslucencyService _translucencyService;
     private readonly IColorSchemeService _colorSchemeService;
     private readonly IApplicationService _applicationService;
     private readonly IDataWipeService _dataWipeService;
@@ -32,7 +32,7 @@ internal partial class SettingsViewModel : PageViewModel
     [ObservableProperty] private int _selectedLanguageIndex;
     [ObservableProperty] private int _selectedColorSchemeIndex;
     [ObservableProperty] private int _selectedColorSchemeAppearanceIndex;
-    [ObservableProperty] private bool _isTransparentWindowEnabled;
+    [ObservableProperty] private bool _isTranslucencyEnabled;
     [ObservableProperty] private bool _isWellnessFullScreenEnabled;
     [ObservableProperty] private bool _isWellnessAnimatedBackgroundEnabled;
     [ObservableProperty] private bool _showWellnessTimer;
@@ -42,7 +42,7 @@ internal partial class SettingsViewModel : PageViewModel
 
     public SettingsViewModel(
         IPreferencesService preferencesService,
-        IWindowTransparencyService windowTransparencyService,
+        ITranslucencyService translucencyService,
         IColorSchemeService colorSchemeService,
         IApplicationService applicationService,
         IDataWipeService dataWipeService,
@@ -52,7 +52,7 @@ internal partial class SettingsViewModel : PageViewModel
         Page = ApplicationPage.Settings;
 
         _preferencesService = preferencesService;
-        _windowTransparencyService = windowTransparencyService;
+        _translucencyService = translucencyService;
         _colorSchemeService = colorSchemeService;
         _applicationService = applicationService;
         _dataWipeService = dataWipeService;
@@ -144,7 +144,7 @@ internal partial class SettingsViewModel : PageViewModel
             _ => 0
         };
 
-        IsTransparentWindowEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.TransparentWindow);
+        IsTranslucencyEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.Translucency);
 
         IsWellnessFullScreenEnabled = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessFullScreen);
 
@@ -188,7 +188,7 @@ internal partial class SettingsViewModel : PageViewModel
         _preferencesService.SavePreference(PreferenceKey.Language, language);
         _preferencesService.SavePreference(PreferenceKey.ColorScheme, colorScheme);
         _preferencesService.SavePreference(PreferenceKey.ColorSchemeAppearance, colorSchemeAppearance);
-        _preferencesService.SavePreference(PreferenceKey.TransparentWindow, IsTransparentWindowEnabled);
+        _preferencesService.SavePreference(PreferenceKey.Translucency, IsTranslucencyEnabled);
         _preferencesService.SavePreference(PreferenceKey.WellnessFullScreen, IsWellnessFullScreenEnabled);
         _preferencesService.SavePreference(PreferenceKey.WellnessAnimatedBackground,
             IsWellnessAnimatedBackgroundEnabled);
@@ -215,7 +215,7 @@ internal partial class SettingsViewModel : PageViewModel
         }
 
         _colorSchemeService.SetColorScheme(colorScheme, colorSchemeAppearance);
-        _windowTransparencyService.SetTransparencyEnabled(IsTransparentWindowEnabled);
+        _translucencyService.SetTranslucencyEnabled(IsTranslucencyEnabled);
 
         _toastMessageService.ShowToastMessage(
             LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),
@@ -230,7 +230,7 @@ internal partial class SettingsViewModel : PageViewModel
             nameof(SelectedLanguageIndex) or
             nameof(SelectedColorSchemeIndex) or
             nameof(SelectedColorSchemeAppearanceIndex) or
-            nameof(IsTransparentWindowEnabled) or
+            nameof(IsTranslucencyEnabled) or
             nameof(IsWellnessFullScreenEnabled) or
             nameof(IsWellnessAnimatedBackgroundEnabled) or
             nameof(ShowWellnessTimer) or

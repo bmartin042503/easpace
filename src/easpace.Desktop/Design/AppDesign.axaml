@@ -13,10 +13,6 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Fonts -->
             <FontFamily x:Key="FontFamily.Poppins">avares://easpace.Desktop/Assets/Fonts#Poppins</FontFamily>
 
-            <!-- Default opacity values that can be changed via WindowAppearanceService -->
-            <x:Double x:Key="Opacity.Page">1.0</x:Double>
-            <x:Double x:Key="Opacity.Sidebar">1.0</x:Double>
-
             <ResourceDictionary.MergedDictionaries>
 
                 <!-- Metrics -->
@@ -25,6 +21,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <ResourceInclude Source="Metrics/Spacing.axaml" />
                 <ResourceInclude Source="Metrics/Typography.axaml" />
                 <ResourceInclude Source="Metrics/Sizes.axaml" />
+                <ResourceInclude Source="Metrics/Opacity.axaml" />
 
                 <!-- Icons -->
                 <ResourceInclude Source="Icons/AppIcons.axaml" />

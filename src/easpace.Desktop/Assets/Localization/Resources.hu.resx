@@ -209,7 +209,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Dátum...</value>
     </data>
     <data name="Activities.Label.Archived" xml:space="preserve">
-        <value>(Archivált)</value>
+        <value>Archivált</value>
     </data>
     <data name="Activities.Label.Name" xml:space="preserve">
         <value>Név</value>
@@ -670,11 +670,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Language.Description" xml:space="preserve">
         <value>Válaszd ki az alkalmazás nyelvét.</value>
     </data>
-    <data name="Settings.TransparentWindow.Label" xml:space="preserve">
-        <value>Áttetsző ablak</value>
+    <data name="Settings.Translucency.Label" xml:space="preserve">
+        <value>Áttetszőség</value>
     </data>
-    <data name="Settings.TransparentWindow.Description" xml:space="preserve">
-        <value>Részben átlátszóvá teszi az ablak hátterét, és ahol támogatott, enyhe elmosást alkalmaz.</value>
+    <data name="Settings.Translucency.Description" xml:space="preserve">
+        <value>Áttetszővé teszi a felületet, és ahol támogatott, enyhe elmosást alkalmaz.</value>
     </data>
     <data name="Settings.ColorScheme.Label" xml:space="preserve">
         <value>Színséma</value>

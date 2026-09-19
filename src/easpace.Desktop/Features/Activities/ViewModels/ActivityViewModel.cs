@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -52,6 +53,8 @@ internal abstract partial class ActivityViewModel : ViewModelBase
     
     protected virtual void OnEntryCollectionChanged() {}
 
+    public abstract ICommand AddDataEntryCommand { get; }
+    
     public abstract Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest);
 
     public abstract Task<ActivityDataEntryViewModel?> EditDataEntry(Guid entryId);

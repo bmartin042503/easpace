@@ -7,7 +7,6 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:trend="clr-namespace:easpace.Desktop.Features.Activities.Controls.Trend"
              xmlns:controls="clr-namespace:easpace.Desktop.Design.Controls"
@@ -15,175 +14,37 @@ Licensed under the MIT License. See LICENSE file for details.
              x:DataType="viewModels:TrendActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.TrendActivityView">
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
-          RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+        
+        <!-- Details -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
-        <!-- Top bar -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
-                    Spacing="{StaticResource Metrics.Spacing.Xxs}">
+            <!-- Current value -->
+            <TextBlock Classes="neutral fs4"
+                       VerticalAlignment="Center" Text="{Binding CurrentValueText}"
+                       IsVisible="{Binding TodayValue, Converter={x:Static ObjectConverters.IsNotNull}}" />
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
-
-                <!-- Title -->
-                <TextBlock Grid.Column="0" Text="{Binding Name}"
-                           Classes="neutral fs2 trm-ellipsis"
-                           VerticalAlignment="Center"
-                           ToolTip.Tip="{Binding Name}" />
-
-                <!-- Archive status -->
-                <TextBlock Grid.Column="1" IsVisible="{Binding IsArchived}"
-                           Text="{core:LocalizationService Key='Activities.Label.Archived'}"
-                           Classes="subtle neutral fs3 trm-ellipsis"
-                           VerticalAlignment="Center" />
-
-            </Grid>
-
-            <!-- Details -->
-            <StackPanel Orientation="Horizontal"
-                        Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                <!-- Current value -->
-                <TextBlock Classes="neutral fs4"
-                           VerticalAlignment="Center" Text="{Binding CurrentValueText}"
-                           IsVisible="{Binding TodayValue, Converter={x:Static ObjectConverters.IsNotNull}}" />
-
-                <!-- Target value -->
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}"
-                            IsVisible="{Binding Target, Converter={x:Static ObjectConverters.IsNotNull}}">
-                    <TextBlock Classes="brand fs5 medium"
-                               VerticalAlignment="Center">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} {1}">
-                                <Binding Path="Target" />
-                                <Binding Path="Unit" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                    <PathIcon Classes="target"
-                              Data="{StaticResource PhosphorIcons.Target.Fill}"
-                              VerticalAlignment="Center" />
-                </StackPanel>
-
+            <!-- Target value -->
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}"
+                        IsVisible="{Binding Target, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <TextBlock Classes="brand fs5 medium"
+                           VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Target" />
+                            <Binding Path="Unit" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <PathIcon Classes="target"
+                          Data="{StaticResource PhosphorIcons.Target.Fill}"
+                          VerticalAlignment="Center" />
             </StackPanel>
 
         </StackPanel>
 
-        <!-- Interaction buttons -->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Metrics.Spacing.Sm}"
-                    Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
-                    VerticalAlignment="Top" HorizontalAlignment="Right">
-
-            <!-- Add button -->
-            <Button Classes="primary regular"
-                    Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Activities.Button.Add'}">
-                
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}"
-                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                    <TextBlock Classes="fs6 medium"
-                               Text="{core:LocalizationService Key='Activities.Button.Add'}" />
-
-                </StackPanel>
-                
-            </Button>
-
-            <!-- Dots Flyout -->
-            <Button Classes="dots-flyout">
-
-                <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                          Foreground="{DynamicResource Sem.Foreground.Muted}"
-                          Width="{StaticResource Metrics.Icon.Size.Sm}"
-                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
-
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                            <!-- Edit button -->
-                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding EditCommand}"
-                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
-
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}"
-                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                    <TextBlock Classes="fs6 medium"
-                                               Text="{core:LocalizationService Key='Common.Button.Edit'}" />
-
-                                </StackPanel>
-
-                            </Button>
-
-                            <!-- Archive/Restore button -->
-                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding ToggleArchiveCommand}">
-
-                                <Panel>
-                                    <StackPanel IsVisible="{Binding !IsArchived}"
-                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
-                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}">
-
-                                        <PathIcon Data="{StaticResource PhosphorIcons.Archive.Fill}"
-                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                        <TextBlock Classes="fs6 medium"
-                                                   Text="{core:LocalizationService Key='Common.Button.Archive'}" />
-
-                                    </StackPanel>
-
-                                    <StackPanel IsVisible="{Binding IsArchived}"
-                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
-                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}">
-
-                                        <PathIcon Data="{StaticResource PhosphorIcons.BoxArrowUp.Fill}"
-                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                        <TextBlock Classes="fs6 medium"
-                                                   Text="{core:LocalizationService Key='Common.Button.Restore'}" />
-
-                                    </StackPanel>
-                                </Panel>
-
-                            </Button>
-
-                            <!-- Delete button -->
-                            <Button Classes="danger regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding DeleteCommand}"
-                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                                    <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}"
-                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                    <TextBlock Classes="fs6 medium"
-                                               Text="{core:LocalizationService Key='Common.Button.Delete'}" />
-
-                                </StackPanel>
-
-                            </Button>
-
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-
-            </Button>
-
-        </StackPanel>
-
         <!-- Chart interactions -->
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnDefinitions="Auto,*"
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*"
               ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
             <!-- Time Range Selection (segmented control) -->
@@ -214,14 +75,13 @@ Licensed under the MIT License. See LICENSE file for details.
         </Grid>
 
         <!-- Chart -->
-        <trend:TrendChart Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+        <trend:TrendChart Grid.Row="2"
                           Target="{Binding Target}"
                           Unit="{Binding Unit}"
                           DataPoints="{Binding DataPoints}"
                           RangeStart="{Binding VisibleRangeStart}"
                           RangeEnd="{Binding VisibleRangeEnd}"
-                          TimeRange="{Binding SelectedTimeRange}"
-                          Margin="0,0,6,0" />
+                          TimeRange="{Binding SelectedTimeRange}" />
 
     </Grid>
 

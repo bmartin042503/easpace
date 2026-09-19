@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
@@ -27,6 +28,8 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
     [ObservableProperty] private string? _unit;
     [ObservableProperty] private double? _target;
 
+    public override ICommand AddDataEntryCommand { get; }
+
     public NumericActivityViewModel(
         NumericActivity numericActivity,
         IActivityDataEntryService activityDataEntryService,
@@ -35,12 +38,14 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
         _numericActivity = numericActivity;
         _activityDataEntryService = activityDataEntryService;
         _dialogService = dialogService;
+
+        AddDataEntryCommand = new AsyncRelayCommand(AddDataEntryAsync);
+        
         Unit = numericActivity.Unit;
         Target = numericActivity.Target;
     }
-
-    [RelayCommand]
-    private async Task AddDataEntry()
+    
+    private async Task AddDataEntryAsync()
     {
         var numericEntryDialog = new NumericEntryDialogViewModel
         {

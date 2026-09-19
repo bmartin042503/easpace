@@ -58,8 +58,8 @@ internal static class ServiceCollectionExtensions
             collection.AddTransient<WindowService>();
             collection.AddTransient<IWindowService>(sp => sp.GetRequiredService<WindowService>());
             
-            collection.AddTransient<WindowTransparencyService>();
-            collection.AddTransient<IWindowTransparencyService>(sp => sp.GetRequiredService<WindowTransparencyService>());
+            collection.AddTransient<TranslucencyService>();
+            collection.AddTransient<ITranslucencyService>(sp => sp.GetRequiredService<TranslucencyService>());
 
             collection.AddSingleton<ActivityService>();
             collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());

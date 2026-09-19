@@ -11,17 +11,18 @@ using easpace.Desktop.Views;
 
 namespace easpace.Desktop.Services.Presentation;
 
-internal interface IWindowTransparencyService
+internal interface ITranslucencyService
 {
-    void SetTransparencyEnabled(bool enabled);
+    void SetTranslucencyEnabled(bool enabled);
 }
 
-internal sealed class WindowTransparencyService : IWindowTransparencyService
+internal sealed class TranslucencyService : ITranslucencyService
 {
     private const string PageOpacityKey = "Opacity.Page";
     private const string SidebarOpacityKey = "Opacity.Sidebar";
+    private const string CardOpacityKey = "Opacity.Card";
 
-    public void SetTransparencyEnabled(bool enabled)
+    public void SetTranslucencyEnabled(bool enabled)
     {
         Dispatcher.UIThread.VerifyAccess();
 
@@ -48,6 +49,7 @@ internal sealed class WindowTransparencyService : IWindowTransparencyService
 
         SetOpacity(app, PageOpacityKey, enabled ? 0.8 : 1.0);
         SetOpacity(app, SidebarOpacityKey, enabled ? 0.65 : 1.0);
+        SetOpacity(app, CardOpacityKey, enabled ? 0.65 : 1.0);
     }
 
     private static void SetOpacity(Application app, string key, double value)

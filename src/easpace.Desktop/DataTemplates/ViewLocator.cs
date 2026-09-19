@@ -24,6 +24,7 @@ internal class ViewLocator : IDataTemplate
 {
     public Control? Build(object? param)
     {
+        // make sure these are set in the right order, otherwise parent types will catch everything
         return param switch
         {
             // Pages
@@ -38,6 +39,7 @@ internal class ViewLocator : IDataTemplate
             TrendActivityViewModel vm => CreateView(new TrendActivityView(), vm),
             MilestoneActivityViewModel vm => CreateView(new MilestoneActivityView(), vm),
             RoutineActivityViewModel vm => CreateView(new RoutineActivityView(), vm),
+            ActivityViewModel vm => CreateView(new ActivityView(), vm),
             
             // Activity editor
             ActivityEditorViewModel vm => CreateView(new ActivityEditorView(), vm),
@@ -47,7 +49,7 @@ internal class ViewLocator : IDataTemplate
             WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
             WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
             
-            // Dialogs (make sure dialogs are set in the correct order)
+            // Dialogs
             LegalInfoDialogViewModel vm => CreateView(new DetailedInfoDialogView(), vm),
             DetailedInfoDialogViewModel vm => CreateView(new DetailedInfoDialogView(), vm),
             DetailedConfirmDialogViewModel vm => CreateView(new DetailedConfirmDialogView(), vm),

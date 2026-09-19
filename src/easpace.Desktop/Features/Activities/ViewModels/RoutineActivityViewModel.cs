@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
@@ -35,6 +36,8 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
             .OfType<RoutineActivityDataEntryViewModel>()
             .FirstOrDefault(e => e.Timestamp.Date == DateTime.Today && e.State != RoutineState.None);
 
+    public override ICommand AddDataEntryCommand { get; }
+
     public RoutineActivityViewModel(
         RoutineActivity routineActivity,
         IRoutineActivityDataProvider routineActivityDataProvider,
@@ -47,6 +50,8 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
         _activityService = activityService;
         _dialogService = dialogService;
         _activityDataEntryService = activityDataEntryService;
+        
+        AddDataEntryCommand = new AsyncRelayCommand(AddDataEntryAsync);
 
         LoadEntries();
         LoadRoutineMonths();
@@ -95,8 +100,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
         RoutineMonths.AddRange(months);
     }
 
-    [RelayCommand]
-    private async Task AddDataEntry()
+    private async Task AddDataEntryAsync()
     {
         var routineEntryDialog = new RoutineEntryDialogViewModel
         {

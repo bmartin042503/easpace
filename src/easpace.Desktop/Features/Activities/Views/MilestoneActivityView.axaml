@@ -7,179 +7,41 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:viewModels="clr-namespace:easpace.Desktop.Features.Activities.ViewModels"
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Activities.Controls"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="viewModels:MilestoneActivityViewModel"
              x:Class="easpace.Desktop.Features.Activities.Views.MilestoneActivityView">
 
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
-          RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+    <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+        
+        <!-- Details -->
+        <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-        <!-- Top bar -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical"
-                    Spacing="{StaticResource Metrics.Spacing.Xxs}">
+            <!-- Start date -->
+            <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
+                       IsVisible="{Binding HasStartDate}">
+                <Run Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
+                <Run Text=": " />
+                <Run Text="{Binding StartDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+            </TextBlock>
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
-
-                <!-- Title -->
-                <TextBlock Grid.Column="0" Text="{Binding Name}"
-                           Classes="neutral fs2 trm-ellipsis"
-                           VerticalAlignment="Center"
-                           ToolTip.Tip="{Binding Name}" />
-
-                <!-- Archive status -->
-                <TextBlock Grid.Column="1" IsVisible="{Binding IsArchived}"
-                           Text="{core:LocalizationService Key='Activities.Label.Archived'}"
-                           Classes="subtle neutral fs3 trm-ellipsis"
-                           VerticalAlignment="Center" />
-
-            </Grid>
-
-            <!-- Details -->
-            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-
-                <!-- Start date -->
-                <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
-                           IsVisible="{Binding HasStartDate}">
-                    <Run Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
-                    <Run Text=": " />
-                    <Run Text="{Binding StartDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
-                </TextBlock>
-
-                <!-- Target date -->
-                <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
-                           IsVisible="{Binding HasTargetDate}">
-                    <Run Text="{core:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
-                    <Run Text=": " />
-                    <Run Text="{Binding TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
-                </TextBlock>
-
-            </StackPanel>
-
-        </StackPanel>
-
-        <!-- Interaction buttons -->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
-                    Spacing="{StaticResource Metrics.Spacing.Sm}"
-                    Margin="{StaticResource Metrics.Spacing.Thickness.Xxs}"
-                    VerticalAlignment="Top" HorizontalAlignment="Right">
-
-            <!-- Add button -->
-            <Button Classes="primary regular"
-                    Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Activities.Button.Add'}">
-
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}"
-                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                    <TextBlock Classes="fs6 medium"
-                               Text="{core:LocalizationService Key='Activities.Button.Add'}" />
-
-                </StackPanel>
-
-            </Button>
-
-            <!-- Dots Flyout -->
-            <Button Classes="dots-flyout">
-
-                <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                          Foreground="{DynamicResource Sem.Foreground.Muted}"
-                          Width="{StaticResource Metrics.Icon.Size.Sm}"
-                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
-
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                            <!-- Edit button -->
-                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding EditCommand}"
-                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}">
-
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}"
-                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                    <TextBlock Classes="fs6 medium"
-                                               Text="{core:LocalizationService Key='Common.Button.Edit'}" />
-
-                                </StackPanel>
-
-                            </Button>
-
-                            <!-- Archive/Restore button -->
-                            <Button Classes="primary regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding ToggleArchiveCommand}">
-
-                                <Panel>
-                                    <StackPanel IsVisible="{Binding !IsArchived}"
-                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
-                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Archive'}">
-
-                                        <PathIcon Data="{StaticResource PhosphorIcons.Archive.Fill}"
-                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                        <TextBlock Classes="fs6 medium"
-                                                   Text="{core:LocalizationService Key='Common.Button.Archive'}" />
-
-                                    </StackPanel>
-
-                                    <StackPanel IsVisible="{Binding IsArchived}"
-                                                Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
-                                                ToolTip.Tip="{core:LocalizationService Key='Common.Button.Restore'}">
-
-                                        <PathIcon Data="{StaticResource PhosphorIcons.BoxArrowUp.Fill}"
-                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                        <TextBlock Classes="fs6 medium"
-                                                   Text="{core:LocalizationService Key='Common.Button.Restore'}" />
-
-                                    </StackPanel>
-                                </Panel>
-
-                            </Button>
-
-                            <!-- Delete button -->
-                            <Button Classes="danger regular" HorizontalAlignment="Stretch"
-                                    Command="{Binding DeleteCommand}"
-                                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
-
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                                    <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}"
-                                              Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                              Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-
-                                    <TextBlock Classes="fs6 medium"
-                                               Text="{core:LocalizationService Key='Common.Button.Delete'}" />
-
-                                </StackPanel>
-
-                            </Button>
-
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-
-            </Button>
+            <!-- Target date -->
+            <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
+                       IsVisible="{Binding HasTargetDate}">
+                <Run Text="{core:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
+                <Run Text=": " />
+                <Run Text="{Binding TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
+            </TextBlock>
 
         </StackPanel>
 
         <!-- Chart -->
-        <controls:MilestoneChart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Value="{Binding EntriesSum}"
+        <controls:MilestoneChart Grid.Row="1" Value="{Binding EntriesSum}"
                                  Maximum="{Binding Target}"
                                  Unit="{Binding Unit}" />
-
+        
     </Grid>
 
 </UserControl>

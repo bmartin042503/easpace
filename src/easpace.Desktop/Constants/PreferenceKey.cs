@@ -12,7 +12,7 @@ internal static class PreferenceKey
     public const string Language = "language";
     public const string ColorScheme = "color-scheme";
     public const string ColorSchemeAppearance = "color-scheme-appearance";
-    public const string TransparentWindow = "transparent-window";
+    public const string Translucency = "translucency";
     public const string WellnessFullScreen = "wellness-full-screen";
     public const string WellnessAnimatedBackground = "wellness-animated-background";
     public const string WellnessShowTimer = "wellness-show-timer";
