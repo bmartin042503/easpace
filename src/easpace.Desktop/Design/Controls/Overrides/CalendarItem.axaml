@@ -13,7 +13,7 @@ All other rights reserved.
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <ControlTheme x:Key="Haven.Calendar.HeaderButton" TargetType="Button">
+    <ControlTheme x:Key="Calendar.HeaderButton" TargetType="Button">
 
         <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         <Setter Property="Background" Value="{DynamicResource Sem.Surface.Elevated}" />
@@ -51,7 +51,7 @@ All other rights reserved.
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
 
         <Style Selector="^:pressed">
@@ -64,7 +64,7 @@ All other rights reserved.
 
     </ControlTheme>
 
-    <ControlTheme x:Key="Haven.Calendar.NavigationButton" TargetType="Button">
+    <ControlTheme x:Key="Calendar.NavigationButton" TargetType="Button">
 
         <Setter Property="Width" Value="28" />
         <Setter Property="Height" Value="28" />
@@ -103,7 +103,7 @@ All other rights reserved.
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand.Strong}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Brand}" />
         </Style>
 
@@ -148,18 +148,18 @@ All other rights reserved.
 
                         <Grid Grid.ColumnSpan="2" ColumnDefinitions="*,Auto,Auto"
                               Background="{TemplateBinding HeaderBackground}">
-                            <Button Name="PART_HeaderButton" Theme="{StaticResource Haven.Calendar.HeaderButton}"
+                            <Button Name="PART_HeaderButton" Theme="{StaticResource Calendar.HeaderButton}"
                                     Margin="4,4,2,4" />
 
                             <Button Name="PART_PreviousButton" Grid.Column="1"
-                                    Theme="{StaticResource Haven.Calendar.NavigationButton}">
+                                    Theme="{StaticResource Calendar.NavigationButton}">
                                 <PathIcon Width="{StaticResource Metrics.Icon.Size.Xxs}"
                                           Height="{StaticResource Metrics.Icon.Size.Xxs}"
                                           Data="{StaticResource PhosphorIcons.CaretUp.Bold}" />
                             </Button>
 
                             <Button Name="PART_NextButton" Grid.Column="2"
-                                    Theme="{StaticResource Haven.Calendar.NavigationButton}" Margin="2,2,4,2">
+                                    Theme="{StaticResource Calendar.NavigationButton}" Margin="2,2,4,2">
                                 <PathIcon Width="{StaticResource Metrics.Icon.Size.Xxs}"
                                           Height="{StaticResource Metrics.Icon.Size.Xxs}"
                                           Data="{StaticResource PhosphorIcons.CaretDown.Bold}" />

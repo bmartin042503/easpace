@@ -16,35 +16,35 @@ Licensed under the MIT License. See LICENSE file for details.
              utils:ViewInitialization.Command="{Binding InitializeAsync}"
              Background="Transparent">
 
-    <Grid RowDefinitions="*,*,*" Margin="{StaticResource Metrics.Spacing.Thickness.Xl}">
+    <Grid RowDefinitions="*,*,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}" Margin="80">
 
         <!-- Title -->
-        <TextBlock Grid.Row="0" Classes="strong brand fs1"
+        <TextBlock Grid.Row="0" Classes="neutral fs1"
                    Text="{Binding TitleText}"
                    VerticalAlignment="Center" HorizontalAlignment="Center" />
 
         <!-- Session details -->
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Spacing="{StaticResource Metrics.FontSize.Sm}">
+                    HorizontalAlignment="Center" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
             <!-- Type -->
-            <TextBlock Classes="strong brand fs3"
+            <TextBlock Classes="neutral fs3"
                        Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
                        TextAlignment="Center" />
 
             <!-- Actual duration / Target duration -->
-            <TextBlock Classes="strong brand fs3" TextAlignment="Center">
+            <TextBlock Classes="neutral fs3" TextAlignment="Center">
                 <Run Text="{core:LocalizationService Key='Wellness.Label.Duration'}" />:
                 <Run Text="{Binding DurationText}" />
             </TextBlock>
 
             <!-- Breathing technique name (if the type is breathing) -->
-            <TextBlock Classes="strong brand fs3" TextAlignment="Center"
+            <TextBlock Classes="neutral fs3" TextAlignment="Center"
                        IsVisible="{Binding IsBreathingType}"
                        Text="{Binding BreathingTechniqueName}" />
 
             <!-- Cycle count (if the type is breathing) -->
-            <TextBlock Classes="strong brand fs3" TextAlignment="Center"
+            <TextBlock Classes="neutral fs3" TextAlignment="Center"
                        IsVisible="{Binding IsBreathingType}">
                 <Run Text="{core:LocalizationService Key='Wellness.Label.Cycles'}" />:
                 <Run Text="{Binding CycleCount}" />
@@ -54,10 +54,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xl}"
-                    VerticalAlignment="Center" HorizontalAlignment="Center" IsVisible="{Binding AskToSaveSession}">
+                    VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    IsVisible="{Binding AskToSaveSession}">
 
             <!-- Discard -->
-            <Button Classes="secondary regular"
+            <Button Classes="tertiary regular"
                     Content="{core:LocalizationService Key='Wellness.Button.DiscardSession'}"
                     Command="{Binding NavigateBackCommand}" />
 
@@ -68,7 +69,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </StackPanel>
 
         <!-- Back button -->
-        <Button Grid.Row="2" Classes="regular secondary"
+        <Button Grid.Row="2" Classes="primary regular"
                 Content="{core:LocalizationService Key='Common.Button.Back'}"
                 Command="{Binding NavigateBackCommand}"
                 HorizontalAlignment="Center" VerticalAlignment="Center"

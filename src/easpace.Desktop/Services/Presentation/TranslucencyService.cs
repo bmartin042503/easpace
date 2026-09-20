@@ -48,7 +48,7 @@ internal sealed class TranslucencyService : ITranslucencyService
         }
 
         SetOpacity(app, PageOpacityKey, enabled ? 0.8 : 1.0);
-        SetOpacity(app, SidebarOpacityKey, enabled ? 0.65 : 1.0);
+        SetOpacity(app, SidebarOpacityKey, enabled ? 0.7 : 1.0);
         SetOpacity(app, CardOpacityKey, enabled ? 0.65 : 1.0);
     }
 

@@ -59,7 +59,7 @@ All other rights reserved.
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource Haven.Sem.Accent.Muted.Hover}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand.Strong}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Border#Border">

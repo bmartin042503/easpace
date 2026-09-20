@@ -21,7 +21,6 @@ internal partial class WellnessSessionViewModel : ViewModelBase
 
     private DateTimeOffset _startDate;
 
-    private readonly IPreferencesService _preferencesService;
     private readonly WellnessSessionConfiguration _sessionConfiguration;
     private readonly IWellnessSessionManager _wellnessSessionManager;
 
@@ -29,7 +28,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     [ObservableProperty] private string _instructionText = string.Empty;
     [ObservableProperty] private string _phaseSecondsText = string.Empty;
     [ObservableProperty] private string _timerText = "00:00";
-    [ObservableProperty] private double _breathingCircleSize = 64;
+    [ObservableProperty] private double _breathingCircleSize = 128;
 
     [ObservableProperty]
     private string _timerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");
@@ -59,12 +58,11 @@ internal partial class WellnessSessionViewModel : ViewModelBase
         IPreferencesService preferencesService,
         WellnessSessionConfiguration sessionConfiguration)
     {
-        _preferencesService = preferencesService;
         _sessionConfiguration = sessionConfiguration;
 
         _wellnessSessionManager = new WellnessSessionManager(sessionConfiguration);
 
-        ShowWellnessTimer = _preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
+        ShowWellnessTimer = preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
 
         _wellnessSessionManager.TimerTick += OnSessionManagerTimerTick;
         _wellnessSessionManager.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;

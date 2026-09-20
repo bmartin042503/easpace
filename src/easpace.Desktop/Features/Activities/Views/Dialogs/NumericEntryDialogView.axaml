@@ -44,8 +44,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Time picker -->
                     <TimePicker Grid.Column="1" SelectedTime="{Binding SelectedTime}"
-                                ClockIdentifier="24HourClock"
-                                Width="{StaticResource Haven.TimePicker.Width}" />
+                                ClockIdentifier="24HourClock" />
 
                 </Grid>
 

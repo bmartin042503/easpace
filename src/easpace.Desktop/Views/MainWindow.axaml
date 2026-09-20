@@ -16,7 +16,6 @@ Licensed under the MIT License. See LICENSE file for details.
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        TransparencyBackgroundFallback="{DynamicResource Sem.Surface}"
         Title="easpace" MinHeight="450" MinWidth="700"
         ExtendClientAreaToDecorationsHint="True"
         utils:ViewInitialization.Command="{Binding InitializeCommand}">

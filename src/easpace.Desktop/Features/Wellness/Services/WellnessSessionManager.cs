@@ -27,7 +27,7 @@ internal class WellnessSessionManager : IWellnessSessionManager
     private TimeSpan _breathingAnimationDuration;
     private TimeSpan _breathingAnimationElapsed;
 
-    private double _breathingCircleSize = 64;
+    private double _breathingCircleSize = 96;
     
     private WellnessSessionConfiguration _sessionConfiguration;
     
@@ -168,8 +168,8 @@ internal class WellnessSessionManager : IWellnessSessionManager
         // determine the target circle size based on the phase action
         _breathingCircleTargetSize = phase.Type switch
         {
-            BreathingPhaseType.Inhale => 128.0,
-            BreathingPhaseType.Exhale => 32.0,
+            BreathingPhaseType.Inhale => 192,
+            BreathingPhaseType.Exhale => 96,
             _ => _breathingCircleSize
         };
 
