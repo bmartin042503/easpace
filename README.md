@@ -34,14 +34,14 @@ Linux packages are not available yet due to unresolved secure key-storage requir
 
 ### Windows
 
-Download the `.exe` installer matching your system architecture from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.1.0).
+Download the `.exe` installer matching your system architecture from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.2.0).
 
 > [!NOTE]
 > The app and the installer are **not signed with a trusted code-signing certificate**, so Windows SmartScreen may show a warning. If you trust the downloaded release and wish to continue, click `More info` → `Run anyway`.
 
 ### macOS
 
-Download the `.dmg` file matching your Mac from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.1.0). Open it, and drag **easpace** into the `Applications` folder.
+Download the `.dmg` file matching your Mac from [here](https://github.com/bmartin042503/easpace/releases/tag/v0.2.0). Open it, and drag **easpace** into the `Applications` folder.
 
 MacOS may ask permission to access your **Keychain**. Easpace uses the Keychain to securely store and retrieve the encryption key required to encrypt and decrypt its local database.
 
