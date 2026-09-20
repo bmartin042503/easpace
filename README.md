@@ -45,10 +45,6 @@ Download the `.dmg` file matching your Mac from [here](https://github.com/bmarti
 
 MacOS may ask permission to access your **Keychain**. Easpace uses the Keychain to securely store and retrieve the encryption key required to encrypt and decrypt its local database.
 
-> [!NOTE]
-> The application is currently **not signed with an Apple Developer ID certificate or notarized by Apple**, so macOS may prevent it from opening on some systems.
-> If this occurs the quarantine flag can be removed with: `xattr -cr /Applications/easpace.Desktop.app`
-
 ## Build from source
 
 To build easpace from source, install:
