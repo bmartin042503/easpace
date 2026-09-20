@@ -80,8 +80,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Selected page content -->
         <TransitioningContentControl Grid.Column="1" x:Name="PageContent"
-                                     Content="{Binding CurrentPageViewModel}"
-                                     Margin="{OnPlatform Windows='0,10,0,0', Linux='0,10,0,0' }">
+                                     Content="{Binding CurrentPageViewModel}">
 
             <TransitioningContentControl.PageTransition>
                 <utils:SmartPageTransition />

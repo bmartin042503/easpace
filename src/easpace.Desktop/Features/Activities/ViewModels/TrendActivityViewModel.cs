@@ -196,12 +196,16 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 
         // range end is exclusive, so use the previous instant for display purposes
         var end = VisibleRangeEnd.Value.AddTicks(-1).ToLocalTime();
+        
+        var dayFormat = culture.TwoLetterISOLanguageName == "hu"
+            ? "yyyy. MMMM d."
+            : "MMMM d, yyyy";
 
         VisibleRangeText = SelectedTimeRange switch
         {
-            ChartTimeRange.Day => start.ToString("yyyy. MMMM d.", culture),
+            ChartTimeRange.Day => start.ToString(dayFormat, culture),
             ChartTimeRange.Week => FormatDateRange(start, end),
-            ChartTimeRange.Month => start.ToString("yyyy. MMMM", culture),
+            ChartTimeRange.Month => start.ToString("Y", culture),
             ChartTimeRange.Year => start.ToString("yyyy", culture),
             _ => string.Empty
         };
@@ -209,30 +213,27 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     
     private static string FormatDateRange(DateTimeOffset start, DateTimeOffset end)
     {
-        var culture = CultureInfo.CurrentUICulture;
+        var culture = CultureInfo.CurrentCulture;
+        var isHungarian = culture.TwoLetterISOLanguageName == "hu";
 
-        if (start.Year != end.Year)
-        {
-            return
-                $"{start.ToString("yyyy. MMMM d.", culture)} - " +
-                $"{end.ToString("yyyy. MMMM d.", culture)}";
-        }
+        var fullDate = isHungarian ? "yyyy. MMMM d." : "MMMM d, yyyy";
+
+        if (start.Date == end.Date) return Format(start, fullDate);
+
+        if (start.Year != end.Year) return $"{Format(start, fullDate)} – {Format(end, fullDate)}";
 
         if (start.Month != end.Month)
         {
-            return
-                $"{start.ToString("yyyy. MMMM d.", culture)} - " +
-                $"{end.ToString("MMMM d.", culture)}";
+            return isHungarian
+                ? $"{Format(start, fullDate)} – {Format(end, "MMMM d.")}"
+                : $"{Format(start, "MMMM d")} – {Format(end, fullDate)}";
         }
 
-        if (start.Date != end.Date)
-        {
-            return
-                $"{start.ToString("yyyy. MMMM d.", culture)} - " +
-                $"{end.ToString("d.", culture)}";
-        }
+        return isHungarian
+            ? $"{Format(start, fullDate)} – {Format(end, "d.")}"
+            : $"{Format(start, "MMMM d")}–{Format(end, "d, yyyy")}";
 
-        return start.ToString("yyyy. MMMM d.", culture);
+        string Format(DateTimeOffset date, string pattern) => date.ToString(pattern, culture);
     }
 
     protected override void OnEntryCollectionChanged()

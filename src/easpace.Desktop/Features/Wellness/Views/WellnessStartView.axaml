@@ -45,7 +45,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="400" MinWidth="200" MaxWidth="600" />
+            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
         </Grid.ColumnDefinitions>
 
         <!-- Configuration -->
@@ -227,7 +227,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                            TextWrapping="Wrap">
                                                     <Run Text="{Binding BreathingTechniqueName}" />
                                                     <Run Text="•" />
-                                                    <Run Text="{Binding DurationMinutesText}" />
+                                                    <Run Text="{Binding DurationText}" />
                                                     <Run Text="•" />
                                                     <Run Text="{Binding CyclesText}" />
                                                 </TextBlock>
@@ -235,7 +235,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                 <!-- Meditation session details -->
                                                 <TextBlock Classes="subtle neutral fs6"
                                                            IsVisible="{Binding IsTypeMeditation}"
-                                                           Text="{Binding DurationMinutesText}" />
+                                                           Text="{Binding DurationText}" />
 
                                                 <!-- Start date -->
                                                 <TextBlock Classes="subtle neutral fs6"

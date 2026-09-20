@@ -27,8 +27,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <!-- Versions -->
     <PropertyGroup>
-        <AvaloniaVersion>12.1.1</AvaloniaVersion>
-        <DotNetVersion>10.0.11</DotNetVersion>
+        <AvaloniaVersion>12.1.2</AvaloniaVersion>
+        <DotNetVersion>10.0.12</DotNetVersion>
     </PropertyGroup>
 
     <ItemGroup>

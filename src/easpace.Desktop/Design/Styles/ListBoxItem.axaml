@@ -135,7 +135,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <Setter Property="VerticalContentAlignment" Value="Center" />
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Surface.Brand}" />
             <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground}" />
         </Style>
 

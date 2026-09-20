@@ -14,7 +14,8 @@ Licensed under the MIT License. See LICENSE file for details.
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessPageView"
              x:DataType="viewModels:WellnessPageViewModel"
              Background="{DynamicResource Sem.Background.Page}"
-             utils:ViewInitialization.Command="{Binding InitializeAsync}">
+             utils:ViewInitialization.Command="{Binding InitializeAsync}"
+             Padding="{OnPlatform Windows='0,12,0,0', Linux='0,12,0,0'}">
 
     <Grid>
 

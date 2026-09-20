@@ -24,9 +24,16 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
     public bool IsTypeMeditation => SessionType == WellnessSessionType.Meditation;
 
     public string? BreathingTechniqueName { get; init; }
-    public string DurationMinutesText { get; init; }
+
+    public string DurationText =>
+        ActualDuration.TotalHours >= 1
+            ? FormattableString.Invariant(
+                $"{(long)ActualDuration.TotalHours:00}:{ActualDuration.Minutes:00}:{ActualDuration.Seconds:00}")
+            : FormattableString.Invariant(
+                $"{ActualDuration.Minutes:00}:{ActualDuration.Seconds:00}");
+
     public string? CyclesText { get; init; }
-    
+
     public string TimestampText => StartDate.ToLocalTime().ToString("F", CultureInfo.CurrentCulture);
 
     public WellnessSessionEntryViewModel(WellnessSessionEntry wellnessSessionEntry)
@@ -50,11 +57,5 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
                 ? LocalizationService.GetString("Wellness.Session.OneCycle")
                 : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
         }
-
-        var minutes = (int)ActualDuration.TotalMinutes;
-
-        DurationMinutesText = minutes == 1
-            ? LocalizationService.GetString("Common.Time.OneMinute")
-            : string.Format(LocalizationService.GetString("Common.Time.Minutes"), minutes);
     }
 }

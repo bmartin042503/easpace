@@ -13,14 +13,16 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Views.SettingsView"
              x:DataType="vm:SettingsViewModel"
-             Background="{DynamicResource Sem.Background.Page}">
+             Background="{DynamicResource Sem.Background.Page}"
+             Padding="{OnPlatform Windows='0,12,0,0', Linux='0,12,0,0'}">
 
     <UserControl.Resources>
         <x:Double x:Key="SettingsCardRowSpacing">20</x:Double>
     </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Hidden">
+                  VerticalScrollBarVisibility="Hidden"
+                  Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
         <StackPanel Spacing="{StaticResource Metrics.Spacing.Lg}"
                     Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
