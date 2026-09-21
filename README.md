@@ -33,9 +33,12 @@ Available for **Windows** and **macOS** (support for Linux, iOS and Android will
 
 ## Installation
 
-The **current release is intended primarily for development and testing** rather than as a stable production release.
+> [!WARNING]
+> Git must be installed for the current version of the app to work. You can download it from https://git-scm.com/install/.
+> 
+> The app currently relies on Git Credential Manager to store and retrieve the encryption key used to protect its local database. This dependency will be removed in the next release, after which Git will no longer be required.
 
-The application has been tested on **Windows 11 x64, Windows 11 ARM64**, and **macOS ARM64 (Apple Silicon)**. Windows 10 has not been tested yet, so compatibility is not guaranteed.
+The application has been tested on **Windows 11 x64, Windows 11 ARM64**, and **macOS ARM64 (Apple Silicon)**.
 
 Linux packages are not available yet due to unresolved secure key-storage requirements.
 
