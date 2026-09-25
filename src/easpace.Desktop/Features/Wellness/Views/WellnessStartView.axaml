@@ -156,34 +156,12 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding ShowNoSessionEntries}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                                HorizontalAlignment="Center">
-
-                        <!-- Wind icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="-10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                        <!-- Sparkle icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                    </StackPanel>
+                    <!-- Clock icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.Clock}"
+                              Width="{StaticResource Metrics.Icon.Size.Xl}"
+                              Height="{StaticResource Metrics.Icon.Size.Xl}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                              HorizontalAlignment="Center" />
 
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.Message'}"

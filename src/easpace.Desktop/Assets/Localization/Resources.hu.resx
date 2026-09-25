@@ -628,6 +628,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
     </data>
+    <data name="Wellness.Label.Exercise" xml:space="preserve">
+        <value>Gyakorlat</value>
+    </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Gyakorlatok kezelése</value>
+    </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>Nincsenek légzőgyakorlatok.</value>
     </data>

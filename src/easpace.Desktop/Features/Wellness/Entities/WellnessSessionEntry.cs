@@ -7,12 +7,12 @@ using easpace.Desktop.Features.Wellness.Constants;
 namespace easpace.Desktop.Features.Wellness.Entities;
 
 /// <summary>
-/// Represents a recorded wellness session.
+/// Represents a recorded wellness exercise.
 /// </summary>
 internal class WellnessSessionEntry
 {
     /// <summary>
-    /// Gets or sets the unique identifier for the session.
+    /// Gets or sets the unique identifier for the recorded session.
     /// </summary>
     public Guid Id { get; set; }
 
@@ -22,27 +22,47 @@ internal class WellnessSessionEntry
     public DateTimeOffset StartDate { get; set; }
 
     /// <summary>
-    /// Gets or sets the originally planned duration for the session.
+    /// Gets or sets the originally planned duration of the session.
     /// </summary>
     public TimeSpan? TargetDuration { get; set; }
 
     /// <summary>
-    /// Gets or sets the actual duration the session lasted.
+    /// Gets or sets the recorded duration of the session.
     /// </summary>
     public TimeSpan ActualDuration { get; set; }
 
     /// <summary>
-    /// Gets or sets the type of the wellness session (e.g., breathing, meditation).
+    /// Gets or sets the type of exercise performed during the session.
     /// </summary>
     public WellnessSessionType Type { get; set; }
 
     /// <summary>
-    /// Gets or sets the breathing technique id used during the session, if applicable.
+    /// Gets or sets the identifier of the exercise used for the session.
     /// </summary>
-    public Guid? BreathingTechniqueId { get; set; }
+    public Guid? WellnessExerciseId { get; set; }
     
     /// <summary>
-    /// Gets or sets the breathing technique used during the session, if applicable.
+    /// Gets or sets the exercise associated with the session.
     /// </summary>
-    public BreathingTechnique? BreathingTechnique { get; set; }
+    public WellnessExercise? WellnessExercise { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the exercise name captured when the session started.
+    /// </summary>
+    public string? ExerciseNameSnapshot { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the duration, in seconds, of one complete step sequence as configured when the session started.
+    /// </summary>
+    public int? SequenceDurationSecondsSnapshot { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the planned total number of complete sequence executions.
+    /// </summary>
+    public int? TargetCycles { get; set; }
+
+    /// <summary>
+    /// Gets or sets the number of fully completed sequence executions.
+    /// </summary>
+    public int? CompletedCycles { get; set; }
 }

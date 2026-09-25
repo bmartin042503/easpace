@@ -628,6 +628,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Are you sure you want to delete this session? This action can't be undone.</value>
     </data>
+    <data name="Wellness.Label.Exercise" xml:space="preserve">
+        <value>Exercise</value>
+    </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Manage exercises</value>
+    </data>
     <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
         <value>No breathing techniques available.</value>
     </data>
