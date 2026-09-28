@@ -5,11 +5,16 @@ Licensed under the MIT License. See LICENSE file for details.
 
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors">
+                    xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
+                    xmlns:design="clr-namespace:easpace.Desktop.Design">
 
     <Design.PreviewWith>
-        <Border Padding="20" Background="{DynamicResource Sem.Surface}">
-            <Slider Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+        <Border Padding="20" Background="{DynamicResource Sem.Surface}"
+                design:PreviewScheme.Variant="HavenBlue.Light">
+            <StackPanel Spacing="20">
+                <Slider Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+                <Slider Classes="filled" Minimum="0" Maximum="1" MinWidth="200" MaxWidth="400" Value="0.5" />
+            </StackPanel>
         </Border>
     </Design.PreviewWith>
 
@@ -49,7 +54,26 @@ Licensed under the MIT License. See LICENSE file for details.
                                        IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
                                        Orientation="Horizontal">
 
+                                    <!-- Selection fill, shown with the "filled" class. It is not named PART_DecreaseButton
+                                         and not hit-testable, so clicks still reach SliderBehavior's jump-to-click. -->
+                                    <Track.DecreaseButton>
+                                        <Button Name="SelectionFill" IsVisible="False"
+                                                IsHitTestVisible="False" Focusable="False" ClipToBounds="False"
+                                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <!-- extends under the thumb (half its width) so the fill meets the round thumb without a gap;
+                                                         needs ClipToBounds=False on the button, which the Fluent theme turns on -->
+                                                    <Border Height="16" Margin="0,0,-12,0" CornerRadius="8"
+                                                            VerticalAlignment="Center"
+                                                            Background="{DynamicResource Sem.Progress}" />
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Track.DecreaseButton>
+
                                     <Thumb Name="thumb"
+                                           ZIndex="1"
                                            Width="24"
                                            Height="24"
                                            Margin="0"
@@ -69,6 +93,10 @@ Licensed under the MIT License. See LICENSE file for details.
                 </DataValidationErrors>
             </ControlTemplate>
         </Setter>
+
+        <Style Selector="^.filled /template/ Button#SelectionFill">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
 
         <Style Selector="^:pointerover /template/ Thumb#thumb, ^:pressed /template/ Thumb#thumb">
             <Setter Property="Background" Value="{DynamicResource Sem.Gradient.Brand}" />

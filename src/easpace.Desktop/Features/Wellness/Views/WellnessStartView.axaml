@@ -58,7 +58,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBlock Grid.Row="0" Classes="neutral fs2"
                            Text="{core:LocalizationService Key='Wellness.Title.Start'}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
-                
+
                 <!-- Session Type Selection (segmented control) -->
                 <ListBox Grid.Row="1" Grid.Column="0" Classes="segmented"
                          ItemsSource="{Binding SessionTypes}"
@@ -121,7 +121,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
                                Text="{Binding DurationText}" />
 
-                    <Slider Minimum="{Binding MinimumSeconds}"
+                    <Slider Classes="filled"
+                            Minimum="{Binding MinimumSeconds}"
                             Maximum="{Binding MaximumSeconds}"
                             Value="{Binding SelectedSeconds}"
                             TickFrequency="{Binding StepSeconds}"
