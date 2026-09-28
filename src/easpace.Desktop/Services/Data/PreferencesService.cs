@@ -94,9 +94,22 @@ internal class PreferencesService : IPreferencesService
         {
             if (!File.Exists(_preferencesPath)) return;
             
-            var json = File.ReadAllText(_preferencesPath);
-            var dict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
-            
+            Dictionary<string, JsonElement>? dict;
+
+            try
+            {
+                var json = File.ReadAllText(_preferencesPath);
+                dict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+            }
+            catch (Exception ex) when (ex is JsonException or IOException)
+            {
+                // an unreadable or corrupt file must not block startup, fall back to defaults
+                // which overwrite the broken file on the next save
+                _preferences.Clear();
+                SetDefaultPreferences();
+                return;
+            }
+
             if (dict == null) return;
             
             _preferences.Clear();
@@ -140,7 +153,20 @@ internal class PreferencesService : IPreferencesService
             }
             
             var json = JsonSerializer.Serialize(_preferences, _jsonOptions);
-            File.WriteAllText(_preferencesPath, json);
+
+            // write to a temp file first, then swap it in, so an interrupted write can't leave a truncated file
+            var tempPath = _preferencesPath + ".tmp";
+
+            try
+            {
+                File.WriteAllText(tempPath, json);
+                File.Move(tempPath, _preferencesPath, overwrite: true);
+            }
+            catch
+            {
+                File.Delete(tempPath);
+                throw;
+            }
         }
     }
 }
