@@ -157,6 +157,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;
 
+        _editorViewModel = editor;
         ContentViewModel = editor;
 
         IsEditing = true;

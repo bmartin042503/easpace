@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using easpace.Desktop.ViewModels.Dialogs;
 
@@ -19,12 +20,24 @@ internal class DialogService : IDialogService
 {
     public event Action<DialogViewModel?>? CurrentDialogChanged;
 
+    // the dialog host shows a single dialog, so overlapping requests are queued
+    private readonly SemaphoreSlim _dialogSemaphore = new(1, 1);
+
     public async Task ShowDialogAsync<TDialogViewModel>(TDialogViewModel dialogViewModel)
         where TDialogViewModel : DialogViewModel
     {
-        CurrentDialogChanged?.Invoke(dialogViewModel);
-        dialogViewModel.Show();
-        await dialogViewModel.WaitAsync();
-        CurrentDialogChanged?.Invoke(null);
+        await _dialogSemaphore.WaitAsync();
+
+        try
+        {
+            CurrentDialogChanged?.Invoke(dialogViewModel);
+            dialogViewModel.Show();
+            await dialogViewModel.WaitAsync();
+            CurrentDialogChanged?.Invoke(null);
+        }
+        finally
+        {
+            _dialogSemaphore.Release();
+        }
     }
 }
