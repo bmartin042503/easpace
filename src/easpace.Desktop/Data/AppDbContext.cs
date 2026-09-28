@@ -98,7 +98,7 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
             .HasOne(s => s.BreathingTechnique)
             .WithMany()
             .HasForeignKey(s => s.BreathingTechniqueId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.SetNull);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
