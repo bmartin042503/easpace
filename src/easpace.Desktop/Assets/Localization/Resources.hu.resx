@@ -301,6 +301,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Hét</value>
     </data>
@@ -750,6 +753,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Settings.ToastMessage.SettingsSaved" xml:space="preserve">
         <value>Beállítások mentve</value>
+    </data>
+    <data name="Settings.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a beállításokat. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Settings.Error.DeleteAllDataFailed" xml:space="preserve">
+        <value>Nem sikerült törölni az összes adatot. Kérlek, indítsd újra az alkalmazást, és próbáld újra.</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Verzió</value>

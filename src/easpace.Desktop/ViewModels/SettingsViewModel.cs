@@ -25,6 +25,7 @@ internal partial class SettingsViewModel : PageViewModel
     private readonly IDataWipeService _dataWipeService;
     private readonly IDialogService _dialogService;
     private readonly IToastMessageService _toastMessageService;
+    private readonly ILogger<SettingsViewModel> _logger;
 
     [ObservableProperty] private string _versionText = string.Empty;
 
@@ -47,7 +48,8 @@ internal partial class SettingsViewModel : PageViewModel
         IApplicationService applicationService,
         IDataWipeService dataWipeService,
         IDialogService dialogService,
-        IToastMessageService toastMessageService)
+        IToastMessageService toastMessageService,
+        ILogger<SettingsViewModel> logger)
     {
         Page = ApplicationPage.Settings;
 
@@ -58,6 +60,7 @@ internal partial class SettingsViewModel : PageViewModel
         _dataWipeService = dataWipeService;
         _dialogService = dialogService;
         _toastMessageService = toastMessageService;
+        _logger = logger;
 
         VersionText =
             $"{LocalizationService.GetString("Credits.Text.Version")}: {App.VersionName} (v{App.Version.ToString()})";
@@ -93,10 +96,26 @@ internal partial class SettingsViewModel : PageViewModel
 
         if (!confirmDeletionDialog.Confirmed) return;
 
-        // wiping all data
-        _dataWipeService.DeleteDatabaseFile();
-        _dataWipeService.DeleteEncryptionKey();
-        _dataWipeService.DeletePreferencesFile();
+        try
+        {
+            // wiping all data
+            _dataWipeService.DeleteDatabaseFile();
+            _dataWipeService.DeleteEncryptionKey();
+            _dataWipeService.DeletePreferencesFile();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to delete all application data");
+
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Settings.Error.DeleteAllDataFailed")
+            };
+
+            await _dialogService.ShowDialogAsync(errorDialog);
+            return;
+        }
 
         // shutdown, so we don't recreate the deleted files if we'd restart
         _applicationService.Shutdown();
@@ -237,7 +256,23 @@ internal partial class SettingsViewModel : PageViewModel
             nameof(ShowWellnessTimer) or
             nameof(IsCheckForUpdatesEnabled))
         {
-            await SaveSettings();
+            // async void handler: an escaping exception would crash the app
+            try
+            {
+                await SaveSettings();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to save settings after {PropertyName} changed", e.PropertyName);
+
+                var errorDialog = new ErrorDialogViewModel
+                {
+                    Title = LocalizationService.GetString("Common.Error.Title"),
+                    Message = LocalizationService.GetString("Settings.Error.SaveFailed")
+                };
+
+                await _dialogService.ShowDialogAsync(errorDialog);
+            }
         }
     }
 }

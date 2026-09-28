@@ -301,6 +301,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
         <value>Failed to delete this data entry. Please try again.</value>
     </data>
+    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
+        <value>Failed to save this data entry. Please try again.</value>
+    </data>
     <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
         <value>Mon</value>
     </data>
@@ -750,6 +753,12 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Settings.ToastMessage.SettingsSaved" xml:space="preserve">
         <value>Settings saved</value>
+    </data>
+    <data name="Settings.Error.SaveFailed" xml:space="preserve">
+        <value>Failed to save settings. Please try again.</value>
+    </data>
+    <data name="Settings.Error.DeleteAllDataFailed" xml:space="preserve">
+        <value>Failed to delete all data. Please restart the app and try again.</value>
     </data>
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Version</value>

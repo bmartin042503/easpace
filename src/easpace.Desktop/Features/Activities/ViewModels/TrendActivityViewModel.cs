@@ -17,6 +17,7 @@ using easpace.Desktop.Features.Activities.Services.DataProviders;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
@@ -64,7 +65,8 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
         ITrendActivityDataProvider trendActivityDataProvider,
         IActivityDataEntryService activityDataEntryService,
         IActivityService activityService,
-        IDialogService dialogService) : base(trendActivity, activityDataEntryService, dialogService)
+        IDialogService dialogService,
+        ILogger<ActivityViewModel> logger) : base(trendActivity, activityDataEntryService, dialogService, logger)
     {
         _trendActivity = trendActivity;
         _trendActivityDataProvider = trendActivityDataProvider;

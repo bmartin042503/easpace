@@ -29,6 +29,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
     private readonly IDialogService _dialogService;
     private readonly ILogger<ActivitiesPageViewModel> _logger;
     private readonly ILogger<ActivityEditorViewModel> _editorLogger;
+    private readonly ILogger<ActivityViewModel> _activityLogger;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
     private readonly IToastMessageService _toastMessageService;
@@ -64,6 +65,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         IDialogService dialogService,
         ILogger<ActivitiesPageViewModel> logger,
         ILogger<ActivityEditorViewModel> editorLogger,
+        ILogger<ActivityViewModel> activityLogger,
         ITrendActivityDataProvider trendActivityDataProvider,
         IRoutineActivityDataProvider routineActivityDataProvider,
         IToastMessageService toastMessageService)
@@ -76,6 +78,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         _dialogService = dialogService;
         _logger = logger;
         _editorLogger = editorLogger;
+        _activityLogger = activityLogger;
         _trendActivityDataProvider = trendActivityDataProvider;
         _routineActivityDataProvider = routineActivityDataProvider;
         _toastMessageService = toastMessageService;
@@ -210,18 +213,18 @@ internal partial class ActivitiesPageViewModel : PageViewModel
             case TrendActivity trendActivity:
                 return new TrendActivityViewModel(
                     trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService,
-                    _dialogService
+                    _dialogService, _activityLogger
                 );
 
             case MilestoneActivity milestoneActivity:
                 return new MilestoneActivityViewModel(
-                    milestoneActivity, _activityDataEntryService, _activityService, _dialogService
+                    milestoneActivity, _activityDataEntryService, _activityService, _dialogService, _activityLogger
                 );
 
             case RoutineActivity routineActivity:
                 return new RoutineActivityViewModel(
                     routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService,
-                    _dialogService
+                    _dialogService, _activityLogger
                 );
 
             default:
@@ -278,13 +281,13 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         {
             _logger.LogError(ex, "An error occurred while attempting to delete activity {ActivityId}",
                 activityViewModel.Id);
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Activities.Error.DeleteFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
@@ -330,13 +333,13 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         {
             _logger.LogError(ex, "An error occurred while toggling archive status for activity {ActivityId}",
                 activityViewModel.Id);
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Activities.Error.ArchiveFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
 

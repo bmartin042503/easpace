@@ -16,6 +16,8 @@ using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
+using easpace.Desktop.ViewModels.Dialogs;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
@@ -24,6 +26,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
     private readonly NumericActivity _numericActivity;
     private readonly IActivityDataEntryService _activityDataEntryService;
     private readonly IDialogService _dialogService;
+    private readonly ILogger<ActivityViewModel> _logger;
 
     [ObservableProperty] private string? _unit;
     [ObservableProperty] private double? _target;
@@ -33,11 +36,13 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
     public NumericActivityViewModel(
         NumericActivity numericActivity,
         IActivityDataEntryService activityDataEntryService,
-        IDialogService dialogService) : base(numericActivity, activityDataEntryService)
+        IDialogService dialogService,
+        ILogger<ActivityViewModel> logger) : base(numericActivity, activityDataEntryService)
     {
         _numericActivity = numericActivity;
         _activityDataEntryService = activityDataEntryService;
         _dialogService = dialogService;
+        _logger = logger;
 
         AddDataEntryCommand = new AsyncRelayCommand(AddDataEntryAsync);
         
@@ -57,7 +62,9 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
         await _dialogService.ShowDialogAsync(numericEntryDialog);
 
-        if (numericEntryDialog is { Confirmed: true, NumericValue: not null })
+        if (numericEntryDialog is not { Confirmed: true, NumericValue: not null }) return;
+
+        try
         {
             var createEntryRequest = new CreateDataEntryRequest(
                 Timestamp: numericEntryDialog.GetTimestamp(),
@@ -69,7 +76,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
             var dataEntry = await _activityDataEntryService.CreateDataEntryAsync(Id, createEntryRequest);
 
             if (dataEntry is not NumericActivityDataEntry numericDataEntry) return;
-            
+
             // keep the local entity collection synchronized if EF has not already done so
             if (_numericActivity.Entries.All(e => e.Id != numericDataEntry.Id))
             {
@@ -79,6 +86,18 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
             var dataEntryVm = new NumericActivityDataEntryViewModel(numericDataEntry);
 
             Entries.Insert(0, dataEntryVm);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to add data entry to activity {ActivityId}", Id);
+
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.EntrySaveFailed")
+            };
+
+            await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
 

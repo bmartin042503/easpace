@@ -229,7 +229,22 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     {
         if (parameter is not ActivityDataEntryViewModel dataEntryVm || _activity == null || IsCreatingNew) return;
 
-        await _activity.EditDataEntry(dataEntryVm.Id);
+        try
+        {
+            await _activity.EditDataEntry(dataEntryVm.Id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to edit data entry {EntryId} via editor", dataEntryVm.Id);
+
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Activities.Error.EntrySaveFailed")
+            };
+
+            await _dialogService.ShowDialogAsync(errorDialog);
+        }
     }
 
     private void SetFormDataFromUpdateRequest(UpdateActivityRequest updateRequest)

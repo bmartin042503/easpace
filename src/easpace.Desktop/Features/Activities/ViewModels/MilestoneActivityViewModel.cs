@@ -10,6 +10,7 @@ using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Presentation;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
@@ -31,7 +32,8 @@ internal partial class MilestoneActivityViewModel : NumericActivityViewModel
         MilestoneActivity milestoneActivity,
         IActivityDataEntryService activityDataEntryService,
         IActivityService activityService,
-        IDialogService dialogService) : base(milestoneActivity, activityDataEntryService, dialogService)
+        IDialogService dialogService,
+        ILogger<ActivityViewModel> logger) : base(milestoneActivity, activityDataEntryService, dialogService, logger)
     {
         _activityService = activityService;
         StartDate = milestoneActivity.StartDate;
