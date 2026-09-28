@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.Services;
 
-internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<ActivityDataEntryService> logger)
+internal class ActivityDataEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityDataEntryService> logger)
     : IActivityDataEntryService
 {
     public async Task<ActivityDataEntry?> CreateDataEntryAsync(Guid activityId, CreateDataEntryRequest createRequest)
@@ -23,6 +23,8 @@ internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<Activity
 
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             logger.LogInformation("Creating data entry of type {Type} for activity ID {ActivityId}", createRequest.Type,
                 activityId);
 
@@ -100,6 +102,8 @@ internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<Activity
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             logger.LogInformation("Fetching all data entries from database for activity ID {ActivityId}", activityId);
 
             // don't use OrderByDescending on dbContext with the CreatedAt column
@@ -123,6 +127,8 @@ internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<Activity
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             var entry = await dbContext.ActivityDataEntries.FindAsync(entryId);
 
             if (entry == null)
@@ -183,6 +189,8 @@ internal class ActivityDataEntryService(AppDbContext dbContext, ILogger<Activity
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             var dataEntry = await dbContext.ActivityDataEntries.FindAsync(entryId);
 
             if (dataEntry is null)

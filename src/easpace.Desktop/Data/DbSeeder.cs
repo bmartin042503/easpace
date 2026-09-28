@@ -10,17 +10,19 @@ namespace easpace.Desktop.Data;
 
 internal class DbSeeder
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
 
-    public DbSeeder(AppDbContext dbContext)
+    public DbSeeder(IDbContextFactory<AppDbContext> dbContextFactory)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
     }
 
     public async Task SeedAsync()
     {
+        await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
         // add default breathing techniques if there's none
-        if (!await _dbContext.BreathingTechniques.AnyAsync())
+        if (!await dbContext.BreathingTechniques.AnyAsync())
         {
             var defaultTechniques = new[]
             {
@@ -78,8 +80,8 @@ internal class DbSeeder
                 }
             };
             
-            await _dbContext.BreathingTechniques.AddRangeAsync(defaultTechniques);
-            await _dbContext.SaveChangesAsync();
+            await dbContext.BreathingTechniques.AddRangeAsync(defaultTechniques);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

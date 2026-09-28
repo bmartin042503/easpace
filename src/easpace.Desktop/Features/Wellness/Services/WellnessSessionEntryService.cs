@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
-internal class WellnessSessionEntryService(AppDbContext dbContext, ILogger<WellnessSessionEntryService> logger)
+internal class WellnessSessionEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<WellnessSessionEntryService> logger)
     : IWellnessSessionEntryService
 {
     public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(
@@ -21,6 +21,8 @@ internal class WellnessSessionEntryService(AppDbContext dbContext, ILogger<Welln
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             logger.LogInformation("Creating new wellness session entry of type {Type}", createEntryRequest.SessionType);
             
             var wellnessSession = new WellnessSessionEntry
@@ -49,6 +51,8 @@ internal class WellnessSessionEntryService(AppDbContext dbContext, ILogger<Welln
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             logger.LogInformation("Fetching all wellness session entries from database");
             
             // don't use OrderByDescending on dbContext with the CreatedAt column
@@ -73,6 +77,8 @@ internal class WellnessSessionEntryService(AppDbContext dbContext, ILogger<Welln
     {
         try
         {
+            await using var dbContext = await dbContextFactory.CreateDbContextAsync();
+
             var entry = await dbContext.WellnessSessionEntries.FindAsync(entryId);
             
             if (entry is null)

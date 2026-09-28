@@ -15,12 +15,12 @@ namespace easpace.Desktop.Features.Mood.Services;
 
 internal class MoodEntryService : IMoodEntryService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
     private readonly ILogger<MoodEntryService> _logger;
 
-    public MoodEntryService(AppDbContext dbContext, ILogger<MoodEntryService> logger)
+    public MoodEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<MoodEntryService> logger)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
     }
 
@@ -28,6 +28,8 @@ internal class MoodEntryService : IMoodEntryService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Creating new mood entry with value {Value}", upsertRequest.Value);
             
             var moodEntry = new MoodEntry
@@ -39,8 +41,8 @@ internal class MoodEntryService : IMoodEntryService
                 Value = upsertRequest.Value
             };
 
-            _dbContext.MoodEntries.Add(moodEntry);
-            await _dbContext.SaveChangesAsync();
+            dbContext.MoodEntries.Add(moodEntry);
+            await dbContext.SaveChangesAsync();
 
             _logger.LogInformation("Mood entry successfully created with ID {Id}", moodEntry.Id);
             return moodEntry;
@@ -56,12 +58,14 @@ internal class MoodEntryService : IMoodEntryService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Fetching all mood entries from database");
             
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
         
-            var entries = await _dbContext.MoodEntries
+            var entries = await dbContext.MoodEntries
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -78,7 +82,9 @@ internal class MoodEntryService : IMoodEntryService
     {
         try
         {
-            var existingEntry = await _dbContext.MoodEntries.FindAsync(entryId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var existingEntry = await dbContext.MoodEntries.FindAsync(entryId);
 
             if (existingEntry == null)
             {
@@ -91,7 +97,7 @@ internal class MoodEntryService : IMoodEntryService
             existingEntry.Labels = upsertRequest.Labels;
             existingEntry.Value = upsertRequest.Value;
         
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Mood entry with ID {Id} successfully updated", entryId);
             return existingEntry;
         }
@@ -106,7 +112,9 @@ internal class MoodEntryService : IMoodEntryService
     {
         try
         {
-            var entry = await _dbContext.MoodEntries.FindAsync(entryId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var entry = await dbContext.MoodEntries.FindAsync(entryId);
             
             if (entry is null)
             {
@@ -114,9 +122,9 @@ internal class MoodEntryService : IMoodEntryService
                 return false;
             }
 
-            _dbContext.MoodEntries.Remove(entry);
+            dbContext.MoodEntries.Remove(entry);
         
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Mood entry with ID {Id} successfully deleted", entryId);
             return true;
         }

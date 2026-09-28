@@ -33,31 +33,31 @@ internal static class ServiceCollectionExtensions
         public void AddCommonServices()
         {
             collection.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
-            
+
             collection.AddSingleton<PreferencesService>();
             collection.AddSingleton<IPreferencesService>(sp => sp.GetRequiredService<PreferencesService>());
-            
+
             collection.AddSingleton<ColorSchemeService>();
             collection.AddSingleton<IColorSchemeService>(sp => sp.GetRequiredService<ColorSchemeService>());
 
             collection.AddSingleton<ApplicationService>();
             collection.AddSingleton<IApplicationService>(sp => sp.GetRequiredService<ApplicationService>());
-            
+
             collection.AddSingleton<ToastMessageService>();
             collection.AddSingleton<IToastMessageService>(sp => sp.GetRequiredService<ToastMessageService>());
-            
+
             collection.AddSingleton<DialogService>();
             collection.AddSingleton<IDialogService>(sp => sp.GetRequiredService<DialogService>());
-            
+
             collection.AddSingleton<DataWipeService>();
             collection.AddSingleton<IDataWipeService>(sp => sp.GetRequiredService<DataWipeService>());
-            
+
             collection.AddTransient<UpdateService>();
             collection.AddTransient<IUpdateService>(sp => sp.GetRequiredService<UpdateService>());
 
             collection.AddTransient<WindowService>();
             collection.AddTransient<IWindowService>(sp => sp.GetRequiredService<WindowService>());
-            
+
             collection.AddTransient<TranslucencyService>();
             collection.AddTransient<ITranslucencyService>(sp => sp.GetRequiredService<TranslucencyService>());
 
@@ -125,7 +125,8 @@ internal static class ServiceCollectionExtensions
 
             var password = SecureKeyManager.GetOrGenerateDbPassword();
 
-            collection.AddDbContext<AppDbContext>(options =>
+            // services create a short-lived context per operation instead of sharing one for the app's lifetime
+            collection.AddDbContextFactory<AppDbContext>(options =>
             {
                 var connectionString = $"Data Source={dbPath};Password={password};";
                 options.UseSqlite(connectionString, o => o.MigrationsAssembly("easpace.Desktop"));

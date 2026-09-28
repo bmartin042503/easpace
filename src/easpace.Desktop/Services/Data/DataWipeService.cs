@@ -3,10 +3,8 @@
 
 using System;
 using System.IO;
-using easpace.Desktop.Data;
 using easpace.Desktop.Security;
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Services.Data;
@@ -18,7 +16,7 @@ internal interface IDataWipeService
     void DeletePreferencesFile();
 }
 
-internal class DataWipeService(AppDbContext dbContext, ILogger<DataWipeService> logger) : IDataWipeService
+internal class DataWipeService(ILogger<DataWipeService> logger) : IDataWipeService
 {
     public void DeleteEncryptionKey()
     {
@@ -27,11 +25,10 @@ internal class DataWipeService(AppDbContext dbContext, ILogger<DataWipeService> 
 
     public void DeleteDatabaseFile()
     {
-        logger.LogInformation("Closing database connection");
+        logger.LogInformation("Closing database connections");
 
-        dbContext.Database.CloseConnection();
-        
-        // clear all pools, otherwise we got an SQLite exception (database file is used by another process)
+        // contexts are short-lived and already disposed, but their connections stay open in the pool;
+        // clear it, otherwise we got an SQLite exception (database file is used by another process)
         SqliteConnection.ClearAllPools();
 
         try

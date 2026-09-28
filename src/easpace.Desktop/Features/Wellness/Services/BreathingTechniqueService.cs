@@ -15,12 +15,12 @@ namespace easpace.Desktop.Features.Wellness.Services;
 
 internal class BreathingTechniqueService : IBreathingTechniqueService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
     private readonly ILogger<BreathingTechniqueService> _logger;
 
-    public BreathingTechniqueService(AppDbContext dbContext, ILogger<BreathingTechniqueService> logger)
+    public BreathingTechniqueService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<BreathingTechniqueService> logger)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
     }
 
@@ -28,6 +28,8 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Creating new breathing technique '{Name}'", upsertRequest.Name);
             
             var breathingTechnique = new BreathingTechnique
@@ -40,8 +42,8 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
                 Cycles = upsertRequest.Cycles,
             };
 
-            _dbContext.BreathingTechniques.Add(breathingTechnique);
-            await _dbContext.SaveChangesAsync();
+            dbContext.BreathingTechniques.Add(breathingTechnique);
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Breathing technique created successfully with ID {Id}", breathingTechnique.Id);
             return breathingTechnique;
         }
@@ -56,12 +58,14 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Fetching all breathing techniques from database");
             
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
         
-            var techniques = await _dbContext.BreathingTechniques
+            var techniques = await dbContext.BreathingTechniques
                 .Include(t => t.Phases.OrderBy(p => p.Order))
                 .AsNoTracking()
                 .ToListAsync();
@@ -79,7 +83,9 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
     {
         try
         {
-            var technique = await _dbContext.BreathingTechniques
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var technique = await dbContext.BreathingTechniques
                 .Include(t => t.Phases)
                 .FirstOrDefaultAsync(t => t.Id == techniqueId);
 
@@ -93,10 +99,10 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
             technique.Description = upsertRequest.Description;
             technique.Cycles = upsertRequest.Cycles;
 
-            _dbContext.BreathingPhases.RemoveRange(technique.Phases);
+            dbContext.BreathingPhases.RemoveRange(technique.Phases);
             technique.Phases = upsertRequest.Phases;
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Breathing technique with ID {Id} successfully updated", techniqueId);
             return technique;
         }
@@ -111,7 +117,9 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
     {
         try
         {
-            var technique = await _dbContext.BreathingTechniques.FindAsync(techniqueId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var technique = await dbContext.BreathingTechniques.FindAsync(techniqueId);
             
             if (technique is null)
             {
@@ -119,9 +127,9 @@ internal class BreathingTechniqueService : IBreathingTechniqueService
                 return false;
             }
 
-            _dbContext.BreathingTechniques.Remove(technique);
+            dbContext.BreathingTechniques.Remove(technique);
         
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Breathing technique with ID {Id} successfully deleted", techniqueId);
             return true;
         }

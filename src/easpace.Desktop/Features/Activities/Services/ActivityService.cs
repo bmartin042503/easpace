@@ -17,12 +17,12 @@ namespace easpace.Desktop.Features.Activities.Services;
 
 internal class ActivityService : IActivityService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
     private readonly ILogger<ActivityService> _logger;
 
-    public ActivityService(AppDbContext dbContext, ILogger<ActivityService> logger)
+    public ActivityService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityService> logger)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
     }
 
@@ -30,6 +30,8 @@ internal class ActivityService : IActivityService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Creating new activity of type {Type} with name '{Name}'", createRequest.Type,
                 createRequest.Name);
 
@@ -56,9 +58,9 @@ internal class ActivityService : IActivityService
 
             newActivity.CreatedAt = DateTimeOffset.Now;
 
-            _dbContext.Activities.Add(newActivity);
+            dbContext.Activities.Add(newActivity);
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity successfully created with ID {Id}", newActivity.Id);
             return newActivity;
         }
@@ -73,12 +75,14 @@ internal class ActivityService : IActivityService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Fetching all activities from database");
 
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
 
-            var activities = await _dbContext.Activities
+            var activities = await dbContext.Activities
                 .Include(a => a.Entries)
                 .AsNoTracking()
                 .ToListAsync();
@@ -96,7 +100,9 @@ internal class ActivityService : IActivityService
     {
         try
         {
-            var activity = await _dbContext.Activities.FindAsync(activityId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var activity = await dbContext.Activities.FindAsync(activityId);
 
             if (activity == null)
             {
@@ -130,7 +136,7 @@ internal class ActivityService : IActivityService
                     break;
             }
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity with ID {Id} successfully updated", activityId);
             return activity;
         }
@@ -145,7 +151,9 @@ internal class ActivityService : IActivityService
     {
         try
         {
-            var activity = await _dbContext.Activities.FindAsync(activityId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var activity = await dbContext.Activities.FindAsync(activityId);
             if (activity == null)
             {
                 _logger.LogWarning("Attempted to toggle archive for non-existent activity with ID {Id}", activityId);
@@ -153,7 +161,7 @@ internal class ActivityService : IActivityService
             }
 
             activity.IsArchived = !activity.IsArchived;
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity {Id} archive status changed to {IsArchived}", activityId,
                 activity.IsArchived);
             return activity;
@@ -169,7 +177,9 @@ internal class ActivityService : IActivityService
     {
         try
         {
-            var activity = await _dbContext.Activities.FindAsync(activityId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var activity = await dbContext.Activities.FindAsync(activityId);
 
             if (activity is null)
             {
@@ -177,9 +187,9 @@ internal class ActivityService : IActivityService
                 return false;
             }
 
-            _dbContext.Activities.Remove(activity);
+            dbContext.Activities.Remove(activity);
 
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Activity with ID {Id} successfully deleted", activityId);
             return true;
         }

@@ -61,8 +61,11 @@ internal sealed class Program
             LocalizationService.ChangeLanguage(cultureInfo);
 
             // migrate db if there are changes
-            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            await dbContext.Database.MigrateAsync();
+            var dbContextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<AppDbContext>>();
+            await using (var dbContext = await dbContextFactory.CreateDbContextAsync())
+            {
+                await dbContext.Database.MigrateAsync();
+            }
 
             // seed the db with default values
             var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();

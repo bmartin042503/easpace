@@ -14,12 +14,12 @@ namespace easpace.Desktop.Features.Journal.Services;
 
 internal class JournalEntryService : IJournalEntryService
 {
-    private readonly AppDbContext _dbContext;
+    private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
     private readonly ILogger<JournalEntryService> _logger;
 
-    public JournalEntryService(AppDbContext dbContext, ILogger<JournalEntryService> logger)
+    public JournalEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<JournalEntryService> logger)
     {
-        _dbContext = dbContext;
+        _dbContextFactory = dbContextFactory;
         _logger = logger;
     }
 
@@ -27,6 +27,8 @@ internal class JournalEntryService : IJournalEntryService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Creating new journal entry with title '{Title}'", title);
             
             var entry = new JournalEntry
@@ -37,8 +39,8 @@ internal class JournalEntryService : IJournalEntryService
                 CreatedAt = DateTimeOffset.Now,
             };
 
-            _dbContext.JournalEntries.Add(entry);
-            await _dbContext.SaveChangesAsync();
+            dbContext.JournalEntries.Add(entry);
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Journal entry successfully created with ID {Id}", entry.Id);
             return entry;
         }
@@ -53,12 +55,14 @@ internal class JournalEntryService : IJournalEntryService
     {
         try
         {
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
             _logger.LogInformation("Fetching all journal entries from database");
             
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
         
-            var entries = await _dbContext.JournalEntries
+            var entries = await dbContext.JournalEntries
                 .AsNoTracking()
                 .ToListAsync();
         
@@ -75,7 +79,9 @@ internal class JournalEntryService : IJournalEntryService
     {
         try
         {
-            var entry = await _dbContext.JournalEntries.FindAsync(entryId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var entry = await dbContext.JournalEntries.FindAsync(entryId);
         
             if (entry is null)
             {
@@ -86,7 +92,7 @@ internal class JournalEntryService : IJournalEntryService
             entry.Title = title;
             entry.Content = content;
         
-            await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Journal entry with ID {Id} successfully updated", entryId);
             return entry;
         }
@@ -101,7 +107,9 @@ internal class JournalEntryService : IJournalEntryService
     {
         try
         {
-            var entry = await _dbContext.JournalEntries.FindAsync(entryId);
+            await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+            var entry = await dbContext.JournalEntries.FindAsync(entryId);
             
             if (entry is null)
             {
@@ -109,8 +117,8 @@ internal class JournalEntryService : IJournalEntryService
                 return false;
             }
         
-            _dbContext.JournalEntries.Remove(entry);
-            await _dbContext.SaveChangesAsync();
+            dbContext.JournalEntries.Remove(entry);
+            await dbContext.SaveChangesAsync();
             _logger.LogInformation("Journal entry with ID {Id} successfully deleted", entryId);
             return true;
         }
