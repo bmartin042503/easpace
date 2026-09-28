@@ -15,7 +15,7 @@ Licensed under the MIT License. See LICENSE file for details.
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
-             utils:ViewInitialization.Command="{Binding InitializeAsync}"
+             utils:ViewInitialization.Command="{Binding InitializeCommand}"
              Background="Transparent">
 
     <UserControl.Resources>

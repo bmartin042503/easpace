@@ -74,7 +74,7 @@ internal class ActivityDataEntryService(IDbContextFactory<AppDbContext> dbContex
                     newEntry = new RoutineActivityDataEntry
                     {
                         Id = Guid.NewGuid(),
-                        Timestamp = createRequest.Timestamp ?? DateTimeOffset.Now,
+                        Timestamp = timestamp,
                         ActivityId = activityId,
                         State = createRequest.State.Value
                     };

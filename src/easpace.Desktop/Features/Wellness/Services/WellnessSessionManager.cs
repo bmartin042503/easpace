@@ -75,7 +75,7 @@ internal class WellnessSessionManager : IWellnessSessionManager
         }
         else
         {
-            var randomIndex = new Random().Next(0, _meditationInstructTexts.Count - 1);
+            var randomIndex = Random.Shared.Next(_meditationInstructTexts.Count);
             _instructionText = _meditationInstructTexts[randomIndex];
         }
 
@@ -220,7 +220,7 @@ internal class WellnessSessionManager : IWellnessSessionManager
         {
             if (_meditationInstructElapsedSeconds == MeditationInstructSwitchIntervalSeconds)
             {
-                var randomIndex = new Random().Next(0, _meditationInstructTexts.Count - 1);
+                var randomIndex = Random.Shared.Next(_meditationInstructTexts.Count);
                 _instructionText = _meditationInstructTexts[randomIndex];
                 
                 _meditationInstructElapsedSeconds = 0;

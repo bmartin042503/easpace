@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Timers;
 using Avalonia.Threading;
 using easpace.Desktop.Constants;
 using easpace.Desktop.ViewModels;
@@ -12,44 +11,40 @@ namespace easpace.Desktop.Services.Presentation;
 internal interface IToastMessageService
 {
     event Action<ToastMessageViewModel?>? ToastMessageRaised;
-    
+
     void ShowToastMessage(string message, ToastMessageType messageType);
 }
 
-internal class ToastMessageService : IToastMessageService, IDisposable
+internal class ToastMessageService : IToastMessageService
 {
     public event Action<ToastMessageViewModel?>? ToastMessageRaised;
 
-    private readonly Timer _displayTimer;
+    // ticks on the UI thread, so a stopped timer can't still hide a newer toast
+    private readonly DispatcherTimer _displayTimer;
     private const int DisplayTimeMs = 3000;
 
     public ToastMessageService()
     {
-        _displayTimer = new Timer(DisplayTimeMs);
-        _displayTimer.AutoReset = false;
-        _displayTimer.Elapsed += OnDisplayTimerElapsed;
+        _displayTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(DisplayTimeMs) };
+        _displayTimer.Tick += OnDisplayTimerTick;
     }
-    
+
     public void ShowToastMessage(string message, ToastMessageType messageType)
     {
         var toastMessageViewModel = new ToastMessageViewModel(message, messageType);
-        
+
         _displayTimer.Stop();
-        
-        Dispatcher.UIThread.Post(() => ToastMessageRaised?.Invoke(toastMessageViewModel));
-        
+
+        ToastMessageRaised?.Invoke(toastMessageViewModel);
+
         _displayTimer.Start();
     }
-    
-    private void OnDisplayTimerElapsed(object? sender, ElapsedEventArgs e)
+
+    private void OnDisplayTimerTick(object? sender, EventArgs e)
     {
+        _displayTimer.Stop();
+
         // hide by raising the event with a null ToastMessageViewModel
-        Dispatcher.UIThread.Post(() => ToastMessageRaised?.Invoke(null));
-    }
-    
-    public void Dispose()
-    {
-        _displayTimer.Elapsed -= OnDisplayTimerElapsed;
-        _displayTimer.Dispose();
+        ToastMessageRaised?.Invoke(null);
     }
 }

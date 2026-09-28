@@ -2,9 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -28,7 +25,6 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IBreathingTechniqueService _breathingTechniqueService;
     private readonly IDialogService _dialogService;
-    private readonly ILogger<WellnessPageViewModel> _logger;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
 
@@ -39,11 +35,8 @@ internal partial class WellnessPageViewModel : PageViewModel
     private WellnessSessionViewModel? _sessionViewModel;
     private WellnessEndingViewModel? _endingViewModel;
 
-    private bool _isInitialized;
     private bool _isFullScreenSettingOn;
     private bool _isAnimatedBgSettingOn;
-
-    public AvaloniaList<WellnessSessionEntryViewModel> SessionEntries { get; } = [];
 
     #endregion
 
@@ -59,7 +52,6 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWellnessSessionEntryService wellnessSessionEntryService,
         IBreathingTechniqueService breathingTechniqueService,
         IDialogService dialogService,
-        ILogger<WellnessPageViewModel> logger,
         ILogger<WellnessStartViewModel> startLogger,
         ILogger<WellnessEndingViewModel> endingLogger)
     {
@@ -71,7 +63,6 @@ internal partial class WellnessPageViewModel : PageViewModel
         _breathingTechniqueService = breathingTechniqueService;
         _dialogService = dialogService;
 
-        _logger = logger;
         _startLogger = startLogger;
         _endingLogger = endingLogger;
 
@@ -84,38 +75,18 @@ internal partial class WellnessPageViewModel : PageViewModel
 
     #region Commands
 
+    /// <summary>
+    /// Reloads the wellness settings each time the page is shown, so changes made in Settings take effect.
+    /// </summary>
     [RelayCommand]
-    public async Task InitializeAsync()
+    public void Initialize()
     {
         LoadWellnessSettings();
-        
-        if (_isInitialized) return;
-
-        try
-        {
-            await LoadSessionEntries();
-            _isInitialized = true;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to initialize wellness page and load entries");
-        }
     }
 
     #endregion
 
     #region Private Helper Methods
-
-    private async Task LoadSessionEntries()
-    {
-        SessionEntries.Clear();
-
-        var entries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
-
-        var entryViewModels = entries.Select(entry => new WellnessSessionEntryViewModel(entry));
-
-        SessionEntries.AddRange(entryViewModels);
-    }
 
     private void LoadWellnessSettings()
     {

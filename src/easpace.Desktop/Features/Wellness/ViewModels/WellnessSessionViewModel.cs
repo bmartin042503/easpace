@@ -28,7 +28,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     [ObservableProperty] private string _instructionText = string.Empty;
     [ObservableProperty] private string _phaseSecondsText = string.Empty;
     [ObservableProperty] private string _timerText = "00:00";
-    [ObservableProperty] private double _breathingCircleSize = 128;
+    [ObservableProperty] private double _breathingCircleSize = 96;
 
     [ObservableProperty]
     private string _timerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");

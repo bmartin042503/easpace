@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Services.Core;
 
@@ -27,9 +28,11 @@ internal record UpdateCheckResult(
 internal class UpdateService : IUpdateService
 {
     private readonly HttpClient _httpClient;
+    private readonly ILogger<UpdateService> _logger;
 
-    public UpdateService()
+    public UpdateService(ILogger<UpdateService> logger)
     {
+        _logger = logger;
         _httpClient = new HttpClient();
         _httpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("easpace", App.Version.ToString()));
         _httpClient.DefaultRequestHeaders.Accept.Add(
@@ -42,14 +45,13 @@ internal class UpdateService : IUpdateService
         const string owner = "bmartin042503";
         const string repo = "easpace";
 
-        const string url =
-            $"https://api.github.com/repos/{owner}/{repo}/releases?per_page=100";
+        const string url = $"https://api.github.com/repos/{owner}/{repo}/releases?per_page=100";
 
         try
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            var response = await _httpClient.GetAsync(url, cts.Token);
+            using var response = await _httpClient.GetAsync(url, cts.Token);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -70,7 +72,7 @@ internal class UpdateService : IUpdateService
 
             foreach (var release in releases)
             {
-                if (release.Draft || string.IsNullOrWhiteSpace(release.TagName)) continue;
+                if (release.Draft || release.Prerelease || string.IsNullOrWhiteSpace(release.TagName)) continue;
 
                 var cleanVersion = release.TagName.Trim().TrimStart('v', 'V');
 
@@ -94,17 +96,18 @@ internal class UpdateService : IUpdateService
                 ReleaseTitle: latestRelease.Name,
                 ReleaseDescription: latestRelease.Body);
         }
-        catch (HttpRequestException)
+        catch (HttpRequestException ex)
         {
-            // No internet or GitHub isn't available - ignored
+            // no internet or GitHub isn't available, expected when offline
+            _logger.LogInformation(ex, "Update check skipped, GitHub is not reachable");
         }
         catch (TaskCanceledException)
         {
-            // Timeout - ignored
+            _logger.LogInformation("Update check timed out");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Ignored
+            _logger.LogError(ex, "Update check failed");
         }
 
         return NoUpdate;
