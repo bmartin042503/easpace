@@ -45,4 +45,19 @@ internal class WellnessSessionEntry
     /// Gets or sets the breathing technique used during the session, if applicable.
     /// </summary>
     public BreathingTechnique? BreathingTechnique { get; set; }
+
+    /// <summary>
+    /// Gets or sets the exercise id used during the session, if the exercise still exists.
+    /// </summary>
+    public Guid? ExerciseId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the exercise used during the session, if the exercise still exists.
+    /// </summary>
+    public WellnessExercise? Exercise { get; set; }
+
+    /// <summary>
+    /// Gets or sets the exercise name captured when the session was saved, so history survives the exercise's deletion.
+    /// </summary>
+    public string? ExerciseName { get; set; }
 }

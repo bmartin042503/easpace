@@ -27,6 +27,8 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
     public DbSet<BreathingPhase> BreathingPhases { get; set; }
     public DbSet<BreathingTechnique> BreathingTechniques { get; set; }
     public DbSet<WellnessSessionEntry> WellnessSessionEntries { get; set; }
+    public DbSet<WellnessExercise> WellnessExercises { get; set; }
+    public DbSet<ExerciseInstruction> ExerciseInstructions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -99,6 +101,41 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
             .WithMany()
             .HasForeignKey(s => s.BreathingTechniqueId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<WellnessExercise>(entity =>
+        {
+            entity.HasMany(e => e.Instructions)
+                .WithOne()
+                .HasForeignKey(i => i.ExerciseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(64);
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(256);
+        });
+
+        modelBuilder.Entity<WellnessExercise>()
+            .UseTphMappingStrategy()
+            .HasDiscriminator<string>("ExerciseType")
+            .HasValue<BreathingExercise>("Breathing")
+            .HasValue<MeditationExercise>("Meditation");
+
+        modelBuilder.Entity<ExerciseInstruction>()
+            .Property(i => i.Text)
+            .HasMaxLength(256);
+
+        modelBuilder.Entity<WellnessSessionEntry>(entity =>
+        {
+            entity.HasOne(s => s.Exercise)
+                .WithMany()
+                .HasForeignKey(s => s.ExerciseId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.Property(s => s.ExerciseName)
+                .HasMaxLength(64);
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
