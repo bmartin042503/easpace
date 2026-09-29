@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
@@ -64,39 +63,15 @@ internal partial class WellnessSessionViewModel : ViewModelBase
 
         ShowWellnessTimer = preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
 
-        _wellnessSessionManager.TimerTick += OnSessionManagerTimerTick;
+        _wellnessSessionManager.ProgressChanged += OnSessionManagerProgressChanged;
         _wellnessSessionManager.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;
         _wellnessSessionManager.TimerFinished += OnSessionManagerTimerFinished;
 
-        // setup initial timer text display based on user configuration
-        if (_sessionConfiguration is { TargetDuration: not null })
-        {
-            TimerText = _wellnessSessionManager.GetTimerText(_sessionConfiguration.TargetDuration.Value);
-        }
+        IsBreathing = _sessionConfiguration.SessionType == WellnessSessionType.Breathing;
 
-        if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
-        {
-            IsBreathing = true;
+        // show the initial state before the first tick
+        ApplyProgress(_wellnessSessionManager.Progress);
 
-            var firstPhase = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases
-                .OrderBy(p => p.Order)
-                .FirstOrDefault();
-
-            InstructionText = firstPhase?.Type switch
-            {
-                BreathingPhaseType.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
-                BreathingPhaseType.HoldIn => LocalizationService.GetString("Wellness.Instruction.Hold"),
-                BreathingPhaseType.Exhale => LocalizationService.GetString("Wellness.Instruction.BreatheOut"),
-                BreathingPhaseType.HoldOut => LocalizationService.GetString("Wellness.Instruction.Hold"),
-                _ => LocalizationService.GetString("Wellness.Instruction.BreatheIn")
-            };
-        }
-        else
-        {
-            IsBreathing = false;
-        }
-
-        // configure specific session type properties
         _wellnessSessionManager.StartSession();
         _startDate = DateTimeOffset.Now;
     }
@@ -142,11 +117,13 @@ internal partial class WellnessSessionViewModel : ViewModelBase
 
     #region Private Helper Methods
 
-    private void OnSessionManagerTimerTick(object? sender, SessionTexts sessionTexts)
+    private void OnSessionManagerProgressChanged(object? sender, SessionProgress progress) => ApplyProgress(progress);
+
+    private void ApplyProgress(SessionProgress progress)
     {
-        InstructionText = sessionTexts.InstructionText;
-        TimerText = sessionTexts.TimerText;
-        PhaseSecondsText = sessionTexts.PhaseSecondsText ?? string.Empty;
+        InstructionText = progress.InstructionText;
+        TimerText = progress.TimerText;
+        PhaseSecondsText = progress.StepSecondsText;
     }
 
     private void OnBreathingCircleAnimationTimerTick(object? sender, double breathingCircleSize)
@@ -159,7 +136,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     /// </summary>
     private void OnSessionManagerTimerFinished(object? sender, EventArgs e)
     {
-        _wellnessSessionManager.TimerTick -= OnSessionManagerTimerTick;
+        _wellnessSessionManager.ProgressChanged -= OnSessionManagerProgressChanged;
         _wellnessSessionManager.BreathingCircleAnimationTimerTick -= OnBreathingCircleAnimationTimerTick;
         _wellnessSessionManager.TimerFinished -= OnSessionManagerTimerFinished;
 
