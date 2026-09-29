@@ -481,4 +481,70 @@ public class WellnessExerciseEditorViewModelTests
             dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.RestoreFailed"))), Times.Once);
         _toastServiceMock.Verify(t => t.ShowToastMessage(It.IsAny<string>(), It.IsAny<ToastMessageType>()), Times.Never);
     }
+
+    [Fact]
+    public async Task Initialize_LoadsThePreviewOfTheSelectedExercise()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+
+        editor.Preview.HasSteps.Should().BeTrue();
+        editor.Preview.Progress!.StepCount.Should().Be(2);
+        editor.Preview.ShowBreathingCircle.Should().BeTrue();
+        editor.Form!.Instructions.Select(i => i.IsPreviewing).Should().Equal(true, false);
+    }
+
+    [Fact]
+    public async Task PreviewSteps_HighlightTheirInstruction()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+
+        editor.Preview.StepForwardCommand.Execute(null);
+
+        editor.Form!.Instructions.Select(i => i.IsPreviewing).Should().Equal(false, true);
+    }
+
+    [Fact]
+    public async Task EditingTheInstructions_ReloadsThePreviewAtItsPosition()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        editor.Preview.StepForwardCommand.Execute(null);
+
+        editor.Form!.AddInstructionCommand.Execute(null);
+
+        editor.Preview.Progress!.StepCount.Should().Be(3);
+        editor.Preview.Progress.StepIndex.Should().Be(1);
+
+        editor.Form.MoveInstructionUpCommand.Execute(editor.Form.Instructions[1]);
+
+        // the step index stays, so the instruction that moved into its place is highlighted
+        editor.Preview.InstructionText.Should().Be(ExerciseStep.GetDefaultText(BreathingPhaseType.Inhale));
+        editor.Form.Instructions.Select(i => i.IsPreviewing).Should().Equal(false, true, false);
+    }
+
+    [Fact]
+    public async Task SelectingAnotherExercise_RestartsThePreviewWithItsSteps()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        editor.Preview.StepForwardCommand.Execute(null);
+
+        editor.SelectedExercise = editor.Exercises.Single(e => e.Id == _calm.Id);
+
+        editor.Preview.Progress!.StepIndex.Should().Be(0);
+        editor.Preview.Progress.CycleIndex.Should().Be(0);
+        editor.Preview.InstructionText.Should().Be("Sit");
+        editor.Preview.ShowBreathingCircle.Should().BeFalse();
+        editor.Preview.ShowCountdown.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Close_DisposesThePreview()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+
+        editor.Close();
+        editor.Form!.AddInstructionCommand.Execute(null);
+
+        editor.Preview.HasSteps.Should().BeFalse();
+        editor.Preview.IsPlaying.Should().BeFalse();
+    }
 }

@@ -32,6 +32,8 @@ internal class WellnessSessionManager : IWellnessSessionManager
 
     public int CompletedCycles => _sequence.CompletedCycles;
 
+    public double BreathingCircleSize => _breathingCircleSize;
+
     public event EventHandler? TimerFinished;
     public event EventHandler<SessionProgress>? ProgressChanged;
     public event EventHandler<double>? BreathingCircleAnimationTimerTick;
@@ -97,6 +99,68 @@ internal class WellnessSessionManager : IWellnessSessionManager
         _breathingAnimationTimer?.Tick -= OnBreathingAnimationTimerTick;
     }
     
+    public bool StepForward()
+    {
+        if (!_sequence.MoveNext()) return false;
+
+        if (_sequence.IsCompleted)
+        {
+            TimerFinished?.Invoke(this, EventArgs.Empty);
+            StopSession();
+            ProgressChanged?.Invoke(this, Progress);
+            return true;
+        }
+
+        OnStepJumped();
+        return true;
+    }
+
+    public bool StepBackward()
+    {
+        if (!_sequence.MovePrevious()) return false;
+
+        OnStepJumped();
+        return true;
+    }
+
+    public void Restart()
+    {
+        _sequence.Reset();
+        ElapsedTime = TimeSpan.Zero;
+
+        OnStepJumped();
+    }
+
+    /// <summary>
+    /// Shows the new step from its start: the circle snaps to where the phase begins and the session timer starts a
+    /// full second, but only if it was running, so a paused session stays paused.
+    /// </summary>
+    private void OnStepJumped()
+    {
+        _breathingAnimationTimer?.Stop();
+
+        if (_timer is { IsEnabled: true })
+        {
+            _timer.Stop();
+            _timer.Start();
+        }
+
+        var step = _sequence.CurrentStep;
+
+        // without a phase the circle is hidden, so it keeps its size
+        _breathingCircleSize = step.Phase switch
+        {
+            BreathingPhaseType.Inhale or BreathingPhaseType.HoldOut => BreathingCircleMinSize,
+            BreathingPhaseType.Exhale or BreathingPhaseType.HoldIn => BreathingCircleMaxSize,
+            _ => _breathingCircleSize
+        };
+        BreathingCircleAnimationTimerTick?.Invoke(this, _breathingCircleSize);
+
+        UpdatePhaseAnimation(step);
+
+        ProgressChanged?.Invoke(this, Progress);
+    }
+
     private void UpdatePhaseAnimation(ExerciseStep step)
     {
         _breathingCircleStartSize = _breathingCircleSize;

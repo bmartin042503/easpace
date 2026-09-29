@@ -742,6 +742,30 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.Error.RestoreFailed" xml:space="preserve">
         <value>Failed to restore the default exercises. Please try again.</value>
     </data>
+    <data name="Wellness.Preview.Title" xml:space="preserve">
+        <value>Preview</value>
+    </data>
+    <data name="Wellness.Preview.Play" xml:space="preserve">
+        <value>Play</value>
+    </data>
+    <data name="Wellness.Preview.Pause" xml:space="preserve">
+        <value>Pause</value>
+    </data>
+    <data name="Wellness.Preview.StepForward" xml:space="preserve">
+        <value>Next step</value>
+    </data>
+    <data name="Wellness.Preview.StepBackward" xml:space="preserve">
+        <value>Previous step</value>
+    </data>
+    <data name="Wellness.Preview.Restart" xml:space="preserve">
+        <value>Restart</value>
+    </data>
+    <data name="Wellness.Preview.Position" xml:space="preserve">
+        <value>Step {0}/{1} · Cycle {2}</value>
+    </data>
+    <data name="Wellness.Preview.Empty" xml:space="preserve">
+        <value>Add an instruction to preview the exercise.</value>
+    </data>
     <data name="Wellness.Phase.None" xml:space="preserve">
         <value>No phase</value>
     </data>

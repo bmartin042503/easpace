@@ -169,9 +169,29 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
     /// Creates the steps of one cycle as the form currently defines them. Instructions that can't run yet are left out.
     /// </summary>
     public IReadOnlyList<ExerciseStep> ToSteps() => Instructions
-        .Where(i => i.DurationSeconds > 0 && (!string.IsNullOrWhiteSpace(i.Text) || i.Phase is not null))
+        .Where(CanRun)
         .Select(i => ExerciseStep.Create(i.Text, i.DurationSeconds, i.Phase))
         .ToList();
+
+    /// <summary>
+    /// Marks the instruction that a step of <see cref="ToSteps"/> comes from as the one the preview plays.
+    /// </summary>
+    /// <param name="stepIndex">The index of the step, or <c>null</c> to mark none.</param>
+    public void HighlightStep(int? stepIndex)
+    {
+        var runnableIndex = 0;
+
+        foreach (var instruction in Instructions)
+        {
+            var canRun = CanRun(instruction);
+            instruction.IsPreviewing = canRun && runnableIndex == stepIndex;
+
+            if (canRun) runnableIndex++;
+        }
+    }
+
+    private static bool CanRun(ExerciseInstructionViewModel instruction) =>
+        instruction.DurationSeconds > 0 && (!string.IsNullOrWhiteSpace(instruction.Text) || instruction.Phase is not null);
 
     /// <summary>
     /// Appends an instruction: breathing continues with the next phase (inhale, hold, exhale, hold), meditation gets an

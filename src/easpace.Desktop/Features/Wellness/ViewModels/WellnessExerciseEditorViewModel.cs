@@ -68,6 +68,11 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     /// </summary>
     public AvaloniaList<WellnessExerciseViewModel> Exercises { get; } = [];
 
+    /// <summary>
+    /// Gets the preview that plays the exercise as the form currently defines it.
+    /// </summary>
+    public ExercisePreviewViewModel Preview { get; } = new();
+
     public bool HasExercises => Exercises.Count > 0;
     public bool ShowNoExercises => IsInitialized && !HasExercises && Form is null;
 
@@ -107,6 +112,8 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             OnPropertyChanged(nameof(ShowNoExercises));
             OnPropertyChanged(nameof(CanChangeSelection));
         };
+
+        Preview.PropertyChanged += OnPreviewPropertyChanged;
     }
 
     [RelayCommand]
@@ -328,9 +335,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     private bool CanRestoreDefaults() => IsInitialized && !IsFormLocked;
 
     /// <summary>
-    /// Stops the work that is still running. Called once the editor is no longer shown.
+    /// Stops the work that is still running, including the preview. Called once the editor is no longer shown.
     /// </summary>
-    public void Close() => _closeTokenSource.Cancel();
+    public void Close()
+    {
+        _closeTokenSource.Cancel();
+        Preview.Dispose();
+    }
 
     partial void OnSelectedExerciseChanged(WellnessExerciseViewModel? value)
     {
@@ -339,8 +350,46 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     partial void OnFormChanged(ExerciseFormViewModel? oldValue, ExerciseFormViewModel? newValue)
     {
-        if (oldValue is not null) oldValue.PropertyChanged -= OnFormPropertyChanged;
-        if (newValue is not null) newValue.PropertyChanged += OnFormPropertyChanged;
+        if (oldValue is not null)
+        {
+            oldValue.PropertyChanged -= OnFormPropertyChanged;
+            oldValue.DefinitionChanged -= OnFormDefinitionChanged;
+        }
+
+        if (newValue is not null)
+        {
+            newValue.PropertyChanged += OnFormPropertyChanged;
+            newValue.DefinitionChanged += OnFormDefinitionChanged;
+        }
+
+        // a reloaded form of the same exercise, e.g. after saving, keeps the position of the preview
+        var isOtherExercise = newValue is null || newValue.IsCreatingNew || newValue.Id != oldValue?.Id;
+        LoadPreview(restart: isOtherExercise);
+    }
+
+    private void OnFormDefinitionChanged(object? sender, EventArgs e) => LoadPreview(restart: false);
+
+    private void OnPreviewPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ExercisePreviewViewModel.Progress))
+        {
+            Form?.HighlightStep(Preview.Progress?.StepIndex);
+        }
+    }
+
+    private void LoadPreview(bool restart)
+    {
+        if (Form is not { } form)
+        {
+            Preview.Clear();
+            return;
+        }
+
+        Preview.Load(form.ToSteps(), form.Type);
+        if (restart) Preview.Restart();
+
+        // the progress may not change, but which instruction a step comes from can
+        form.HighlightStep(Preview.Progress?.StepIndex);
     }
 
     private void OnFormPropertyChanged(object? sender, PropertyChangedEventArgs e)

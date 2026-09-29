@@ -12,6 +12,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
              xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Wellness.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExerciseEditorView"
              x:DataType="vm:WellnessExerciseEditorViewModel"
@@ -41,11 +42,106 @@ Licensed under the MIT License. See LICENSE file for details.
 
     </UserControl.Resources>
 
-    <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Md}"
-          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+    <UserControl.Styles>
+
+        <!-- Wide layout: the form on the left and the preview on the right. The positions are set here rather than
+             on the elements, so the container query below can override them. -->
+        <Style Selector="Border#FormCard">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="1" />
+        </Style>
+
+        <Style Selector="Border#PreviewCard">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Grid.ColumnSpan" Value="1" />
+            <Setter Property="Width" Value="320" />
+        </Style>
+
+        <!-- Preview: text on top, then the circle or countdown, then the controls -->
+        <Style Selector="StackPanel#PreviewText">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+        </Style>
+
+        <Style Selector="Viewbox#PreviewVisual">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Grid.RowSpan" Value="1" />
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="Width" Value="192" />
+            <Setter Property="Height" Value="192" />
+        </Style>
+
+        <Style Selector="StackPanel#PreviewControls">
+            <Setter Property="Grid.Row" Value="2" />
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="StackPanel#PreviewText > TextBlock">
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <!-- Narrow layout: the preview becomes a strip above the form, with the circle left of the text and controls -->
+        <ContainerQuery Name="ExerciseEditor" Query="max-width:820">
+
+            <Style Selector="Border#FormCard">
+                <Setter Property="Grid.Row" Value="2" />
+                <Setter Property="Grid.RowSpan" Value="1" />
+                <Setter Property="Grid.ColumnSpan" Value="2" />
+            </Style>
+
+            <Style Selector="Border#PreviewCard">
+                <Setter Property="Grid.Column" Value="0" />
+                <Setter Property="Grid.ColumnSpan" Value="2" />
+                <Setter Property="Width" Value="NaN" />
+            </Style>
+
+            <Style Selector="StackPanel#PreviewText">
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="Grid.ColumnSpan" Value="1" />
+            </Style>
+
+            <Style Selector="Viewbox#PreviewVisual">
+                <Setter Property="Grid.Row" Value="0" />
+                <Setter Property="Grid.RowSpan" Value="3" />
+                <Setter Property="Grid.ColumnSpan" Value="1" />
+                <Setter Property="Width" Value="112" />
+                <Setter Property="Height" Value="112" />
+            </Style>
+
+            <Style Selector="StackPanel#PreviewControls">
+                <Setter Property="Grid.Row" Value="1" />
+                <Setter Property="Grid.Column" Value="1" />
+                <Setter Property="Grid.ColumnSpan" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+
+            <Style Selector="StackPanel#PreviewText > TextBlock">
+                <Setter Property="TextAlignment" Value="Left" />
+            </Style>
+
+        </ContainerQuery>
+
+        <!-- The instruction the preview plays -->
+        <Style Selector="Border.elevated.card.previewing">
+            <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Brand}" />
+        </Style>
+
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*,Auto"
+          RowSpacing="{StaticResource Metrics.Spacing.Md}" ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
+          Container.Name="ExerciseEditor" Container.Sizing="Width">
 
         <!-- Header -->
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
             <!-- Back, title and exercise selector (the selector wraps below when narrow) -->
             <WrapPanel Grid.Column="0" Orientation="Horizontal"
@@ -127,7 +223,7 @@ Licensed under the MIT License. See LICENSE file for details.
         </Grid>
 
         <!-- Form of the selected or the new exercise -->
-        <Border Grid.Row="1" Classes="card" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
+        <Border x:Name="FormCard" Classes="card" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
             <Grid>
 
@@ -231,7 +327,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="vm:ExerciseInstructionViewModel">
 
-                                                    <Border Classes="elevated card">
+                                                    <Border Classes="elevated card" Classes.previewing="{Binding IsPreviewing}">
                                                         <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
                                                               ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
                                                               RowSpacing="{StaticResource Metrics.Spacing.Xs}">
@@ -357,6 +453,76 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
             </Grid>
+
+        </Border>
+
+        <!-- Preview of the form, playing the steps in a loop -->
+        <Border x:Name="PreviewCard" Classes="card" VerticalAlignment="Top"
+                Padding="{StaticResource Metrics.Spacing.Thickness.Lg}"
+                IsVisible="{Binding Form, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        DataContext="{Binding Preview}" x:DataType="vm:ExercisePreviewViewModel">
+
+                <TextBlock Classes="neutral fs4" Text="{core:LocalizationService Key='Wellness.Preview.Title'}" />
+
+                <!-- Hint while no instruction can run yet -->
+                <TextBlock Classes="subtle neutral fs5" TextWrapping="Wrap" IsVisible="{Binding !HasSteps}"
+                           Text="{core:LocalizationService Key='Wellness.Preview.Empty'}" />
+
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" IsVisible="{Binding HasSteps}"
+                      ColumnSpacing="{StaticResource Metrics.Spacing.Md}" RowSpacing="{StaticResource Metrics.Spacing.Sm}">
+
+                    <!-- Instruction and position -->
+                    <StackPanel x:Name="PreviewText" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                        <TextBlock Classes="neutral fs3" TextWrapping="Wrap" Text="{Binding InstructionText}" />
+                        <TextBlock Classes="subtle neutral fs6" Text="{Binding PositionText}" />
+                    </StackPanel>
+
+                    <!-- Breathing circle, or the seconds on their own when the step has no phase -->
+                    <Viewbox x:Name="PreviewVisual" Stretch="Uniform" HorizontalAlignment="Center">
+                        <Panel Width="192" Height="192">
+                            <controls:BreathingCircle IsVisible="{Binding ShowBreathingCircle}"
+                                                      CircleSize="{Binding CircleSize}"
+                                                      Text="{Binding StepSecondsText}" />
+                            <TextBlock Classes="brand strong fs1" IsVisible="{Binding ShowCountdown}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding StepSecondsText}" />
+                        </Panel>
+                    </Viewbox>
+
+                    <!-- Previous, play or pause, next and restart -->
+                    <StackPanel x:Name="PreviewControls" Orientation="Horizontal"
+                                Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                        <Button Classes="secondary icon" Command="{Binding StepBackwardCommand}"
+                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.StepBackward'}">
+                            <PathIcon Data="{StaticResource PhosphorIcons.CaretLeft.Bold}" />
+                        </Button>
+
+                        <Button Classes="primary icon" Command="{Binding TogglePlayPauseCommand}"
+                                ToolTip.Tip="{Binding TogglePlayPauseText}">
+                            <Panel>
+                                <PathIcon Data="{StaticResource PhosphorIcons.Play.Fill}" IsVisible="{Binding !IsPlaying}" />
+                                <PathIcon Data="{StaticResource PhosphorIcons.Pause.Fill}" IsVisible="{Binding IsPlaying}" />
+                            </Panel>
+                        </Button>
+
+                        <Button Classes="secondary icon" Command="{Binding StepForwardCommand}"
+                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.StepForward'}">
+                            <PathIcon Data="{StaticResource PhosphorIcons.CaretRight.Bold}" />
+                        </Button>
+
+                        <Button Classes="secondary icon" Command="{Binding RestartCommand}"
+                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Restart'}">
+                            <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}" />
+                        </Button>
+
+                    </StackPanel>
+
+                </Grid>
+
+            </StackPanel>
 
         </Border>
 

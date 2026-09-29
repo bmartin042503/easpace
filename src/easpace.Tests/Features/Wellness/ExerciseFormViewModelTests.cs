@@ -419,4 +419,20 @@ public class ExerciseFormViewModelTests
             [new UpsertExerciseInstructionRequest("Settle", 30, expectedPhase)]), options => options.WithStrictOrdering());
         form.IsValid.Should().BeTrue();
     }
+
+    [Fact]
+    public void HighlightStep_SkipsInstructionsThatCannotRun()
+    {
+        var form = new ExerciseFormViewModel(Breathing());
+        form.Instructions[1].Text = "";
+        SetPhase(form.Instructions[1], null);
+
+        form.HighlightStep(1);
+
+        form.Instructions.Select(i => i.IsPreviewing).Should().Equal(false, false, true);
+
+        form.HighlightStep(null);
+
+        form.Instructions.Should().OnlyContain(i => !i.IsPreviewing);
+    }
 }

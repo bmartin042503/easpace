@@ -3,7 +3,6 @@
 
 using Avalonia;
 using Avalonia.Headless;
-using easpace.Desktop;
 
 [assembly: AvaloniaTestApplication(typeof(easpace.Tests.TestAppBuilder))]
 
@@ -11,6 +10,7 @@ namespace easpace.Tests;
 
 public class TestAppBuilder
 {
-    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+    // a bare application, as the app's own one needs the services of the host to start its main window
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<Application>()
         .UseHeadless(new AvaloniaHeadlessPlatformOptions());
 }

@@ -742,6 +742,30 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.Error.RestoreFailed" xml:space="preserve">
         <value>Nem sikerült visszaállítani az alapértelmezett gyakorlatokat. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Wellness.Preview.Title" xml:space="preserve">
+        <value>Előnézet</value>
+    </data>
+    <data name="Wellness.Preview.Play" xml:space="preserve">
+        <value>Lejátszás</value>
+    </data>
+    <data name="Wellness.Preview.Pause" xml:space="preserve">
+        <value>Szünet</value>
+    </data>
+    <data name="Wellness.Preview.StepForward" xml:space="preserve">
+        <value>Következő lépés</value>
+    </data>
+    <data name="Wellness.Preview.StepBackward" xml:space="preserve">
+        <value>Előző lépés</value>
+    </data>
+    <data name="Wellness.Preview.Restart" xml:space="preserve">
+        <value>Újrakezdés</value>
+    </data>
+    <data name="Wellness.Preview.Position" xml:space="preserve">
+        <value>{0}/{1}. lépés · {2}. ciklus</value>
+    </data>
+    <data name="Wellness.Preview.Empty" xml:space="preserve">
+        <value>Adj hozzá egy utasítást a gyakorlat előnézetéhez.</value>
+    </data>
     <data name="Wellness.Phase.None" xml:space="preserve">
         <value>Nincs fázis</value>
     </data>
