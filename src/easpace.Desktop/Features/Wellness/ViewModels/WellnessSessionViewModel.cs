@@ -28,6 +28,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     [ObservableProperty] private string _phaseSecondsText = string.Empty;
     [ObservableProperty] private string _timerText = "00:00";
     [ObservableProperty] private double _breathingCircleSize = 96;
+    [ObservableProperty] private bool _showBreathingCircle;
 
     [ObservableProperty]
     private string _timerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");
@@ -124,6 +125,9 @@ internal partial class WellnessSessionViewModel : ViewModelBase
         InstructionText = progress.InstructionText;
         TimerText = progress.TimerText;
         PhaseSecondsText = progress.StepSecondsText;
+
+        // the circle only animates breathing phases, so steps without one hide it
+        ShowBreathingCircle = progress.Phase is not null;
     }
 
     private void OnBreathingCircleAnimationTimerTick(object? sender, double breathingCircleSize)
@@ -152,7 +156,9 @@ internal partial class WellnessSessionViewModel : ViewModelBase
             TargetDuration: _sessionConfiguration.TargetDuration,
             ActualDuration: _wellnessSessionManager.ElapsedTime,
             SessionType: _sessionConfiguration.SessionType,
-            BreathingTechnique: _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique
+            ExerciseId: _sessionConfiguration.ExerciseId,
+            ExerciseName: _sessionConfiguration.ExerciseName,
+            CompletedCycles: _sessionConfiguration.IsRepeating ? _wellnessSessionManager.CompletedCycles : null
         );
 
         SessionEnded?.Invoke(this, request);

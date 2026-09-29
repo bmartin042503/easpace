@@ -38,14 +38,14 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Run Text="{Binding DurationText}" />
             </TextBlock>
 
-            <!-- Breathing technique name (if the type is breathing) -->
+            <!-- Exercise name -->
             <TextBlock Classes="neutral fs3" TextAlignment="Center"
-                       IsVisible="{Binding IsBreathingType}"
-                       Text="{Binding BreathingTechniqueName}" />
+                       IsVisible="{Binding ExerciseName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                       Text="{Binding ExerciseName}" />
 
-            <!-- Cycle count (if the type is breathing) -->
+            <!-- Cycle count (if the exercise repeats) -->
             <TextBlock Classes="neutral fs3" TextAlignment="Center"
-                       IsVisible="{Binding IsBreathingType}">
+                       IsVisible="{Binding CycleCount, Converter={x:Static ObjectConverters.IsNotNull}}">
                 <Run Text="{core:LocalizationService Key='Wellness.Label.Cycles'}" />:
                 <Run Text="{Binding CycleCount}" />
             </TextBlock>

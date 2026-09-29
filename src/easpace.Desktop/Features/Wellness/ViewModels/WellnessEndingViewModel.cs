@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -33,9 +32,10 @@ internal partial class WellnessEndingViewModel : ViewModelBase
 
     [ObservableProperty] private string _durationText = string.Empty;
     [ObservableProperty] private WellnessSessionType _sessionType;
-    [ObservableProperty] private bool _isBreathingType;
-    [ObservableProperty] private string _breathingTechniqueName = string.Empty;
-    [ObservableProperty] private int _cycleCount;
+    [ObservableProperty] private string _exerciseName = string.Empty;
+
+    // null for exercises that run once, as cycles only mean something when the exercise repeats
+    [ObservableProperty] private int? _cycleCount;
 
     public WellnessEndingViewModel(
         IWellnessSessionEntryService sessionEntryService,
@@ -70,18 +70,8 @@ internal partial class WellnessEndingViewModel : ViewModelBase
                     : @"mm\:ss");
 
             SessionType = _createEntryRequest.SessionType;
-
-            IsBreathingType = SessionType == WellnessSessionType.Breathing;
-
-            if (IsBreathingType && _createEntryRequest.BreathingTechnique != null)
-            {
-                BreathingTechniqueName = _createEntryRequest.BreathingTechnique.IsLocalized
-                    ? LocalizationService.GetString(_createEntryRequest.BreathingTechnique.Name)
-                    : _createEntryRequest.BreathingTechnique.Name;
-
-                CycleCount = (int)(_createEntryRequest.ActualDuration.TotalSeconds /
-                                   _createEntryRequest.BreathingTechnique.Phases.Sum(p => p.DurationSeconds));
-            }
+            ExerciseName = _createEntryRequest.ExerciseName ?? string.Empty;
+            CycleCount = _createEntryRequest.CompletedCycles;
         }
         catch (Exception ex)
         {

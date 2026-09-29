@@ -79,15 +79,14 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 </ListBox>
 
-                <!-- Breathing techniques -->
+                <!-- Exercises of the selected type -->
                 <StackPanel Grid.Row="2" Orientation="Vertical"
                             Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <ComboBox MaxWidth="240"
-                              IsEnabled="{Binding HasBreathingTechniques}"
-                              IsVisible="{Binding IsBreathingChecked}"
-                              SelectedItem="{Binding SelectedBreathingTechniqueViewModel}"
-                              ItemsSource="{Binding BreathingTechniques}"
+                              IsEnabled="{Binding HasExercises}"
+                              SelectedItem="{Binding SelectedExercise}"
+                              ItemsSource="{Binding Exercises}"
                               HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
                         <ComboBox.ItemTemplate>
@@ -98,23 +97,23 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     </ComboBox>
 
-                    <Grid IsVisible="{Binding IsBreathingChecked}">
+                    <Grid>
 
-                        <!-- Technique description -->
-                        <TextBlock IsVisible="{Binding HasBreathingTechniques}"
-                                   Text="{Binding SelectedBreathingTechniqueViewModel.Description}"
+                        <!-- Exercise description -->
+                        <TextBlock IsVisible="{Binding HasExercises}"
+                                   Text="{Binding SelectedExercise.Description}"
                                    Classes="subtle neutral fs6" TextAlignment="Center" MaxWidth="540"
                                    TextWrapping="Wrap" />
 
-                        <!-- 'No breathing techniques available' text -->
-                        <TextBlock IsVisible="{Binding ShowNoBreathingTechniques}"
-                                   Text="{core:LocalizationService Key='BreathingTechnique.Empty.Message'}"
+                        <!-- 'No exercises available' text -->
+                        <TextBlock IsVisible="{Binding ShowNoExercises}"
+                                   Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
                                    Classes="strong danger fs5" TextAlignment="Center" />
                     </Grid>
 
                 </StackPanel>
 
-                <!-- Duration slider -->
+                <!-- Duration (only repeating exercises have a slider) -->
                 <StackPanel Grid.Row="3" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
                             VerticalAlignment="Center">
 
@@ -122,6 +121,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                Text="{Binding DurationText}" />
 
                     <Slider Classes="filled"
+                            IsVisible="{Binding ShowDurationSlider}"
                             Minimum="{Binding MinimumSeconds}"
                             Maximum="{Binding MaximumSeconds}"
                             Value="{Binding SelectedSeconds}"

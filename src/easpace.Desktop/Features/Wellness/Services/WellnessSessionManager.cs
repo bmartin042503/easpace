@@ -2,12 +2,9 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Avalonia.Threading;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
-using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
@@ -17,11 +14,9 @@ internal class WellnessSessionManager : IWellnessSessionManager
     private const double BreathingCircleMaxSize = 192;
 
     private DispatcherTimer? _timer;
-    private TimeSpan _timeLeft;
     public TimeSpan ElapsedTime { get; private set; }
 
-    // drives breathing sessions; null for meditation, which rotates random instructions instead
-    private readonly ExerciseSequence? _sequence;
+    private readonly ExerciseSequence _sequence;
 
     private DispatcherTimer? _breathingAnimationTimer;
     private double _breathingCircleStartSize;
@@ -31,36 +26,26 @@ internal class WellnessSessionManager : IWellnessSessionManager
 
     private double _breathingCircleSize = BreathingCircleMinSize;
 
-    private WellnessSessionConfiguration _sessionConfiguration;
-
-    private string _instructionText = string.Empty;
-
     public bool IsPaused { get; private set; }
 
     public SessionProgress Progress => CreateProgress();
+
+    public int CompletedCycles => _sequence.CompletedCycles;
 
     public event EventHandler? TimerFinished;
     public event EventHandler<SessionProgress>? ProgressChanged;
     public event EventHandler<double>? BreathingCircleAnimationTimerTick;
 
-    private int _meditationInstructElapsedSeconds;
-    private const int MeditationInstructSwitchIntervalSeconds = 2 * 60;
-
-    private List<string> _meditationInstructTexts = [
-        LocalizationService.GetString("Wellness.Instruction1.Meditation"),
-        LocalizationService.GetString("Wellness.Instruction2.Meditation"),
-        LocalizationService.GetString("Wellness.Instruction3.Meditation"),
-        LocalizationService.GetString("Wellness.Instruction4.Meditation"),
-        LocalizationService.GetString("Wellness.Instruction5.Meditation"),
-        LocalizationService.GetString("Wellness.Instruction6.Meditation")
-    ];
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WellnessSessionManager"/> class.
+    /// </summary>
+    /// <param name="sessionConfiguration">The steps and cycles of the session to run.</param>
+    /// <exception cref="ArgumentException">Thrown when the configuration has no steps or a step without duration.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when fewer than one cycle is configured.</exception>
     public WellnessSessionManager(
         WellnessSessionConfiguration sessionConfiguration)
     {
-        _sessionConfiguration = sessionConfiguration;
-        _sequence = CreateBreathingSequence(sessionConfiguration);
-        _timeLeft = _sessionConfiguration.TargetDuration ?? TimeSpan.Zero;
+        _sequence = new ExerciseSequence(sessionConfiguration.Steps, sessionConfiguration.Cycles);
     }
 
     public void StartSession()
@@ -72,15 +57,13 @@ internal class WellnessSessionManager : IWellnessSessionManager
         _timer.Tick += OnTimerTick;
         _timer?.Start();
 
-        if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
+        _breathingAnimationTimer = new DispatcherTimer(DispatcherPriority.Render)
         {
-            StartBreathingTechnique();
-        }
-        else
-        {
-            var randomIndex = Random.Shared.Next(_meditationInstructTexts.Count);
-            _instructionText = _meditationInstructTexts[randomIndex];
-        }
+            Interval = TimeSpan.FromMilliseconds(16)
+        };
+        _breathingAnimationTimer.Tick += OnBreathingAnimationTimerTick;
+
+        UpdatePhaseAnimation(_sequence.CurrentStep);
 
         ProgressChanged?.Invoke(this, Progress);
     }
@@ -114,53 +97,6 @@ internal class WellnessSessionManager : IWellnessSessionManager
         _breathingAnimationTimer?.Tick -= OnBreathingAnimationTimerTick;
     }
     
-    /// <summary>
-    /// Builds the instruction sequence of a breathing session from the phases of its technique.
-    /// Returns <c>null</c> for other session types and for techniques without phases.
-    /// </summary>
-    private static ExerciseSequence? CreateBreathingSequence(WellnessSessionConfiguration configuration)
-    {
-        var techniqueConfiguration = configuration.BreathingTechniqueConfiguration;
-
-        if (configuration.SessionType != WellnessSessionType.Breathing
-            || techniqueConfiguration?.BreathingTechnique is not { Phases.Count: > 0 } technique)
-        {
-            return null;
-        }
-
-        var steps = technique.Phases
-            .OrderBy(p => p.Order)
-            .Select(p => ExerciseStep.Create(null, p.DurationSeconds, p.Type))
-            .ToList();
-
-        return new ExerciseSequence(steps, techniqueConfiguration.Cycles);
-    }
-
-    private void StartBreathingTechnique()
-    {
-        // a technique without valid phases has nothing to animate
-        if (_sequence is null) return;
-
-        _breathingAnimationTimer = new DispatcherTimer(DispatcherPriority.Render)
-        {
-            Interval = TimeSpan.FromMilliseconds(16)
-        };
-        _breathingAnimationTimer.Tick += OnBreathingAnimationTimerTick;
-
-        UpdatePhaseAnimation(_sequence.CurrentStep);
-    }
-
-    private void ProcessBreathingPhase()
-    {
-        if (_sequence is null) return;
-
-        // animate the next phase once the current one has elapsed, unless the whole sequence is completed
-        if (_sequence.Tick() && !_sequence.IsCompleted)
-        {
-            UpdatePhaseAnimation(_sequence.CurrentStep);
-        }
-    }
-
     private void UpdatePhaseAnimation(ExerciseStep step)
     {
         _breathingCircleStartSize = _breathingCircleSize;
@@ -185,19 +121,6 @@ internal class WellnessSessionManager : IWellnessSessionManager
 
     private SessionProgress CreateProgress()
     {
-        if (_sequence is null)
-        {
-            return new SessionProgress(
-                TimerText: GetTimerText(_timeLeft),
-                InstructionText: _instructionText,
-                StepSecondsText: string.Empty,
-                Phase: null,
-                StepIndex: 0,
-                StepCount: 0,
-                CycleIndex: 0,
-                Cycles: null);
-        }
-
         // show the remaining time of a finite sequence and the elapsed time of an endless one
         var timerSeconds = _sequence.TotalSeconds is { } totalSeconds
             ? totalSeconds - _sequence.ElapsedSeconds
@@ -219,37 +142,13 @@ internal class WellnessSessionManager : IWellnessSessionManager
         // increment total elapsed time
         ElapsedTime = ElapsedTime.Add(TimeSpan.FromSeconds(1));
 
-        if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
+        // animate the next phase once the current one has elapsed, unless the whole sequence is completed
+        if (_sequence.Tick() && !_sequence.IsCompleted)
         {
-            ProcessBreathingPhase();
-        }
-        else if (_sessionConfiguration.SessionType == WellnessSessionType.Meditation)
-        {
-            if (_meditationInstructElapsedSeconds == MeditationInstructSwitchIntervalSeconds)
-            {
-                var randomIndex = Random.Shared.Next(_meditationInstructTexts.Count);
-                _instructionText = _meditationInstructTexts[randomIndex];
-                
-                _meditationInstructElapsedSeconds = 0;
-            }
-            
-            _meditationInstructElapsedSeconds++;
+            UpdatePhaseAnimation(_sequence.CurrentStep);
         }
 
-        bool isFinished;
-
-        if (_sequence is not null)
-        {
-            isFinished = _sequence.IsCompleted;
-        }
-        else
-        {
-            // sessions without an instruction sequence count down the target duration
-            _timeLeft = _timeLeft.Subtract(TimeSpan.FromSeconds(1));
-            isFinished = _timeLeft.TotalSeconds <= 0;
-        }
-
-        if (isFinished)
+        if (_sequence.IsCompleted)
         {
             TimerFinished?.Invoke(this, EventArgs.Empty);
             StopSession();

@@ -32,7 +32,8 @@ internal class WellnessSessionEntryService(IDbContextFactory<AppDbContext> dbCon
                 Type = createEntryRequest.SessionType,
                 TargetDuration = createEntryRequest.TargetDuration,
                 ActualDuration = createEntryRequest.ActualDuration,
-                BreathingTechniqueId = createEntryRequest.BreathingTechnique?.Id
+                ExerciseId = createEntryRequest.ExerciseId,
+                ExerciseName = createEntryRequest.ExerciseName
             };
 
             dbContext.WellnessSessionEntries.Add(wellnessSession);

@@ -24,8 +24,8 @@ Licensed under the MIT License. See LICENSE file for details.
                    behaviors:AnimatedTextBehavior.AnimatedText="{Binding InstructionText}"
                    TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-        <!-- Breathing elements -->
-        <Grid Grid.Row="1" IsVisible="{Binding IsBreathing}"
+        <!-- Breathing elements (only while the current step has a breathing phase) -->
+        <Grid Grid.Row="1" IsVisible="{Binding ShowBreathingCircle}"
               Width="192" Height="192" VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <!-- Inner ellipse -->

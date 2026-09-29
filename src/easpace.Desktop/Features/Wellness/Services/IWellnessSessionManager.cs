@@ -16,6 +16,11 @@ internal interface IWellnessSessionManager
     /// </summary>
     SessionProgress Progress { get; }
 
+    /// <summary>
+    /// Gets the number of fully completed cycles.
+    /// </summary>
+    int CompletedCycles { get; }
+
     event EventHandler? TimerFinished;
 
     /// <summary>

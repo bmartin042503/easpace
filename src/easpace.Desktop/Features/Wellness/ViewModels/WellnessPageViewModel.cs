@@ -23,7 +23,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWindowService _windowService;
     private readonly IPreferencesService _preferencesService;
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
-    private readonly IBreathingTechniqueService _breathingTechniqueService;
+    private readonly IWellnessExerciseService _wellnessExerciseService;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
@@ -50,7 +50,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWindowService windowService,
         IPreferencesService preferencesService,
         IWellnessSessionEntryService wellnessSessionEntryService,
-        IBreathingTechniqueService breathingTechniqueService,
+        IWellnessExerciseService wellnessExerciseService,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> startLogger,
         ILogger<WellnessEndingViewModel> endingLogger)
@@ -60,7 +60,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         _windowService = windowService;
         _preferencesService = preferencesService;
         _wellnessSessionEntryService = wellnessSessionEntryService;
-        _breathingTechniqueService = breathingTechniqueService;
+        _wellnessExerciseService = wellnessExerciseService;
         _dialogService = dialogService;
 
         _startLogger = startLogger;
@@ -146,7 +146,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         if (_configurationViewModel == null)
         {
             _configurationViewModel = new WellnessStartViewModel(
-                _wellnessSessionEntryService, _breathingTechniqueService, _dialogService, _startLogger);
+                _wellnessSessionEntryService, _wellnessExerciseService, _dialogService, _startLogger);
 
             _configurationViewModel.SessionStarted += OnSessionStarted;
         }
