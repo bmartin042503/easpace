@@ -574,6 +574,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.DiscardSession" xml:space="preserve">
         <value>Discard</value>
     </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Manage exercises</value>
+    </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Breathe in...</value>
     </data>
@@ -636,6 +639,18 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Exercise.Empty.Message" xml:space="preserve">
         <value>No exercises available.</value>
+    </data>
+    <data name="Wellness.Editor.Title" xml:space="preserve">
+        <value>Manage exercises</value>
+    </data>
+    <data name="Wellness.Editor.Label.Repeat" xml:space="preserve">
+        <value>Repeat instructions</value>
+    </data>
+    <data name="Wellness.Editor.Label.OneCycle" xml:space="preserve">
+        <value>One cycle: {0}</value>
+    </data>
+    <data name="Wellness.Editor.Label.Instructions" xml:space="preserve">
+        <value>Instructions</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Box Breathing</value>

@@ -1,0 +1,163 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
+             xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
+             xmlns:utils="clr-namespace:easpace.Desktop.Utils"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExerciseEditorView"
+             x:DataType="vm:WellnessExerciseEditorViewModel"
+             utils:ViewInitialization.Command="{Binding InitializeCommand}"
+             Background="Transparent">
+
+    <UserControl.Resources>
+
+        <!-- Session type icons, as the selector lists the exercises of both types -->
+        <dataTemplates:TemplateSelector x:Key="SessionTypeIconSelector">
+
+            <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
+                <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
+                          Foreground="{DynamicResource Sem.Brand.Strong}"
+                          Width="{StaticResource Metrics.Icon.Size.Sm}"
+                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
+                <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
+                          Foreground="{DynamicResource Sem.Brand.Strong}"
+                          Width="{StaticResource Metrics.Icon.Size.Sm}"
+                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
+            </DataTemplate>
+
+        </dataTemplates:TemplateSelector>
+
+    </UserControl.Resources>
+
+    <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Md}"
+          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+
+        <!-- Header: back, title and exercise selector (the selector wraps below when narrow) -->
+        <WrapPanel Grid.Row="0" Orientation="Horizontal"
+                   ItemSpacing="{StaticResource Metrics.Spacing.Md}"
+                   LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        VerticalAlignment="Center">
+
+                <!-- Back button -->
+                <Button Classes="secondary icon" Command="{Binding NavigateBackCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.CaretLeft.Bold}" />
+                </Button>
+
+                <!-- Title -->
+                <TextBlock Classes="neutral fs2" VerticalAlignment="Center"
+                           Text="{core:LocalizationService Key='Wellness.Editor.Title'}" />
+
+            </StackPanel>
+
+            <!-- Exercise selector -->
+            <ComboBox Width="260" VerticalAlignment="Center"
+                      IsEnabled="{Binding HasExercises}"
+                      ItemsSource="{Binding Exercises}"
+                      SelectedItem="{Binding SelectedExercise}">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                            <ContentControl Content="{Binding SessionType}"
+                                            ContentTemplate="{StaticResource SessionTypeIconSelector}"
+                                            VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+
+        </WrapPanel>
+
+        <!-- Read-only summary of the selected exercise -->
+        <Border Grid.Row="1" Classes="card" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
+
+            <Grid>
+
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                              IsVisible="{Binding SelectedExercise, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
+
+                        <!-- Type and name -->
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                            <TextBlock Classes="subtle neutral fs6"
+                                       Text="{Binding SelectedExercise.SessionType, Converter={StaticResource EnumToLocalizedConverter}}" />
+                            <TextBlock Classes="neutral fs3" TextWrapping="Wrap"
+                                       Text="{Binding SelectedExercise.Name}" />
+                        </StackPanel>
+
+                        <!-- Description -->
+                        <TextBlock Classes="subtle neutral fs6" TextWrapping="Wrap"
+                                   IsVisible="{Binding SelectedExercise.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                   Text="{Binding SelectedExercise.Description}" />
+
+                        <!-- Whether it repeats, and the length of one cycle -->
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Lg}">
+                            <ToggleSwitch IsEnabled="False" VerticalAlignment="Center"
+                                          IsChecked="{Binding SelectedExercise.IsRepeating, Mode=OneWay}"
+                                          Content="{core:LocalizationService Key='Wellness.Editor.Label.Repeat'}" />
+                            <TextBlock Classes="neutral fs5" VerticalAlignment="Center"
+                                       Text="{Binding CycleDurationText}" />
+                        </StackPanel>
+
+                        <!-- Instructions -->
+                        <TextBlock Classes="neutral fs4"
+                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Instructions'}" />
+
+                        <ItemsControl ItemsSource="{Binding SelectedSteps}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:ExerciseStepSummary">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
+                                        <TextBlock Grid.Column="0" Classes="subtle neutral fs5" MinWidth="20"
+                                                   Text="{Binding Number}" />
+                                        <TextBlock Grid.Column="1" Classes="neutral fs5" TextWrapping="Wrap"
+                                                   Text="{Binding Text}" />
+                                        <TextBlock Grid.Column="2" Classes="subtle neutral fs5"
+                                                   Text="{Binding DurationText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
+                <!-- 'No exercises available' text -->
+                <TextBlock IsVisible="{Binding ShowNoExercises}"
+                           Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
+                           Classes="strong danger fs5" TextAlignment="Center"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</UserControl>

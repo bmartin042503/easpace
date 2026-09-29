@@ -24,11 +24,14 @@ public class WellnessStartViewModelTests
         _sessionEntryServiceMock.Setup(s => s.GetWellnessSessionEntriesAsync()).ReturnsAsync([]);
     }
 
-    private async Task<WellnessStartViewModel> CreateInitializedViewModelAsync(params WellnessExercise[] exercises)
-    {
+    private void SetUpExercises(params WellnessExercise[] exercises) =>
         _exerciseServiceMock
             .Setup(s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(exercises);
+
+    private async Task<WellnessStartViewModel> CreateInitializedViewModelAsync(params WellnessExercise[] exercises)
+    {
+        SetUpExercises(exercises);
 
         var viewModel = new WellnessStartViewModel(
             _sessionEntryServiceMock.Object,
@@ -194,5 +197,86 @@ public class WellnessStartViewModelTests
         viewModel.SelectedCycles = 0;
         viewModel.StartSessionCommand.CanExecute(null).Should().BeFalse();
         Start(viewModel).Should().BeNull();
+    }
+
+    [Fact]
+    public async Task ManageExercisesCommand_RequestsTheEditorWithTheSelectedExercise()
+    {
+        var triangle = Breathing("Triangle", true, 3, 3, 3);
+        var viewModel = await CreateInitializedViewModelAsync(Breathing("Box", true, 4), triangle);
+        viewModel.SelectedExercise = viewModel.Exercises.Single(e => e.Id == triangle.Id);
+        var requests = new List<Guid?>();
+        viewModel.ManageExercisesRequested += (_, exerciseId) => requests.Add(exerciseId);
+
+        viewModel.ManageExercisesCommand.Execute(null);
+
+        requests.Should().Equal(triangle.Id);
+    }
+
+    [Fact]
+    public async Task ManageExercisesCommand_WithoutExercises_RequestsTheEditorWithoutSelection()
+    {
+        var viewModel = await CreateInitializedViewModelAsync();
+        var requests = new List<Guid?>();
+        viewModel.ManageExercisesRequested += (_, exerciseId) => requests.Add(exerciseId);
+
+        viewModel.ManageExercisesCommand.Execute(null);
+
+        requests.Should().Equal([null]);
+    }
+
+    [Fact]
+    public async Task RefreshExercisesAsync_ReloadsAndKeepsTheSelectedExerciseWithItsCycles()
+    {
+        var box = Breathing("Box", true, 4, 4, 4, 4);
+        var triangle = Breathing("Triangle", true, 3, 3, 3);
+        var viewModel = await CreateInitializedViewModelAsync(box, triangle);
+        viewModel.SelectedExercise = viewModel.Exercises.Single(e => e.Id == triangle.Id);
+        viewModel.SelectedCycles = 7;
+
+        // edited in the meantime: renamed, and a new exercise now comes first
+        triangle.Name = "Triangle (edited)";
+        SetUpExercises(Breathing("Alpha", true, 5), box, triangle);
+
+        await viewModel.RefreshExercisesAsync();
+
+        viewModel.Exercises.Select(e => e.Name).Should().Equal("Alpha", "Box", "Triangle (edited)");
+        viewModel.SelectedExercise!.Id.Should().Be(triangle.Id);
+        viewModel.SelectedExercise.Name.Should().Be("Triangle (edited)");
+        viewModel.SelectedCycles.Should().Be(7);
+        _exerciseServiceMock.Verify(
+            s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+    }
+
+    [Fact]
+    public async Task RefreshExercisesAsync_WhenTheSelectedExerciseIsGone_SelectsTheFirstWithItsDefaultCycles()
+    {
+        var box = Breathing("Box", true, 4, 4, 4, 4);
+        var triangle = Breathing("Triangle", true, 3, 3, 3);
+        var viewModel = await CreateInitializedViewModelAsync(box, triangle);
+        viewModel.SelectedExercise = viewModel.Exercises.Single(e => e.Id == triangle.Id);
+        viewModel.SelectedCycles = 7;
+
+        SetUpExercises(box);
+        await viewModel.RefreshExercisesAsync();
+
+        viewModel.SelectedExercise!.Id.Should().Be(box.Id);
+        viewModel.SelectedCycles.Should().Be(19);
+    }
+
+    [Fact]
+    public async Task RefreshExercisesAsync_ClampsTheKeptCyclesToTheNewMaximum()
+    {
+        var box = Breathing("Box", true, 4, 4, 4, 4);
+        var viewModel = await CreateInitializedViewModelAsync(box);
+        viewModel.SelectedCycles = 100;
+
+        // one cycle now takes 20 minutes, so only three fit into an hour
+        box.Instructions = [new ExerciseInstruction { Order = 1, DurationSeconds = 1200, Phase = BreathingPhaseType.Inhale }];
+        SetUpExercises(box);
+        await viewModel.RefreshExercisesAsync();
+
+        viewModel.MaximumCycles.Should().Be(3);
+        viewModel.SelectedCycles.Should().Be(3);
     }
 }

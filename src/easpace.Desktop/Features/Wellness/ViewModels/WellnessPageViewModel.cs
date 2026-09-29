@@ -27,6 +27,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
+    private readonly ILogger<WellnessExerciseEditorViewModel> _exerciseEditorLogger;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
     [ObservableProperty] private bool _isBlobBackgroundVisible;
@@ -34,6 +35,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private WellnessStartViewModel? _configurationViewModel;
     private WellnessSessionViewModel? _sessionViewModel;
     private WellnessEndingViewModel? _endingViewModel;
+    private WellnessExerciseEditorViewModel? _exerciseEditorViewModel;
 
     private bool _isFullScreenSettingOn;
     private bool _isAnimatedBgSettingOn;
@@ -53,7 +55,8 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWellnessExerciseService wellnessExerciseService,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> startLogger,
-        ILogger<WellnessEndingViewModel> endingLogger)
+        ILogger<WellnessEndingViewModel> endingLogger,
+        ILogger<WellnessExerciseEditorViewModel> exerciseEditorLogger)
     {
         Page = ApplicationPage.Wellness;
         _messenger = messenger;
@@ -65,6 +68,7 @@ internal partial class WellnessPageViewModel : PageViewModel
 
         _startLogger = startLogger;
         _endingLogger = endingLogger;
+        _exerciseEditorLogger = exerciseEditorLogger;
 
         LoadWellnessSettings();
         
@@ -135,6 +139,34 @@ internal partial class WellnessPageViewModel : PageViewModel
     }
 
     /// <summary>
+    /// Handles the event when the user wants to manage the exercises from the configuration view.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="selectedExerciseId">The exercise selected in the configuration view, if any.</param>
+    private void OnManageExercisesRequested(object? sender, Guid? selectedExerciseId)
+    {
+        SetExerciseEditorView(selectedExerciseId);
+    }
+
+    /// <summary>
+    /// Handles the event when the user leaves the exercise editor. The same configuration view is shown again,
+    /// and its exercises are reloaded, as they may have changed.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">Event arguments.</param>
+    private async void OnExerciseEditorClosed(object? sender, EventArgs e)
+    {
+        SetConfigurationView();
+        CleanUpExerciseEditorView();
+
+        // the refresh reports its own errors, so nothing escapes this async event handler
+        if (_configurationViewModel is { } configurationViewModel)
+        {
+            await configurationViewModel.RefreshExercisesAsync();
+        }
+    }
+
+    /// <summary>
     /// Sets the current content view to the configuration view and subscribes to its events.
     /// </summary>
     private void SetConfigurationView()
@@ -149,6 +181,7 @@ internal partial class WellnessPageViewModel : PageViewModel
                 _wellnessSessionEntryService, _wellnessExerciseService, _dialogService, _startLogger);
 
             _configurationViewModel.SessionStarted += OnSessionStarted;
+            _configurationViewModel.ManageExercisesRequested += OnManageExercisesRequested;
         }
 
         ContentViewModel = _configurationViewModel;
@@ -190,6 +223,22 @@ internal partial class WellnessPageViewModel : PageViewModel
     }
 
     /// <summary>
+    /// Sets the current content view to the exercise editor and subscribes to its events.
+    /// The configuration view model is kept, so its state is intact when the editor is closed.
+    /// </summary>
+    /// <param name="selectedExerciseId">The exercise to select in the editor, if any.</param>
+    private void SetExerciseEditorView(Guid? selectedExerciseId)
+    {
+        IsBlobBackgroundVisible = false;
+
+        _exerciseEditorViewModel = new WellnessExerciseEditorViewModel(
+            _wellnessExerciseService, _dialogService, _exerciseEditorLogger, selectedExerciseId);
+        _exerciseEditorViewModel.Closed += OnExerciseEditorClosed;
+
+        ContentViewModel = _exerciseEditorViewModel;
+    }
+
+    /// <summary>
     /// Unsubscribes from events and releases the configuration view model to free up memory.
     /// </summary>
     private void CleanUpConfigurationView()
@@ -197,6 +246,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         if (_configurationViewModel == null) return;
 
         _configurationViewModel.SessionStarted -= OnSessionStarted;
+        _configurationViewModel.ManageExercisesRequested -= OnManageExercisesRequested;
         _configurationViewModel = null;
     }
 
@@ -220,6 +270,18 @@ internal partial class WellnessPageViewModel : PageViewModel
 
         _endingViewModel.NavigatedToConfiguration -= OnNavigatedToConfiguration;
         _endingViewModel = null;
+    }
+
+    /// <summary>
+    /// Unsubscribes from events, stops the remaining work of the exercise editor and releases it.
+    /// </summary>
+    private void CleanUpExerciseEditorView()
+    {
+        if (_exerciseEditorViewModel == null) return;
+
+        _exerciseEditorViewModel.Closed -= OnExerciseEditorClosed;
+        _exerciseEditorViewModel.Close();
+        _exerciseEditorViewModel = null;
     }
 
     #endregion

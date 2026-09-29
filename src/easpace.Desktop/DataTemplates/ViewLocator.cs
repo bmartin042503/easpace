@@ -48,6 +48,7 @@ internal class ViewLocator : IDataTemplate
             WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
             WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
             WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
+            WellnessExerciseEditorViewModel vm => CreateView(new WellnessExerciseEditorView(), vm),
             
             // Dialogs
             LegalInfoDialogViewModel vm => CreateView(new DetailedInfoDialogView(), vm),

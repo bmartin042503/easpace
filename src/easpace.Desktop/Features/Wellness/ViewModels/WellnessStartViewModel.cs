@@ -89,6 +89,11 @@ internal partial class WellnessStartViewModel : ViewModelBase
     /// </summary>
     public event EventHandler<WellnessSessionConfiguration>? SessionStarted;
 
+    /// <summary>
+    /// Occurs when the user wants to manage the exercises. Carries the id of the selected exercise, if any.
+    /// </summary>
+    public event EventHandler<Guid?>? ManageExercisesRequested;
+
     #endregion
 
     #region Properties
@@ -255,6 +260,45 @@ internal partial class WellnessStartViewModel : ViewModelBase
         SessionStarted?.Invoke(this, sessionConfiguration);
     }
 
+    [RelayCommand]
+    private void ManageExercises() => ManageExercisesRequested?.Invoke(this, SelectedExercise?.Id);
+
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// Reloads the exercises, for example after they were edited. The selected exercise stays selected with its
+    /// number of cycles while it still exists; otherwise the first exercise of the selected type is selected.
+    /// </summary>
+    public async Task RefreshExercisesAsync()
+    {
+        var selectedExerciseId = SelectedExercise?.Id;
+        var selectedCycles = SelectedCycles;
+
+        try
+        {
+            await LoadExercises(selectedExerciseId);
+
+            if (SelectedExercise is not null && SelectedExercise.Id == selectedExerciseId)
+            {
+                SelectedCycles = Math.Clamp(selectedCycles, 1, MaximumCycles);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to refresh the wellness exercises");
+
+            var errorDialog = new ErrorDialogViewModel
+            {
+                Title = LocalizationService.GetString("Common.Error.Title"),
+                Message = LocalizationService.GetString("Wellness.Error.LoadFailed")
+            };
+
+            await _dialogService.ShowDialogAsync(errorDialog);
+        }
+    }
+
     #endregion
 
     #region Private Helper Methods
@@ -269,21 +313,21 @@ internal partial class WellnessStartViewModel : ViewModelBase
         WellnessSessionEntries.AddRange(sessionEntryViewModels);
     }
 
-    private async Task LoadExercises()
+    private async Task LoadExercises(Guid? selectedExerciseId = null)
     {
         var exercises = await _wellnessExerciseService.GetExercisesAsync();
         _allExercises = exercises.Select(e => new WellnessExerciseViewModel(e)).ToList();
-        UpdateExercises();
+        UpdateExercises(selectedExerciseId);
     }
 
     /// <summary>
-    /// Lists the exercises of the selected session type and selects the first one.
+    /// Lists the exercises of the selected session type and selects the given one, or the first if it isn't listed.
     /// </summary>
-    private void UpdateExercises()
+    private void UpdateExercises(Guid? selectedExerciseId = null)
     {
         Exercises.Clear();
         Exercises.AddRange(_allExercises.Where(e => e.SessionType == SelectedSessionType));
-        SelectedExercise = Exercises.FirstOrDefault();
+        SelectedExercise = Exercises.FirstOrDefault(e => e.Id == selectedExerciseId) ?? Exercises.FirstOrDefault();
     }
 
     /// <summary>

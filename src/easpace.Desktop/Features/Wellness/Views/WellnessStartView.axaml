@@ -83,19 +83,31 @@ Licensed under the MIT License. See LICENSE file for details.
                 <StackPanel Grid.Row="2" Orientation="Vertical"
                             Spacing="{StaticResource Metrics.Spacing.Sm}">
 
-                    <ComboBox MaxWidth="240"
-                              IsEnabled="{Binding HasExercises}"
-                              SelectedItem="{Binding SelectedExercise}"
-                              ItemsSource="{Binding Exercises}"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <!-- Exercise selector and the way to manage exercises, which stays available when there are none -->
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                                HorizontalAlignment="Center">
 
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
+                        <ComboBox Width="240"
+                                  IsEnabled="{Binding HasExercises}"
+                                  SelectedItem="{Binding SelectedExercise}"
+                                  ItemsSource="{Binding Exercises}"
+                                  VerticalAlignment="Center">
 
-                    </ComboBox>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                        </ComboBox>
+
+                        <Button Classes="secondary icon" Command="{Binding ManageExercisesCommand}"
+                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Button.ManageExercises'}"
+                                VerticalAlignment="Center">
+                            <PathIcon Data="{StaticResource PhosphorIcons.ListBullets}" />
+                        </Button>
+
+                    </StackPanel>
 
                     <Grid>
 

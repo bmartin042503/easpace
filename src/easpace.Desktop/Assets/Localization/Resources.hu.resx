@@ -574,6 +574,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.DiscardSession" xml:space="preserve">
         <value>Elvetés</value>
     </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Gyakorlatok kezelése</value>
+    </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Lélegezz be...</value>
     </data>
@@ -636,6 +639,18 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Exercise.Empty.Message" xml:space="preserve">
         <value>Nincsenek elérhető gyakorlatok.</value>
+    </data>
+    <data name="Wellness.Editor.Title" xml:space="preserve">
+        <value>Gyakorlatok kezelése</value>
+    </data>
+    <data name="Wellness.Editor.Label.Repeat" xml:space="preserve">
+        <value>Utasítások ismétlése</value>
+    </data>
+    <data name="Wellness.Editor.Label.OneCycle" xml:space="preserve">
+        <value>Egy ciklus: {0}</value>
+    </data>
+    <data name="Wellness.Editor.Label.Instructions" xml:space="preserve">
+        <value>Utasítások</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Dobozlégzés</value>
