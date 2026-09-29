@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
 /// <summary>
-/// Lets the user browse and manage the wellness exercises in place of the start view.
+/// Lets the user browse and edit the wellness exercises in place of the start view.
 /// </summary>
 internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 {
@@ -28,7 +28,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     private readonly ILogger<WellnessExerciseEditorViewModel> _logger;
     private readonly Guid? _initialExerciseId;
 
-    // cancels loading that is still running when the editor gets closed
+    // cancels work that is still running when the editor gets closed
     private readonly CancellationTokenSource _closeTokenSource = new();
 
     private bool _isInitializationRunning;
@@ -37,10 +37,16 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
     private bool _isInitialized;
 
+    [ObservableProperty] private WellnessExerciseViewModel? _selectedExercise;
+
+    /// <summary>
+    /// Gets the form of the selected exercise, or <c>null</c> when nothing is selected.
+    /// </summary>
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CycleDurationText))]
-    [NotifyPropertyChangedFor(nameof(SelectedSteps))]
-    private WellnessExerciseViewModel? _selectedExercise;
+    [NotifyPropertyChangedFor(nameof(CanChangeSelection))]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    [NotifyCanExecuteChangedFor(nameof(DiscardCommand))]
+    private ExerciseFormViewModel? _form;
 
     /// <summary>
     /// Gets the exercises of every session type: breathing first, then meditation, each sorted by name.
@@ -50,17 +56,10 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     public bool HasExercises => Exercises.Count > 0;
     public bool ShowNoExercises => IsInitialized && !HasExercises;
 
-    public string CycleDurationText => SelectedExercise is { } exercise
-        ? string.Format(LocalizationService.GetString("Wellness.Editor.Label.OneCycle"), FormatDuration(exercise.CycleSeconds))
-        : string.Empty;
-
     /// <summary>
-    /// Gets the numbered steps of the selected exercise for the read-only summary.
+    /// Gets whether another exercise can be selected, which unsaved changes prevent.
     /// </summary>
-    public IReadOnlyList<ExerciseStepSummary> SelectedSteps =>
-        SelectedExercise?.Steps
-            .Select((step, index) => new ExerciseStepSummary(index + 1, step.Text, FormatDuration(step.DurationSeconds)))
-            .ToList() ?? [];
+    public bool CanChangeSelection => HasExercises && Form is not { IsDirty: true };
 
     /// <summary>
     /// Occurs when the user leaves the editor.
@@ -86,6 +85,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         {
             OnPropertyChanged(nameof(HasExercises));
             OnPropertyChanged(nameof(ShowNoExercises));
+            OnPropertyChanged(nameof(CanChangeSelection));
         };
     }
 
@@ -99,12 +99,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
         try
         {
-            var exercises = await _wellnessExerciseService.GetExercisesAsync(cancellationToken: _closeTokenSource.Token);
-
-            // the order is stable, so each type keeps the name order of the service
-            Exercises.AddRange(exercises.OrderBy(e => e.SessionType).Select(e => new WellnessExerciseViewModel(e)));
-            SelectedExercise = Exercises.FirstOrDefault(e => e.Id == _initialExerciseId) ?? Exercises.FirstOrDefault();
-
+            await LoadExercisesAsync(_initialExerciseId);
             IsInitialized = true;
         }
         catch (OperationCanceledException)
@@ -114,14 +109,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load the wellness exercises for the editor");
-
-            var errorDialog = new ErrorDialogViewModel
-            {
-                Title = LocalizationService.GetString("Common.Error.Title"),
-                Message = LocalizationService.GetString("Wellness.Error.LoadFailed")
-            };
-
-            await _dialogService.ShowDialogAsync(errorDialog);
+            await ShowErrorAsync("Wellness.Error.LoadFailed");
         }
         finally
         {
@@ -129,25 +117,130 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Leaves the editor. With unsaved changes, the user has to confirm that they are discarded.
+    /// </summary>
     [RelayCommand]
-    private void NavigateBack() => Closed?.Invoke(this, EventArgs.Empty);
+    private async Task NavigateBack()
+    {
+        if (Form is { IsDirty: true } && !await ConfirmDiscardAsync()) return;
+
+        Closed?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Saves the form and reloads the exercises, as a new name can change their order.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanSave))]
+    private async Task Save()
+    {
+        if (Form is not { } form || SelectedExercise is not { } exercise) return;
+
+        form.Validate();
+        if (!form.IsValid) return;
+
+        try
+        {
+            await _wellnessExerciseService.UpdateExerciseAsync(exercise.Id, form.ToRequest(), _closeTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to save the wellness exercise with ID {Id}", exercise.Id);
+            await ShowErrorAsync("Wellness.Editor.Error.SaveFailed");
+            return;
+        }
+
+        try
+        {
+            // selecting the saved exercise again gives a clean form
+            await LoadExercisesAsync(exercise.Id);
+        }
+        catch (OperationCanceledException)
+        {
+            // the editor was closed while loading
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to reload the wellness exercises after saving");
+            await ShowErrorAsync("Wellness.Error.LoadFailed");
+        }
+    }
+
+    /// <summary>
+    /// Drops the unsaved changes by loading the stored exercise into a new form.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanDiscard))]
+    private void Discard()
+    {
+        Form = SelectedExercise is { } exercise ? new ExerciseFormViewModel(exercise.Exercise) : null;
+    }
+
+    private bool CanSave() => Form is { IsDirty: true, IsValid: true };
+
+    private bool CanDiscard() => Form is { IsDirty: true };
 
     /// <summary>
     /// Stops the work that is still running. Called once the editor is no longer shown.
     /// </summary>
     public void Close() => _closeTokenSource.Cancel();
 
-    private static string FormatDuration(int seconds)
+    partial void OnSelectedExerciseChanged(WellnessExerciseViewModel? value)
     {
-        var duration = TimeSpan.FromSeconds(seconds);
-        return duration.ToString(duration.TotalHours >= 1 ? @"hh\:mm\:ss" : @"mm\:ss");
+        Form = value is null ? null : new ExerciseFormViewModel(value.Exercise);
+    }
+
+    partial void OnFormChanged(ExerciseFormViewModel? oldValue, ExerciseFormViewModel? newValue)
+    {
+        if (oldValue is not null) oldValue.PropertyChanged -= OnFormPropertyChanged;
+        if (newValue is not null) newValue.PropertyChanged += OnFormPropertyChanged;
+    }
+
+    private void OnFormPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is not (nameof(ExerciseFormViewModel.IsDirty) or nameof(ExerciseFormViewModel.IsValid))) return;
+
+        OnPropertyChanged(nameof(CanChangeSelection));
+        SaveCommand.NotifyCanExecuteChanged();
+        DiscardCommand.NotifyCanExecuteChanged();
+    }
+
+    private async Task LoadExercisesAsync(Guid? selectedExerciseId)
+    {
+        var exercises = await _wellnessExerciseService.GetExercisesAsync(cancellationToken: _closeTokenSource.Token);
+
+        // the order is stable, so each type keeps the name order of the service
+        Exercises.Clear();
+        Exercises.AddRange(exercises.OrderBy(e => e.SessionType).Select(e => new WellnessExerciseViewModel(e)));
+        SelectedExercise = Exercises.FirstOrDefault(e => e.Id == selectedExerciseId) ?? Exercises.FirstOrDefault();
+    }
+
+    private async Task<bool> ConfirmDiscardAsync()
+    {
+        var confirmation = new ConfirmDialogViewModel
+        {
+            Title = LocalizationService.GetString("Wellness.Editor.DiscardDialog.Title"),
+            Message = LocalizationService.GetString("Wellness.Editor.DiscardDialog.Message"),
+            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+            ConfirmText = LocalizationService.GetString("Wellness.Editor.Button.Discard"),
+            IsDestructive = true
+        };
+
+        await _dialogService.ShowDialogAsync(confirmation);
+        return confirmation.Confirmed;
+    }
+
+    private async Task ShowErrorAsync(string messageKey)
+    {
+        var errorDialog = new ErrorDialogViewModel
+        {
+            Title = LocalizationService.GetString("Common.Error.Title"),
+            Message = LocalizationService.GetString(messageKey)
+        };
+
+        await _dialogService.ShowDialogAsync(errorDialog);
     }
 }
-
-/// <summary>
-/// Represents a step of the selected exercise as shown in the editor's read-only summary.
-/// </summary>
-/// <param name="Number">The 1-based position of the step within its cycle.</param>
-/// <param name="Text">The instruction text of the step.</param>
-/// <param name="DurationText">The formatted duration of the step.</param>
-internal sealed record ExerciseStepSummary(int Number, string Text, string DurationText);

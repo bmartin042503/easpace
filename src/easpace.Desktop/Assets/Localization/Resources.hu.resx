@@ -367,6 +367,24 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
         <value>Kérlek, adj meg egy érvényes dátumot.</value>
     </data>
+    <data name="FormValidation.Description.MaxLength" xml:space="preserve">
+        <value>A leírás maximum 256 karakter hosszú lehet.</value>
+    </data>
+    <data name="FormValidation.Instructions.Required" xml:space="preserve">
+        <value>Kérlek, adj hozzá legalább egy utasítást.</value>
+    </data>
+    <data name="FormValidation.Instructions.TooLong" xml:space="preserve">
+        <value>Egy ciklus maximum 60 perc hosszú lehet.</value>
+    </data>
+    <data name="FormValidation.InstructionText.Required" xml:space="preserve">
+        <value>Kérlek, add meg az utasítás szövegét.</value>
+    </data>
+    <data name="FormValidation.InstructionText.MaxLength" xml:space="preserve">
+        <value>Az utasítás maximum 256 karakter hosszú lehet.</value>
+    </data>
+    <data name="FormValidation.Duration.Range" xml:space="preserve">
+        <value>Az időtartamnak 1 és 3600 másodperc között kell lennie.</value>
+    </data>
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Nagyon kellemetlen</value>
     </data>
@@ -651,6 +669,63 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Editor.Label.Instructions" xml:space="preserve">
         <value>Utasítások</value>
+    </data>
+    <data name="Wellness.Editor.Label.Name" xml:space="preserve">
+        <value>Név</value>
+    </data>
+    <data name="Wellness.Editor.Label.Description" xml:space="preserve">
+        <value>Leírás</value>
+    </data>
+    <data name="Wellness.Editor.Label.RepeatHint" xml:space="preserve">
+        <value>Bekapcsolva minden alkalom előtt kiválaszthatod, hány ciklust végzel. Kikapcsolva az utasítások egyszer futnak le.</value>
+    </data>
+    <data name="Wellness.Editor.Label.SecondsUnit" xml:space="preserve">
+        <value>mp</value>
+    </data>
+    <data name="Wellness.Editor.Input.NamePlaceholder" xml:space="preserve">
+        <value>A gyakorlat neve</value>
+    </data>
+    <data name="Wellness.Editor.Input.TextPlaceholder" xml:space="preserve">
+        <value>Az utasítás szövege</value>
+    </data>
+    <data name="Wellness.Editor.Button.AddInstruction" xml:space="preserve">
+        <value>Utasítás hozzáadása</value>
+    </data>
+    <data name="Wellness.Editor.Button.MoveUp" xml:space="preserve">
+        <value>Feljebb mozgatás</value>
+    </data>
+    <data name="Wellness.Editor.Button.MoveDown" xml:space="preserve">
+        <value>Lejjebb mozgatás</value>
+    </data>
+    <data name="Wellness.Editor.Button.RemoveInstruction" xml:space="preserve">
+        <value>Utasítás törlése</value>
+    </data>
+    <data name="Wellness.Editor.Button.Discard" xml:space="preserve">
+        <value>Módosítások elvetése</value>
+    </data>
+    <data name="Wellness.Editor.DiscardDialog.Title" xml:space="preserve">
+        <value>Elveted a módosításokat?</value>
+    </data>
+    <data name="Wellness.Editor.DiscardDialog.Message" xml:space="preserve">
+        <value>A gyakorlat nem mentett módosításai elvesznek.</value>
+    </data>
+    <data name="Wellness.Editor.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Wellness.Phase.None" xml:space="preserve">
+        <value>Nincs fázis</value>
+    </data>
+    <data name="Wellness.Phase.Inhale" xml:space="preserve">
+        <value>Belégzés</value>
+    </data>
+    <data name="Wellness.Phase.HoldIn" xml:space="preserve">
+        <value>Bent tartás</value>
+    </data>
+    <data name="Wellness.Phase.Exhale" xml:space="preserve">
+        <value>Kilégzés</value>
+    </data>
+    <data name="Wellness.Phase.HoldOut" xml:space="preserve">
+        <value>Kint tartás</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Dobozlégzés</value>

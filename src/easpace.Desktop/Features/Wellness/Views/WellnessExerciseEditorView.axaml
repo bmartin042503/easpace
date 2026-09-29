@@ -44,107 +44,246 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid RowDefinitions="Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Md}"
           Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-        <!-- Header: back, title and exercise selector (the selector wraps below when narrow) -->
-        <WrapPanel Grid.Row="0" Orientation="Horizontal"
-                   ItemSpacing="{StaticResource Metrics.Spacing.Md}"
-                   LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
 
-            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                        VerticalAlignment="Center">
+            <!-- Back, title and exercise selector (the selector wraps below when narrow) -->
+            <WrapPanel Grid.Column="0" Orientation="Horizontal"
+                       ItemSpacing="{StaticResource Metrics.Spacing.Md}"
+                       LineSpacing="{StaticResource Metrics.Spacing.Xs}">
 
-                <!-- Back button -->
-                <Button Classes="secondary icon" Command="{Binding NavigateBackCommand}"
-                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
-                    <PathIcon Data="{StaticResource PhosphorIcons.CaretLeft.Bold}" />
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
+                            VerticalAlignment="Center">
+
+                    <!-- Back button -->
+                    <Button Classes="secondary icon" Command="{Binding NavigateBackCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.CaretLeft.Bold}" />
+                    </Button>
+
+                    <!-- Title -->
+                    <TextBlock Classes="neutral fs2" VerticalAlignment="Center"
+                               Text="{core:LocalizationService Key='Wellness.Editor.Title'}" />
+
+                </StackPanel>
+
+                <!-- Exercise selector, locked while there are unsaved changes -->
+                <ComboBox Width="260" VerticalAlignment="Center"
+                          IsEnabled="{Binding CanChangeSelection}"
+                          ItemsSource="{Binding Exercises}"
+                          SelectedItem="{Binding SelectedExercise}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
+                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                                <ContentControl Content="{Binding SessionType}"
+                                                ContentTemplate="{StaticResource SessionTypeIconSelector}"
+                                                VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
+
+            </WrapPanel>
+
+            <!-- Discard and save -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                        VerticalAlignment="Top">
+
+                <Button Classes="secondary icon" Command="{Binding DiscardCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.Discard'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.X}" />
                 </Button>
 
-                <!-- Title -->
-                <TextBlock Classes="neutral fs2" VerticalAlignment="Center"
-                           Text="{core:LocalizationService Key='Wellness.Editor.Title'}" />
+                <Button Classes="primary icon" Command="{Binding SaveCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
+                </Button>
 
             </StackPanel>
 
-            <!-- Exercise selector -->
-            <ComboBox Width="260" VerticalAlignment="Center"
-                      IsEnabled="{Binding HasExercises}"
-                      ItemsSource="{Binding Exercises}"
-                      SelectedItem="{Binding SelectedExercise}">
+        </Grid>
 
-                <ComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-                            <ContentControl Content="{Binding SessionType}"
-                                            ContentTemplate="{StaticResource SessionTypeIconSelector}"
-                                            VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-
-            </ComboBox>
-
-        </WrapPanel>
-
-        <!-- Read-only summary of the selected exercise -->
+        <!-- Form of the selected exercise -->
         <Border Grid.Row="1" Classes="card" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
             <Grid>
 
-                <ScrollViewer HorizontalScrollBarVisibility="Disabled"
-                              IsVisible="{Binding SelectedExercise, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled">
 
-                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Sm}">
+                    <ContentControl Content="{Binding Form}">
 
-                        <!-- Type and name -->
-                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-                            <TextBlock Classes="subtle neutral fs6"
-                                       Text="{Binding SelectedExercise.SessionType, Converter={StaticResource EnumToLocalizedConverter}}" />
-                            <TextBlock Classes="neutral fs3" TextWrapping="Wrap"
-                                       Text="{Binding SelectedExercise.Name}" />
-                        </StackPanel>
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate x:DataType="vm:ExerciseFormViewModel">
 
-                        <!-- Description -->
-                        <TextBlock Classes="subtle neutral fs6" TextWrapping="Wrap"
-                                   IsVisible="{Binding SelectedExercise.Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                   Text="{Binding SelectedExercise.Description}" />
+                                <!-- the right margin keeps the scroll bar off the instruction cards -->
+                                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
+                                            Margin="0,0,12,0">
 
-                        <!-- Whether it repeats, and the length of one cycle -->
-                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Lg}">
-                            <ToggleSwitch IsEnabled="False" VerticalAlignment="Center"
-                                          IsChecked="{Binding SelectedExercise.IsRepeating, Mode=OneWay}"
-                                          Content="{core:LocalizationService Key='Wellness.Editor.Label.Repeat'}" />
-                            <TextBlock Classes="neutral fs5" VerticalAlignment="Center"
-                                       Text="{Binding CycleDurationText}" />
-                        </StackPanel>
+                                    <!-- Name -->
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                        <!-- Instructions -->
-                        <TextBlock Classes="neutral fs4"
-                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Instructions'}" />
+                                        <TextBlock Classes="neutral fs4"
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Name'}" />
 
-                        <ItemsControl ItemsSource="{Binding SelectedSteps}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
+                                            </Grid.ColumnDefinitions>
 
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+                                            <TextBox Grid.Column="0" Text="{Binding Name}"
+                                                     PlaceholderText="{core:LocalizationService Key='Wellness.Editor.Input.NamePlaceholder'}"
+                                                     MaxLength="64" />
+                                        </Grid>
 
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="vm:ExerciseStepSummary">
-                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
-                                        <TextBlock Grid.Column="0" Classes="subtle neutral fs5" MinWidth="20"
-                                                   Text="{Binding Number}" />
-                                        <TextBlock Grid.Column="1" Classes="neutral fs5" TextWrapping="Wrap"
-                                                   Text="{Binding Text}" />
-                                        <TextBlock Grid.Column="2" Classes="subtle neutral fs5"
-                                                   Text="{Binding DurationText}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
+                                    </StackPanel>
 
-                        </ItemsControl>
+                                    <!-- Description -->
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                    </StackPanel>
+                                        <TextBlock Classes="neutral fs4"
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Description'}" />
+
+                                        <TextBox Text="{Binding Description}" AcceptsReturn="True" TextWrapping="Wrap"
+                                                 VerticalContentAlignment="Top" MinHeight="80" MaxLength="256" />
+
+                                    </StackPanel>
+
+                                    <!-- Repeat, with the length of one cycle -->
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Lg}">
+                                            <ToggleSwitch IsChecked="{Binding IsRepeating}"
+                                                          Content="{core:LocalizationService Key='Wellness.Editor.Label.Repeat'}" />
+                                            <TextBlock Classes="neutral fs5" VerticalAlignment="Bottom" Margin="0,0,0,6"
+                                                       Text="{Binding OneCycleDurationText}" />
+                                        </StackPanel>
+
+                                        <TextBlock Classes="subtle neutral fs6" TextWrapping="Wrap"
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.RepeatHint'}" />
+
+                                    </StackPanel>
+
+                                    <!-- Instructions -->
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                        <TextBlock Classes="neutral fs4"
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Instructions'}" />
+
+                                        <!-- an ItemsControl, so there's no row selection competing with the inputs' focus -->
+                                        <ItemsControl ItemsSource="{Binding Instructions}">
+
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="vm:ExerciseInstructionViewModel">
+
+                                                    <Border Classes="elevated card">
+                                                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
+                                                              ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                              RowSpacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                                            <!-- Number, centered on the text box -->
+                                                            <Panel Grid.Row="0" Grid.Column="0" MinWidth="20"
+                                                                   Height="{StaticResource Metrics.Input.Height}" VerticalAlignment="Top">
+                                                                <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center"
+                                                                           Text="{Binding Number}" />
+                                                            </Panel>
+
+                                                            <!-- Text, with the phase's default text as hint -->
+                                                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Text}"
+                                                                     PlaceholderText="{Binding TextPlaceholder}" MaxLength="256" />
+
+                                                            <!-- Phase, duration and row actions -->
+                                                            <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                                                                       ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                                       LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                                                <ComboBox Width="150" IsVisible="{Binding SupportsPhases}"
+                                                                          ItemsSource="{Binding PhaseOptions}"
+                                                                          SelectedItem="{Binding SelectedPhase}">
+                                                                    <ComboBox.ItemTemplate>
+                                                                        <DataTemplate x:DataType="vm:PhaseOption">
+                                                                            <TextBlock Text="{Binding Label}" />
+                                                                        </DataTemplate>
+                                                                    </ComboBox.ItemTemplate>
+                                                                </ComboBox>
+
+                                                                <NumericUpDown Width="130" Minimum="1" Maximum="3600" Increment="1"
+                                                                               FormatString="0" ClipValueToMinMax="True"
+                                                                               Value="{Binding DurationSeconds}">
+                                                                    <NumericUpDown.InnerRightContent>
+                                                                        <TextBlock Classes="subtle neutral fs6" VerticalAlignment="Center"
+                                                                                   Margin="0,0,6,0"
+                                                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.SecondsUnit'}" />
+                                                                    </NumericUpDown.InnerRightContent>
+                                                                </NumericUpDown>
+
+                                                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                                                    <Button Classes="tertiary icon"
+                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionUpCommand}"
+                                                                            CommandParameter="{Binding}"
+                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveUp'}">
+                                                                        <PathIcon Data="{StaticResource PhosphorIcons.CaretUp}" />
+                                                                    </Button>
+
+                                                                    <Button Classes="tertiary icon"
+                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionDownCommand}"
+                                                                            CommandParameter="{Binding}"
+                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveDown'}">
+                                                                        <PathIcon Data="{StaticResource PhosphorIcons.CaretDown}" />
+                                                                    </Button>
+
+                                                                    <Button Classes="tertiary danger icon"
+                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).RemoveInstructionCommand}"
+                                                                            CommandParameter="{Binding}"
+                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RemoveInstruction'}">
+                                                                        <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
+                                                                    </Button>
+
+                                                                </StackPanel>
+
+                                                            </WrapPanel>
+
+                                                        </Grid>
+                                                    </Border>
+
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                        </ItemsControl>
+
+                                        <!-- Error of the whole list: none, or one cycle too long -->
+                                        <TextBlock Classes="danger fs6" TextWrapping="Wrap"
+                                                   IsVisible="{Binding InstructionsError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                   Text="{Binding InstructionsError, Converter={StaticResource ValidationResultToLocalizedConverter}}" />
+
+                                        <Button Classes="secondary" HorizontalAlignment="Left"
+                                                Command="{Binding AddInstructionCommand}">
+                                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                                                <PathIcon Data="{StaticResource PhosphorIcons.Plus}"
+                                                          Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                                          Height="{StaticResource Metrics.Icon.Size.Xs}" />
+                                                <TextBlock VerticalAlignment="Center"
+                                                           Text="{core:LocalizationService Key='Wellness.Editor.Button.AddInstruction'}" />
+                                            </StackPanel>
+                                        </Button>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+
+                    </ContentControl>
 
                 </ScrollViewer>
 

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace easpace.Desktop.ValidationAttributes;
 
-internal class RequiredIfAttribute(string otherPropertyName, object desiredValue) : ValidationAttribute
+internal class RequiredIfAttribute(string otherPropertyName, object? desiredValue) : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
