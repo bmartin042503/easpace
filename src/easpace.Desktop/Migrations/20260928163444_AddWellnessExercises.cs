@@ -113,11 +113,92 @@ namespace easpace.Desktop.Migrations
                     "ExerciseName" = (SELECT e."Name" FROM "WellnessExercises" e WHERE e."Id" = "WellnessSessionEntries"."BreathingTechniqueId")
                 WHERE "BreathingTechniqueId" IS NOT NULL;
                 """);
+
+            // everything of the legacy technique model is copied, so it's removed
+            migrationBuilder.DropForeignKey(
+                name: "FK_WellnessSessionEntries_BreathingTechniques_BreathingTechniqueId",
+                table: "WellnessSessionEntries");
+
+            migrationBuilder.DropTable(
+                name: "BreathingPhases");
+
+            migrationBuilder.DropTable(
+                name: "BreathingTechniques");
+
+            migrationBuilder.DropIndex(
+                name: "IX_WellnessSessionEntries_BreathingTechniqueId",
+                table: "WellnessSessionEntries");
+
+            migrationBuilder.DropColumn(
+                name: "BreathingTechniqueId",
+                table: "WellnessSessionEntries");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            // the legacy technique model comes back empty, as its data can't be restored
+            migrationBuilder.AddColumn<Guid>(
+                name: "BreathingTechniqueId",
+                table: "WellnessSessionEntries",
+                type: "TEXT",
+                nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "BreathingTechniques",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Cycles = table.Column<int>(type: "INTEGER", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
+                    IsLocalized = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BreathingTechniques", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BreathingPhases",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    BreathingTechniqueId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    DurationSeconds = table.Column<int>(type: "INTEGER", nullable: false),
+                    Order = table.Column<int>(type: "INTEGER", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BreathingPhases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BreathingPhases_BreathingTechniques_BreathingTechniqueId",
+                        column: x => x.BreathingTechniqueId,
+                        principalTable: "BreathingTechniques",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WellnessSessionEntries_BreathingTechniqueId",
+                table: "WellnessSessionEntries",
+                column: "BreathingTechniqueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BreathingPhases_BreathingTechniqueId",
+                table: "BreathingPhases",
+                column: "BreathingTechniqueId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_WellnessSessionEntries_BreathingTechniques_BreathingTechniqueId",
+                table: "WellnessSessionEntries",
+                column: "BreathingTechniqueId",
+                principalTable: "BreathingTechniques",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.SetNull);
+
             migrationBuilder.DropForeignKey(
                 name: "FK_WellnessSessionEntries_WellnessExercises_ExerciseId",
                 table: "WellnessSessionEntries");

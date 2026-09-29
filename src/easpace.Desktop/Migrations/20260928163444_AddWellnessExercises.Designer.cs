@@ -129,61 +129,6 @@ namespace easpace.Desktop.Migrations
                     b.ToTable("MoodEntries");
                 });
 
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingPhase", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("BreathingTechniqueId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("DurationSeconds")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreathingTechniqueId");
-
-                    b.ToTable("BreathingPhases");
-                });
-
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Cycles")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsLocalized")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BreathingTechniques");
-                });
-
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.ExerciseInstruction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -259,9 +204,6 @@ namespace easpace.Desktop.Migrations
                     b.Property<TimeSpan>("ActualDuration")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("BreathingTechniqueId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid?>("ExerciseId")
                         .HasColumnType("TEXT");
 
@@ -279,8 +221,6 @@ namespace easpace.Desktop.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BreathingTechniqueId");
 
                     b.HasIndex("ExerciseId");
 
@@ -376,14 +316,6 @@ namespace easpace.Desktop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingPhase", b =>
-                {
-                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", null)
-                        .WithMany("Phases")
-                        .HasForeignKey("BreathingTechniqueId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.ExerciseInstruction", b =>
                 {
                     b.HasOne("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", null)
@@ -395,17 +327,10 @@ namespace easpace.Desktop.Migrations
 
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessSessionEntry", b =>
                 {
-                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", "BreathingTechnique")
-                        .WithMany()
-                        .HasForeignKey("BreathingTechniqueId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", "Exercise")
                         .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("BreathingTechnique");
 
                     b.Navigation("Exercise");
                 });
@@ -413,11 +338,6 @@ namespace easpace.Desktop.Migrations
             modelBuilder.Entity("easpace.Desktop.Features.Activities.Entities.Activity", b =>
                 {
                     b.Navigation("Entries");
-                });
-
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", b =>
-                {
-                    b.Navigation("Phases");
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", b =>

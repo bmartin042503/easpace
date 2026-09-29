@@ -30,8 +30,12 @@ Licensed under the MIT License. See LICENSE file for details.
             IsHitTestVisible="False"
             IsVisible="{Binding IsBlobBackgroundVisible}" />
 
-        <!-- Wellness content -->
-        <ContentControl Content="{Binding ContentViewModel}" />
+        <!-- Wellness content, cross-faded between start, session, ending and the exercise editor -->
+        <TransitioningContentControl Content="{Binding ContentViewModel}">
+            <TransitioningContentControl.PageTransition>
+                <CrossFade Duration="0:0:0.2" />
+            </TransitioningContentControl.PageTransition>
+        </TransitioningContentControl>
         
     </Grid>
 

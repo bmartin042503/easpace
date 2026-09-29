@@ -608,10 +608,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Ha szédülést, légszomjat vagy kellemetlenséget érzel, állj meg és térj vissza a természetes légzésedhez.</value>
     </data>
     <data name="Wellness.Question.SaveSession" xml:space="preserve">
-        <value>Szeretnéd elmenteni ezt a gyakorlatot?</value>
+        <value>Szeretnéd elmenteni ezt az alkalmat?</value>
     </data>
     <data name="Wellness.Text.SessionSaved" xml:space="preserve">
-        <value>Gyakorlat elmentve</value>
+        <value>Alkalom elmentve</value>
     </data>
     <data name="Wellness.Session.OneCycle" xml:space="preserve">
         <value>1 ciklus</value>
@@ -620,7 +620,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>{0} ciklus</value>
     </data>
     <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>Nincsenek gyakorlatok</value>
+        <value>Nincsenek alkalmak</value>
     </data>
     <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
         <value>Finoman irányítsd a figyelmed a légzésedre.</value>
@@ -644,16 +644,16 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Nem sikerült betölteni a wellness adatokat. Kérlek, próbáld újra később.</value>
     </data>
     <data name="Wellness.Error.SaveFailed" xml:space="preserve">
-        <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
+        <value>Nem sikerült elmenteni az alkalmat. Kérlek, próbáld újra.</value>
     </data>
     <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
-        <value>Nem sikerült törölni ezt a gyakorlatot. Kérlek, próbáld újra.</value>
+        <value>Nem sikerült törölni ezt az alkalmat. Kérlek, próbáld újra.</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
-        <value>Törlöd a gyakorlatot?</value>
+        <value>Törlöd az alkalmat?</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
+        <value>Biztosan törölni szeretnéd ezt az alkalmat? A művelet nem vonható vissza.</value>
     </data>
     <data name="Wellness.Exercise.Empty.Message" xml:space="preserve">
         <value>Nincsenek elérhető gyakorlatok.</value>
@@ -677,7 +677,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Leírás</value>
     </data>
     <data name="Wellness.Editor.Label.RepeatHint" xml:space="preserve">
-        <value>Bekapcsolva minden alkalom előtt kiválaszthatod, hány ciklust végzel. Kikapcsolva az utasítások egyszer futnak le.</value>
+        <value>Bekapcsolva minden alkalom előtt kiválaszthatod, hány ciklust végzel. Kikapcsolva az utasítások egyszer, ismétlés nélkül követik egymást.</value>
     </data>
     <data name="Wellness.Editor.Label.SecondsUnit" xml:space="preserve">
         <value>mp</value>
@@ -692,10 +692,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Utasítás hozzáadása</value>
     </data>
     <data name="Wellness.Editor.Button.MoveUp" xml:space="preserve">
-        <value>Feljebb mozgatás</value>
+        <value>Mozgatás feljebb</value>
     </data>
     <data name="Wellness.Editor.Button.MoveDown" xml:space="preserve">
-        <value>Lejjebb mozgatás</value>
+        <value>Mozgatás lejjebb</value>
     </data>
     <data name="Wellness.Editor.Button.RemoveInstruction" xml:space="preserve">
         <value>Utasítás törlése</value>
@@ -728,13 +728,13 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Törlöd a gyakorlatot?</value>
     </data>
     <data name="Wellness.Editor.DeleteDialog.Message" xml:space="preserve">
-        <value>A(z) „{0}” gyakorlat törlődik. A vele végzett korábbi alkalmaid megmaradnak az előzményekben.</value>
+        <value>Ez a gyakorlat törlődik: „{0}”. A vele végzett korábbi alkalmaid megmaradnak az előzményekben.</value>
     </data>
     <data name="Wellness.Editor.Toast.DefaultsRestored" xml:space="preserve">
-        <value>Visszaállított alapértelmezett gyakorlatok: {0}</value>
+        <value>{0} alapértelmezett gyakorlat visszaállítva.</value>
     </data>
     <data name="Wellness.Editor.Toast.NothingToRestore" xml:space="preserve">
-        <value>Minden alapértelmezett gyakorlat elérhető.</value>
+        <value>Már minden alapértelmezett gyakorlat elérhető.</value>
     </data>
     <data name="Wellness.Editor.Error.DeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni a gyakorlatot. Kérlek, próbáld újra.</value>
@@ -749,7 +749,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Lejátszás</value>
     </data>
     <data name="Wellness.Preview.Pause" xml:space="preserve">
-        <value>Szünet</value>
+        <value>Szüneteltetés</value>
     </data>
     <data name="Wellness.Preview.StepForward" xml:space="preserve">
         <value>Következő lépés</value>
