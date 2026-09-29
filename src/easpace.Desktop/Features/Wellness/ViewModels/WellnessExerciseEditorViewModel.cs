@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
@@ -25,8 +28,12 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 {
     private readonly IWellnessExerciseService _wellnessExerciseService;
     private readonly IDialogService _dialogService;
+    private readonly IToastMessageService _toastMessageService;
     private readonly ILogger<WellnessExerciseEditorViewModel> _logger;
     private readonly Guid? _initialExerciseId;
+
+    // the exercise to return to when a new, unsaved exercise is discarded
+    private WellnessExerciseViewModel? _exerciseBeforeDraft;
 
     // cancels work that is still running when the editor gets closed
     private readonly CancellationTokenSource _closeTokenSource = new();
@@ -35,17 +42,25 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
+    [NotifyCanExecuteChangedFor(nameof(CreateNewExerciseCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RestoreDefaultsCommand))]
     private bool _isInitialized;
 
-    [ObservableProperty] private WellnessExerciseViewModel? _selectedExercise;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(DeleteExerciseCommand))]
+    private WellnessExerciseViewModel? _selectedExercise;
 
     /// <summary>
-    /// Gets the form of the selected exercise, or <c>null</c> when nothing is selected.
+    /// Gets the form of the selected exercise or of a new exercise, or <c>null</c> when there is neither.
     /// </summary>
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
     [NotifyPropertyChangedFor(nameof(CanChangeSelection))]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     [NotifyCanExecuteChangedFor(nameof(DiscardCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CreateNewExerciseCommand))]
+    [NotifyCanExecuteChangedFor(nameof(DeleteExerciseCommand))]
+    [NotifyCanExecuteChangedFor(nameof(RestoreDefaultsCommand))]
     private ExerciseFormViewModel? _form;
 
     /// <summary>
@@ -54,12 +69,15 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     public AvaloniaList<WellnessExerciseViewModel> Exercises { get; } = [];
 
     public bool HasExercises => Exercises.Count > 0;
-    public bool ShowNoExercises => IsInitialized && !HasExercises;
+    public bool ShowNoExercises => IsInitialized && !HasExercises && Form is null;
 
     /// <summary>
-    /// Gets whether another exercise can be selected, which unsaved changes prevent.
+    /// Gets whether another exercise can be selected, which unsaved changes and a new exercise prevent.
     /// </summary>
-    public bool CanChangeSelection => HasExercises && Form is not { IsDirty: true };
+    public bool CanChangeSelection => HasExercises && !IsFormLocked;
+
+    // unsaved changes and a new exercise keep the user on the form until it's saved or discarded
+    private bool IsFormLocked => Form is { IsDirty: true } or { IsCreatingNew: true };
 
     /// <summary>
     /// Occurs when the user leaves the editor.
@@ -73,11 +91,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     public WellnessExerciseEditorViewModel(
         IWellnessExerciseService wellnessExerciseService,
         IDialogService dialogService,
+        IToastMessageService toastMessageService,
         ILogger<WellnessExerciseEditorViewModel> logger,
         Guid? selectedExerciseId)
     {
         _wellnessExerciseService = wellnessExerciseService;
         _dialogService = dialogService;
+        _toastMessageService = toastMessageService;
         _logger = logger;
         _initialExerciseId = selectedExerciseId;
 
@@ -129,15 +149,38 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Saves the form and reloads the exercises, as a new name can change their order.
+    /// Starts a new exercise with the type of the selected one, or breathing when nothing is selected.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanCreateNewExercise))]
+    private void CreateNewExercise()
+    {
+        var type = SelectedExercise?.SessionType ?? WellnessSessionType.Breathing;
+
+        // the selector shows no exercise while the new one is edited
+        _exerciseBeforeDraft = SelectedExercise;
+        SelectedExercise = null;
+        Form = new ExerciseFormViewModel(type);
+    }
+
+    /// <summary>
+    /// Saves the form. A new exercise is added to the list and selected; an existing one is saved and the exercises are
+    /// reloaded, as a new name can change their order.
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task Save()
     {
-        if (Form is not { } form || SelectedExercise is not { } exercise) return;
+        if (Form is not { } form) return;
 
         form.Validate();
         if (!form.IsValid) return;
+
+        if (form.IsCreatingNew)
+        {
+            await CreateExerciseAsync(form);
+            return;
+        }
+
+        if (SelectedExercise is not { } exercise) return;
 
         try
         {
@@ -171,17 +214,118 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Drops the unsaved changes by loading the stored exercise into a new form.
+    /// Drops the unsaved changes by loading the stored exercise into a new form. A new exercise is dropped entirely,
+    /// and the exercise selected before it is shown again.
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanDiscard))]
     private void Discard()
     {
+        if (Form is { IsCreatingNew: true })
+        {
+            SelectedExercise = _exerciseBeforeDraft;
+            _exerciseBeforeDraft = null;
+
+            // without a previous exercise, the selection doesn't change and the form has to be cleared here
+            if (SelectedExercise is null) Form = null;
+            return;
+        }
+
         Form = SelectedExercise is { } exercise ? new ExerciseFormViewModel(exercise.Exercise) : null;
+    }
+
+    /// <summary>
+    /// Deletes the selected exercise once the user confirms, and selects the one that takes its place in the list.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanDeleteExercise))]
+    private async Task DeleteExercise()
+    {
+        if (SelectedExercise is not { } exercise || !await ConfirmDeleteAsync(exercise)) return;
+
+        try
+        {
+            await _wellnessExerciseService.DeleteExerciseAsync(exercise.Id, _closeTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to delete the wellness exercise with ID {Id}", exercise.Id);
+            await ShowErrorAsync("Wellness.Editor.Error.DeleteFailed");
+            return;
+        }
+
+        var index = Exercises.IndexOf(exercise);
+        Exercises.Remove(exercise);
+
+        // the next exercise moves up into the place of the deleted one; after the last one, the one before it is taken
+        SelectedExercise = Exercises.Count == 0 ? null : Exercises[Math.Clamp(index, 0, Exercises.Count - 1)];
+    }
+
+    /// <summary>
+    /// Adds the missing built-in exercises and selects the first of them. The user is told how many were restored.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanRestoreDefaults))]
+    private async Task RestoreDefaults()
+    {
+        int restoredCount;
+
+        try
+        {
+            restoredCount = await _wellnessExerciseService.RestoreDefaultExercisesAsync(_closeTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to restore the default wellness exercises");
+            await ShowErrorAsync("Wellness.Editor.Error.RestoreFailed");
+            return;
+        }
+
+        if (restoredCount == 0)
+        {
+            _toastMessageService.ShowToastMessage(
+                LocalizationService.GetString("Wellness.Editor.Toast.NothingToRestore"), ToastMessageType.Info);
+            return;
+        }
+
+        _toastMessageService.ShowToastMessage(
+            string.Format(LocalizationService.GetString("Wellness.Editor.Toast.DefaultsRestored"), restoredCount),
+            ToastMessageType.Success);
+
+        var knownIds = Exercises.Select(e => e.Id).ToHashSet();
+
+        try
+        {
+            await LoadExercisesAsync(SelectedExercise?.Id);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to reload the wellness exercises after restoring the defaults");
+            await ShowErrorAsync("Wellness.Error.LoadFailed");
+            return;
+        }
+
+        SelectedExercise = Exercises.FirstOrDefault(e => !knownIds.Contains(e.Id)) ?? SelectedExercise;
     }
 
     private bool CanSave() => Form is { IsDirty: true, IsValid: true };
 
-    private bool CanDiscard() => Form is { IsDirty: true };
+    private bool CanDiscard() => Form is { IsDirty: true } or { IsCreatingNew: true };
+
+    private bool CanCreateNewExercise() => IsInitialized && !IsFormLocked;
+
+    private bool CanDeleteExercise() => SelectedExercise is not null && !IsFormLocked;
+
+    private bool CanRestoreDefaults() => IsInitialized && !IsFormLocked;
 
     /// <summary>
     /// Stops the work that is still running. Called once the editor is no longer shown.
@@ -206,6 +350,42 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         OnPropertyChanged(nameof(CanChangeSelection));
         SaveCommand.NotifyCanExecuteChanged();
         DiscardCommand.NotifyCanExecuteChanged();
+        CreateNewExerciseCommand.NotifyCanExecuteChanged();
+        DeleteExerciseCommand.NotifyCanExecuteChanged();
+        RestoreDefaultsCommand.NotifyCanExecuteChanged();
+    }
+
+    private async Task CreateExerciseAsync(ExerciseFormViewModel form)
+    {
+        WellnessExercise created;
+
+        try
+        {
+            created = await _wellnessExerciseService.CreateExerciseAsync(form.ToRequest(), _closeTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to create a new {Type} wellness exercise", form.Type);
+            await ShowErrorAsync("Wellness.Editor.Error.SaveFailed");
+            return;
+        }
+
+        var exercise = new WellnessExerciseViewModel(created);
+
+        // keeps the order of the list: by type, then by name like the service sorts them
+        var index = Exercises.TakeWhile(e => e.SessionType < exercise.SessionType
+            || (e.SessionType == exercise.SessionType
+                && string.Compare(e.Name, exercise.Name, StringComparison.CurrentCultureIgnoreCase) <= 0)).Count();
+
+        Exercises.Insert(index, exercise);
+        _exerciseBeforeDraft = null;
+
+        // selecting the new exercise replaces the draft with a clean form of the stored exercise
+        SelectedExercise = exercise;
     }
 
     private async Task LoadExercisesAsync(Guid? selectedExerciseId)
@@ -226,6 +406,21 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             Message = LocalizationService.GetString("Wellness.Editor.DiscardDialog.Message"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Wellness.Editor.Button.Discard"),
+            IsDestructive = true
+        };
+
+        await _dialogService.ShowDialogAsync(confirmation);
+        return confirmation.Confirmed;
+    }
+
+    private async Task<bool> ConfirmDeleteAsync(WellnessExerciseViewModel exercise)
+    {
+        var confirmation = new ConfirmDialogViewModel
+        {
+            Title = LocalizationService.GetString("Wellness.Editor.DeleteDialog.Title"),
+            Message = string.Format(LocalizationService.GetString("Wellness.Editor.DeleteDialog.Message"), exercise.Name),
+            CancelText = LocalizationService.GetString("Common.Button.Cancel"),
+            ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
             IsDestructive = true
         };
 

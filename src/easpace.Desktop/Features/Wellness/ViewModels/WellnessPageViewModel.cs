@@ -25,6 +25,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
     private readonly IWellnessExerciseService _wellnessExerciseService;
     private readonly IDialogService _dialogService;
+    private readonly IToastMessageService _toastMessageService;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
     private readonly ILogger<WellnessExerciseEditorViewModel> _exerciseEditorLogger;
@@ -54,6 +55,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWellnessSessionEntryService wellnessSessionEntryService,
         IWellnessExerciseService wellnessExerciseService,
         IDialogService dialogService,
+        IToastMessageService toastMessageService,
         ILogger<WellnessStartViewModel> startLogger,
         ILogger<WellnessEndingViewModel> endingLogger,
         ILogger<WellnessExerciseEditorViewModel> exerciseEditorLogger)
@@ -65,6 +67,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         _wellnessSessionEntryService = wellnessSessionEntryService;
         _wellnessExerciseService = wellnessExerciseService;
         _dialogService = dialogService;
+        _toastMessageService = toastMessageService;
 
         _startLogger = startLogger;
         _endingLogger = endingLogger;
@@ -232,7 +235,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         IsBlobBackgroundVisible = false;
 
         _exerciseEditorViewModel = new WellnessExerciseEditorViewModel(
-            _wellnessExerciseService, _dialogService, _exerciseEditorLogger, selectedExerciseId);
+            _wellnessExerciseService, _dialogService, _toastMessageService, _exerciseEditorLogger, selectedExerciseId);
         _exerciseEditorViewModel.Closed += OnExerciseEditorClosed;
 
         ContentViewModel = _exerciseEditorViewModel;

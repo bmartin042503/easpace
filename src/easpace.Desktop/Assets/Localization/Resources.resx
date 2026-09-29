@@ -712,6 +712,36 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.Error.SaveFailed" xml:space="preserve">
         <value>Failed to save the exercise. Please try again.</value>
     </data>
+    <data name="Wellness.Editor.Label.Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Wellness.Editor.Button.New" xml:space="preserve">
+        <value>New exercise</value>
+    </data>
+    <data name="Wellness.Editor.Button.Delete" xml:space="preserve">
+        <value>Delete exercise</value>
+    </data>
+    <data name="Wellness.Editor.Button.RestoreDefaults" xml:space="preserve">
+        <value>Restore defaults</value>
+    </data>
+    <data name="Wellness.Editor.DeleteDialog.Title" xml:space="preserve">
+        <value>Delete exercise?</value>
+    </data>
+    <data name="Wellness.Editor.DeleteDialog.Message" xml:space="preserve">
+        <value>“{0}” will be deleted. Your past sessions with this exercise stay in your history.</value>
+    </data>
+    <data name="Wellness.Editor.Toast.DefaultsRestored" xml:space="preserve">
+        <value>Default exercises restored: {0}</value>
+    </data>
+    <data name="Wellness.Editor.Toast.NothingToRestore" xml:space="preserve">
+        <value>All default exercises are already available.</value>
+    </data>
+    <data name="Wellness.Editor.Error.DeleteFailed" xml:space="preserve">
+        <value>Failed to delete the exercise. Please try again.</value>
+    </data>
+    <data name="Wellness.Editor.Error.RestoreFailed" xml:space="preserve">
+        <value>Failed to restore the default exercises. Please try again.</value>
+    </data>
     <data name="Wellness.Phase.None" xml:space="preserve">
         <value>No phase</value>
     </data>

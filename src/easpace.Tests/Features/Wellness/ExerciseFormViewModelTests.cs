@@ -333,4 +333,90 @@ public class ExerciseFormViewModelTests
 
         raised.Should().Be(4);
     }
+
+    [Theory]
+    [InlineData(nameof(WellnessSessionType.Breathing))]
+    [InlineData(nameof(WellnessSessionType.Meditation))]
+    public void NewForm_StartsACleanRepeatingDraftWithOneInstruction(string typeName)
+    {
+        var type = Enum.Parse<WellnessSessionType>(typeName);
+        var (expectedDuration, expectedPhase) = type == WellnessSessionType.Breathing
+            ? (4, BreathingPhaseType.Inhale)
+            : (60, (BreathingPhaseType?)null);
+
+        var form = new ExerciseFormViewModel(type);
+
+        form.Id.Should().BeNull();
+        form.IsCreatingNew.Should().BeTrue();
+        form.Type.Should().Be(type);
+        form.Name.Should().BeEmpty();
+        form.Description.Should().BeEmpty();
+        form.IsRepeating.Should().BeTrue();
+        form.Instructions.Select(i => (i.Number, i.Text, i.DurationSeconds, i.Phase)).Should().Equal(
+            (1, "", expectedDuration, expectedPhase));
+        form.IsDirty.Should().BeFalse();
+        form.IsValid.Should().BeFalse();
+    }
+
+    [Fact]
+    public void Type_OfANewExercise_SwitchingToMeditationDropsThePhases()
+    {
+        var form = new ExerciseFormViewModel(WellnessSessionType.Breathing);
+        form.AddInstructionCommand.Execute(null);
+        form.Instructions[1].Text = "Hold";
+
+        form.Type = WellnessSessionType.Meditation;
+
+        form.Instructions.Select(i => (i.Number, i.Text, i.DurationSeconds, i.Phase, i.SupportsPhases)).Should().Equal(
+            (1, "", 4, (BreathingPhaseType?)null, false),
+            (2, "Hold", 4, (BreathingPhaseType?)null, false));
+        form.IsDirty.Should().BeTrue();
+
+        // meditation instructions need their text now
+        form.Instructions[0].HasErrors.Should().BeTrue();
+
+        form.Type = WellnessSessionType.Breathing;
+
+        form.Instructions.Should().AllSatisfy(i =>
+        {
+            i.SupportsPhases.Should().BeTrue();
+            i.Phase.Should().BeNull();
+        });
+    }
+
+    [Fact]
+    public void Type_OfAnExistingExercise_CannotChange()
+    {
+        var form = new ExerciseFormViewModel(Breathing());
+
+        form.Type = WellnessSessionType.Meditation;
+
+        form.Type.Should().Be(WellnessSessionType.Breathing);
+        form.Instructions.Select(i => i.Phase).Should().Equal(
+            BreathingPhaseType.Inhale, BreathingPhaseType.HoldIn, BreathingPhaseType.Exhale);
+        form.IsDirty.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(nameof(WellnessSessionType.Breathing))]
+    [InlineData(nameof(WellnessSessionType.Meditation))]
+    public void ToRequest_OfANewExercise_CreatesTheChosenTypeWithoutId(string typeName)
+    {
+        var type = Enum.Parse<WellnessSessionType>(typeName);
+        var form = new ExerciseFormViewModel(WellnessSessionType.Breathing)
+        {
+            Type = type,
+            Name = "Evening",
+            Description = "Wind down"
+        };
+        form.Instructions[0].Text = "Settle";
+        form.Instructions[0].DurationSeconds = 30;
+
+        var request = form.ToRequest();
+
+        var expectedPhase = type == WellnessSessionType.Breathing ? BreathingPhaseType.Inhale : (BreathingPhaseType?)null;
+        request.Should().BeEquivalentTo(new UpsertWellnessExerciseRequest(null, type, "Evening", "Wind down", true,
+            [new UpsertExerciseInstructionRequest("Settle", 30, expectedPhase)]), options => options.WithStrictOrdering());
+        form.IsValid.Should().BeTrue();
+    }
 }

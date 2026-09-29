@@ -67,24 +67,44 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 </StackPanel>
 
-                <!-- Exercise selector, locked while there are unsaved changes -->
-                <ComboBox Width="260" VerticalAlignment="Center"
-                          IsEnabled="{Binding CanChangeSelection}"
-                          ItemsSource="{Binding Exercises}"
-                          SelectedItem="{Binding SelectedExercise}">
+                <!-- Exercise selector and its actions, locked while there are unsaved changes or a new exercise -->
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                            VerticalAlignment="Center">
 
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-                                <ContentControl Content="{Binding SessionType}"
-                                                ContentTemplate="{StaticResource SessionTypeIconSelector}"
-                                                VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+                    <ComboBox Width="260" VerticalAlignment="Center"
+                              IsEnabled="{Binding CanChangeSelection}"
+                              ItemsSource="{Binding Exercises}"
+                              SelectedItem="{Binding SelectedExercise}">
 
-                </ComboBox>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
+                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                                    <ContentControl Content="{Binding SessionType}"
+                                                    ContentTemplate="{StaticResource SessionTypeIconSelector}"
+                                                    VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+
+                    </ComboBox>
+
+                    <Button Classes="secondary icon" Command="{Binding CreateNewExerciseCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.New'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.Plus}" />
+                    </Button>
+
+                    <Button Classes="secondary icon" Command="{Binding DeleteExerciseCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.Delete'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.Trash}" />
+                    </Button>
+
+                    <Button Classes="secondary icon" Command="{Binding RestoreDefaultsCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RestoreDefaults'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}" />
+                    </Button>
+
+                </StackPanel>
 
             </WrapPanel>
 
@@ -106,7 +126,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         </Grid>
 
-        <!-- Form of the selected exercise -->
+        <!-- Form of the selected or the new exercise -->
         <Border Grid.Row="1" Classes="card" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
             <Grid>
@@ -121,6 +141,33 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <!-- the right margin keeps the scroll bar off the instruction cards -->
                                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
                                             Margin="0,0,12,0">
+
+                                    <!-- Type, which can only be chosen until a new exercise is saved -->
+                                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                        <TextBlock Classes="neutral fs4"
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Type'}" />
+
+                                        <ListBox Classes="segmented" HorizontalAlignment="Left"
+                                                 IsEnabled="{Binding IsCreatingNew}"
+                                                 ItemsSource="{Binding SessionTypes}"
+                                                 SelectedItem="{Binding Type}">
+
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+
+                                        </ListBox>
+
+                                    </StackPanel>
 
                                     <!-- Name -->
                                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
@@ -287,11 +334,27 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 </ScrollViewer>
 
-                <!-- 'No exercises available' text -->
-                <TextBlock IsVisible="{Binding ShowNoExercises}"
-                           Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
-                           Classes="strong danger fs5" TextAlignment="Center"
-                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <!-- 'No exercises available' text, with the way to get the built-in exercises back -->
+                <StackPanel IsVisible="{Binding ShowNoExercises}" Orientation="Vertical"
+                            Spacing="{StaticResource Metrics.Spacing.Sm}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <TextBlock Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
+                               Classes="strong danger fs5" TextAlignment="Center"
+                               HorizontalAlignment="Center" />
+
+                    <Button Classes="primary" HorizontalAlignment="Center"
+                            Command="{Binding RestoreDefaultsCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                            <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}"
+                                      Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                      Height="{StaticResource Metrics.Icon.Size.Xs}" />
+                            <TextBlock VerticalAlignment="Center"
+                                       Text="{core:LocalizationService Key='Wellness.Editor.Button.RestoreDefaults'}" />
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
 
             </Grid>
 

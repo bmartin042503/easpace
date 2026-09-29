@@ -29,6 +29,8 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
     private const int BreathingInstructionSeconds = 4;
     private const int MeditationInstructionSeconds = 60;
 
+    private static readonly IReadOnlyList<WellnessSessionType> AllSessionTypes = Enum.GetValues<WellnessSessionType>();
+
     // the values the form was loaded with, to tell whether anything changed
     private readonly UpsertWellnessExerciseRequest _original;
 
@@ -52,9 +54,26 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
     /// </summary>
     [ObservableProperty] private string? _instructionsError;
 
+    private WellnessSessionType _type;
+
     public Guid? Id { get; }
-    public WellnessSessionType Type { get; }
     public bool IsCreatingNew => Id is null;
+
+    public IReadOnlyList<WellnessSessionType> SessionTypes => AllSessionTypes;
+
+    /// <summary>
+    /// Gets or sets the session type. It's fixed once the exercise exists, so changes are ignored unless it's new.
+    /// </summary>
+    public WellnessSessionType Type
+    {
+        get => _type;
+        set
+        {
+            if (!IsCreatingNew || !SetProperty(ref _type, value)) return;
+
+            OnTypeChanged();
+        }
+    }
 
     public AvaloniaList<ExerciseInstructionViewModel> Instructions { get; } = [];
 
@@ -80,17 +99,36 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="ExerciseFormViewModel"/> class with the values of an exercise.
     /// </summary>
-    public ExerciseFormViewModel(WellnessExercise exercise)
+    public ExerciseFormViewModel(WellnessExercise exercise) : this(exercise.Id, new UpsertWellnessExerciseRequest(
+        exercise.Id, exercise.SessionType, exercise.Name, exercise.Description, exercise.IsRepeating,
+        exercise.Instructions
+            .OrderBy(i => i.Order)
+            .Select(i => new UpsertExerciseInstructionRequest(i.Text, i.DurationSeconds,
+                exercise.SessionType == WellnessSessionType.Breathing ? i.Phase : null))
+            .ToList()))
     {
-        Id = exercise.Id;
-        Type = exercise.SessionType;
+    }
 
-        _original = new UpsertWellnessExerciseRequest(exercise.Id, exercise.SessionType, exercise.Name, exercise.Description,
-            exercise.IsRepeating,
-            exercise.Instructions
-                .OrderBy(i => i.Order)
-                .Select(i => new UpsertExerciseInstructionRequest(i.Text, i.DurationSeconds, SupportsPhases ? i.Phase : null))
-                .ToList());
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExerciseFormViewModel"/> class for a new, repeating exercise that
+    /// starts with one instruction.
+    /// </summary>
+    /// <param name="type">The initial session type, which can be changed until the exercise is saved.</param>
+    public ExerciseFormViewModel(WellnessSessionType type) : this(null, new UpsertWellnessExerciseRequest(
+        null, type, string.Empty, string.Empty, true,
+        [
+            type == WellnessSessionType.Breathing
+                ? new UpsertExerciseInstructionRequest(string.Empty, BreathingInstructionSeconds, BreathingPhaseType.Inhale)
+                : new UpsertExerciseInstructionRequest(string.Empty, MeditationInstructionSeconds, null)
+        ]))
+    {
+    }
+
+    private ExerciseFormViewModel(Guid? id, UpsertWellnessExerciseRequest original)
+    {
+        Id = id;
+        _type = original.Type;
+        _original = original;
 
         ErrorsChanged += (_, _) => OnPropertyChanged(nameof(IsValid));
         Instructions.CollectionChanged += OnInstructionsCollectionChanged;
@@ -195,6 +233,18 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
 
     partial void OnInstructionsErrorChanged(string? value) => OnPropertyChanged(nameof(IsValid));
 
+    // only breathing offers phases, so the instructions are recreated for the new type, and meditation drops the phases
+    private void OnTypeChanged()
+    {
+        for (var i = 0; i < Instructions.Count; i++)
+        {
+            var instruction = Instructions[i];
+            Instructions[i] = new ExerciseInstructionViewModel(instruction.Text, instruction.DurationSeconds, instruction.Phase, SupportsPhases);
+        }
+
+        UpdateIsDirty();
+    }
+
     private void OnInstructionsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         foreach (var instruction in e.OldItems?.OfType<ExerciseInstructionViewModel>() ?? [])
@@ -258,7 +308,8 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
     {
         var current = ToRequest();
 
-        IsDirty = current.Name != _original.Name
+        IsDirty = current.Type != _original.Type
+                  || current.Name != _original.Name
                   || current.Description != _original.Description
                   || current.IsRepeating != _original.IsRepeating
                   || !current.Instructions.SequenceEqual(_original.Instructions);

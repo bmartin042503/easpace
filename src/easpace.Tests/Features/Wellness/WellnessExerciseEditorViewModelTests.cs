@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -19,6 +20,7 @@ public class WellnessExerciseEditorViewModelTests
 {
     private readonly Mock<IWellnessExerciseService> _exerciseServiceMock = new();
     private readonly Mock<IDialogService> _dialogServiceMock = new();
+    private readonly Mock<IToastMessageService> _toastServiceMock = new();
 
     private readonly BreathingExercise _box = new()
     {
@@ -46,10 +48,16 @@ public class WellnessExerciseEditorViewModelTests
     private async Task<WellnessExerciseEditorViewModel> CreateInitializedEditorAsync(Guid? selectedExerciseId)
     {
         SetUpExercises(_box, _calm);
+        return await InitializeEditorAsync(selectedExerciseId);
+    }
 
+    // the exercises have to be set up before
+    private async Task<WellnessExerciseEditorViewModel> InitializeEditorAsync(Guid? selectedExerciseId)
+    {
         var editor = new WellnessExerciseEditorViewModel(
             _exerciseServiceMock.Object,
             _dialogServiceMock.Object,
+            _toastServiceMock.Object,
             new Mock<ILogger<WellnessExerciseEditorViewModel>>().Object,
             selectedExerciseId);
 
@@ -57,7 +65,14 @@ public class WellnessExerciseEditorViewModelTests
         return editor;
     }
 
-    private void AnswerDiscardDialog(bool confirm) =>
+    private static BreathingExercise Breathing(string name) => new()
+    {
+        Name = name,
+        IsRepeating = true,
+        Instructions = [new ExerciseInstruction { Order = 1, DurationSeconds = 4, Phase = BreathingPhaseType.Inhale }]
+    };
+
+    private void AnswerConfirmation(bool confirm) =>
         _dialogServiceMock
             .Setup(d => d.ShowDialogAsync(It.IsAny<ConfirmDialogViewModel>()))
             .Callback<ConfirmDialogViewModel>(dialog =>
@@ -186,7 +201,7 @@ public class WellnessExerciseEditorViewModelTests
     {
         var editor = await CreateInitializedEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
-        AnswerDiscardDialog(confirm: false);
+        AnswerConfirmation(confirm: false);
         var closed = false;
         editor.Closed += (_, _) => closed = true;
 
@@ -203,7 +218,7 @@ public class WellnessExerciseEditorViewModelTests
     {
         var editor = await CreateInitializedEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
-        AnswerDiscardDialog(confirm: true);
+        AnswerConfirmation(confirm: true);
         var closed = false;
         editor.Closed += (_, _) => closed = true;
 
@@ -212,5 +227,258 @@ public class WellnessExerciseEditorViewModelTests
         closed.Should().BeTrue();
         _exerciseServiceMock.Verify(s => s.UpdateExerciseAsync(
             It.IsAny<Guid>(), It.IsAny<UpsertWellnessExerciseRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task CreateNewExercise_StartsACleanDraftOfTheSelectedType()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+
+        editor.CreateNewExerciseCommand.Execute(null);
+
+        editor.SelectedExercise.Should().BeNull();
+        editor.Form!.IsCreatingNew.Should().BeTrue();
+        editor.Form.Id.Should().BeNull();
+        editor.Form.Type.Should().Be(WellnessSessionType.Meditation);
+        editor.Form.Name.Should().BeEmpty();
+        editor.Form.IsDirty.Should().BeFalse();
+        editor.ShowNoExercises.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task CreateNewExercise_WithoutExercises_StartsABreathingDraft()
+    {
+        SetUpExercises();
+        var editor = await InitializeEditorAsync(null);
+        editor.ShowNoExercises.Should().BeTrue();
+
+        editor.CreateNewExerciseCommand.Execute(null);
+
+        editor.Form!.Type.Should().Be(WellnessSessionType.Breathing);
+        editor.ShowNoExercises.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task CreateNewExercise_LocksTheHeaderUntilTheDraftIsDiscarded()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+
+        editor.CreateNewExerciseCommand.Execute(null);
+
+        editor.CanChangeSelection.Should().BeFalse();
+        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeFalse();
+        editor.SaveCommand.CanExecute(null).Should().BeFalse();
+        editor.DiscardCommand.CanExecute(null).Should().BeTrue();
+
+        editor.DiscardCommand.Execute(null);
+
+        editor.SelectedExercise!.Id.Should().Be(_calm.Id);
+        editor.Form!.Id.Should().Be(_calm.Id);
+        editor.CanChangeSelection.Should().BeTrue();
+        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeTrue();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeTrue();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task DiscardingADraft_WithoutExercises_ClearsTheForm()
+    {
+        SetUpExercises();
+        var editor = await InitializeEditorAsync(null);
+        editor.CreateNewExerciseCommand.Execute(null);
+
+        editor.DiscardCommand.Execute(null);
+
+        editor.Form.Should().BeNull();
+        editor.ShowNoExercises.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(nameof(WellnessSessionType.Breathing))]
+    [InlineData(nameof(WellnessSessionType.Meditation))]
+    public async Task Save_OfADraft_CreatesTheExerciseAndSelectsIt(string typeName)
+    {
+        var type = Enum.Parse<WellnessSessionType>(typeName);
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        editor.CreateNewExerciseCommand.Execute(null);
+        editor.Form!.Type = type;
+        editor.Form.Name = "Aaa";
+        editor.Form.Instructions[0].Text = "Relax";
+
+        UpsertWellnessExerciseRequest? createRequest = null;
+        _exerciseServiceMock
+            .Setup(s => s.CreateExerciseAsync(It.IsAny<UpsertWellnessExerciseRequest>(), It.IsAny<CancellationToken>()))
+            .Callback<UpsertWellnessExerciseRequest, CancellationToken>((request, _) => createRequest = request)
+            .ReturnsAsync((UpsertWellnessExerciseRequest request, CancellationToken _) =>
+            {
+                WellnessExercise created = request.Type == WellnessSessionType.Breathing ? new BreathingExercise() : new MeditationExercise();
+                created.Name = request.Name;
+                created.IsRepeating = request.IsRepeating;
+                created.Instructions = request.Instructions
+                    .Select((i, index) => new ExerciseInstruction { Order = index + 1, Text = i.Text, DurationSeconds = i.DurationSeconds, Phase = i.Phase })
+                    .ToList();
+                return created;
+            });
+
+        await editor.SaveCommand.ExecuteAsync(null);
+
+        createRequest.Should().NotBeNull();
+        createRequest!.Id.Should().BeNull();
+        createRequest.Type.Should().Be(type);
+        createRequest.Name.Should().Be("Aaa");
+        _exerciseServiceMock.Verify(s => s.UpdateExerciseAsync(
+            It.IsAny<Guid>(), It.IsAny<UpsertWellnessExerciseRequest>(), It.IsAny<CancellationToken>()), Times.Never);
+
+        // sorted by type, then by name, so "Aaa" is the first of its type
+        var expectedNames = type == WellnessSessionType.Breathing ? new[] { "Aaa", "Box", "Calm" } : ["Box", "Aaa", "Calm"];
+        editor.Exercises.Select(e => e.Name).Should().Equal(expectedNames);
+        editor.SelectedExercise!.Name.Should().Be("Aaa");
+        editor.Form!.IsCreatingNew.Should().BeFalse();
+        editor.Form.Id.Should().Be(editor.SelectedExercise.Id);
+        editor.Form.IsDirty.Should().BeFalse();
+        editor.CanChangeSelection.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task DeleteExercise_WhenConfirmed_DeletesItAndSelectsTheNextOne()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        AnswerConfirmation(confirm: true);
+
+        await editor.DeleteExerciseCommand.ExecuteAsync(null);
+
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ConfirmDialogViewModel>(dialog =>
+            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.Editor.DeleteDialog.Title"))), Times.Once);
+        _exerciseServiceMock.Verify(s => s.DeleteExerciseAsync(_box.Id, It.IsAny<CancellationToken>()), Times.Once);
+        editor.Exercises.Select(e => e.Id).Should().Equal(_calm.Id);
+        editor.SelectedExercise!.Id.Should().Be(_calm.Id);
+        editor.Form!.Id.Should().Be(_calm.Id);
+    }
+
+    [Fact]
+    public async Task DeleteExercise_OfTheLastOne_SelectsThePreviousOne()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+        AnswerConfirmation(confirm: true);
+
+        await editor.DeleteExerciseCommand.ExecuteAsync(null);
+
+        editor.SelectedExercise!.Id.Should().Be(_box.Id);
+    }
+
+    [Fact]
+    public async Task DeleteExercise_OfTheOnlyOne_ShowsTheEmptyState()
+    {
+        SetUpExercises(_box);
+        var editor = await InitializeEditorAsync(_box.Id);
+        AnswerConfirmation(confirm: true);
+
+        await editor.DeleteExerciseCommand.ExecuteAsync(null);
+
+        editor.Exercises.Should().BeEmpty();
+        editor.SelectedExercise.Should().BeNull();
+        editor.Form.Should().BeNull();
+        editor.ShowNoExercises.Should().BeTrue();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task DeleteExercise_WhenCancelled_KeepsTheExercise()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        AnswerConfirmation(confirm: false);
+
+        await editor.DeleteExerciseCommand.ExecuteAsync(null);
+
+        _exerciseServiceMock.Verify(s => s.DeleteExerciseAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
+        editor.Exercises.Should().HaveCount(2);
+        editor.SelectedExercise!.Id.Should().Be(_box.Id);
+    }
+
+    [Fact]
+    public async Task DeleteExercise_WhenTheServiceFails_ShowsAnErrorAndKeepsTheExercise()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        AnswerConfirmation(confirm: true);
+        _exerciseServiceMock
+            .Setup(s => s.DeleteExerciseAsync(_box.Id, It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("database is locked"));
+
+        await editor.DeleteExerciseCommand.ExecuteAsync(null);
+
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ErrorDialogViewModel>(dialog =>
+            dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.DeleteFailed"))), Times.Once);
+        editor.Exercises.Should().HaveCount(2);
+        editor.SelectedExercise!.Id.Should().Be(_box.Id);
+    }
+
+    [Fact]
+    public async Task UnsavedChanges_DisableDeleteAndRestore()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+
+        editor.Form!.Name = "Square";
+
+        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task RestoreDefaults_WithRestoredExercises_ShowsTheCountAndSelectsTheFirstRestoredOne()
+    {
+        var fourSix = Breathing("4-6");
+        var triangle = Breathing("Triangle");
+        _exerciseServiceMock
+            .SetupSequence(s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([_box, _calm])
+            .ReturnsAsync([fourSix, _box, triangle, _calm]);
+        _exerciseServiceMock
+            .Setup(s => s.RestoreDefaultExercisesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(2);
+        var editor = await InitializeEditorAsync(_calm.Id);
+
+        await editor.RestoreDefaultsCommand.ExecuteAsync(null);
+
+        _toastServiceMock.Verify(t => t.ShowToastMessage(
+            string.Format(LocalizationService.GetString("Wellness.Editor.Toast.DefaultsRestored"), 2),
+            ToastMessageType.Success), Times.Once);
+        editor.Exercises.Select(e => e.Name).Should().Equal("4-6", "Box", "Triangle", "Calm");
+        editor.SelectedExercise!.Id.Should().Be(fourSix.Id);
+        editor.Form!.Id.Should().Be(fourSix.Id);
+    }
+
+    [Fact]
+    public async Task RestoreDefaults_WithNothingToRestore_ShowsAnInfoAndKeepsTheSelection()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+        _exerciseServiceMock
+            .Setup(s => s.RestoreDefaultExercisesAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(0);
+
+        await editor.RestoreDefaultsCommand.ExecuteAsync(null);
+
+        _toastServiceMock.Verify(t => t.ShowToastMessage(
+            LocalizationService.GetString("Wellness.Editor.Toast.NothingToRestore"), ToastMessageType.Info), Times.Once);
+        _exerciseServiceMock.Verify(s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()), Times.Once);
+        editor.SelectedExercise!.Id.Should().Be(_calm.Id);
+    }
+
+    [Fact]
+    public async Task RestoreDefaults_WhenTheServiceFails_ShowsAnError()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+        _exerciseServiceMock
+            .Setup(s => s.RestoreDefaultExercisesAsync(It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("database is locked"));
+
+        await editor.RestoreDefaultsCommand.ExecuteAsync(null);
+
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ErrorDialogViewModel>(dialog =>
+            dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.RestoreFailed"))), Times.Once);
+        _toastServiceMock.Verify(t => t.ShowToastMessage(It.IsAny<string>(), It.IsAny<ToastMessageType>()), Times.Never);
     }
 }
