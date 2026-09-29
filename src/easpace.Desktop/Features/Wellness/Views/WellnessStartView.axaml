@@ -222,21 +222,10 @@ Licensed under the MIT License. See LICENSE file for details.
                                                     Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
                                                     Classes="neutral fs5" />
 
-                                                <!-- Breathing session details -->
+                                                <!-- Session details: exercise, duration and cycles, whichever are known -->
                                                 <TextBlock Classes="subtle neutral fs6"
-                                                           IsVisible="{Binding IsTypeBreathing}"
-                                                           TextWrapping="Wrap">
-                                                    <Run Text="{Binding BreathingTechniqueName}" />
-                                                    <Run Text="•" />
-                                                    <Run Text="{Binding DurationText}" />
-                                                    <Run Text="•" />
-                                                    <Run Text="{Binding CyclesText}" />
-                                                </TextBlock>
-
-                                                <!-- Meditation session details -->
-                                                <TextBlock Classes="subtle neutral fs6"
-                                                           IsVisible="{Binding IsTypeMeditation}"
-                                                           Text="{Binding DurationText}" />
+                                                           Text="{Binding DetailsText}"
+                                                           TextWrapping="Wrap" />
 
                                                 <!-- Start date -->
                                                 <TextBlock Classes="subtle neutral fs6"

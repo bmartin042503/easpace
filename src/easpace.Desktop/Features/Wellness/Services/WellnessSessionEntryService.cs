@@ -59,9 +59,10 @@ internal class WellnessSessionEntryService(IDbContextFactory<AppDbContext> dbCon
             // don't use OrderByDescending on dbContext with the CreatedAt column
             // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
 
+            // the exercise is null once it's deleted, then the entry only has its ExerciseName snapshot
             var sessionEntries = await dbContext.WellnessSessionEntries
-                .Include(e => e.BreathingTechnique)
-                .ThenInclude(t => t!.Phases.OrderBy(p => p.Order))
+                .Include(e => e.Exercise)
+                .ThenInclude(e => e!.Instructions)
                 .AsNoTracking()
                 .ToListAsync();
 
