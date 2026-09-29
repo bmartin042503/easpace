@@ -113,23 +113,30 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 </StackPanel>
 
-                <!-- Duration (only repeating exercises have a slider) -->
-                <StackPanel Grid.Row="3" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
-                            VerticalAlignment="Center">
+                <!-- Cycles of a repeating exercise, or the fixed duration of one that runs once -->
+                <Grid Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
+                                IsVisible="{Binding ShowCycleSelector}">
+
+                        <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
+                                   Text="{core:LocalizationService Key='Wellness.Label.Cycles'}" />
+
+                        <NumericUpDown Minimum="1" Maximum="{Binding MaximumCycles}"
+                                       Value="{Binding SelectedCycles}"
+                                       Increment="1" FormatString="0" ClipValueToMinMax="True"
+                                       MinWidth="120" VerticalAlignment="Center" />
+
+                        <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
+                                   Text="{Binding DurationText}" />
+
+                    </StackPanel>
+
+                    <TextBlock Classes="neutral fs4" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsVisible="{Binding !ShowCycleSelector}"
                                Text="{Binding DurationText}" />
 
-                    <Slider Classes="filled"
-                            IsVisible="{Binding ShowDurationSlider}"
-                            Minimum="{Binding MinimumSeconds}"
-                            Maximum="{Binding MaximumSeconds}"
-                            Value="{Binding SelectedSeconds}"
-                            TickFrequency="{Binding StepSeconds}"
-                            IsSnapToTickEnabled="True"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxWidth="400" />
-
-                </StackPanel>
+                </Grid>
 
                 <!-- Begin session button -->
                 <Button Grid.Row="4" Classes="primary regular"

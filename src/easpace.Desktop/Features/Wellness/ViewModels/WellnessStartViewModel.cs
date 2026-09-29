@@ -29,14 +29,19 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _logger;
 
-    [ObservableProperty] 
-    [NotifyPropertyChangedFor(nameof(DurationText))]
-    private double _selectedSeconds = 300;
+    // sessions default to about five minutes and never run longer than an hour
+    private const int DefaultSessionSeconds = 5 * 60;
+    private const int MaximumSessionSeconds = 60 * 60;
 
-    [ObservableProperty] private double _stepSeconds = 60;
-    [ObservableProperty] private double _maximumSeconds = 30 * 60;
-    [ObservableProperty] private double _minimumSeconds = 60;
-    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DurationText))]
+    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    private int _selectedCycles = 1;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(DurationText))]
+    private int _maximumCycles = 1;
+
     public IEnumerable<WellnessSessionType> SessionTypes { get; } = Enum.GetValues<WellnessSessionType>();
     
     [ObservableProperty]
@@ -44,7 +49,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    [NotifyPropertyChangedFor(nameof(ShowDurationSlider))]
+    [NotifyPropertyChangedFor(nameof(ShowCycleSelector))]
     private WellnessExerciseViewModel? _selectedExercise;
 
     [ObservableProperty]
@@ -67,12 +72,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
     public bool ShowNoSessionEntries => IsInitialized && !HasSessionEntries;
 
     /// <summary>
-    /// Gets whether the length of the session can be chosen, which only repeating exercises allow.
+    /// Gets whether the number of cycles can be chosen, which only repeating exercises allow.
     /// </summary>
-    public bool ShowDurationSlider => SelectedExercise is { IsRepeating: true };
+    public bool ShowCycleSelector => SelectedExercise is { IsRepeating: true };
 
-    // a session can't run without at least one step
-    private bool CanStartSession() => SelectedExercise is { Steps.Count: > 0 };
+    // a session needs at least one step, and a repeating exercise at least one cycle
+    private bool CanStartSession() =>
+        SelectedExercise is { Steps.Count: > 0 } exercise && (!exercise.IsRepeating || SelectedCycles >= 1);
 
     #endregion
 
@@ -88,7 +94,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
     #region Properties
 
     /// <summary>
-    /// Gets the formatted duration text to be displayed on the UI based on current selections.
+    /// Gets the session length: approximate for the chosen cycles of a repeating exercise, fixed for one that runs once.
     /// </summary>
     public string DurationText
     {
@@ -96,21 +102,11 @@ internal partial class WellnessStartViewModel : ViewModelBase
         {
             if (SelectedExercise is not { CycleSeconds: > 0 } exercise) return string.Empty;
 
-            // exercises that don't repeat run once, so their length is fixed
-            if (!exercise.IsRepeating)
-            {
-                return $"{LocalizationService.GetString("Wellness.Label.Duration")}: " +
-                       FormatDuration(TimeSpan.FromSeconds(exercise.CycleSeconds));
-            }
+            var duration = FormatDuration(TimeSpan.FromSeconds(GetCycles(exercise) * exercise.CycleSeconds));
 
-            var cycles = GetSelectedCycles(exercise);
-
-            // get localized cycle text based on cycle count
-            var cyclesText = cycles == 1
-                ? LocalizationService.GetString("Wellness.Session.OneCycle")
-                : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
-
-            return $"{FormatDuration(TimeSpan.FromSeconds(cycles * exercise.CycleSeconds))} ({cyclesText})";
+            return exercise.IsRepeating
+                ? string.Format(LocalizationService.GetString("Wellness.Label.ApproxDuration"), duration)
+                : $"{LocalizationService.GetString("Wellness.Label.Duration")}: {duration}";
         }
     }
 
@@ -170,7 +166,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
             await LoadWellnessSessionEntries();
             await LoadExercises();
 
-            UpdateSlider();
+            UpdateCycleSelector();
 
             IsInitialized = true;
         }
@@ -243,10 +239,8 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanStartSession))]
     private void StartSession()
     {
-        if (SelectedExercise is not { Steps.Count: > 0 } exercise) return;
-
-        // exercises that don't repeat run exactly once
-        var cycles = exercise.IsRepeating ? GetSelectedCycles(exercise) : 1;
+        // the command can also be executed directly, so the guard applies here as well
+        if (!CanStartSession() || SelectedExercise is not { } exercise) return;
 
         // assemble the final configuration payload
         var sessionConfiguration = new WellnessSessionConfiguration(
@@ -254,7 +248,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
             ExerciseId: exercise.Id,
             ExerciseName: exercise.Name,
             Steps: exercise.Steps,
-            Cycles: cycles,
+            Cycles: GetCycles(exercise),
             IsRepeating: exercise.IsRepeating
         );
 
@@ -293,10 +287,10 @@ internal partial class WellnessStartViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the number of cycles that the slider selection amounts to, which is at least one.
+    /// Gets the number of cycles to run: the selection within its bounds for a repeating exercise, otherwise one.
     /// </summary>
-    private int GetSelectedCycles(WellnessExerciseViewModel exercise) =>
-        Math.Max(1, (int)Math.Round(SelectedSeconds / exercise.CycleSeconds));
+    private int GetCycles(WellnessExerciseViewModel exercise) =>
+        exercise.IsRepeating ? Math.Clamp(SelectedCycles, 1, MaximumCycles) : 1;
 
     // format as hh:mm:ss if an hour or more, otherwise mm:ss
     private static string FormatDuration(TimeSpan duration) =>
@@ -310,48 +304,21 @@ internal partial class WellnessStartViewModel : ViewModelBase
     /// <summary>
     /// Triggered automatically when the selected exercise changes.
     /// </summary>
-    partial void OnSelectedExerciseChanged(WellnessExerciseViewModel? value) => UpdateSlider();
+    partial void OnSelectedExerciseChanged(WellnessExerciseViewModel? value) => UpdateCycleSelector();
 
     /// <summary>
-    /// Recalculates slider limits, steps, and selected value to align with the selected exercise.
+    /// Applies the cycle bounds of the selected exercise and selects about five minutes of cycles.
     /// </summary>
-    private void UpdateSlider()
+    private void UpdateCycleSelector()
     {
-        // only repeating exercises have a slider, and it moves in whole cycles
-        if (SelectedExercise is not { IsRepeating: true, CycleSeconds: > 0 } exercise)
+        if (SelectedExercise is { IsRepeating: true, CycleSeconds: > 0 } exercise)
         {
-            OnPropertyChanged(nameof(DurationText));
-            return;
+            // the maximum goes first, otherwise the stepper would clip the new selection to the previous maximum;
+            // a single cycle is always allowed, even if it's longer than the cap
+            MaximumCycles = Math.Max(1, MaximumSessionSeconds / exercise.CycleSeconds);
+            SelectedCycles = Math.Clamp((int)Math.Round((double)DefaultSessionSeconds / exercise.CycleSeconds), 1, MaximumCycles);
         }
 
-        StepSeconds = exercise.CycleSeconds;
-
-        // calculate maximum cycles with a 10-minute limit for breathing and 30 minutes for meditation,
-        // but always allow at least one cycle
-        var maximumSessionSeconds = exercise.SessionType == WellnessSessionType.Breathing ? 10 * 60 : 30 * 60;
-        var maxCycles = Math.Max(1, Math.Floor(maximumSessionSeconds / StepSeconds));
-
-        // calculate minimum cycles required to hit at least one minute, without exceeding the maximum
-        var minCycles = Math.Min(maxCycles, Math.Ceiling(60.0 / StepSeconds));
-
-        MinimumSeconds = minCycles * StepSeconds;
-        MaximumSeconds = maxCycles * StepSeconds;
-
-        // round current selection to the nearest valid step interval
-        var targetCycles = Math.Round(SelectedSeconds / StepSeconds);
-        var newSelectedSeconds = targetCycles * StepSeconds;
-
-        // enforce slider bounds safely
-        if (newSelectedSeconds < MinimumSeconds)
-        {
-            newSelectedSeconds = MinimumSeconds;
-        }
-        else if (newSelectedSeconds > MaximumSeconds)
-        {
-            newSelectedSeconds = MaximumSeconds;
-        }
-
-        SelectedSeconds = newSelectedSeconds;
         OnPropertyChanged(nameof(DurationText));
     }
 

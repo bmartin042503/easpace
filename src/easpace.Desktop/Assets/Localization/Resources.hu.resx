@@ -553,6 +553,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Időtartam</value>
     </data>
+    <data name="Wellness.Label.ApproxDuration" xml:space="preserve">
+        <value>≈ {0}</value>
+    </data>
     <data name="Wellness.Label.Cycles" xml:space="preserve">
         <value>Ciklusok</value>
     </data>
