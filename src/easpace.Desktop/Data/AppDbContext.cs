@@ -24,8 +24,6 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
     public DbSet<MoodEntry> MoodEntries { get; set; }
     
     // Wellness
-    public DbSet<BreathingPhase> BreathingPhases { get; set; }
-    public DbSet<BreathingTechnique> BreathingTechniques { get; set; }
     public DbSet<WellnessSessionEntry> WellnessSessionEntries { get; set; }
     public DbSet<WellnessExercise> WellnessExercises { get; set; }
     public DbSet<ExerciseInstruction> ExerciseInstructions { get; set; }
@@ -82,26 +80,6 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
                 .HasMaxLength(512);
         });
         
-        modelBuilder.Entity<BreathingTechnique>(entity =>
-        {
-
-            entity.HasMany(t => t.Phases)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
-            
-            entity.Property(t => t.Name)
-                .HasMaxLength(64);
-            
-            entity.Property(t => t.Description)
-                .HasMaxLength(256);
-        });
-        
-        modelBuilder.Entity<WellnessSessionEntry>()
-            .HasOne(s => s.BreathingTechnique)
-            .WithMany()
-            .HasForeignKey(s => s.BreathingTechniqueId)
-            .OnDelete(DeleteBehavior.SetNull);
-
         modelBuilder.Entity<WellnessExercise>(entity =>
         {
             entity.HasMany(e => e.Instructions)

@@ -76,10 +76,6 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<MoodEntryService>();
             collection.AddSingleton<IMoodEntryService>(sp => sp.GetRequiredService<MoodEntryService>());
 
-            collection.AddSingleton<BreathingTechniqueService>();
-            collection.AddSingleton<IBreathingTechniqueService>(sp =>
-                sp.GetRequiredService<BreathingTechniqueService>());
-
             collection.AddSingleton<WellnessSessionEntryService>();
             collection.AddSingleton<IWellnessSessionEntryService>(sp =>
                 sp.GetRequiredService<WellnessSessionEntryService>());
