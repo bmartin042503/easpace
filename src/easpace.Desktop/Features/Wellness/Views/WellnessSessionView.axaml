@@ -10,6 +10,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
              xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Wellness.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessSessionView"
              x:DataType="vm:WellnessSessionViewModel"
@@ -24,27 +25,11 @@ Licensed under the MIT License. See LICENSE file for details.
                    behaviors:AnimatedTextBehavior.AnimatedText="{Binding InstructionText}"
                    TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-        <!-- Breathing elements (only while the current step has a breathing phase) -->
-        <Grid Grid.Row="1" IsVisible="{Binding ShowBreathingCircle}"
-              Width="192" Height="192" VerticalAlignment="Center" HorizontalAlignment="Center">
-
-            <!-- Inner ellipse -->
-            <Ellipse Width="96" Height="96"
-                     Fill="{DynamicResource Sem.Brand.Strong}"
-                     Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-            <!-- Outer animated ellipse -->
-            <Ellipse Width="{Binding BreathingCircleSize}"
-                     Height="{Binding BreathingCircleSize}"
-                     Fill="{DynamicResource Sem.Brand.Strong}"
-                     Opacity="0.4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-
-            <!-- Phase seconds -->
-            <TextBlock Classes="fs1" Foreground="{DynamicResource Sem.Surface.Brand}"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
-                       behaviors:AnimatedTextBehavior.AnimatedText="{Binding PhaseSecondsText}" />
-
-        </Grid>
+        <!-- Breathing circle (only while the current step has a breathing phase) -->
+        <controls:BreathingCircle Grid.Row="1" IsVisible="{Binding ShowBreathingCircle}"
+                                  CircleSize="{Binding BreathingCircleSize}"
+                                  Text="{Binding PhaseSecondsText}"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
 
         <!-- Buttons -->
         <Grid Grid.Row="2" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto"

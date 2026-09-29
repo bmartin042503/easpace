@@ -1,0 +1,36 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:easpace.Desktop.Features.Wellness.Controls"
+             xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
+             mc:Ignorable="d" d:DesignWidth="192" d:DesignHeight="192"
+             x:Class="easpace.Desktop.Features.Wellness.Controls.BreathingCircle">
+
+    <!-- sized for the largest circle, so the layout doesn't move while it breathes -->
+    <Grid Width="192" Height="192" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+        <!-- Inner ellipse -->
+        <Ellipse Width="96" Height="96"
+                 Fill="{DynamicResource Sem.Brand.Strong}"
+                 Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+        <!-- Outer animated ellipse -->
+        <Ellipse Width="{Binding $parent[controls:BreathingCircle].CircleSize}"
+                 Height="{Binding $parent[controls:BreathingCircle].CircleSize}"
+                 Fill="{DynamicResource Sem.Brand.Strong}"
+                 Opacity="0.4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+        <!-- Step seconds -->
+        <TextBlock Classes="fs1" Foreground="{DynamicResource Sem.Surface.Brand}"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
+                   behaviors:AnimatedTextBehavior.AnimatedText="{Binding $parent[controls:BreathingCircle].Text}" />
+
+    </Grid>
+
+</UserControl>
