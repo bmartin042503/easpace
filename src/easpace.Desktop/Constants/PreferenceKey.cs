@@ -16,5 +16,6 @@ internal static class PreferenceKey
     public const string WellnessFullScreen = "wellness-full-screen";
     public const string WellnessAnimatedBackground = "wellness-animated-background";
     public const string WellnessShowTimer = "wellness-show-timer";
+    public const string WellnessDefaultsSeeded = "wellness-defaults-seeded";
     public const string CheckForUpdates = "check-for-updates";
 }
