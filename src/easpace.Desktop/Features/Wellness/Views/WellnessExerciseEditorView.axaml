@@ -13,6 +13,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Wellness.Controls"
+             xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExerciseEditorView"
              x:DataType="vm:WellnessExerciseEditorViewModel"
@@ -131,6 +132,50 @@ Licensed under the MIT License. See LICENSE file for details.
         <!-- The instruction the preview plays -->
         <Style Selector="Border.elevated.card.previewing">
             <Setter Property="BorderBrush" Value="{DynamicResource Sem.Border.Brand}" />
+        </Style>
+
+        <!-- Reordering the instructions by drag and drop -->
+        <Style Selector="Border.drag-handle">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="SizeNorthSouth" />
+            <Setter Property="Padding" Value="2,0" />
+        </Style>
+
+        <Style Selector="Border.drag-handle PathIcon">
+            <Setter Property="Width" Value="{StaticResource Metrics.Icon.Size.Sm}" />
+            <Setter Property="Height" Value="{StaticResource Metrics.Icon.Size.Sm}" />
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Foreground.Muted}" />
+        </Style>
+
+        <Style Selector="Border.drag-handle:pointerover PathIcon">
+            <Setter Property="Foreground" Value="{DynamicResource Sem.Brand}" />
+        </Style>
+
+        <Style Selector="ContentPresenter.dragging">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+
+        <!-- the lines sit in the middle of the gap between two instructions, without taking any space -->
+        <Style Selector="Border.drop-line">
+            <Setter Property="IsVisible" Value="False" />
+            <Setter Property="Height" Value="2" />
+            <Setter Property="CornerRadius" Value="{StaticResource Metrics.Radius.Circular}" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+            <Setter Property="ZIndex" Value="1" />
+        </Style>
+
+        <Style Selector="Border.drop-line.before">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,-7,0,0" />
+        </Style>
+
+        <Style Selector="Border.drop-line.after">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Margin" Value="0,0,0,-7" />
+        </Style>
+
+        <Style Selector="ContentPresenter.drop-before Border.drop-line.before, ContentPresenter.drop-after Border.drop-line.after">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
 
     </UserControl.Styles>
@@ -316,7 +361,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                                    Text="{core:LocalizationService Key='Wellness.Editor.Label.Instructions'}" />
 
                                         <!-- an ItemsControl, so there's no row selection competing with the inputs' focus -->
-                                        <ItemsControl ItemsSource="{Binding Instructions}">
+                                        <ItemsControl ItemsSource="{Binding Instructions}"
+                                                      behaviors:ItemsReorderBehavior.MoveCommand="{Binding MoveInstructionCommand}">
 
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -327,76 +373,92 @@ Licensed under the MIT License. See LICENSE file for details.
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="vm:ExerciseInstructionViewModel">
 
-                                                    <Border Classes="elevated card" Classes.previewing="{Binding IsPreviewing}">
-                                                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
-                                                              ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
-                                                              RowSpacing="{StaticResource Metrics.Spacing.Xs}">
+                                                    <!-- the lines mark where a dragged instruction would be dropped -->
+                                                    <Panel>
 
-                                                            <!-- Number, centered on the text box -->
-                                                            <Panel Grid.Row="0" Grid.Column="0" MinWidth="20"
-                                                                   Height="{StaticResource Metrics.Input.Height}" VerticalAlignment="Top">
-                                                                <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center"
-                                                                           Text="{Binding Number}" />
-                                                            </Panel>
+                                                        <Border Classes="drop-line before" />
 
-                                                            <!-- Text, with the phase's default text as hint -->
-                                                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Text}"
-                                                                     PlaceholderText="{Binding TextPlaceholder}" MaxLength="256" />
+                                                        <Border Classes="elevated card" Classes.previewing="{Binding IsPreviewing}">
+                                                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto"
+                                                                  ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                                  RowSpacing="{StaticResource Metrics.Spacing.Xs}">
 
-                                                            <!-- Phase, duration and row actions -->
-                                                            <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
-                                                                       ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
-                                                                       LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+                                                                <!-- Drag handle and number, centered on the text box -->
+                                                                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal"
+                                                                            Spacing="{StaticResource Metrics.Spacing.Xxs}"
+                                                                            Height="{StaticResource Metrics.Input.Height}" VerticalAlignment="Top">
 
-                                                                <ComboBox Width="150" IsVisible="{Binding SupportsPhases}"
-                                                                          ItemsSource="{Binding PhaseOptions}"
-                                                                          SelectedItem="{Binding SelectedPhase}">
-                                                                    <ComboBox.ItemTemplate>
-                                                                        <DataTemplate x:DataType="vm:PhaseOption">
-                                                                            <TextBlock Text="{Binding Label}" />
-                                                                        </DataTemplate>
-                                                                    </ComboBox.ItemTemplate>
-                                                                </ComboBox>
+                                                                    <Border Classes="drag-handle" VerticalAlignment="Stretch">
+                                                                        <PathIcon Data="{StaticResource PhosphorIcons.DotsSixVertical}" />
+                                                                    </Border>
 
-                                                                <NumericUpDown Width="130" Minimum="1" Maximum="3600" Increment="1"
-                                                                               FormatString="0" ClipValueToMinMax="True"
-                                                                               Value="{Binding DurationSeconds}">
-                                                                    <NumericUpDown.InnerRightContent>
-                                                                        <TextBlock Classes="subtle neutral fs6" VerticalAlignment="Center"
-                                                                                   Margin="0,0,6,0"
-                                                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.SecondsUnit'}" />
-                                                                    </NumericUpDown.InnerRightContent>
-                                                                </NumericUpDown>
-
-                                                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-
-                                                                    <Button Classes="tertiary icon"
-                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionUpCommand}"
-                                                                            CommandParameter="{Binding}"
-                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveUp'}">
-                                                                        <PathIcon Data="{StaticResource PhosphorIcons.CaretUp}" />
-                                                                    </Button>
-
-                                                                    <Button Classes="tertiary icon"
-                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionDownCommand}"
-                                                                            CommandParameter="{Binding}"
-                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveDown'}">
-                                                                        <PathIcon Data="{StaticResource PhosphorIcons.CaretDown}" />
-                                                                    </Button>
-
-                                                                    <Button Classes="tertiary danger icon"
-                                                                            Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).RemoveInstructionCommand}"
-                                                                            CommandParameter="{Binding}"
-                                                                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RemoveInstruction'}">
-                                                                        <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
-                                                                    </Button>
+                                                                    <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center" MinWidth="20"
+                                                                               Text="{Binding Number}" />
 
                                                                 </StackPanel>
 
-                                                            </WrapPanel>
+                                                                <!-- Text, with the phase's default text as hint -->
+                                                                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Text}"
+                                                                         PlaceholderText="{Binding TextPlaceholder}" MaxLength="256" />
 
-                                                        </Grid>
-                                                    </Border>
+                                                                <!-- Phase, duration and row actions -->
+                                                                <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                                                                           ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
+                                                                           LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                                                    <ComboBox Width="150" IsVisible="{Binding SupportsPhases}"
+                                                                              ItemsSource="{Binding PhaseOptions}"
+                                                                              SelectedItem="{Binding SelectedPhase}">
+                                                                        <ComboBox.ItemTemplate>
+                                                                            <DataTemplate x:DataType="vm:PhaseOption">
+                                                                                <TextBlock Text="{Binding Label}" />
+                                                                            </DataTemplate>
+                                                                        </ComboBox.ItemTemplate>
+                                                                    </ComboBox>
+
+                                                                    <NumericUpDown Width="130" Minimum="1" Maximum="3600" Increment="1"
+                                                                                   FormatString="0" ClipValueToMinMax="True"
+                                                                                   Value="{Binding DurationSeconds}">
+                                                                        <NumericUpDown.InnerRightContent>
+                                                                            <TextBlock Classes="subtle neutral fs6" VerticalAlignment="Center"
+                                                                                       Margin="0,0,6,0"
+                                                                                       Text="{core:LocalizationService Key='Wellness.Editor.Label.SecondsUnit'}" />
+                                                                        </NumericUpDown.InnerRightContent>
+                                                                    </NumericUpDown>
+
+                                                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                                                        <Button Classes="tertiary icon"
+                                                                                Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionUpCommand}"
+                                                                                CommandParameter="{Binding}"
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveUp'}">
+                                                                            <PathIcon Data="{StaticResource PhosphorIcons.CaretUp}" />
+                                                                        </Button>
+
+                                                                        <Button Classes="tertiary icon"
+                                                                                Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionDownCommand}"
+                                                                                CommandParameter="{Binding}"
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveDown'}">
+                                                                            <PathIcon Data="{StaticResource PhosphorIcons.CaretDown}" />
+                                                                        </Button>
+
+                                                                        <Button Classes="tertiary danger icon"
+                                                                                Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).RemoveInstructionCommand}"
+                                                                                CommandParameter="{Binding}"
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RemoveInstruction'}">
+                                                                            <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
+                                                                        </Button>
+
+                                                                    </StackPanel>
+
+                                                                </WrapPanel>
+
+                                                            </Grid>
+                                                        </Border>
+
+                                                        <Border Classes="drop-line after" />
+
+                                                    </Panel>
 
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>

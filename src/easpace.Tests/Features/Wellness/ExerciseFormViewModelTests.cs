@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using easpace.Desktop.Behaviors;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -434,5 +435,57 @@ public class ExerciseFormViewModelTests
         form.HighlightStep(null);
 
         form.Instructions.Should().OnlyContain(i => !i.IsPreviewing);
+    }
+
+    [Theory]
+    [InlineData(0, 2, new[] { 1, 2, 0 })] // first to last
+    [InlineData(2, 0, new[] { 2, 0, 1 })] // last to first
+    [InlineData(0, 1, new[] { 1, 0, 2 })]
+    [InlineData(2, 1, new[] { 0, 2, 1 })]
+    public void MoveInstruction_ReordersRenumbersAndReportsTheChange(int from, int to, int[] expectedOrder)
+    {
+        var form = new ExerciseFormViewModel(Breathing());
+        var original = form.Instructions.ToList();
+        var definitionChanges = 0;
+        form.DefinitionChanged += (_, _) => definitionChanges++;
+
+        form.MoveInstructionCommand.CanExecute(new ItemMoveRequest(from, to)).Should().BeTrue();
+        form.MoveInstructionCommand.Execute(new ItemMoveRequest(from, to));
+
+        form.Instructions.Should().Equal(expectedOrder.Select(i => original[i]));
+        form.Instructions.Select(i => i.Number).Should().Equal(1, 2, 3);
+        form.IsDirty.Should().BeTrue();
+        definitionChanges.Should().Be(1);
+    }
+
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(-1, 0)]
+    [InlineData(0, 3)]
+    [InlineData(3, 0)]
+    public void MoveInstruction_IgnoresTheSamePositionAndInvalidIndices(int from, int to)
+    {
+        var form = new ExerciseFormViewModel(Breathing());
+        var definitionChanges = 0;
+        form.DefinitionChanged += (_, _) => definitionChanges++;
+
+        form.MoveInstructionCommand.CanExecute(new ItemMoveRequest(from, to)).Should().BeFalse();
+        form.MoveInstructionCommand.Execute(new ItemMoveRequest(from, to));
+
+        form.Instructions.Select(i => i.Phase).Should().Equal(
+            BreathingPhaseType.Inhale, BreathingPhaseType.HoldIn, BreathingPhaseType.Exhale);
+        form.IsDirty.Should().BeFalse();
+        definitionChanges.Should().Be(0);
+    }
+
+    [Fact]
+    public void MoveInstruction_Back_MakesTheFormCleanAgain()
+    {
+        var form = new ExerciseFormViewModel(Breathing());
+
+        form.MoveInstructionCommand.Execute(new ItemMoveRequest(0, 2));
+        form.MoveInstructionCommand.Execute(new ItemMoveRequest(2, 0));
+
+        form.IsDirty.Should().BeFalse();
     }
 }

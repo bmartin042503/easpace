@@ -10,6 +10,7 @@ using System.Linq;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Behaviors;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -231,6 +232,22 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
         Instructions.Move(index, index + 1);
     }
 
+    /// <summary>
+    /// Moves an instruction to another position, e.g. when it's dragged there.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanMoveInstruction))]
+    private void MoveInstruction(ItemMoveRequest request)
+    {
+        if (!CanMoveInstruction(request)) return;
+
+        Instructions.Move(request.FromIndex, request.ToIndex);
+    }
+
+    private bool CanMoveInstruction(ItemMoveRequest request) =>
+        request.FromIndex != request.ToIndex
+        && request.FromIndex >= 0 && request.FromIndex < Instructions.Count
+        && request.ToIndex >= 0 && request.ToIndex < Instructions.Count;
+
     private bool CanMoveInstructionUp(ExerciseInstructionViewModel? instruction) =>
         instruction is not null && Instructions.IndexOf(instruction) > 0;
 
@@ -286,6 +303,7 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
 
         MoveInstructionUpCommand.NotifyCanExecuteChanged();
         MoveInstructionDownCommand.NotifyCanExecuteChanged();
+        MoveInstructionCommand.NotifyCanExecuteChanged();
 
         OnDefinitionChanged();
     }

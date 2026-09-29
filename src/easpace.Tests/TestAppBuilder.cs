@@ -3,6 +3,7 @@
 
 using Avalonia;
 using Avalonia.Headless;
+using Avalonia.Themes.Fluent;
 
 [assembly: AvaloniaTestApplication(typeof(easpace.Tests.TestAppBuilder))]
 
@@ -10,7 +11,9 @@ namespace easpace.Tests;
 
 public class TestAppBuilder
 {
-    // a bare application, as the app's own one needs the services of the host to start its main window
+    // a bare application, as the app's own one needs the services of the host to start its main window;
+    // the Fluent theme gives the controls their templates
     public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<Application>()
-        .UseHeadless(new AvaloniaHeadlessPlatformOptions());
+        .UseHeadless(new AvaloniaHeadlessPlatformOptions())
+        .AfterSetup(builder => builder.Instance!.Styles.Add(new FluentTheme()));
 }
