@@ -658,6 +658,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
         <value>Egyszerű légzési ritmus a lelassuláshoz és a figyelem légzésre irányításához. Lélegezz be 3 másodpercig, tartsd bent 3-ig, majd lélegezz ki 3 másodperc alatt.</value>
     </data>
+    <data name="Wellness.Default.GuidedCalm.Name" xml:space="preserve">
+        <value>Vezetett nyugalom</value>
+    </data>
+    <data name="Wellness.Default.GuidedCalm.Description" xml:space="preserve">
+        <value>Szelíd, vezetett meditáció hat rövid gondolattal, mindegyik egy percig tart. Hagyd, hogy minden gondolat irányítsa a figyelmed, majd egyszerűen időzz el vele.</value>
+    </data>
+    <data name="Wellness.Default.SilentSitting.Name" xml:space="preserve">
+        <value>Csendes ülés</value>
+    </data>
+    <data name="Wellness.Default.SilentSitting.Description" xml:space="preserve">
+        <value>Csendes meditáció egyetlen emlékeztetővel, hogy egyszerűen csak jelen legyél. Válaszd ki, hány percig szeretnél ülni.</value>
+    </data>
     <data name="Settings.Category.General" xml:space="preserve">
         <value>Általános</value>
     </data>

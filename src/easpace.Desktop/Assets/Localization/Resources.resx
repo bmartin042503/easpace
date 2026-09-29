@@ -658,6 +658,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
         <value>A simple breathing rhythm for slowing down and bringing attention to your breath. Inhale for 3 seconds, hold for 3, then exhale for 3.</value>
     </data>
+    <data name="Wellness.Default.GuidedCalm.Name" xml:space="preserve">
+        <value>Guided Calm</value>
+    </data>
+    <data name="Wellness.Default.GuidedCalm.Description" xml:space="preserve">
+        <value>A gentle guided meditation with six short reflections, one minute each. Let each prompt guide your attention, then simply rest with it.</value>
+    </data>
+    <data name="Wellness.Default.SilentSitting.Name" xml:space="preserve">
+        <value>Silent Sitting</value>
+    </data>
+    <data name="Wellness.Default.SilentSitting.Description" xml:space="preserve">
+        <value>A quiet meditation with a single reminder to simply be present. Choose how many minutes you would like to sit.</value>
+    </data>
     <data name="Settings.Category.General" xml:space="preserve">
         <value>General</value>
     </data>
