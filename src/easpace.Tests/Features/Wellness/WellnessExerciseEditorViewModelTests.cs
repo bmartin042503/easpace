@@ -163,7 +163,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.SaveCommand.ExecuteAsync(null);
 
         _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ErrorDialogViewModel>(dialog =>
-            dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.SaveFailed"))), Times.Once);
+            dialog.Message == LocalizationService.GetString("Wellness.Error.ExerciseSaveFailed"))), Times.Once);
         editor.Form!.Name.Should().Be("Square");
         editor.Form.IsDirty.Should().BeTrue();
     }
@@ -210,7 +210,7 @@ public class WellnessExerciseEditorViewModelTests
         closed.Should().BeFalse();
         editor.Form!.Name.Should().Be("Square");
         _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ConfirmDialogViewModel>(dialog =>
-            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.Editor.DiscardDialog.Title"))), Times.Once);
+            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.DiscardChangesDialog.Title"))), Times.Once);
     }
 
     [Fact]
@@ -350,7 +350,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.DeleteExerciseCommand.ExecuteAsync(null);
 
         _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ConfirmDialogViewModel>(dialog =>
-            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.Editor.DeleteDialog.Title"))), Times.Once);
+            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.DeleteExerciseDialog.Title"))), Times.Once);
         _exerciseServiceMock.Verify(s => s.DeleteExerciseAsync(_box.Id, It.IsAny<CancellationToken>()), Times.Once);
         editor.Exercises.Select(e => e.Id).Should().Equal(_calm.Id);
         editor.SelectedExercise!.Id.Should().Be(_calm.Id);
@@ -410,7 +410,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.DeleteExerciseCommand.ExecuteAsync(null);
 
         _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ErrorDialogViewModel>(dialog =>
-            dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.DeleteFailed"))), Times.Once);
+            dialog.Message == LocalizationService.GetString("Wellness.Error.ExerciseDeleteFailed"))), Times.Once);
         editor.Exercises.Should().HaveCount(2);
         editor.SelectedExercise!.Id.Should().Be(_box.Id);
     }
@@ -444,7 +444,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.RestoreDefaultsCommand.ExecuteAsync(null);
 
         _toastServiceMock.Verify(t => t.ShowToastMessage(
-            string.Format(LocalizationService.GetString("Wellness.Editor.Toast.DefaultsRestored"), 2),
+            string.Format(LocalizationService.GetString("Wellness.ToastMessage.DefaultsRestored"), 2),
             ToastMessageType.Success), Times.Once);
         editor.Exercises.Select(e => e.Name).Should().Equal("4-6", "Box", "Triangle", "Calm");
         editor.SelectedExercise!.Id.Should().Be(fourSix.Id);
@@ -462,7 +462,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.RestoreDefaultsCommand.ExecuteAsync(null);
 
         _toastServiceMock.Verify(t => t.ShowToastMessage(
-            LocalizationService.GetString("Wellness.Editor.Toast.NothingToRestore"), ToastMessageType.Info), Times.Once);
+            LocalizationService.GetString("Wellness.ToastMessage.NothingToRestore"), ToastMessageType.Info), Times.Once);
         _exerciseServiceMock.Verify(s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()), Times.Once);
         editor.SelectedExercise!.Id.Should().Be(_calm.Id);
     }
@@ -478,7 +478,7 @@ public class WellnessExerciseEditorViewModelTests
         await editor.RestoreDefaultsCommand.ExecuteAsync(null);
 
         _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ErrorDialogViewModel>(dialog =>
-            dialog.Message == LocalizationService.GetString("Wellness.Editor.Error.RestoreFailed"))), Times.Once);
+            dialog.Message == LocalizationService.GetString("Wellness.Error.DefaultsRestoreFailed"))), Times.Once);
         _toastServiceMock.Verify(t => t.ShowToastMessage(It.IsAny<string>(), It.IsAny<ToastMessageType>()), Times.Never);
     }
 

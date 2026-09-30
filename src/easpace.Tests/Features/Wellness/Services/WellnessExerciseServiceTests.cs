@@ -337,8 +337,8 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     [Fact]
     public async Task RestoreDefaultExercisesAsync_MatchesNamesIgnoringCaseAndWhitespaceWithinTheSameType()
     {
-        var boxBreathingName = LocalizationService.GetString("BreathingTechnique.BoxBreathing.Name");
-        var guidedCalmName = LocalizationService.GetString("Wellness.Default.GuidedCalm.Name");
+        var boxBreathingName = LocalizationService.GetString("DefaultExercise.BoxBreathing.Name");
+        var guidedCalmName = LocalizationService.GetString("DefaultExercise.GuidedCalm.Name");
 
         // same type, different casing: counts as present
         var renamed = await _service.CreateExerciseAsync(BreathingRequest("placeholder"), TestCancellation);

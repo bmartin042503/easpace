@@ -24,25 +24,29 @@ internal static class DefaultWellnessExercises
     {
         return
         [
-            CreateBreathing("BreathingTechnique.BoxBreathing",
+            CreateBreathing("DefaultExercise.BoxBreathing",
                 (BreathingPhaseType.Inhale, 4), (BreathingPhaseType.HoldIn, 4),
                 (BreathingPhaseType.Exhale, 4), (BreathingPhaseType.HoldOut, 4)),
 
-            CreateBreathing("BreathingTechnique.FourSevenEightBreathing",
+            CreateBreathing("DefaultExercise.FourSevenEightBreathing",
                 (BreathingPhaseType.Inhale, 4), (BreathingPhaseType.HoldIn, 7), (BreathingPhaseType.Exhale, 8)),
 
-            CreateBreathing("BreathingTechnique.FourSixBreathing",
+            CreateBreathing("DefaultExercise.FourSixBreathing",
                 (BreathingPhaseType.Inhale, 4), (BreathingPhaseType.Exhale, 6)),
 
-            CreateBreathing("BreathingTechnique.TriangleBreathing",
+            CreateBreathing("DefaultExercise.TriangleBreathing",
                 (BreathingPhaseType.Inhale, 3), (BreathingPhaseType.HoldIn, 3), (BreathingPhaseType.Exhale, 3)),
 
-            CreateMeditation("Wellness.Default.GuidedCalm",
-                "Wellness.Instruction1.Meditation", "Wellness.Instruction2.Meditation", "Wellness.Instruction3.Meditation",
-                "Wellness.Instruction4.Meditation", "Wellness.Instruction5.Meditation", "Wellness.Instruction6.Meditation"),
+            CreateMeditation("DefaultExercise.GuidedCalm",
+                "DefaultExercise.MeditationPrompt.FocusOnBreath",
+                "DefaultExercise.MeditationPrompt.NoticeSensations",
+                "DefaultExercise.MeditationPrompt.ReturnToPresent",
+                "DefaultExercise.MeditationPrompt.LetThoughtsPass",
+                "DefaultExercise.MeditationPrompt.RelaxShoulders",
+                "DefaultExercise.MeditationPrompt.SimplyBeHere"),
 
             // a single one-minute instruction lets users pick the session length in minutes
-            CreateMeditation("Wellness.Default.SilentSitting", "Wellness.Instruction6.Meditation")
+            CreateMeditation("DefaultExercise.SilentSitting", "DefaultExercise.MeditationPrompt.SimplyBeHere")
         ];
     }
 

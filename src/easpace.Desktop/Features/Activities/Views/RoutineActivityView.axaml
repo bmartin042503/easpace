@@ -73,14 +73,14 @@ Licensed under the MIT License. See LICENSE file for details.
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
+                           Text="{core:LocalizationService Key='RoutineActivity.EntryState.Completed'}" />
             </StackPanel>
 
             <!-- Not completed legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box not-completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
+                           Text="{core:LocalizationService Key='RoutineActivity.EntryState.NotCompleted'}" />
             </StackPanel>
 
             <!-- Today legend -->

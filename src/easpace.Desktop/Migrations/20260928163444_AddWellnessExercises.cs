@@ -10,13 +10,14 @@ namespace easpace.Desktop.Migrations
     /// <inheritdoc />
     public partial class AddWellnessExercises : Migration
     {
-        // localization key prefixes of the seeded techniques stored with IsLocalized = 1
-        private static readonly string[] LocalizedTechniqueKeys =
+        // the key prefixes old databases store for the seeded techniques (IsLocalized = 1), mapped to the prefixes
+        // of the resource keys that now hold their texts; the stored ones are data and must never change
+        private static readonly (string StoredPrefix, string ResourcePrefix)[] LocalizedTechniqueKeys =
         [
-            "BreathingTechnique.BoxBreathing",
-            "BreathingTechnique.FourSevenEightBreathing",
-            "BreathingTechnique.FourSixBreathing",
-            "BreathingTechnique.TriangleBreathing"
+            ("BreathingTechnique.BoxBreathing", "DefaultExercise.BoxBreathing"),
+            ("BreathingTechnique.FourSevenEightBreathing", "DefaultExercise.FourSevenEightBreathing"),
+            ("BreathingTechnique.FourSixBreathing", "DefaultExercise.FourSixBreathing"),
+            ("BreathingTechnique.TriangleBreathing", "DefaultExercise.TriangleBreathing")
         ];
 
         /// <inheritdoc />
@@ -228,10 +229,11 @@ namespace easpace.Desktop.Migrations
         /// <param name="column">The BreathingTechniques column holding either a localization key or plain text.</param>
         private static string ResolveLocalizedColumn(string column)
         {
-            var cases = string.Join(" ", LocalizedTechniqueKeys.Select(prefix =>
+            var cases = string.Join(" ", LocalizedTechniqueKeys.Select(keys =>
             {
-                var key = $"{prefix}.{column}";
-                return $"WHEN {ToSqlLiteral(key)} THEN {ToSqlLiteral(LocalizationService.GetString(key))}";
+                var storedKey = $"{keys.StoredPrefix}.{column}";
+                var text = LocalizationService.GetString($"{keys.ResourcePrefix}.{column}");
+                return $"WHEN {ToSqlLiteral(storedKey)} THEN {ToSqlLiteral(text)}";
             }));
 
             return $"CASE WHEN \"IsLocalized\" = 1 THEN CASE \"{column}\" {cases} ELSE \"{column}\" END ELSE \"{column}\" END";

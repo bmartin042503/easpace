@@ -28,6 +28,8 @@ Licensed under the MIT License. See LICENSE file for details.
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
+
+    <!-- Navigation: sidebar items -->
     <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Journal</value>
     </data>
@@ -43,6 +45,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Navigation.Item.Wellness" xml:space="preserve">
         <value>Wellness</value>
     </data>
+
+    <!-- Common: relative times and chart time ranges -->
     <data name="Common.Time.JustNow" xml:space="preserve">
         <value>Just now</value>
     </data>
@@ -79,6 +83,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Time.All" xml:space="preserve">
         <value>All</value>
     </data>
+
+    <!-- Common: buttons, toggles, inputs, errors and titles shared across the app -->
     <data name="Common.Button.Add" xml:space="preserve">
         <value>Add new</value>
     </data>
@@ -133,219 +139,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Title.History" xml:space="preserve">
         <value>History</value>
     </data>
-    <data name="Journal.Search.Placeholder" xml:space="preserve">
-        <value>Search entries...</value>
-    </data>
-    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
-        <value>Enter a title...</value>
-    </data>
-    <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
-        <value>Write your thoughts here...</value>
-    </data>
-    <data name="Journal.Empty.Message" xml:space="preserve">
-        <value>Click the + button to create your first entry.</value>
-    </data>
-    <data name="Journal.Empty.SearchResult" xml:space="preserve">
-        <value>No results</value>
-    </data>
-    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
-        <value>Delete '{0}'?</value>
-    </data>
-    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this journal entry? This action can't be undone.</value>
-    </data>
-    <data name="Journal.Error.LoadFailed" xml:space="preserve">
-        <value>Failed to load journal entries. Please try again later.</value>
-    </data>
-    <data name="Journal.Error.SaveFailed" xml:space="preserve">
-        <value>Failed to save journal entry. Please try again.</value>
-    </data>
-    <data name="Journal.Error.DeleteFailed" xml:space="preserve">
-        <value>Failed to delete this journal entry. Please try again.</value>
-    </data>
-    <data name="Journal.WordCount.OneWord" xml:space="preserve">
-        <value>1 word</value>
-    </data>
-    <data name="Journal.WordCount.Words" xml:space="preserve">
-        <value>{0} words</value>
-    </data>
-    <data name="Activities.Empty.Message" xml:space="preserve">
-        <value>Click the + button to create your first activity.</value>
-    </data>
-    <data name="Activities.Button.Add" xml:space="preserve">
-        <value>Record value</value>
-    </data>
-    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
-        <value>Activity archived</value>
-    </data>
-    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
-        <value>Activity restored</value>
-    </data>
-    <data name="Activities.Search.Placeholder" xml:space="preserve">
-        <value>Search activities...</value>
-    </data>
-    <data name="Activities.NumericActivity.Target" xml:space="preserve">
-        <value>Target</value>
-    </data>
-    <data name="Activities.NumericActivity.StartDate" xml:space="preserve">
-        <value>Start date</value>
-    </data>
-    <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
-        <value>Goal date</value>
-    </data>
-    <data name="Activities.Input.NewActivityName" xml:space="preserve">
-        <value>New activity</value>
-    </data>
-    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
-        <value>Enter activity name...</value>
-    </data>
-    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
-        <value>Unit...</value>
-    </data>
-    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
-        <value>Goal...</value>
-    </data>
-    <data name="Activities.Input.DatePlaceholder" xml:space="preserve">
+    <data name="Common.Input.DatePlaceholder" xml:space="preserve">
         <value>Date...</value>
     </data>
-    <data name="Activities.Label.Archived" xml:space="preserve">
-        <value>Archived</value>
-    </data>
-    <data name="Activities.Label.Name" xml:space="preserve">
-        <value>Name</value>
-    </data>
-    <data name="Activities.Label.Type" xml:space="preserve">
-        <value>Type</value>
-    </data>
-    <data name="Activities.Label.Unit" xml:space="preserve">
-        <value>Unit (e.g. kg, pages, steps)</value>
-    </data>
-    <data name="Activities.Label.TargetValue" xml:space="preserve">
-        <value>Goal value</value>
-    </data>
-    <data name="Activities.Label.TargetDate" xml:space="preserve">
-        <value>Goal date</value>
-    </data>
-    <data name="Activities.Label.Aggregation" xml:space="preserve">
-        <value>Combine daily entries by</value>
-    </data>
-    <data name="Activities.Aggregation.Sum" xml:space="preserve">
-        <value>Total</value>
-    </data>
-    <data name="Activities.Aggregation.Average" xml:space="preserve">
-        <value>Average</value>
-    </data>
-    <data name="Activities.Aggregation.Latest" xml:space="preserve">
-        <value>Latest value</value>
-    </data>
-    <data name="Activities.Aggregation.Maximum" xml:space="preserve">
-        <value>Highest value</value>
-    </data>
-    <data name="Activities.Label.DataEntry" xml:space="preserve">
-        <value>Data (1 entry)</value>
-    </data>
-    <data name="Activities.Label.DataEntries" xml:space="preserve">
-        <value>Data ({0} entries)</value>
-    </data>
-    <data name="Activities.CheckBox.Target" xml:space="preserve">
-        <value>Set a goal</value>
-    </data>
-    <data name="Activities.Title.Edit" xml:space="preserve">
-        <value>Edit '{0}'</value>
-    </data>
-    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
-        <value>Delete '{0}'?</value>
-    </data>
-    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this activity? This action can't be undone.</value>
-    </data>
-    <data name="Activities.EntryDialog.Title" xml:space="preserve">
-        <value>Record entry</value>
-    </data>
-    <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
-        <value>Date...</value>
-    </data>
-    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
-        <value>Value...</value>
-    </data>
-    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
-        <value>Edit entry</value>
-    </data>
-    <data name="Activities.Type.Trend" xml:space="preserve">
-        <value>Trend</value>
-    </data>
-    <data name="Activities.Type.Milestone" xml:space="preserve">
-        <value>Milestone</value>
-    </data>
-    <data name="Activities.Type.Routine" xml:space="preserve">
-        <value>Routine</value>
-    </data>
-    <data name="Activities.Filter.Active" xml:space="preserve">
-        <value>Active</value>
-    </data>
-    <data name="Activities.Filter.Archived" xml:space="preserve">
-        <value>Archived</value>
-    </data>
-    <data name="Activities.Error.LoadFailed" xml:space="preserve">
-        <value>Failed to load activities. Please try again later.</value>
-    </data>
-    <data name="Activities.Error.SaveFailed" xml:space="preserve">
-        <value>Failed to save the activity. Please try again.</value>
-    </data>
-    <data name="Activities.Error.DeleteFailed" xml:space="preserve">
-        <value>Failed to delete the activity. Please try again.</value>
-    </data>
-    <data name="Activities.Error.ArchiveFailed" xml:space="preserve">
-        <value>Failed to update the archive status. Please try again.</value>
-    </data>
-    <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
-        <value>Failed to delete this data entry. Please try again.</value>
-    </data>
-    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
-        <value>Failed to save this data entry. Please try again.</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
-        <value>Mon</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
-        <value>Tue</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
-        <value>Wed</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
-        <value>Thu</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
-        <value>Fri</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
-        <value>Sat</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
-        <value>Sun</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.Completed" xml:space="preserve">
-        <value>Completed</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.NotCompleted" xml:space="preserve">
-        <value>Not completed</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
-        <value>Today</value>
-    </data>
-    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
-        <value>Completed</value>
-    </data>
-    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
-        <value>Not completed</value>
-    </data>
-    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
-        <value>Empty</value>
-    </data>
-    <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
-        <value>Current value: {0} {1}</value>
-    </data>
+
+    <!-- Form validation: DataAnnotations error messages, looked up by their ErrorMessage key -->
     <data name="FormValidation.Name.Required" xml:space="preserve">
         <value>Please enter a name.</value>
     </data>
@@ -385,6 +183,90 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Duration.Range" xml:space="preserve">
         <value>The duration must be between 1 and 3600 seconds.</value>
     </data>
+
+    <!-- Onboarding: welcome, terms, customization, beta warning and thank-you screens -->
+    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
+        <value>A private space for your thoughts.</value>
+    </data>
+    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
+        <value>Get Started</value>
+    </data>
+    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
+        <value>I have read and agree to the Terms of Use.</value>
+    </data>
+    <data name="Onboarding.Customize.Title" xml:space="preserve">
+        <value>Choose the look that feels right for you</value>
+    </data>
+    <data name="Onboarding.Customize.Description" xml:space="preserve">
+        <value>You can change these anytime in Settings.</value>
+    </data>
+    <data name="Onboarding.Customize.Appearance" xml:space="preserve">
+        <value>Appearance</value>
+    </data>
+    <data name="Onboarding.Customize.ColorPalette" xml:space="preserve">
+        <value>Color palette</value>
+    </data>
+    <data name="Onboarding.Customize.Translucency" xml:space="preserve">
+        <value>Translucency</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
+        <value>This is beta software</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
+        <value>easpace is still in active development and is not yet ready for general use. Some features may not work as expected, and data could be lost. By continuing you understand that you are using easpace at your own risk and are responsible for keeping your own backups of important data.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
+        <value>I understand that easpace is beta software and accept the risks associated with using it, including possible data loss.</value>
+    </data>
+    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
+        <value>Thank you for giving easpace a try. I hope it can become a useful, private space for you. Your feedback is always welcome.</value>
+    </data>
+    <data name="Onboarding.Text.Developer" xml:space="preserve">
+        <value>developer</value>
+    </data>
+    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
+        <value>Martin Bartos (bmartin@easpace.eu)</value>
+    </data>
+
+    <!-- Journal: entry list, editor, dialogs and errors -->
+    <data name="Journal.Search.Placeholder" xml:space="preserve">
+        <value>Search entries...</value>
+    </data>
+    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
+        <value>Enter a title...</value>
+    </data>
+    <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
+        <value>Write your thoughts here...</value>
+    </data>
+    <data name="Journal.Empty.Message" xml:space="preserve">
+        <value>Click the + button to create your first entry.</value>
+    </data>
+    <data name="Journal.Empty.SearchResult" xml:space="preserve">
+        <value>No results</value>
+    </data>
+    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
+        <value>Delete '{0}'?</value>
+    </data>
+    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this journal entry? This action can't be undone.</value>
+    </data>
+    <data name="Journal.Error.LoadFailed" xml:space="preserve">
+        <value>Failed to load journal entries. Please try again later.</value>
+    </data>
+    <data name="Journal.Error.SaveFailed" xml:space="preserve">
+        <value>Failed to save journal entry. Please try again.</value>
+    </data>
+    <data name="Journal.Error.DeleteFailed" xml:space="preserve">
+        <value>Failed to delete this journal entry. Please try again.</value>
+    </data>
+    <data name="Journal.WordCount.OneWord" xml:space="preserve">
+        <value>1 word</value>
+    </data>
+    <data name="Journal.WordCount.Words" xml:space="preserve">
+        <value>{0} words</value>
+    </data>
+
+    <!-- Mood: states, labels (Mood.Label.* is looked up by MoodLabelState name), form and errors -->
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Very unpleasant</value>
     </data>
@@ -532,14 +414,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Label.Cheerfulness" xml:space="preserve">
         <value>Cheerfulness</value>
     </data>
-    <data name="Mood.Labels.More" xml:space="preserve">
+    <data name="Mood.Button.MoreEmotions" xml:space="preserve">
         <value>More emotions</value>
     </data>
     <data name="Mood.Input.DescriptionPlaceholder" xml:space="preserve">
         <value>Description...</value>
-    </data>
-    <data name="Mood.Input.DatePlaceholder" xml:space="preserve">
-        <value>Date...</value>
     </data>
     <data name="Mood.Empty.Message" xml:space="preserve">
         <value>No entries</value>
@@ -553,6 +432,177 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Error.DeleteFailed" xml:space="preserve">
         <value>Failed to delete this mood entry. Please try again.</value>
     </data>
+
+    <!-- Activities: list, editor, data entries, dialogs and errors -->
+    <data name="Activities.Empty.Message" xml:space="preserve">
+        <value>Click the + button to create your first activity.</value>
+    </data>
+    <data name="Activities.Button.Add" xml:space="preserve">
+        <value>Record value</value>
+    </data>
+    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
+        <value>Activity archived</value>
+    </data>
+    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
+        <value>Activity restored</value>
+    </data>
+    <data name="Activities.Search.Placeholder" xml:space="preserve">
+        <value>Search activities...</value>
+    </data>
+    <data name="Activities.NumericActivity.Target" xml:space="preserve">
+        <value>Target</value>
+    </data>
+    <data name="Activities.NumericActivity.StartDate" xml:space="preserve">
+        <value>Start date</value>
+    </data>
+    <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
+        <value>Goal date</value>
+    </data>
+    <data name="Activities.Input.NewActivityName" xml:space="preserve">
+        <value>New activity</value>
+    </data>
+    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
+        <value>Enter activity name...</value>
+    </data>
+    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
+        <value>Unit...</value>
+    </data>
+    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
+        <value>Goal...</value>
+    </data>
+    <data name="Activities.Label.Archived" xml:space="preserve">
+        <value>Archived</value>
+    </data>
+    <data name="Activities.Label.Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="Activities.Label.Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Activities.Label.Unit" xml:space="preserve">
+        <value>Unit (e.g. kg, pages, steps)</value>
+    </data>
+    <data name="Activities.Label.TargetValue" xml:space="preserve">
+        <value>Goal value</value>
+    </data>
+    <data name="Activities.Label.TargetDate" xml:space="preserve">
+        <value>Goal date</value>
+    </data>
+    <data name="Activities.Label.Aggregation" xml:space="preserve">
+        <value>Combine daily entries by</value>
+    </data>
+    <data name="Activities.Aggregation.Sum" xml:space="preserve">
+        <value>Total</value>
+    </data>
+    <data name="Activities.Aggregation.Average" xml:space="preserve">
+        <value>Average</value>
+    </data>
+    <data name="Activities.Aggregation.Latest" xml:space="preserve">
+        <value>Latest value</value>
+    </data>
+    <data name="Activities.Aggregation.Maximum" xml:space="preserve">
+        <value>Highest value</value>
+    </data>
+    <data name="Activities.Label.DataEntry" xml:space="preserve">
+        <value>Data (1 entry)</value>
+    </data>
+    <data name="Activities.Label.DataEntries" xml:space="preserve">
+        <value>Data ({0} entries)</value>
+    </data>
+    <data name="Activities.CheckBox.Target" xml:space="preserve">
+        <value>Set a goal</value>
+    </data>
+    <data name="Activities.Title.Edit" xml:space="preserve">
+        <value>Edit '{0}'</value>
+    </data>
+    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
+        <value>Delete '{0}'?</value>
+    </data>
+    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this activity? This action can't be undone.</value>
+    </data>
+    <data name="Activities.EntryDialog.Title" xml:space="preserve">
+        <value>Record entry</value>
+    </data>
+    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
+        <value>Value...</value>
+    </data>
+    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
+        <value>Edit entry</value>
+    </data>
+    <data name="Activities.Type.Trend" xml:space="preserve">
+        <value>Trend</value>
+    </data>
+    <data name="Activities.Type.Milestone" xml:space="preserve">
+        <value>Milestone</value>
+    </data>
+    <data name="Activities.Type.Routine" xml:space="preserve">
+        <value>Routine</value>
+    </data>
+    <data name="Activities.Filter.Active" xml:space="preserve">
+        <value>Active</value>
+    </data>
+    <data name="Activities.Filter.Archived" xml:space="preserve">
+        <value>Archived</value>
+    </data>
+    <data name="Activities.Error.LoadFailed" xml:space="preserve">
+        <value>Failed to load activities. Please try again later.</value>
+    </data>
+    <data name="Activities.Error.SaveFailed" xml:space="preserve">
+        <value>Failed to save the activity. Please try again.</value>
+    </data>
+    <data name="Activities.Error.DeleteFailed" xml:space="preserve">
+        <value>Failed to delete the activity. Please try again.</value>
+    </data>
+    <data name="Activities.Error.ArchiveFailed" xml:space="preserve">
+        <value>Failed to update the archive status. Please try again.</value>
+    </data>
+    <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
+        <value>Failed to delete this data entry. Please try again.</value>
+    </data>
+    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
+        <value>Failed to save this data entry. Please try again.</value>
+    </data>
+
+    <!-- Activities: routine calendar and trend details -->
+    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
+        <value>Mon</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
+        <value>Tue</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
+        <value>Wed</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
+        <value>Thu</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
+        <value>Fri</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
+        <value>Sat</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
+        <value>Sun</value>
+    </data>
+    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
+        <value>Completed</value>
+    </data>
+    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
+        <value>Not completed</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Today</value>
+    </data>
+    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
+        <value>Empty</value>
+    </data>
+    <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
+        <value>Current value: {0} {1}</value>
+    </data>
+
+    <!-- Wellness: start view and session history -->
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Take a moment for yourself</value>
     </data>
@@ -580,6 +630,35 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.BeginSession" xml:space="preserve">
         <value>Begin</value>
     </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Manage exercises</value>
+    </data>
+    <data name="Wellness.Session.OneCycle" xml:space="preserve">
+        <value>1 cycle</value>
+    </data>
+    <data name="Wellness.Session.Cycles" xml:space="preserve">
+        <value>{0} cycles</value>
+    </data>
+    <data name="Wellness.Empty.NoSessions" xml:space="preserve">
+        <value>No sessions</value>
+    </data>
+    <data name="Wellness.Error.LoadFailed" xml:space="preserve">
+        <value>Failed to load wellness data. Please try again later.</value>
+    </data>
+    <data name="Wellness.Error.SessionDeleteFailed" xml:space="preserve">
+        <value>Failed to delete this session. Please try again.</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
+        <value>Delete session?</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this session? This action can't be undone.</value>
+    </data>
+    <data name="Wellness.Empty.NoExercises" xml:space="preserve">
+        <value>No exercises available.</value>
+    </data>
+
+    <!-- Wellness: running session and ending view -->
     <data name="Wellness.Button.PauseSession" xml:space="preserve">
         <value>Pause</value>
     </data>
@@ -591,9 +670,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Button.DiscardSession" xml:space="preserve">
         <value>Discard</value>
-    </data>
-    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
-        <value>Manage exercises</value>
     </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Breathe in...</value>
@@ -613,135 +689,112 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Text.SessionSaved" xml:space="preserve">
         <value>Session Saved</value>
     </data>
-    <data name="Wellness.Session.OneCycle" xml:space="preserve">
-        <value>1 cycle</value>
-    </data>
-    <data name="Wellness.Session.Cycles" xml:space="preserve">
-        <value>{0} cycles</value>
-    </data>
-    <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>No sessions</value>
-    </data>
-    <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
-        <value>Gently bring your attention to your breath.</value>
-    </data>
-    <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
-        <value>Notice the sensations in your body without judging them.</value>
-    </data>
-    <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
-        <value>If your mind wanders, gently return to the present moment.</value>
-    </data>
-    <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
-        <value>Let your thoughts come and go without holding on to them.</value>
-    </data>
-    <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
-        <value>Relax your shoulders and allow your breathing to feel natural.</value>
-    </data>
-    <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
-        <value>Take a moment to simply be here, without needing to do anything.</value>
-    </data>
-    <data name="Wellness.Error.LoadFailed" xml:space="preserve">
-        <value>Failed to load wellness data. Please try again later.</value>
-    </data>
-    <data name="Wellness.Error.SaveFailed" xml:space="preserve">
+    <data name="Wellness.Error.SessionSaveFailed" xml:space="preserve">
         <value>Failed to save wellness session. Please try again.</value>
     </data>
-    <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
-        <value>Failed to delete this session. Please try again.</value>
-    </data>
-    <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
-        <value>Delete session?</value>
-    </data>
-    <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this session? This action can't be undone.</value>
-    </data>
-    <data name="Wellness.Exercise.Empty.Message" xml:space="preserve">
-        <value>No exercises available.</value>
-    </data>
+
+    <!-- Wellness: exercise editor -->
     <data name="Wellness.Editor.Title" xml:space="preserve">
         <value>Manage exercises</value>
     </data>
-    <data name="Wellness.Editor.Label.Repeat" xml:space="preserve">
+    <data name="Wellness.Editor.RepeatLabel" xml:space="preserve">
         <value>Repeat instructions</value>
     </data>
-    <data name="Wellness.Editor.Label.OneCycle" xml:space="preserve">
+    <data name="Wellness.Editor.OneCycleLabel" xml:space="preserve">
         <value>One cycle: {0}</value>
     </data>
-    <data name="Wellness.Editor.Label.Instructions" xml:space="preserve">
+    <data name="Wellness.Editor.InstructionsLabel" xml:space="preserve">
         <value>Instructions</value>
     </data>
-    <data name="Wellness.Editor.Label.Name" xml:space="preserve">
+    <data name="Wellness.Editor.NameLabel" xml:space="preserve">
         <value>Name</value>
     </data>
-    <data name="Wellness.Editor.Label.Description" xml:space="preserve">
+    <data name="Wellness.Editor.DescriptionLabel" xml:space="preserve">
         <value>Description</value>
     </data>
-    <data name="Wellness.Editor.Label.RepeatHint" xml:space="preserve">
+    <data name="Wellness.Editor.RepeatHint" xml:space="preserve">
         <value>When on, you choose how many cycles to do before each session. When off, the instructions run once.</value>
     </data>
-    <data name="Wellness.Editor.Label.SecondsUnit" xml:space="preserve">
+    <data name="Wellness.Editor.SecondsUnit" xml:space="preserve">
         <value>s</value>
     </data>
-    <data name="Wellness.Editor.Input.NamePlaceholder" xml:space="preserve">
+    <data name="Wellness.Editor.NamePlaceholder" xml:space="preserve">
         <value>Name of the exercise</value>
     </data>
-    <data name="Wellness.Editor.Input.TextPlaceholder" xml:space="preserve">
+    <data name="Wellness.Editor.InstructionTextPlaceholder" xml:space="preserve">
         <value>Instruction text</value>
     </data>
-    <data name="Wellness.Editor.Button.AddInstruction" xml:space="preserve">
+    <data name="Wellness.Editor.AddInstructionButton" xml:space="preserve">
         <value>Add instruction</value>
     </data>
-    <data name="Wellness.Editor.Button.MoveUp" xml:space="preserve">
+    <data name="Wellness.Editor.MoveUpButton" xml:space="preserve">
         <value>Move up</value>
     </data>
-    <data name="Wellness.Editor.Button.MoveDown" xml:space="preserve">
+    <data name="Wellness.Editor.MoveDownButton" xml:space="preserve">
         <value>Move down</value>
     </data>
-    <data name="Wellness.Editor.Button.RemoveInstruction" xml:space="preserve">
+    <data name="Wellness.Editor.RemoveInstructionButton" xml:space="preserve">
         <value>Remove instruction</value>
     </data>
-    <data name="Wellness.Editor.Button.Discard" xml:space="preserve">
+    <data name="Wellness.Editor.DiscardButton" xml:space="preserve">
         <value>Discard changes</value>
     </data>
-    <data name="Wellness.Editor.DiscardDialog.Title" xml:space="preserve">
+    <data name="Wellness.DiscardChangesDialog.Title" xml:space="preserve">
         <value>Discard changes?</value>
     </data>
-    <data name="Wellness.Editor.DiscardDialog.Message" xml:space="preserve">
+    <data name="Wellness.DiscardChangesDialog.Message" xml:space="preserve">
         <value>The unsaved changes to this exercise will be lost.</value>
     </data>
-    <data name="Wellness.Editor.Error.SaveFailed" xml:space="preserve">
+    <data name="Wellness.Error.ExerciseSaveFailed" xml:space="preserve">
         <value>Failed to save the exercise. Please try again.</value>
     </data>
-    <data name="Wellness.Editor.Label.Type" xml:space="preserve">
+    <data name="Wellness.Editor.TypeLabel" xml:space="preserve">
         <value>Type</value>
     </data>
-    <data name="Wellness.Editor.Button.New" xml:space="preserve">
+    <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>New exercise</value>
     </data>
-    <data name="Wellness.Editor.Button.Delete" xml:space="preserve">
+    <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Delete exercise</value>
     </data>
-    <data name="Wellness.Editor.Button.RestoreDefaults" xml:space="preserve">
+    <data name="Wellness.Editor.RestoreDefaultsButton" xml:space="preserve">
         <value>Restore defaults</value>
     </data>
-    <data name="Wellness.Editor.DeleteDialog.Title" xml:space="preserve">
+    <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
         <value>Delete exercise?</value>
     </data>
-    <data name="Wellness.Editor.DeleteDialog.Message" xml:space="preserve">
+    <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
         <value>“{0}” will be deleted. Your past sessions with this exercise stay in your history.</value>
     </data>
-    <data name="Wellness.Editor.Toast.DefaultsRestored" xml:space="preserve">
+    <data name="Wellness.ToastMessage.DefaultsRestored" xml:space="preserve">
         <value>Default exercises restored: {0}</value>
     </data>
-    <data name="Wellness.Editor.Toast.NothingToRestore" xml:space="preserve">
+    <data name="Wellness.ToastMessage.NothingToRestore" xml:space="preserve">
         <value>All default exercises are already available.</value>
     </data>
-    <data name="Wellness.Editor.Error.DeleteFailed" xml:space="preserve">
+    <data name="Wellness.Error.ExerciseDeleteFailed" xml:space="preserve">
         <value>Failed to delete the exercise. Please try again.</value>
     </data>
-    <data name="Wellness.Editor.Error.RestoreFailed" xml:space="preserve">
+    <data name="Wellness.Error.DefaultsRestoreFailed" xml:space="preserve">
         <value>Failed to restore the default exercises. Please try again.</value>
     </data>
+    <data name="Wellness.Phase.None" xml:space="preserve">
+        <value>No phase</value>
+    </data>
+    <data name="Wellness.Phase.Inhale" xml:space="preserve">
+        <value>Inhale</value>
+    </data>
+    <data name="Wellness.Phase.HoldIn" xml:space="preserve">
+        <value>Hold in</value>
+    </data>
+    <data name="Wellness.Phase.Exhale" xml:space="preserve">
+        <value>Exhale</value>
+    </data>
+    <data name="Wellness.Phase.HoldOut" xml:space="preserve">
+        <value>Hold out</value>
+    </data>
+
+    <!-- Wellness: exercise preview in the editor -->
     <data name="Wellness.Preview.Title" xml:space="preserve">
         <value>Preview</value>
     </data>
@@ -766,57 +819,64 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Preview.Empty" xml:space="preserve">
         <value>Add an instruction to preview the exercise.</value>
     </data>
-    <data name="Wellness.Phase.None" xml:space="preserve">
-        <value>No phase</value>
+
+    <!-- Default exercises: the built-in catalog, localized when seeded or restored; the AddWellnessExercises migration also reads the breathing ones -->
+    <data name="DefaultExercise.MeditationPrompt.FocusOnBreath" xml:space="preserve">
+        <value>Gently bring your attention to your breath.</value>
     </data>
-    <data name="Wellness.Phase.Inhale" xml:space="preserve">
-        <value>Inhale</value>
+    <data name="DefaultExercise.MeditationPrompt.NoticeSensations" xml:space="preserve">
+        <value>Notice the sensations in your body without judging them.</value>
     </data>
-    <data name="Wellness.Phase.HoldIn" xml:space="preserve">
-        <value>Hold in</value>
+    <data name="DefaultExercise.MeditationPrompt.ReturnToPresent" xml:space="preserve">
+        <value>If your mind wanders, gently return to the present moment.</value>
     </data>
-    <data name="Wellness.Phase.Exhale" xml:space="preserve">
-        <value>Exhale</value>
+    <data name="DefaultExercise.MeditationPrompt.LetThoughtsPass" xml:space="preserve">
+        <value>Let your thoughts come and go without holding on to them.</value>
     </data>
-    <data name="Wellness.Phase.HoldOut" xml:space="preserve">
-        <value>Hold out</value>
+    <data name="DefaultExercise.MeditationPrompt.RelaxShoulders" xml:space="preserve">
+        <value>Relax your shoulders and allow your breathing to feel natural.</value>
     </data>
-    <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.MeditationPrompt.SimplyBeHere" xml:space="preserve">
+        <value>Take a moment to simply be here, without needing to do anything.</value>
+    </data>
+    <data name="DefaultExercise.BoxBreathing.Name" xml:space="preserve">
         <value>Box Breathing</value>
     </data>
-    <data name="BreathingTechnique.BoxBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.BoxBreathing.Description" xml:space="preserve">
         <value>A steady breathing rhythm that can help you slow down and refocus. Inhale for 4 seconds, hold for 4, exhale for 4, then hold for 4.</value>
     </data>
-    <data name="BreathingTechnique.FourSevenEightBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.FourSevenEightBreathing.Name" xml:space="preserve">
         <value>4-7-8 Breathing</value>
     </data>
-    <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.FourSevenEightBreathing.Description" xml:space="preserve">
         <value>A slow breathing exercise for relaxing and releasing tension. Inhale for 4 seconds, hold for 7, then exhale slowly for 8.</value>
     </data>
-    <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.FourSixBreathing.Name" xml:space="preserve">
         <value>4-6 Breathing</value>
     </data>
-    <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.FourSixBreathing.Description" xml:space="preserve">
         <value>A gentle breathing rhythm for slowing down and easing tension. Inhale for 4 seconds, then exhale slowly for 6.</value>
     </data>
-    <data name="BreathingTechnique.TriangleBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.TriangleBreathing.Name" xml:space="preserve">
         <value>Triangle Breathing</value>
     </data>
-    <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.TriangleBreathing.Description" xml:space="preserve">
         <value>A simple breathing rhythm for slowing down and bringing attention to your breath. Inhale for 3 seconds, hold for 3, then exhale for 3.</value>
     </data>
-    <data name="Wellness.Default.GuidedCalm.Name" xml:space="preserve">
+    <data name="DefaultExercise.GuidedCalm.Name" xml:space="preserve">
         <value>Guided Calm</value>
     </data>
-    <data name="Wellness.Default.GuidedCalm.Description" xml:space="preserve">
+    <data name="DefaultExercise.GuidedCalm.Description" xml:space="preserve">
         <value>A gentle guided meditation with six short reflections, one minute each. Let each prompt guide your attention, then simply rest with it.</value>
     </data>
-    <data name="Wellness.Default.SilentSitting.Name" xml:space="preserve">
+    <data name="DefaultExercise.SilentSitting.Name" xml:space="preserve">
         <value>Silent Sitting</value>
     </data>
-    <data name="Wellness.Default.SilentSitting.Description" xml:space="preserve">
+    <data name="DefaultExercise.SilentSitting.Description" xml:space="preserve">
         <value>A quiet meditation with a single reminder to simply be present. Choose how many minutes you would like to sit.</value>
     </data>
+
+    <!-- Settings: categories, options, dialogs and errors -->
     <data name="Settings.Category.General" xml:space="preserve">
         <value>General</value>
     </data>
@@ -919,6 +979,16 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Error.DeleteAllDataFailed" xml:space="preserve">
         <value>Failed to delete all data. Please restart the app and try again.</value>
     </data>
+
+    <!-- Update dialog -->
+    <data name="NewUpdate.Dialog.Title" xml:space="preserve">
+        <value>Update Available</value>
+    </data>
+    <data name="NewUpdate.Dialog.Description" xml:space="preserve">
+        <value>A new version of the app is available (v{0} -> v{1}). Would you like to open GitHub to download the latest release?</value>
+    </data>
+
+    <!-- Credits: version, legal and contact information in Settings -->
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Version</value>
     </data>
@@ -942,53 +1012,5 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.Logo" xml:space="preserve">
         <value>Logo: Edwin Jo</value>
-    </data>
-    <data name="NewUpdate.Dialog.Title" xml:space="preserve">
-        <value>Update Available</value>
-    </data>
-    <data name="NewUpdate.Dialog.Description" xml:space="preserve">
-        <value>A new version of the app is available (v{0} -> v{1}). Would you like to open GitHub to download the latest release?</value>
-    </data>
-    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
-        <value>A private space for your thoughts.</value>
-    </data>
-    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
-        <value>Get Started</value>
-    </data>
-    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
-        <value>I have read and agree to the Terms of Use.</value>
-    </data>
-    <data name="Onboarding.Customize.Title" xml:space="preserve">
-        <value>Choose the look that feels right for you</value>
-    </data>
-    <data name="Onboarding.Customize.Description" xml:space="preserve">
-        <value>You can change these anytime in Settings.</value>
-    </data>
-    <data name="Onboarding.Customize.Appearance" xml:space="preserve">
-        <value>Appearance</value>
-    </data>
-    <data name="Onboarding.Customize.ColorPalette" xml:space="preserve">
-        <value>Color palette</value>
-    </data>
-    <data name="Onboarding.Customize.Translucency" xml:space="preserve">
-        <value>Translucency</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
-        <value>This is beta software</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
-        <value>easpace is still in active development and is not yet ready for general use. Some features may not work as expected, and data could be lost. By continuing you understand that you are using easpace at your own risk and are responsible for keeping your own backups of important data.</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
-        <value>I understand that easpace is beta software and accept the risks associated with using it, including possible data loss.</value>
-    </data>
-    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
-        <value>Thank you for giving easpace a try. I hope it can become a useful, private space for you. Your feedback is always welcome.</value>
-    </data>
-    <data name="Onboarding.Text.Developer" xml:space="preserve">
-        <value>developer</value>
-    </data>
-    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
-        <value>Martin Bartos (bmartin@easpace.eu)</value>
     </data>
 </root>

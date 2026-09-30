@@ -104,7 +104,7 @@ internal partial class WellnessEndingViewModel : ViewModelBase
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
-                Message = LocalizationService.GetString("Wellness.Error.SaveFailed")
+                Message = LocalizationService.GetString("Wellness.Error.SessionSaveFailed")
             };
             
             await _dialogService.ShowDialogAsync(errorDialog);

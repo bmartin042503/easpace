@@ -82,7 +82,7 @@ internal partial class ExerciseInstructionViewModel : ValidatorViewModelBase
     /// Gets the hint of the empty text box. With a phase, it's the phase's default text, which is used while the text is empty.
     /// </summary>
     public string TextPlaceholder => Phase is null
-        ? LocalizationService.GetString("Wellness.Editor.Input.TextPlaceholder")
+        ? LocalizationService.GetString("Wellness.Editor.InstructionTextPlaceholder")
         : ExerciseStep.GetDefaultText(Phase);
 
     /// <summary>

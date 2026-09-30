@@ -200,7 +200,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to save the wellness exercise with ID {Id}", exercise.Id);
-            await ShowErrorAsync("Wellness.Editor.Error.SaveFailed");
+            await ShowErrorAsync("Wellness.Error.ExerciseSaveFailed");
             return;
         }
 
@@ -259,7 +259,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to delete the wellness exercise with ID {Id}", exercise.Id);
-            await ShowErrorAsync("Wellness.Editor.Error.DeleteFailed");
+            await ShowErrorAsync("Wellness.Error.ExerciseDeleteFailed");
             return;
         }
 
@@ -289,19 +289,19 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to restore the default wellness exercises");
-            await ShowErrorAsync("Wellness.Editor.Error.RestoreFailed");
+            await ShowErrorAsync("Wellness.Error.DefaultsRestoreFailed");
             return;
         }
 
         if (restoredCount == 0)
         {
             _toastMessageService.ShowToastMessage(
-                LocalizationService.GetString("Wellness.Editor.Toast.NothingToRestore"), ToastMessageType.Info);
+                LocalizationService.GetString("Wellness.ToastMessage.NothingToRestore"), ToastMessageType.Info);
             return;
         }
 
         _toastMessageService.ShowToastMessage(
-            string.Format(LocalizationService.GetString("Wellness.Editor.Toast.DefaultsRestored"), restoredCount),
+            string.Format(LocalizationService.GetString("Wellness.ToastMessage.DefaultsRestored"), restoredCount),
             ToastMessageType.Success);
 
         var knownIds = Exercises.Select(e => e.Id).ToHashSet();
@@ -419,7 +419,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to create a new {Type} wellness exercise", form.Type);
-            await ShowErrorAsync("Wellness.Editor.Error.SaveFailed");
+            await ShowErrorAsync("Wellness.Error.ExerciseSaveFailed");
             return;
         }
 
@@ -451,10 +451,10 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     {
         var confirmation = new ConfirmDialogViewModel
         {
-            Title = LocalizationService.GetString("Wellness.Editor.DiscardDialog.Title"),
-            Message = LocalizationService.GetString("Wellness.Editor.DiscardDialog.Message"),
+            Title = LocalizationService.GetString("Wellness.DiscardChangesDialog.Title"),
+            Message = LocalizationService.GetString("Wellness.DiscardChangesDialog.Message"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
-            ConfirmText = LocalizationService.GetString("Wellness.Editor.Button.Discard"),
+            ConfirmText = LocalizationService.GetString("Wellness.Editor.DiscardButton"),
             IsDestructive = true
         };
 
@@ -466,8 +466,8 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     {
         var confirmation = new ConfirmDialogViewModel
         {
-            Title = LocalizationService.GetString("Wellness.Editor.DeleteDialog.Title"),
-            Message = string.Format(LocalizationService.GetString("Wellness.Editor.DeleteDialog.Message"), exercise.Name),
+            Title = LocalizationService.GetString("Wellness.DeleteExerciseDialog.Title"),
+            Message = string.Format(LocalizationService.GetString("Wellness.DeleteExerciseDialog.Message"), exercise.Name),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
             IsDestructive = true

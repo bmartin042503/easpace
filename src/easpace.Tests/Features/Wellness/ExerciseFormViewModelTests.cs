@@ -60,7 +60,7 @@ public class ExerciseFormViewModelTests
             (2, "", 4, BreathingPhaseType.HoldIn),
             (3, "", 4, BreathingPhaseType.Exhale));
         form.TotalCycleSeconds.Should().Be(12);
-        form.OneCycleDurationText.Should().Be(string.Format(LocalizationService.GetString("Wellness.Editor.Label.OneCycle"), "00:12"));
+        form.OneCycleDurationText.Should().Be(string.Format(LocalizationService.GetString("Wellness.Editor.OneCycleLabel"), "00:12"));
         form.IsDirty.Should().BeFalse();
         form.IsValid.Should().BeTrue();
     }
@@ -136,7 +136,7 @@ public class ExerciseFormViewModelTests
 
         SetPhase(instruction, null);
 
-        instruction.TextPlaceholder.Should().Be(LocalizationService.GetString("Wellness.Editor.Input.TextPlaceholder"));
+        instruction.TextPlaceholder.Should().Be(LocalizationService.GetString("Wellness.Editor.InstructionTextPlaceholder"));
         instruction.HasErrors.Should().BeTrue();
     }
 

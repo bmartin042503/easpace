@@ -231,17 +231,17 @@ Licensed under the MIT License. See LICENSE file for details.
                     </ComboBox>
 
                     <Button Classes="secondary icon" Command="{Binding CreateNewExerciseCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.New'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.NewExerciseButton'}">
                         <PathIcon Data="{StaticResource PhosphorIcons.Plus}" />
                     </Button>
 
                     <Button Classes="secondary icon" Command="{Binding DeleteExerciseCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.Delete'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.DeleteExerciseButton'}">
                         <PathIcon Data="{StaticResource PhosphorIcons.Trash}" />
                     </Button>
 
                     <Button Classes="secondary icon" Command="{Binding RestoreDefaultsCommand}"
-                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RestoreDefaults'}">
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.RestoreDefaultsButton'}">
                         <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}" />
                     </Button>
 
@@ -254,7 +254,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         VerticalAlignment="Top">
 
                 <Button Classes="secondary icon" Command="{Binding DiscardCommand}"
-                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.Discard'}">
+                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.DiscardButton'}">
                     <PathIcon Data="{StaticResource PhosphorIcons.X}" />
                 </Button>
 
@@ -287,7 +287,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                                         <TextBlock Classes="neutral fs4"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Type'}" />
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.TypeLabel'}" />
 
                                         <ListBox Classes="segmented" HorizontalAlignment="Left"
                                                  IsEnabled="{Binding IsCreatingNew}"
@@ -314,7 +314,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                                         <TextBlock Classes="neutral fs4"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Name'}" />
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.NameLabel'}" />
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -322,7 +322,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                             </Grid.ColumnDefinitions>
 
                                             <TextBox Grid.Column="0" Text="{Binding Name}"
-                                                     PlaceholderText="{core:LocalizationService Key='Wellness.Editor.Input.NamePlaceholder'}"
+                                                     PlaceholderText="{core:LocalizationService Key='Wellness.Editor.NamePlaceholder'}"
                                                      MaxLength="64" />
                                         </Grid>
 
@@ -332,7 +332,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                                         <TextBlock Classes="neutral fs4"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Description'}" />
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.DescriptionLabel'}" />
 
                                         <TextBox Text="{Binding Description}" AcceptsReturn="True" TextWrapping="Wrap"
                                                  VerticalContentAlignment="Top" MinHeight="80" MaxLength="256" />
@@ -344,13 +344,13 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                         <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Lg}">
                                             <ToggleSwitch IsChecked="{Binding IsRepeating}"
-                                                          Content="{core:LocalizationService Key='Wellness.Editor.Label.Repeat'}" />
+                                                          Content="{core:LocalizationService Key='Wellness.Editor.RepeatLabel'}" />
                                             <TextBlock Classes="neutral fs5" VerticalAlignment="Bottom" Margin="0,0,0,6"
                                                        Text="{Binding OneCycleDurationText}" />
                                         </StackPanel>
 
                                         <TextBlock Classes="subtle neutral fs6" TextWrapping="Wrap"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.RepeatHint'}" />
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.RepeatHint'}" />
 
                                     </StackPanel>
 
@@ -358,7 +358,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
                                         <TextBlock Classes="neutral fs4"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.Label.Instructions'}" />
+                                                   Text="{core:LocalizationService Key='Wellness.Editor.InstructionsLabel'}" />
 
                                         <!-- an ItemsControl, so there's no row selection competing with the inputs' focus -->
                                         <ItemsControl ItemsSource="{Binding Instructions}"
@@ -422,7 +422,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                                         <NumericUpDown.InnerRightContent>
                                                                             <TextBlock Classes="subtle neutral fs6" VerticalAlignment="Center"
                                                                                        Margin="0,0,6,0"
-                                                                                       Text="{core:LocalizationService Key='Wellness.Editor.Label.SecondsUnit'}" />
+                                                                                       Text="{core:LocalizationService Key='Wellness.Editor.SecondsUnit'}" />
                                                                         </NumericUpDown.InnerRightContent>
                                                                     </NumericUpDown>
 
@@ -431,21 +431,21 @@ Licensed under the MIT License. See LICENSE file for details.
                                                                         <Button Classes="tertiary icon"
                                                                                 Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionUpCommand}"
                                                                                 CommandParameter="{Binding}"
-                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveUp'}">
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.MoveUpButton'}">
                                                                             <PathIcon Data="{StaticResource PhosphorIcons.CaretUp}" />
                                                                         </Button>
 
                                                                         <Button Classes="tertiary icon"
                                                                                 Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).MoveInstructionDownCommand}"
                                                                                 CommandParameter="{Binding}"
-                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.MoveDown'}">
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.MoveDownButton'}">
                                                                             <PathIcon Data="{StaticResource PhosphorIcons.CaretDown}" />
                                                                         </Button>
 
                                                                         <Button Classes="tertiary danger icon"
                                                                                 Command="{Binding $parent[ItemsControl].((vm:ExerciseFormViewModel)DataContext).RemoveInstructionCommand}"
                                                                                 CommandParameter="{Binding}"
-                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.Button.RemoveInstruction'}">
+                                                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.RemoveInstructionButton'}">
                                                                             <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
                                                                         </Button>
 
@@ -477,7 +477,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                                           Width="{StaticResource Metrics.Icon.Size.Xs}"
                                                           Height="{StaticResource Metrics.Icon.Size.Xs}" />
                                                 <TextBlock VerticalAlignment="Center"
-                                                           Text="{core:LocalizationService Key='Wellness.Editor.Button.AddInstruction'}" />
+                                                           Text="{core:LocalizationService Key='Wellness.Editor.AddInstructionButton'}" />
                                             </StackPanel>
                                         </Button>
 
@@ -497,7 +497,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Metrics.Spacing.Sm}"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <TextBlock Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.NoExercises'}"
                                Classes="strong danger fs5" TextAlignment="Center"
                                HorizontalAlignment="Center" />
 
@@ -508,7 +508,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                       Width="{StaticResource Metrics.Icon.Size.Xs}"
                                       Height="{StaticResource Metrics.Icon.Size.Xs}" />
                             <TextBlock VerticalAlignment="Center"
-                                       Text="{core:LocalizationService Key='Wellness.Editor.Button.RestoreDefaults'}" />
+                                       Text="{core:LocalizationService Key='Wellness.Editor.RestoreDefaultsButton'}" />
                         </StackPanel>
                     </Button>
 

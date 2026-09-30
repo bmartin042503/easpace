@@ -39,7 +39,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Date input -->
                     <CalendarDatePicker SelectedDate="{Binding SelectedDate}"
                                         HorizontalAlignment="Stretch" Width="160"
-                                        PlaceholderText="{core:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
+                                        PlaceholderText="{core:LocalizationService Key='Common.Input.DatePlaceholder'}"
                                         DisplayDateEnd="{Binding MaxAllowedDate}" />
 
                     <!-- Time picker -->

@@ -231,7 +231,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
-                Message = LocalizationService.GetString("Wellness.Error.DeleteFailed")
+                Message = LocalizationService.GetString("Wellness.Error.SessionDeleteFailed")
             };
 
             await _dialogService.ShowDialogAsync(errorDialog);

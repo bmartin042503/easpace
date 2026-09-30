@@ -86,7 +86,7 @@ internal partial class ExerciseFormViewModel : ValidatorViewModelBase
         {
             var duration = TimeSpan.FromSeconds(TotalCycleSeconds);
             var durationText = duration.ToString(duration.TotalHours >= 1 ? @"hh\:mm\:ss" : @"mm\:ss");
-            return string.Format(LocalizationService.GetString("Wellness.Editor.Label.OneCycle"), durationText);
+            return string.Format(LocalizationService.GetString("Wellness.Editor.OneCycleLabel"), durationText);
         }
     }
 

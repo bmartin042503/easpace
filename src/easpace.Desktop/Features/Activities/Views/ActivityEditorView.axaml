@@ -169,7 +169,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding StartDate, Mode=TwoWay}"
                                             HorizontalAlignment="Stretch"
-                                            PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                                            PlaceholderText="{core:LocalizationService Key='Common.Input.DatePlaceholder'}" />
                     </Grid>
 
                 </StackPanel>
@@ -189,7 +189,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding TargetDate, Mode=TwoWay}"
                                             HorizontalAlignment="Stretch"
-                                            PlaceholderText="{core:LocalizationService Key='Activities.Input.DatePlaceholder'}" />
+                                            PlaceholderText="{core:LocalizationService Key='Common.Input.DatePlaceholder'}" />
                     </Grid>
 
                 </StackPanel>

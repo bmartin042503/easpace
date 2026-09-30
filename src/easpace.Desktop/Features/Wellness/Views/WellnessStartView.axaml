@@ -119,7 +119,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                         <!-- 'No exercises available' text -->
                         <TextBlock IsVisible="{Binding ShowNoExercises}"
-                                   Text="{core:LocalizationService Key='Wellness.Exercise.Empty.Message'}"
+                                   Text="{core:LocalizationService Key='Wellness.Empty.NoExercises'}"
                                    Classes="strong danger fs5" TextAlignment="Center" />
                     </Grid>
 
@@ -206,7 +206,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- 'Add entries' message -->
-                    <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.NoSessions'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
 
                 </StackPanel>

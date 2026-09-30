@@ -28,6 +28,8 @@ Licensed under the MIT License. See LICENSE file for details.
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
+
+    <!-- Navigation: sidebar items -->
     <data name="Navigation.Item.Journal" xml:space="preserve">
         <value>Napló</value>
     </data>
@@ -43,6 +45,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Navigation.Item.Wellness" xml:space="preserve">
         <value>Wellness</value>
     </data>
+
+    <!-- Common: relative times and chart time ranges -->
     <data name="Common.Time.JustNow" xml:space="preserve">
         <value>Épp most</value>
     </data>
@@ -79,6 +83,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Time.All" xml:space="preserve">
         <value>Összes</value>
     </data>
+
+    <!-- Common: buttons, toggles, inputs, errors and titles shared across the app -->
     <data name="Common.Button.Add" xml:space="preserve">
         <value>Új hozzáadása</value>
     </data>
@@ -133,219 +139,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Common.Title.History" xml:space="preserve">
         <value>Előzmények</value>
     </data>
-    <data name="Journal.Search.Placeholder" xml:space="preserve">
-        <value>Keresés...</value>
-    </data>
-    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
-        <value>Adj meg egy címet...</value>
-    </data>
-    <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
-        <value>Írd ide a gondolataidat...</value>
-    </data>
-    <data name="Journal.Empty.Message" xml:space="preserve">
-        <value>Kattins a + gombra az első bejegyzésed létrehozásához.</value>
-    </data>
-    <data name="Journal.Empty.SearchResult" xml:space="preserve">
-        <value>Nincs találat</value>
-    </data>
-    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
-        <value>Törlöd a(z) "{0}" bejegyzést?</value>
-    </data>
-    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
-    </data>
-    <data name="Journal.Error.LoadFailed" xml:space="preserve">
-        <value>Nem sikerült betölteni a naplóbejegyzéseket. Kérlek, próbáld újra később.</value>
-    </data>
-    <data name="Journal.Error.SaveFailed" xml:space="preserve">
-        <value>Nem sikerült elmenteni a naplóbejegyzést. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Journal.Error.DeleteFailed" xml:space="preserve">
-        <value>Nem sikerült törölni ezt a naplóbejegyzést. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Journal.WordCount.OneWord" xml:space="preserve">
-        <value>1 szó</value>
-    </data>
-    <data name="Journal.WordCount.Words" xml:space="preserve">
-        <value>{0} szó</value>
-    </data>
-    <data name="Activities.Empty.Message" xml:space="preserve">
-        <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
-    </data>
-    <data name="Activities.Button.Add" xml:space="preserve">
-        <value>Érték rögzítése</value>
-    </data>
-    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
-        <value>Tevékenység archiválva</value>
-    </data>
-    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
-        <value>Tevékenység visszaállítva</value>
-    </data>
-    <data name="Activities.Search.Placeholder" xml:space="preserve">
-        <value>Keresés...</value>
-    </data>
-    <data name="Activities.NumericActivity.Target" xml:space="preserve">
-        <value>Cél</value>
-    </data>
-    <data name="Activities.NumericActivity.StartDate" xml:space="preserve">
-        <value>Kezdés</value>
-    </data>
-    <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
-        <value>Céldátum</value>
-    </data>
-    <data name="Activities.Input.NewActivityName" xml:space="preserve">
-        <value>Új tevékenység</value>
-    </data>
-    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
-        <value>Adj meg egy nevet...</value>
-    </data>
-    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
-        <value>Egység...</value>
-    </data>
-    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
-        <value>Cél...</value>
-    </data>
-    <data name="Activities.Input.DatePlaceholder" xml:space="preserve">
+    <data name="Common.Input.DatePlaceholder" xml:space="preserve">
         <value>Dátum...</value>
     </data>
-    <data name="Activities.Label.Archived" xml:space="preserve">
-        <value>Archivált</value>
-    </data>
-    <data name="Activities.Label.Name" xml:space="preserve">
-        <value>Név</value>
-    </data>
-    <data name="Activities.Label.Type" xml:space="preserve">
-        <value>Típus</value>
-    </data>
-    <data name="Activities.Label.Unit" xml:space="preserve">
-        <value>Egység (pl. kg, oldal, lépés)</value>
-    </data>
-    <data name="Activities.Label.TargetValue" xml:space="preserve">
-        <value>Cél értéke</value>
-    </data>
-    <data name="Activities.Label.TargetDate" xml:space="preserve">
-        <value>Cél dátum</value>
-    </data>
-    <data name="Activities.Label.Aggregation" xml:space="preserve">
-        <value>Napi bejegyzések összevonása</value>
-    </data>
-    <data name="Activities.Aggregation.Sum" xml:space="preserve">
-        <value>Összeg</value>
-    </data>
-    <data name="Activities.Aggregation.Average" xml:space="preserve">
-        <value>Átlag</value>
-    </data>
-    <data name="Activities.Aggregation.Latest" xml:space="preserve">
-        <value>Legutóbbi érték</value>
-    </data>
-    <data name="Activities.Aggregation.Maximum" xml:space="preserve">
-        <value>Legmagasabb érték</value>
-    </data>
-    <data name="Activities.Label.DataEntry" xml:space="preserve">
-        <value>Adatok (1 bejegyzés)</value>
-    </data>
-    <data name="Activities.Label.DataEntries" xml:space="preserve">
-        <value>Adatok ({0} bejegyzés)</value>
-    </data>
-    <data name="Activities.CheckBox.Target" xml:space="preserve">
-        <value>Cél beállítása</value>
-    </data>
-    <data name="Activities.Title.Edit" xml:space="preserve">
-        <value>"{0}" szerkesztése</value>
-    </data>
-    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
-        <value>Törlöd a(z) "{0}" tevékenységet?</value>
-    </data>
-    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt a tevékenységet? A művelet nem vonható vissza.</value>
-    </data>
-    <data name="Activities.EntryDialog.Title" xml:space="preserve">
-        <value>Érték rögzítése</value>
-    </data>
-    <data name="Activities.EntryDialog.DatePlaceholder" xml:space="preserve">
-        <value>Dátum...</value>
-    </data>
-    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
-        <value>Érték...</value>
-    </data>
-    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
-        <value>Bejegyzés szerkesztése</value>
-    </data>
-    <data name="Activities.Type.Trend" xml:space="preserve">
-        <value>Trend</value>
-    </data>
-    <data name="Activities.Type.Milestone" xml:space="preserve">
-        <value>Mérföldkő</value>
-    </data>
-    <data name="Activities.Type.Routine" xml:space="preserve">
-        <value>Rutin</value>
-    </data>
-    <data name="Activities.Filter.Active" xml:space="preserve">
-        <value>Aktív</value>
-    </data>
-    <data name="Activities.Filter.Archived" xml:space="preserve">
-        <value>Archivált</value>
-    </data>
-    <data name="Activities.Error.LoadFailed" xml:space="preserve">
-        <value>Nem sikerült betölteni a tevékenységeket. Kérlek, próbáld újra később.</value>
-    </data>
-    <data name="Activities.Error.SaveFailed" xml:space="preserve">
-        <value>Nem sikerült elmenteni a tevékenységet. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Activities.Error.DeleteFailed" xml:space="preserve">
-        <value>Nem sikerült törölni ezt a tevékenységet. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Activities.Error.ArchiveFailed" xml:space="preserve">
-        <value>Nem sikerült módosítani az archiválást. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
-        <value>Nem sikerült törölni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
-        <value>Nem sikerült elmenteni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
-        <value>Hét</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
-        <value>Kedd</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
-        <value>Sze</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
-        <value>Csüt</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
-        <value>Pén</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
-        <value>Szo</value>
-    </data>
-    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
-        <value>Vas</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.Completed" xml:space="preserve">
-        <value>Teljesítve</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.NotCompleted" xml:space="preserve">
-        <value>Nincs teljesítve</value>
-    </data>
-    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
-        <value>Mai nap</value>
-    </data>
-    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
-        <value>Teljesítve</value>
-    </data>
-    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
-        <value>Nincs teljesítve</value>
-    </data>
-    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
-        <value>Üres</value>
-    </data>
-    <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
-        <value>Jelenlegi érték: {0} {1}</value>
-    </data>
+
+    <!-- Form validation: DataAnnotations error messages, looked up by their ErrorMessage key -->
     <data name="FormValidation.Name.Required" xml:space="preserve">
         <value>Kérlek, adj meg egy nevet.</value>
     </data>
@@ -385,6 +183,90 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Duration.Range" xml:space="preserve">
         <value>Az időtartamnak 1 és 3600 másodperc között kell lennie.</value>
     </data>
+
+    <!-- Onboarding: welcome, terms, customization, beta warning and thank-you screens -->
+    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
+        <value>Egy biztonságos hely a gondolataidnak.</value>
+    </data>
+    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
+        <value>Kezdjük el</value>
+    </data>
+    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
+        <value>Elolvastam és elfogadom a Felhasználási feltételeket.</value>
+    </data>
+    <data name="Onboarding.Customize.Title" xml:space="preserve">
+        <value>Válaszd ki a hozzád illő megjelenést</value>
+    </data>
+    <data name="Onboarding.Customize.Description" xml:space="preserve">
+        <value>Ezeket később bármikor módosíthatod a beállításokban.</value>
+    </data>
+    <data name="Onboarding.Customize.Appearance" xml:space="preserve">
+        <value>Megjelenés</value>
+    </data>
+    <data name="Onboarding.Customize.ColorPalette" xml:space="preserve">
+        <value>Színpaletta</value>
+    </data>
+    <data name="Onboarding.Customize.Translucency" xml:space="preserve">
+        <value>Áttetszőség</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
+        <value>Ez egy béta verzió</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
+        <value>Az easpace jelenleg aktív fejlesztés alatt áll, és még nem készült fel általános használatra. Egyes funkciók nem működhetnek megfelelően, és adatvesztés is előfordulhat. A folytatással tudomásul veszed, hogy az easpace-t saját felelősségedre használod, és a fontos adataid biztonsági mentéséről neked kell gondoskodnod.</value>
+    </data>
+    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
+        <value>Tudomásul veszem, hogy az easpace béta szoftver, és elfogadom a használatával járó kockázatokat, beleértve az esetleges adatvesztést is.</value>
+    </data>
+    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
+        <value>Köszönöm, hogy kipróbálod az easpacet. Remélem, hogy egy hasznos, biztonságos teret nyújt számodra. A visszajelzéseket mindig szívesen fogadom.</value>
+    </data>
+    <data name="Onboarding.Text.Developer" xml:space="preserve">
+        <value>fejlesztő</value>
+    </data>
+    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
+        <value>Bartos Martin (bmartin@easpace.eu)</value>
+    </data>
+
+    <!-- Journal: entry list, editor, dialogs and errors -->
+    <data name="Journal.Search.Placeholder" xml:space="preserve">
+        <value>Keresés...</value>
+    </data>
+    <data name="Journal.Input.TitlePlaceholder" xml:space="preserve">
+        <value>Adj meg egy címet...</value>
+    </data>
+    <data name="Journal.Input.ContentPlaceholder" xml:space="preserve">
+        <value>Írd ide a gondolataidat...</value>
+    </data>
+    <data name="Journal.Empty.Message" xml:space="preserve">
+        <value>Kattins a + gombra az első bejegyzésed létrehozásához.</value>
+    </data>
+    <data name="Journal.Empty.SearchResult" xml:space="preserve">
+        <value>Nincs találat</value>
+    </data>
+    <data name="Journal.DeleteDialog.Title" xml:space="preserve">
+        <value>Törlöd a(z) "{0}" bejegyzést?</value>
+    </data>
+    <data name="Journal.DeleteDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
+    </data>
+    <data name="Journal.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a naplóbejegyzéseket. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Journal.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a naplóbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Journal.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a naplóbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Journal.WordCount.OneWord" xml:space="preserve">
+        <value>1 szó</value>
+    </data>
+    <data name="Journal.WordCount.Words" xml:space="preserve">
+        <value>{0} szó</value>
+    </data>
+
+    <!-- Mood: states, labels (Mood.Label.* is looked up by MoodLabelState name), form and errors -->
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Nagyon kellemetlen</value>
     </data>
@@ -532,14 +414,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Label.Cheerfulness" xml:space="preserve">
         <value>Vidámság</value>
     </data>
-    <data name="Mood.Labels.More" xml:space="preserve">
+    <data name="Mood.Button.MoreEmotions" xml:space="preserve">
         <value>További érzelmek</value>
     </data>
     <data name="Mood.Input.DescriptionPlaceholder" xml:space="preserve">
         <value>Leírás...</value>
-    </data>
-    <data name="Mood.Input.DatePlaceholder" xml:space="preserve">
-        <value>Dátum...</value>
     </data>
     <data name="Mood.Empty.Message" xml:space="preserve">
         <value>Nincsenek bejegyzések</value>
@@ -553,6 +432,177 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Error.DeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt a bejegyzést. Kérlek, próbáld újra.</value>
     </data>
+
+    <!-- Activities: list, editor, data entries, dialogs and errors -->
+    <data name="Activities.Empty.Message" xml:space="preserve">
+        <value>Kattins a + gombra az első tevékenységed létrehozásához.</value>
+    </data>
+    <data name="Activities.Button.Add" xml:space="preserve">
+        <value>Érték rögzítése</value>
+    </data>
+    <data name="Activities.ToastMessage.Archived" xml:space="preserve">
+        <value>Tevékenység archiválva</value>
+    </data>
+    <data name="Activities.ToastMessage.Restored" xml:space="preserve">
+        <value>Tevékenység visszaállítva</value>
+    </data>
+    <data name="Activities.Search.Placeholder" xml:space="preserve">
+        <value>Keresés...</value>
+    </data>
+    <data name="Activities.NumericActivity.Target" xml:space="preserve">
+        <value>Cél</value>
+    </data>
+    <data name="Activities.NumericActivity.StartDate" xml:space="preserve">
+        <value>Kezdés</value>
+    </data>
+    <data name="Activities.NumericActivity.TargetDate" xml:space="preserve">
+        <value>Céldátum</value>
+    </data>
+    <data name="Activities.Input.NewActivityName" xml:space="preserve">
+        <value>Új tevékenység</value>
+    </data>
+    <data name="Activities.Input.NamePlaceholder" xml:space="preserve">
+        <value>Adj meg egy nevet...</value>
+    </data>
+    <data name="Activities.Input.UnitPlaceholder" xml:space="preserve">
+        <value>Egység...</value>
+    </data>
+    <data name="Activities.Input.TargetPlaceholder" xml:space="preserve">
+        <value>Cél...</value>
+    </data>
+    <data name="Activities.Label.Archived" xml:space="preserve">
+        <value>Archivált</value>
+    </data>
+    <data name="Activities.Label.Name" xml:space="preserve">
+        <value>Név</value>
+    </data>
+    <data name="Activities.Label.Type" xml:space="preserve">
+        <value>Típus</value>
+    </data>
+    <data name="Activities.Label.Unit" xml:space="preserve">
+        <value>Egység (pl. kg, oldal, lépés)</value>
+    </data>
+    <data name="Activities.Label.TargetValue" xml:space="preserve">
+        <value>Cél értéke</value>
+    </data>
+    <data name="Activities.Label.TargetDate" xml:space="preserve">
+        <value>Cél dátum</value>
+    </data>
+    <data name="Activities.Label.Aggregation" xml:space="preserve">
+        <value>Napi bejegyzések összevonása</value>
+    </data>
+    <data name="Activities.Aggregation.Sum" xml:space="preserve">
+        <value>Összeg</value>
+    </data>
+    <data name="Activities.Aggregation.Average" xml:space="preserve">
+        <value>Átlag</value>
+    </data>
+    <data name="Activities.Aggregation.Latest" xml:space="preserve">
+        <value>Legutóbbi érték</value>
+    </data>
+    <data name="Activities.Aggregation.Maximum" xml:space="preserve">
+        <value>Legmagasabb érték</value>
+    </data>
+    <data name="Activities.Label.DataEntry" xml:space="preserve">
+        <value>Adatok (1 bejegyzés)</value>
+    </data>
+    <data name="Activities.Label.DataEntries" xml:space="preserve">
+        <value>Adatok ({0} bejegyzés)</value>
+    </data>
+    <data name="Activities.CheckBox.Target" xml:space="preserve">
+        <value>Cél beállítása</value>
+    </data>
+    <data name="Activities.Title.Edit" xml:space="preserve">
+        <value>"{0}" szerkesztése</value>
+    </data>
+    <data name="Activities.DeleteDialog.Title" xml:space="preserve">
+        <value>Törlöd a(z) "{0}" tevékenységet?</value>
+    </data>
+    <data name="Activities.DeleteDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a tevékenységet? A művelet nem vonható vissza.</value>
+    </data>
+    <data name="Activities.EntryDialog.Title" xml:space="preserve">
+        <value>Érték rögzítése</value>
+    </data>
+    <data name="Activities.EntryDialog.NumericValuePlaceholder" xml:space="preserve">
+        <value>Érték...</value>
+    </data>
+    <data name="Activities.EditEntryDialog.Title" xml:space="preserve">
+        <value>Bejegyzés szerkesztése</value>
+    </data>
+    <data name="Activities.Type.Trend" xml:space="preserve">
+        <value>Trend</value>
+    </data>
+    <data name="Activities.Type.Milestone" xml:space="preserve">
+        <value>Mérföldkő</value>
+    </data>
+    <data name="Activities.Type.Routine" xml:space="preserve">
+        <value>Rutin</value>
+    </data>
+    <data name="Activities.Filter.Active" xml:space="preserve">
+        <value>Aktív</value>
+    </data>
+    <data name="Activities.Filter.Archived" xml:space="preserve">
+        <value>Archivált</value>
+    </data>
+    <data name="Activities.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a tevékenységeket. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Activities.Error.SaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni a tevékenységet. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.DeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt a tevékenységet. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.ArchiveFailed" xml:space="preserve">
+        <value>Nem sikerült módosítani az archiválást. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.EntryDeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Activities.Error.EntrySaveFailed" xml:space="preserve">
+        <value>Nem sikerült elmenteni ezt az adatbejegyzést. Kérlek, próbáld újra.</value>
+    </data>
+
+    <!-- Activities: routine calendar and trend details -->
+    <data name="RoutineActivity.CalendarDay.MondayShort" xml:space="preserve">
+        <value>Hét</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.TuesdayShort" xml:space="preserve">
+        <value>Kedd</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.WednesdayShort" xml:space="preserve">
+        <value>Sze</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.ThursdayShort" xml:space="preserve">
+        <value>Csüt</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.FridayShort" xml:space="preserve">
+        <value>Pén</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SaturdayShort" xml:space="preserve">
+        <value>Szo</value>
+    </data>
+    <data name="RoutineActivity.CalendarDay.SundayShort" xml:space="preserve">
+        <value>Vas</value>
+    </data>
+    <data name="RoutineActivity.EntryState.Completed" xml:space="preserve">
+        <value>Teljesítve</value>
+    </data>
+    <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
+        <value>Nincs teljesítve</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Mai nap</value>
+    </data>
+    <data name="RoutineActivity.EntryState.None" xml:space="preserve">
+        <value>Üres</value>
+    </data>
+    <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
+        <value>Jelenlegi érték: {0} {1}</value>
+    </data>
+
+    <!-- Wellness: start view and session history -->
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Szánj egy percet magadra</value>
     </data>
@@ -580,6 +630,35 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.BeginSession" xml:space="preserve">
         <value>Gyakorlat indítása</value>
     </data>
+    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
+        <value>Gyakorlatok kezelése</value>
+    </data>
+    <data name="Wellness.Session.OneCycle" xml:space="preserve">
+        <value>1 ciklus</value>
+    </data>
+    <data name="Wellness.Session.Cycles" xml:space="preserve">
+        <value>{0} ciklus</value>
+    </data>
+    <data name="Wellness.Empty.NoSessions" xml:space="preserve">
+        <value>Nincsenek alkalmak</value>
+    </data>
+    <data name="Wellness.Error.LoadFailed" xml:space="preserve">
+        <value>Nem sikerült betölteni a wellness adatokat. Kérlek, próbáld újra később.</value>
+    </data>
+    <data name="Wellness.Error.SessionDeleteFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt az alkalmat. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
+        <value>Törlöd az alkalmat?</value>
+    </data>
+    <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt az alkalmat? A művelet nem vonható vissza.</value>
+    </data>
+    <data name="Wellness.Empty.NoExercises" xml:space="preserve">
+        <value>Nincsenek elérhető gyakorlatok.</value>
+    </data>
+
+    <!-- Wellness: running session and ending view -->
     <data name="Wellness.Button.PauseSession" xml:space="preserve">
         <value>Szüneteltetés</value>
     </data>
@@ -591,9 +670,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Button.DiscardSession" xml:space="preserve">
         <value>Elvetés</value>
-    </data>
-    <data name="Wellness.Button.ManageExercises" xml:space="preserve">
-        <value>Gyakorlatok kezelése</value>
     </data>
     <data name="Wellness.Instruction.BreatheIn" xml:space="preserve">
         <value>Lélegezz be...</value>
@@ -613,135 +689,112 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Text.SessionSaved" xml:space="preserve">
         <value>Alkalom elmentve</value>
     </data>
-    <data name="Wellness.Session.OneCycle" xml:space="preserve">
-        <value>1 ciklus</value>
-    </data>
-    <data name="Wellness.Session.Cycles" xml:space="preserve">
-        <value>{0} ciklus</value>
-    </data>
-    <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>Nincsenek alkalmak</value>
-    </data>
-    <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
-        <value>Finoman irányítsd a figyelmed a légzésedre.</value>
-    </data>
-    <data name="Wellness.Instruction2.Meditation" xml:space="preserve">
-        <value>Figyeld meg a tested érzéseit anélkül, hogy megítélnéd őket.</value>
-    </data>
-    <data name="Wellness.Instruction3.Meditation" xml:space="preserve">
-        <value>Ha elkalandozik a figyelmed, finoman térj vissza a jelen pillanathoz.</value>
-    </data>
-    <data name="Wellness.Instruction4.Meditation" xml:space="preserve">
-        <value>Engedd, hogy a gondolatok jöjjenek és menjenek anélkül, hogy kapaszkodnál beléjük.</value>
-    </data>
-    <data name="Wellness.Instruction5.Meditation" xml:space="preserve">
-        <value>Lazítsd el a vállaidat, és hagyd, hogy a légzésed természetes legyen.</value>
-    </data>
-    <data name="Wellness.Instruction6.Meditation" xml:space="preserve">
-        <value>Szánj egy pillanatot arra, hogy egyszerűen csak jelen legyél.</value>
-    </data>
-    <data name="Wellness.Error.LoadFailed" xml:space="preserve">
-        <value>Nem sikerült betölteni a wellness adatokat. Kérlek, próbáld újra később.</value>
-    </data>
-    <data name="Wellness.Error.SaveFailed" xml:space="preserve">
+    <data name="Wellness.Error.SessionSaveFailed" xml:space="preserve">
         <value>Nem sikerült elmenteni az alkalmat. Kérlek, próbáld újra.</value>
     </data>
-    <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
-        <value>Nem sikerült törölni ezt az alkalmat. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
-        <value>Törlöd az alkalmat?</value>
-    </data>
-    <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt az alkalmat? A művelet nem vonható vissza.</value>
-    </data>
-    <data name="Wellness.Exercise.Empty.Message" xml:space="preserve">
-        <value>Nincsenek elérhető gyakorlatok.</value>
-    </data>
+
+    <!-- Wellness: exercise editor -->
     <data name="Wellness.Editor.Title" xml:space="preserve">
         <value>Gyakorlatok kezelése</value>
     </data>
-    <data name="Wellness.Editor.Label.Repeat" xml:space="preserve">
+    <data name="Wellness.Editor.RepeatLabel" xml:space="preserve">
         <value>Utasítások ismétlése</value>
     </data>
-    <data name="Wellness.Editor.Label.OneCycle" xml:space="preserve">
+    <data name="Wellness.Editor.OneCycleLabel" xml:space="preserve">
         <value>Egy ciklus: {0}</value>
     </data>
-    <data name="Wellness.Editor.Label.Instructions" xml:space="preserve">
+    <data name="Wellness.Editor.InstructionsLabel" xml:space="preserve">
         <value>Utasítások</value>
     </data>
-    <data name="Wellness.Editor.Label.Name" xml:space="preserve">
+    <data name="Wellness.Editor.NameLabel" xml:space="preserve">
         <value>Név</value>
     </data>
-    <data name="Wellness.Editor.Label.Description" xml:space="preserve">
+    <data name="Wellness.Editor.DescriptionLabel" xml:space="preserve">
         <value>Leírás</value>
     </data>
-    <data name="Wellness.Editor.Label.RepeatHint" xml:space="preserve">
+    <data name="Wellness.Editor.RepeatHint" xml:space="preserve">
         <value>Bekapcsolva minden alkalom előtt kiválaszthatod, hány ciklust végzel. Kikapcsolva az utasítások egyszer, ismétlés nélkül követik egymást.</value>
     </data>
-    <data name="Wellness.Editor.Label.SecondsUnit" xml:space="preserve">
+    <data name="Wellness.Editor.SecondsUnit" xml:space="preserve">
         <value>mp</value>
     </data>
-    <data name="Wellness.Editor.Input.NamePlaceholder" xml:space="preserve">
+    <data name="Wellness.Editor.NamePlaceholder" xml:space="preserve">
         <value>A gyakorlat neve</value>
     </data>
-    <data name="Wellness.Editor.Input.TextPlaceholder" xml:space="preserve">
+    <data name="Wellness.Editor.InstructionTextPlaceholder" xml:space="preserve">
         <value>Az utasítás szövege</value>
     </data>
-    <data name="Wellness.Editor.Button.AddInstruction" xml:space="preserve">
+    <data name="Wellness.Editor.AddInstructionButton" xml:space="preserve">
         <value>Utasítás hozzáadása</value>
     </data>
-    <data name="Wellness.Editor.Button.MoveUp" xml:space="preserve">
+    <data name="Wellness.Editor.MoveUpButton" xml:space="preserve">
         <value>Mozgatás feljebb</value>
     </data>
-    <data name="Wellness.Editor.Button.MoveDown" xml:space="preserve">
+    <data name="Wellness.Editor.MoveDownButton" xml:space="preserve">
         <value>Mozgatás lejjebb</value>
     </data>
-    <data name="Wellness.Editor.Button.RemoveInstruction" xml:space="preserve">
+    <data name="Wellness.Editor.RemoveInstructionButton" xml:space="preserve">
         <value>Utasítás törlése</value>
     </data>
-    <data name="Wellness.Editor.Button.Discard" xml:space="preserve">
+    <data name="Wellness.Editor.DiscardButton" xml:space="preserve">
         <value>Módosítások elvetése</value>
     </data>
-    <data name="Wellness.Editor.DiscardDialog.Title" xml:space="preserve">
+    <data name="Wellness.DiscardChangesDialog.Title" xml:space="preserve">
         <value>Elveted a módosításokat?</value>
     </data>
-    <data name="Wellness.Editor.DiscardDialog.Message" xml:space="preserve">
+    <data name="Wellness.DiscardChangesDialog.Message" xml:space="preserve">
         <value>A gyakorlat nem mentett módosításai elvesznek.</value>
     </data>
-    <data name="Wellness.Editor.Error.SaveFailed" xml:space="preserve">
+    <data name="Wellness.Error.ExerciseSaveFailed" xml:space="preserve">
         <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
-    <data name="Wellness.Editor.Label.Type" xml:space="preserve">
+    <data name="Wellness.Editor.TypeLabel" xml:space="preserve">
         <value>Típus</value>
     </data>
-    <data name="Wellness.Editor.Button.New" xml:space="preserve">
+    <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>Új gyakorlat</value>
     </data>
-    <data name="Wellness.Editor.Button.Delete" xml:space="preserve">
+    <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Gyakorlat törlése</value>
     </data>
-    <data name="Wellness.Editor.Button.RestoreDefaults" xml:space="preserve">
+    <data name="Wellness.Editor.RestoreDefaultsButton" xml:space="preserve">
         <value>Alapértelmezések visszaállítása</value>
     </data>
-    <data name="Wellness.Editor.DeleteDialog.Title" xml:space="preserve">
+    <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
         <value>Törlöd a gyakorlatot?</value>
     </data>
-    <data name="Wellness.Editor.DeleteDialog.Message" xml:space="preserve">
+    <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
         <value>Ez a gyakorlat törlődik: „{0}”. A vele végzett korábbi alkalmaid megmaradnak az előzményekben.</value>
     </data>
-    <data name="Wellness.Editor.Toast.DefaultsRestored" xml:space="preserve">
+    <data name="Wellness.ToastMessage.DefaultsRestored" xml:space="preserve">
         <value>{0} alapértelmezett gyakorlat visszaállítva.</value>
     </data>
-    <data name="Wellness.Editor.Toast.NothingToRestore" xml:space="preserve">
+    <data name="Wellness.ToastMessage.NothingToRestore" xml:space="preserve">
         <value>Már minden alapértelmezett gyakorlat elérhető.</value>
     </data>
-    <data name="Wellness.Editor.Error.DeleteFailed" xml:space="preserve">
+    <data name="Wellness.Error.ExerciseDeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
-    <data name="Wellness.Editor.Error.RestoreFailed" xml:space="preserve">
+    <data name="Wellness.Error.DefaultsRestoreFailed" xml:space="preserve">
         <value>Nem sikerült visszaállítani az alapértelmezett gyakorlatokat. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Wellness.Phase.None" xml:space="preserve">
+        <value>Nincs fázis</value>
+    </data>
+    <data name="Wellness.Phase.Inhale" xml:space="preserve">
+        <value>Belégzés</value>
+    </data>
+    <data name="Wellness.Phase.HoldIn" xml:space="preserve">
+        <value>Bent tartás</value>
+    </data>
+    <data name="Wellness.Phase.Exhale" xml:space="preserve">
+        <value>Kilégzés</value>
+    </data>
+    <data name="Wellness.Phase.HoldOut" xml:space="preserve">
+        <value>Kint tartás</value>
+    </data>
+
+    <!-- Wellness: exercise preview in the editor -->
     <data name="Wellness.Preview.Title" xml:space="preserve">
         <value>Előnézet</value>
     </data>
@@ -766,57 +819,64 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Preview.Empty" xml:space="preserve">
         <value>Adj hozzá egy utasítást a gyakorlat előnézetéhez.</value>
     </data>
-    <data name="Wellness.Phase.None" xml:space="preserve">
-        <value>Nincs fázis</value>
+
+    <!-- Default exercises: the built-in catalog, localized when seeded or restored; the AddWellnessExercises migration also reads the breathing ones -->
+    <data name="DefaultExercise.MeditationPrompt.FocusOnBreath" xml:space="preserve">
+        <value>Finoman irányítsd a figyelmed a légzésedre.</value>
     </data>
-    <data name="Wellness.Phase.Inhale" xml:space="preserve">
-        <value>Belégzés</value>
+    <data name="DefaultExercise.MeditationPrompt.NoticeSensations" xml:space="preserve">
+        <value>Figyeld meg a tested érzéseit anélkül, hogy megítélnéd őket.</value>
     </data>
-    <data name="Wellness.Phase.HoldIn" xml:space="preserve">
-        <value>Bent tartás</value>
+    <data name="DefaultExercise.MeditationPrompt.ReturnToPresent" xml:space="preserve">
+        <value>Ha elkalandozik a figyelmed, finoman térj vissza a jelen pillanathoz.</value>
     </data>
-    <data name="Wellness.Phase.Exhale" xml:space="preserve">
-        <value>Kilégzés</value>
+    <data name="DefaultExercise.MeditationPrompt.LetThoughtsPass" xml:space="preserve">
+        <value>Engedd, hogy a gondolatok jöjjenek és menjenek anélkül, hogy kapaszkodnál beléjük.</value>
     </data>
-    <data name="Wellness.Phase.HoldOut" xml:space="preserve">
-        <value>Kint tartás</value>
+    <data name="DefaultExercise.MeditationPrompt.RelaxShoulders" xml:space="preserve">
+        <value>Lazítsd el a vállaidat, és hagyd, hogy a légzésed természetes legyen.</value>
     </data>
-    <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.MeditationPrompt.SimplyBeHere" xml:space="preserve">
+        <value>Szánj egy pillanatot arra, hogy egyszerűen csak jelen legyél.</value>
+    </data>
+    <data name="DefaultExercise.BoxBreathing.Name" xml:space="preserve">
         <value>Dobozlégzés</value>
     </data>
-    <data name="BreathingTechnique.BoxBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.BoxBreathing.Description" xml:space="preserve">
         <value>Egyenletes légzési ritmus, amely segíthet lelassulni és újra összpontosítani. Lélegezz be 4 másodpercig, tartsd bent 4-ig, lélegezz ki 4 másodperc alatt, majd tartsd kint 4-ig.</value>
     </data>
-    <data name="BreathingTechnique.FourSevenEightBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.FourSevenEightBreathing.Name" xml:space="preserve">
         <value>4-7-8 légzés</value>
     </data>
-    <data name="BreathingTechnique.FourSevenEightBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.FourSevenEightBreathing.Description" xml:space="preserve">
         <value>Lassú légzőgyakorlat az ellazuláshoz és a feszültség elengedéséhez. Lélegezz be 4 másodpercig, tartsd bent 7-ig, majd lassan lélegezz ki 8 másodperc alatt.</value>
     </data>
-    <data name="BreathingTechnique.FourSixBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.FourSixBreathing.Name" xml:space="preserve">
         <value>4-6 légzés</value>
     </data>
-    <data name="BreathingTechnique.FourSixBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.FourSixBreathing.Description" xml:space="preserve">
         <value>Kíméletes légzési ritmus a lelassuláshoz és a feszültség oldásához. Lélegezz be 4 másodpercig, majd lassan lélegezz ki 6 másodperc alatt.</value>
     </data>
-    <data name="BreathingTechnique.TriangleBreathing.Name" xml:space="preserve">
+    <data name="DefaultExercise.TriangleBreathing.Name" xml:space="preserve">
         <value>Háromszög-légzés</value>
     </data>
-    <data name="BreathingTechnique.TriangleBreathing.Description" xml:space="preserve">
+    <data name="DefaultExercise.TriangleBreathing.Description" xml:space="preserve">
         <value>Egyszerű légzési ritmus a lelassuláshoz és a figyelem légzésre irányításához. Lélegezz be 3 másodpercig, tartsd bent 3-ig, majd lélegezz ki 3 másodperc alatt.</value>
     </data>
-    <data name="Wellness.Default.GuidedCalm.Name" xml:space="preserve">
+    <data name="DefaultExercise.GuidedCalm.Name" xml:space="preserve">
         <value>Vezetett nyugalom</value>
     </data>
-    <data name="Wellness.Default.GuidedCalm.Description" xml:space="preserve">
+    <data name="DefaultExercise.GuidedCalm.Description" xml:space="preserve">
         <value>Szelíd, vezetett meditáció hat rövid gondolattal, mindegyik egy percig tart. Hagyd, hogy minden gondolat irányítsa a figyelmed, majd egyszerűen időzz el vele.</value>
     </data>
-    <data name="Wellness.Default.SilentSitting.Name" xml:space="preserve">
+    <data name="DefaultExercise.SilentSitting.Name" xml:space="preserve">
         <value>Csendes ülés</value>
     </data>
-    <data name="Wellness.Default.SilentSitting.Description" xml:space="preserve">
+    <data name="DefaultExercise.SilentSitting.Description" xml:space="preserve">
         <value>Csendes meditáció egyetlen emlékeztetővel, hogy egyszerűen csak jelen legyél. Válaszd ki, hány percig szeretnél ülni.</value>
     </data>
+
+    <!-- Settings: categories, options, dialogs and errors -->
     <data name="Settings.Category.General" xml:space="preserve">
         <value>Általános</value>
     </data>
@@ -848,7 +908,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Haven Blue</value>
     </data>
     <data name="Settings.ColorScheme.AvallamaPurple" xml:space="preserve">
-        <value>Avallama Purple</value>f
+        <value>Avallama Purple</value>
     </data>
     <data name="Settings.ColorSchemeAppearance.Label" xml:space="preserve">
         <value>Megjelenés</value>
@@ -919,6 +979,16 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Settings.Error.DeleteAllDataFailed" xml:space="preserve">
         <value>Nem sikerült törölni az összes adatot. Kérlek, indítsd újra az alkalmazást, és próbáld újra.</value>
     </data>
+
+    <!-- Update dialog -->
+    <data name="NewUpdate.Dialog.Title" xml:space="preserve">
+        <value>Frissítés elérhető</value>
+    </data>
+    <data name="NewUpdate.Dialog.Description" xml:space="preserve">
+        <value>Új frissítés érhető el az alkalmazáshoz (v{0} -> v{1}). Szeretnéd megnyitni a GitHubot a legújabb kiadás letöltéséhez?</value>
+    </data>
+
+    <!-- Credits: version, legal and contact information in Settings -->
     <data name="Credits.Text.Version" xml:space="preserve">
         <value>Verzió</value>
     </data>
@@ -942,53 +1012,5 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Credits.Text.Logo" xml:space="preserve">
         <value>Logó: Edwin Jo</value>
-    </data>
-    <data name="NewUpdate.Dialog.Title" xml:space="preserve">
-        <value>Frissítés elérhető</value>
-    </data>
-    <data name="NewUpdate.Dialog.Description" xml:space="preserve">
-        <value>Új frissítés érhető el az alkalmazáshoz (v{0} -> v{1}). Szeretnéd megnyitni a GitHubot a legújabb kiadás letöltéséhez?</value>
-    </data>
-    <data name="Onboarding.Welcome.Subtitle" xml:space="preserve">
-        <value>Egy biztonságos hely a gondolataidnak.</value>
-    </data>
-    <data name="Onboarding.Welcome.GetStarted" xml:space="preserve">
-        <value>Kezdjük el</value>
-    </data>
-    <data name="Onboarding.TermsOfUse.Accept" xml:space="preserve">
-        <value>Elolvastam és elfogadom a Felhasználási feltételeket.</value>
-    </data>
-    <data name="Onboarding.Customize.Title" xml:space="preserve">
-        <value>Válaszd ki a hozzád illő megjelenést</value>
-    </data>
-    <data name="Onboarding.Customize.Description" xml:space="preserve">
-        <value>Ezeket később bármikor módosíthatod a beállításokban.</value>
-    </data>
-    <data name="Onboarding.Customize.Appearance" xml:space="preserve">
-        <value>Megjelenés</value>
-    </data>
-    <data name="Onboarding.Customize.ColorPalette" xml:space="preserve">
-        <value>Színpaletta</value>
-    </data>
-    <data name="Onboarding.Customize.Translucency" xml:space="preserve">
-        <value>Áttetszőség</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Title" xml:space="preserve">
-        <value>Ez egy béta verzió</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Description" xml:space="preserve">
-        <value>Az easpace jelenleg aktív fejlesztés alatt áll, és még nem készült fel általános használatra. Egyes funkciók nem működhetnek megfelelően, és adatvesztés is előfordulhat. A folytatással tudomásul veszed, hogy az easpace-t saját felelősségedre használod, és a fontos adataid biztonsági mentéséről neked kell gondoskodnod.</value>
-    </data>
-    <data name="Onboarding.BetaWarning.Accept" xml:space="preserve">
-        <value>Tudomásul veszem, hogy az easpace béta szoftver, és elfogadom a használatával járó kockázatokat, beleértve az esetleges adatvesztést is.</value>
-    </data>
-    <data name="Onboarding.ThankYou.Title" xml:space="preserve">
-        <value>Köszönöm, hogy kipróbálod az easpacet. Remélem, hogy egy hasznos, biztonságos teret nyújt számodra. A visszajelzéseket mindig szívesen fogadom.</value>
-    </data>
-    <data name="Onboarding.Text.Developer" xml:space="preserve">
-        <value>fejlesztő</value>
-    </data>
-    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
-        <value>Bartos Martin (bmartin@easpace.eu)</value>
     </data>
 </root>
