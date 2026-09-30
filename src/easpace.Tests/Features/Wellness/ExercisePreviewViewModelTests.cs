@@ -27,10 +27,11 @@ public class ExercisePreviewViewModelTests
         ExerciseStep.Create("Breathe", 30, null)
     ];
 
-    private static ExercisePreviewViewModel CreateLoadedPreview(IReadOnlyList<ExerciseStep> steps, WellnessSessionType type)
+    private static ExercisePreviewViewModel CreateLoadedPreview(
+        IReadOnlyList<ExerciseStep> steps, WellnessSessionType type, bool isRepeating = true)
     {
         var preview = new ExercisePreviewViewModel();
-        preview.Load(steps, type);
+        preview.Load(steps, type, isRepeating);
         return preview;
     }
 
@@ -127,6 +128,58 @@ public class ExercisePreviewViewModelTests
     }
 
     [AvaloniaFact]
+    public void StepForward_WithoutRepeating_StopsAtTheLastStep()
+    {
+        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation, isRepeating: false);
+        preview.Progress!.Cycles.Should().Be(1);
+
+        preview.StepForwardCommand.Execute(null);
+
+        preview.Progress!.StepIndex.Should().Be(1);
+        preview.Progress.CycleIndex.Should().Be(0);
+        preview.StepForwardCommand.CanExecute(null).Should().BeFalse();
+        preview.StepBackwardCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [AvaloniaFact]
+    public void Play_WithoutRepeating_StopsAfterOneCycleAndPlaysAgainFromTheStart()
+    {
+        var preview = CreateLoadedPreview([ExerciseStep.Create("One", 1, null)], WellnessSessionType.Meditation,
+            isRepeating: false);
+
+        preview.TogglePlayPauseCommand.Execute(null);
+        RunDispatcherFor(TimeSpan.FromSeconds(1.3));
+
+        // finished on the last step of the first cycle, with no time left
+        preview.IsPlaying.Should().BeFalse();
+        preview.Progress!.StepIndex.Should().Be(0);
+        preview.Progress.CycleIndex.Should().Be(0);
+        preview.StepSecondsText.Should().Be("0");
+
+        preview.TogglePlayPauseCommand.Execute(null);
+
+        preview.IsPlaying.Should().BeTrue();
+        preview.StepSecondsText.Should().Be("1");
+
+        preview.Dispose();
+    }
+
+    [AvaloniaFact]
+    public void Load_WithoutRepeating_MovesThePositionIntoTheOnlyCycle()
+    {
+        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        for (var i = 0; i < 6; i++) preview.StepForwardCommand.Execute(null);
+        preview.Progress!.CycleIndex.Should().Be(1);
+
+        preview.Load(BoxSteps, WellnessSessionType.Breathing, false);
+
+        preview.Progress!.CycleIndex.Should().Be(0);
+        preview.Progress.StepIndex.Should().Be(2);
+        preview.Progress.Cycles.Should().Be(1);
+        preview.StepForwardCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [AvaloniaFact]
     public void Load_KeepsThePositionAndClampsItToTheRemainingSteps()
     {
         var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
@@ -134,7 +187,7 @@ public class ExercisePreviewViewModelTests
         preview.Progress!.CycleIndex.Should().Be(1);
         preview.Progress.StepIndex.Should().Be(3);
 
-        preview.Load(BoxSteps.Take(2).ToList(), WellnessSessionType.Breathing);
+        preview.Load(BoxSteps.Take(2).ToList(), WellnessSessionType.Breathing, true);
 
         preview.Progress!.CycleIndex.Should().Be(1);
         preview.Progress.StepIndex.Should().Be(1);
@@ -153,7 +206,8 @@ public class ExercisePreviewViewModelTests
         var secondsLeft = preview.StepSecondsText;
         secondsLeft.Should().NotBe("60");
 
-        preview.Load([ExerciseStep.Create("Sit still", 60, null), MeditationSteps[1]], WellnessSessionType.Meditation);
+        preview.Load([ExerciseStep.Create("Sit still", 60, null), MeditationSteps[1]], WellnessSessionType.Meditation,
+            true);
 
         preview.InstructionText.Should().Be("Sit still");
         preview.StepSecondsText.Should().Be(secondsLeft);
@@ -191,11 +245,38 @@ public class ExercisePreviewViewModelTests
         var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
         preview.TogglePlayPauseCommand.Execute(null);
 
-        preview.Load([ExerciseStep.Create("Sit", 10, null)], WellnessSessionType.Meditation);
+        preview.Load([ExerciseStep.Create("Sit", 10, null)], WellnessSessionType.Meditation, true);
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
 
         preview.IsPlaying.Should().BeTrue();
         preview.StepSecondsText.Should().NotBe("10");
+
+        preview.Dispose();
+    }
+
+    [AvaloniaFact]
+    public void Reset_StopsThePreviewAtTheStartOfTheNewSteps()
+    {
+        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        preview.TogglePlayPauseCommand.Execute(null);
+        preview.StepForwardCommand.Execute(null);
+        RunDispatcherFor(TimeSpan.FromSeconds(1.3));
+        preview.StepSecondsText.Should().NotBe("4");
+
+        // another exercise with the same timing, which Load would continue at the position and time of the current one
+        var otherSteps = BoxSteps.Select(s => ExerciseStep.Create("Other", s.DurationSeconds, s.Phase)).ToList();
+        preview.Reset(otherSteps, WellnessSessionType.Breathing, true);
+
+        // as if it had just been loaded: the first step with its full time, no elapsed time and the smallest circle
+        var loaded = CreateLoadedPreview(otherSteps, WellnessSessionType.Breathing);
+        preview.IsPlaying.Should().BeFalse();
+        preview.Progress.Should().Be(loaded.Progress);
+        preview.CircleSize.Should().Be(loaded.CircleSize);
+
+        // the timers are stopped as well
+        RunDispatcherFor(TimeSpan.FromSeconds(1.3));
+
+        preview.Progress.Should().Be(loaded.Progress);
 
         preview.Dispose();
     }
@@ -211,7 +292,7 @@ public class ExercisePreviewViewModelTests
         preview.Dispose();
         changes = 0;
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
-        preview.Load(MeditationSteps, WellnessSessionType.Meditation);
+        preview.Load(MeditationSteps, WellnessSessionType.Meditation, true);
 
         changes.Should().Be(0);
         preview.IsPlaying.Should().BeFalse();

@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using Avalonia.Headless.XUnit;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
@@ -65,6 +66,13 @@ public class WellnessExerciseEditorViewModelTests
         return editor;
     }
 
+    private async Task<WellnessExerciseEditorViewModel> CreateEditingEditorAsync(Guid selectedExerciseId)
+    {
+        var editor = await CreateInitializedEditorAsync(selectedExerciseId);
+        editor.EditExerciseCommand.Execute(null);
+        return editor;
+    }
+
     private static BreathingExercise Breathing(string name) => new()
     {
         Name = name,
@@ -83,35 +91,72 @@ public class WellnessExerciseEditorViewModelTests
             .Returns(Task.CompletedTask);
 
     [Fact]
-    public async Task Initialize_SelectsTheRequestedExerciseWithACleanForm()
+    public async Task Initialize_ShowsTheRequestedExerciseReadOnly()
     {
         var editor = await CreateInitializedEditorAsync(_calm.Id);
 
+        editor.IsEditing.Should().BeFalse();
         editor.SelectedExercise!.Id.Should().Be(_calm.Id);
         editor.Form!.Id.Should().Be(_calm.Id);
         editor.Form.Name.Should().Be("Calm");
         editor.Form.IsDirty.Should().BeFalse();
         editor.CanChangeSelection.Should().BeTrue();
+        editor.EditExerciseCommand.CanExecute(null).Should().BeTrue();
+        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeTrue();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeTrue();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeTrue();
         editor.SaveCommand.CanExecute(null).Should().BeFalse();
         editor.DiscardCommand.CanExecute(null).Should().BeFalse();
     }
 
     [Fact]
-    public async Task EditingTheForm_LocksTheSelectionAndEnablesSaveAndDiscard()
+    public async Task EditExercise_LocksTheCollectionAndAllowsDiscarding()
     {
         var editor = await CreateInitializedEditorAsync(_box.Id);
 
+        editor.EditExerciseCommand.Execute(null);
+
+        editor.IsEditing.Should().BeTrue();
+        editor.Form!.Id.Should().Be(_box.Id);
+        editor.CanChangeSelection.Should().BeFalse();
+        editor.EditExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
+        editor.RestoreDefaultsCommand.CanExecute(null).Should().BeFalse();
+        editor.DiscardCommand.CanExecute(null).Should().BeTrue();
+
+        // nothing to save until something changes
+        editor.SaveCommand.CanExecute(null).Should().BeFalse();
+
+        editor.Form.Name = "Square";
+
+        editor.SaveCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task EditExercise_WithoutExercises_IsNotAvailable()
+    {
+        SetUpExercises();
+        var editor = await InitializeEditorAsync(null);
+
+        editor.EditExerciseCommand.CanExecute(null).Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task ChangesWhileNotEditing_CannotBeSaved()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+
+        // the view shows the form read-only, but the command mustn't rely on that
         editor.Form!.Name = "Square";
 
-        editor.CanChangeSelection.Should().BeFalse();
-        editor.SaveCommand.CanExecute(null).Should().BeTrue();
-        editor.DiscardCommand.CanExecute(null).Should().BeTrue();
+        editor.SaveCommand.CanExecute(null).Should().BeFalse();
     }
 
     [Fact]
     public async Task InvalidForm_CannotBeSaved()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
 
         editor.Form!.Name = "";
 
@@ -122,9 +167,9 @@ public class WellnessExerciseEditorViewModelTests
     }
 
     [Fact]
-    public async Task Save_UpdatesTheExerciseAndReloadsWithACleanForm()
+    public async Task Save_UpdatesTheExerciseAndReturnsToTheCleanReadOnlyForm()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
         editor.Form.Instructions[1].DurationSeconds = 6;
 
@@ -148,13 +193,14 @@ public class WellnessExerciseEditorViewModelTests
         editor.SelectedExercise.Name.Should().Be("Square");
         editor.Form!.Name.Should().Be("Square");
         editor.Form.IsDirty.Should().BeFalse();
+        editor.IsEditing.Should().BeFalse();
         editor.CanChangeSelection.Should().BeTrue();
     }
 
     [Fact]
-    public async Task Save_WhenTheServiceFails_ShowsAnErrorAndKeepsTheChanges()
+    public async Task Save_WhenTheServiceFails_ShowsAnErrorAndKeepsEditingTheChanges()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
         _exerciseServiceMock
             .Setup(s => s.UpdateExerciseAsync(_box.Id, It.IsAny<UpsertWellnessExerciseRequest>(), It.IsAny<CancellationToken>()))
@@ -166,21 +212,54 @@ public class WellnessExerciseEditorViewModelTests
             dialog.Message == LocalizationService.GetString("Wellness.Error.ExerciseSaveFailed"))), Times.Once);
         editor.Form!.Name.Should().Be("Square");
         editor.Form.IsDirty.Should().BeTrue();
+        editor.IsEditing.Should().BeTrue();
     }
 
     [Fact]
-    public async Task Discard_RevertsTheFormToTheStoredExercise()
+    public async Task Discard_WithoutChanges_StopsEditingWithoutAsking()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
+        var form = editor.Form;
+
+        await editor.DiscardCommand.ExecuteAsync(null);
+
+        editor.IsEditing.Should().BeFalse();
+        editor.Form.Should().BeSameAs(form);
+        editor.CanChangeSelection.Should().BeTrue();
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.IsAny<ConfirmDialogViewModel>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Discard_WithChanges_RevertsTheFormOnceTheUserConfirms()
+    {
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
         editor.Form.RemoveInstructionCommand.Execute(editor.Form.Instructions[0]);
+        AnswerConfirmation(confirm: true);
 
-        editor.DiscardCommand.Execute(null);
+        await editor.DiscardCommand.ExecuteAsync(null);
 
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.Is<ConfirmDialogViewModel>(dialog =>
+            dialog.IsDestructive && dialog.Title == LocalizationService.GetString("Wellness.DiscardChangesDialog.Title"))), Times.Once);
+        editor.IsEditing.Should().BeFalse();
         editor.Form!.Name.Should().Be("Box");
         editor.Form.Instructions.Select(i => i.Phase).Should().Equal(BreathingPhaseType.Inhale, BreathingPhaseType.Exhale);
         editor.Form.IsDirty.Should().BeFalse();
         editor.CanChangeSelection.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Discard_WithChanges_KeepsEditingWhenTheUserCancels()
+    {
+        var editor = await CreateEditingEditorAsync(_box.Id);
+        editor.Form!.Name = "Square";
+        AnswerConfirmation(confirm: false);
+
+        await editor.DiscardCommand.ExecuteAsync(null);
+
+        editor.IsEditing.Should().BeTrue();
+        editor.Form!.Name.Should().Be("Square");
+        editor.Form.IsDirty.Should().BeTrue();
     }
 
     [Fact]
@@ -199,7 +278,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public async Task NavigateBack_WithChanges_StaysWhenTheUserCancels()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
         AnswerConfirmation(confirm: false);
         var closed = false;
@@ -216,7 +295,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public async Task NavigateBack_WithChanges_ClosesWhenTheUserConfirms()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Form!.Name = "Square";
         AnswerConfirmation(confirm: true);
         var closed = false;
@@ -230,12 +309,13 @@ public class WellnessExerciseEditorViewModelTests
     }
 
     [Fact]
-    public async Task CreateNewExercise_StartsACleanDraftOfTheSelectedType()
+    public async Task CreateNewExercise_StartsEditingACleanDraftOfTheSelectedType()
     {
         var editor = await CreateInitializedEditorAsync(_calm.Id);
 
         editor.CreateNewExerciseCommand.Execute(null);
 
+        editor.IsEditing.Should().BeTrue();
         editor.SelectedExercise.Should().BeNull();
         editor.Form!.IsCreatingNew.Should().BeTrue();
         editor.Form.Id.Should().BeNull();
@@ -259,27 +339,47 @@ public class WellnessExerciseEditorViewModelTests
     }
 
     [Fact]
-    public async Task CreateNewExercise_LocksTheHeaderUntilTheDraftIsDiscarded()
+    public async Task CreateNewExercise_LocksTheCollectionUntilTheDraftIsDiscarded()
     {
         var editor = await CreateInitializedEditorAsync(_calm.Id);
 
         editor.CreateNewExerciseCommand.Execute(null);
 
         editor.CanChangeSelection.Should().BeFalse();
+        editor.EditExerciseCommand.CanExecute(null).Should().BeFalse();
         editor.CreateNewExerciseCommand.CanExecute(null).Should().BeFalse();
         editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
         editor.RestoreDefaultsCommand.CanExecute(null).Should().BeFalse();
         editor.SaveCommand.CanExecute(null).Should().BeFalse();
         editor.DiscardCommand.CanExecute(null).Should().BeTrue();
 
-        editor.DiscardCommand.Execute(null);
+        // an untouched draft is dropped without asking
+        await editor.DiscardCommand.ExecuteAsync(null);
 
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.IsAny<ConfirmDialogViewModel>()), Times.Never);
+        editor.IsEditing.Should().BeFalse();
         editor.SelectedExercise!.Id.Should().Be(_calm.Id);
         editor.Form!.Id.Should().Be(_calm.Id);
         editor.CanChangeSelection.Should().BeTrue();
+        editor.EditExerciseCommand.CanExecute(null).Should().BeTrue();
         editor.CreateNewExerciseCommand.CanExecute(null).Should().BeTrue();
         editor.DeleteExerciseCommand.CanExecute(null).Should().BeTrue();
         editor.RestoreDefaultsCommand.CanExecute(null).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task DiscardingAChangedDraft_AsksFirst()
+    {
+        var editor = await CreateInitializedEditorAsync(_calm.Id);
+        editor.CreateNewExerciseCommand.Execute(null);
+        editor.Form!.Name = "Evening";
+        AnswerConfirmation(confirm: true);
+
+        await editor.DiscardCommand.ExecuteAsync(null);
+
+        _dialogServiceMock.Verify(d => d.ShowDialogAsync(It.IsAny<ConfirmDialogViewModel>()), Times.Once);
+        editor.IsEditing.Should().BeFalse();
+        editor.SelectedExercise!.Id.Should().Be(_calm.Id);
     }
 
     [Fact]
@@ -289,8 +389,9 @@ public class WellnessExerciseEditorViewModelTests
         var editor = await InitializeEditorAsync(null);
         editor.CreateNewExerciseCommand.Execute(null);
 
-        editor.DiscardCommand.Execute(null);
+        await editor.DiscardCommand.ExecuteAsync(null);
 
+        editor.IsEditing.Should().BeFalse();
         editor.Form.Should().BeNull();
         editor.ShowNoExercises.Should().BeTrue();
     }
@@ -338,6 +439,7 @@ public class WellnessExerciseEditorViewModelTests
         editor.Form!.IsCreatingNew.Should().BeFalse();
         editor.Form.Id.Should().Be(editor.SelectedExercise.Id);
         editor.Form.IsDirty.Should().BeFalse();
+        editor.IsEditing.Should().BeFalse();
         editor.CanChangeSelection.Should().BeTrue();
     }
 
@@ -416,13 +518,10 @@ public class WellnessExerciseEditorViewModelTests
     }
 
     [Fact]
-    public async Task UnsavedChanges_DisableDeleteAndRestore()
+    public async Task DeleteExercise_WhileEditing_IsNotAvailable()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
 
-        editor.Form!.Name = "Square";
-
-        editor.CreateNewExerciseCommand.CanExecute(null).Should().BeFalse();
         editor.DeleteExerciseCommand.CanExecute(null).Should().BeFalse();
         editor.RestoreDefaultsCommand.CanExecute(null).Should().BeFalse();
     }
@@ -506,7 +605,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public async Task EditingTheInstructions_ReloadsThePreviewAtItsPosition()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
         editor.Preview.StepForwardCommand.Execute(null);
 
         editor.Form!.AddInstructionCommand.Execute(null);
@@ -521,25 +620,79 @@ public class WellnessExerciseEditorViewModelTests
         editor.Form.Instructions.Select(i => i.IsPreviewing).Should().Equal(false, true, false);
     }
 
-    [Fact]
-    public async Task SelectingAnotherExercise_RestartsThePreviewWithItsSteps()
+    // the preview plays on the UI thread, so these tests run on it
+    [AvaloniaFact]
+    public async Task SelectingAnotherExercise_StopsThePreviewAtTheStartOfItsSteps()
     {
         var editor = await CreateInitializedEditorAsync(_box.Id);
+        editor.Preview.TogglePlayPauseCommand.Execute(null);
         editor.Preview.StepForwardCommand.Execute(null);
 
         editor.SelectedExercise = editor.Exercises.Single(e => e.Id == _calm.Id);
 
+        editor.Preview.IsPlaying.Should().BeFalse();
         editor.Preview.Progress!.StepIndex.Should().Be(0);
         editor.Preview.Progress.CycleIndex.Should().Be(0);
+        editor.Preview.StepSecondsText.Should().Be("60");
         editor.Preview.InstructionText.Should().Be("Sit");
         editor.Preview.ShowBreathingCircle.Should().BeFalse();
         editor.Preview.ShowCountdown.Should().BeTrue();
+        editor.Form!.Instructions.Select(i => i.IsPreviewing).Should().Equal(true);
+
+        editor.Close();
+    }
+
+    [AvaloniaFact]
+    public async Task CreateNewExercise_StopsThePreviewAtTheStartOfTheDraft()
+    {
+        var editor = await CreateInitializedEditorAsync(_box.Id);
+        editor.Preview.TogglePlayPauseCommand.Execute(null);
+        editor.Preview.StepForwardCommand.Execute(null);
+
+        editor.CreateNewExerciseCommand.Execute(null);
+
+        editor.Preview.IsPlaying.Should().BeFalse();
+        editor.Preview.Progress!.StepIndex.Should().Be(0);
+        editor.Preview.Progress.CycleIndex.Should().Be(0);
+        editor.Preview.Progress.StepCount.Should().Be(1);
+
+        // the draft's changes don't start it either
+        editor.Form!.AddInstructionCommand.Execute(null);
+
+        editor.Preview.IsPlaying.Should().BeFalse();
+        editor.Preview.Progress!.StepCount.Should().Be(2);
+
+        editor.Close();
+    }
+
+    [AvaloniaFact]
+    public async Task EditingTheInstructions_KeepsThePreviewPlaying()
+    {
+        var editor = await CreateEditingEditorAsync(_box.Id);
+        editor.Preview.TogglePlayPauseCommand.Execute(null);
+
+        editor.Form!.AddInstructionCommand.Execute(null);
+
+        editor.Preview.IsPlaying.Should().BeTrue();
+
+        editor.Close();
+    }
+
+    [Fact]
+    public async Task TurningRepeatingOff_LimitsThePreviewToOneCycle()
+    {
+        var editor = await CreateEditingEditorAsync(_box.Id);
+        editor.Preview.Progress!.Cycles.Should().BeNull();
+
+        editor.Form!.IsRepeating = false;
+
+        editor.Preview.Progress!.Cycles.Should().Be(1);
     }
 
     [Fact]
     public async Task Close_DisposesThePreview()
     {
-        var editor = await CreateInitializedEditorAsync(_box.Id);
+        var editor = await CreateEditingEditorAsync(_box.Id);
 
         editor.Close();
         editor.Form!.AddInstructionCommand.Execute(null);

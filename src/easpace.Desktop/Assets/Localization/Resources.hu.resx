@@ -715,6 +715,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.RepeatHint" xml:space="preserve">
         <value>Bekapcsolva minden alkalom előtt kiválaszthatod, hány ciklust végzel. Kikapcsolva az utasítások egyszer, ismétlés nélkül követik egymást.</value>
     </data>
+    <data name="Wellness.Editor.RepeatsInCyclesText" xml:space="preserve">
+        <value>Ciklusokban ismétlődik</value>
+    </data>
+    <data name="Wellness.Editor.RunsOnceText" xml:space="preserve">
+        <value>Egyszer fut le</value>
+    </data>
+    <data name="Wellness.Editor.PhaseLabel" xml:space="preserve">
+        <value>Fázis</value>
+    </data>
+    <data name="Wellness.Editor.DurationLabel" xml:space="preserve">
+        <value>Időtartam</value>
+    </data>
     <data name="Wellness.Editor.SecondsUnit" xml:space="preserve">
         <value>mp</value>
     </data>
@@ -753,6 +765,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>Új gyakorlat</value>
+    </data>
+    <data name="Wellness.Editor.EditButton" xml:space="preserve">
+        <value>Gyakorlat szerkesztése</value>
     </data>
     <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Gyakorlat törlése</value>
@@ -795,9 +810,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
 
     <!-- Wellness: exercise preview in the editor -->
-    <data name="Wellness.Preview.Title" xml:space="preserve">
-        <value>Előnézet</value>
-    </data>
     <data name="Wellness.Preview.Play" xml:space="preserve">
         <value>Lejátszás</value>
     </data>

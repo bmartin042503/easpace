@@ -22,7 +22,8 @@ using Microsoft.Extensions.Logging;
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
 /// <summary>
-/// Lets the user browse and edit the wellness exercises in place of the start view.
+/// Lets the user browse and edit the wellness exercises in place of the start view. An exercise is only shown until the
+/// user starts editing it or creates a new one.
 /// </summary>
 internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 {
@@ -47,6 +48,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     private bool _isInitialized;
 
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(EditExerciseCommand))]
     [NotifyCanExecuteChangedFor(nameof(DeleteExerciseCommand))]
     private WellnessExerciseViewModel? _selectedExercise;
 
@@ -55,13 +57,22 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    private ExerciseFormViewModel? _form;
+
+    /// <summary>
+    /// Gets whether the form is being edited. Otherwise the exercise is only shown, and the exercises can be browsed,
+    /// created, deleted and restored.
+    /// </summary>
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanChangeSelection))]
+    [NotifyCanExecuteChangedFor(nameof(EditExerciseCommand))]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     [NotifyCanExecuteChangedFor(nameof(DiscardCommand))]
     [NotifyCanExecuteChangedFor(nameof(CreateNewExerciseCommand))]
     [NotifyCanExecuteChangedFor(nameof(DeleteExerciseCommand))]
     [NotifyCanExecuteChangedFor(nameof(RestoreDefaultsCommand))]
-    private ExerciseFormViewModel? _form;
+    private bool _isEditing;
 
     /// <summary>
     /// Gets the exercises of every session type: breathing first, then meditation, each sorted by name.
@@ -77,12 +88,9 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     public bool ShowNoExercises => IsInitialized && !HasExercises && Form is null;
 
     /// <summary>
-    /// Gets whether another exercise can be selected, which unsaved changes and a new exercise prevent.
+    /// Gets whether another exercise can be selected, which isn't possible while editing.
     /// </summary>
-    public bool CanChangeSelection => HasExercises && !IsFormLocked;
-
-    // unsaved changes and a new exercise keep the user on the form until it's saved or discarded
-    private bool IsFormLocked => Form is { IsDirty: true } or { IsCreatingNew: true };
+    public bool CanChangeSelection => HasExercises && !IsEditing;
 
     /// <summary>
     /// Occurs when the user leaves the editor.
@@ -156,7 +164,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Starts a new exercise with the type of the selected one, or breathing when nothing is selected.
+    /// Starts editing the selected exercise.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanEditExercise))]
+    private void EditExercise() => IsEditing = true;
+
+    /// <summary>
+    /// Starts editing a new exercise with the type of the selected one, or breathing when nothing is selected.
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanCreateNewExercise))]
     private void CreateNewExercise()
@@ -167,11 +181,12 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         _exerciseBeforeDraft = SelectedExercise;
         SelectedExercise = null;
         Form = new ExerciseFormViewModel(type);
+        IsEditing = true;
     }
 
     /// <summary>
-    /// Saves the form. A new exercise is added to the list and selected; an existing one is saved and the exercises are
-    /// reloaded, as a new name can change their order.
+    /// Saves the form and stops editing. A new exercise is added to the list and selected; an existing one is saved and
+    /// the exercises are reloaded, as a new name can change their order.
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task Save()
@@ -208,6 +223,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         {
             // selecting the saved exercise again gives a clean form
             await LoadExercisesAsync(exercise.Id);
+            IsEditing = false;
         }
         catch (OperationCanceledException)
         {
@@ -221,12 +237,14 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Drops the unsaved changes by loading the stored exercise into a new form. A new exercise is dropped entirely,
-    /// and the exercise selected before it is shown again.
+    /// Stops editing. Unsaved changes are dropped once the user confirms, by loading the stored exercise into a new
+    /// form. A new exercise is dropped entirely, and the exercise selected before it is shown again.
     /// </summary>
-    [RelayCommand(CanExecute = nameof(CanDiscard))]
-    private void Discard()
+    [RelayCommand(CanExecute = nameof(IsEditing))]
+    private async Task Discard()
     {
+        if (Form is { IsDirty: true } && !await ConfirmDiscardAsync()) return;
+
         if (Form is { IsCreatingNew: true })
         {
             SelectedExercise = _exerciseBeforeDraft;
@@ -234,10 +252,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
             // without a previous exercise, the selection doesn't change and the form has to be cleared here
             if (SelectedExercise is null) Form = null;
-            return;
+        }
+        else if (Form is { IsDirty: true } && SelectedExercise is { } exercise)
+        {
+            Form = new ExerciseFormViewModel(exercise.Exercise);
         }
 
-        Form = SelectedExercise is { } exercise ? new ExerciseFormViewModel(exercise.Exercise) : null;
+        IsEditing = false;
     }
 
     /// <summary>
@@ -324,15 +345,15 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         SelectedExercise = Exercises.FirstOrDefault(e => !knownIds.Contains(e.Id)) ?? SelectedExercise;
     }
 
-    private bool CanSave() => Form is { IsDirty: true, IsValid: true };
+    private bool CanEditExercise() => SelectedExercise is not null && !IsEditing;
 
-    private bool CanDiscard() => Form is { IsDirty: true } or { IsCreatingNew: true };
+    private bool CanSave() => IsEditing && Form is { IsDirty: true, IsValid: true };
 
-    private bool CanCreateNewExercise() => IsInitialized && !IsFormLocked;
+    private bool CanCreateNewExercise() => IsInitialized && !IsEditing;
 
-    private bool CanDeleteExercise() => SelectedExercise is not null && !IsFormLocked;
+    private bool CanDeleteExercise() => SelectedExercise is not null && !IsEditing;
 
-    private bool CanRestoreDefaults() => IsInitialized && !IsFormLocked;
+    private bool CanRestoreDefaults() => IsInitialized && !IsEditing;
 
     /// <summary>
     /// Stops the work that is still running, including the preview. Called once the editor is no longer shown.
@@ -362,12 +383,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             newValue.DefinitionChanged += OnFormDefinitionChanged;
         }
 
-        // a reloaded form of the same exercise, e.g. after saving, keeps the position of the preview
+        // a reloaded form of the same exercise, e.g. after saving, keeps the position of the preview; another exercise
+        // is shown from its start, paused
         var isOtherExercise = newValue is null || newValue.IsCreatingNew || newValue.Id != oldValue?.Id;
-        LoadPreview(restart: isOtherExercise);
+        LoadPreview(reset: isOtherExercise);
     }
 
-    private void OnFormDefinitionChanged(object? sender, EventArgs e) => LoadPreview(restart: false);
+    private void OnFormDefinitionChanged(object? sender, EventArgs e) => LoadPreview(reset: false);
 
     private void OnPreviewPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -377,7 +399,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         }
     }
 
-    private void LoadPreview(bool restart)
+    private void LoadPreview(bool reset)
     {
         if (Form is not { } form)
         {
@@ -385,8 +407,8 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             return;
         }
 
-        Preview.Load(form.ToSteps(), form.Type);
-        if (restart) Preview.Restart();
+        if (reset) Preview.Reset(form.ToSteps(), form.Type, form.IsRepeating);
+        else Preview.Load(form.ToSteps(), form.Type, form.IsRepeating);
 
         // the progress may not change, but which instruction a step comes from can
         form.HighlightStep(Preview.Progress?.StepIndex);
@@ -394,14 +416,10 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     private void OnFormPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName is not (nameof(ExerciseFormViewModel.IsDirty) or nameof(ExerciseFormViewModel.IsValid))) return;
-
-        OnPropertyChanged(nameof(CanChangeSelection));
-        SaveCommand.NotifyCanExecuteChanged();
-        DiscardCommand.NotifyCanExecuteChanged();
-        CreateNewExerciseCommand.NotifyCanExecuteChanged();
-        DeleteExerciseCommand.NotifyCanExecuteChanged();
-        RestoreDefaultsCommand.NotifyCanExecuteChanged();
+        if (e.PropertyName is nameof(ExerciseFormViewModel.IsDirty) or nameof(ExerciseFormViewModel.IsValid))
+        {
+            SaveCommand.NotifyCanExecuteChanged();
+        }
     }
 
     private async Task CreateExerciseAsync(ExerciseFormViewModel form)
@@ -435,6 +453,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
         // selecting the new exercise replaces the draft with a clean form of the stored exercise
         SelectedExercise = exercise;
+        IsEditing = false;
     }
 
     private async Task LoadExercisesAsync(Guid? selectedExerciseId)

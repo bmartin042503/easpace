@@ -5,8 +5,12 @@ using System;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 using Avalonia.VisualTree;
 
 namespace easpace.Desktop.Behaviors;
@@ -14,8 +18,9 @@ namespace easpace.Desktop.Behaviors;
 /// <summary>
 /// Provides an attached behavior for the ItemsControl that lets the user reorder its items by dragging them by a
 /// handle. The handle is any element of an item with the <c>drag-handle</c> class, so the other inputs of the item
-/// keep working. While dragging, the dragged item container has the <c>dragging</c> class and the container at the
-/// drop position has the <c>drop-before</c> or <c>drop-after</c> class. Escape cancels the drag.
+/// keep working. While dragging, a scaled-down picture of the item with the <c>drag-ghost</c> class follows the
+/// pointer above the window, the dragged item container has the <c>dragging</c> class and the container at the drop
+/// position has the <c>drop-before</c> or <c>drop-after</c> class. Escape cancels the drag.
 /// </summary>
 /// <remarks>
 /// The drag captures the pointer instead of starting a system drag and drop, as the items never leave the control.
@@ -23,9 +28,14 @@ namespace easpace.Desktop.Behaviors;
 internal class ItemsReorderBehavior : AvaloniaObject
 {
     private const string DragHandleClass = "drag-handle";
+    private const string DragGhostClass = "drag-ghost";
     private const string DraggingClass = "dragging";
     private const string DropBeforeClass = "drop-before";
     private const string DropAfterClass = "drop-after";
+
+    // the ghost is compact and see-through, so the drop targets under it stay visible
+    private const double GhostScale = 0.78;
+    private const double GhostOpacity = 0.65;
 
     /// <summary>
     /// Identifies the MoveCommand attached property. Setting a command enables the behavior; the command receives an
@@ -94,8 +104,14 @@ internal class ItemsReorderBehavior : AvaloniaObject
             EndDrag(itemsControl, commit: false);
         };
 
+        // pictured before the container is marked, as the mark may dim it
+        ShowGhost(state, e);
+
         itemsControl.SetValue(DragStateProperty, state);
         container.Classes.Add(DraggingClass);
+
+        // the tool tips of the items under the pointer would cover the drop position; the override is undone at the end
+        state.ToolTipSuppression = itemsControl.SetValue(ToolTip.ServiceEnabledProperty, false, BindingPriority.Animation);
         state.TopLevel?.AddHandler(InputElement.KeyDownEvent, state.KeyDownHandler, RoutingStrategies.Tunnel);
 
         e.Pointer.Capture(itemsControl);
@@ -103,11 +119,13 @@ internal class ItemsReorderBehavior : AvaloniaObject
     }
 
     /// <summary>
-    /// Moves the drop indicator to the gap nearest to the pointer.
+    /// Moves the ghost with the pointer and the drop indicator to the gap nearest to the pointer.
     /// </summary>
     private static void OnPointerMoved(object? sender, PointerEventArgs e)
     {
         if (sender is not ItemsControl itemsControl || itemsControl.GetValue(DragStateProperty) is not { } state) return;
+
+        MoveGhost(state, e);
 
         var pointerY = e.GetPosition(itemsControl).Y;
         Control? target = null;
@@ -168,6 +186,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
         var insertIndex = state.InsertIndex;
         state.Source.Classes.Remove(DraggingClass);
         ClearDropTarget(state);
+        RemoveGhost(state);
+        state.ToolTipSuppression?.Dispose();
 
         if (state.KeyDownHandler is not null) state.TopLevel?.RemoveHandler(InputElement.KeyDownEvent, state.KeyDownHandler);
         if (ReferenceEquals(state.Pointer.Captured, itemsControl)) state.Pointer.Capture(null);
@@ -187,6 +207,63 @@ internal class ItemsReorderBehavior : AvaloniaObject
         state.Target?.Classes.Remove(DropAfterClass);
         state.Target = null;
         state.InsertIndex = null;
+    }
+
+    /// <summary>
+    /// Shows a picture of the dragged item above the window, under the pointer that presses it. It's scaled down around
+    /// the point the item is held by, so that point stays under the pointer.
+    /// </summary>
+    private static void ShowGhost(DragState state, PointerEventArgs e)
+    {
+        // the overlay layer is above the whole window, so the ghost isn't clipped by the list's scroll viewer
+        if (OverlayLayer.GetOverlayLayer(state.Source) is not { } layer) return;
+
+        var size = state.Source.Bounds.Size;
+        var scaling = state.TopLevel?.RenderScaling ?? 1;
+        var pixelSize = PixelSize.FromSize(size, scaling);
+        if (pixelSize.Width <= 0 || pixelSize.Height <= 0) return;
+
+        var picture = new RenderTargetBitmap(pixelSize, new Vector(96 * scaling, 96 * scaling));
+        picture.Render(state.Source);
+
+        var grabPoint = e.GetPosition(state.Source);
+        var ghost = new Image
+        {
+            Source = picture,
+            Width = size.Width,
+            Height = size.Height,
+            Opacity = GhostOpacity,
+            IsHitTestVisible = false,
+            RenderTransformOrigin = new RelativePoint(grabPoint, RelativeUnit.Absolute),
+            RenderTransform = new ScaleTransform(GhostScale, GhostScale),
+            Effect = new DropShadowEffect { OffsetX = 0, OffsetY = 6, BlurRadius = 18, Opacity = 0.3, Color = Colors.Black }
+        };
+        ghost.Classes.Add(DragGhostClass);
+
+        layer.Children.Add(ghost);
+        state.Ghost = ghost;
+        state.GhostLayer = layer;
+        state.GrabPoint = grabPoint;
+        MoveGhost(state, e);
+    }
+
+    private static void MoveGhost(DragState state, PointerEventArgs e)
+    {
+        if (state.Ghost is not { } ghost || state.GhostLayer is not { } layer) return;
+
+        var pointer = e.GetPosition(layer);
+        Canvas.SetLeft(ghost, pointer.X - state.GrabPoint.X);
+        Canvas.SetTop(ghost, pointer.Y - state.GrabPoint.Y);
+    }
+
+    private static void RemoveGhost(DragState state)
+    {
+        if (state.Ghost is not { } ghost) return;
+
+        state.GhostLayer?.Children.Remove(ghost);
+        (ghost.Source as IDisposable)?.Dispose();
+        state.Ghost = null;
+        state.GhostLayer = null;
     }
 
     private static bool IsOnDragHandle(Visual source, ItemsControl itemsControl)
@@ -220,6 +297,15 @@ internal class ItemsReorderBehavior : AvaloniaObject
         // the container marked as the drop position, and the index the item would be inserted at before it's removed
         public Control? Target { get; set; }
         public int? InsertIndex { get; set; }
+
+        // the picture of the item that follows the pointer, the layer it's shown in, and the point of the item container
+        // the pointer holds it by
+        public Image? Ghost { get; set; }
+        public OverlayLayer? GhostLayer { get; set; }
+        public Point GrabPoint { get; set; }
+
+        // undoes turning off the tool tips of the items control while dragging
+        public IDisposable? ToolTipSuppression { get; set; }
     }
 }
 

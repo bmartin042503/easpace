@@ -715,6 +715,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.RepeatHint" xml:space="preserve">
         <value>When on, you choose how many cycles to do before each session. When off, the instructions run once.</value>
     </data>
+    <data name="Wellness.Editor.RepeatsInCyclesText" xml:space="preserve">
+        <value>Repeats in cycles</value>
+    </data>
+    <data name="Wellness.Editor.RunsOnceText" xml:space="preserve">
+        <value>Runs once</value>
+    </data>
+    <data name="Wellness.Editor.PhaseLabel" xml:space="preserve">
+        <value>Phase</value>
+    </data>
+    <data name="Wellness.Editor.DurationLabel" xml:space="preserve">
+        <value>Duration</value>
+    </data>
     <data name="Wellness.Editor.SecondsUnit" xml:space="preserve">
         <value>s</value>
     </data>
@@ -753,6 +765,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>New exercise</value>
+    </data>
+    <data name="Wellness.Editor.EditButton" xml:space="preserve">
+        <value>Edit exercise</value>
     </data>
     <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Delete exercise</value>
@@ -795,9 +810,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
 
     <!-- Wellness: exercise preview in the editor -->
-    <data name="Wellness.Preview.Title" xml:space="preserve">
-        <value>Preview</value>
-    </data>
     <data name="Wellness.Preview.Play" xml:space="preserve">
         <value>Play</value>
     </data>

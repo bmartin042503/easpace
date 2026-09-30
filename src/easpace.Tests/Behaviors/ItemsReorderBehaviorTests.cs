@@ -3,6 +3,7 @@
 
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Headless;
 using Avalonia.Headless.XUnit;
@@ -53,6 +54,16 @@ public class ItemsReorderBehaviorTests
 
     private static IEnumerable<string> ClassesOf(ItemsControl items, int index) =>
         items.ContainerFromIndex(index)!.Classes.Where(c => c is "dragging" or "drop-before" or "drop-after");
+
+    private static IEnumerable<Control> GhostsOf(Window window) =>
+        OverlayLayer.GetOverlayLayer(window)!.Children.Where(c => c.Classes.Contains("drag-ghost"));
+
+    private static void ShouldBeAt(Point? actual, Point expected)
+    {
+        actual.Should().NotBeNull();
+        actual!.Value.X.Should().BeApproximately(expected.X, 0.01);
+        actual.Value.Y.Should().BeApproximately(expected.Y, 0.01);
+    }
 
     [AvaloniaTheory]
     [InlineData(0, 2, 0.75, 2)] // first below the third
@@ -111,6 +122,48 @@ public class ItemsReorderBehaviorTests
     }
 
     [AvaloniaFact]
+    public void Dragging_ShowsAGhostOfTheItemThatFollowsThePointer()
+    {
+        var (window, _) = ShowList(4);
+
+        window.MouseDown(ItemPoint(1, HandleX, 0.5), MouseButton.Left);
+        Dispatcher.UIThread.RunJobs();
+
+        // the ghost pictures the item at its size, scaled around the point it's held by, which stays under the pointer
+        var ghost = GhostsOf(window).Should().ContainSingle().Subject;
+        ghost.Bounds.Size.Should().Be(new Size(300, ItemHeight));
+        ShouldBeAt(ghost.TranslatePoint(new Point(HandleX, ItemHeight / 2), window), ItemPoint(1, HandleX, 0.5));
+
+        window.MouseMove(ItemPoint(3, TextX, 0.75));
+        Dispatcher.UIThread.RunJobs();
+
+        ShouldBeAt(ghost.TranslatePoint(new Point(HandleX, ItemHeight / 2), window), ItemPoint(3, TextX, 0.75));
+
+        window.MouseUp(ItemPoint(3, TextX, 0.75), MouseButton.Left);
+
+        GhostsOf(window).Should().BeEmpty();
+        _requests.Should().Equal(new ItemMoveRequest(1, 3));
+
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void Dragging_TurnsOffToolTipsUntilTheDragEnds()
+    {
+        var (window, items) = ShowList(4);
+
+        window.MouseDown(ItemPoint(0, HandleX, 0.5), MouseButton.Left);
+
+        ToolTip.GetServiceEnabled(items).Should().BeFalse();
+
+        window.MouseUp(ItemPoint(2, TextX, 0.75), MouseButton.Left);
+
+        ToolTip.GetServiceEnabled(items).Should().BeTrue();
+
+        window.Close();
+    }
+
+    [AvaloniaFact]
     public void Escape_CancelsTheDragWithoutMoving()
     {
         var (window, items) = ShowList(4);
@@ -120,12 +173,34 @@ public class ItemsReorderBehaviorTests
         window.KeyPress(Key.Escape, RawInputModifiers.None, PhysicalKey.Escape, null);
 
         Enumerable.Range(0, 4).SelectMany(i => ClassesOf(items, i)).Should().BeEmpty();
+        GhostsOf(window).Should().BeEmpty();
 
         window.MouseMove(ItemPoint(2, TextX, 0.75));
         window.MouseUp(ItemPoint(2, TextX, 0.75), MouseButton.Left);
 
         _requests.Should().BeEmpty();
         Enumerable.Range(0, 4).SelectMany(i => ClassesOf(items, i)).Should().BeEmpty();
+        GhostsOf(window).Should().BeEmpty();
+
+        window.Close();
+    }
+
+    [AvaloniaFact]
+    public void RemovingTheList_WhileDragging_CancelsTheDrag()
+    {
+        var (window, items) = ShowList(4);
+        var containers = Enumerable.Range(0, 4).Select(i => items.ContainerFromIndex(i)!).ToList();
+
+        window.MouseDown(ItemPoint(0, HandleX, 0.5), MouseButton.Left);
+        window.MouseMove(ItemPoint(3, TextX, 0.75));
+
+        // e.g. when the form is replaced; the list loses the pointer capture with it
+        window.Content = null;
+        window.MouseUp(ItemPoint(3, TextX, 0.75), MouseButton.Left);
+
+        GhostsOf(window).Should().BeEmpty();
+        containers.SelectMany(c => c.Classes).Should().NotContain(["dragging", "drop-before", "drop-after"]);
+        _requests.Should().BeEmpty();
 
         window.Close();
     }
