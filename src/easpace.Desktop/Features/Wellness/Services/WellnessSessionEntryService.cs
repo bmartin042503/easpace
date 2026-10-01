@@ -23,13 +23,13 @@ internal class WellnessSessionEntryService(IDbContextFactory<AppDbContext> dbCon
         {
             await using var dbContext = await dbContextFactory.CreateDbContextAsync();
 
-            logger.LogInformation("Creating new wellness session entry of type {Type}", createEntryRequest.SessionType);
-            
+            logger.LogInformation("Creating new wellness session entry for exercise {ExerciseId}",
+                createEntryRequest.ExerciseId);
+
             var wellnessSession = new WellnessSessionEntry
             {
                 Id = Guid.NewGuid(),
                 StartDate = createEntryRequest.StartDate,
-                Type = createEntryRequest.SessionType,
                 TargetDuration = createEntryRequest.TargetDuration,
                 ActualDuration = createEntryRequest.ActualDuration,
                 ExerciseId = createEntryRequest.ExerciseId,

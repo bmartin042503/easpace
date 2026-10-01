@@ -11,7 +11,7 @@ using easpace.Desktop.Services.Core;
 namespace easpace.Desktop.Features.Wellness.Services;
 
 /// <summary>
-/// Provides the built-in exercises used for seeding and restoring defaults.
+/// Provides the built-in exercises used for seeding.
 /// </summary>
 internal static class DefaultWellnessExercises
 {
@@ -50,11 +50,11 @@ internal static class DefaultWellnessExercises
         ];
     }
 
-    private static BreathingExercise CreateBreathing(
+    private static WellnessExercise CreateBreathing(
         string keyPrefix,
         params (BreathingPhaseType Phase, int DurationSeconds)[] phases)
     {
-        return new BreathingExercise
+        return new WellnessExercise
         {
             Name = LocalizationService.GetString($"{keyPrefix}.Name"),
             Description = LocalizationService.GetString($"{keyPrefix}.Description"),
@@ -71,9 +71,9 @@ internal static class DefaultWellnessExercises
         };
     }
 
-    private static MeditationExercise CreateMeditation(string keyPrefix, params string[] instructionKeys)
+    private static WellnessExercise CreateMeditation(string keyPrefix, params string[] instructionKeys)
     {
-        return new MeditationExercise
+        return new WellnessExercise
         {
             Name = LocalizationService.GetString($"{keyPrefix}.Name"),
             Description = LocalizationService.GetString($"{keyPrefix}.Description"),

@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using easpace.Desktop.Features.Wellness.Constants;
 
 namespace easpace.Desktop.Features.Wellness.Entities;
 
@@ -30,11 +29,6 @@ internal class WellnessSessionEntry
     /// Gets or sets the actual duration the session lasted.
     /// </summary>
     public TimeSpan ActualDuration { get; set; }
-
-    /// <summary>
-    /// Gets or sets the type of the wellness session (e.g., breathing, meditation).
-    /// </summary>
-    public WellnessSessionType Type { get; set; }
 
     /// <summary>
     /// Gets or sets the exercise id used during the session, if the exercise still exists.

@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using easpace.Desktop.Features.Wellness.Constants;
 
 namespace easpace.Desktop.Features.Wellness.Entities;
 
 /// <summary>
 /// Represents a wellness exercise made of ordered instructions.
 /// </summary>
-internal abstract class WellnessExercise
+internal class WellnessExercise
 {
     /// <summary>
     /// Gets or sets the unique identifier for the exercise.
@@ -41,9 +40,4 @@ internal abstract class WellnessExercise
     /// Gets or sets the instructions that make up a single cycle of the exercise.
     /// </summary>
     public ICollection<ExerciseInstruction> Instructions { get; set; } = [];
-
-    /// <summary>
-    /// Gets the session type this exercise belongs to.
-    /// </summary>
-    public abstract WellnessSessionType SessionType { get; }
 }

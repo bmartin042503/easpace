@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using easpace.Desktop.Data;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -36,28 +35,18 @@ internal class WellnessExerciseService : IWellnessExerciseService
         _logger = logger;
     }
 
-    public async Task<IReadOnlyList<WellnessExercise>> GetExercisesAsync(
-        WellnessSessionType? type = null,
-        CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<WellnessExercise>> GetExercisesAsync(CancellationToken cancellationToken = default)
     {
         try
         {
             await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-            _logger.LogInformation("Fetching wellness exercises (type: {Type})", type?.ToString() ?? "all");
+            _logger.LogInformation("Fetching wellness exercises");
 
-            IQueryable<WellnessExercise> query = dbContext.WellnessExercises
+            var exercises = await dbContext.WellnessExercises
                 .Include(e => e.Instructions.OrderBy(i => i.Order))
-                .AsNoTracking();
-
-            query = type switch
-            {
-                WellnessSessionType.Breathing => query.Where(e => e is BreathingExercise),
-                WellnessSessionType.Meditation => query.Where(e => e is MeditationExercise),
-                _ => query
-            };
-
-            var exercises = await query.ToListAsync(cancellationToken);
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
 
             return exercises.OrderBy(e => e.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
         }
@@ -76,12 +65,7 @@ internal class WellnessExerciseService : IWellnessExerciseService
 
         try
         {
-            WellnessExercise exercise = request.Type switch
-            {
-                WellnessSessionType.Breathing => new BreathingExercise(),
-                WellnessSessionType.Meditation => new MeditationExercise(),
-                _ => throw new ArgumentOutOfRangeException(nameof(request), request.Type, "Unknown exercise type.")
-            };
+            var exercise = new WellnessExercise();
 
             exercise.Id = request.Id ?? exercise.Id;
             exercise.CreatedAt = DateTimeOffset.Now;
@@ -89,7 +73,7 @@ internal class WellnessExerciseService : IWellnessExerciseService
 
             await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
-            _logger.LogInformation("Creating new {Type} exercise '{Name}'", exercise.SessionType, exercise.Name);
+            _logger.LogInformation("Creating new wellness exercise '{Name}'", exercise.Name);
 
             dbContext.WellnessExercises.Add(exercise);
             await dbContext.SaveChangesAsync(cancellationToken);
@@ -165,47 +149,12 @@ internal class WellnessExerciseService : IWellnessExerciseService
         }
     }
 
-    public async Task<int> RestoreDefaultExercisesAsync(CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            await using var dbContext = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
-
-            var existingExercises = await dbContext.WellnessExercises
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
-
-            var missingDefaults = DefaultWellnessExercises.Create()
-                .Where(defaultExercise => !existingExercises.Any(existing =>
-                    existing.SessionType == defaultExercise.SessionType &&
-                    string.Equals(existing.Name.Trim(), defaultExercise.Name.Trim(), StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-
-            if (missingDefaults.Count > 0)
-            {
-                dbContext.WellnessExercises.AddRange(missingDefaults);
-                await dbContext.SaveChangesAsync(cancellationToken);
-            }
-
-            _logger.LogInformation("Restored {Count} default wellness exercises", missingDefaults.Count);
-            return missingDefaults.Count;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to restore default wellness exercises");
-            throw;
-        }
-    }
-
     /// <summary>
     /// Copies the normalized request values onto the exercise, replacing its instructions, and validates the result.
-    /// Phases are dropped for exercises that don't support them.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown when the resulting exercise violates the exercise constraints.</exception>
     private static void ApplyRequest(WellnessExercise exercise, UpsertWellnessExerciseRequest request)
     {
-        var supportsPhases = exercise.SessionType == WellnessSessionType.Breathing;
-
         exercise.Name = request.Name.Trim();
         exercise.Description = request.Description.Trim();
         exercise.IsRepeating = request.IsRepeating;
@@ -216,7 +165,7 @@ internal class WellnessExerciseService : IWellnessExerciseService
                 Order = index + 1,
                 Text = instruction.Text.Trim(),
                 DurationSeconds = instruction.DurationSeconds,
-                Phase = supportsPhases ? instruction.Phase : null
+                Phase = instruction.Phase
             })
             .ToList();
 

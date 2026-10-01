@@ -37,7 +37,7 @@ internal class ExerciseInstruction
     public int DurationSeconds { get; set; }
 
     /// <summary>
-    /// Gets or sets the breathing phase animated during the instruction, if any. Only used by breathing exercises.
+    /// Gets or sets the breathing phase animated during the instruction, if any.
     /// </summary>
     public BreathingPhaseType? Phase { get; set; }
 }

@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
@@ -68,7 +68,8 @@ internal partial class WellnessSessionViewModel : ViewModelBase
         _wellnessSessionManager.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;
         _wellnessSessionManager.TimerFinished += OnSessionManagerTimerFinished;
 
-        IsBreathing = _sessionConfiguration.SessionType == WellnessSessionType.Breathing;
+        // the breathing warning is shown when the exercise guides the breath
+        IsBreathing = _sessionConfiguration.Steps.Any(s => s.Phase is not null);
 
         // show the initial state before the first tick
         ApplyProgress(_wellnessSessionManager.Progress);
@@ -155,7 +156,6 @@ internal partial class WellnessSessionViewModel : ViewModelBase
             StartDate: _startDate,
             TargetDuration: _sessionConfiguration.TargetDuration,
             ActualDuration: _wellnessSessionManager.ElapsedTime,
-            SessionType: _sessionConfiguration.SessionType,
             ExerciseId: _sessionConfiguration.ExerciseId,
             ExerciseName: _sessionConfiguration.ExerciseName,
             CompletedCycles: _sessionConfiguration.IsRepeating ? _wellnessSessionManager.CompletedCycles : null

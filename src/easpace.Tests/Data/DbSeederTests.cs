@@ -6,6 +6,7 @@ using easpace.Desktop.Data;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Data;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
@@ -48,11 +49,11 @@ public class DbSeederTests : IAsyncLifetime
             .Setup(p => p.ReadPreference(PreferenceKey.WellnessDefaultsSeeded, It.IsAny<bool>()))
             .Returns(isSeeded);
 
-    private async Task<BreathingExercise> AddBreathingExerciseAsync()
+    private async Task<WellnessExercise> AddExerciseAsync(string name)
     {
-        var exercise = new BreathingExercise
+        var exercise = new WellnessExercise
         {
-            Name = "Migrated Breathing",
+            Name = name,
             IsRepeating = true,
             Instructions = [new ExerciseInstruction { Order = 1, DurationSeconds = 4, Phase = BreathingPhaseType.Inhale }]
         };
@@ -74,17 +75,16 @@ public class DbSeederTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task SeedAsync_OnFreshDatabase_SeedsDefaultsOfBothTypesAndSetsFlag()
+    public async Task SeedAsync_OnFreshDatabase_SeedsAllDefaultsInTheCurrentLanguageAndSetsFlag()
     {
         SetSeededFlag(false);
 
         await _seeder.SeedAsync();
 
         var exercises = await GetExercisesAsync();
-        var defaults = DefaultWellnessExercises.Create();
-        exercises.Should().Contain(e => e is BreathingExercise).And.Contain(e => e is MeditationExercise);
-        exercises.Select(e => (e.SessionType, e.Name, e.Instructions.Count))
-            .Should().BeEquivalentTo(defaults.Select(e => (e.SessionType, e.Name, e.Instructions.Count)));
+        exercises.Select(e => (e.Name, e.Instructions.Count))
+            .Should().BeEquivalentTo(DefaultWellnessExercises.Create().Select(e => (e.Name, e.Instructions.Count)));
+        exercises.Should().Contain(e => e.Name == LocalizationService.GetString("DefaultExercise.BoxBreathing.Name"));
         _preferencesServiceMock.Verify(p => p.SavePreference(PreferenceKey.WellnessDefaultsSeeded, true), Times.Once);
     }
 
@@ -92,7 +92,7 @@ public class DbSeederTests : IAsyncLifetime
     public async Task SeedAsync_WithFlagSet_LeavesExistingDatabaseUntouched()
     {
         SetSeededFlag(true);
-        var existing = await AddBreathingExerciseAsync();
+        var existing = await AddExerciseAsync("Migrated Breathing");
 
         await _seeder.SeedAsync();
 
@@ -101,17 +101,22 @@ public class DbSeederTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task SeedAsync_OnUpgradedDatabaseWithBreathingOnly_SeedsOnlyMeditationDefaultsAndSetsFlag()
+    public async Task SeedAsync_OnUpgradedDatabase_AddsOnlyTheDefaultsMissingByNameAndSetsFlag()
     {
         SetSeededFlag(false);
-        var migrated = await AddBreathingExerciseAsync();
+        var boxBreathingName = LocalizationService.GetString("DefaultExercise.BoxBreathing.Name");
+
+        // a migrated legacy default carries the localized name of the default; casing and spaces don't matter
+        var migratedDefault = await AddExerciseAsync($"  {boxBreathingName.ToUpperInvariant()}  ");
+        var custom = await AddExerciseAsync("Migrated Breathing");
 
         await _seeder.SeedAsync();
 
         var exercises = await GetExercisesAsync();
-        exercises.OfType<BreathingExercise>().Should().ContainSingle().Which.Id.Should().Be(migrated.Id);
-        exercises.OfType<MeditationExercise>().Select(e => e.Name)
-            .Should().BeEquivalentTo(DefaultWellnessExercises.Create().OfType<MeditationExercise>().Select(e => e.Name));
+        exercises.Should().HaveCount(DefaultWellnessExercises.Create().Count + 1);
+        exercises.Where(e => string.Equals(e.Name.Trim(), boxBreathingName, StringComparison.CurrentCultureIgnoreCase))
+            .Should().ContainSingle().Which.Id.Should().Be(migratedDefault.Id);
+        exercises.Should().Contain(e => e.Id == custom.Id);
         _preferencesServiceMock.Verify(p => p.SavePreference(PreferenceKey.WellnessDefaultsSeeded, true), Times.Once);
     }
 

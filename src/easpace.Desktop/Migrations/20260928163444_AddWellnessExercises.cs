@@ -44,8 +44,7 @@ namespace easpace.Desktop.Migrations
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    IsRepeating = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ExerciseType = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false)
+                    IsRepeating = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,8 +93,8 @@ namespace easpace.Desktop.Migrations
 
             // copy the legacy breathing techniques, resolving localization keys in the current app language
             migrationBuilder.Sql($"""
-                INSERT INTO "WellnessExercises" ("Id", "ExerciseType", "CreatedAt", "Name", "Description", "IsRepeating")
-                SELECT "Id", 'Breathing', "CreatedAt", {ResolveLocalizedColumn("Name")}, {ResolveLocalizedColumn("Description")}, 1
+                INSERT INTO "WellnessExercises" ("Id", "CreatedAt", "Name", "Description", "IsRepeating")
+                SELECT "Id", "CreatedAt", {ResolveLocalizedColumn("Name")}, {ResolveLocalizedColumn("Description")}, 1
                 FROM "BreathingTechniques";
                 """);
 
@@ -113,6 +112,16 @@ namespace easpace.Desktop.Migrations
                 SET "ExerciseId" = "BreathingTechniqueId",
                     "ExerciseName" = (SELECT e."Name" FROM "WellnessExercises" e WHERE e."Id" = "WellnessSessionEntries"."BreathingTechniqueId")
                 WHERE "BreathingTechniqueId" IS NOT NULL;
+                """);
+
+            // sessions without a technique, like meditations, are named after their session type, as it's dropped below
+            migrationBuilder.Sql($"""
+                UPDATE "WellnessSessionEntries"
+                SET "ExerciseName" = CASE "Type"
+                    WHEN 1 THEN {ToSqlLiteral(LocalizationService.GetString("Wellness.SessionType.Meditation"))}
+                    ELSE {ToSqlLiteral(LocalizationService.GetString("Wellness.SessionType.Breathing"))}
+                END
+                WHERE "ExerciseName" IS NULL;
                 """);
 
             // everything of the legacy technique model is copied, so it's removed
@@ -133,6 +142,11 @@ namespace easpace.Desktop.Migrations
             migrationBuilder.DropColumn(
                 name: "BreathingTechniqueId",
                 table: "WellnessSessionEntries");
+
+            // exercises have no type anymore, so the sessions don't either
+            migrationBuilder.DropColumn(
+                name: "Type",
+                table: "WellnessSessionEntries");
         }
 
         /// <inheritdoc />
@@ -144,6 +158,14 @@ namespace easpace.Desktop.Migrations
                 table: "WellnessSessionEntries",
                 type: "TEXT",
                 nullable: true);
+
+            // the session type can't be told apart anymore, so every session comes back as a breathing session
+            migrationBuilder.AddColumn<int>(
+                name: "Type",
+                table: "WellnessSessionEntries",
+                type: "INTEGER",
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "BreathingTechniques",

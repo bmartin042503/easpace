@@ -16,11 +16,11 @@ using Avalonia.VisualTree;
 namespace easpace.Desktop.Behaviors;
 
 /// <summary>
-/// Provides an attached behavior for the ItemsControl that lets the user reorder its items by dragging them by a
-/// handle. The handle is any element of an item with the <c>drag-handle</c> class, so the other inputs of the item
-/// keep working. While dragging, a scaled-down picture of the item with the <c>drag-ghost</c> class follows the
-/// pointer above the window, the dragged item container has the <c>dragging</c> class and the container at the drop
-/// position has the <c>drop-before</c> or <c>drop-after</c> class. Escape cancels the drag.
+/// Provides an attached behavior for the ItemsControl that lets the user reorder its items by dragging them by a handle.
+/// The handle is any element of an item with the <c>drag-handle</c> class, so the other inputs of the item keep working.
+/// While dragging, a scaled-down picture of the item with the <c>drag-ghost</c> class follows the pointer above the
+/// window, the dragged item container has the <c>dragging</c> class and the container at the drop position has the
+/// <c>drop-before</c> or <c>drop-after</c> class. Escape cancels the drag.
 /// </summary>
 /// <remarks>
 /// The drag captures the pointer instead of starting a system drag and drop, as the items never leave the control.
@@ -34,7 +34,7 @@ internal class ItemsReorderBehavior : AvaloniaObject
     private const string DropAfterClass = "drop-after";
 
     // the ghost is compact and see-through, so the drop targets under it stay visible
-    private const double GhostScale = 0.78;
+    private const double GhostScale = 0.45;
     private const double GhostOpacity = 0.65;
 
     /// <summary>
@@ -56,7 +56,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
     /// <summary>
     /// Sets the value of the MoveCommand property.
     /// </summary>
-    public static void SetMoveCommand(ItemsControl element, ICommand? value) => element.SetValue(MoveCommandProperty, value);
+    public static void SetMoveCommand(ItemsControl element, ICommand? value) =>
+        element.SetValue(MoveCommandProperty, value);
 
     /// <summary>
     /// Initializes static members of the <see cref="ItemsReorderBehavior"/> class.
@@ -95,7 +96,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
         if (e.Source is not Visual source || !IsOnDragHandle(source, itemsControl)) return;
         if (FindContainer(source, itemsControl) is not { } container) return;
 
-        var state = new DragState(e.Pointer, itemsControl.IndexFromContainer(container), container, TopLevel.GetTopLevel(itemsControl));
+        var state = new DragState(e.Pointer, itemsControl.IndexFromContainer(container), container,
+            TopLevel.GetTopLevel(itemsControl));
         state.KeyDownHandler = (_, args) =>
         {
             if (args.Key != Key.Escape) return;
@@ -111,7 +113,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
         container.Classes.Add(DraggingClass);
 
         // the tool tips of the items under the pointer would cover the drop position; the override is undone at the end
-        state.ToolTipSuppression = itemsControl.SetValue(ToolTip.ServiceEnabledProperty, false, BindingPriority.Animation);
+        state.ToolTipSuppression =
+            itemsControl.SetValue(ToolTip.ServiceEnabledProperty, false, BindingPriority.Animation);
         state.TopLevel?.AddHandler(InputElement.KeyDownEvent, state.KeyDownHandler, RoutingStrategies.Tunnel);
 
         e.Pointer.Capture(itemsControl);
@@ -123,7 +126,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
     /// </summary>
     private static void OnPointerMoved(object? sender, PointerEventArgs e)
     {
-        if (sender is not ItemsControl itemsControl || itemsControl.GetValue(DragStateProperty) is not { } state) return;
+        if (sender is not ItemsControl itemsControl ||
+            itemsControl.GetValue(DragStateProperty) is not { } state) return;
 
         MoveGhost(state, e);
 
@@ -170,7 +174,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
     // when the drag starts raises the same bubbling event, which is ignored
     private static void OnPointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
     {
-        if (sender is ItemsControl itemsControl && ReferenceEquals(e.Source, itemsControl)) EndDrag(itemsControl, commit: false);
+        if (sender is ItemsControl itemsControl && ReferenceEquals(e.Source, itemsControl))
+            EndDrag(itemsControl, commit: false);
     }
 
     /// <summary>
@@ -189,13 +194,15 @@ internal class ItemsReorderBehavior : AvaloniaObject
         RemoveGhost(state);
         state.ToolTipSuppression?.Dispose();
 
-        if (state.KeyDownHandler is not null) state.TopLevel?.RemoveHandler(InputElement.KeyDownEvent, state.KeyDownHandler);
+        if (state.KeyDownHandler is not null)
+            state.TopLevel?.RemoveHandler(InputElement.KeyDownEvent, state.KeyDownHandler);
         if (ReferenceEquals(state.Pointer.Captured, itemsControl)) state.Pointer.Capture(null);
 
         if (!commit || insertIndex is null) return;
 
         // the item leaves its old place first, which shifts the gaps after it one position up
-        var request = new ItemMoveRequest(state.FromIndex, insertIndex > state.FromIndex ? insertIndex.Value - 1 : insertIndex.Value);
+        var request = new ItemMoveRequest(state.FromIndex,
+            insertIndex > state.FromIndex ? insertIndex.Value - 1 : insertIndex.Value);
         var command = GetMoveCommand(itemsControl);
 
         if (command?.CanExecute(request) == true) command.Execute(request);
@@ -236,7 +243,8 @@ internal class ItemsReorderBehavior : AvaloniaObject
             IsHitTestVisible = false,
             RenderTransformOrigin = new RelativePoint(grabPoint, RelativeUnit.Absolute),
             RenderTransform = new ScaleTransform(GhostScale, GhostScale),
-            Effect = new DropShadowEffect { OffsetX = 0, OffsetY = 6, BlurRadius = 18, Opacity = 0.3, Color = Colors.Black }
+            Effect = new DropShadowEffect
+                { OffsetX = 0, OffsetY = 6, BlurRadius = 18, Opacity = 0.3, Color = Colors.Black }
         };
         ghost.Classes.Add(DragGhostClass);
 
@@ -268,7 +276,9 @@ internal class ItemsReorderBehavior : AvaloniaObject
 
     private static bool IsOnDragHandle(Visual source, ItemsControl itemsControl)
     {
-        for (var visual = source; visual is not null && !ReferenceEquals(visual, itemsControl); visual = visual.GetVisualParent())
+        for (var visual = source;
+             visual is not null && !ReferenceEquals(visual, itemsControl);
+             visual = visual.GetVisualParent())
         {
             if (visual is StyledElement element && element.Classes.Contains(DragHandleClass)) return true;
         }
@@ -278,7 +288,9 @@ internal class ItemsReorderBehavior : AvaloniaObject
 
     private static Control? FindContainer(Visual source, ItemsControl itemsControl)
     {
-        for (var visual = source; visual is not null && !ReferenceEquals(visual, itemsControl); visual = visual.GetVisualParent())
+        for (var visual = source;
+             visual is not null && !ReferenceEquals(visual, itemsControl);
+             visual = visual.GetVisualParent())
         {
             if (visual is Control control && itemsControl.IndexFromContainer(control) >= 0) return control;
         }

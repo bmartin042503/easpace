@@ -50,11 +50,6 @@ internal partial class ExerciseInstructionViewModel : ValidatorViewModelBase
     /// </summary>
     [ObservableProperty] private bool _isPreviewing;
 
-    /// <summary>
-    /// Gets whether the instruction can have a breathing phase, which only breathing exercises allow.
-    /// </summary>
-    public bool SupportsPhases { get; }
-
     public IReadOnlyList<PhaseOption> PhaseOptions => AllPhaseOptions;
 
     /// <summary>
@@ -88,14 +83,11 @@ internal partial class ExerciseInstructionViewModel : ValidatorViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="ExerciseInstructionViewModel"/> class.
     /// </summary>
-    /// <param name="supportsPhases">Whether the instruction may have a phase; otherwise the phase is dropped.</param>
-    public ExerciseInstructionViewModel(string text, int durationSeconds, BreathingPhaseType? phase, bool supportsPhases)
+    public ExerciseInstructionViewModel(string text, int durationSeconds, BreathingPhaseType? phase)
     {
-        SupportsPhases = supportsPhases;
-
         _text = text;
         _durationSeconds = durationSeconds;
-        _selectedPhase = AllPhaseOptions.Single(o => o.Value == (supportsPhases ? phase : null));
+        _selectedPhase = AllPhaseOptions.Single(o => o.Value == phase);
 
         ValidateAllProperties();
     }

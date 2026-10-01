@@ -170,11 +170,6 @@ namespace easpace.Desktop.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ExerciseType")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsRepeating")
                         .HasColumnType("INTEGER");
 
@@ -186,10 +181,6 @@ namespace easpace.Desktop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WellnessExercises");
-
-                    b.HasDiscriminator<string>("ExerciseType").HasValue("WellnessExercise");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessSessionEntry", b =>
@@ -213,9 +204,6 @@ namespace easpace.Desktop.Migrations
 
                     b.Property<TimeSpan?>("TargetDuration")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -263,20 +251,6 @@ namespace easpace.Desktop.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("Routine");
-                });
-
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingExercise", b =>
-                {
-                    b.HasBaseType("easpace.Desktop.Features.Wellness.Entities.WellnessExercise");
-
-                    b.HasDiscriminator().HasValue("Breathing");
-                });
-
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.MeditationExercise", b =>
-                {
-                    b.HasBaseType("easpace.Desktop.Features.Wellness.Entities.WellnessExercise");
-
-                    b.HasDiscriminator().HasValue("Meditation");
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Activities.Entities.MilestoneActivity", b =>

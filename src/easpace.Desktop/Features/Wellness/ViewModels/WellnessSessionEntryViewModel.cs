@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
@@ -17,7 +16,6 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
     public DateTimeOffset StartDate { get; }
     public TimeSpan? TargetDuration { get; }
     public TimeSpan ActualDuration { get; }
-    public WellnessSessionType SessionType { get; }
 
     /// <summary>
     /// Gets the exercise name, the duration and, while the exercise exists and repeats, the cycle count, joined with " • ".
@@ -32,7 +30,6 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
         StartDate = wellnessSessionEntry.StartDate;
         TargetDuration = wellnessSessionEntry.TargetDuration;
         ActualDuration = wellnessSessionEntry.ActualDuration;
-        SessionType = wellnessSessionEntry.Type;
 
         // the name saved with the session comes first, so renaming or deleting the exercise keeps the history intact
         var exerciseName = wellnessSessionEntry.ExerciseName ?? wellnessSessionEntry.Exercise?.Name;

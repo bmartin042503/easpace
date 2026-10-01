@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
@@ -31,7 +30,6 @@ internal partial class WellnessEndingViewModel : ViewModelBase
     [ObservableProperty] private string _titleText = string.Empty;
 
     [ObservableProperty] private string _durationText = string.Empty;
-    [ObservableProperty] private WellnessSessionType _sessionType;
     [ObservableProperty] private string _exerciseName = string.Empty;
 
     // null for exercises that run once, as cycles only mean something when the exercise repeats
@@ -69,7 +67,6 @@ internal partial class WellnessEndingViewModel : ViewModelBase
                     ? @"hh\:mm\:ss"
                     : @"mm\:ss");
 
-            SessionType = _createEntryRequest.SessionType;
             ExerciseName = _createEntryRequest.ExerciseName ?? string.Empty;
             CycleCount = _createEntryRequest.CompletedCycles;
         }

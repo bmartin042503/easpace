@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
@@ -54,17 +53,12 @@ internal sealed partial class ExercisePreviewViewModel : ViewModelBase, IDisposa
 
     [ObservableProperty] private double _circleSize;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowBreathingCircle))]
-    [NotifyPropertyChangedFor(nameof(ShowCountdown))]
-    private WellnessSessionType _type;
-
     public bool HasSteps => Progress is not null;
 
     /// <summary>
-    /// Gets whether the breathing circle is shown, which only breathing steps with a phase have, as in a session.
+    /// Gets whether the breathing circle is shown, which only steps with a breathing phase have, as in a session.
     /// </summary>
-    public bool ShowBreathingCircle => Type == WellnessSessionType.Breathing && Progress?.Phase is not null;
+    public bool ShowBreathingCircle => Progress?.Phase is not null;
 
     /// <summary>
     /// Gets whether the seconds of the step are shown on their own, as there is no circle to show them in.
@@ -90,9 +84,8 @@ internal sealed partial class ExercisePreviewViewModel : ViewModelBase, IDisposa
     /// time.
     /// </summary>
     /// <param name="steps">The steps of one cycle.</param>
-    /// <param name="type">The session type of the exercise, which decides whether the breathing circle is shown.</param>
     /// <param name="isRepeating">Whether the steps repeat endlessly; otherwise the preview plays them once.</param>
-    public void Load(IReadOnlyList<ExerciseStep> steps, WellnessSessionType type, bool isRepeating)
+    public void Load(IReadOnlyList<ExerciseStep> steps, bool isRepeating)
     {
         if (_isDisposed) return;
 
@@ -100,7 +93,6 @@ internal sealed partial class ExercisePreviewViewModel : ViewModelBase, IDisposa
         var wasRepeating = _isRepeating;
         _steps = steps;
         _isRepeating = isRepeating;
-        Type = type;
 
         if (steps.Count == 0)
         {
@@ -119,7 +111,7 @@ internal sealed partial class ExercisePreviewViewModel : ViewModelBase, IDisposa
         StopSession();
 
         _sessionManager = new WellnessSessionManager(
-            new WellnessSessionConfiguration(type, null, string.Empty, steps, isRepeating ? null : 1, isRepeating));
+            new WellnessSessionConfiguration(null, string.Empty, steps, isRepeating ? null : 1, isRepeating));
         _isFinished = false;
 
         if (position is not null)
@@ -147,12 +139,11 @@ internal sealed partial class ExercisePreviewViewModel : ViewModelBase, IDisposa
     /// state of the previous exercise don't apply to them.
     /// </summary>
     /// <param name="steps">The steps of one cycle.</param>
-    /// <param name="type">The session type of the exercise, which decides whether the breathing circle is shown.</param>
     /// <param name="isRepeating">Whether the steps repeat endlessly; otherwise the preview plays them once.</param>
-    public void Reset(IReadOnlyList<ExerciseStep> steps, WellnessSessionType type, bool isRepeating)
+    public void Reset(IReadOnlyList<ExerciseStep> steps, bool isRepeating)
     {
         Clear();
-        Load(steps, type, isRepeating);
+        Load(steps, isRepeating);
     }
 
     /// <summary>

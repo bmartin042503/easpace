@@ -28,10 +28,10 @@ public class ExercisePreviewViewModelTests
     ];
 
     private static ExercisePreviewViewModel CreateLoadedPreview(
-        IReadOnlyList<ExerciseStep> steps, WellnessSessionType type, bool isRepeating = true)
+        IReadOnlyList<ExerciseStep> steps, bool isRepeating = true)
     {
         var preview = new ExercisePreviewViewModel();
-        preview.Load(steps, type, isRepeating);
+        preview.Load(steps, isRepeating);
         return preview;
     }
 
@@ -49,7 +49,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Load_ShowsTheFirstStepPaused()
     {
-        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview(BoxSteps);
 
         preview.HasSteps.Should().BeTrue();
         preview.IsPlaying.Should().BeFalse();
@@ -66,9 +66,9 @@ public class ExercisePreviewViewModelTests
     }
 
     [AvaloniaFact]
-    public void Load_WithMeditation_ShowsTheCountdownInsteadOfTheCircle()
+    public void Load_WithoutPhase_ShowsTheCountdownInsteadOfTheCircle()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview(MeditationSteps);
 
         preview.InstructionText.Should().Be("Sit");
         preview.StepSecondsText.Should().Be("60");
@@ -77,9 +77,25 @@ public class ExercisePreviewViewModelTests
     }
 
     [AvaloniaFact]
+    public void Steps_WithAndWithoutPhase_SwitchBetweenTheCircleAndTheCountdown()
+    {
+        var preview = CreateLoadedPreview(
+            [ExerciseStep.Create("Sit", 10, null), ExerciseStep.Create("In", 4, BreathingPhaseType.Inhale)]);
+
+        preview.ShowBreathingCircle.Should().BeFalse();
+        preview.ShowCountdown.Should().BeTrue();
+
+        preview.StepForwardCommand.Execute(null);
+
+        preview.InstructionText.Should().Be("In");
+        preview.ShowBreathingCircle.Should().BeTrue();
+        preview.ShowCountdown.Should().BeFalse();
+    }
+
+    [AvaloniaFact]
     public void Load_WithoutSteps_DisablesThePreview()
     {
-        var preview = CreateLoadedPreview([], WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview([]);
 
         preview.HasSteps.Should().BeFalse();
         preview.Progress.Should().BeNull();
@@ -93,7 +109,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Steps_UpdateTheProgressAndSnapTheCircle()
     {
-        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview(BoxSteps);
 
         preview.StepForwardCommand.Execute(null);
         preview.StepForwardCommand.Execute(null);
@@ -117,7 +133,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void StepForward_LoopsIntoTheNextCycle()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview(MeditationSteps);
 
         preview.StepForwardCommand.Execute(null);
         preview.StepForwardCommand.Execute(null);
@@ -130,7 +146,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void StepForward_WithoutRepeating_StopsAtTheLastStep()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation, isRepeating: false);
+        var preview = CreateLoadedPreview(MeditationSteps, isRepeating: false);
         preview.Progress!.Cycles.Should().Be(1);
 
         preview.StepForwardCommand.Execute(null);
@@ -144,8 +160,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Play_WithoutRepeating_StopsAfterOneCycleAndPlaysAgainFromTheStart()
     {
-        var preview = CreateLoadedPreview([ExerciseStep.Create("One", 1, null)], WellnessSessionType.Meditation,
-            isRepeating: false);
+        var preview = CreateLoadedPreview([ExerciseStep.Create("One", 1, null)], isRepeating: false);
 
         preview.TogglePlayPauseCommand.Execute(null);
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
@@ -167,11 +182,11 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Load_WithoutRepeating_MovesThePositionIntoTheOnlyCycle()
     {
-        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview(BoxSteps);
         for (var i = 0; i < 6; i++) preview.StepForwardCommand.Execute(null);
         preview.Progress!.CycleIndex.Should().Be(1);
 
-        preview.Load(BoxSteps, WellnessSessionType.Breathing, false);
+        preview.Load(BoxSteps, false);
 
         preview.Progress!.CycleIndex.Should().Be(0);
         preview.Progress.StepIndex.Should().Be(2);
@@ -182,12 +197,12 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Load_KeepsThePositionAndClampsItToTheRemainingSteps()
     {
-        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview(BoxSteps);
         for (var i = 0; i < 7; i++) preview.StepForwardCommand.Execute(null);
         preview.Progress!.CycleIndex.Should().Be(1);
         preview.Progress.StepIndex.Should().Be(3);
 
-        preview.Load(BoxSteps.Take(2).ToList(), WellnessSessionType.Breathing, true);
+        preview.Load(BoxSteps.Take(2).ToList(), true);
 
         preview.Progress!.CycleIndex.Should().Be(1);
         preview.Progress.StepIndex.Should().Be(1);
@@ -199,15 +214,14 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Load_WithChangedTextsOnly_KeepsTheTimeOfTheCurrentStep()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview(MeditationSteps);
         preview.TogglePlayPauseCommand.Execute(null);
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
         preview.TogglePlayPauseCommand.Execute(null);
         var secondsLeft = preview.StepSecondsText;
         secondsLeft.Should().NotBe("60");
 
-        preview.Load([ExerciseStep.Create("Sit still", 60, null), MeditationSteps[1]], WellnessSessionType.Meditation,
-            true);
+        preview.Load([ExerciseStep.Create("Sit still", 60, null), MeditationSteps[1]], true);
 
         preview.InstructionText.Should().Be("Sit still");
         preview.StepSecondsText.Should().Be(secondsLeft);
@@ -218,8 +232,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Play_AdvancesTheStepsAndPauseStopsThem()
     {
-        var preview = CreateLoadedPreview([ExerciseStep.Create("One", 1, null), ExerciseStep.Create("Two", 5, null)],
-            WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview([ExerciseStep.Create("One", 1, null), ExerciseStep.Create("Two", 5, null)]);
 
         preview.TogglePlayPauseCommand.Execute(null);
         preview.IsPlaying.Should().BeTrue();
@@ -242,10 +255,10 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Load_WhilePlaying_KeepsPlaying()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview(MeditationSteps);
         preview.TogglePlayPauseCommand.Execute(null);
 
-        preview.Load([ExerciseStep.Create("Sit", 10, null)], WellnessSessionType.Meditation, true);
+        preview.Load([ExerciseStep.Create("Sit", 10, null)], true);
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
 
         preview.IsPlaying.Should().BeTrue();
@@ -257,7 +270,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Reset_StopsThePreviewAtTheStartOfTheNewSteps()
     {
-        var preview = CreateLoadedPreview(BoxSteps, WellnessSessionType.Breathing);
+        var preview = CreateLoadedPreview(BoxSteps);
         preview.TogglePlayPauseCommand.Execute(null);
         preview.StepForwardCommand.Execute(null);
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
@@ -265,10 +278,10 @@ public class ExercisePreviewViewModelTests
 
         // another exercise with the same timing, which Load would continue at the position and time of the current one
         var otherSteps = BoxSteps.Select(s => ExerciseStep.Create("Other", s.DurationSeconds, s.Phase)).ToList();
-        preview.Reset(otherSteps, WellnessSessionType.Breathing, true);
+        preview.Reset(otherSteps, true);
 
         // as if it had just been loaded: the first step with its full time, no elapsed time and the smallest circle
-        var loaded = CreateLoadedPreview(otherSteps, WellnessSessionType.Breathing);
+        var loaded = CreateLoadedPreview(otherSteps);
         preview.IsPlaying.Should().BeFalse();
         preview.Progress.Should().Be(loaded.Progress);
         preview.CircleSize.Should().Be(loaded.CircleSize);
@@ -284,7 +297,7 @@ public class ExercisePreviewViewModelTests
     [AvaloniaFact]
     public void Dispose_StopsTheTimersForGood()
     {
-        var preview = CreateLoadedPreview(MeditationSteps, WellnessSessionType.Meditation);
+        var preview = CreateLoadedPreview(MeditationSteps);
         preview.TogglePlayPauseCommand.Execute(null);
         var changes = 0;
         preview.PropertyChanged += (_, _) => changes++;
@@ -292,7 +305,7 @@ public class ExercisePreviewViewModelTests
         preview.Dispose();
         changes = 0;
         RunDispatcherFor(TimeSpan.FromSeconds(1.3));
-        preview.Load(MeditationSteps, WellnessSessionType.Meditation, true);
+        preview.Load(MeditationSteps, true);
 
         changes.Should().Be(0);
         preview.IsPlaying.Should().BeFalse();

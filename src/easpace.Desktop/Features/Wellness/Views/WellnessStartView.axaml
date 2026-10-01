@@ -9,36 +9,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
-             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
-             xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeCommand}"
              Background="Transparent">
-
-    <UserControl.Resources>
-
-        <dataTemplates:TemplateSelector x:Key="WellnessSessionEntrySelector">
-
-            <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Wind}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Md}"
-                          Height="{StaticResource Metrics.Icon.Size.Md}" />
-            </DataTemplate>
-
-            <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Sparkle}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Md}"
-                          Height="{StaticResource Metrics.Icon.Size.Md}" />
-            </DataTemplate>
-
-        </dataTemplates:TemplateSelector>
-
-    </UserControl.Resources>
 
     <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
@@ -52,35 +28,15 @@ Licensed under the MIT License. See LICENSE file for details.
         <Border Grid.Column="0" Classes="card"
                 Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
-            <Grid RowDefinitions="*,*,*,*,*">
+            <Grid RowDefinitions="*,*,*,*">
 
                 <!-- Title -->
                 <TextBlock Grid.Row="0" Classes="neutral fs2"
                            Text="{core:LocalizationService Key='Wellness.Title.Start'}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
 
-                <!-- Session Type Selection (segmented control) -->
-                <ListBox Grid.Row="1" Grid.Column="0" Classes="segmented"
-                         ItemsSource="{Binding SessionTypes}"
-                         SelectedItem="{Binding SelectedSessionType}"
-                         HorizontalAlignment="Center">
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-
-                </ListBox>
-
-                <!-- Exercises of the selected type -->
-                <StackPanel Grid.Row="2" Orientation="Vertical"
+                <!-- Exercises -->
+                <StackPanel Grid.Row="1" Orientation="Vertical"
                             Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <!-- Exercise selector and the way to manage exercises, which stays available when there are none -->
@@ -126,7 +82,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Cycles of a repeating exercise, or the fixed duration of one that runs once -->
-                <Grid Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
 
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
                                 IsVisible="{Binding ShowCycleSelector}">
@@ -151,7 +107,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </Grid>
 
                 <!-- Begin session button -->
-                <Button Grid.Row="4" Classes="primary regular"
+                <Button Grid.Row="3" Classes="primary regular"
                         Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
                         Command="{Binding StartSessionCommand}"
                         HorizontalAlignment="Center" />
@@ -176,34 +132,11 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding ShowNoSessionEntries}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                                HorizontalAlignment="Center">
-
-                        <!-- Wind icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="-10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                        <!-- Sparkle icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                    </StackPanel>
+                    <!-- Lotus icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.FlowerLotus}"
+                              Width="{StaticResource Metrics.Icon.Size.Xl}"
+                              Height="{StaticResource Metrics.Icon.Size.Xl}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}" />
 
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.NoSessions'}"
@@ -226,23 +159,13 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
 
                                     <Border Classes="elevated card">
-                                        <Grid ColumnDefinitions="Auto,*,Auto"
+                                        <Grid ColumnDefinitions="*,Auto"
                                               ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
-                                            <!-- Icon -->
-                                            <ContentControl Grid.Column="0" Content="{Binding SessionType}"
-                                                            ContentTemplate="{StaticResource WellnessSessionEntrySelector}"
-                                                            VerticalAlignment="Center" />
-
-                                            <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
-
-                                                <!-- Session type name -->
-                                                <TextBlock
-                                                    Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
-                                                    Classes="neutral fs5" />
+                                            <StackPanel Grid.Column="0" Orientation="Vertical" Spacing="4">
 
                                                 <!-- Session details: exercise, duration and cycles, whichever are known -->
-                                                <TextBlock Classes="subtle neutral fs6"
+                                                <TextBlock Classes="neutral fs5"
                                                            Text="{Binding DetailsText}"
                                                            TextWrapping="Wrap" />
 
@@ -254,7 +177,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                             </StackPanel>
 
                                             <!-- Delete button -->
-                                            <Button Grid.Column="2" Classes="tertiary danger icon"
+                                            <Button Grid.Column="1" Classes="tertiary danger icon"
                                                     Command="{Binding $parent[UserControl].((vm:WellnessStartViewModel)DataContext).DeleteEntryCommand}"
                                                     CommandParameter="{Binding .}" VerticalAlignment="Top"
                                                     ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">

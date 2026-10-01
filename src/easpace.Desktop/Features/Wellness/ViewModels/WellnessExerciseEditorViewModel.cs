@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Constants;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
@@ -29,7 +27,6 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 {
     private readonly IWellnessExerciseService _wellnessExerciseService;
     private readonly IDialogService _dialogService;
-    private readonly IToastMessageService _toastMessageService;
     private readonly ILogger<WellnessExerciseEditorViewModel> _logger;
     private readonly Guid? _initialExerciseId;
 
@@ -44,7 +41,6 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
     [NotifyCanExecuteChangedFor(nameof(CreateNewExerciseCommand))]
-    [NotifyCanExecuteChangedFor(nameof(RestoreDefaultsCommand))]
     private bool _isInitialized;
 
     [ObservableProperty]
@@ -62,7 +58,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     /// <summary>
     /// Gets whether the form is being edited. Otherwise the exercise is only shown, and the exercises can be browsed,
-    /// created, deleted and restored.
+    /// created and deleted.
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanChangeSelection))]
@@ -71,11 +67,10 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(DiscardCommand))]
     [NotifyCanExecuteChangedFor(nameof(CreateNewExerciseCommand))]
     [NotifyCanExecuteChangedFor(nameof(DeleteExerciseCommand))]
-    [NotifyCanExecuteChangedFor(nameof(RestoreDefaultsCommand))]
     private bool _isEditing;
 
     /// <summary>
-    /// Gets the exercises of every session type: breathing first, then meditation, each sorted by name.
+    /// Gets the exercises, sorted by name.
     /// </summary>
     public AvaloniaList<WellnessExerciseViewModel> Exercises { get; } = [];
 
@@ -104,13 +99,11 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     public WellnessExerciseEditorViewModel(
         IWellnessExerciseService wellnessExerciseService,
         IDialogService dialogService,
-        IToastMessageService toastMessageService,
         ILogger<WellnessExerciseEditorViewModel> logger,
         Guid? selectedExerciseId)
     {
         _wellnessExerciseService = wellnessExerciseService;
         _dialogService = dialogService;
-        _toastMessageService = toastMessageService;
         _logger = logger;
         _initialExerciseId = selectedExerciseId;
 
@@ -170,17 +163,15 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     private void EditExercise() => IsEditing = true;
 
     /// <summary>
-    /// Starts editing a new exercise with the type of the selected one, or breathing when nothing is selected.
+    /// Starts editing a new exercise.
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanCreateNewExercise))]
     private void CreateNewExercise()
     {
-        var type = SelectedExercise?.SessionType ?? WellnessSessionType.Breathing;
-
         // the selector shows no exercise while the new one is edited
         _exerciseBeforeDraft = SelectedExercise;
         SelectedExercise = null;
-        Form = new ExerciseFormViewModel(type);
+        Form = new ExerciseFormViewModel();
         IsEditing = true;
     }
 
@@ -291,60 +282,6 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         SelectedExercise = Exercises.Count == 0 ? null : Exercises[Math.Clamp(index, 0, Exercises.Count - 1)];
     }
 
-    /// <summary>
-    /// Adds the missing built-in exercises and selects the first of them. The user is told how many were restored.
-    /// </summary>
-    [RelayCommand(CanExecute = nameof(CanRestoreDefaults))]
-    private async Task RestoreDefaults()
-    {
-        int restoredCount;
-
-        try
-        {
-            restoredCount = await _wellnessExerciseService.RestoreDefaultExercisesAsync(_closeTokenSource.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            return;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to restore the default wellness exercises");
-            await ShowErrorAsync("Wellness.Error.DefaultsRestoreFailed");
-            return;
-        }
-
-        if (restoredCount == 0)
-        {
-            _toastMessageService.ShowToastMessage(
-                LocalizationService.GetString("Wellness.ToastMessage.NothingToRestore"), ToastMessageType.Info);
-            return;
-        }
-
-        _toastMessageService.ShowToastMessage(
-            string.Format(LocalizationService.GetString("Wellness.ToastMessage.DefaultsRestored"), restoredCount),
-            ToastMessageType.Success);
-
-        var knownIds = Exercises.Select(e => e.Id).ToHashSet();
-
-        try
-        {
-            await LoadExercisesAsync(SelectedExercise?.Id);
-        }
-        catch (OperationCanceledException)
-        {
-            return;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to reload the wellness exercises after restoring the defaults");
-            await ShowErrorAsync("Wellness.Error.LoadFailed");
-            return;
-        }
-
-        SelectedExercise = Exercises.FirstOrDefault(e => !knownIds.Contains(e.Id)) ?? SelectedExercise;
-    }
-
     private bool CanEditExercise() => SelectedExercise is not null && !IsEditing;
 
     private bool CanSave() => IsEditing && Form is { IsDirty: true, IsValid: true };
@@ -352,8 +289,6 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     private bool CanCreateNewExercise() => IsInitialized && !IsEditing;
 
     private bool CanDeleteExercise() => SelectedExercise is not null && !IsEditing;
-
-    private bool CanRestoreDefaults() => IsInitialized && !IsEditing;
 
     /// <summary>
     /// Stops the work that is still running, including the preview. Called once the editor is no longer shown.
@@ -407,8 +342,8 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             return;
         }
 
-        if (reset) Preview.Reset(form.ToSteps(), form.Type, form.IsRepeating);
-        else Preview.Load(form.ToSteps(), form.Type, form.IsRepeating);
+        if (reset) Preview.Reset(form.ToSteps(), form.IsRepeating);
+        else Preview.Load(form.ToSteps(), form.IsRepeating);
 
         // the progress may not change, but which instruction a step comes from can
         form.HighlightStep(Preview.Progress?.StepIndex);
@@ -436,17 +371,17 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to create a new {Type} wellness exercise", form.Type);
+            _logger.LogError(ex, "Failed to create a new wellness exercise");
             await ShowErrorAsync("Wellness.Error.ExerciseSaveFailed");
             return;
         }
 
         var exercise = new WellnessExerciseViewModel(created);
 
-        // keeps the order of the list: by type, then by name like the service sorts them
-        var index = Exercises.TakeWhile(e => e.SessionType < exercise.SessionType
-            || (e.SessionType == exercise.SessionType
-                && string.Compare(e.Name, exercise.Name, StringComparison.CurrentCultureIgnoreCase) <= 0)).Count();
+        // keeps the order of the list: by name like the service sorts them
+        var index = Exercises
+            .TakeWhile(e => string.Compare(e.Name, exercise.Name, StringComparison.CurrentCultureIgnoreCase) <= 0)
+            .Count();
 
         Exercises.Insert(index, exercise);
         _exerciseBeforeDraft = null;
@@ -458,11 +393,10 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     private async Task LoadExercisesAsync(Guid? selectedExerciseId)
     {
-        var exercises = await _wellnessExerciseService.GetExercisesAsync(cancellationToken: _closeTokenSource.Token);
+        var exercises = await _wellnessExerciseService.GetExercisesAsync(_closeTokenSource.Token);
 
-        // the order is stable, so each type keeps the name order of the service
         Exercises.Clear();
-        Exercises.AddRange(exercises.OrderBy(e => e.SessionType).Select(e => new WellnessExerciseViewModel(e)));
+        Exercises.AddRange(exercises.Select(e => new WellnessExerciseViewModel(e)));
         SelectedExercise = Exercises.FirstOrDefault(e => e.Id == selectedExerciseId) ?? Exercises.FirstOrDefault();
     }
 

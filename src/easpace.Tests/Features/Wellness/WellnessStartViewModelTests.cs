@@ -26,7 +26,7 @@ public class WellnessStartViewModelTests
 
     private void SetUpExercises(params WellnessExercise[] exercises) =>
         _exerciseServiceMock
-            .Setup(s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetExercisesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(exercises);
 
     private async Task<WellnessStartViewModel> CreateInitializedViewModelAsync(params WellnessExercise[] exercises)
@@ -43,7 +43,7 @@ public class WellnessStartViewModelTests
         return viewModel;
     }
 
-    private static BreathingExercise Breathing(string name, bool isRepeating, params int[] durations) => new()
+    private static WellnessExercise Breathing(string name, bool isRepeating, params int[] durations) => new()
     {
         Name = name,
         IsRepeating = isRepeating,
@@ -55,7 +55,7 @@ public class WellnessStartViewModelTests
             .ToList()
     };
 
-    private static MeditationExercise Meditation(string name, bool isRepeating, params int[] durations) => new()
+    private static WellnessExercise Meditation(string name, bool isRepeating, params int[] durations) => new()
     {
         Name = name,
         IsRepeating = isRepeating,
@@ -108,25 +108,19 @@ public class WellnessStartViewModelTests
     public async Task NonRepeatingExercise_HidesCycleSelectorAndShowsFixedDuration()
     {
         var viewModel = await CreateInitializedViewModelAsync(Meditation("Once", false, 4, 5));
-        viewModel.SelectedSessionType = WellnessSessionType.Meditation;
 
         viewModel.ShowCycleSelector.Should().BeFalse();
         viewModel.DurationText.Should().Be($"{LocalizationService.GetString("Wellness.Label.Duration")}: 00:09");
     }
 
     [Fact]
-    public async Task SelectedSessionType_ListsOnlyThatTypeAndSelectsTheFirst()
+    public async Task Initialize_ListsEveryExerciseAndSelectsTheFirst()
     {
         var viewModel = await CreateInitializedViewModelAsync(
             Breathing("Box", true, 4), Meditation("Calm", true, 60), Breathing("Triangle", true, 3));
 
-        viewModel.Exercises.Select(e => e.Name).Should().Equal("Box", "Triangle");
+        viewModel.Exercises.Select(e => e.Name).Should().Equal("Box", "Calm", "Triangle");
         viewModel.SelectedExercise!.Name.Should().Be("Box");
-
-        viewModel.SelectedSessionType = WellnessSessionType.Meditation;
-
-        viewModel.Exercises.Select(e => e.Name).Should().Equal("Calm");
-        viewModel.SelectedExercise!.Name.Should().Be("Calm");
     }
 
     [Fact]
@@ -139,8 +133,7 @@ public class WellnessStartViewModelTests
         var configuration = Start(viewModel);
 
         configuration.Should().NotBeNull();
-        configuration!.SessionType.Should().Be(WellnessSessionType.Breathing);
-        configuration.ExerciseId.Should().Be(exercise.Id);
+        configuration!.ExerciseId.Should().Be(exercise.Id);
         configuration.ExerciseName.Should().Be("Box");
         configuration.IsRepeating.Should().BeTrue();
         configuration.Steps.Should().Equal(Enumerable.Repeat(ExerciseStep.Create(null, 4, BreathingPhaseType.Inhale), 4));
@@ -245,7 +238,7 @@ public class WellnessStartViewModelTests
         viewModel.SelectedExercise.Name.Should().Be("Triangle (edited)");
         viewModel.SelectedCycles.Should().Be(7);
         _exerciseServiceMock.Verify(
-            s => s.GetExercisesAsync(It.IsAny<WellnessSessionType?>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+            s => s.GetExercisesAsync(It.IsAny<CancellationToken>()), Times.Exactly(2));
     }
 
     [Fact]

@@ -41,6 +41,12 @@ internal partial class SettingsViewModel : PageViewModel
 
     private bool _isLoading = true;
 
+    // the language the app runs with, as a new one only takes effect after a restart
+    private string _initialLanguage = string.Empty;
+
+    // whether the language was changed since the restart was last offered
+    private bool _isLanguageChanged;
+
     public SettingsViewModel(
         IPreferencesService preferencesService,
         ITranslucencyService translucencyService,
@@ -133,6 +139,43 @@ internal partial class SettingsViewModel : PageViewModel
         await _applicationService.LaunchUriAsync(new Uri("https://www.fiverr.com/l_nuge"));
     }
 
+    /// <summary>
+    /// Offers to restart the app when the language was changed and the saved language differs from the one the app
+    /// runs with. Called when the settings are left, so changing the language and back again asks nothing.
+    /// </summary>
+    public async Task OfferRestartIfNeededAsync()
+    {
+        if (!_isLanguageChanged) return;
+
+        _isLanguageChanged = false;
+
+        // compared with the saved language, as only a change that was saved needs a restart
+        if (_preferencesService.ReadPreference<string>(PreferenceKey.Language) == _initialLanguage) return;
+
+        try
+        {
+            var restartConfirmDialog = new ConfirmDialogViewModel
+            {
+                Title = string.Format(LocalizationService.GetString("Settings.RestartDialog.Title")),
+                Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Description")),
+                CancelText = LocalizationService.GetString("Common.Button.Later"),
+                ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow")
+            };
+
+            await _dialogService.ShowDialogAsync(restartConfirmDialog);
+
+            if (restartConfirmDialog.Confirmed)
+            {
+                _applicationService.Restart();
+            }
+        }
+        catch (Exception ex)
+        {
+            // the settings are already left, so there is no page to report the error on
+            _logger.LogError(ex, "Failed to restart the app after the language changed");
+        }
+    }
+
     private void LoadSettings()
     {
         _isLoading = true;
@@ -144,6 +187,7 @@ internal partial class SettingsViewModel : PageViewModel
             "hu" => 1,
             _ => 0
         };
+        _initialLanguage = GetSelectedLanguage();
 
         var colorScheme = _preferencesService.ReadPreference<ColorScheme>(PreferenceKey.ColorScheme);
         SelectedColorSchemeIndex = colorScheme switch
@@ -178,16 +222,16 @@ internal partial class SettingsViewModel : PageViewModel
         _isLoading = false;
     }
 
-    private async Task SaveSettings()
+    private string GetSelectedLanguage() => SelectedLanguageIndex switch
     {
-        var previousLanguage = _preferencesService.ReadPreference<string>(PreferenceKey.Language);
+        0 => "en",
+        1 => "hu",
+        _ => string.Empty
+    };
 
-        var language = SelectedLanguageIndex switch
-        {
-            0 => "en",
-            1 => "hu",
-            _ => string.Empty
-        };
+    private void SaveSettings()
+    {
+        var language = GetSelectedLanguage();
 
         var colorScheme = SelectedColorSchemeIndex switch
         {
@@ -214,25 +258,6 @@ internal partial class SettingsViewModel : PageViewModel
         _preferencesService.SavePreference(PreferenceKey.WellnessShowTimer, ShowWellnessTimer);
         _preferencesService.SavePreference(PreferenceKey.CheckForUpdates, IsCheckForUpdatesEnabled);
 
-        // restart required dialog when the language setting has changed
-        if (previousLanguage != language)
-        {
-            var restartConfirmDialog = new ConfirmDialogViewModel
-            {
-                Title = string.Format(LocalizationService.GetString("Settings.RestartDialog.Title")),
-                Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Description")),
-                CancelText = LocalizationService.GetString("Common.Button.Later"),
-                ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow")
-            };
-
-            await _dialogService.ShowDialogAsync(restartConfirmDialog);
-
-            if (restartConfirmDialog.Confirmed)
-            {
-                _applicationService.Restart();
-            }
-        }
-
         _colorSchemeService.SetColorScheme(colorScheme);
         _colorSchemeService.SetColorSchemeAppearance(colorSchemeAppearance);
         _translucencyService.SetTranslucencyEnabled(IsTranslucencyEnabled);
@@ -256,10 +281,13 @@ internal partial class SettingsViewModel : PageViewModel
             nameof(ShowWellnessTimer) or
             nameof(IsCheckForUpdatesEnabled))
         {
+            // the restart it needs is offered once the settings are left
+            if (e.PropertyName == nameof(SelectedLanguageIndex)) _isLanguageChanged = true;
+
             // async void handler: an escaping exception would crash the app
             try
             {
-                await SaveSettings();
+                SaveSettings();
             }
             catch (Exception ex)
             {

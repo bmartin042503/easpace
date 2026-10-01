@@ -27,11 +27,6 @@ Licensed under the MIT License. See LICENSE file for details.
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center"
                     HorizontalAlignment="Center" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
-            <!-- Type -->
-            <TextBlock Classes="neutral fs3"
-                       Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
-                       TextAlignment="Center" />
-
             <!-- Actual duration / Target duration -->
             <TextBlock Classes="neutral fs3" TextAlignment="Center">
                 <Run Text="{core:LocalizationService Key='Wellness.Label.Duration'}" />:

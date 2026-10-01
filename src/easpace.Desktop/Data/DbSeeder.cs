@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using easpace.Desktop.Constants;
@@ -22,8 +23,9 @@ internal class DbSeeder
     }
 
     /// <summary>
-    /// Seeds the default wellness exercises once. Each session type is seeded only if it has no exercises yet,
-    /// so upgraded databases keep their migrated exercises and deleted defaults are never re-added.
+    /// Seeds the default wellness exercises once, with their texts in the current app language. Deleted defaults are
+    /// never re-added, and a default is skipped if an exercise already has its name, so upgraded databases keep their
+    /// migrated exercises without duplicates.
     /// </summary>
     public async Task SeedAsync()
     {
@@ -31,12 +33,13 @@ internal class DbSeeder
 
         await using var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        var existingTypes = (await dbContext.WellnessExercises.AsNoTracking().ToListAsync())
-            .Select(e => e.SessionType)
-            .ToHashSet();
+        // migrated legacy techniques are named in the same language, as the migration runs right before seeding
+        var existingNames = (await dbContext.WellnessExercises.AsNoTracking().Select(e => e.Name).ToListAsync())
+            .Select(name => name.Trim())
+            .ToHashSet(StringComparer.CurrentCultureIgnoreCase);
 
         var missingDefaults = DefaultWellnessExercises.Create()
-            .Where(e => !existingTypes.Contains(e.SessionType))
+            .Where(e => !existingNames.Contains(e.Name))
             .ToList();
 
         if (missingDefaults.Count > 0)

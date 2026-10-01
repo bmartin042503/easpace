@@ -94,12 +94,6 @@ internal class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(
                 .HasMaxLength(256);
         });
 
-        modelBuilder.Entity<WellnessExercise>()
-            .UseTphMappingStrategy()
-            .HasDiscriminator<string>("ExerciseType")
-            .HasValue<BreathingExercise>("Breathing")
-            .HasValue<MeditationExercise>("Meditation");
-
         modelBuilder.Entity<ExerciseInstruction>()
             .Property(i => i.Text)
             .HasMaxLength(256);

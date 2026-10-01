@@ -245,10 +245,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>No results</value>
     </data>
     <data name="Journal.DeleteDialog.Title" xml:space="preserve">
-        <value>Delete '{0}'?</value>
+        <value>Delete “{0}”?</value>
     </data>
     <data name="Journal.DeleteDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this journal entry? This action can't be undone.</value>
+        <value>Are you sure you want to delete this journal entry? This action can’t be undone.</value>
     </data>
     <data name="Journal.Error.LoadFailed" xml:space="preserve">
         <value>Failed to load journal entries. Please try again later.</value>
@@ -513,13 +513,13 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Set a goal</value>
     </data>
     <data name="Activities.Title.Edit" xml:space="preserve">
-        <value>Edit '{0}'</value>
+        <value>Edit “{0}”</value>
     </data>
     <data name="Activities.DeleteDialog.Title" xml:space="preserve">
-        <value>Delete '{0}'?</value>
+        <value>Delete “{0}”?</value>
     </data>
     <data name="Activities.DeleteDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this activity? This action can't be undone.</value>
+        <value>Are you sure you want to delete this activity? This action can’t be undone.</value>
     </data>
     <data name="Activities.EntryDialog.Title" xml:space="preserve">
         <value>Record entry</value>
@@ -592,11 +592,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
         <value>Not completed</value>
     </data>
-    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
-        <value>Today</value>
-    </data>
     <data name="RoutineActivity.EntryState.None" xml:space="preserve">
         <value>Empty</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Today</value>
     </data>
     <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
         <value>Current value: {0} {1}</value>
@@ -611,12 +611,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.SessionType.Meditation" xml:space="preserve">
         <value>Meditation</value>
-    </data>
-    <data name="Wellness.Description.Breathing" xml:space="preserve">
-        <value>Find your center with guided breathing exercises.</value>
-    </data>
-    <data name="Wellness.Description.Meditation" xml:space="preserve">
-        <value>Clear your mind in a quiet, distraction-free space.</value>
     </data>
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Duration</value>
@@ -652,7 +646,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Delete session?</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Are you sure you want to delete this session? This action can't be undone.</value>
+        <value>Are you sure you want to delete this session? This action can’t be undone.</value>
     </data>
     <data name="Wellness.Empty.NoExercises" xml:space="preserve">
         <value>No exercises available.</value>
@@ -760,9 +754,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Error.ExerciseSaveFailed" xml:space="preserve">
         <value>Failed to save the exercise. Please try again.</value>
     </data>
-    <data name="Wellness.Editor.TypeLabel" xml:space="preserve">
-        <value>Type</value>
-    </data>
     <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>New exercise</value>
     </data>
@@ -772,26 +763,14 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Delete exercise</value>
     </data>
-    <data name="Wellness.Editor.RestoreDefaultsButton" xml:space="preserve">
-        <value>Restore defaults</value>
-    </data>
     <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
         <value>Delete exercise?</value>
     </data>
     <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
         <value>“{0}” will be deleted. Your past sessions with this exercise stay in your history.</value>
     </data>
-    <data name="Wellness.ToastMessage.DefaultsRestored" xml:space="preserve">
-        <value>Default exercises restored: {0}</value>
-    </data>
-    <data name="Wellness.ToastMessage.NothingToRestore" xml:space="preserve">
-        <value>All default exercises are already available.</value>
-    </data>
     <data name="Wellness.Error.ExerciseDeleteFailed" xml:space="preserve">
         <value>Failed to delete the exercise. Please try again.</value>
-    </data>
-    <data name="Wellness.Error.DefaultsRestoreFailed" xml:space="preserve">
-        <value>Failed to restore the default exercises. Please try again.</value>
     </data>
     <data name="Wellness.Phase.None" xml:space="preserve">
         <value>No phase</value>
@@ -926,7 +905,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Appearance</value>
     </data>
     <data name="Settings.ColorSchemeAppearance.Description" xml:space="preserve">
-        <value>Set the application's appearance.</value>
+        <value>Set the application’s appearance.</value>
     </data>
     <data name="Settings.ColorSchemeAppearanceSetting.System" xml:space="preserve">
         <value>System</value>
@@ -971,7 +950,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Are you sure you want to delete all data?</value>
     </data>
     <data name="Settings.DeleteAllDataDialog.Description" xml:space="preserve">
-        <value>This deletes all your data (journals, mood entries, activity and wellness sessions' data, encryption key, user preferences) PERMANENTLY. This action cannot be undone. The app closes after the deletion.</value>
+        <value>This deletes all your data (journals, mood entries, activity and wellness sessions’ data, encryption key, user preferences) PERMANENTLY. This action cannot be undone. The app closes after the deletion.</value>
     </data>
     <data name="Settings.RestartDialog.Title" xml:space="preserve">
         <value>Changes will take effect after restarting the application</value>

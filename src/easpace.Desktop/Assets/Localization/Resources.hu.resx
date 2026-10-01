@@ -245,7 +245,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Nincs találat</value>
     </data>
     <data name="Journal.DeleteDialog.Title" xml:space="preserve">
-        <value>Törlöd a(z) "{0}" bejegyzést?</value>
+        <value>Törlöd a(z) „{0}” bejegyzést?</value>
     </data>
     <data name="Journal.DeleteDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a naplóbejegyzést? A művelet nem vonható vissza.</value>
@@ -513,10 +513,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Cél beállítása</value>
     </data>
     <data name="Activities.Title.Edit" xml:space="preserve">
-        <value>"{0}" szerkesztése</value>
+        <value>„{0}” szerkesztése</value>
     </data>
     <data name="Activities.DeleteDialog.Title" xml:space="preserve">
-        <value>Törlöd a(z) "{0}" tevékenységet?</value>
+        <value>Törlöd a(z) „{0}” tevékenységet?</value>
     </data>
     <data name="Activities.DeleteDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a tevékenységet? A művelet nem vonható vissza.</value>
@@ -592,11 +592,11 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="RoutineActivity.EntryState.NotCompleted" xml:space="preserve">
         <value>Nincs teljesítve</value>
     </data>
-    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
-        <value>Mai nap</value>
-    </data>
     <data name="RoutineActivity.EntryState.None" xml:space="preserve">
         <value>Üres</value>
+    </data>
+    <data name="RoutineActivity.CalendarLegend.Today" xml:space="preserve">
+        <value>Mai nap</value>
     </data>
     <data name="TrendActivity.Details.CurrentValue" xml:space="preserve">
         <value>Jelenlegi érték: {0} {1}</value>
@@ -611,12 +611,6 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.SessionType.Meditation" xml:space="preserve">
         <value>Meditáció</value>
-    </data>
-    <data name="Wellness.Description.Breathing" xml:space="preserve">
-        <value>Találd meg az egyensúlyt irányított légzéssel.</value>
-    </data>
-    <data name="Wellness.Description.Meditation" xml:space="preserve">
-        <value>Csendesítsd el az elmédet egy zavartalan térben.</value>
     </data>
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Időtartam</value>
@@ -760,9 +754,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Error.ExerciseSaveFailed" xml:space="preserve">
         <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
-    <data name="Wellness.Editor.TypeLabel" xml:space="preserve">
-        <value>Típus</value>
-    </data>
     <data name="Wellness.Editor.NewExerciseButton" xml:space="preserve">
         <value>Új gyakorlat</value>
     </data>
@@ -772,26 +763,14 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Editor.DeleteExerciseButton" xml:space="preserve">
         <value>Gyakorlat törlése</value>
     </data>
-    <data name="Wellness.Editor.RestoreDefaultsButton" xml:space="preserve">
-        <value>Alapértelmezések visszaállítása</value>
-    </data>
     <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
         <value>Törlöd a gyakorlatot?</value>
     </data>
     <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
         <value>Ez a gyakorlat törlődik: „{0}”. A vele végzett korábbi alkalmaid megmaradnak az előzményekben.</value>
     </data>
-    <data name="Wellness.ToastMessage.DefaultsRestored" xml:space="preserve">
-        <value>{0} alapértelmezett gyakorlat visszaállítva.</value>
-    </data>
-    <data name="Wellness.ToastMessage.NothingToRestore" xml:space="preserve">
-        <value>Már minden alapértelmezett gyakorlat elérhető.</value>
-    </data>
     <data name="Wellness.Error.ExerciseDeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni a gyakorlatot. Kérlek, próbáld újra.</value>
-    </data>
-    <data name="Wellness.Error.DefaultsRestoreFailed" xml:space="preserve">
-        <value>Nem sikerült visszaállítani az alapértelmezett gyakorlatokat. Kérlek, próbáld újra.</value>
     </data>
     <data name="Wellness.Phase.None" xml:space="preserve">
         <value>Nincs fázis</value>

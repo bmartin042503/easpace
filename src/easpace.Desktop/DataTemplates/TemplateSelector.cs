@@ -8,7 +8,6 @@ using Avalonia.Metadata;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Activities.ViewModels;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
-using easpace.Desktop.Features.Wellness.Constants;
 
 namespace easpace.Desktop.DataTemplates;
 
@@ -65,7 +64,6 @@ internal class TemplateSelector : IDataTemplate
             OnboardingContent content => content.ToString(),
             ActivityViewModel activity => activity.GetType().Name,
             ActivityDataEntryViewModel dataEntry => dataEntry.GetType().Name,
-            WellnessSessionType sessionType => sessionType.ToString(),
             _ => data.ToString()
         };
 

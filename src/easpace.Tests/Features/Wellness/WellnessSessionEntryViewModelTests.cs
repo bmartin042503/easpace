@@ -12,21 +12,19 @@ namespace easpace.Tests.Features.Wellness;
 public class WellnessSessionEntryViewModelTests
 {
     private static WellnessSessionEntry Entry(
-        WellnessSessionType type,
         int actualSeconds,
         string? exerciseName = null,
         WellnessExercise? exercise = null) => new()
     {
         Id = Guid.NewGuid(),
         StartDate = new DateTimeOffset(2026, 9, 29, 8, 0, 0, TimeSpan.Zero),
-        Type = type,
         ActualDuration = TimeSpan.FromSeconds(actualSeconds),
         ExerciseId = exercise?.Id,
         Exercise = exercise,
         ExerciseName = exerciseName
     };
 
-    private static MeditationExercise Meditation(string name, bool isRepeating, int instructionCount) => new()
+    private static WellnessExercise Meditation(string name, bool isRepeating, int instructionCount) => new()
     {
         Name = name,
         IsRepeating = isRepeating,
@@ -38,7 +36,7 @@ public class WellnessSessionEntryViewModelTests
     [Fact]
     public void DetailsText_WithExistingRepeatingExercise_ShowsNameDurationAndCycles()
     {
-        var exercise = new BreathingExercise
+        var exercise = new WellnessExercise
         {
             Name = "Box Breathing",
             IsRepeating = true,
@@ -51,7 +49,7 @@ public class WellnessSessionEntryViewModelTests
             ]
         };
 
-        var entryVm = new WellnessSessionEntryViewModel(Entry(WellnessSessionType.Breathing, 304, exercise.Name, exercise));
+        var entryVm = new WellnessSessionEntryViewModel(Entry(304, exercise.Name, exercise));
 
         var cyclesText = string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), 19);
         entryVm.DetailsText.Should().Be($"Box Breathing • 05:04 • {cyclesText}");
@@ -60,15 +58,15 @@ public class WellnessSessionEntryViewModelTests
     [Fact]
     public void DetailsText_WithDeletedExercise_ShowsSavedNameAndDurationWithoutCycles()
     {
-        var entryVm = new WellnessSessionEntryViewModel(Entry(WellnessSessionType.Breathing, 125, "Calm Breath"));
+        var entryVm = new WellnessSessionEntryViewModel(Entry(125, "Calm Breath"));
 
         entryVm.DetailsText.Should().Be("Calm Breath • 02:05");
     }
 
     [Fact]
-    public void DetailsText_WithLegacyMeditationEntry_ShowsDurationOnly()
+    public void DetailsText_WithoutExerciseName_ShowsDurationOnly()
     {
-        var entryVm = new WellnessSessionEntryViewModel(Entry(WellnessSessionType.Meditation, 600));
+        var entryVm = new WellnessSessionEntryViewModel(Entry(600));
 
         entryVm.DetailsText.Should().Be("10:00");
     }
@@ -80,7 +78,7 @@ public class WellnessSessionEntryViewModelTests
     {
         var exercise = Meditation("Quiet Mind", isRepeating, instructionCount);
 
-        var entryVm = new WellnessSessionEntryViewModel(Entry(WellnessSessionType.Meditation, 120, exercise.Name, exercise));
+        var entryVm = new WellnessSessionEntryViewModel(Entry(120, exercise.Name, exercise));
 
         entryVm.DetailsText.Should().Be("Quiet Mind • 02:00");
     }
@@ -92,7 +90,7 @@ public class WellnessSessionEntryViewModelTests
     {
         var exercise = Meditation("Current name", isRepeating: false, instructionCount: 1);
 
-        var entryVm = new WellnessSessionEntryViewModel(Entry(WellnessSessionType.Meditation, 60, savedName, exercise));
+        var entryVm = new WellnessSessionEntryViewModel(Entry(60, savedName, exercise));
 
         entryVm.DetailsText.Should().Be($"{expectedName} • 01:00");
     }

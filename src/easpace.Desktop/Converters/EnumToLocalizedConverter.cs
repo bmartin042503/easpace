@@ -7,7 +7,6 @@ using Avalonia.Data;
 using Avalonia.Data.Converters;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Mood.Constants;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Services.Core;
 
 namespace easpace.Desktop.Converters;
@@ -41,16 +40,6 @@ public class EnumToLocalizedConverter : IValueConverter
         if (value is MoodLabelState moodLabelState)
         {
             return LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}");
-        }
-
-        if (value is WellnessSessionType sessionType)
-        {
-            return sessionType switch
-            {
-                WellnessSessionType.Breathing => LocalizationService.GetString("Wellness.SessionType.Breathing"),
-                WellnessSessionType.Meditation => LocalizationService.GetString("Wellness.SessionType.Meditation"),
-                _ => string.Empty
-            };
         }
 
         if (value is TrendAggregation aggregation)

@@ -6,7 +6,6 @@ using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
-using easpace.Desktop.Services.Core;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +43,7 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     }
 
     private static UpsertWellnessExerciseRequest BreathingRequest(string name = "Calm Breath") =>
-        new(null, WellnessSessionType.Breathing, name, "Slow down", true,
+        new(null, name, "Slow down", true,
         [
             new UpsertExerciseInstructionRequest("", 4, BreathingPhaseType.Inhale),
             new UpsertExerciseInstructionRequest("Hold gently", 2, BreathingPhaseType.HoldIn),
@@ -52,14 +51,14 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
         ]);
 
     private static UpsertWellnessExerciseRequest MeditationRequest(string name = "Quiet Mind") =>
-        new(null, WellnessSessionType.Meditation, name, "Rest", false,
+        new(null, name, "Rest", false,
         [
             new UpsertExerciseInstructionRequest("Notice your breath", 60, null),
             new UpsertExerciseInstructionRequest("Relax your shoulders", 90, null)
         ]);
 
     private static UpsertWellnessExerciseRequest ToRequest(WellnessExercise exercise) =>
-        new(null, exercise.SessionType, exercise.Name, exercise.Description, exercise.IsRepeating,
+        new(null, exercise.Name, exercise.Description, exercise.IsRepeating,
             exercise.Instructions
                 .OrderBy(i => i.Order)
                 .Select(i => new UpsertExerciseInstructionRequest(i.Text, i.DurationSeconds, i.Phase))
@@ -72,15 +71,14 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task CreateExerciseAsync_Breathing_PersistsTrimmedValuesAndOrderedInstructions()
+    public async Task CreateExerciseAsync_PersistsTrimmedValuesAndOrderedInstructions()
     {
         var request = BreathingRequest() with { Name = "  Calm Breath  ", Description = "  Slow down  " };
 
         var created = await _service.CreateExerciseAsync(request, TestCancellation);
 
-        var exercise = (await _service.GetExercisesAsync(cancellationToken: TestCancellation)).Single();
+        var exercise = (await _service.GetExercisesAsync(TestCancellation)).Single();
         exercise.Id.Should().Be(created.Id);
-        exercise.Should().BeOfType<BreathingExercise>();
         exercise.Name.Should().Be("Calm Breath");
         exercise.Description.Should().Be("Slow down");
         exercise.IsRepeating.Should().BeTrue();
@@ -93,18 +91,22 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task CreateExerciseAsync_Meditation_StripsBreathingPhases()
+    public async Task CreateExerciseAsync_KeepsTheBreathingPhasesOfTextInstructions()
     {
         var request = MeditationRequest() with
         {
-            Instructions = [new UpsertExerciseInstructionRequest("Breathe in slowly", 30, BreathingPhaseType.Inhale)]
+            Instructions =
+            [
+                new UpsertExerciseInstructionRequest("Breathe in slowly", 30, BreathingPhaseType.Inhale),
+                new UpsertExerciseInstructionRequest("Rest", 60, null)
+            ]
         };
 
         await _service.CreateExerciseAsync(request, TestCancellation);
 
-        var exercise = (await _service.GetExercisesAsync(cancellationToken: TestCancellation)).Single();
-        exercise.Should().BeOfType<MeditationExercise>();
-        exercise.Instructions.Single().Phase.Should().BeNull();
+        var exercise = (await _service.GetExercisesAsync(TestCancellation)).Single();
+        exercise.Instructions.OrderBy(i => i.Order).Select(i => (i.Text, i.Phase))
+            .Should().Equal(("Breathe in slowly", BreathingPhaseType.Inhale), ("Rest", (BreathingPhaseType?)null));
     }
 
     [Fact]
@@ -127,7 +129,6 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     [InlineData("duration too long")]
     [InlineData("text too long")]
     [InlineData("no text and no phase")]
-    [InlineData("meditation text relies on phase")]
     [InlineData("cycle too long")]
     public async Task CreateExerciseAsync_WithInvalidRequest_ThrowsAndPersistsNothing(string invalidCase)
     {
@@ -142,7 +143,6 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
             "duration too long" => breathing with { Instructions = [new("Breathe", 3601, BreathingPhaseType.Inhale)] },
             "text too long" => breathing with { Instructions = [new(new string('a', 257), 4, BreathingPhaseType.Inhale)] },
             "no text and no phase" => breathing with { Instructions = [new("  ", 4, null)] },
-            "meditation text relies on phase" => MeditationRequest() with { Instructions = [new("", 60, BreathingPhaseType.Inhale)] },
             "cycle too long" => breathing with { Instructions = [new("One", 1800, null), new("Two", 1801, null)] },
             _ => throw new ArgumentOutOfRangeException(nameof(invalidCase))
         };
@@ -175,33 +175,16 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
         await _service.CreateExerciseAsync(MeditationRequest("Alpha"), TestCancellation);
         await _service.CreateExerciseAsync(BreathingRequest("beta"), TestCancellation);
 
-        var exercises = await _service.GetExercisesAsync(cancellationToken: TestCancellation);
+        var exercises = await _service.GetExercisesAsync(TestCancellation);
 
         exercises.Select(e => e.Name).Should().Equal("Alpha", "beta", "gamma");
-    }
-
-    [Fact]
-    public async Task GetExercisesAsync_WithType_ReturnsOnlyThatType()
-    {
-        await _service.CreateExerciseAsync(BreathingRequest("Breath A"), TestCancellation);
-        await _service.CreateExerciseAsync(MeditationRequest("Meditation A"), TestCancellation);
-        await _service.CreateExerciseAsync(BreathingRequest("Breath B"), TestCancellation);
-
-        var breathing = await _service.GetExercisesAsync(WellnessSessionType.Breathing, TestCancellation);
-        var meditation = await _service.GetExercisesAsync(WellnessSessionType.Meditation, TestCancellation);
-
-        breathing.Select(e => e.Name).Should().Equal("Breath A", "Breath B");
-        breathing.Should().AllBeOfType<BreathingExercise>();
-        meditation.Select(e => e.Name).Should().Equal("Meditation A");
-        meditation.Should().AllBeOfType<MeditationExercise>();
     }
 
     [Fact]
     public async Task UpdateExerciseAsync_ReplacesPropertiesAndInstructions()
     {
         var created = await _service.CreateExerciseAsync(BreathingRequest(), TestCancellation);
-        var request = new UpsertWellnessExerciseRequest(created.Id, WellnessSessionType.Breathing,
-            "  Renamed  ", "  New description  ", false,
+        var request = new UpsertWellnessExerciseRequest(created.Id, "  Renamed  ", "  New description  ", false,
             [
                 new UpsertExerciseInstructionRequest("Exhale fully", 5, BreathingPhaseType.Exhale),
                 new UpsertExerciseInstructionRequest("", 3, BreathingPhaseType.HoldOut)
@@ -209,7 +192,7 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
 
         await _service.UpdateExerciseAsync(created.Id, request, TestCancellation);
 
-        var exercise = (await _service.GetExercisesAsync(cancellationToken: TestCancellation)).Single();
+        var exercise = (await _service.GetExercisesAsync(TestCancellation)).Single();
         exercise.Name.Should().Be("Renamed");
         exercise.Description.Should().Be("New description");
         exercise.IsRepeating.Should().BeFalse();
@@ -221,25 +204,6 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
 
         // the previous instructions are removed rather than kept alongside the new ones
         (await CountAsync<ExerciseInstruction>()).Should().Be(2);
-    }
-
-    [Fact]
-    public async Task UpdateExerciseAsync_KeepsOriginalTypeAndItsPhaseRules()
-    {
-        var breathing = await _service.CreateExerciseAsync(BreathingRequest("Breath"), TestCancellation);
-        var meditation = await _service.CreateExerciseAsync(MeditationRequest("Mind"), TestCancellation);
-        var phasedInstructions = new List<UpsertExerciseInstructionRequest> { new("Breathe in", 4, BreathingPhaseType.Inhale) };
-
-        await _service.UpdateExerciseAsync(breathing.Id,
-            MeditationRequest("Breath") with { Instructions = phasedInstructions }, TestCancellation);
-        await _service.UpdateExerciseAsync(meditation.Id,
-            BreathingRequest("Mind") with { Instructions = phasedInstructions }, TestCancellation);
-
-        var exercises = (await _service.GetExercisesAsync(cancellationToken: TestCancellation)).ToDictionary(e => e.Id);
-        exercises[breathing.Id].Should().BeOfType<BreathingExercise>();
-        exercises[breathing.Id].Instructions.Single().Phase.Should().Be(BreathingPhaseType.Inhale);
-        exercises[meditation.Id].Should().BeOfType<MeditationExercise>();
-        exercises[meditation.Id].Instructions.Single().Phase.Should().BeNull();
     }
 
     [Fact]
@@ -275,7 +239,6 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
                 Id = sessionId,
                 StartDate = DateTimeOffset.Now,
                 ActualDuration = TimeSpan.FromMinutes(2),
-                Type = WellnessSessionType.Breathing,
                 ExerciseId = deleted.Id,
                 ExerciseName = "Calm Breath"
             });
@@ -284,7 +247,7 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
 
         await _service.DeleteExerciseAsync(deleted.Id, TestCancellation);
 
-        (await _service.GetExercisesAsync(cancellationToken: TestCancellation)).Select(e => e.Id).Should().Equal(kept.Id);
+        (await _service.GetExercisesAsync(TestCancellation)).Select(e => e.Id).Should().Equal(kept.Id);
         (await CountAsync<ExerciseInstruction>()).Should().Be(kept.Instructions.Count);
 
         await using (var dbContext = _dbContextFactory.CreateDbContext())
@@ -306,67 +269,16 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
     }
 
     [Fact]
-    public async Task RestoreDefaultExercisesAsync_OnEmptyDatabase_InsertsAllDefaults()
-    {
-        var restored = await _service.RestoreDefaultExercisesAsync(TestCancellation);
-
-        var defaults = DefaultWellnessExercises.Create();
-        restored.Should().Be(defaults.Count);
-
-        var exercises = await _service.GetExercisesAsync(cancellationToken: TestCancellation);
-        exercises.Select(e => (e.SessionType, e.Name))
-            .Should().BeEquivalentTo(defaults.Select(e => (e.SessionType, e.Name)));
-    }
-
-    [Fact]
-    public async Task RestoreDefaultExercisesAsync_InsertsOnlyMissingDefaults()
-    {
-        await _service.RestoreDefaultExercisesAsync(TestCancellation);
-        var exercises = await _service.GetExercisesAsync(cancellationToken: TestCancellation);
-        await _service.DeleteExerciseAsync(exercises[0].Id, TestCancellation);
-        await _service.DeleteExerciseAsync(exercises[^1].Id, TestCancellation);
-
-        var restored = await _service.RestoreDefaultExercisesAsync(TestCancellation);
-        var restoredAgain = await _service.RestoreDefaultExercisesAsync(TestCancellation);
-
-        restored.Should().Be(2);
-        restoredAgain.Should().Be(0);
-        (await CountAsync<WellnessExercise>()).Should().Be(DefaultWellnessExercises.Create().Count);
-    }
-
-    [Fact]
-    public async Task RestoreDefaultExercisesAsync_MatchesNamesIgnoringCaseAndWhitespaceWithinTheSameType()
-    {
-        var boxBreathingName = LocalizationService.GetString("DefaultExercise.BoxBreathing.Name");
-        var guidedCalmName = LocalizationService.GetString("DefaultExercise.GuidedCalm.Name");
-
-        // same type, different casing: counts as present
-        var renamed = await _service.CreateExerciseAsync(BreathingRequest("placeholder"), TestCancellation);
-        await using (var dbContext = _dbContextFactory.CreateDbContext())
-        {
-            var exercise = await dbContext.WellnessExercises.SingleAsync(e => e.Id == renamed.Id, TestCancellation);
-            exercise.Name = $"  {boxBreathingName.ToUpperInvariant()}  ";
-            await dbContext.SaveChangesAsync(TestCancellation);
-        }
-
-        // same name but a different type: doesn't count as the meditation default
-        await _service.CreateExerciseAsync(BreathingRequest(guidedCalmName), TestCancellation);
-
-        var restored = await _service.RestoreDefaultExercisesAsync(TestCancellation);
-
-        restored.Should().Be(DefaultWellnessExercises.Create().Count - 1);
-        var meditation = await _service.GetExercisesAsync(WellnessSessionType.Meditation, TestCancellation);
-        meditation.Should().Contain(e => e.Name == guidedCalmName);
-    }
-
-    [Fact]
     public void DefaultWellnessExercises_Create_ProducesValidBuiltInExercises()
     {
         var defaults = DefaultWellnessExercises.Create();
 
-        defaults.OfType<BreathingExercise>().Should().HaveCount(4);
-        defaults.OfType<MeditationExercise>().Should().HaveCount(2);
-        defaults.Select(e => (e.SessionType, e.Name)).Should().OnlyHaveUniqueItems();
+        defaults.Should().HaveCount(6);
+        defaults.Select(e => e.Name).Should().OnlyHaveUniqueItems();
+
+        // four breathing rhythms made of phases, two meditations made of texts
+        defaults.Count(e => e.Instructions.All(i => i.Phase != null)).Should().Be(4);
+        defaults.Count(e => e.Instructions.All(i => i.Phase == null)).Should().Be(2);
 
         foreach (var exercise in defaults)
         {
@@ -385,15 +297,6 @@ public class WellnessExerciseServiceTests : IAsyncLifetime
                 instruction.Text.Should().NotBeNullOrWhiteSpace().And.NotStartWith("[");
                 instruction.Text.Length.Should().BeLessThanOrEqualTo(256);
                 instruction.DurationSeconds.Should().BeInRange(1, 3600);
-            }
-
-            if (exercise is BreathingExercise)
-            {
-                exercise.Instructions.Should().OnlyContain(i => i.Phase != null);
-            }
-            else
-            {
-                exercise.Instructions.Should().OnlyContain(i => i.Phase == null);
             }
         }
     }

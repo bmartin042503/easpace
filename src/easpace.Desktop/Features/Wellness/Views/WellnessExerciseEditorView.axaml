@@ -9,8 +9,6 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
-             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
-             xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              xmlns:controls="clr-namespace:easpace.Desktop.Features.Wellness.Controls"
              xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
@@ -22,45 +20,18 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <UserControl.Resources>
 
-        <!-- Session type icons, as the selector lists the exercises of both types -->
-        <dataTemplates:TemplateSelector x:Key="SessionTypeIconSelector">
-
-            <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
-                <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Sm}"
-                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
-            </DataTemplate>
-
-            <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
-                <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Sm}"
-                          Height="{StaticResource Metrics.Icon.Size.Sm}" />
-            </DataTemplate>
-
-        </dataTemplates:TemplateSelector>
-
         <!-- The exercise as it's stored, shown until the user starts editing it -->
         <DataTemplate x:Key="ReadOnlyFormTemplate" x:DataType="vm:ExerciseFormViewModel">
 
             <!-- the right margin keeps the scroll bar off the content, the bottom one lets the list end calmly -->
             <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xl}" Margin="0,0,18,32">
 
-                <!-- Name, with the type and whether it repeats -->
+                <!-- Name, with whether it repeats -->
                 <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
                     <TextBlock Classes="neutral fs2" TextWrapping="Wrap" Text="{Binding Name}" />
 
                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-
-                        <ContentControl Content="{Binding Type}" VerticalAlignment="Center"
-                                        ContentTemplate="{StaticResource SessionTypeIconSelector}" />
-
-                        <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center"
-                                   Text="{Binding Type, Converter={StaticResource EnumToLocalizedConverter}}" />
-
-                        <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center" Text="·" />
 
                         <TextBlock Classes="subtle neutral fs5" VerticalAlignment="Center" IsVisible="{Binding IsRepeating}"
                                    Text="{core:LocalizationService Key='Wellness.Editor.RepeatsInCyclesText'}" />
@@ -168,33 +139,6 @@ Licensed under the MIT License. See LICENSE file for details.
                                  PlaceholderText="{core:LocalizationService Key='Wellness.Editor.NamePlaceholder'}"
                                  MaxLength="64" />
                     </Grid>
-
-                </StackPanel>
-
-                <!-- Type, which can only be chosen until a new exercise is saved -->
-                <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-
-                    <TextBlock Classes="neutral fs4"
-                               Text="{core:LocalizationService Key='Wellness.Editor.TypeLabel'}" />
-
-                    <ListBox Classes="segmented" HorizontalAlignment="Left"
-                             IsEnabled="{Binding IsCreatingNew}"
-                             ItemsSource="{Binding SessionTypes}"
-                             SelectedItem="{Binding Type}">
-
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-
-                    </ListBox>
 
                 </StackPanel>
 
@@ -314,7 +258,6 @@ Licensed under the MIT License. See LICENSE file for details.
                                                        LineSpacing="{StaticResource Metrics.Spacing.Xs}">
 
                                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}"
-                                                            IsVisible="{Binding SupportsPhases}"
                                                             ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.PhaseLabel'}">
 
                                                     <PathIcon Classes="field-icon" Data="{StaticResource PhosphorIcons.Wind}" />
@@ -399,8 +342,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <UserControl.Styles>
 
-        <!-- Wide layout: the form left of a full-height preview, split by a line like the page splitters. The positions
-             are set here rather than on the elements, so the container query below can override them. -->
+        <!-- Wide layout: the form left of a full-height preview, split by a page splitter that resizes the preview. The
+             positions are set here rather than on the elements, so the container query below can override them. -->
         <Style Selector="ScrollViewer#FormPane">
             <Setter Property="Grid.Row" Value="0" />
             <Setter Property="Grid.RowSpan" Value="3" />
@@ -408,19 +351,19 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Grid.ColumnSpan" Value="1" />
         </Style>
 
-        <Style Selector="Border#PreviewDivider">
+        <Style Selector="GridSplitter#PreviewSplitter">
             <Setter Property="Grid.Row" Value="0" />
             <Setter Property="Grid.RowSpan" Value="3" />
             <Setter Property="Grid.Column" Value="1" />
-            <Setter Property="Grid.ColumnSpan" Value="1" />
-            <Setter Property="Width" Value="{StaticResource Metrics.Spacing.Xs}" />
         </Style>
 
-        <Style Selector="Border#PreviewDivider > Rectangle">
-            <Setter Property="Width" Value="{StaticResource Metrics.Border.Thickness.Double}" />
-            <Setter Property="Height" Value="NaN" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Style Selector="GridSplitter#PreviewSplitter.no-exercise">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <!-- the line between the strip and the form of the narrow layout -->
+        <Style Selector="Border#PreviewDivider">
+            <Setter Property="IsVisible" Value="False" />
         </Style>
 
         <Style Selector="Panel#PreviewPane">
@@ -428,7 +371,6 @@ Licensed under the MIT License. See LICENSE file for details.
             <Setter Property="Grid.RowSpan" Value="3" />
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="Grid.ColumnSpan" Value="1" />
-            <Setter Property="Width" Value="320" />
         </Style>
 
         <Style Selector="Viewbox#PreviewVisual">
@@ -445,16 +387,23 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="Grid.ColumnSpan" Value="3" />
             </Style>
 
+            <!-- the panes are stacked, so there is nothing to resize -->
+            <Style Selector="GridSplitter#PreviewSplitter">
+                <Setter Property="IsVisible" Value="False" />
+            </Style>
+
             <Style Selector="Border#PreviewDivider">
+                <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Grid.Row" Value="1" />
-                <Setter Property="Grid.RowSpan" Value="1" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="Grid.ColumnSpan" Value="3" />
-                <Setter Property="Width" Value="NaN" />
+            </Style>
+
+            <Style Selector="Border#PreviewDivider.no-exercise">
+                <Setter Property="IsVisible" Value="False" />
             </Style>
 
             <Style Selector="Border#PreviewDivider > Rectangle">
-                <Setter Property="Width" Value="NaN" />
                 <Setter Property="Height" Value="{StaticResource Metrics.Border.Thickness.Double}" />
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -464,7 +413,6 @@ Licensed under the MIT License. See LICENSE file for details.
                 <Setter Property="Grid.RowSpan" Value="1" />
                 <Setter Property="Grid.Column" Value="0" />
                 <Setter Property="Grid.ColumnSpan" Value="3" />
-                <Setter Property="Width" Value="NaN" />
             </Style>
 
             <!-- a smaller circle keeps more of the form in view below the strip -->
@@ -603,7 +551,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <TextBlock Grid.Column="1" Classes="neutral fs2 trm-ellipsis" VerticalAlignment="Center"
                            Text="{core:LocalizationService Key='Wellness.Editor.Title'}" />
 
-                <!-- New exercise and the other actions, like the actions of an activity -->
+                <!-- New exercise -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
                             VerticalAlignment="Center" IsVisible="{Binding !IsEditing}">
 
@@ -616,32 +564,6 @@ Licensed under the MIT License. See LICENSE file for details.
                             <TextBlock Classes="fs6 medium"
                                        Text="{core:LocalizationService Key='Wellness.Editor.NewExerciseButton'}" />
                         </StackPanel>
-                    </Button>
-
-                    <Button x:Name="MoreActionsButton" Classes="dots-flyout">
-
-                        <PathIcon Data="{StaticResource PhosphorIcons.DotsThree}"
-                                  Foreground="{DynamicResource Sem.Foreground.Muted}"
-                                  Width="{StaticResource Metrics.Icon.Size.Sm}"
-                                  Height="{StaticResource Metrics.Icon.Size.Sm}" />
-
-                        <Button.Flyout>
-                            <Flyout>
-                                <!-- Restore the built-in exercises -->
-                                <Button Classes="primary regular" HorizontalAlignment="Stretch"
-                                        Command="{Binding RestoreDefaultsCommand}" Click="OnMoreActionClick"
-                                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Editor.RestoreDefaultsButton'}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-                                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}"
-                                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-                                        <TextBlock Classes="fs6 medium"
-                                                   Text="{core:LocalizationService Key='Wellness.Editor.RestoreDefaultsButton'}" />
-                                    </StackPanel>
-                                </Button>
-                            </Flyout>
-                        </Button.Flyout>
-
                     </Button>
 
                 </StackPanel>
@@ -675,12 +597,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="vm:WellnessExerciseViewModel">
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
-                                <ContentControl Content="{Binding SessionType}"
-                                                ContentTemplate="{StaticResource SessionTypeIconSelector}"
-                                                VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
-                            </StackPanel>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
 
@@ -709,63 +626,46 @@ Licensed under the MIT License. See LICENSE file for details.
         <Separator Grid.Row="1" Height="1" Margin="0" />
 
         <!-- Form and preview: side by side, the preview stacked on top when narrow -->
-        <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto,*"
-              ColumnSpacing="{StaticResource Metrics.Spacing.Md}" RowSpacing="{StaticResource Metrics.Spacing.Md}">
+        <Grid Grid.Row="2" RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Md}">
+
+            <!-- the splitter resizes the preview between its limits; both columns are star sized, so the narrow layout,
+                 where the panes span every column, can't be pushed wider than the window by a resized preview. The
+                 gaps are the splitter's margins rather than column spacing, which the splitter would count as width. -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="240" MaxWidth="480" />
+            </Grid.ColumnDefinitions>
 
             <!-- The selected exercise, shown or edited, or a new one -->
             <ScrollViewer x:Name="FormPane" HorizontalScrollBarVisibility="Disabled">
                 <ContentControl x:Name="FormContent" Content="{Binding Form}" Classes.editing="{Binding IsEditing}" />
             </ScrollViewer>
 
-            <!-- 'No exercises available' text, with the way to get the built-in exercises back; it spans the whole body,
-                 as there is no preview then -->
+            <!-- 'No exercises available' text; it spans the whole body, as there is no preview then -->
             <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="3"
                         IsVisible="{Binding ShowNoExercises}" Orientation="Vertical"
                         Spacing="{StaticResource Metrics.Spacing.Sm}"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                            HorizontalAlignment="Center">
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
-                              Width="{StaticResource Metrics.Icon.Size.Xl}"
-                              Height="{StaticResource Metrics.Icon.Size.Xl}"
-                              Foreground="{DynamicResource Sem.Foreground.Subtle}">
-                        <PathIcon.RenderTransform>
-                            <RotateTransform Angle="-10" />
-                        </PathIcon.RenderTransform>
-                    </PathIcon>
-
-                    <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
-                              Width="{StaticResource Metrics.Icon.Size.Xl}"
-                              Height="{StaticResource Metrics.Icon.Size.Xl}"
-                              Foreground="{DynamicResource Sem.Foreground.Subtle}">
-                        <PathIcon.RenderTransform>
-                            <RotateTransform Angle="10" />
-                        </PathIcon.RenderTransform>
-                    </PathIcon>
-
-                </StackPanel>
+                <PathIcon Data="{StaticResource PhosphorIcons.FlowerLotus}"
+                          Width="{StaticResource Metrics.Icon.Size.Xl}"
+                          Height="{StaticResource Metrics.Icon.Size.Xl}"
+                          Foreground="{DynamicResource Sem.Foreground.Subtle}" />
 
                 <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.NoExercises'}"
                            Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
 
-                <Button Classes="primary regular" HorizontalAlignment="Center"
-                        Command="{Binding RestoreDefaultsCommand}">
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
-                        <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xxs}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xxs}" />
-                        <TextBlock Classes="fs6 medium"
-                                   Text="{core:LocalizationService Key='Wellness.Editor.RestoreDefaultsButton'}" />
-                    </StackPanel>
-                </Button>
-
             </StackPanel>
 
-            <!-- Divider between the form and the preview, drawn like the page splitters but without resizing -->
+            <!-- Splitter between the form and the preview, like the page splitters; it resizes the preview -->
+            <GridSplitter x:Name="PreviewSplitter" Classes="vertical" ResizeDirection="Columns"
+                          Margin="{StaticResource Metrics.Spacing.Thickness.Horizontal.Md}"
+                          Classes.no-exercise="{Binding Form, Converter={x:Static ObjectConverters.IsNull}}" />
+
+            <!-- Divider between the preview strip and the form of the narrow layout -->
             <Border x:Name="PreviewDivider"
-                    IsVisible="{Binding Form, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    Classes.no-exercise="{Binding Form, Converter={x:Static ObjectConverters.IsNull}}">
                 <Rectangle Fill="{DynamicResource Sem.Border.Divider}" />
             </Border>
 

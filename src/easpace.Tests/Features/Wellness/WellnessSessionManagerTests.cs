@@ -24,7 +24,7 @@ public class WellnessSessionManagerTests
     ];
 
     private static WellnessSessionManager CreateManager(int? cycles) =>
-        new(new WellnessSessionConfiguration(WellnessSessionType.Breathing, null, "Box", BoxSteps, cycles, cycles is not null));
+        new(new WellnessSessionConfiguration(null, "Box", BoxSteps, cycles, cycles is not null));
 
     // runs the dispatcher loop, timers included, long enough for the one-second session timer to tick if it's running
     private static void RunDispatcherFor(TimeSpan duration)

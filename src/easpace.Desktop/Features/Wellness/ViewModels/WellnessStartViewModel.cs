@@ -2,14 +2,12 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
@@ -42,11 +40,6 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(DurationText))]
     private int _maximumCycles = 1;
 
-    public IEnumerable<WellnessSessionType> SessionTypes { get; } = Enum.GetValues<WellnessSessionType>();
-    
-    [ObservableProperty]
-    private WellnessSessionType _selectedSessionType;
-
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
     [NotifyPropertyChangedFor(nameof(ShowCycleSelector))]
@@ -60,9 +53,6 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [ObservableProperty] private bool _isLoading = true;
 
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
-
-    // exercises of every session type; the list only shows the selected type
-    private IReadOnlyList<WellnessExerciseViewModel> _allExercises = [];
 
     private bool _isInitializationRunning;
 
@@ -249,7 +239,6 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
         // assemble the final configuration payload
         var sessionConfiguration = new WellnessSessionConfiguration(
-            SessionType: exercise.SessionType,
             ExerciseId: exercise.Id,
             ExerciseName: exercise.Name,
             Steps: exercise.Steps,
@@ -269,7 +258,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
     /// <summary>
     /// Reloads the exercises, for example after they were edited. The selected exercise stays selected with its
-    /// number of cycles while it still exists; otherwise the first exercise of the selected type is selected.
+    /// number of cycles while it still exists; otherwise the first exercise is selected.
     /// </summary>
     public async Task RefreshExercisesAsync()
     {
@@ -313,20 +302,15 @@ internal partial class WellnessStartViewModel : ViewModelBase
         WellnessSessionEntries.AddRange(sessionEntryViewModels);
     }
 
+    /// <summary>
+    /// Lists the exercises and selects the given one, or the first if it isn't listed.
+    /// </summary>
     private async Task LoadExercises(Guid? selectedExerciseId = null)
     {
         var exercises = await _wellnessExerciseService.GetExercisesAsync();
-        _allExercises = exercises.Select(e => new WellnessExerciseViewModel(e)).ToList();
-        UpdateExercises(selectedExerciseId);
-    }
 
-    /// <summary>
-    /// Lists the exercises of the selected session type and selects the given one, or the first if it isn't listed.
-    /// </summary>
-    private void UpdateExercises(Guid? selectedExerciseId = null)
-    {
         Exercises.Clear();
-        Exercises.AddRange(_allExercises.Where(e => e.SessionType == SelectedSessionType));
+        Exercises.AddRange(exercises.Select(e => new WellnessExerciseViewModel(e)));
         SelectedExercise = Exercises.FirstOrDefault(e => e.Id == selectedExerciseId) ?? Exercises.FirstOrDefault();
     }
 
@@ -339,11 +323,6 @@ internal partial class WellnessStartViewModel : ViewModelBase
     // format as hh:mm:ss if an hour or more, otherwise mm:ss
     private static string FormatDuration(TimeSpan duration) =>
         duration.ToString(duration.TotalHours >= 1 ? @"hh\:mm\:ss" : @"mm\:ss");
-
-    /// <summary>
-    /// Triggered automatically when the selected session type changes.
-    /// </summary>
-    partial void OnSelectedSessionTypeChanged(WellnessSessionType value) => UpdateExercises();
 
     /// <summary>
     /// Triggered automatically when the selected exercise changes.
