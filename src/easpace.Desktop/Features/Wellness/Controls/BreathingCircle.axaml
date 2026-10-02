@@ -16,8 +16,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <Grid Width="192" Height="192" VerticalAlignment="Center" HorizontalAlignment="Center">
 
         <!-- Inner ellipse -->
-        <Ellipse Width="96" Height="96"
-                 Fill="{DynamicResource Sem.Brand.Strong}"
+        <Ellipse Width="96" Height="96" Fill="{DynamicResource Sem.Brand.Strong}"
                  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
         <!-- Outer animated ellipse -->

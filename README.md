@@ -122,6 +122,7 @@ Once the project reaches a more mature state, contribution guidelines will be pu
 * [SQLite3 Multiple Ciphers](https://github.com/utelle/SQLite3MultipleCiphers-NuGet) - Database encryption
 * [Devlooped.CredentialManager](https://github.com/devlooped/CredentialManager) - Secure local key storage
 * [Phosphor Icons](https://phosphoricons.com/) - Iconography
+* [Poppins](https://github.com/itfoundry/Poppins) - Typography
 
 ## License
 

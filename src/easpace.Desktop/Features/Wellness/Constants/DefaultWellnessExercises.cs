@@ -3,12 +3,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Services.Core;
 
-namespace easpace.Desktop.Features.Wellness.Services;
+namespace easpace.Desktop.Features.Wellness.Constants;
 
 /// <summary>
 /// Provides the built-in exercises used for seeding.

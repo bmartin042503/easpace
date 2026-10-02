@@ -413,7 +413,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Classes="brand fs4 medium"
-                                   Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.OpenSourceComponents'}" />
 
                         <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
                                    LineSpacing="{StaticResource Metrics.Spacing.Xs}">
@@ -480,6 +480,17 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                 <Button.CommandParameter>
                                     <constants:LegalFileType>MicrosoftPublicLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
+                            
+                            <Button Classes="tertiary" Padding="0"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Content="Poppins • SIL Open Font License 1.1"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>PoppinsLicense</constants:LegalFileType>
                                 </Button.CommandParameter>
 
                             </Button>

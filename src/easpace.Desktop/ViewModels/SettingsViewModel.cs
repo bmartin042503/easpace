@@ -140,8 +140,7 @@ internal partial class SettingsViewModel : PageViewModel
     }
 
     /// <summary>
-    /// Offers to restart the app when the language was changed and the saved language differs from the one the app
-    /// runs with. Called when the settings are left, so changing the language and back again asks nothing.
+    /// Offers to restart the app when the language was changed and the saved language differs from the one the app runs with.
     /// </summary>
     public async Task OfferRestartIfNeededAsync()
     {
@@ -265,6 +264,8 @@ internal partial class SettingsViewModel : PageViewModel
         _toastMessageService.ShowToastMessage(
             LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),
             ToastMessageType.Success);
+        
+        
     }
 
     private async void OnSettingChanged(object? sender, PropertyChangedEventArgs e)
@@ -288,6 +289,7 @@ internal partial class SettingsViewModel : PageViewModel
             try
             {
                 SaveSettings();
+                await OfferRestartIfNeededAsync();
             }
             catch (Exception ex)
             {

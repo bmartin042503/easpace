@@ -992,8 +992,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Credits.Text.BuiltWith" xml:space="preserve">
         <value>Built with .NET and Avalonia UI</value>
     </data>
-    <data name="Credits.Text.ThirdPartyLibraries" xml:space="preserve">
-        <value>Third-party libraries</value>
+    <data name="Credits.Text.OpenSourceComponents" xml:space="preserve">
+        <value>Open-source components</value>
     </data>
     <data name="Credits.Text.PrivacyPolicy" xml:space="preserve">
         <value>Privacy Policy</value>

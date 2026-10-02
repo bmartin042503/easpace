@@ -85,6 +85,7 @@ internal static class ServiceCollectionExtensions
                 sp.GetRequiredService<WellnessExerciseService>());
 
             collection.AddSingleton(TimeProvider.System);
+            
             collection.AddSingleton<TrendActivityDataProvider>();
             collection.AddSingleton<ITrendActivityDataProvider>(sp =>
                 sp.GetRequiredService<TrendActivityDataProvider>());

@@ -23,6 +23,7 @@ internal class LegalInfoDialogViewModel : DetailedInfoDialogViewModel
             LegalFileType.DevloopedCredentialManagerLicense => "Devlooped.CredentialManager • MIT License",
             LegalFileType.PhosphorIconsLicense => "Phosphor Icons • MIT License",
             LegalFileType.MicrosoftPublicLicense => "Microsoft Public License (Ms-PL)",
+            LegalFileType.PoppinsLicense => "Poppins • SIL Open Font License 1.1",
             _ => string.Empty
         };
 

@@ -7,8 +7,7 @@ using Avalonia.Controls;
 namespace easpace.Desktop.Features.Wellness.Controls;
 
 /// <summary>
-/// Shows the breathing circle: a fixed inner circle, an outer circle that grows and shrinks with the breath, and a
-/// text in the center.
+/// A fixed inner circle, an outer circle that grows and shrinks with the breath, and a text in the center.
 /// </summary>
 internal partial class BreathingCircle : UserControl
 {
