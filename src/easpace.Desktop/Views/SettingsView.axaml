@@ -483,6 +483,17 @@ Licensed under the MIT License. See LICENSE file for details.
                                 </Button.CommandParameter>
 
                             </Button>
+                            
+                            <Button Classes="tertiary" Padding="0"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Content="Poppins • SIL Open Font License 1.1"
+                                    Command="{Binding ShowLegalFileCommand}">
+
+                                <Button.CommandParameter>
+                                    <constants:LegalFileType>PoppinsLicense</constants:LegalFileType>
+                                </Button.CommandParameter>
+
+                            </Button>
 
                         </WrapPanel>
 

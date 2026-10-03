@@ -99,6 +99,7 @@ internal class ApplicationService : IApplicationService
             LegalFileType.DevloopedCredentialManagerLicense => "devlooped-credential-manager",
             LegalFileType.PhosphorIconsLicense => "phosphor-icons",
             LegalFileType.MicrosoftPublicLicense => "microsoft-public",
+            LegalFileType.PoppinsLicense => "poppins",
             _ => string.Empty
         };
 
