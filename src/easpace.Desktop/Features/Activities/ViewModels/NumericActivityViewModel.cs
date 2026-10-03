@@ -11,6 +11,7 @@ using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
@@ -24,7 +25,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 internal abstract partial class NumericActivityViewModel : ActivityViewModel
 {
     private readonly NumericActivity _numericActivity;
-    private readonly IActivityDataEntryService _activityDataEntryService;
+    private readonly IActivityDataEntryRepository _activityDataEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<ActivityViewModel> _logger;
 
@@ -35,12 +36,12 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
     public NumericActivityViewModel(
         NumericActivity numericActivity,
-        IActivityDataEntryService activityDataEntryService,
+        IActivityDataEntryRepository activityDataEntryRepository,
         IDialogService dialogService,
-        ILogger<ActivityViewModel> logger) : base(numericActivity, activityDataEntryService)
+        ILogger<ActivityViewModel> logger) : base(numericActivity, activityDataEntryRepository)
     {
         _numericActivity = numericActivity;
-        _activityDataEntryService = activityDataEntryService;
+        _activityDataEntryRepository = activityDataEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
 
@@ -73,7 +74,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
                 Type: ActivityDataEntryType.Numeric
             );
 
-            var dataEntry = await _activityDataEntryService.CreateDataEntryAsync(Id, createEntryRequest);
+            var dataEntry = await _activityDataEntryRepository.CreateDataEntryAsync(Id, createEntryRequest);
 
             if (dataEntry is not NumericActivityDataEntry numericDataEntry) return;
 
@@ -126,7 +127,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
                 State: null
             );
 
-            var updatedEntry = await _activityDataEntryService.UpdateDataEntryAsync(entryId, updateRequest);
+            var updatedEntry = await _activityDataEntryRepository.UpdateDataEntryAsync(entryId, updateRequest);
 
             if (updatedEntry is not NumericActivityDataEntry numericDataEntry) return null;
 

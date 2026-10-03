@@ -7,13 +7,15 @@ using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Data;
 using easpace.Desktop.Factories;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
-using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.DataProviders;
 using easpace.Desktop.Features.Activities.ViewModels;
-using easpace.Desktop.Features.Journal.Services;
+using easpace.Desktop.Features.Journal.Repositories;
 using easpace.Desktop.Features.Journal.ViewModels;
-using easpace.Desktop.Features.Mood.Services;
+using easpace.Desktop.Features.Mood.Repositories;
 using easpace.Desktop.Features.Mood.ViewModels;
+using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels;
 using easpace.Desktop.Security;
@@ -61,28 +63,28 @@ internal static class ServiceCollectionExtensions
             collection.AddTransient<TranslucencyService>();
             collection.AddTransient<ITranslucencyService>(sp => sp.GetRequiredService<TranslucencyService>());
 
-            collection.AddSingleton<ActivityService>();
-            collection.AddSingleton<IActivityService>(sp => sp.GetRequiredService<ActivityService>());
+            collection.AddSingleton<ActivityRepository>();
+            collection.AddSingleton<IActivityRepository>(sp => sp.GetRequiredService<ActivityRepository>());
+            
+            collection.AddSingleton<ActivityDataEntryRepository>();
+            collection.AddSingleton<IActivityDataEntryRepository>(sp => sp.GetRequiredService<ActivityDataEntryRepository>());
 
             collection.AddSingleton<ActivityEditorService>();
             collection.AddSingleton<IActivityEditorService>(sp => sp.GetRequiredService<ActivityEditorService>());
 
-            collection.AddSingleton<ActivityDataEntryService>();
-            collection.AddSingleton<IActivityDataEntryService>(sp => sp.GetRequiredService<ActivityDataEntryService>());
+            collection.AddSingleton<JournalEntryRepository>();
+            collection.AddSingleton<IJournalEntryRepository>(sp => sp.GetRequiredService<JournalEntryRepository>());
 
-            collection.AddSingleton<JournalEntryService>();
-            collection.AddSingleton<IJournalEntryService>(sp => sp.GetRequiredService<JournalEntryService>());
+            collection.AddSingleton<MoodEntryRepository>();
+            collection.AddSingleton<IMoodEntryRepository>(sp => sp.GetRequiredService<MoodEntryRepository>());
 
-            collection.AddSingleton<MoodEntryService>();
-            collection.AddSingleton<IMoodEntryService>(sp => sp.GetRequiredService<MoodEntryService>());
+            collection.AddSingleton<BreathingTechniqueRepository>();
+            collection.AddSingleton<IBreathingTechniqueRepository>(sp =>
+                sp.GetRequiredService<BreathingTechniqueRepository>());
 
-            collection.AddSingleton<BreathingTechniqueService>();
-            collection.AddSingleton<IBreathingTechniqueService>(sp =>
-                sp.GetRequiredService<BreathingTechniqueService>());
-
-            collection.AddSingleton<WellnessSessionEntryService>();
-            collection.AddSingleton<IWellnessSessionEntryService>(sp =>
-                sp.GetRequiredService<WellnessSessionEntryService>());
+            collection.AddSingleton<WellnessSessionEntryRepository>();
+            collection.AddSingleton<IWellnessSessionEntryRepository>(sp =>
+                sp.GetRequiredService<WellnessSessionEntryRepository>());
 
             collection.AddSingleton(TimeProvider.System);
             collection.AddSingleton<TrendActivityDataProvider>();

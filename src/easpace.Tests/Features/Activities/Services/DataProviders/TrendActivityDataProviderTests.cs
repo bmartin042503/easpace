@@ -3,7 +3,7 @@
 
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
-using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.DataProviders;
 using FluentAssertions;
 
 namespace easpace.Tests.Features.Activities.Services.DataProviders;

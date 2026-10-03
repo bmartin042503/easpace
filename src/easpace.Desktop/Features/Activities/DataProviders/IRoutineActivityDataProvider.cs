@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 
-namespace easpace.Desktop.Features.Activities.Services.DataProviders;
+namespace easpace.Desktop.Features.Activities.DataProviders;
 
 internal interface IRoutineActivityDataProvider
 {

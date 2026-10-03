@@ -3,7 +3,7 @@
 
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Journal.Entities;
-using easpace.Desktop.Features.Journal.Services;
+using easpace.Desktop.Features.Journal.Repositories;
 using easpace.Desktop.Features.Journal.ViewModels;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels.Dialogs;
@@ -18,7 +18,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void Constructor_InitializesAnEmptyJournalPage()
     {
-        var journalPageVm = CreatePage(new Mock<IJournalEntryService>(), out _);
+        var journalPageVm = CreatePage(new Mock<IJournalEntryRepository>(), out _);
 
         journalPageVm.Page.Should().Be(ApplicationPage.Journal);
         journalPageVm.Entries.Should().BeEmpty();
@@ -29,7 +29,7 @@ public class JournalPageViewModelTests
     [Fact]
     public void AddEntryCommand_OpensEditorWithoutCreatingAPersistedEntry()
     {
-        var mockService = new Mock<IJournalEntryService>();
+        var mockService = new Mock<IJournalEntryRepository>();
         var journalPageVm = CreatePage(mockService, out _);
 
         journalPageVm.AddEntryCommand.Execute(null);
@@ -44,7 +44,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task NewEntrySave_AddsSelectsAndClosesEditor()
     {
-        var mockService = new Mock<IJournalEntryService>();
+        var mockService = new Mock<IJournalEntryRepository>();
         var journalPageVm = CreatePage(mockService, out _);
         journalPageVm.AddEntryCommand.Execute(null);
 
@@ -65,7 +65,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task DeleteEntryCommand_WhenContentIsEmpty_DeletesWithoutShowingADialog()
     {
-        var mockService = new Mock<IJournalEntryService>();
+        var mockService = new Mock<IJournalEntryRepository>();
         var emptyEntry = new JournalEntry { Id = Guid.NewGuid(), Title = "Title", Content = "   " };
 
         mockService.Setup(s => s.GetJournalEntriesAsync()).ReturnsAsync(new List<JournalEntry> { emptyEntry });
@@ -87,7 +87,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task DeleteEntryCommand_WhenDialogIsCanceled_KeepsTheEntry()
     {
-        var mockService = new Mock<IJournalEntryService>();
+        var mockService = new Mock<IJournalEntryRepository>();
         var entry = new JournalEntry { Id = Guid.NewGuid(), Title = "Title", Content = "Meaningful content" };
 
         mockService.Setup(s => s.GetJournalEntriesAsync()).ReturnsAsync(new List<JournalEntry> { entry });
@@ -110,7 +110,7 @@ public class JournalPageViewModelTests
     [Fact]
     public async Task SearchText_FiltersByTitleAndContent()
     {
-        var mockService = new Mock<IJournalEntryService>();
+        var mockService = new Mock<IJournalEntryRepository>();
         var entry1 = new JournalEntry
             { Id = Guid.NewGuid(), Title = "Morning reflection", Content = "Coffee and a walk" };
         var entry2 = new JournalEntry
@@ -130,7 +130,7 @@ public class JournalPageViewModelTests
         journalPageVm.Entries.Single().Title.Should().Be("Morning reflection");
     }
 
-    private static JournalPageViewModel CreatePage(Mock<IJournalEntryService> mockService,
+    private static JournalPageViewModel CreatePage(Mock<IJournalEntryRepository> mockService,
         out Mock<IDialogService> dialogService)
     {
         dialogService = new Mock<IDialogService>();

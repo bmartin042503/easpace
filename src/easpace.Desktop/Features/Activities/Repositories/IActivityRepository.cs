@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 
-namespace easpace.Desktop.Features.Activities.Services;
+namespace easpace.Desktop.Features.Activities.Repositories;
 
-internal interface IActivityService
+internal interface IActivityRepository
 {
     Task<Activity> CreateActivityAsync(CreateActivityRequest createRequest);
     Task<IReadOnlyList<Activity>> GetActivitiesAsync();

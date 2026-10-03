@@ -9,7 +9,7 @@ using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-namespace easpace.Desktop.Features.Activities.Services.DataProviders;
+namespace easpace.Desktop.Features.Activities.DataProviders;
 
 internal class RoutineActivityDataProvider : IRoutineActivityDataProvider
 {

@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
+using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Data;
 using easpace.Desktop.Services.Presentation;
@@ -22,8 +23,8 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IMessenger _messenger;
     private readonly IWindowService _windowService;
     private readonly IPreferencesService _preferencesService;
-    private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
-    private readonly IBreathingTechniqueService _breathingTechniqueService;
+    private readonly IWellnessSessionEntryRepository _wellnessSessionEntryRepository;
+    private readonly IBreathingTechniqueRepository _breathingTechniqueRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
@@ -49,8 +50,8 @@ internal partial class WellnessPageViewModel : PageViewModel
         IMessenger messenger,
         IWindowService windowService,
         IPreferencesService preferencesService,
-        IWellnessSessionEntryService wellnessSessionEntryService,
-        IBreathingTechniqueService breathingTechniqueService,
+        IWellnessSessionEntryRepository wellnessSessionEntryRepository,
+        IBreathingTechniqueRepository breathingTechniqueRepository,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> startLogger,
         ILogger<WellnessEndingViewModel> endingLogger)
@@ -59,8 +60,8 @@ internal partial class WellnessPageViewModel : PageViewModel
         _messenger = messenger;
         _windowService = windowService;
         _preferencesService = preferencesService;
-        _wellnessSessionEntryService = wellnessSessionEntryService;
-        _breathingTechniqueService = breathingTechniqueService;
+        _wellnessSessionEntryRepository = wellnessSessionEntryRepository;
+        _breathingTechniqueRepository = breathingTechniqueRepository;
         _dialogService = dialogService;
 
         _startLogger = startLogger;
@@ -146,7 +147,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         if (_configurationViewModel == null)
         {
             _configurationViewModel = new WellnessStartViewModel(
-                _wellnessSessionEntryService, _breathingTechniqueService, _dialogService, _startLogger);
+                _wellnessSessionEntryRepository, _breathingTechniqueRepository, _dialogService, _startLogger);
 
             _configurationViewModel.SessionStarted += OnSessionStarted;
         }
@@ -183,7 +184,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     {
         IsBlobBackgroundVisible = _isAnimatedBgSettingOn;
         
-        _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryService, _dialogService, createEntryRequest, _endingLogger);
+        _endingViewModel = new WellnessEndingViewModel(_wellnessSessionEntryRepository, _dialogService, createEntryRequest, _endingLogger);
         _endingViewModel.NavigatedToConfiguration += OnNavigatedToConfiguration;
 
         ContentViewModel = _endingViewModel;

@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Core;
@@ -24,7 +25,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 {
-    private readonly IActivityService _activityService;
+    private readonly IActivityRepository _activityRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<ActivityEditorViewModel> _logger;
     private ActivityViewModel? _activity;
@@ -88,11 +89,11 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
     }
 
     public ActivityEditorViewModel(
-        IActivityService activityService,
+        IActivityRepository activityRepository,
         IDialogService dialogService,
         ILogger<ActivityEditorViewModel> logger)
     {
-        _activityService = activityService;
+        _activityRepository = activityRepository;
         _dialogService = dialogService;
         _logger = logger;
         IsCreatingNew = true;
@@ -108,12 +109,12 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
     public ActivityEditorViewModel(
         IActivityEditorService editorService,
-        IActivityService activityService,
+        IActivityRepository activityRepository,
         IDialogService dialogService,
         ActivityViewModel activity,
         ILogger<ActivityEditorViewModel> logger)
     {
-        _activityService = activityService;
+        _activityRepository = activityRepository;
         _dialogService = dialogService;
         _logger = logger;
         _activity = activity;
@@ -160,7 +161,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
             if (IsCreatingNew)
             {
                 _logger.LogInformation("Saving new activity from editor");
-                var savedEntry = await _activityService.CreateActivityAsync(GetCreateRequest());
+                var savedEntry = await _activityRepository.CreateActivityAsync(GetCreateRequest());
                 Saved?.Invoke(this, savedEntry);
             }
             else

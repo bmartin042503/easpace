@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.ViewModels;
@@ -19,7 +20,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 internal abstract partial class ActivityViewModel : ViewModelBase
 {
-    private readonly IActivityDataEntryService _activityDataEntryService;
+    private readonly IActivityDataEntryRepository _activityDataEntryRepository;
     private readonly Activity _activity;
 
     public Guid Id { get; }
@@ -35,10 +36,10 @@ internal abstract partial class ActivityViewModel : ViewModelBase
 
     public AvaloniaList<ActivityDataEntryViewModel> Entries { get; } = [];
 
-    protected ActivityViewModel(Activity activity, IActivityDataEntryService activityDataEntryService)
+    protected ActivityViewModel(Activity activity, IActivityDataEntryRepository activityDataEntryRepository)
     {
         _activity = activity;
-        _activityDataEntryService = activityDataEntryService;
+        _activityDataEntryRepository = activityDataEntryRepository;
 
         Id = _activity.Id;
         Name = _activity.Name;
@@ -120,7 +121,7 @@ internal abstract partial class ActivityViewModel : ViewModelBase
         var entryVm = Entries.FirstOrDefault(e => e.Id == entryId);
         if (entryVm is null) return false;
 
-        var deleted = await _activityDataEntryService.DeleteDataEntryAsync(entryVm.Id);
+        var deleted = await _activityDataEntryRepository.DeleteDataEntryAsync(entryVm.Id);
 
         if (!deleted) return false;
 

@@ -12,8 +12,8 @@ using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
-using easpace.Desktop.Features.Activities.Services;
-using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.Repositories;
+using easpace.Desktop.Features.Activities.DataProviders;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
@@ -25,7 +25,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 {
     private readonly TrendActivity _trendActivity;
     private readonly ITrendActivityDataProvider _trendActivityDataProvider;
-    private readonly IActivityService _activityService;
+    private readonly IActivityRepository _activityRepository;
 
     private int _intervalsBack;
 
@@ -63,14 +63,14 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     public TrendActivityViewModel(
         TrendActivity trendActivity,
         ITrendActivityDataProvider trendActivityDataProvider,
-        IActivityDataEntryService activityDataEntryService,
-        IActivityService activityService,
+        IActivityDataEntryRepository activityDataEntryRepository,
+        IActivityRepository activityRepository,
         IDialogService dialogService,
-        ILogger<ActivityViewModel> logger) : base(trendActivity, activityDataEntryService, dialogService, logger)
+        ILogger<ActivityViewModel> logger) : base(trendActivity, activityDataEntryRepository, dialogService, logger)
     {
         _trendActivity = trendActivity;
         _trendActivityDataProvider = trendActivityDataProvider;
-        _activityService = activityService;
+        _activityRepository = activityRepository;
 
         _selectedTimeRange = ChartTimeRange.Day;
 
@@ -83,7 +83,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
 
     public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
+        var updated = await _activityRepository.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is not TrendActivity trendActivity) return null;
 

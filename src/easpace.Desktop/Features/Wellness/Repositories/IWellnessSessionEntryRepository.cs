@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 
-namespace easpace.Desktop.Features.Wellness.Services;
+namespace easpace.Desktop.Features.Wellness.Repositories;
 
-internal interface IWellnessSessionEntryService
+internal interface IWellnessSessionEntryRepository
 {
     Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createEntryRequest);
     Task<IReadOnlyList<WellnessSessionEntry>> GetWellnessSessionEntriesAsync();

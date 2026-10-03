@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Presentation;
@@ -16,7 +17,7 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 internal partial class MilestoneActivityViewModel : NumericActivityViewModel
 {
-    private readonly IActivityService _activityService;
+    private readonly IActivityRepository _activityRepository;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasTargetDate))]
 
@@ -30,12 +31,12 @@ internal partial class MilestoneActivityViewModel : NumericActivityViewModel
     
     public MilestoneActivityViewModel(
         MilestoneActivity milestoneActivity,
-        IActivityDataEntryService activityDataEntryService,
-        IActivityService activityService,
+        IActivityDataEntryRepository activityDataEntryRepository,
+        IActivityRepository activityRepository,
         IDialogService dialogService,
-        ILogger<ActivityViewModel> logger) : base(milestoneActivity, activityDataEntryService, dialogService, logger)
+        ILogger<ActivityViewModel> logger) : base(milestoneActivity, activityDataEntryRepository, dialogService, logger)
     {
-        _activityService = activityService;
+        _activityRepository = activityRepository;
         StartDate = milestoneActivity.StartDate;
         TargetDate = milestoneActivity.TargetDate;
         
@@ -47,7 +48,7 @@ internal partial class MilestoneActivityViewModel : NumericActivityViewModel
 
     public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
+        var updated = await _activityRepository.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is not MilestoneActivity milestoneActivity)
             return null;

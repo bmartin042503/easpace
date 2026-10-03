@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
+using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
@@ -24,8 +25,8 @@ internal partial class WellnessStartViewModel : ViewModelBase
 {
     #region Fields
 
-    private readonly IWellnessSessionEntryService _wellnessSessionEntryService;
-    private readonly IBreathingTechniqueService _breathingTechniqueService;
+    private readonly IWellnessSessionEntryRepository _wellnessSessionEntryRepository;
+    private readonly IBreathingTechniqueRepository _breathingTechniqueRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _logger;
 
@@ -139,13 +140,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="WellnessStartViewModel"/> class.
     /// </summary>
     public WellnessStartViewModel(
-        IWellnessSessionEntryService wellnessSessionEntryService,
-        IBreathingTechniqueService breathingTechniqueService,
+        IWellnessSessionEntryRepository wellnessSessionEntryRepository,
+        IBreathingTechniqueRepository breathingTechniqueRepository,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> logger)
     {
-        _wellnessSessionEntryService = wellnessSessionEntryService;
-        _breathingTechniqueService = breathingTechniqueService;
+        _wellnessSessionEntryRepository = wellnessSessionEntryRepository;
+        _breathingTechniqueRepository = breathingTechniqueRepository;
         _dialogService = dialogService;
         _logger = logger;
 
@@ -227,7 +228,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
             if (confirmation.Confirmed)
             {
-                var isDeleted = await _wellnessSessionEntryService.DeleteWellnessSessionEntryAsync(entry.Id);
+                var isDeleted = await _wellnessSessionEntryRepository.DeleteWellnessSessionEntryAsync(entry.Id);
 
                 if (!isDeleted) return;
 
@@ -295,7 +296,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
     private async Task LoadWellnessSessionEntries()
     {
-        var sessionEntries = await _wellnessSessionEntryService.GetWellnessSessionEntriesAsync();
+        var sessionEntries = await _wellnessSessionEntryRepository.GetWellnessSessionEntriesAsync();
 
         var sessionEntryViewModels =
             sessionEntries.Select(sessionEntry => new WellnessSessionEntryViewModel(sessionEntry));
@@ -305,7 +306,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
 
     private async Task LoadBreathingTechniques()
     {
-        var techniques = await _breathingTechniqueService.GetBreathingTechniquesAsync();
+        var techniques = await _breathingTechniqueRepository.GetBreathingTechniquesAsync();
         var techniqueViewModels = techniques.Select(t => new BreathingTechniqueViewModel(t));
         BreathingTechniques.AddRange(techniqueViewModels);
         SelectedBreathingTechniqueViewModel = BreathingTechniques.FirstOrDefault();

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using easpace.Desktop.Features.Mood.Contracts;
 using easpace.Desktop.Features.Mood.Entities;
 
-namespace easpace.Desktop.Features.Mood.Services;
+namespace easpace.Desktop.Features.Mood.Repositories;
 
-internal interface IMoodEntryService
+internal interface IMoodEntryRepository
 {
     Task<MoodEntry> CreateMoodEntryAsync(UpsertMoodEntryRequest upsertRequest);
     Task<IReadOnlyList<MoodEntry>> GetMoodEntriesAsync();

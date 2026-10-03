@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
+using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
@@ -19,7 +20,7 @@ namespace easpace.Desktop.Features.Wellness.ViewModels;
 
 internal partial class WellnessEndingViewModel : ViewModelBase
 {
-    private readonly IWellnessSessionEntryService _sessionEntryService;
+    private readonly IWellnessSessionEntryRepository _sessionEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessEndingViewModel> _logger;
 
@@ -38,12 +39,12 @@ internal partial class WellnessEndingViewModel : ViewModelBase
     [ObservableProperty] private int _cycleCount;
 
     public WellnessEndingViewModel(
-        IWellnessSessionEntryService sessionEntryService,
+        IWellnessSessionEntryRepository sessionEntryRepository,
         IDialogService dialogService,
         CreateWellnessSessionEntryRequest createWellnessSessionEntryRequest,
         ILogger<WellnessEndingViewModel> logger)
     {
-        _sessionEntryService = sessionEntryService;
+        _sessionEntryRepository = sessionEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
         _createEntryRequest = createWellnessSessionEntryRequest;
@@ -103,7 +104,7 @@ internal partial class WellnessEndingViewModel : ViewModelBase
         try
         {
             _logger.LogInformation("Saving completed wellness session to database");
-            await _sessionEntryService.CreateWellnessSessionEntryAsync(_createEntryRequest);
+            await _sessionEntryRepository.CreateWellnessSessionEntryAsync(_createEntryRequest);
             SessionSaved = true;
             TitleText = LocalizationService.GetString("Wellness.Text.SessionSaved");
         }

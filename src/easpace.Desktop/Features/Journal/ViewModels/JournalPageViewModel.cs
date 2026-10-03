@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Journal.Entities;
-using easpace.Desktop.Features.Journal.Services;
+using easpace.Desktop.Features.Journal.Repositories;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -21,7 +21,7 @@ namespace easpace.Desktop.Features.Journal.ViewModels;
 
 internal partial class JournalPageViewModel : PageViewModel
 {
-    private readonly IJournalEntryService _journalEntryService;
+    private readonly IJournalEntryRepository _journalEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<JournalPageViewModel> _logger;
     private readonly ILogger<JournalEditorViewModel> _editorLogger;
@@ -46,12 +46,12 @@ internal partial class JournalPageViewModel : PageViewModel
     private bool _isInitialized;
 
     public JournalPageViewModel(
-        IJournalEntryService journalEntryService, 
+        IJournalEntryRepository journalEntryRepository, 
         IDialogService dialogService, 
         ILogger<JournalPageViewModel> logger,
         ILogger<JournalEditorViewModel> editorLogger)
     {
-        _journalEntryService = journalEntryService;
+        _journalEntryRepository = journalEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
         _editorLogger = editorLogger;
@@ -139,7 +139,7 @@ internal partial class JournalPageViewModel : PageViewModel
 
         try
         {
-            var isDeleted = await _journalEntryService.DeleteJournalEntryAsync(entryToDelete.Id);
+            var isDeleted = await _journalEntryRepository.DeleteJournalEntryAsync(entryToDelete.Id);
         
             if (!isDeleted) return;
 
@@ -172,7 +172,7 @@ internal partial class JournalPageViewModel : PageViewModel
     {
         _allEntries.Clear();
         
-        var journalEntries = await _journalEntryService.GetJournalEntriesAsync();
+        var journalEntries = await _journalEntryRepository.GetJournalEntriesAsync();
 
         var journalEntryViewModels = journalEntries.Select(entry => new JournalEntryViewModel(entry));
 
@@ -191,8 +191,8 @@ internal partial class JournalPageViewModel : PageViewModel
         }
 
         var editor = entry is null
-            ? new JournalEditorViewModel(_journalEntryService, _dialogService, _editorLogger)
-            : new JournalEditorViewModel(_journalEntryService, _dialogService, entry, _editorLogger);
+            ? new JournalEditorViewModel(_journalEntryRepository, _dialogService, _editorLogger)
+            : new JournalEditorViewModel(_journalEntryRepository, _dialogService, entry, _editorLogger);
 
         editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;

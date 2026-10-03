@@ -11,10 +11,10 @@ using easpace.Desktop.Features.Wellness.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Wellness.Services;
+namespace easpace.Desktop.Features.Wellness.Repositories;
 
-internal class WellnessSessionEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<WellnessSessionEntryService> logger)
-    : IWellnessSessionEntryService
+internal class WellnessSessionEntryRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<WellnessSessionEntryRepository> logger)
+    : IWellnessSessionEntryRepository
 {
     public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(
         CreateWellnessSessionEntryRequest createEntryRequest)

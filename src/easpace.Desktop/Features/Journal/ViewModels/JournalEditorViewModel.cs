@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Journal.Entities;
-using easpace.Desktop.Features.Journal.Services;
+using easpace.Desktop.Features.Journal.Repositories;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -19,7 +19,7 @@ namespace easpace.Desktop.Features.Journal.ViewModels;
 
 internal partial class JournalEditorViewModel : ViewModelBase
 {
-    private readonly IJournalEntryService _journalEntryService;
+    private readonly IJournalEntryRepository _journalEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<JournalEditorViewModel> _logger;
     private readonly Guid? _editingEntryId;
@@ -39,11 +39,11 @@ internal partial class JournalEditorViewModel : ViewModelBase
 
     /// <summary>Creates a blank draft for a new journal entry.</summary>
     public JournalEditorViewModel(
-        IJournalEntryService journalEntryService,
+        IJournalEntryRepository journalEntryRepository,
         IDialogService dialogService,
         ILogger<JournalEditorViewModel> logger)
     {
-        _journalEntryService = journalEntryService;
+        _journalEntryRepository = journalEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
         Title = GetFormattedNow();
@@ -51,12 +51,12 @@ internal partial class JournalEditorViewModel : ViewModelBase
 
     /// <summary>Copies an existing entry into an independent editing draft.</summary>
     public JournalEditorViewModel(
-        IJournalEntryService journalEntryService,
+        IJournalEntryRepository journalEntryRepository,
         IDialogService dialogService,
         JournalEntryViewModel entry,
         ILogger<JournalEditorViewModel> logger)
     {
-        _journalEntryService = journalEntryService;
+        _journalEntryRepository = journalEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
         _editingEntryId = entry.Id;
@@ -88,8 +88,8 @@ internal partial class JournalEditorViewModel : ViewModelBase
             }
 
             var savedEntry = IsCreatingNew
-                ? await _journalEntryService.CreateJournalEntryAsync(title, Content)
-                : await _journalEntryService.UpdateJournalEntryAsync(_editingEntryId!.Value, title, Content);
+                ? await _journalEntryRepository.CreateJournalEntryAsync(title, Content)
+                : await _journalEntryRepository.UpdateJournalEntryAsync(_editingEntryId!.Value, title, Content);
 
             // A deleted entry cannot normally be edited, but do not close the editor
             // as if it had been saved if its backing entity no longer exists.

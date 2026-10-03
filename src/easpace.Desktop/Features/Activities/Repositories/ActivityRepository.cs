@@ -13,14 +13,14 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Activities.Services;
+namespace easpace.Desktop.Features.Activities.Repositories;
 
-internal class ActivityService : IActivityService
+internal class ActivityRepository : IActivityRepository
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private readonly ILogger<ActivityService> _logger;
+    private readonly ILogger<ActivityRepository> _logger;
 
-    public ActivityService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityService> logger)
+    public ActivityRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityRepository> logger)
     {
         _dbContextFactory = dbContextFactory;
         _logger = logger;

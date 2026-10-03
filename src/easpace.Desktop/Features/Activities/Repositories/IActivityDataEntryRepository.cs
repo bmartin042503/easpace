@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-namespace easpace.Desktop.Features.Activities.Services;
+namespace easpace.Desktop.Features.Activities.Repositories;
 
-internal interface IActivityDataEntryService
+internal interface IActivityDataEntryRepository
 {
     Task<ActivityDataEntry?> CreateDataEntryAsync(Guid activityId, CreateDataEntryRequest createRequest);
     Task<IReadOnlyList<ActivityDataEntry>> GetDataEntriesAsync(Guid activityId);

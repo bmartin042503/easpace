@@ -11,14 +11,14 @@ using easpace.Desktop.Features.Wellness.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Wellness.Services;
+namespace easpace.Desktop.Features.Wellness.Repositories;
 
-internal class BreathingTechniqueService : IBreathingTechniqueService
+internal class BreathingTechniqueRepository : IBreathingTechniqueRepository
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private readonly ILogger<BreathingTechniqueService> _logger;
+    private readonly ILogger<BreathingTechniqueRepository> _logger;
 
-    public BreathingTechniqueService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<BreathingTechniqueService> logger)
+    public BreathingTechniqueRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<BreathingTechniqueRepository> logger)
     {
         _dbContextFactory = dbContextFactory;
         _logger = logger;

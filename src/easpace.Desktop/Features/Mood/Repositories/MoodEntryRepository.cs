@@ -11,14 +11,14 @@ using easpace.Desktop.Features.Mood.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Mood.Services;
+namespace easpace.Desktop.Features.Mood.Repositories;
 
-internal class MoodEntryService : IMoodEntryService
+internal class MoodEntryRepository : IMoodEntryRepository
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private readonly ILogger<MoodEntryService> _logger;
+    private readonly ILogger<MoodEntryRepository> _logger;
 
-    public MoodEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<MoodEntryService> logger)
+    public MoodEntryRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<MoodEntryRepository> logger)
     {
         _dbContextFactory = dbContextFactory;
         _logger = logger;

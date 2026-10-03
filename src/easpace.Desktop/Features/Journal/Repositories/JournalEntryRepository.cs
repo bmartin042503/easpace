@@ -10,14 +10,14 @@ using easpace.Desktop.Features.Journal.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Journal.Services;
+namespace easpace.Desktop.Features.Journal.Repositories;
 
-internal class JournalEntryService : IJournalEntryService
+internal class JournalEntryRepository : IJournalEntryRepository
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private readonly ILogger<JournalEntryService> _logger;
+    private readonly ILogger<JournalEntryRepository> _logger;
 
-    public JournalEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<JournalEntryService> logger)
+    public JournalEntryRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<JournalEntryRepository> logger)
     {
         _dbContextFactory = dbContextFactory;
         _logger = logger;

@@ -8,7 +8,7 @@ using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
 
-namespace easpace.Desktop.Features.Activities.Services.DataProviders;
+namespace easpace.Desktop.Features.Activities.DataProviders;
 
 /// <summary>
 /// Builds chart data for trend activities and applies daily aggregation and visual downsampling when needed.

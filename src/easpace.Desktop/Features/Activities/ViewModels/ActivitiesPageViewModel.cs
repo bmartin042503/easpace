@@ -10,9 +10,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Activities.Entities;
-using easpace.Desktop.Features.Activities.Entities.DataEntries;
+using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
-using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.DataProviders;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -23,9 +23,9 @@ namespace easpace.Desktop.Features.Activities.ViewModels;
 
 internal partial class ActivitiesPageViewModel : PageViewModel
 {
-    private readonly IActivityService _activityService;
+    private readonly IActivityRepository _activityRepository;
     private readonly IActivityEditorService _activityEditorService;
-    private readonly IActivityDataEntryService _activityDataEntryService;
+    private readonly IActivityDataEntryRepository _activityDataEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<ActivitiesPageViewModel> _logger;
     private readonly ILogger<ActivityEditorViewModel> _editorLogger;
@@ -59,9 +59,9 @@ internal partial class ActivitiesPageViewModel : PageViewModel
     }
 
     public ActivitiesPageViewModel(
-        IActivityService activityService,
+        IActivityRepository activityRepository,
         IActivityEditorService activityEditorService,
-        IActivityDataEntryService activityDataEntryService,
+        IActivityDataEntryRepository activityDataEntryRepository,
         IDialogService dialogService,
         ILogger<ActivitiesPageViewModel> logger,
         ILogger<ActivityEditorViewModel> editorLogger,
@@ -72,9 +72,9 @@ internal partial class ActivitiesPageViewModel : PageViewModel
     {
         Page = ApplicationPage.Activities;
 
-        _activityService = activityService;
+        _activityRepository = activityRepository;
         _activityEditorService = activityEditorService;
-        _activityDataEntryService = activityDataEntryService;
+        _activityDataEntryRepository = activityDataEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
         _editorLogger = editorLogger;
@@ -86,7 +86,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
     private async Task LoadActivities()
     {
-        var activities = await _activityService.GetActivitiesAsync();
+        var activities = await _activityRepository.GetActivitiesAsync();
 
         var activityViewModels = activities
             .Select(CreateViewModel)
@@ -150,8 +150,8 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         if (_editorViewModel is not null) return;
 
         var editor = activity is null
-            ? new ActivityEditorViewModel(_activityService, _dialogService, _editorLogger)
-            : new ActivityEditorViewModel(_activityEditorService, _activityService, _dialogService, activity,
+            ? new ActivityEditorViewModel(_activityRepository, _dialogService, _editorLogger)
+            : new ActivityEditorViewModel(_activityEditorService, _activityRepository, _dialogService, activity,
                 _editorLogger);
 
         editor.Saved += OnEditorSaved;
@@ -213,18 +213,18 @@ internal partial class ActivitiesPageViewModel : PageViewModel
         {
             case TrendActivity trendActivity:
                 return new TrendActivityViewModel(
-                    trendActivity, _trendActivityDataProvider, _activityDataEntryService, _activityService,
+                    trendActivity, _trendActivityDataProvider, _activityDataEntryRepository, _activityRepository,
                     _dialogService, _activityLogger
                 );
 
             case MilestoneActivity milestoneActivity:
                 return new MilestoneActivityViewModel(
-                    milestoneActivity, _activityDataEntryService, _activityService, _dialogService, _activityLogger
+                    milestoneActivity, _activityDataEntryRepository, _activityRepository, _dialogService, _activityLogger
                 );
 
             case RoutineActivity routineActivity:
                 return new RoutineActivityViewModel(
-                    routineActivity, _routineActivityDataProvider, _activityDataEntryService, _activityService,
+                    routineActivity, _routineActivityDataProvider, _activityDataEntryRepository, _activityRepository,
                     _dialogService, _activityLogger
                 );
 
@@ -265,7 +265,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
             if (!confirmDeletionDialog.Confirmed) return;
 
-            var deleted = await _activityService.DeleteActivityAsync(activityViewModel.Id);
+            var deleted = await _activityRepository.DeleteActivityAsync(activityViewModel.Id);
 
             if (!deleted) return;
 
@@ -314,7 +314,7 @@ internal partial class ActivitiesPageViewModel : PageViewModel
 
         try
         {
-            await _activityService.ToggleArchiveAsync(activityViewModel.Id);
+            await _activityRepository.ToggleArchiveAsync(activityViewModel.Id);
             activityViewModel.IsArchived = !activityViewModel.IsArchived;
 
             if (activityViewModel.IsArchived)

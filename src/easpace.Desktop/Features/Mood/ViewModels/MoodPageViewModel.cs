@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Mood.Constants;
 using easpace.Desktop.Features.Mood.Contracts;
-using easpace.Desktop.Features.Mood.Services;
+using easpace.Desktop.Features.Mood.Repositories;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -22,7 +22,7 @@ namespace easpace.Desktop.Features.Mood.ViewModels;
 
 internal partial class MoodPageViewModel : PageViewModel
 {
-    private readonly IMoodEntryService _moodEntryService;
+    private readonly IMoodEntryRepository _moodEntryRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<MoodPageViewModel> _logger;
 
@@ -71,11 +71,11 @@ internal partial class MoodPageViewModel : PageViewModel
     }
 
     public MoodPageViewModel(
-        IMoodEntryService moodEntryService,
+        IMoodEntryRepository moodEntryRepository,
         IDialogService dialogService,
         ILogger<MoodPageViewModel> logger)
     {
-        _moodEntryService = moodEntryService;
+        _moodEntryRepository = moodEntryRepository;
         _dialogService = dialogService;
         _logger = logger;
 
@@ -127,7 +127,7 @@ internal partial class MoodPageViewModel : PageViewModel
     {
         MoodEntries.Clear();
 
-        var moodEntries = await _moodEntryService.GetMoodEntriesAsync();
+        var moodEntries = await _moodEntryRepository.GetMoodEntriesAsync();
 
         var moodEntryViewModels = moodEntries.Select(entry => new MoodEntryViewModel(entry))
             .ToList();
@@ -188,7 +188,7 @@ internal partial class MoodPageViewModel : PageViewModel
             );
 
             _logger.LogInformation("Saving new mood entry from UI");
-            var savedEntry = await _moodEntryService.CreateMoodEntryAsync(createEntryRequest);
+            var savedEntry = await _moodEntryRepository.CreateMoodEntryAsync(createEntryRequest);
 
             var entryViewModel = new MoodEntryViewModel(savedEntry);
 
@@ -217,7 +217,7 @@ internal partial class MoodPageViewModel : PageViewModel
 
         try
         {
-            var deleted = await _moodEntryService.DeleteMoodEntryAsync(entryViewModel.Id);
+            var deleted = await _moodEntryRepository.DeleteMoodEntryAsync(entryViewModel.Id);
 
             if (deleted)
             {

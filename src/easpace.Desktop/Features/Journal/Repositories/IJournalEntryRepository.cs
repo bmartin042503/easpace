@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using easpace.Desktop.Features.Journal.Entities;
 
-namespace easpace.Desktop.Features.Journal.Services;
+namespace easpace.Desktop.Features.Journal.Repositories;
 
-internal interface IJournalEntryService
+internal interface IJournalEntryRepository
 {
     Task<JournalEntry> CreateJournalEntryAsync(string title, string content);
     Task<IReadOnlyList<JournalEntry>> GetJournalEntriesAsync();

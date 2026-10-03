@@ -12,8 +12,8 @@ using easpace.Desktop.Features.Activities.Constants;
 using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Entities.DataEntries;
-using easpace.Desktop.Features.Activities.Services;
-using easpace.Desktop.Features.Activities.Services.DataProviders;
+using easpace.Desktop.Features.Activities.Repositories;
+using easpace.Desktop.Features.Activities.DataProviders;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Features.Activities.ViewModels.Dialogs;
 using easpace.Desktop.Services.Core;
@@ -27,9 +27,9 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
 {
     private readonly RoutineActivity _routineActivity;
     private readonly IRoutineActivityDataProvider _routineActivityDataProvider;
-    private readonly IActivityService _activityService;
+    private readonly IActivityRepository _activityRepository;
     private readonly IDialogService _dialogService;
-    private readonly IActivityDataEntryService _activityDataEntryService;
+    private readonly IActivityDataEntryRepository _activityDataEntryRepository;
     private readonly ILogger<ActivityViewModel> _logger;
 
     public AvaloniaList<RoutineMonth> RoutineMonths { get; } = [];
@@ -44,16 +44,16 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
     public RoutineActivityViewModel(
         RoutineActivity routineActivity,
         IRoutineActivityDataProvider routineActivityDataProvider,
-        IActivityDataEntryService activityDataEntryService,
-        IActivityService activityService,
+        IActivityDataEntryRepository activityDataEntryRepository,
+        IActivityRepository activityRepository,
         IDialogService dialogService,
-        ILogger<ActivityViewModel> logger) : base(routineActivity, activityDataEntryService)
+        ILogger<ActivityViewModel> logger) : base(routineActivity, activityDataEntryRepository)
     {
         _routineActivity = routineActivity;
         _routineActivityDataProvider = routineActivityDataProvider;
-        _activityService = activityService;
+        _activityRepository = activityRepository;
         _dialogService = dialogService;
-        _activityDataEntryService = activityDataEntryService;
+        _activityDataEntryRepository = activityDataEntryRepository;
         _logger = logger;
         
         AddDataEntryCommand = new AsyncRelayCommand(AddDataEntryAsync);
@@ -88,7 +88,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
 
     public override async Task<Activity?> UpdateFrom(UpdateActivityRequest updateRequest)
     {
-        var updated = await _activityService.UpdateActivityAsync(Id, updateRequest);
+        var updated = await _activityRepository.UpdateActivityAsync(Id, updateRequest);
 
         if (updated is null) return null;
 
@@ -141,7 +141,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
                 );
 
                 var updatedDataEntry =
-                    await _activityDataEntryService.UpdateDataEntryAsync(
+                    await _activityDataEntryRepository.UpdateDataEntryAsync(
                         existingEntry.Id,
                         updateEntryRequest);
 
@@ -186,7 +186,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
             );
 
             var dataEntry =
-                await _activityDataEntryService.CreateDataEntryAsync(
+                await _activityDataEntryRepository.CreateDataEntryAsync(
                     Id,
                     createEntryRequest);
 
@@ -241,7 +241,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
                 Value: null
             );
 
-            var updatedEntry = await _activityDataEntryService.UpdateDataEntryAsync(entryId, updateRequest);
+            var updatedEntry = await _activityDataEntryRepository.UpdateDataEntryAsync(entryId, updateRequest);
 
             if (updatedEntry is not RoutineActivityDataEntry routineDataEntry) return null;
 

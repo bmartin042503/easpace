@@ -12,10 +12,10 @@ using easpace.Desktop.Features.Activities.Entities.DataEntries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace easpace.Desktop.Features.Activities.Services;
+namespace easpace.Desktop.Features.Activities.Repositories;
 
-internal class ActivityDataEntryService(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityDataEntryService> logger)
-    : IActivityDataEntryService
+internal class ActivityDataEntryRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<ActivityDataEntryRepository> logger)
+    : IActivityDataEntryRepository
 {
     public async Task<ActivityDataEntry?> CreateDataEntryAsync(Guid activityId, CreateDataEntryRequest createRequest)
     {
