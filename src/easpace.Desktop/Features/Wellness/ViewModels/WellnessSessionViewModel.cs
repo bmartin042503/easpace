@@ -84,10 +84,10 @@ internal partial class WellnessSessionViewModel : ViewModelBase
 
             InstructionText = firstPhase?.Type switch
             {
-                BreathingPhaseType.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
-                BreathingPhaseType.HoldIn => LocalizationService.GetString("Wellness.Instruction.Hold"),
-                BreathingPhaseType.Exhale => LocalizationService.GetString("Wellness.Instruction.BreatheOut"),
-                BreathingPhaseType.HoldOut => LocalizationService.GetString("Wellness.Instruction.Hold"),
+                BreathingPhase.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
+                BreathingPhase.HoldIn => LocalizationService.GetString("Wellness.Instruction.Hold"),
+                BreathingPhase.Exhale => LocalizationService.GetString("Wellness.Instruction.BreatheOut"),
+                BreathingPhase.HoldOut => LocalizationService.GetString("Wellness.Instruction.Hold"),
                 _ => LocalizationService.GetString("Wellness.Instruction.BreatheIn")
             };
         }

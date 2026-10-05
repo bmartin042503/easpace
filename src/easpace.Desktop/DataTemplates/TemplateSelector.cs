@@ -65,7 +65,6 @@ internal class TemplateSelector : IDataTemplate
             OnboardingContent content => content.ToString(),
             ActivityViewModel activity => activity.GetType().Name,
             ActivityDataEntryViewModel dataEntry => dataEntry.GetType().Name,
-            WellnessSessionType sessionType => sessionType.ToString(),
             _ => data.ToString()
         };
 

@@ -16,68 +16,46 @@ public class EnumToLocalizedConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is ActivityType activityType)
+        return value switch
         {
-            return activityType switch
+            ActivityType activityType => activityType switch
             {
                 ActivityType.Trend => LocalizationService.GetString("Activities.Type.Trend"),
                 ActivityType.Milestone => LocalizationService.GetString("Activities.Type.Milestone"),
                 ActivityType.Routine => LocalizationService.GetString("Activities.Type.Routine"),
                 _ => string.Empty
-            };
-        }
-        
-        if (value is RoutineState routineState)
-        {
-            return routineState switch
+            },
+            
+            RoutineState routineState => routineState switch
             {
                 RoutineState.Completed => LocalizationService.GetString("RoutineActivity.EntryState.Completed"),
                 RoutineState.NotCompleted => LocalizationService.GetString("RoutineActivity.EntryState.NotCompleted"),
                 RoutineState.None => LocalizationService.GetString("RoutineActivity.EntryState.None"),
                 _ => string.Empty
-            };
-        }
-
-        if (value is MoodLabelState moodLabelState)
-        {
-            return LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}");
-        }
-
-        if (value is WellnessSessionType sessionType)
-        {
-            return sessionType switch
-            {
-                WellnessSessionType.Breathing => LocalizationService.GetString("Wellness.SessionType.Breathing"),
-                WellnessSessionType.Meditation => LocalizationService.GetString("Wellness.SessionType.Meditation"),
-                _ => string.Empty
-            };
-        }
-
-        if (value is TrendAggregation aggregation)
-        {
-            return aggregation switch
+            },
+            
+            MoodLabelState moodLabelState => LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}"),
+            
+            TrendAggregation aggregation => aggregation switch
             {
                 TrendAggregation.Sum => LocalizationService.GetString("Activities.Aggregation.Sum"),
                 TrendAggregation.Average => LocalizationService.GetString("Activities.Aggregation.Average"),
                 TrendAggregation.Latest => LocalizationService.GetString("Activities.Aggregation.Latest"),
                 TrendAggregation.Maximum => LocalizationService.GetString("Activities.Aggregation.Maximum"),
                 _ => string.Empty
-            };
-        }
-
-        if (value is ChartTimeRange timeRange)
-        {
-            return timeRange switch
+            },
+            
+            ChartTimeRange timeRange => timeRange switch
             {
                 ChartTimeRange.Year => LocalizationService.GetString("Common.Time.Year"),
                 ChartTimeRange.Week => LocalizationService.GetString("Common.Time.Week"),
                 ChartTimeRange.Month => LocalizationService.GetString("Common.Time.Month"),
                 ChartTimeRange.Day => LocalizationService.GetString("Common.Time.Day"),
                 _ => LocalizationService.GetString("Common.Time.All"),
-            };
-        }
-        
-        return string.Empty;
+            },
+            
+            _ => string.Empty
+        };
     }
     
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

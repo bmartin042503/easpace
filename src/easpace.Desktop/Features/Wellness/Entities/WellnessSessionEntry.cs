@@ -32,17 +32,12 @@ internal class WellnessSessionEntry
     public TimeSpan ActualDuration { get; set; }
 
     /// <summary>
-    /// Gets or sets the type of the wellness session (e.g., breathing, meditation).
+    /// Gets or sets the id of the exercise used during the session.
     /// </summary>
-    public WellnessSessionType Type { get; set; }
-
-    /// <summary>
-    /// Gets or sets the breathing technique id used during the session, if applicable.
-    /// </summary>
-    public Guid? BreathingTechniqueId { get; set; }
+    public Guid? ExerciseId { get; set; }
     
     /// <summary>
-    /// Gets or sets the breathing technique used during the session, if applicable.
+    /// Gets or sets the exercise used during the session.
     /// </summary>
-    public BreathingTechnique? BreathingTechnique { get; set; }
+    public WellnessExercise? Exercise { get; set; }
 }

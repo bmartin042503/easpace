@@ -78,10 +78,6 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<MoodEntryRepository>();
             collection.AddSingleton<IMoodEntryRepository>(sp => sp.GetRequiredService<MoodEntryRepository>());
 
-            collection.AddSingleton<BreathingTechniqueRepository>();
-            collection.AddSingleton<IBreathingTechniqueRepository>(sp =>
-                sp.GetRequiredService<BreathingTechniqueRepository>());
-
             collection.AddSingleton<WellnessSessionEntryRepository>();
             collection.AddSingleton<IWellnessSessionEntryRepository>(sp =>
                 sp.GetRequiredService<WellnessSessionEntryRepository>());

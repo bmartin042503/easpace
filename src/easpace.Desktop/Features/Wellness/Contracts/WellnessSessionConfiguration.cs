@@ -3,17 +3,16 @@
 
 using System;
 using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Entities;
 
 namespace easpace.Desktop.Features.Wellness.Contracts;
 
 /// <summary>
 /// Represents the configuration parameters required to start a wellness session.
 /// </summary>
-/// <param name="SessionType">The type of the wellness session.</param>
+/// <param name="Exercise">The exercise of the wellness session.</param>
 /// <param name="TargetDuration">The target duration for the session.</param>
-/// <param name="BreathingTechniqueConfiguration">The configuration details for the breathing technique, if applicable.</param>
 internal record WellnessSessionConfiguration(
-    WellnessSessionType SessionType,
-    TimeSpan? TargetDuration,
-    BreathingTechniqueConfiguration? BreathingTechniqueConfiguration
+    WellnessExercise Exercise,
+    TimeSpan? TargetDuration
 );

@@ -10,7 +10,5 @@ namespace easpace.Desktop.Features.Wellness.Contracts;
 internal sealed record CreateWellnessSessionEntryRequest(
     DateTimeOffset StartDate,
     TimeSpan? TargetDuration,
-    TimeSpan ActualDuration,
-    WellnessSessionType SessionType,
-    BreathingTechnique? BreathingTechnique
+    TimeSpan ActualDuration
 );
