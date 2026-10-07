@@ -38,7 +38,7 @@ Thumbs.db
 **/*.Designer.cs
 
 # Keep migration designers as they're required for updating db
-!src/easpace.Desktop/Migrations/*.Designer.cs
+!src/easpace.Desktop/Migrations/**/*.Designer.cs
 
 # Avalonia-specific files
 *.g.cs
