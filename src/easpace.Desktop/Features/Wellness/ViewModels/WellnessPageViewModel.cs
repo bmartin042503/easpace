@@ -24,7 +24,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWindowService _windowService;
     private readonly IPreferencesService _preferencesService;
     private readonly IWellnessSessionEntryRepository _wellnessSessionEntryRepository;
-    private readonly IBreathingTechniqueRepository _breathingTechniqueRepository;
+    private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _startLogger;
     private readonly ILogger<WellnessEndingViewModel> _endingLogger;
@@ -51,7 +51,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWindowService windowService,
         IPreferencesService preferencesService,
         IWellnessSessionEntryRepository wellnessSessionEntryRepository,
-        IBreathingTechniqueRepository breathingTechniqueRepository,
+        IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> startLogger,
         ILogger<WellnessEndingViewModel> endingLogger)
@@ -61,7 +61,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         _windowService = windowService;
         _preferencesService = preferencesService;
         _wellnessSessionEntryRepository = wellnessSessionEntryRepository;
-        _breathingTechniqueRepository = breathingTechniqueRepository;
+        _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
 
         _startLogger = startLogger;
@@ -147,7 +147,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         if (_configurationViewModel == null)
         {
             _configurationViewModel = new WellnessStartViewModel(
-                _wellnessSessionEntryRepository, _breathingTechniqueRepository, _dialogService, _startLogger);
+                _wellnessSessionEntryRepository, _wellnessExerciseRepository, _dialogService, _startLogger);
 
             _configurationViewModel.SessionStarted += OnSessionStarted;
         }

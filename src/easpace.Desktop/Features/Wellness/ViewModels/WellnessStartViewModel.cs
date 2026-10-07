@@ -2,17 +2,13 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using easpace.Desktop.Features.Activities.Constants;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Repositories;
-using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -26,33 +22,22 @@ internal partial class WellnessStartViewModel : ViewModelBase
     #region Fields
 
     private readonly IWellnessSessionEntryRepository _wellnessSessionEntryRepository;
-    private readonly IBreathingTechniqueRepository _breathingTechniqueRepository;
+    private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessStartViewModel> _logger;
 
-    [ObservableProperty] 
-    [NotifyPropertyChangedFor(nameof(DurationText))]
-    private double _selectedSeconds = 300;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(DurationText))]
+    private int _selectedCycles = 1;
 
     [ObservableProperty] private double _stepSeconds = 60;
     [ObservableProperty] private double _maximumSeconds = 30 * 60;
     [ObservableProperty] private double _minimumSeconds = 60;
-    
-    public IEnumerable<WellnessSessionType> SessionTypes { get; } = Enum.GetValues<WellnessSessionType>();
-    
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsBreathingChecked))]
-    [NotifyPropertyChangedFor(nameof(IsMeditationChecked))]
-    private WellnessSessionType _selectedSessionType;
-
-    public bool IsBreathingChecked => SelectedSessionType is WellnessSessionType.Breathing;
-    public bool IsMeditationChecked => SelectedSessionType is WellnessSessionType.Meditation;
 
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    private BreathingTechniqueViewModel? _selectedBreathingTechniqueViewModel;
+    private WellnessExerciseViewModel? _selectedExerciseViewModel;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ShowNoBreathingTechniques))]
+    [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
     [NotifyPropertyChangedFor(nameof(ShowNoSessionEntries))]
     private bool _isInitialized;
 
@@ -63,15 +48,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
     private bool _isInitializationRunning;
 
     public bool HasSessionEntries => WellnessSessionEntries.Count > 0;
-    public bool HasBreathingTechniques => BreathingTechniques.Count > 0;
-    public bool ShowNoBreathingTechniques => IsInitialized && !HasBreathingTechniques;
+    public bool HasExercises => WellnessExercises.Count > 0;
+    public bool ShowNoExercises => IsInitialized && !HasExercises;
     public bool ShowNoSessionEntries => IsInitialized && !HasSessionEntries;
 
     private bool CanStartSession()
     {
-        if (IsMeditationChecked) return true;
-
-        return IsBreathingChecked && SelectedBreathingTechniqueViewModel != null;
+        return SelectedExerciseViewModel != null;
     }
 
     #endregion
@@ -94,43 +77,35 @@ internal partial class WellnessStartViewModel : ViewModelBase
     {
         get
         {
-            var timeSpan = TimeSpan.FromSeconds(SelectedSeconds);
+            if (SelectedExerciseViewModel == null) return string.Empty;
+            var oneCycleSeconds = SelectedExerciseViewModel.Instructions.Sum(i => i.DurationSeconds);
+            var exerciseDuration = TimeSpan.FromSeconds(oneCycleSeconds * SelectedCycles);
 
-            if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
+            // format string as hh:mm:ss if an hour or more, otherwise mm:ss
+            var timeString = exerciseDuration.TotalHours >= 1
+                ? exerciseDuration.ToString(@"hh\:mm\:ss")
+                : exerciseDuration.ToString(@"mm\:ss");
+
+            var cyclesText = string.Empty;
+
+            // get localized cycle text based on cycle count
+            if (SelectedCycles == 1)
             {
-                // format string as hh:mm:ss if an hour or more, otherwise mm:ss
-                var timeString = timeSpan.TotalHours >= 1
-                    ? timeSpan.ToString(@"hh\:mm\:ss")
-                    : timeSpan.ToString(@"mm\:ss");
-
-                var cycles = (int)(SelectedSeconds / StepSeconds);
-
-                var cyclesText = string.Empty;
-
-                // get localized cycle text based on cycle count
-                if (cycles == 1)
-                {
-                    cyclesText = LocalizationService.GetString("Wellness.Session.OneCycle");
-                }
-                else if (cycles > 1)
-                {
-                    cyclesText = string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
-                }
-
-                return $"{timeString} ({cyclesText})";
+                cyclesText = LocalizationService.GetString("Wellness.Session.OneCycle");
+            }
+            else if (SelectedCycles > 1)
+            {
+                cyclesText = string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), SelectedCycles);
             }
 
-            // fallback to standard minutes formatting for meditation
-            var minutes = (int)(SelectedSeconds / 60);
-            var localizationKey = minutes == 1 ? "Common.Time.OneMinute" : "Common.Time.Minutes";
-            return string.Format(LocalizationService.GetString(localizationKey), minutes);
+            return $"{timeString} ({cyclesText})";
         }
     }
 
     /// <summary>
-    /// Gets the collection of available breathing techniques.
+    /// Gets the collection of available exercises.
     /// </summary>
-    public AvaloniaList<BreathingTechniqueViewModel> BreathingTechniques { get; } = [];
+    public AvaloniaList<WellnessExerciseViewModel> WellnessExercises { get; } = [];
 
     #endregion
 
@@ -141,12 +116,12 @@ internal partial class WellnessStartViewModel : ViewModelBase
     /// </summary>
     public WellnessStartViewModel(
         IWellnessSessionEntryRepository wellnessSessionEntryRepository,
-        IBreathingTechniqueRepository breathingTechniqueRepository,
+        IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
         ILogger<WellnessStartViewModel> logger)
     {
         _wellnessSessionEntryRepository = wellnessSessionEntryRepository;
-        _breathingTechniqueRepository = breathingTechniqueRepository;
+        _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
         _logger = logger;
 
@@ -156,10 +131,10 @@ internal partial class WellnessStartViewModel : ViewModelBase
             OnPropertyChanged(nameof(ShowNoSessionEntries));
         };
 
-        BreathingTechniques.CollectionChanged += (_, _) =>
+        WellnessExercises.CollectionChanged += (_, _) =>
         {
-            OnPropertyChanged(nameof(HasBreathingTechniques));
-            OnPropertyChanged(nameof(ShowNoBreathingTechniques));
+            OnPropertyChanged(nameof(HasExercises));
+            OnPropertyChanged(nameof(ShowNoExercises));
         };
     }
 
@@ -181,17 +156,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
         try
         {
             await LoadWellnessSessionEntries();
-            await LoadBreathingTechniques();
-
-            UpdateSlider();
+            await LoadWellnessExercises();
 
             IsInitialized = true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(
-                ex,
-                "Failed to load configuration data and initialize wellness start view");
+            _logger.LogError(ex, "Failed to load configuration data and initialize wellness start view");
 
             var errorDialog = new ErrorDialogViewModel
             {
@@ -256,35 +227,11 @@ internal partial class WellnessStartViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanStartSession))]
     private void StartSession()
     {
-        TimeSpan targetDuration;
-        BreathingTechniqueConfiguration? breathingTechniqueConfiguration = null;
+        if (SelectedExerciseViewModel == null) return;
 
-        // configure the breathing technique parameters if applicable
-        if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
-        {
-            // calculate the total duration of a single breathing cycle in seconds
-            var cycleDurationSeconds = SelectedBreathingTechniqueViewModel.Phases.Sum(p => p.DurationSeconds);
-
-            int cycles;
-
-            cycles = (int)Math.Round(SelectedSeconds / cycleDurationSeconds);
-            targetDuration = TimeSpan.FromSeconds(cycles * cycleDurationSeconds);
-
-            breathingTechniqueConfiguration = new BreathingTechniqueConfiguration(
-                BreathingTechnique: SelectedBreathingTechniqueViewModel.BreathingTechnique,
-                Cycles: cycles
-            );
-        }
-        else
-        {
-            targetDuration = TimeSpan.FromSeconds(SelectedSeconds);
-        }
-
-        // assemble the final configuration payload
         var sessionConfiguration = new WellnessSessionConfiguration(
-            SessionType: SelectedSessionType,
-            TargetDuration: targetDuration,
-            BreathingTechniqueConfiguration: breathingTechniqueConfiguration
+            SelectedExerciseViewModel.Exercise,
+            SelectedCycles
         );
 
         SessionStarted?.Invoke(this, sessionConfiguration);
@@ -304,64 +251,12 @@ internal partial class WellnessStartViewModel : ViewModelBase
         WellnessSessionEntries.AddRange(sessionEntryViewModels);
     }
 
-    private async Task LoadBreathingTechniques()
+    private async Task LoadWellnessExercises()
     {
-        var techniques = await _breathingTechniqueRepository.GetBreathingTechniquesAsync();
-        var techniqueViewModels = techniques.Select(t => new BreathingTechniqueViewModel(t));
-        BreathingTechniques.AddRange(techniqueViewModels);
-        SelectedBreathingTechniqueViewModel = BreathingTechniques.FirstOrDefault();
-    }
-
-    /// <summary>
-    /// Triggered automatically when the selected session type changes.
-    /// </summary>
-    partial void OnSelectedSessionTypeChanged(WellnessSessionType value) => UpdateSlider();
-
-    /// <summary>
-    /// Triggered automatically when the selected breathing technique changes.
-    /// </summary>
-    partial void OnSelectedBreathingTechniqueViewModelChanged(BreathingTechniqueViewModel? value) => UpdateSlider();
-
-    /// <summary>
-    /// Recalculates slider limits, steps, and selected value to align with the current session mode.
-    /// </summary>
-    private void UpdateSlider()
-    {
-        if (IsBreathingChecked && SelectedBreathingTechniqueViewModel != null)
-        {
-            StepSeconds = SelectedBreathingTechniqueViewModel.Phases.Sum(p => p.DurationSeconds);
-
-            // calculate minimum cycles required to hit at least one minute
-            var minCycles = Math.Ceiling(60.0 / StepSeconds);
-            MinimumSeconds = minCycles * StepSeconds;
-
-            // calculate maximum cycles with a 10-minute limit
-            var maxCycles = Math.Floor(10 * 60.0 / StepSeconds);
-            MaximumSeconds = maxCycles * StepSeconds;
-        }
-        else
-        {
-            MaximumSeconds = 30 * 60;
-            StepSeconds = 60;
-            MinimumSeconds = 60;
-        }
-
-        // round current selection to the nearest valid step interval
-        var targetCycles = Math.Round(SelectedSeconds / StepSeconds);
-        var newSelectedSeconds = targetCycles * StepSeconds;
-
-        // enforce slider bounds safely
-        if (newSelectedSeconds < MinimumSeconds)
-        {
-            newSelectedSeconds = MinimumSeconds;
-        }
-        else if (newSelectedSeconds > MaximumSeconds)
-        {
-            newSelectedSeconds = MaximumSeconds;
-        }
-
-        SelectedSeconds = newSelectedSeconds;
-        OnPropertyChanged(nameof(DurationText));
+        var exercises = await _wellnessExerciseRepository.GetWellnessExercisesAsync();
+        var exerciseViewModels = exercises.Select(e => new WellnessExerciseViewModel(e));
+        WellnessExercises.AddRange(exerciseViewModels);
+        SelectedExerciseViewModel = WellnessExercises.FirstOrDefault();
     }
 
     #endregion

@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
+// TODO: refactor into new logic and improve UX for saving/discarding, etc.
 internal partial class WellnessEndingViewModel : ViewModelBase
 {
     private readonly IWellnessSessionEntryRepository _sessionEntryRepository;
@@ -33,7 +34,6 @@ internal partial class WellnessEndingViewModel : ViewModelBase
     [ObservableProperty] private string _titleText = string.Empty;
 
     [ObservableProperty] private string _durationText = string.Empty;
-    [ObservableProperty] private WellnessSessionType _sessionType;
     [ObservableProperty] private bool _isBreathingType;
     [ObservableProperty] private string _breathingTechniqueName = string.Empty;
     [ObservableProperty] private int _cycleCount;
@@ -55,6 +55,7 @@ internal partial class WellnessEndingViewModel : ViewModelBase
     {
         try
         {
+            /*
             if (_createEntryRequest.ActualDuration == _createEntryRequest.TargetDuration)
             {
                 await SaveSession();
@@ -83,6 +84,7 @@ internal partial class WellnessEndingViewModel : ViewModelBase
                 CycleCount = (int)(_createEntryRequest.ActualDuration.TotalSeconds /
                                    _createEntryRequest.BreathingTechnique.Phases.Sum(p => p.DurationSeconds));
             }
+            */
         }
         catch (Exception ex)
         {

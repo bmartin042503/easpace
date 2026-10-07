@@ -3,7 +3,7 @@
 
 using System;
 
-namespace easpace.Desktop.Features.Wellness.Utils;
+namespace easpace.Desktop.Features.Wellness.Time;
 
 internal interface IWellnessExerciseClock
 {

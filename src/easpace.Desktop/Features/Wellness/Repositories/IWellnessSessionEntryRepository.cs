@@ -11,7 +11,7 @@ namespace easpace.Desktop.Features.Wellness.Repositories;
 
 internal interface IWellnessSessionEntryRepository
 {
-    Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createEntryRequest);
+    Task<WellnessSessionEntry?> CreateWellnessSessionEntryAsync(CreateWellnessSessionEntryRequest createSessionEntryRequest);
     Task<IReadOnlyList<WellnessSessionEntry>> GetWellnessSessionEntriesAsync();
-    Task<bool> DeleteWellnessSessionEntryAsync(Guid entryId);
+    Task<bool> DeleteWellnessSessionEntryAsync(Guid sessionId);
 }

@@ -17,6 +17,7 @@ internal interface IWellnessExercisePlayer
     void Start(int cycleCount);
     void Pause();
     void Resume();
+    void Stop();
     void Next();
     void Previous();
     void Advance(TimeSpan elapsed);

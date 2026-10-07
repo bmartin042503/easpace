@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using easpace.Desktop.Features.Wellness.Constants;
 
 namespace easpace.Desktop.Features.Wellness.Entities;
 
@@ -22,15 +21,15 @@ internal class WellnessSessionEntry
     public DateTimeOffset StartDate { get; set; }
 
     /// <summary>
-    /// Gets or sets the originally planned duration for the session.
+    /// Gets or sets the duration the session lasted.
     /// </summary>
-    public TimeSpan? TargetDuration { get; set; }
-
+    public TimeSpan Duration { get; set; }
+    
     /// <summary>
-    /// Gets or sets the actual duration the session lasted.
+    /// Gets or sets the number of cycles used for the exercise.
     /// </summary>
-    public TimeSpan ActualDuration { get; set; }
-
+    public int? CycleCount { get; set; }
+    
     /// <summary>
     /// Gets or sets the id of the exercise used during the session.
     /// </summary>
@@ -40,4 +39,9 @@ internal class WellnessSessionEntry
     /// Gets or sets the exercise used during the session.
     /// </summary>
     public WellnessExercise? Exercise { get; set; }
+
+    /// <summary>
+    /// Gets or sets the exercise name used during the session, used as a snapshot in case the exercise is deleted.
+    /// </summary>
+    public string ExerciseName { get; set; } = string.Empty;
 }

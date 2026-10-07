@@ -41,7 +41,7 @@ namespace easpace.Desktop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
 
                     b.HasDiscriminator<string>("ActivityType").HasValue("Activity");
 
@@ -69,7 +69,7 @@ namespace easpace.Desktop.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("ActivityDataEntries");
+                    b.ToTable("ActivityDataEntries", (string)null);
 
                     b.HasDiscriminator<string>("EntryType").HasValue("ActivityDataEntry");
 
@@ -97,7 +97,7 @@ namespace easpace.Desktop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JournalEntries");
+                    b.ToTable("JournalEntries", (string)null);
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Mood.Entities.MoodEntry", b =>
@@ -123,35 +123,10 @@ namespace easpace.Desktop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MoodEntries");
+                    b.ToTable("MoodEntries", (string)null);
                 });
 
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingPhase", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("BreathingTechniqueId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("DurationSeconds")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreathingTechniqueId");
-
-                    b.ToTable("BreathingPhases");
-                });
-
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", b =>
+            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,16 +135,13 @@ namespace easpace.Desktop.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Cycles")
+                    b.Property<int>("DefaultCycleCount")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(256)
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsLocalized")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -178,7 +150,37 @@ namespace easpace.Desktop.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BreathingTechniques");
+                    b.ToTable("WellnessExercises", (string)null);
+                });
+
+            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessExerciseInstruction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("BreathingPhase")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DurationSeconds")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ExerciseId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId", "Order");
+
+                    b.ToTable("WellnessExerciseInstructions", (string)null);
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessSessionEntry", b =>
@@ -187,26 +189,28 @@ namespace easpace.Desktop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("ActualDuration")
+                    b.Property<int?>("CycleCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<TimeSpan>("Duration")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("BreathingTechniqueId")
+                    b.Property<Guid?>("ExerciseId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ExerciseName")
+                        .IsRequired()
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTimeOffset>("StartDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan?>("TargetDuration")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("BreathingTechniqueId");
+                    b.HasIndex("ExerciseId");
 
-                    b.ToTable("WellnessSessionEntries");
+                    b.ToTable("WellnessSessionEntries", (string)null);
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Activities.Entities.NumericActivity", b =>
@@ -284,22 +288,23 @@ namespace easpace.Desktop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingPhase", b =>
+            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessExerciseInstruction", b =>
                 {
-                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", null)
-                        .WithMany("Phases")
-                        .HasForeignKey("BreathingTechniqueId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", null)
+                        .WithMany("Instructions")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessSessionEntry", b =>
                 {
-                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", "BreathingTechnique")
+                    b.HasOne("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", "Exercise")
                         .WithMany()
-                        .HasForeignKey("BreathingTechniqueId")
+                        .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("BreathingTechnique");
+                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("easpace.Desktop.Features.Activities.Entities.Activity", b =>
@@ -307,9 +312,9 @@ namespace easpace.Desktop.Migrations
                     b.Navigation("Entries");
                 });
 
-            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.BreathingTechnique", b =>
+            modelBuilder.Entity("easpace.Desktop.Features.Wellness.Entities.WellnessExercise", b =>
                 {
-                    b.Navigation("Phases");
+                    b.Navigation("Instructions");
                 });
 #pragma warning restore 612, 618
         }

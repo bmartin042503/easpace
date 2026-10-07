@@ -9,36 +9,12 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
-             xmlns:dataTemplates="clr-namespace:easpace.Desktop.DataTemplates"
-             xmlns:constants="clr-namespace:easpace.Desktop.Features.Wellness.Constants"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
              x:DataType="vm:WellnessStartViewModel"
              utils:ViewInitialization.Command="{Binding InitializeCommand}"
              Background="Transparent">
-
-    <UserControl.Resources>
-
-        <dataTemplates:TemplateSelector x:Key="WellnessSessionEntrySelector">
-
-            <DataTemplate x:Key="Breathing" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Wind}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Md}"
-                          Height="{StaticResource Metrics.Icon.Size.Md}" />
-            </DataTemplate>
-
-            <DataTemplate x:Key="Meditation" x:DataType="constants:WellnessSessionType">
-                <PathIcon Grid.Column="0" Data="{StaticResource PhosphorIcons.Sparkle}"
-                          Foreground="{DynamicResource Sem.Brand.Strong}"
-                          Width="{StaticResource Metrics.Icon.Size.Md}"
-                          Height="{StaticResource Metrics.Icon.Size.Md}" />
-            </DataTemplate>
-
-        </dataTemplates:TemplateSelector>
-
-    </UserControl.Resources>
 
     <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
@@ -52,42 +28,21 @@ Licensed under the MIT License. See LICENSE file for details.
         <Border Grid.Column="0" Classes="card"
                 Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
 
-            <Grid RowDefinitions="*,*,*,*,*">
+            <Grid RowDefinitions="*,*,*">
 
                 <!-- Title -->
                 <TextBlock Grid.Row="0" Classes="neutral fs2"
                            Text="{core:LocalizationService Key='Wellness.Title.Start'}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
 
-                <!-- Session Type Selection (segmented control) -->
-                <ListBox Grid.Row="1" Grid.Column="0" Classes="segmented"
-                         ItemsSource="{Binding SessionTypes}"
-                         SelectedItem="{Binding SelectedSessionType}"
-                         HorizontalAlignment="Center">
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-
-                </ListBox>
-
-                <!-- Breathing techniques -->
-                <StackPanel Grid.Row="2" Orientation="Vertical"
+                <!-- Exercises -->
+                <StackPanel Grid.Row="1" Orientation="Vertical"
                             Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <ComboBox MaxWidth="240"
-                              IsEnabled="{Binding HasBreathingTechniques}"
-                              IsVisible="{Binding IsBreathingChecked}"
-                              SelectedItem="{Binding SelectedBreathingTechniqueViewModel}"
-                              ItemsSource="{Binding BreathingTechniques}"
+                              IsEnabled="{Binding HasExercises}"
+                              SelectedItem="{Binding SelectedExerciseViewModel}"
+                              ItemsSource="{Binding WellnessExercises}"
                               HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
                         <ComboBox.ItemTemplate>
@@ -98,41 +53,24 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     </ComboBox>
 
-                    <Grid IsVisible="{Binding IsBreathingChecked}">
+                    <Grid>
 
-                        <!-- Technique description -->
-                        <TextBlock IsVisible="{Binding HasBreathingTechniques}"
-                                   Text="{Binding SelectedBreathingTechniqueViewModel.Description}"
+                        <!-- Exercise description -->
+                        <TextBlock IsVisible="{Binding HasExercises}"
+                                   Text="{Binding SelectedExerciseViewModel.Description}"
                                    Classes="subtle neutral fs6" TextAlignment="Center" MaxWidth="540"
                                    TextWrapping="Wrap" />
 
-                        <!-- 'No breathing techniques available' text -->
-                        <TextBlock IsVisible="{Binding ShowNoBreathingTechniques}"
-                                   Text="{core:LocalizationService Key='BreathingTechnique.Empty.Message'}"
+                        <!-- 'No exercises available' text -->
+                        <TextBlock IsVisible="{Binding ShowNoExercises}"
+                                   Text="{core:LocalizationService Key='WellnessExercise.Empty.Message'}"
                                    Classes="strong danger fs5" TextAlignment="Center" />
                     </Grid>
 
                 </StackPanel>
 
-                <!-- Duration slider -->
-                <StackPanel Grid.Row="3" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}"
-                            VerticalAlignment="Center">
-
-                    <TextBlock Classes="neutral fs4" HorizontalAlignment="Center"
-                               Text="{Binding DurationText}" />
-
-                    <Slider Classes="filled"
-                            Minimum="{Binding MinimumSeconds}"
-                            Maximum="{Binding MaximumSeconds}"
-                            Value="{Binding SelectedSeconds}"
-                            TickFrequency="{Binding StepSeconds}"
-                            IsSnapToTickEnabled="True"
-                            HorizontalAlignment="Stretch" VerticalAlignment="Center" MaxWidth="400" />
-
-                </StackPanel>
-
                 <!-- Begin session button -->
-                <Button Grid.Row="4" Classes="primary regular"
+                <Button Grid.Row="2" Classes="primary regular"
                         Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
                         Command="{Binding StartSessionCommand}"
                         HorizontalAlignment="Center" />
@@ -210,33 +148,17 @@ Licensed under the MIT License. See LICENSE file for details.
                                         <Grid ColumnDefinitions="Auto,*,Auto"
                                               ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
 
-                                            <!-- Icon -->
-                                            <ContentControl Grid.Column="0" Content="{Binding SessionType}"
-                                                            ContentTemplate="{StaticResource WellnessSessionEntrySelector}"
-                                                            VerticalAlignment="Center" />
-
                                             <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
 
-                                                <!-- Session type name -->
-                                                <TextBlock
-                                                    Text="{Binding SessionType, Converter={StaticResource EnumToLocalizedConverter}}"
-                                                    Classes="neutral fs5" />
-
-                                                <!-- Breathing session details -->
+                                                <!-- Exercise session details -->
                                                 <TextBlock Classes="subtle neutral fs6"
-                                                           IsVisible="{Binding IsTypeBreathing}"
                                                            TextWrapping="Wrap">
-                                                    <Run Text="{Binding BreathingTechniqueName}" />
+                                                    <Run Text="{Binding ExerciseName}" />
                                                     <Run Text="•" />
                                                     <Run Text="{Binding DurationText}" />
                                                     <Run Text="•" />
                                                     <Run Text="{Binding CyclesText}" />
                                                 </TextBlock>
-
-                                                <!-- Meditation session details -->
-                                                <TextBlock Classes="subtle neutral fs6"
-                                                           IsVisible="{Binding IsTypeMeditation}"
-                                                           Text="{Binding DurationText}" />
 
                                                 <!-- Start date -->
                                                 <TextBlock Classes="subtle neutral fs6"

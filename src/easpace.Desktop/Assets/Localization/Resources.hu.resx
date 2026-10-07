@@ -538,18 +538,6 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Szánj egy percet magadra</value>
     </data>
-    <data name="Wellness.SessionType.Breathing" xml:space="preserve">
-        <value>Légzés</value>
-    </data>
-    <data name="Wellness.SessionType.Meditation" xml:space="preserve">
-        <value>Meditáció</value>
-    </data>
-    <data name="Wellness.Description.Breathing" xml:space="preserve">
-        <value>Találd meg az egyensúlyt irányított légzéssel.</value>
-    </data>
-    <data name="Wellness.Description.Meditation" xml:space="preserve">
-        <value>Csendesítsd el az elmédet egy zavartalan térben.</value>
-    </data>
     <data name="Wellness.Label.Duration" xml:space="preserve">
         <value>Időtartam</value>
     </data>
@@ -631,8 +619,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
     </data>
-    <data name="BreathingTechnique.Empty.Message" xml:space="preserve">
-        <value>Nincsenek légzőgyakorlatok.</value>
+    <data name="WellnessExercise.Empty.Message" xml:space="preserve">
+        <value>Nincsenek gyakorlatok.</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Dobozlégzés</value>

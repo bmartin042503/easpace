@@ -65,9 +65,10 @@ internal static class ServiceCollectionExtensions
 
             collection.AddSingleton<ActivityRepository>();
             collection.AddSingleton<IActivityRepository>(sp => sp.GetRequiredService<ActivityRepository>());
-            
+
             collection.AddSingleton<ActivityDataEntryRepository>();
-            collection.AddSingleton<IActivityDataEntryRepository>(sp => sp.GetRequiredService<ActivityDataEntryRepository>());
+            collection.AddSingleton<IActivityDataEntryRepository>(sp =>
+                sp.GetRequiredService<ActivityDataEntryRepository>());
 
             collection.AddSingleton<ActivityEditorService>();
             collection.AddSingleton<IActivityEditorService>(sp => sp.GetRequiredService<ActivityEditorService>());
@@ -81,6 +82,10 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<WellnessSessionEntryRepository>();
             collection.AddSingleton<IWellnessSessionEntryRepository>(sp =>
                 sp.GetRequiredService<WellnessSessionEntryRepository>());
+
+            collection.AddSingleton<WellnessExerciseRepository>();
+            collection.AddSingleton<IWellnessExerciseRepository>(sp =>
+                sp.GetRequiredService<WellnessExerciseRepository>());
 
             collection.AddSingleton(TimeProvider.System);
             collection.AddSingleton<TrendActivityDataProvider>();

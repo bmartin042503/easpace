@@ -22,7 +22,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     private DateTimeOffset _startDate;
 
     private readonly WellnessSessionConfiguration _sessionConfiguration;
-    private readonly IWellnessSessionManager _wellnessSessionManager;
+    private readonly IWellnessExercisePlayer _wellnessExercisePlayer;
 
     [ObservableProperty] private bool _isPaused;
     [ObservableProperty] private string _instructionText = string.Empty;
@@ -60,44 +60,19 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     {
         _sessionConfiguration = sessionConfiguration;
 
-        _wellnessSessionManager = new WellnessSessionManager(sessionConfiguration);
+       // TODO: initialize exercise player
+       _wellnessExercisePlayer = new WellnessExercisePlayer();
 
         ShowWellnessTimer = preferencesService.ReadPreference<bool>(PreferenceKey.WellnessShowTimer);
 
-        _wellnessSessionManager.TimerTick += OnSessionManagerTimerTick;
-        _wellnessSessionManager.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;
-        _wellnessSessionManager.TimerFinished += OnSessionManagerTimerFinished;
-
-        // setup initial timer text display based on user configuration
-        if (_sessionConfiguration is { TargetDuration: not null })
-        {
-            TimerText = _wellnessSessionManager.GetTimerText(_sessionConfiguration.TargetDuration.Value);
-        }
-
-        if (_sessionConfiguration.SessionType == WellnessSessionType.Breathing)
-        {
-            IsBreathing = true;
-
-            var firstPhase = _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique?.Phases
-                .OrderBy(p => p.Order)
-                .FirstOrDefault();
-
-            InstructionText = firstPhase?.Type switch
-            {
-                BreathingPhase.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
-                BreathingPhase.HoldIn => LocalizationService.GetString("Wellness.Instruction.Hold"),
-                BreathingPhase.Exhale => LocalizationService.GetString("Wellness.Instruction.BreatheOut"),
-                BreathingPhase.HoldOut => LocalizationService.GetString("Wellness.Instruction.Hold"),
-                _ => LocalizationService.GetString("Wellness.Instruction.BreatheIn")
-            };
-        }
-        else
-        {
-            IsBreathing = false;
-        }
-
+        // _wellnessExercisePlayer.TimerTick += OnSessionManagerTimerTick;
+        // _wellnessExercisePlayer.BreathingCircleAnimationTimerTick += OnBreathingCircleAnimationTimerTick;
+        // _wellnessExercisePlayer.TimerFinished += OnSessionManagerTimerFinished;
+        
+        // TODO: initialize first instruction of the exercise and start exercise player with the configuration
+        
         // configure specific session type properties
-        _wellnessSessionManager.StartSession();
+        // _wellnessExercisePlayer.Start(_sessionConfiguration.TargetCycleCount);
         _startDate = DateTimeOffset.Now;
     }
 
@@ -113,14 +88,14 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     {
         if (IsPaused)
         {
-            _wellnessSessionManager.ResumeSession();
+            _wellnessExercisePlayer.Resume();
 
             IsPaused = false;
             TimerToggleButtonText = LocalizationService.GetString("Wellness.Button.PauseSession");
         }
         else
         {
-            _wellnessSessionManager.PauseSession();
+            _wellnessExercisePlayer.Pause();
 
             IsPaused = true;
             TimerToggleButtonText = LocalizationService.GetString("Wellness.Button.ResumeSession");
@@ -133,7 +108,7 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     [RelayCommand]
     private void StopSession()
     {
-        _wellnessSessionManager.StopSession();
+        _wellnessExercisePlayer.Stop();
 
         FinishSession();
     }
@@ -159,9 +134,11 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     /// </summary>
     private void OnSessionManagerTimerFinished(object? sender, EventArgs e)
     {
-        _wellnessSessionManager.TimerTick -= OnSessionManagerTimerTick;
-        _wellnessSessionManager.BreathingCircleAnimationTimerTick -= OnBreathingCircleAnimationTimerTick;
-        _wellnessSessionManager.TimerFinished -= OnSessionManagerTimerFinished;
+        /*
+        _wellnessExercisePlayer.TimerTick -= OnSessionManagerTimerTick;
+        _wellnessExercisePlayer.BreathingCircleAnimationTimerTick -= OnBreathingCircleAnimationTimerTick;
+        _wellnessExercisePlayer.TimerFinished -= OnSessionManagerTimerFinished;
+        */
 
         FinishSession();
     }
@@ -169,16 +146,17 @@ internal partial class WellnessSessionViewModel : ViewModelBase
     private void FinishSession()
     {
         // create the request to save the session
+        /*
         var request = new CreateWellnessSessionEntryRequest
         (
             StartDate: _startDate,
-            TargetDuration: _sessionConfiguration.TargetDuration,
-            ActualDuration: _wellnessSessionManager.ElapsedTime,
-            SessionType: _sessionConfiguration.SessionType,
-            BreathingTechnique: _sessionConfiguration.BreathingTechniqueConfiguration?.BreathingTechnique
+            Duration: _sessionConfiguration.TargetDuration,
+            CycleCount: // TODO: track cycles in player and get actual cycle count
+            Exercise: _sessionConfiguration.Exercise
         );
+        */
 
-        SessionEnded?.Invoke(this, request);
+        // SessionEnded?.Invoke(this, request);
     }
 
     #endregion

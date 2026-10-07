@@ -13,36 +13,47 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.Repositories;
 
-internal class WellnessSessionEntryRepository(IDbContextFactory<AppDbContext> dbContextFactory, ILogger<WellnessSessionEntryRepository> logger)
-    : IWellnessSessionEntryRepository
+internal class WellnessSessionEntryRepository(
+    IDbContextFactory<AppDbContext> dbContextFactory,
+    ILogger<WellnessSessionEntryRepository> logger) : IWellnessSessionEntryRepository
 {
-    public async Task<WellnessSessionEntry> CreateWellnessSessionEntryAsync(
-        CreateWellnessSessionEntryRequest createEntryRequest)
+    public async Task<WellnessSessionEntry?> CreateWellnessSessionEntryAsync(
+        CreateWellnessSessionEntryRequest createSessionEntryRequest)
     {
         try
         {
             await using var dbContext = await dbContextFactory.CreateDbContextAsync();
 
-            logger.LogInformation("Creating new wellness session entry of type {Type}", createEntryRequest.SessionType);
-            
-            var wellnessSession = new WellnessSessionEntry
+            logger.LogInformation("Creating new wellness session with {Name} exercise",
+                createSessionEntryRequest.ExerciseName);
+
+            var exercise = await dbContext.WellnessExercises
+                .FindAsync(createSessionEntryRequest.ExerciseId);
+
+            if (exercise is null)
             {
-                Id = Guid.NewGuid(),
-                StartDate = createEntryRequest.StartDate,
-                Type = createEntryRequest.SessionType,
-                TargetDuration = createEntryRequest.TargetDuration,
-                ActualDuration = createEntryRequest.ActualDuration,
-                BreathingTechniqueId = createEntryRequest.BreathingTechnique?.Id
+                logger.LogWarning("Attempted to create session with non-existent exercise with ID {Id}",
+                    createSessionEntryRequest.ExerciseId);
+                return null;
+            }
+
+            var session = new WellnessSessionEntry
+            {
+                StartDate = createSessionEntryRequest.StartDate,
+                Duration = createSessionEntryRequest.Duration,
+                CycleCount = createSessionEntryRequest.CycleCount,
+                ExerciseId = exercise.Id,
+                ExerciseName = createSessionEntryRequest.ExerciseName
             };
 
-            dbContext.WellnessSessionEntries.Add(wellnessSession);
+            dbContext.WellnessSessions.Add(session);
             await dbContext.SaveChangesAsync();
 
-            return wellnessSession;
+            return session;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to create wellness session entry");
+            logger.LogError(ex, "Failed to create wellness session");
             throw;
         }
     }
@@ -53,14 +64,10 @@ internal class WellnessSessionEntryRepository(IDbContextFactory<AppDbContext> db
         {
             await using var dbContext = await dbContextFactory.CreateDbContextAsync();
 
-            logger.LogInformation("Fetching all wellness session entries from database");
-            
-            // don't use OrderByDescending on dbContext with the CreatedAt column
-            // SQLite does not support expressions of type 'DateTimeOffset' in ORDER BY clauses
+            logger.LogInformation("Fetching all wellness sessions from database");
 
-            var sessionEntries = await dbContext.WellnessSessionEntries
-                .Include(e => e.BreathingTechnique)
-                .ThenInclude(t => t!.Phases.OrderBy(p => p.Order))
+            var sessionEntries = await dbContext.WellnessSessions
+                .Include(e => e.Exercise)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -68,33 +75,33 @@ internal class WellnessSessionEntryRepository(IDbContextFactory<AppDbContext> db
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to fetch wellness session entries from database");
+            logger.LogError(ex, "Failed to fetch wellness sessions from database");
             throw;
         }
     }
 
-    public async Task<bool> DeleteWellnessSessionEntryAsync(Guid entryId)
+    public async Task<bool> DeleteWellnessSessionEntryAsync(Guid sessionId)
     {
         try
         {
             await using var dbContext = await dbContextFactory.CreateDbContextAsync();
 
-            var entry = await dbContext.WellnessSessionEntries.FindAsync(entryId);
-            
+            var entry = await dbContext.WellnessSessions.FindAsync(sessionId);
+
             if (entry is null)
             {
-                logger.LogWarning("Attempted to delete non-existent wellness session entry with ID {Id}", entryId);
+                logger.LogWarning("Attempted to delete non-existent wellness session with ID {Id}", sessionId);
                 return false;
             }
 
-            dbContext.WellnessSessionEntries.Remove(entry);
+            dbContext.WellnessSessions.Remove(entry);
             await dbContext.SaveChangesAsync();
-            logger.LogInformation("Wellness session entry with ID {Id} successfully deleted", entryId);
+            logger.LogInformation("Wellness session with ID {Id} successfully deleted", sessionId);
             return true;
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to delete wellness session entry with ID {Id}", entryId);
+            logger.LogError(ex, "Failed to delete wellness session with ID {Id}", sessionId);
             throw;
         }
     }

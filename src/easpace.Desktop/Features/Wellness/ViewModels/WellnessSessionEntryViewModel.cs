@@ -3,8 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
-using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
@@ -15,22 +13,16 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
     public DateTimeOffset StartDate { get; }
-    public TimeSpan? TargetDuration { get; }
-    public TimeSpan ActualDuration { get; }
-    public WellnessSessionType SessionType { get; }
-    public BreathingTechnique? BreathingTechnique { get; }
-
-    public bool IsTypeBreathing => SessionType == WellnessSessionType.Breathing;
-    public bool IsTypeMeditation => SessionType == WellnessSessionType.Meditation;
-
-    public string? BreathingTechniqueName { get; init; }
+    public TimeSpan Duration { get; }
+    public string ExerciseName { get; }
+    public WellnessExercise? Exercise { get; }
 
     public string DurationText =>
-        ActualDuration.TotalHours >= 1
+        Duration.TotalHours >= 1
             ? FormattableString.Invariant(
-                $"{(long)ActualDuration.TotalHours:00}:{ActualDuration.Minutes:00}:{ActualDuration.Seconds:00}")
+                $"{(long)Duration.TotalHours:00}:{Duration.Minutes:00}:{Duration.Seconds:00}")
             : FormattableString.Invariant(
-                $"{ActualDuration.Minutes:00}:{ActualDuration.Seconds:00}");
+                $"{Duration.Minutes:00}:{Duration.Seconds:00}");
 
     public string? CyclesText { get; init; }
 
@@ -40,22 +32,12 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
     {
         Id = wellnessSessionEntry.Id;
         StartDate = wellnessSessionEntry.StartDate;
-        TargetDuration = wellnessSessionEntry.TargetDuration;
-        ActualDuration = wellnessSessionEntry.ActualDuration;
-        SessionType = wellnessSessionEntry.Type;
-        BreathingTechnique = wellnessSessionEntry.BreathingTechnique;
+        Duration = wellnessSessionEntry.Duration;
+        ExerciseName = wellnessSessionEntry.ExerciseName;
+        Exercise = wellnessSessionEntry.Exercise;
 
-        if (wellnessSessionEntry is { Type: WellnessSessionType.Breathing, BreathingTechnique: not null })
-        {
-            BreathingTechniqueName = BreathingTechnique!.IsLocalized
-                ? LocalizationService.GetString(wellnessSessionEntry.BreathingTechnique.Name)
-                : wellnessSessionEntry.BreathingTechnique.Name;
-
-            var cycles = (int)(ActualDuration.TotalSeconds / BreathingTechnique.Phases.Sum(p => p.DurationSeconds));
-
-            CyclesText = cycles == 1
-                ? LocalizationService.GetString("Wellness.Session.OneCycle")
-                : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), cycles);
-        }
+        CyclesText = wellnessSessionEntry.CycleCount == 1
+            ? LocalizationService.GetString("Wellness.Session.OneCycle")
+            : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), wellnessSessionEntry.CycleCount);
     }
 }
