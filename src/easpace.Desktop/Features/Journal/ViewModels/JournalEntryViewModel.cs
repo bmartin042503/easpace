@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Journal.Entities;
@@ -13,6 +14,8 @@ namespace easpace.Desktop.Features.Journal.ViewModels;
 internal partial class JournalEntryViewModel : ViewModelBase
 {
     public Guid Id { get; }
+    
+    public Vector ScrollOffset { get; set; }
 
     [ObservableProperty] private string _title = string.Empty;
     [ObservableProperty] private string _content = string.Empty;

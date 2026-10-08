@@ -19,7 +19,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Xs}"
           Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
             <ColumnDefinition Width="Auto" />
@@ -73,11 +73,13 @@ Licensed under the MIT License. See LICENSE file for details.
             </StackPanel>
 
             <!-- Entries -->
-            <ScrollViewer Grid.Row="1" IsVisible="{Binding HasEntries}">
+            <ScrollViewer x:Name="EntriesScrollViewer" Grid.Row="1" 
+                          IsVisible="{Binding HasEntries}">
 
                 <ListBox Classes="journal list"
                          ItemsSource="{Binding Entries}"
                          SelectedItem="{Binding SelectedEntry, Mode=TwoWay}"
+                         AutoScrollToSelectedItem="False"
                          IsEnabled="{Binding !IsEditing}">
 
                     <ListBox.ItemTemplate>
@@ -145,7 +147,7 @@ Licensed under the MIT License. See LICENSE file for details.
             </StackPanel>
 
             <!-- Content -->
-            <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <ScrollViewer x:Name="EntryContentScrollViewer" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <SelectableTextBlock TextWrapping="Wrap"
                                      Classes="neutral fs4 trm-ellipsis"
                                      Text="{Binding ActiveEntry.Content}" />
@@ -210,5 +212,5 @@ Licensed under the MIT License. See LICENSE file for details.
 
         </Grid>
     </Grid>
-    
+
 </UserControl>

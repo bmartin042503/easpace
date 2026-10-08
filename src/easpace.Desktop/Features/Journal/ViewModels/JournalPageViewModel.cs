@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -28,6 +29,8 @@ internal partial class JournalPageViewModel : PageViewModel
     private readonly List<JournalEntryViewModel> _allEntries = [];
 
     public AvaloniaList<JournalEntryViewModel> Entries { get; } = [];
+    
+    public Vector EntriesScrollOffset { get; set; }
 
     [ObservableProperty] private JournalEntryViewModel? _selectedEntry;
 
