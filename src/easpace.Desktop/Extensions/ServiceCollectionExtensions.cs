@@ -88,6 +88,7 @@ internal static class ServiceCollectionExtensions
                 sp.GetRequiredService<WellnessExerciseRepository>());
 
             collection.AddSingleton(TimeProvider.System);
+            
             collection.AddSingleton<TrendActivityDataProvider>();
             collection.AddSingleton<ITrendActivityDataProvider>(sp =>
                 sp.GetRequiredService<TrendActivityDataProvider>());
@@ -106,6 +107,9 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<MoodPageViewModel>();
             collection.AddSingleton<WellnessPageViewModel>();
             collection.AddSingleton<SettingsViewModel>();
+            
+            collection.AddTransient<IWellnessExercisePlayer, WellnessExercisePlayer>();
+            collection.AddTransient<WellnessExercisePreviewViewModel>();
 
             collection.AddSingleton<Func<ApplicationPage, PageViewModel>>(serviceProvider => page => page switch
             {
