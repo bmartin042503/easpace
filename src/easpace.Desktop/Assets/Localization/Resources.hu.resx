@@ -619,6 +619,42 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
     </data>
+    <data name="Wellness.Preview.Previous" xml:space="preserve">
+        <value>Előző instrukció</value>
+    </data>
+    <data name="Wellness.Preview.Next" xml:space="preserve">
+        <value>Következő instrukció</value>
+    </data>
+    <data name="Wellness.Preview.Play" xml:space="preserve">
+        <value>Lejátszás</value>
+    </data>
+    <data name="Wellness.Preview.Pause" xml:space="preserve">
+        <value>Szünet</value>
+    </data>
+    <data name="Wellness.Preview.Stop" xml:space="preserve">
+        <value>Leállítás</value>
+    </data>
+    <data name="Wellness.Preview.Restart" xml:space="preserve">
+        <value>Újraindítás</value>
+    </data>
+    <data name="Wellness.Preview.Position" xml:space="preserve">
+        <value>Ciklus: {0}/{1} · Utasítás: {2}/{3}</value>
+    </data>
+    <data name="Wellness.Preview.PhaseInhale" xml:space="preserve">
+        <value>Légzés: belégzés</value>
+    </data>
+    <data name="Wellness.Preview.PhaseHoldIn" xml:space="preserve">
+        <value>Légzés: benntartás</value>
+    </data>
+    <data name="Wellness.Preview.PhaseExhale" xml:space="preserve">
+        <value>Légzés: kilégzés</value>
+    </data>
+    <data name="Wellness.Preview.PhaseHoldOut" xml:space="preserve">
+        <value>Légzés: kilégzés utáni szünet</value>
+    </data>
+    <data name="Wellness.Preview.PhaseNone" xml:space="preserve">
+        <value>Nincs légzési fázis</value>
+    </data>
     <data name="WellnessExercise.Empty.Message" xml:space="preserve">
         <value>Nincsenek gyakorlatok.</value>
     </data>

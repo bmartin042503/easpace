@@ -1,0 +1,121 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
+             xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExercisePreviewView"
+             x:DataType="vm:WellnessExercisePreviewViewModel"
+             Background="Transparent">
+
+    <UserControl.Styles>
+        <Style Selector="Button.icon">
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*,Auto"
+          RowSpacing="{StaticResource Metrics.Spacing.Xl}"
+          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
+
+        <!-- Instruction -->
+        <TextBlock Grid.Row="0" Classes="neutral fs3"
+                   Text="{Binding InstructionText}"
+                   TextWrapping="Wrap" TextAlignment="Center"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <!-- Breathing animation -->
+        <Viewbox Grid.Row="1" Stretch="Uniform"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                 IsVisible="{Binding IsBreathing}">
+
+            <Grid Width="192" Height="192">
+
+                <Ellipse Width="96" Height="96"
+                         Fill="{DynamicResource Sem.Brand.Strong}"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                <Ellipse Width="{Binding BreathingCircleSize}"
+                         Height="{Binding BreathingCircleSize}"
+                         Fill="{DynamicResource Sem.Brand.Strong}" Opacity="0.4"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                <TextBlock Classes="fs1"
+                           Text="{Binding PhaseSecondsText}"
+                           Foreground="{DynamicResource Sem.Surface.Brand}"
+                           TextAlignment="Center"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            </Grid>
+
+        </Viewbox>
+
+        <!-- Playback status and controls -->
+        <StackPanel Grid.Row="2" Spacing="{StaticResource Metrics.Spacing.Md}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <TextBlock Classes="subtle neutral fs6"
+                       Text="{Binding PreviewStatusText}"
+                       TextWrapping="Wrap" TextAlignment="Center"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <Button Classes="secondary icon"
+                        Command="{Binding RestartCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Restart'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Wellness.Preview.Restart'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.ArrowCounterClockwise}" />
+                </Button>
+
+                <Button Classes="secondary icon"
+                        Command="{Binding PreviousCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Previous'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Wellness.Preview.Previous'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.SkipBack.Fill}" />
+                </Button>
+
+                <Grid>
+
+                    <Button Classes="primary icon"
+                            IsVisible="{Binding !IsPlaying}"
+                            Command="{Binding PlayCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Play'}"
+                            AutomationProperties.Name="{core:LocalizationService Key='Wellness.Preview.Play'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.Play.Fill}" />
+                    </Button>
+
+                    <Button Classes="primary icon"
+                            IsVisible="{Binding IsPlaying}"
+                            Command="{Binding PauseCommand}"
+                            ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Pause'}"
+                            AutomationProperties.Name="{core:LocalizationService Key='Wellness.Preview.Pause'}">
+                        <PathIcon Data="{StaticResource PhosphorIcons.Pause.Fill}" />
+                    </Button>
+
+                </Grid>
+
+                <Button Classes="secondary icon"
+                        Command="{Binding NextCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Wellness.Preview.Next'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Wellness.Preview.Next'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.SkipForward.Fill}" />
+                </Button>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

@@ -2,11 +2,14 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Linq;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
@@ -40,7 +43,50 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
 
     public TimeSpan InstructionElapsed => _player.InstructionElapsed;
     public TimeSpan InstructionRemaining => _player.InstructionRemaining;
-    public string InstructionText => CurrentInstruction?.Text ?? string.Empty;
+    
+    public string InstructionText
+    {
+        get
+        {
+            var instruction = CurrentInstruction;
+
+            if (instruction == null) return string.Empty;
+            if (!string.IsNullOrWhiteSpace(instruction.Text)) return instruction.Text;
+
+            return instruction.BreathingPhase switch
+            {
+                BreathingPhase.Inhale => LocalizationService.GetString("Wellness.Instruction.BreatheIn"),
+                BreathingPhase.HoldIn => LocalizationService.GetString("Wellness.Instruction.Hold"),
+                BreathingPhase.Exhale => LocalizationService.GetString("Wellness.Instruction.BreatheOut"),
+                BreathingPhase.HoldOut => LocalizationService.GetString("Wellness.Instruction.Hold"),
+                _ => string.Empty
+            };
+        }
+    }
+    
+    public string PreviewStatusText
+    {
+        get
+        {
+            if (CurrentInstruction == null) return string.Empty;
+
+            var positionText = string.Format(
+                LocalizationService.GetString("Wellness.Preview.Position"),
+                CurrentCycle, TotalCycles, CurrentInstructionIndex + 1, _exercise?.Instructions.Count ?? 0);
+
+            var phaseKey = CurrentInstruction.BreathingPhase switch
+            {
+                BreathingPhase.Inhale => "Wellness.Preview.PhaseInhale",
+                BreathingPhase.HoldIn => "Wellness.Preview.PhaseHoldIn",
+                BreathingPhase.Exhale => "Wellness.Preview.PhaseExhale",
+                BreathingPhase.HoldOut => "Wellness.Preview.PhaseHoldOut",
+                _ => "Wellness.Preview.PhaseNone"
+            };
+
+            return $"{positionText}{Environment.NewLine}{LocalizationService.GetString(phaseKey)}";
+        }
+    }
+    
     public bool IsBreathing => CurrentInstruction?.BreathingPhase != null;
 
     public string PhaseSecondsText => IsBreathing
@@ -93,21 +139,91 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
     }
 
     /// <summary>
-    /// Loads the exercise and displays its first instruction without starting timed playback.
+    /// Updates the loaded exercise while preserving the current playback position.
     /// </summary>
-    public void Load(WellnessExercise exercise, int cycleCount)
+    public bool UpdateExercise(UpsertWellnessExerciseRequest request)
     {
         ObjectDisposedException.ThrowIf(_isDisposed, this);
         Dispatcher.UIThread.VerifyAccess();
 
-        // publish only the final paused state, not the temporary state created by Start
+        if (_exercise == null) return false;
+
+        var exercise = new WellnessExercise
+        {
+            Id = _exercise.Id,
+            CreatedAt = _exercise.CreatedAt,
+            Name = request.Name,
+            Description = request.Description,
+            DefaultCycleCount = request.DefaultCycleCount,
+            Instructions = request.Instructions
+                .Select((instruction, index) => new WellnessExerciseInstruction
+                {
+                    ExerciseId = _exercise.Id,
+                    Order = index,
+                    Text = instruction.Text,
+                    DurationSeconds = instruction.DurationSeconds,
+                    BreathingPhase = instruction.BreathingPhase
+                })
+                .ToArray()
+        };
+
+        if (!IsPlayable(exercise, request.DefaultCycleCount)) return false;
+
+        _exercise = exercise;
+        _cycleCount = request.DefaultCycleCount;
+
+        if (CurrentInstruction != null)
+        {
+            // do not apply time from before the update to the replacement instruction
+            _lastTimestamp = _timeProvider.GetTimestamp();
+            _player.UpdateExercise(request);
+        }
+        else
+        {
+            RefreshPlayback();
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Loads a valid exercise and displays its first instruction without timed playback.
+    /// </summary>
+    public bool Load(WellnessExercise exercise, int cycleCount)
+    {
+        ObjectDisposedException.ThrowIf(_isDisposed, this);
+        Dispatcher.UIThread.VerifyAccess();
+
+        if (!IsPlayable(exercise, cycleCount)) return false;
+
+        var snapshot = new WellnessExercise
+        {
+            Id = exercise.Id,
+            CreatedAt = exercise.CreatedAt,
+            Name = exercise.Name,
+            Description = exercise.Description,
+            DefaultCycleCount = exercise.DefaultCycleCount,
+            Instructions = exercise.Instructions
+                .OrderBy(instruction => instruction.Order)
+                .Select(instruction => new WellnessExerciseInstruction
+                {
+                    Id = instruction.Id,
+                    ExerciseId = instruction.ExerciseId,
+                    Order = instruction.Order,
+                    Text = instruction.Text,
+                    DurationSeconds = instruction.DurationSeconds,
+                    BreathingPhase = instruction.BreathingPhase
+                })
+                .ToArray()
+        };
+
         _isLoading = true;
 
         try
         {
-            _player.Start(exercise, cycleCount);
+            _player.Start(snapshot, cycleCount);
 
-            _exercise = exercise;
+            _exercise = snapshot;
             _cycleCount = cycleCount;
 
             _player.Pause();
@@ -117,6 +233,8 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
             _isLoading = false;
             RefreshPlayback();
         }
+
+        return true;
     }
 
     /// <summary>
@@ -192,7 +310,25 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         _lastTimestamp = _timeProvider.GetTimestamp();
         _player.Previous();
     }
+    
+    /// <summary>
+    /// Returns to the first instruction, preserving whether playback was running.
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanRestart))]
+    private void Restart()
+    {
+        if (!CanRestart()) return;
 
+        var wasPlaying = IsPlaying;
+        _lastTimestamp = _timeProvider.GetTimestamp();
+
+        if (Load(_exercise!, _cycleCount) && wasPlaying)
+        {
+            _player.Resume();
+        }
+    }
+
+    private bool CanRestart() => !_isDisposed && _exercise != null;
     private bool CanPlay() => !_isDisposed && _exercise != null && !IsPlaying;
     private bool CanPause() => !_isDisposed && IsPlaying;
     private bool CanStop() => !_isDisposed && CurrentInstruction != null;
@@ -200,6 +336,14 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
 
     private bool CanPrevious() =>
         !_isDisposed && (IsPlaying || IsPaused || State == WellnessExercisePlaybackState.Completed);
+
+    private static bool IsPlayable(WellnessExercise exercise, int cycleCount)
+    {
+        return cycleCount > 0 && exercise.Instructions.Count > 0
+                              && exercise.Instructions.All(instruction =>
+                                  instruction.DurationSeconds > 0
+                                  && (instruction.BreathingPhase is not { } phase || Enum.IsDefined(phase)));
+    }
 
     private void OnTimerTick(object? sender, EventArgs e)
     {
@@ -264,6 +408,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         OnPropertyChanged(nameof(PhaseSecondsText));
         OnPropertyChanged(nameof(InstructionProgress));
         OnPropertyChanged(nameof(BreathingCircleSize));
+        OnPropertyChanged(nameof(PreviewStatusText));
     }
 
     private void NotifyCommandsCanExecuteChanged()
@@ -273,6 +418,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         StopCommand.NotifyCanExecuteChanged();
         NextCommand.NotifyCanExecuteChanged();
         PreviousCommand.NotifyCanExecuteChanged();
+        RestartCommand.NotifyCanExecuteChanged();
     }
 
     /// <summary>

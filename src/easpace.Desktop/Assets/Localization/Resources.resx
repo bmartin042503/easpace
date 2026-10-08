@@ -619,6 +619,42 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Are you sure you want to delete this session? This action can't be undone.</value>
     </data>
+    <data name="Wellness.Preview.Previous" xml:space="preserve">
+        <value>Previous instruction</value>
+    </data>
+    <data name="Wellness.Preview.Next" xml:space="preserve">
+        <value>Next instruction</value>
+    </data>
+    <data name="Wellness.Preview.Play" xml:space="preserve">
+        <value>Play</value>
+    </data>
+    <data name="Wellness.Preview.Pause" xml:space="preserve">
+        <value>Pause</value>
+    </data>
+    <data name="Wellness.Preview.Stop" xml:space="preserve">
+        <value>Stop</value>
+    </data>
+    <data name="Wellness.Preview.Restart" xml:space="preserve">
+        <value>Restart</value>
+    </data>
+    <data name="Wellness.Preview.Position" xml:space="preserve">
+        <value>Cycle {0}/{1} · Instruction {2}/{3}</value>
+    </data>
+    <data name="Wellness.Preview.PhaseInhale" xml:space="preserve">
+        <value>Breathing: inhale</value>
+    </data>
+    <data name="Wellness.Preview.PhaseHoldIn" xml:space="preserve">
+        <value>Breathing: hold after inhaling</value>
+    </data>
+    <data name="Wellness.Preview.PhaseExhale" xml:space="preserve">
+        <value>Breathing: exhale</value>
+    </data>
+    <data name="Wellness.Preview.PhaseHoldOut" xml:space="preserve">
+        <value>Breathing: hold after exhaling</value>
+    </data>
+    <data name="Wellness.Preview.PhaseNone" xml:space="preserve">
+        <value>No breathing phase</value>
+    </data>
     <data name="WellnessExercise.Empty.Message" xml:space="preserve">
         <value>No exercises available.</value>
     </data>

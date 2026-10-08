@@ -45,6 +45,7 @@ internal class ViewLocator : IDataTemplate
             ActivityEditorViewModel vm => CreateView(new ActivityEditorView(), vm),
             
             // Wellness
+            WellnessExercisePreviewViewModel vm => CreateView(new WellnessExercisePreviewView(), vm),
             WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
             WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
             WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
