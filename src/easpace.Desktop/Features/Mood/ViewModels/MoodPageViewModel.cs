@@ -12,6 +12,7 @@ using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Mood.Constants;
 using easpace.Desktop.Features.Mood.Contracts;
 using easpace.Desktop.Features.Mood.Repositories;
+using easpace.Desktop.Features.Mood.Validation;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -49,7 +50,8 @@ internal partial class MoodPageViewModel : PageViewModel
         get;
         set
         {
-            if (value is < 0 or > 1) return;
+            Validate(value);
+            if (HasErrors) return;
             field = value;
 
             var localizedValue = value switch
@@ -171,6 +173,9 @@ internal partial class MoodPageViewModel : PageViewModel
     [RelayCommand]
     private async Task Save()
     {
+        Validate(MoodSliderValue);
+        if (HasErrors) return;
+
         try
         {
             var timestamp = DateTimeOffset.Now;
@@ -238,6 +243,8 @@ internal partial class MoodPageViewModel : PageViewModel
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
+
+    private void Validate(double value) => SetValidationErrors(MoodEntryValidator.Validate(value));
 
     private void ResetForm()
     {

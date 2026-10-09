@@ -373,6 +373,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
         <value>Kérlek, adj meg egy érvényes dátumot.</value>
     </data>
+    <data name="Mood.Validation.Range" xml:space="preserve">
+        <value>A hangulat értékének 0 és 1 között kell lennie.</value>
+    </data>
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Nagyon kellemetlen</value>
     </data>

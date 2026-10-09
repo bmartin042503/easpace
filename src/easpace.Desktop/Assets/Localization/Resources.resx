@@ -373,6 +373,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
         <value>Please enter a valid date.</value>
     </data>
+    <data name="Mood.Validation.Range" xml:space="preserve">
+        <value>Mood value must be between 0 and 1.</value>
+    </data>
     <data name="Mood.State.VeryUnpleasant" xml:space="preserve">
         <value>Very unpleasant</value>
     </data>
