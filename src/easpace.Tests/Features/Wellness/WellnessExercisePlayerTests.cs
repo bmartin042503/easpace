@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
 using FluentAssertions;
@@ -265,6 +266,70 @@ public class WellnessExercisePlayerTests
         observedCycle.Should().Be(2);
         observedIndex.Should().Be(1);
         observedElapsed.Should().Be(TimeSpan.FromSeconds(1));
+    }
+
+    [Theory]
+    [InlineData(0, 4, false)]
+    [InlineData(-1, 4, false)]
+    [InlineData(1, 0, false)]
+    [InlineData(1, -1, false)]
+    [InlineData(1, 4, true)]
+    public void InvalidStartAndUpdate_PreservePlayback(int cycles, int duration, bool empty)
+    {
+        var player = new WellnessExercisePlayer();
+        player.Start(CreateExercise(), 2);
+        player.Advance(TimeSpan.FromSeconds(2));
+        player.Pause();
+        var currentInstruction = player.CurrentInstruction;
+        var notifications = 0;
+        player.PlaybackChanged += (_, _) => notifications++;
+        var invalidExercise = new WellnessExercise
+        {
+            Instructions = empty ? [] : [new WellnessExerciseInstruction { DurationSeconds = duration }]
+        };
+
+        player.Start(invalidExercise, cycles);
+        player.UpdateExercise(new UpsertWellnessExerciseRequest("", "", cycles,
+            empty ? [] : [new UpsertWellnessExerciseInstructionRequest("", duration, null)]));
+
+        player.CurrentInstruction.Should().BeSameAs(currentInstruction);
+        player.State.Should().Be(WellnessExercisePlaybackState.Paused);
+        player.TotalCycles.Should().Be(2);
+        player.CurrentCycle.Should().Be(1);
+        player.CurrentInstructionIndex.Should().Be(0);
+        player.InstructionElapsed.Should().Be(TimeSpan.FromSeconds(2));
+        notifications.Should().Be(0);
+    }
+
+    [Fact]
+    public void StartAllowsUndefinedPhaseButUpdateRejectsItAndAcceptsAnOptionalPhase()
+    {
+        var player = new WellnessExercisePlayer();
+        var exercise = CreateExercise();
+        exercise.Instructions.Single(instruction => instruction.Order == 0).BreathingPhase = (BreathingPhase)999;
+        player.Start(exercise, 2);
+        player.Advance(TimeSpan.FromSeconds(2));
+        var currentInstruction = player.CurrentInstruction;
+        var notifications = 0;
+        player.PlaybackChanged += (_, _) => notifications++;
+
+        player.UpdateExercise(new UpsertWellnessExerciseRequest("", "", 3,
+            [new UpsertWellnessExerciseInstructionRequest("", 5, (BreathingPhase)999)]));
+
+        player.State.Should().Be(WellnessExercisePlaybackState.Playing);
+        player.CurrentInstruction.Should().BeSameAs(currentInstruction);
+        player.CurrentInstruction!.BreathingPhase.Should().Be((BreathingPhase)999);
+        player.TotalCycles.Should().Be(2);
+        player.InstructionElapsed.Should().Be(TimeSpan.FromSeconds(2));
+        notifications.Should().Be(0);
+
+        player.UpdateExercise(new UpsertWellnessExerciseRequest("", "", 3,
+            [new UpsertWellnessExerciseInstructionRequest("", 5, null)]));
+
+        player.TotalCycles.Should().Be(3);
+        player.CurrentInstruction!.BreathingPhase.Should().BeNull();
+        player.InstructionRemaining.Should().Be(TimeSpan.FromSeconds(5));
+        notifications.Should().Be(1);
     }
 
     private static WellnessExercise CreateExercise()

@@ -6,6 +6,7 @@ using System.Linq;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Features.Wellness.Validation;
 
 namespace easpace.Desktop.Features.Wellness.Services;
 
@@ -36,7 +37,7 @@ internal class WellnessExercisePlayer : IWellnessExercisePlayer
     {
         var currentInstruction = CurrentInstruction;
 
-        if (currentInstruction == null || updateRequest.DefaultCycleCount <= 0) return;
+        if (currentInstruction == null) return;
 
         // the request's list order defines the playback positions
         var instructions = updateRequest.Instructions
@@ -50,9 +51,7 @@ internal class WellnessExercisePlayer : IWellnessExercisePlayer
             })
             .ToArray();
 
-        if (instructions.Length == 0
-            || instructions.Any(instruction => instruction.DurationSeconds <= 0)
-            || instructions.Any(instruction => instruction.BreathingPhase is { } phase && !Enum.IsDefined(phase)))
+        if (!WellnessPlaybackValidator.IsPlayable(instructions, updateRequest.DefaultCycleCount, validateBreathingPhases: true))
         {
             return;
         }
@@ -98,8 +97,7 @@ internal class WellnessExercisePlayer : IWellnessExercisePlayer
     /// <inheritdoc/>
     public void Start(WellnessExercise exercise, int cycleCount)
     {
-        if (cycleCount <= 0 || exercise.Instructions.Count == 0
-                            || exercise.Instructions.Any(i => i.DurationSeconds <= 0)) return;
+        if (!WellnessPlaybackValidator.IsPlayable(exercise.Instructions, cycleCount, validateBreathingPhases: false)) return;
 
         // copy the instructions
         var instructions = exercise.Instructions

@@ -9,6 +9,7 @@ using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
+using easpace.Desktop.Features.Wellness.Validation;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
@@ -43,7 +44,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
 
     public TimeSpan InstructionElapsed => _player.InstructionElapsed;
     public TimeSpan InstructionRemaining => _player.InstructionRemaining;
-    
+
     public string InstructionText
     {
         get
@@ -63,7 +64,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
             };
         }
     }
-    
+
     public string PreviewStatusText
     {
         get
@@ -86,7 +87,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
             return $"{positionText}{Environment.NewLine}{LocalizationService.GetString(phaseKey)}";
         }
     }
-    
+
     public bool IsBreathing => CurrentInstruction?.BreathingPhase != null;
 
     public string PhaseSecondsText => IsBreathing
@@ -167,7 +168,10 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
                 .ToArray()
         };
 
-        if (!IsPlayable(exercise, request.DefaultCycleCount)) return false;
+        if (!WellnessPlaybackValidator.IsPlayable(
+                exercise.Instructions,
+                request.DefaultCycleCount,
+                validateBreathingPhases: true)) return false;
 
         _exercise = exercise;
         _cycleCount = request.DefaultCycleCount;
@@ -194,7 +198,8 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         ObjectDisposedException.ThrowIf(_isDisposed, this);
         Dispatcher.UIThread.VerifyAccess();
 
-        if (!IsPlayable(exercise, cycleCount)) return false;
+        if (!WellnessPlaybackValidator.IsPlayable(exercise.Instructions, cycleCount, validateBreathingPhases: true))
+            return false;
 
         var snapshot = new WellnessExercise
         {
@@ -310,7 +315,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         _lastTimestamp = _timeProvider.GetTimestamp();
         _player.Previous();
     }
-    
+
     /// <summary>
     /// Returns to the first instruction, preserving whether playback was running.
     /// </summary>
@@ -336,14 +341,6 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
 
     private bool CanPrevious() =>
         !_isDisposed && (IsPlaying || IsPaused || State == WellnessExercisePlaybackState.Completed);
-
-    private static bool IsPlayable(WellnessExercise exercise, int cycleCount)
-    {
-        return cycleCount > 0 && exercise.Instructions.Count > 0
-                              && exercise.Instructions.All(instruction =>
-                                  instruction.DurationSeconds > 0
-                                  && (instruction.BreathingPhase is not { } phase || Enum.IsDefined(phase)));
-    }
 
     private void OnTimerTick(object? sender, EventArgs e)
     {
