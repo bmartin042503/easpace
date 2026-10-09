@@ -34,9 +34,9 @@ internal sealed class LocalizationService : MarkupExtension
         CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
     }
     
-    public static string GetString(string key)
+    public static string GetString(string key, string? fallback = null)
     {
-        return ResourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? $"[{key}]";
+        return ResourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? fallback ?? $"[{key}]";
     }
     
     public string Key { get; set; } = string.Empty;

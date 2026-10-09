@@ -43,7 +43,7 @@ public class ValidationStateTests
         state.GetErrors("Name").Should().Equal(required, tooShort);
         state.GetErrors("Duration").Should().Equal(positive);
         state.GetErrors("Unknown").Should().BeEmpty();
-        changedMembers.Should().BeEquivalentTo(new[] { "Name", "Duration" });
+        changedMembers.Should().BeEquivalentTo("Name", "Duration");
     }
 
     [Fact]
@@ -73,7 +73,7 @@ public class ValidationStateTests
 
         state.SetErrors([nameError, durationError, cyclesError]);
 
-        changedMembers.Should().BeEquivalentTo(new[] { "Name", "Description", "Cycles" });
+        changedMembers.Should().BeEquivalentTo("Name", "Description", "Cycles");
     }
 
     [Fact]

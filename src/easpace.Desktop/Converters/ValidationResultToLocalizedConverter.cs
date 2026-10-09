@@ -7,21 +7,29 @@ using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using easpace.Desktop.Services.Core;
+using easpace.Desktop.Validation;
 
 namespace easpace.Desktop.Converters;
 
-// Since ValidationAttribute requires compile-time values this converter is needed to localize validation messages
+// Localize validation keys while preserving messages from control and binding errors.
 public class ValidationResultToLocalizedConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        var key = value switch
+        if (value is ValidationIssue issue)
         {
-            ValidationResult vr => vr.ErrorMessage,
-            _ => value?.ToString()
+            return LocalizationService.GetString(issue.MessageKey);
+        }
+
+        var message = value switch
+        {
+            ValidationResult result => result.ErrorMessage,
+            Exception exception => exception.Message,
+            string text => text,
+            _ => null
         };
         
-        return string.IsNullOrWhiteSpace(key) ? value : LocalizationService.GetString(key);
+        return message is null ? value : LocalizationService.GetString(message, message);
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

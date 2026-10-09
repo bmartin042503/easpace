@@ -3,7 +3,6 @@
 
 using Avalonia;
 using Avalonia.Headless;
-using easpace.Desktop;
 
 [assembly: AvaloniaTestApplication(typeof(easpace.Tests.TestAppBuilder))]
 
@@ -11,6 +10,7 @@ namespace easpace.Tests;
 
 public class TestAppBuilder
 {
-    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+    // Binding tests do not need the desktop application's service initialization.
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<Application>()
         .UseHeadless(new AvaloniaHeadlessPlatformOptions());
 }
