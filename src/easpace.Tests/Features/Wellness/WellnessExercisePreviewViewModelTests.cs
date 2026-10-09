@@ -57,6 +57,15 @@ public class WellnessExercisePreviewViewModelTests
         }
 
         notifications.Should().Be(0);
+
+        // Restart must still use the accepted snapshot after rejected loads and updates.
+        preview.StopCommand.Execute(null);
+        preview.CurrentInstruction.Should().BeNull();
+        preview.RestartCommand.Execute(null);
+        preview.TotalCycles.Should().Be(2);
+        preview.InstructionRemaining.Should().Be(TimeSpan.FromSeconds(4));
+        preview.State.Should().Be(WellnessExercisePlaybackState.Paused);
+
         preview.UpdateExercise(new UpsertWellnessExerciseRequest("", "", 3,
             [new UpsertWellnessExerciseInstructionRequest("", 5, null)])).Should().BeTrue();
         preview.TotalCycles.Should().Be(3);

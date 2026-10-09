@@ -1,7 +1,6 @@
 // Copyright (c) 2026 Martin Bartos
 // Licensed under the MIT License. See LICENSE file for details.
 
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using easpace.Desktop.Converters;
 using easpace.Desktop.Validation;
@@ -12,17 +11,22 @@ namespace easpace.Tests.Validation;
 public class ValidationResultToLocalizedConverterTests
 {
     [Theory]
-    [InlineData("en", "Please enter a name.")]
-    [InlineData("hu", "Kérlek, adj meg egy nevet.")]
-    public void Convert_LocalizesSharedIssuesAndLegacyErrors(string language, string expected)
+    [InlineData("en", "FormValidation.Name.Required", "Please enter a name.")]
+    [InlineData("hu", "FormValidation.Name.Required", "Kérlek, adj meg egy nevet.")]
+    [InlineData("en", "FormValidation.Date.Required", "Please select a date.")]
+    [InlineData("hu", "FormValidation.Date.Required", "Kérlek, válassz egy dátumot.")]
+    [InlineData("en", "FormValidation.NumericValue.Required", "Please enter a value.")]
+    [InlineData("hu", "FormValidation.NumericValue.Required", "Kérlek, adj meg egy értéket.")]
+    [InlineData("en", "Mood.Validation.Range", "Mood value must be between 0 and 1.")]
+    [InlineData("hu", "Mood.Validation.Range", "A hangulat értékének 0 és 1 között kell lennie.")]
+    public void Convert_LocalizesSharedIssuesAndRecognizedMessages(string language, string key, string expected)
     {
         var previousCulture = CultureInfo.CurrentUICulture;
         try
         {
             CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
-            const string key = "FormValidation.Name.Required";
             var converter = new ValidationResultToLocalizedConverter();
-            object[] errors = [new ValidationIssue("Name", key), new ValidationResult(key), key, new ValidationException(key)];
+            object[] errors = [new ValidationIssue("Field", key), key, new FormatException(key)];
 
             foreach (var error in errors)
             {
@@ -42,7 +46,7 @@ public class ValidationResultToLocalizedConverterTests
     public void Convert_PreservesUnrecognizedMessages(string message)
     {
         var converter = new ValidationResultToLocalizedConverter();
-        object[] errors = [message, new ValidationResult(message), new FormatException(message)];
+        object[] errors = [message, new FormatException(message)];
 
         foreach (var error in errors)
         {

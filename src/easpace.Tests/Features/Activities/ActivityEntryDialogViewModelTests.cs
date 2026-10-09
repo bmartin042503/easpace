@@ -66,6 +66,26 @@ public class ActivityEntryDialogViewModelTests
     }
 
     [Fact]
+    public void DirectConfirm_RevalidatesEvenWhenPreviousErrorsWereCleared()
+    {
+        var dialog = new TestNumericEntryDialogViewModel { SelectedDate = null };
+        dialog.ClearValidation();
+        dialog.Show();
+        dialog.ConfirmCommand.CanExecute(null).Should().BeTrue();
+
+        dialog.ConfirmCommand.Execute(null);
+
+        dialog.Confirmed.Should().BeFalse();
+        dialog.IsOpen.Should().BeTrue();
+        dialog.HasErrors.Should().BeTrue();
+        dialog.GetErrors(nameof(dialog.SelectedDate)).Cast<ValidationIssue>().Should().Equal(
+            new ValidationIssue(nameof(dialog.SelectedDate), "FormValidation.Date.Required"));
+        dialog.GetErrors(nameof(dialog.NumericValue)).Cast<ValidationIssue>().Should().Equal(
+            new ValidationIssue(nameof(dialog.NumericValue), "FormValidation.NumericValue.Required"));
+        dialog.ConfirmCommand.CanExecute(null).Should().BeFalse();
+    }
+
+    [Fact]
     public void RoutineEntry_PreservesDateClampingAndOptionalTime()
     {
         var dialog = new RoutineEntryDialogViewModel();
@@ -80,5 +100,10 @@ public class ActivityEntryDialogViewModelTests
 
         dialog.SelectedTime = TimeSpan.FromHours(12);
         dialog.GetTimestamp().DateTime.Should().Be(dialog.MaxAllowedDate.AddHours(12));
+    }
+
+    private sealed class TestNumericEntryDialogViewModel : NumericEntryDialogViewModel
+    {
+        public void ClearValidation() => SetValidationErrors([]);
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
@@ -23,7 +22,6 @@ public class ValidationResultToLocalizedConverter : IValueConverter
 
         var message = value switch
         {
-            ValidationResult result => result.ErrorMessage,
             Exception exception => exception.Message,
             string text => text,
             _ => null
