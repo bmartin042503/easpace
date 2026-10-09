@@ -364,6 +364,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Target.Range" xml:space="preserve">
         <value>A célértéknek 0-nál nagyobbnak és legfeljebb 10 000 000-nak kell lennie.</value>
     </data>
+    <data name="FormValidation.Date.Required" xml:space="preserve">
+        <value>Kérlek, válassz egy dátumot.</value>
+    </data>
+    <data name="FormValidation.NumericValue.Required" xml:space="preserve">
+        <value>Kérlek, adj meg egy értéket.</value>
+    </data>
     <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
         <value>Kérlek, adj meg egy érvényes dátumot.</value>
     </data>

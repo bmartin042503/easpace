@@ -2,8 +2,11 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Features.Activities.Validation;
+using easpace.Desktop.Validation;
 using easpace.Desktop.ViewModels.Dialogs;
 
 namespace easpace.Desktop.Features.Activities.ViewModels.Dialogs;
@@ -15,9 +18,7 @@ internal partial class EntryDialogViewModel : DialogViewModel
     [ObservableProperty] private string _cancelText = string.Empty;
     [ObservableProperty] private bool _confirmed;
     
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(ConfirmCommand))]
-    private DateTime? _selectedDate = DateTime.Now;
+    [ObservableProperty] private DateTime? _selectedDate = DateTime.Now;
     
     [ObservableProperty] private TimeSpan? _selectedTime = DateTime.Now.TimeOfDay;
     
@@ -29,11 +30,18 @@ internal partial class EntryDialogViewModel : DialogViewModel
         {
             SelectedDate = MaxAllowedDate;
         }
+
+        Validate();
     }
 
-    protected virtual bool CanConfirm()
+    private bool CanConfirm() => !HasErrors;
+
+    protected virtual IEnumerable<ValidationIssue> GetValidationErrors() => ActivityEntryValidator.Validate(SelectedDate);
+
+    protected void Validate()
     {
-        return SelectedDate.HasValue;
+        SetValidationErrors(GetValidationErrors());
+        ConfirmCommand.NotifyCanExecuteChanged();
     }
     
     public DateTimeOffset GetTimestamp()
@@ -53,6 +61,9 @@ internal partial class EntryDialogViewModel : DialogViewModel
     [RelayCommand(CanExecute = nameof(CanConfirm))]
     private void Confirm()
     {
+        Validate();
+        if (HasErrors) return;
+
         Confirmed = true;
         Close();
     }

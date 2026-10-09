@@ -364,6 +364,12 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="FormValidation.Target.Range" xml:space="preserve">
         <value>The goal must be greater than 0 and no more than 10 000 000.</value>
     </data>
+    <data name="FormValidation.Date.Required" xml:space="preserve">
+        <value>Please select a date.</value>
+    </data>
+    <data name="FormValidation.NumericValue.Required" xml:space="preserve">
+        <value>Please enter a value.</value>
+    </data>
     <data name="FormValidation.TargetDate.Invalid" xml:space="preserve">
         <value>Please enter a valid date.</value>
     </data>
