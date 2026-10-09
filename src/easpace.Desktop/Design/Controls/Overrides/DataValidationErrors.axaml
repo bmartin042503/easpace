@@ -10,7 +10,7 @@ Licensed under the MIT License. See LICENSE file for details.
         
         <Setter Property="Template">
             <ControlTemplate TargetType="DataValidationErrors">
-                <Grid RowDefinitions="Auto,Auto">
+                <Grid RowDefinitions="*,Auto">
 
                     <ContentPresenter Name="PART_ContentPresenter"
                                       Grid.Row="0"

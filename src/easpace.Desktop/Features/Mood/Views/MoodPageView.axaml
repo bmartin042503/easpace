@@ -88,8 +88,12 @@ Licensed under the MIT License. See LICENSE file for details.
                     </Grid>
 
                     <!-- Description text box -->
-                    <TextBox Grid.Row="2" Classes="large-text-area" Text="{Binding Description}"
-                             HorizontalAlignment="Stretch" Height="100"
+                    <TextBox Grid.Row="2" Classes="large-text-area"
+                             Text="{Binding Description}"
+                             HorizontalAlignment="Stretch"
+                             Height="120" MaxLength="512"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
 
                 </Grid>
@@ -176,8 +180,9 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <DataTemplate x:DataType="vm:MoodEntryViewModel">
                                     <Border Classes="elevated card">
 
-                                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xs}">
-                                            
+                                        <StackPanel Orientation="Vertical"
+                                                    Spacing="{StaticResource Metrics.Spacing.Xs}">
+
                                             <!-- Header -->
                                             <Grid ColumnDefinitions="*,Auto"
                                                   ColumnSpacing="{StaticResource Metrics.Spacing.Xs}">
