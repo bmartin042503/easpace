@@ -88,7 +88,7 @@ internal static class ServiceCollectionExtensions
                 sp.GetRequiredService<WellnessExerciseRepository>());
 
             collection.AddSingleton(TimeProvider.System);
-            
+
             collection.AddSingleton<TrendActivityDataProvider>();
             collection.AddSingleton<ITrendActivityDataProvider>(sp =>
                 sp.GetRequiredService<TrendActivityDataProvider>());
@@ -107,7 +107,7 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<MoodPageViewModel>();
             collection.AddSingleton<WellnessPageViewModel>();
             collection.AddSingleton<SettingsViewModel>();
-            
+
             collection.AddTransient<IWellnessExercisePlayer, WellnessExercisePlayer>();
             collection.AddTransient<WellnessExercisePreviewViewModel>();
 
@@ -125,10 +125,9 @@ internal static class ServiceCollectionExtensions
 
         public void AddDatabaseServices()
         {
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "easpace");
-            Directory.CreateDirectory(folderPath);
-            var dbPath = Path.Combine(folderPath, "easpace.db");
+            var dirPath = AppStoragePaths.LocalPath;
+            Directory.CreateDirectory(dirPath);
+            var dbPath = Path.Combine(dirPath, "easpace.db");
 
             var password = SecureKeyManager.GetOrGenerateDbPassword();
 

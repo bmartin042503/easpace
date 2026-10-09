@@ -19,26 +19,27 @@ internal interface IPreferencesService
 
 internal class PreferencesService : IPreferencesService
 {
-    private static readonly Version Version = new(0,2,0);
-    
+    private static readonly Version Version = new(0, 2, 0);
+
     private readonly Dictionary<string, JsonElement> _preferences = new();
     private readonly Lock _lock = new();
     private readonly string _preferencesPath;
     private readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+
     public PreferencesService()
     {
-        var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "easpace");
-        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
-        _preferencesPath = Path.Combine(folder, "preferences.json");
+        var dirPath = AppStoragePaths.RoamingPath;
+        if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
+        _preferencesPath = Path.Combine(dirPath, "preferences.json");
         LoadPreferences();
-        
+
         var savedPreferencesVersion = ReadPreference<Version>(PreferenceKey.PreferencesVersion);
         if (savedPreferencesVersion < Version)
         {
             MigratePreferences();
         }
     }
-    
+
     public T ReadPreference<T>(string key, T defaultValue = default!)
     {
         lock (_lock)
@@ -64,13 +65,13 @@ internal class PreferencesService : IPreferencesService
             SavePreferences();
         }
     }
-    
+
     private void MigratePreferences()
     {
         // v0.1.0 -> v0.2.0
-        
+
         var colorSchemeValue = ReadPreference<string>(PreferenceKey.ColorScheme);
-        if (!string.IsNullOrEmpty(colorSchemeValue) 
+        if (!string.IsNullOrEmpty(colorSchemeValue)
             || colorSchemeValue == "system" || colorSchemeValue == "light" || colorSchemeValue == "dark")
         {
             var appearance = colorSchemeValue switch
@@ -80,7 +81,7 @@ internal class PreferencesService : IPreferencesService
                 "dark" => ColorSchemeAppearance.Dark,
                 _ => ColorSchemeAppearance.Default
             };
-            
+
             SavePreference(PreferenceKey.ColorSchemeAppearance, appearance);
             SavePreference(PreferenceKey.ColorScheme, ColorScheme.HavenBlue);
             SavePreference(PreferenceKey.PreferencesVersion, Version);
@@ -93,7 +94,7 @@ internal class PreferencesService : IPreferencesService
         lock (_lock)
         {
             if (!File.Exists(_preferencesPath)) return;
-            
+
             Dictionary<string, JsonElement>? dict;
 
             try
@@ -111,9 +112,9 @@ internal class PreferencesService : IPreferencesService
             }
 
             if (dict == null) return;
-            
+
             _preferences.Clear();
-            
+
             foreach (var kvp in dict)
                 _preferences[kvp.Key] = kvp.Value;
         }
@@ -123,22 +124,22 @@ internal class PreferencesService : IPreferencesService
     {
         var colorScheme = JsonSerializer.SerializeToElement(ColorScheme.HavenBlue);
         _preferences[PreferenceKey.ColorScheme] = colorScheme;
-        
+
         var colorSchemeAppearance = JsonSerializer.SerializeToElement(ColorSchemeAppearance.Default);
         _preferences[PreferenceKey.ColorSchemeAppearance] = colorSchemeAppearance;
-        
+
         var wellnessFullScreenSetting = JsonSerializer.SerializeToElement(true);
         _preferences[PreferenceKey.WellnessFullScreen] = wellnessFullScreenSetting;
-        
+
         var wellnessAnimatedBgSetting = JsonSerializer.SerializeToElement(true);
         _preferences[PreferenceKey.WellnessAnimatedBackground] = wellnessAnimatedBgSetting;
-        
+
         var wellnessShowTimerSetting = JsonSerializer.SerializeToElement(true);
         _preferences[PreferenceKey.WellnessShowTimer] = wellnessShowTimerSetting;
-        
+
         var glassMorphismSetting = JsonSerializer.SerializeToElement(false);
         _preferences[PreferenceKey.Translucency] = glassMorphismSetting;
-        
+
         var version = JsonSerializer.SerializeToElement(Version);
         _preferences[PreferenceKey.PreferencesVersion] = version;
     }
@@ -151,7 +152,7 @@ internal class PreferencesService : IPreferencesService
             {
                 SetDefaultPreferences();
             }
-            
+
             var json = JsonSerializer.Serialize(_preferences, _jsonOptions);
 
             // write to a temp file first, then swap it in, so an interrupted write can't leave a truncated file

@@ -102,6 +102,7 @@ internal partial class SettingsViewModel : PageViewModel
             _dataWipeService.DeleteDatabaseFile();
             _dataWipeService.DeleteEncryptionKey();
             _dataWipeService.DeletePreferencesFile();
+            _dataWipeService.DeleteAppDirectories();
         }
         catch (Exception ex)
         {

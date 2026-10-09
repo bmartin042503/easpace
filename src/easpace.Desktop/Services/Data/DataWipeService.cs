@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using easpace.Desktop.Constants;
 using easpace.Desktop.Security;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ internal interface IDataWipeService
     void DeleteEncryptionKey();
     void DeleteDatabaseFile();
     void DeletePreferencesFile();
+    void DeleteAppDirectories();
 }
 
 internal class DataWipeService(ILogger<DataWipeService> logger) : IDataWipeService
@@ -33,9 +35,7 @@ internal class DataWipeService(ILogger<DataWipeService> logger) : IDataWipeServi
 
         try
         {
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "easpace");
-            var dbPath = Path.Combine(folderPath, "easpace.db");
+            var dbPath = Path.Combine(AppStoragePaths.LocalPath, "easpace.db");
 
             if (File.Exists(dbPath))
             {
@@ -57,17 +57,33 @@ internal class DataWipeService(ILogger<DataWipeService> logger) : IDataWipeServi
     {
         try
         {
-            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "easpace");
-            var preferencesPath = Path.Combine(folder, "preferences.json");
+            var preferencesPath = Path.Combine(AppStoragePaths.RoamingPath, "preferences.json");
 
             if (!File.Exists(preferencesPath)) return;
             File.Delete(preferencesPath);
-            
+
             logger.LogInformation("Preferences file deleted");
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "An error occured while trying to delete the database file");
+            throw;
+        }
+    }
+
+    public void DeleteAppDirectories()
+    {
+        try
+        {
+            if (Directory.Exists(AppStoragePaths.RoamingPath)) 
+                Directory.Delete(AppStoragePaths.RoamingPath, true);
+            
+            if (Directory.Exists(AppStoragePaths.LocalPath)) 
+                Directory.Delete(AppStoragePaths.LocalPath, true);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occured while trying to delete the app folders");
             throw;
         }
     }

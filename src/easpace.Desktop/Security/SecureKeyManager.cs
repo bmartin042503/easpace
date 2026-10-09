@@ -9,11 +9,17 @@ namespace easpace.Desktop.Security;
 
 internal static class SecureKeyManager
 {
-    private const string AppNamespace = "easpace_app";
-    
     // Windows needs "://" otherwise it won't save the credential
+
+#if DEBUG
+    private const string AppNamespace = "easpace_dev_app";
+    private const string KeyResource = "easpace_dev://local_sqlite_db";
+    private const string KeyAccount = "easpace_dev_user";
+#else
+    private const string AppNamespace = "easpace_app";
     private const string KeyResource = "easpace://local_sqlite_db";
     private const string KeyAccount = "easpace_user";
+#endif
 
     public static string GetOrGenerateDbPassword()
     {
@@ -27,9 +33,9 @@ internal static class SecureKeyManager
         }
 
         var newPassword = GenerateCryptographicKey();
-        
+
         store.AddOrUpdate(KeyResource, KeyAccount, newPassword);
-        
+
         return newPassword;
     }
 
