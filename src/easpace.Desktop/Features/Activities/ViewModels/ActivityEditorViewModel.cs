@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,17 +12,17 @@ using easpace.Desktop.Features.Activities.Contracts;
 using easpace.Desktop.Features.Activities.Entities;
 using easpace.Desktop.Features.Activities.Repositories;
 using easpace.Desktop.Features.Activities.Services;
+using easpace.Desktop.Features.Activities.Validation;
 using easpace.Desktop.Features.Activities.ViewModels.DataEntries;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
-using easpace.Desktop.ValidationAttributes;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
 using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Activities.ViewModels;
 
-internal partial class ActivityEditorViewModel : ValidatorViewModelBase
+internal partial class ActivityEditorViewModel : ViewModelBase
 {
     private readonly IActivityRepository _activityRepository;
     private readonly IDialogService _dialogService;
@@ -32,28 +31,13 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
     [ObservableProperty] private string _titleText = string.Empty;
 
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "FormValidation.Name.Required")]
-    [MinLength(3, ErrorMessage = "FormValidation.Name.MinLength")]
-    [MaxLength(64, ErrorMessage = "FormValidation.Name.MaxLength")]
-    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    private string _name = LocalizationService.GetString("Activities.Input.NewActivityName");
+    [ObservableProperty] private string _name = LocalizationService.GetString("Activities.Input.NewActivityName");
 
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [MaxLength(16, ErrorMessage = "FormValidation.Unit.MaxLength")]
-    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    private string? _unit;
+    [ObservableProperty] private string? _unit;
 
     [ObservableProperty] private bool _isTargetChecked;
 
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Range(0d, 10_000_000d, MinimumIsExclusive = true, ErrorMessage = "FormValidation.Target.Range")]
-    [RequiredIf(nameof(SelectedType), ActivityType.Milestone, ErrorMessage = "FormValidation.Target.Required")]
-    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    private double? _target;
+    [ObservableProperty] private double? _target;
 
     [ObservableProperty] private DateTime? _targetDate;
     [ObservableProperty] private DateTime? _startDate;
@@ -83,8 +67,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
         set
         {
             SetProperty(ref field, value);
-            ValidateAllProperties();
-            SaveCommand.NotifyCanExecuteChanged();
+            Validate();
         }
     }
 
@@ -103,8 +86,7 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
         DataEntries = [];
 
-        ValidateAllProperties();
-        SaveCommand.NotifyCanExecuteChanged();
+        Validate();
     }
 
     public ActivityEditorViewModel(
@@ -137,23 +119,37 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
 
         TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), _activity.Name);
 
-        ValidateAllProperties();
-        SaveCommand.NotifyCanExecuteChanged();
+        Validate();
     }
+
+    partial void OnNameChanged(string value) => Validate();
+
+    partial void OnUnitChanged(string? value) => Validate();
+
+    partial void OnTargetChanged(double? value) => Validate();
 
     partial void OnIsTargetCheckedChanged(bool value)
     {
         if (!value)
         {
-            // we make sure to set target value to null if the target option is not checked
+            // Preserve the existing behavior when the optional target is disabled.
             Target = null;
         }
+
+        Validate();
+    }
+
+    private void Validate()
+    {
+        var input = new ActivityValidationInput(Name, SelectedType, Target, Unit, IsTargetChecked);
+        SetValidationErrors(ActivityValidator.Validate(input));
+        SaveCommand.NotifyCanExecuteChanged();
     }
 
     [RelayCommand(CanExecute = nameof(CanSubmit))]
     private async Task Save()
     {
-        ValidateAllProperties();
+        Validate();
         if (HasErrors) return;
 
         try
@@ -297,13 +293,14 @@ internal partial class ActivityEditorViewModel : ValidatorViewModelBase
                 "Cannot create an update request without an activity.");
         }
 
+        var request = GetCreateRequest();
         return new UpdateActivityRequest(
-            Name: Name,
-            Target: Target,
-            Unit: Unit,
-            Aggregation: SelectedType is ActivityType.Trend ? SelectedTrendAggregation : null,
-            StartDate: ToDateOnly(StartDate),
-            TargetDate: ToDateOnly(TargetDate)
+            Name: request.Name,
+            Target: request.Target,
+            Unit: request.Unit,
+            Aggregation: request.Aggregation,
+            StartDate: request.StartDate,
+            TargetDate: request.TargetDate
         );
     }
 
