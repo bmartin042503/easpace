@@ -599,7 +599,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>{0} ciklus</value>
     </data>
     <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>Nincsenek alkalmak</value>
+        <value>Nincsenek rögzített alkalmak</value>
     </data>
     <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
         <value>Finoman irányítsd a figyelmed a légzésedre.</value>
@@ -623,16 +623,25 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Nem sikerült betölteni a wellness adatokat. Kérlek, próbáld újra később.</value>
     </data>
     <data name="Wellness.Error.SaveFailed" xml:space="preserve">
-        <value>Nem sikerült elmenteni a gyakorlatot. Kérlek, próbáld újra.</value>
+        <value>Nem sikerült elmenteni az alkalmat. Kérlek, próbáld újra.</value>
     </data>
-    <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
+    <data name="Wellness.Error.DeleteSessionFailed" xml:space="preserve">
+        <value>Nem sikerült törölni ezt az alkalmat. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Wellness.Error.DeleteExerciseFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt a gyakorlatot. Kérlek, próbáld újra.</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
-        <value>Törlöd a gyakorlatot?</value>
+        <value>Törlöd az alkalmat?</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
-        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza.</value>
+        <value>Biztosan törölni szeretnéd ezt az alkalmat? A művelet nem vonható vissza.</value>
+    </data>
+    <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
+        <value>Törlöd a gyakorlatot?</value>
+    </data>
+    <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
+        <value>Biztosan törölni szeretnéd ezt a gyakorlatot? A művelet nem vonható vissza. A korábbi alkalmak továbbra is megjelennek az előzményekben, a gyakorlat nevével együtt.</value>
     </data>
     <data name="Wellness.Preview.Previous" xml:space="preserve">
         <value>Előző instrukció</value>
@@ -672,6 +681,48 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="WellnessExercise.Empty.Message" xml:space="preserve">
         <value>Nincsenek gyakorlatok.</value>
+    </data>
+    <data name="WellnessExercise.Label.Name" xml:space="preserve">
+        <value>Név</value>
+    </data>
+    <data name="WellnessExercise.Label.Description" xml:space="preserve">
+        <value>Leírás</value>
+    </data>
+    <data name="WellnessExercise.Label.DefaultCycleCount" xml:space="preserve">
+        <value>Alapértelmezett ciklusok száma</value>
+    </data>
+    <data name="WellnessExercise.Label.Instructions" xml:space="preserve">
+        <value>Instrukciók</value>
+    </data>
+    <data name="WellnessExercise.Label.SecondsUnit" xml:space="preserve">
+        <value>mp</value>
+    </data>
+    <data name="WellnessExercise.Text.DurationSeconds" xml:space="preserve">
+        <value>{0} mp</value>
+    </data>
+    <data name="WellnessExercise.Input.InstructionPlaceholder" xml:space="preserve">
+        <value>Instrukció szövege</value>
+    </data>
+    <data name="WellnessExercise.Button.Add" xml:space="preserve">
+        <value>Új gyakorlat</value>
+    </data>
+    <data name="WellnessExercise.Button.Reorder" xml:space="preserve">
+        <value>Húzd az átrendezéshez</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.None" xml:space="preserve">
+        <value>Nincs légzési fázis</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.Inhale" xml:space="preserve">
+        <value>Belégzés</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.HoldIn" xml:space="preserve">
+        <value>Benntartás belégzés után</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.Exhale" xml:space="preserve">
+        <value>Kilégzés</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.HoldOut" xml:space="preserve">
+        <value>Szünet kilégzés után</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Dobozlégzés</value>
@@ -868,7 +919,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Onboarding.Text.Developer" xml:space="preserve">
         <value>fejlesztő</value>
     </data>
-    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
-        <value>Bartos Martin (bmartin@easpace.eu)</value>
+    <data name="Onboarding.Text.DeveloperName" xml:space="preserve">
+        <value>Bartos Martin</value>
     </data>
 </root>

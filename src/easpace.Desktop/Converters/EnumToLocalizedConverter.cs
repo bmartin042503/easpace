@@ -25,7 +25,7 @@ public class EnumToLocalizedConverter : IValueConverter
                 ActivityType.Routine => LocalizationService.GetString("Activities.Type.Routine"),
                 _ => string.Empty
             },
-            
+
             RoutineState routineState => routineState switch
             {
                 RoutineState.Completed => LocalizationService.GetString("RoutineActivity.EntryState.Completed"),
@@ -33,9 +33,9 @@ public class EnumToLocalizedConverter : IValueConverter
                 RoutineState.None => LocalizationService.GetString("RoutineActivity.EntryState.None"),
                 _ => string.Empty
             },
-            
+
             MoodLabelState moodLabelState => LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}"),
-            
+
             TrendAggregation aggregation => aggregation switch
             {
                 TrendAggregation.Sum => LocalizationService.GetString("Activities.Aggregation.Sum"),
@@ -44,7 +44,7 @@ public class EnumToLocalizedConverter : IValueConverter
                 TrendAggregation.Maximum => LocalizationService.GetString("Activities.Aggregation.Maximum"),
                 _ => string.Empty
             },
-            
+
             ChartTimeRange timeRange => timeRange switch
             {
                 ChartTimeRange.Year => LocalizationService.GetString("Common.Time.Year"),
@@ -53,13 +53,14 @@ public class EnumToLocalizedConverter : IValueConverter
                 ChartTimeRange.Day => LocalizationService.GetString("Common.Time.Day"),
                 _ => LocalizationService.GetString("Common.Time.All"),
             },
-            
+
             _ => string.Empty
         };
     }
-    
+
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return new BindingNotification(new NotSupportedException("Localized values cannot be converted back to enum types."));
+        return new BindingNotification(
+            new NotSupportedException("Localized values cannot be converted back to enum types."));
     }
 }

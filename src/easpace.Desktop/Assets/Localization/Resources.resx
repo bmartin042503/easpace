@@ -599,7 +599,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>{0} cycles</value>
     </data>
     <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>No sessions</value>
+        <value>No recorded sessions</value>
     </data>
     <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
         <value>Gently bring your attention to your breath.</value>
@@ -625,14 +625,23 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Error.SaveFailed" xml:space="preserve">
         <value>Failed to save wellness session. Please try again.</value>
     </data>
-    <data name="Wellness.Error.DeleteFailed" xml:space="preserve">
+    <data name="Wellness.Error.DeleteSessionFailed" xml:space="preserve">
         <value>Failed to delete this session. Please try again.</value>
+    </data>
+    <data name="Wellness.Error.DeleteExerciseFailed" xml:space="preserve">
+        <value>Failed to delete this exercise. Please try again.</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Title" xml:space="preserve">
         <value>Delete session?</value>
     </data>
     <data name="Wellness.DeleteSessionDialog.Message" xml:space="preserve">
         <value>Are you sure you want to delete this session? This action can't be undone.</value>
+    </data>
+    <data name="Wellness.DeleteExerciseDialog.Title" xml:space="preserve">
+        <value>Delete exercise?</value>
+    </data>
+    <data name="Wellness.DeleteExerciseDialog.Message" xml:space="preserve">
+        <value>Are you sure you want to delete this exercise? This action can't be undone. Your past sessions will still appear in your history with the exercise's name.</value>
     </data>
     <data name="Wellness.Preview.Previous" xml:space="preserve">
         <value>Previous instruction</value>
@@ -672,6 +681,48 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="WellnessExercise.Empty.Message" xml:space="preserve">
         <value>No exercises available.</value>
+    </data>
+    <data name="WellnessExercise.Label.Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="WellnessExercise.Label.Description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="WellnessExercise.Label.DefaultCycleCount" xml:space="preserve">
+        <value>Default number of cycles</value>
+    </data>
+    <data name="WellnessExercise.Label.Instructions" xml:space="preserve">
+        <value>Instructions</value>
+    </data>
+    <data name="WellnessExercise.Label.SecondsUnit" xml:space="preserve">
+        <value>s</value>
+    </data>
+    <data name="WellnessExercise.Text.DurationSeconds" xml:space="preserve">
+        <value>{0} s</value>
+    </data>
+    <data name="WellnessExercise.Input.InstructionPlaceholder" xml:space="preserve">
+        <value>Instruction text</value>
+    </data>
+    <data name="WellnessExercise.Button.Add" xml:space="preserve">
+        <value>New exercise</value>
+    </data>
+    <data name="WellnessExercise.Button.Reorder" xml:space="preserve">
+        <value>Drag to reorder</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.None" xml:space="preserve">
+        <value>No breathing phase</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.Inhale" xml:space="preserve">
+        <value>Inhale</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.HoldIn" xml:space="preserve">
+        <value>Hold after inhaling</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.Exhale" xml:space="preserve">
+        <value>Exhale</value>
+    </data>
+    <data name="WellnessExercise.BreathingPhase.HoldOut" xml:space="preserve">
+        <value>Hold after exhaling</value>
     </data>
     <data name="BreathingTechnique.BoxBreathing.Name" xml:space="preserve">
         <value>Box Breathing</value>
@@ -868,7 +919,7 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Onboarding.Text.Developer" xml:space="preserve">
         <value>developer</value>
     </data>
-    <data name="Onboarding.Text.DeveloperNameAndContact" xml:space="preserve">
-        <value>Martin Bartos (bmartin@easpace.eu)</value>
+    <data name="Onboarding.Text.DeveloperName" xml:space="preserve">
+        <value>Martin Bartos</value>
     </data>
 </root>

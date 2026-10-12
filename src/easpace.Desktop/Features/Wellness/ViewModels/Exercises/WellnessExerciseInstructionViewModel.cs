@@ -4,6 +4,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
@@ -11,8 +12,17 @@ namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 internal partial class WellnessExerciseInstructionViewModel : ViewModelBase
 {
     [ObservableProperty] private string _text = string.Empty;
-    [ObservableProperty] private int _durationSeconds;
-    [ObservableProperty] private BreathingPhase? _breathingPhase;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(DurationText))]
+    private int _durationSeconds;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasBreathingPhase))]
+    private BreathingPhase? _breathingPhase;
+
+    public string DurationText =>
+        string.Format(LocalizationService.GetString("WellnessExercise.Text.DurationSeconds"), DurationSeconds);
+
+    public bool HasBreathingPhase => BreathingPhase != null;
 
     public WellnessExerciseInstructionViewModel(WellnessExerciseInstruction instruction)
     {

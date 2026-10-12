@@ -15,17 +15,20 @@ internal class WellnessExerciseViewModel : ViewModelBase
     public string Name { get; }
     public string Description { get; }
     public int DefaultCycleCount { get; }
-    public IReadOnlyList<WellnessExerciseInstruction> Instructions { get; }
-    
+    public IReadOnlyList<WellnessExerciseInstructionViewModel> Instructions { get; }
+
     public WellnessExercise Exercise { get; }
-    
+
     public WellnessExerciseViewModel(WellnessExercise wellnessExercise)
     {
         Id = wellnessExercise.Id;
         Name = wellnessExercise.Name;
         Description = wellnessExercise.Description;
         DefaultCycleCount = wellnessExercise.DefaultCycleCount;
-        Instructions = wellnessExercise.Instructions.ToList();
+        Instructions = wellnessExercise.Instructions
+            .OrderBy(i => i.Order)
+            .Select(i => new WellnessExerciseInstructionViewModel(i))
+            .ToList();
         Exercise = wellnessExercise;
     }
 }
