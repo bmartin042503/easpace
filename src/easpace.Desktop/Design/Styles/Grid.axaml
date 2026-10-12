@@ -1,0 +1,34 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Grid.history-drawer">
+        <Setter Property="Width" Value="0" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="IsEnabled" Value="False" />
+
+        <Setter Property="Transitions">
+            <Transitions>
+                <DoubleTransition Property="Width" Duration="0:0:0.3" Easing="CubicEaseInOut" />
+            </Transitions>
+        </Setter>
+    </Style>
+
+    <Style Selector="Grid.history-drawer.open">
+        <Setter Property="Width" Value="{StaticResource Metrics.HistoryDrawer.Width}" />
+        <Setter Property="IsHitTestVisible" Value="True" />
+        <Setter Property="IsEnabled" Value="True" />
+    </Style>
+
+    <Style Selector="Grid.history-drawer-content">
+        <Setter Property="Background" Value="{DynamicResource Sem.Background.Sidebar}" />
+        <Setter Property="Width" Value="{StaticResource Metrics.HistoryDrawer.Width}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+</Styles>

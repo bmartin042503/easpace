@@ -286,5 +286,13 @@ SOFTWARE.
     <StreamGeometry x:Key="PhosphorIcons.SkipForward.Fill">
         M208,40V216a8,8,0,0,1-16,0V146.77L72.43,221.55A15.95,15.95,0,0,1,48,208.12V47.88A15.95,15.95,0,0,1,72.43,34.45L192,109.23V40a8,8,0,0,1,16,0Z
     </StreamGeometry>
+    
+    <StreamGeometry x:Key="PhosphorIcons.SquareHalf.Fill">
+        M200,40H56A16,16,0,0,0,40,56V200a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40ZM56,56h72V200H56Z
+    </StreamGeometry>
+    
+    <StreamGeometry x:Key="PhosphorIcons.Timer.Fill">
+        M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm45.66,61.66-40,40a8,8,0,0,1-11.32-11.32l40-40a8,8,0,0,1,11.32,11.32ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z
+    </StreamGeometry>
 
 </ResourceDictionary>

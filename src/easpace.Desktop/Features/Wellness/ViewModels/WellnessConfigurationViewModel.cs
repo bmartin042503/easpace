@@ -43,6 +43,7 @@ internal partial class WellnessConfigurationViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(ShowNoSessionEntries))]
     private bool _isInitialized;
 
+    [ObservableProperty] private bool _isHistoryOpen;
     [ObservableProperty] private bool _isLoading = true;
 
     public AvaloniaList<WellnessSessionEntryViewModel> WellnessSessionEntries { get; } = [];
@@ -184,6 +185,12 @@ internal partial class WellnessConfigurationViewModel : ViewModelBase
             IsLoading = false;
             _isInitializationRunning = false;
         }
+    }
+
+    [RelayCommand]
+    private void ToggleHistory()
+    {
+        IsHistoryOpen = !IsHistoryOpen;
     }
 
     [RelayCommand]

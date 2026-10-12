@@ -17,96 +17,90 @@ Licensed under the MIT License. See LICENSE file for details.
              utils:ViewInitialization.Command="{Binding InitializeCommand}"
              Background="Transparent">
 
-    <Grid Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="600" />
-        </Grid.ColumnDefinitions>
+    <Grid ColumnDefinitions="*,Auto">
 
         <!-- Configuration -->
-        <Border Grid.Column="0" Classes="card"
-                Padding="{StaticResource Metrics.Spacing.Thickness.Lg}">
+        <Grid Grid.Column="0" RowDefinitions="Auto,*,*,*" ColumnDefinitions="Auto,*,Auto"
+              Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
+              ColumnSpacing="{StaticResource Metrics.Spacing.Lg}">
 
-            <Grid RowDefinitions="Auto,*,*,*">
+            <!-- Exercises button -->
+            <Button Grid.Column="0" Grid.Row="0" Classes="tertiary regular"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding OpenExercisesCommand}">
 
-                <!-- Exercises button -->
-                <Button Grid.Row="0" Classes="tertiary regular"
-                        HorizontalAlignment="Right" VerticalAlignment="Center"
-                        Command="{Binding OpenExercisesCommand}">
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.ListBullets}"
+                              Width="{StaticResource Metrics.Icon.Size.Xs}"
+                              Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
-                        <PathIcon Data="{StaticResource PhosphorIcons.ListBullets}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xs}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xs}" />
-
-                        <TextBlock Classes="fs6 medium"
-                                   Text="{core:LocalizationService Key='Wellness.Button.Exercises'}" />
-
-                    </StackPanel>
-
-                </Button>
-
-                <!-- Title -->
-                <TextBlock Grid.Row="1" Classes="neutral fs1"
-                           Text="{core:LocalizationService Key='Wellness.Title.Start'}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
-
-                <!-- Exercises -->
-                <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center"
-                            Spacing="{StaticResource Metrics.Spacing.Sm}">
-
-                    <ComboBox MaxWidth="240"
-                              IsEnabled="{Binding HasExercises}"
-                              SelectedItem="{Binding SelectedExerciseViewModel}"
-                              ItemsSource="{Binding WellnessExercises}"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Center">
-
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-
-                    </ComboBox>
-
-                    <Grid>
-
-                        <!-- Exercise description -->
-                        <TextBlock IsVisible="{Binding HasExercises}"
-                                   Text="{Binding SelectedExerciseViewModel.Description}"
-                                   Classes="subtle neutral fs6" TextAlignment="Center" MaxWidth="540"
-                                   TextWrapping="Wrap" />
-
-                        <!-- 'No exercises available' text -->
-                        <TextBlock IsVisible="{Binding ShowNoExercises}"
-                                   Text="{core:LocalizationService Key='WellnessExercise.Empty.Message'}"
-                                   Classes="strong danger fs5" TextAlignment="Center" />
-                    </Grid>
+                    <TextBlock Classes="fs6 medium"
+                               Text="{core:LocalizationService Key='Wellness.Button.Exercises'}" />
 
                 </StackPanel>
 
-                <!-- Begin session button -->
-                <Button Grid.Row="3" Classes="primary regular"
-                        Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
-                        Command="{Binding StartSessionCommand}"
-                        HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Button>
 
-            </Grid>
+            <!-- History sidebar button -->
+            <Button Grid.Row="0" Grid.Column="2" Classes="tertiary icon"
+                    ToolTip.Tip="{core:LocalizationService Key='Common.Title.History'}"
+                    Command="{Binding ToggleHistoryCommand}">
+                <PathIcon Data="{StaticResource PhosphorIcons.SquareHalf.Fill}" />
+            </Button>
 
-        </Border>
+            <!-- Title -->
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Classes="neutral fs2"
+                       Text="{core:LocalizationService Key='Wellness.Title.Start'}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
 
-        <!-- Horizontal splitter -->
-        <GridSplitter Grid.Column="1"
-                      Background="Transparent"
-                      Width="{StaticResource Metrics.Spacing.Lg}"
-                      ResizeDirection="Columns" />
+            <!-- Exercises -->
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Vertical"
+                        VerticalAlignment="Center"
+                        Spacing="{StaticResource Metrics.Spacing.Sm}">
 
-        <Border Grid.Column="2" Classes="card">
+                <ComboBox MaxWidth="240"
+                          IsEnabled="{Binding HasExercises}"
+                          SelectedItem="{Binding SelectedExerciseViewModel}"
+                          ItemsSource="{Binding WellnessExercises}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center">
 
-            <Grid>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
+
+                <Grid>
+
+                    <!-- Exercise description -->
+                    <TextBlock IsVisible="{Binding HasExercises}"
+                               Text="{Binding SelectedExerciseViewModel.Description}"
+                               Classes="subtle neutral fs6" TextAlignment="Center" MaxWidth="540"
+                               TextWrapping="Wrap" />
+
+                    <!-- 'No exercises available' text -->
+                    <TextBlock IsVisible="{Binding ShowNoExercises}"
+                               Text="{core:LocalizationService Key='WellnessExercise.Empty.Message'}"
+                               Classes="strong danger fs5" TextAlignment="Center" />
+                </Grid>
+
+            </StackPanel>
+
+            <!-- Begin session button -->
+            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Classes="primary regular"
+                    Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
+                    Command="{Binding StartSessionCommand}"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        </Grid>
+
+        <Grid Grid.Column="1" Classes="history-drawer"
+              Classes.open="{Binding IsHistoryOpen}">
+
+            <Grid Classes="history-drawer-content">
 
                 <!-- No history view -->
                 <StackPanel VerticalAlignment="Center"
@@ -114,34 +108,11 @@ Licensed under the MIT License. See LICENSE file for details.
                             Spacing="{StaticResource Metrics.Spacing.Sm}"
                             IsVisible="{Binding ShowNoSessionEntries}">
 
-                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                                HorizontalAlignment="Center">
-
-                        <!-- Wind icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="-10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                        <!-- Sparkle icon -->
-                        <PathIcon Data="{StaticResource PhosphorIcons.Sparkle}"
-                                  Width="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Height="{StaticResource Metrics.Icon.Size.Xl}"
-                                  Foreground="{DynamicResource Sem.Foreground.Subtle}">
-
-                            <PathIcon.RenderTransform>
-                                <RotateTransform Angle="10" />
-                            </PathIcon.RenderTransform>
-
-                        </PathIcon>
-
-                    </StackPanel>
+                    <!-- Timer icon -->
+                    <PathIcon Data="{StaticResource PhosphorIcons.Timer.Fill}"
+                              Width="{StaticResource Metrics.Icon.Size.Xl}"
+                              Height="{StaticResource Metrics.Icon.Size.Xl}"
+                              Foreground="{DynamicResource Sem.Foreground.Subtle}"/>
 
                     <!-- 'Add entries' message -->
                     <TextBlock Text="{core:LocalizationService Key='Wellness.Empty.Message'}"
@@ -212,7 +183,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </Grid>
 
-        </Border>
+        </Grid>
 
     </Grid>
 

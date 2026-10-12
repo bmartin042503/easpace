@@ -30,9 +30,10 @@ Licensed under the MIT License. See LICENSE file for details.
         <Border Classes="card" Grid.Column="0" Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
             <Grid RowDefinitions="*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}">
 
-                <Grid Grid.Row="0" RowDefinitions="*,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
+                <Grid Grid.Row="0" RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource Metrics.Spacing.Xxl}">
 
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*">
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" RowDefinitions="*,*" 
+                          RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
                         <!-- Form title -->
                         <TextBlock Grid.Row="0" Classes="neutral fs2"
@@ -90,8 +91,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Description text box -->
                     <TextBox Grid.Row="2" Classes="large-text-area"
                              Text="{Binding Description}"
-                             HorizontalAlignment="Stretch"
-                             Height="120" MaxLength="512"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxLength="512"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
