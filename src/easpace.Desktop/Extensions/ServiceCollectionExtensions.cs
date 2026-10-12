@@ -18,6 +18,7 @@ using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels;
+using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 using easpace.Desktop.Security;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Data;

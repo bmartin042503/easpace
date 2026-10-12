@@ -553,6 +553,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Label.Cycles" xml:space="preserve">
         <value>Ciklusok</value>
     </data>
+    <data name="Wellness.Button.Exercises" xml:space="preserve">
+        <value>Gyakorlatok</value>
+    </data>
     <data name="Wellness.Button.BeginSession" xml:space="preserve">
         <value>Gyakorlat indítása</value>
     </data>
@@ -805,8 +808,8 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Credits.Text.BuiltWith" xml:space="preserve">
         <value>.NET és Avalonia UI alapokon készült</value>
     </data>
-    <data name="Credits.Text.ThirdPartyLibraries" xml:space="preserve">
-        <value>Harmadik féltől származó könyvtárak</value>
+    <data name="Credits.Text.Licenses" xml:space="preserve">
+        <value>Licencek</value>
     </data>
     <data name="Credits.Text.PrivacyPolicy" xml:space="preserve">
         <value>Adatvédelmi tájékoztató</value>

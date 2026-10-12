@@ -7,7 +7,7 @@ using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.Features.Wellness.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels.Session;
 
 internal class WellnessSessionEntryViewModel : ViewModelBase
 {

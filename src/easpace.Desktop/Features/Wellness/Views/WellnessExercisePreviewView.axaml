@@ -8,10 +8,10 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
-             xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:exerciseVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExercisePreviewView"
-             x:DataType="vm:WellnessExercisePreviewViewModel"
+             x:DataType="exerciseVm:WellnessExercisePreviewViewModel"
              Background="Transparent">
 
     <UserControl.Styles>

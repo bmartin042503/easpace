@@ -13,7 +13,7 @@ using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Data;
 using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.Features.Wellness.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels.Session;
 
 internal partial class WellnessSessionViewModel : ViewModelBase
 {
@@ -35,15 +35,6 @@ internal partial class WellnessSessionViewModel : ViewModelBase
 
     public bool IsBreathing { get; set; }
     public bool ShowWellnessTimer { get; init; }
-
-    #endregion
-
-    #region Events
-
-    /// <summary>
-    /// Occurs when the wellness session has ended or is manually stopped.
-    /// </summary>
-    public event EventHandler<CreateWellnessSessionEntryRequest>? SessionEnded;
 
     #endregion
 

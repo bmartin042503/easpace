@@ -7,7 +7,7 @@ using System.Linq;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.Features.Wellness.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 
 internal class WellnessExerciseViewModel : ViewModelBase
 {

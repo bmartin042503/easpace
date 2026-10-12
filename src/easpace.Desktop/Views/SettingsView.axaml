@@ -408,12 +408,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     </WrapPanel>
 
-                    <!-- Third-party libraries -->
+                    <!-- Licenses -->
 
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Classes="brand fs4 medium"
-                                   Text="{core:LocalizationService Key='Credits.Text.ThirdPartyLibraries'}" />
+                                   Text="{core:LocalizationService Key='Credits.Text.Licenses'}" />
 
                         <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
                                    LineSpacing="{StaticResource Metrics.Spacing.Xs}">

@@ -6,7 +6,7 @@ using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Services;
-using easpace.Desktop.Features.Wellness.ViewModels;
+using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 using FluentAssertions;
 
 namespace easpace.Tests.Features.Wellness;

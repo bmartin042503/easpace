@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Repositories;
+using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
+using easpace.Desktop.Features.Wellness.ViewModels.Session;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.ViewModels;
@@ -17,14 +19,14 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels;
 
-internal partial class WellnessStartViewModel : ViewModelBase
+internal partial class WellnessConfigurationViewModel : ViewModelBase
 {
     #region Fields
 
     private readonly IWellnessSessionEntryRepository _wellnessSessionEntryRepository;
     private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
-    private readonly ILogger<WellnessStartViewModel> _logger;
+    private readonly ILogger<WellnessConfigurationViewModel> _logger;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(DurationText))]
     private int _selectedCycles = 1;
@@ -65,6 +67,11 @@ internal partial class WellnessStartViewModel : ViewModelBase
     /// Occurs when the user initiates a new wellness session.
     /// </summary>
     public event EventHandler<WellnessSessionConfiguration>? SessionStarted;
+    
+    /// <summary>
+    /// Occurs when the user clicks the Exercises button.
+    /// </summary>
+    public event EventHandler? ExercisesViewRequested;
 
     #endregion
 
@@ -112,13 +119,13 @@ internal partial class WellnessStartViewModel : ViewModelBase
     #region Constructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WellnessStartViewModel"/> class.
+    /// Initializes a new instance of the <see cref="WellnessConfigurationViewModel"/> class.
     /// </summary>
-    public WellnessStartViewModel(
+    public WellnessConfigurationViewModel(
         IWellnessSessionEntryRepository wellnessSessionEntryRepository,
         IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
-        ILogger<WellnessStartViewModel> logger)
+        ILogger<WellnessConfigurationViewModel> logger)
     {
         _wellnessSessionEntryRepository = wellnessSessionEntryRepository;
         _wellnessExerciseRepository = wellnessExerciseRepository;
@@ -143,7 +150,7 @@ internal partial class WellnessStartViewModel : ViewModelBase
     #region Commands
 
     [RelayCommand]
-    public async Task InitializeAsync()
+    private async Task InitializeAsync()
     {
         if (IsInitialized || _isInitializationRunning)
         {
@@ -235,6 +242,12 @@ internal partial class WellnessStartViewModel : ViewModelBase
         );
 
         SessionStarted?.Invoke(this, sessionConfiguration);
+    }
+
+    [RelayCommand]
+    private void OpenExercises()
+    {
+        ExercisesViewRequested?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion

@@ -9,10 +9,11 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:vm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels"
+             xmlns:sessionVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Session"
              xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessStartView"
-             x:DataType="vm:WellnessStartViewModel"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessConfigurationView"
+             x:DataType="vm:WellnessConfigurationViewModel"
              utils:ViewInitialization.Command="{Binding InitializeCommand}"
              Background="Transparent">
 
@@ -26,17 +27,35 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Configuration -->
         <Border Grid.Column="0" Classes="card"
-                Padding="{StaticResource Metrics.Spacing.Thickness.Xl}">
+                Padding="{StaticResource Metrics.Spacing.Thickness.Lg}">
 
-            <Grid RowDefinitions="*,*,*">
+            <Grid RowDefinitions="Auto,*,*,*">
+
+                <!-- Exercises button -->
+                <Button Grid.Row="0" Classes="tertiary regular"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Command="{Binding OpenExercisesCommand}">
+
+                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                        <PathIcon Data="{StaticResource PhosphorIcons.ListBullets}"
+                                  Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                  Height="{StaticResource Metrics.Icon.Size.Xs}" />
+
+                        <TextBlock Classes="fs6 medium"
+                                   Text="{core:LocalizationService Key='Wellness.Button.Exercises'}" />
+
+                    </StackPanel>
+
+                </Button>
 
                 <!-- Title -->
-                <TextBlock Grid.Row="0" Classes="neutral fs2"
+                <TextBlock Grid.Row="1" Classes="neutral fs1"
                            Text="{core:LocalizationService Key='Wellness.Title.Start'}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" />
 
                 <!-- Exercises -->
-                <StackPanel Grid.Row="1" Orientation="Vertical"
+                <StackPanel Grid.Row="2" Orientation="Vertical" VerticalAlignment="Center"
                             Spacing="{StaticResource Metrics.Spacing.Sm}">
 
                     <ComboBox MaxWidth="240"
@@ -70,10 +89,10 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- Begin session button -->
-                <Button Grid.Row="2" Classes="primary regular"
+                <Button Grid.Row="3" Classes="primary regular"
                         Content="{core:LocalizationService Key='Wellness.Button.BeginSession'}"
                         Command="{Binding StartSessionCommand}"
-                        HorizontalAlignment="Center" />
+                        HorizontalAlignment="Center" VerticalAlignment="Center" />
 
             </Grid>
 
@@ -142,7 +161,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         <ItemsRepeater ItemsSource="{Binding WellnessSessionEntries}">
 
                             <ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="vm:WellnessSessionEntryViewModel">
+                                <DataTemplate x:DataType="sessionVm:WellnessSessionEntryViewModel">
 
                                     <Border Classes="elevated card">
                                         <Grid ColumnDefinitions="Auto,*,Auto"
@@ -169,7 +188,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                             <!-- Delete button -->
                                             <Button Grid.Column="2" Classes="tertiary danger icon"
-                                                    Command="{Binding $parent[UserControl].((vm:WellnessStartViewModel)DataContext).DeleteEntryCommand}"
+                                                    Command="{Binding $parent[UserControl].((vm:WellnessConfigurationViewModel)DataContext).DeleteEntryCommand}"
                                                     CommandParameter="{Binding .}" VerticalAlignment="Top"
                                                     ToolTip.Tip="{core:LocalizationService Key='Common.Button.Delete'}">
                                                 <PathIcon Data="{DynamicResource PhosphorIcons.Trash.Fill}" />

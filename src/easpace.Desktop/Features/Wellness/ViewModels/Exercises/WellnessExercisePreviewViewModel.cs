@@ -13,7 +13,7 @@ using easpace.Desktop.Features.Wellness.Validation;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
-namespace easpace.Desktop.Features.Wellness.ViewModels;
+namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 
 /// <summary>
 /// Controls exercise preview playback and provides instruction and breathing animation data.

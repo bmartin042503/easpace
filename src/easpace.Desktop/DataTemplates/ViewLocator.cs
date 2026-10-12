@@ -12,6 +12,8 @@ using easpace.Desktop.Features.Journal.Views;
 using easpace.Desktop.Features.Mood.ViewModels;
 using easpace.Desktop.Features.Mood.Views;
 using easpace.Desktop.Features.Wellness.ViewModels;
+using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
+using easpace.Desktop.Features.Wellness.ViewModels.Session;
 using easpace.Desktop.Features.Wellness.Views;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
@@ -46,9 +48,9 @@ internal class ViewLocator : IDataTemplate
             
             // Wellness
             WellnessExercisePreviewViewModel vm => CreateView(new WellnessExercisePreviewView(), vm),
-            WellnessStartViewModel vm => CreateView(new WellnessStartView(), vm),
+            WellnessExercisesViewModel vm => CreateView(new WellnessExercisesView(), vm),
+            WellnessConfigurationViewModel vm => CreateView(new WellnessConfigurationView(), vm),
             WellnessSessionViewModel vm => CreateView(new WellnessSessionView(), vm),
-            WellnessEndingViewModel vm => CreateView(new WellnessEndingView(), vm),
             
             // Dialogs
             LegalInfoDialogViewModel vm => CreateView(new DetailedInfoDialogView(), vm),

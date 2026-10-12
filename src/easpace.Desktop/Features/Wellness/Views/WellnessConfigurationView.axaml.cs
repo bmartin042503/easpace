@@ -5,9 +5,9 @@ using Avalonia.Controls;
 
 namespace easpace.Desktop.Features.Wellness.Views;
 
-internal partial class WellnessStartView : UserControl
+internal partial class WellnessConfigurationView : UserControl
 {
-    public WellnessStartView()
+    public WellnessConfigurationView()
     {
         InitializeComponent();
     }
