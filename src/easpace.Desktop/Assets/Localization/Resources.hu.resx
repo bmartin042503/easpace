@@ -544,6 +544,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Mood.Error.DeleteFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt a bejegyzést. Kérlek, próbáld újra.</value>
     </data>
+    <data name="Mood.Entry.Saved" xml:space="preserve">
+        <value>Hangulat rögzítve</value>
+    </data>
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Szánj egy percet magadra</value>
     </data>
@@ -596,7 +599,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>{0} ciklus</value>
     </data>
     <data name="Wellness.Empty.Message" xml:space="preserve">
-        <value>Nincsenek gyakorlatok</value>
+        <value>Nincsenek alkalmak</value>
     </data>
     <data name="Wellness.Instruction1.Meditation" xml:space="preserve">
         <value>Finoman irányítsd a figyelmed a légzésedre.</value>

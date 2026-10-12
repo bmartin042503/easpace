@@ -103,9 +103,8 @@ Licensed under the MIT License. See LICENSE file for details.
             </ContentControl>
         </Grid>
 
-        <!-- Toast message host -->
-        <ContentControl Grid.Column="0" Grid.ColumnSpan="2"
-                        MaxHeight="48" MaxWidth="800"
+        <!-- Toast message host (placed into the 2nd column so it's centered in the page content) -->
+        <ContentControl Grid.Column="1" MaxHeight="48" MaxWidth="800"
                         Content="{Binding CurrentToastMessage}"
                         HorizontalAlignment="Center" VerticalAlignment="Bottom"
                         Margin="0,0,0,50"

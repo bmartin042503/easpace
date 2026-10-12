@@ -25,6 +25,7 @@ internal partial class MoodPageViewModel : PageViewModel
 {
     private readonly IMoodEntryRepository _moodEntryRepository;
     private readonly IDialogService _dialogService;
+    private readonly IToastMessageService _toastMessageService;
     private readonly ILogger<MoodPageViewModel> _logger;
 
     private readonly List<MoodLabelViewModel> _allMoodLabels = [];
@@ -32,6 +33,7 @@ internal partial class MoodPageViewModel : PageViewModel
     public AvaloniaList<MoodEntryViewModel> MoodEntries { get; } = [];
     public AvaloniaList<MoodLabelViewModel> MoodLabels { get; } = [];
 
+    [ObservableProperty] private bool _isHistoryOpen;
     [ObservableProperty] private string _moodStateText = string.Empty;
     [ObservableProperty] private string _description = string.Empty;
 
@@ -75,10 +77,12 @@ internal partial class MoodPageViewModel : PageViewModel
     public MoodPageViewModel(
         IMoodEntryRepository moodEntryRepository,
         IDialogService dialogService,
+        IToastMessageService toastMessageService,
         ILogger<MoodPageViewModel> logger)
     {
         _moodEntryRepository = moodEntryRepository;
         _dialogService = dialogService;
+        _toastMessageService = toastMessageService;
         _logger = logger;
 
         Page = ApplicationPage.Mood;
@@ -152,15 +156,21 @@ internal partial class MoodPageViewModel : PageViewModel
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to initialize mood page and load entries");
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Mood.Error.LoadFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
+    }
+    
+    [RelayCommand]
+    private void ToggleHistory()
+    {
+        IsHistoryOpen = !IsHistoryOpen;
     }
 
     [RelayCommand]
@@ -200,17 +210,21 @@ internal partial class MoodPageViewModel : PageViewModel
             MoodEntries.Insert(0, entryViewModel);
 
             ResetForm();
+            
+            _toastMessageService.ShowToastMessage(
+                LocalizationService.GetString("Mood.Entry.Saved"),
+                ToastMessageType.Success);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to save mood entry from UI");
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Mood.Error.SaveFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }
@@ -233,13 +247,13 @@ internal partial class MoodPageViewModel : PageViewModel
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to delete mood entry {EntryId} from UI", entryViewModel.Id);
-            
+
             var errorDialog = new ErrorDialogViewModel
             {
                 Title = LocalizationService.GetString("Common.Error.Title"),
                 Message = LocalizationService.GetString("Mood.Error.DeleteFailed")
             };
-            
+
             await _dialogService.ShowDialogAsync(errorDialog);
         }
     }

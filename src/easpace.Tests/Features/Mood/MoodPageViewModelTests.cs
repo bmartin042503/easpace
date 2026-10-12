@@ -63,9 +63,9 @@ public class MoodPageViewModelTests
         await page.SaveCommand.ExecuteAsync(null);
 
         repository.Verify(r
-                => r.CreateMoodEntryAsync(It.Is<UpsertMoodEntryRequest>(request =>
-                    Math.Abs(request.Value - 0.75) < 0.01 && request.Description == string.Empty &&
-                    request.Labels.Count == 0)), Times.Once);
+            => r.CreateMoodEntryAsync(It.Is<UpsertMoodEntryRequest>(request =>
+                Math.Abs(request.Value - 0.75) < 0.01 && request.Description == string.Empty &&
+                request.Labels.Count == 0)), Times.Once);
 
         hadErrorsAtSave.Should().BeFalse();
         page.MoodEntries.Should().ContainSingle().Which.Value.Should().Be(0.75);
@@ -105,5 +105,8 @@ public class MoodPageViewModelTests
     }
 
     private static MoodPageViewModel CreatePage(Mock<IMoodEntryRepository> repository) => new(
-        repository.Object, Mock.Of<IDialogService>(), NullLogger<MoodPageViewModel>.Instance);
+        repository.Object,
+        Mock.Of<IDialogService>(),
+        Mock.Of<IToastMessageService>(),
+        NullLogger<MoodPageViewModel>.Instance);
 }
