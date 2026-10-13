@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2025 Martin Bartos
+Copyright (c) 2026 Martin Bartos
 Licensed under the MIT License. See LICENSE file for details.
 -->
 
@@ -9,28 +9,87 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:exercisesVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
+             xmlns:utils="clr-namespace:easpace.Desktop.Utils"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExercisesView"
-             x:DataType="exercisesVm:WellnessExercisesViewModel">
-    
-    <Grid RowDefinitions="Auto,*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-          Margin="{StaticResource Metrics.Spacing.Thickness.Lg}">
-        
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Sm}"
-                    HorizontalAlignment="Left" VerticalAlignment="Center">
+             x:DataType="exercisesVm:WellnessExercisesViewModel"
+             utils:ViewInitialization.Command="{Binding InitializeCommand}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Margin="{StaticResource Metrics.Spacing.Thickness.Lg}"
+          RowSpacing="{StaticResource Metrics.Spacing.Lg}"
+          ColumnSpacing="{StaticResource Metrics.Spacing.Md}"
+          VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="300" MinWidth="200" MaxWidth="500" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Column="0" Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal"
+                        Spacing="{StaticResource Metrics.Spacing.Sm}"
+                        HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                <!-- Navigate back button -->
+                <Button Classes="primary icon" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Command="{Binding NavigateBackCommand}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
+                </Button>
+
+                <!-- Title -->
+                <TextBlock Classes="neutral fs2" Text="{Binding Title}" />
+
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                <!-- Exercise selector combo box -->
+                <ComboBox MaxWidth="{StaticResource Metrics.Input.MaxWidth}"
+                          IsEnabled="{Binding HasExercises}"
+                          SelectedItem="{Binding SelectedExerciseViewModel}"
+                          ItemsSource="{Binding WellnessExercises}"
+                          HorizontalAlignment="Stretch">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                </ComboBox>
+
+                <!-- 'No exercises available' text -->
+                <TextBlock IsVisible="{Binding ShowNoExercises}"
+                           Text="{core:LocalizationService Key='WellnessExercise.Empty.Message'}"
+                           Classes="strong danger fs5" TextAlignment="Left" HorizontalAlignment="Left" />
+
+            </StackPanel>
+
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Hidden">
             
-            <!-- Navigate back button -->
-            <Button Classes="primary icon" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Command="{Binding NavigateBackCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Common.Button.Back'}">
-                <PathIcon Data="{StaticResource PhosphorIcons.ArrowLeft.Bold}" />
-            </Button>
+            <!-- Content (Selected exercise's reading/editing view) -->
+            <ContentControl Content="{Binding ContentViewModel}" />
             
-            <!-- Title -->
-            <TextBlock Classes="neutral fs2" Text="{core:LocalizationService Key='Wellness.Button.Exercises'}" />
-            
-        </StackPanel>
-        
+        </ScrollViewer>
+
+        <!-- Vertical splitter -->
+        <GridSplitter Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"
+                      Classes="vertical" ResizeDirection="Columns" />
+
     </Grid>
-    
+
 </UserControl>

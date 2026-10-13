@@ -53,6 +53,15 @@ public class EnumToLocalizedConverter : IValueConverter
                 ChartTimeRange.Day => LocalizationService.GetString("Common.Time.Day"),
                 _ => LocalizationService.GetString("Common.Time.All"),
             },
+            
+            BreathingPhase breathingPhase => breathingPhase switch
+            {
+                BreathingPhase.Inhale => LocalizationService.GetString("WellnessExercise.BreathingPhase.Inhale"),
+                BreathingPhase.HoldIn => LocalizationService.GetString("WellnessExercise.BreathingPhase.HoldIn"),
+                BreathingPhase.Exhale => LocalizationService.GetString("WellnessExercise.BreathingPhase.Exhale"),
+                BreathingPhase.HoldOut => LocalizationService.GetString("WellnessExercise.BreathingPhase.HoldOut"),
+                _ => LocalizationService.GetString("WellnessExercise.BreathingPhase.None")
+            },
 
             _ => string.Empty
         };

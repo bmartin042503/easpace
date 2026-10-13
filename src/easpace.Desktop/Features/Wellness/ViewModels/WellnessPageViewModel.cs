@@ -26,13 +26,14 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessConfigurationViewModel> _configurationLogger;
+    private readonly ILogger<WellnessExercisesViewModel> _exercisesLogger;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
     [ObservableProperty] private bool _isBlobBackgroundVisible;
 
     private bool _isFullScreenSettingOn;
     private bool _isAnimatedBgSettingOn;
-    
+
     public WellnessPageViewModel(
         IMessenger messenger,
         IWindowService windowService,
@@ -40,7 +41,8 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWellnessSessionEntryRepository wellnessSessionEntryRepository,
         IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
-        ILogger<WellnessConfigurationViewModel> configurationLogger)
+        ILogger<WellnessConfigurationViewModel> configurationLogger,
+        ILogger<WellnessExercisesViewModel> exercisesLogger)
     {
         Page = ApplicationPage.Wellness;
         _messenger = messenger;
@@ -50,11 +52,12 @@ internal partial class WellnessPageViewModel : PageViewModel
         _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
         _configurationLogger = configurationLogger;
-        
+        _exercisesLogger = exercisesLogger;
+
         LoadWellnessSettings();
         ShowConfiguration();
     }
-    
+
     [RelayCommand]
     public void Initialize()
     {
@@ -69,16 +72,20 @@ internal partial class WellnessPageViewModel : PageViewModel
             _dialogService,
             _configurationLogger
         );
-        
+
         configurationViewModel.SessionStarted += OnSessionStarted;
         configurationViewModel.ExercisesViewRequested += OnExercisesViewRequested;
-        
+
         NavigateTo(configurationViewModel);
     }
 
     private void ShowExercises()
     {
-        var exercisesViewModel = new WellnessExercisesViewModel();
+        var exercisesViewModel = new WellnessExercisesViewModel(
+            _wellnessExerciseRepository,
+            _dialogService,
+            _exercisesLogger
+        );
         exercisesViewModel.ConfigurationViewRequested += OnConfigurationViewRequested;
         NavigateTo(exercisesViewModel);
     }
@@ -88,7 +95,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         var sessionViewModel = new WellnessSessionViewModel(_preferencesService, sessionConfiguration);
         NavigateTo(sessionViewModel);
     }
-    
+
 
     private void LoadWellnessSettings()
     {
@@ -99,7 +106,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private void NavigateTo(ObservableObject viewModel)
     {
         CleanUpCurrentView();
-        
+
         var wasInSession = ContentViewModel is WellnessSessionViewModel;
         var navigatedToSession = viewModel is WellnessSessionViewModel;
 
@@ -118,10 +125,10 @@ internal partial class WellnessPageViewModel : PageViewModel
             {
                 _windowService.EnterFullScreen();
             }
-            
+
             _messenger.Send(new ApplicationMessage.SidebarVisibility(false));
         }
-        
+
         IsBlobBackgroundVisible = navigatedToSession && _isAnimatedBgSettingOn;
         ContentViewModel = viewModel;
     }
@@ -144,7 +151,7 @@ internal partial class WellnessPageViewModel : PageViewModel
             disposable.Dispose();
         }
     }
-    
+
     private void OnSessionStarted(object? sender, WellnessSessionConfiguration sessionConfiguration)
     {
         ShowSession(sessionConfiguration);
@@ -154,7 +161,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     {
         ShowExercises();
     }
-    
+
     private void OnConfigurationViewRequested(object? sender, EventArgs e)
     {
         ShowConfiguration();

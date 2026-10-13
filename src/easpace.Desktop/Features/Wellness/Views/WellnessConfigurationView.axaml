@@ -60,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         VerticalAlignment="Center"
                         Spacing="{StaticResource Metrics.Spacing.Sm}">
 
-                <ComboBox MaxWidth="240"
+                <ComboBox MaxWidth="{StaticResource Metrics.Input.MaxWidth}"
                           IsEnabled="{Binding HasExercises}"
                           SelectedItem="{Binding SelectedExerciseViewModel}"
                           ItemsSource="{Binding WellnessExercises}"

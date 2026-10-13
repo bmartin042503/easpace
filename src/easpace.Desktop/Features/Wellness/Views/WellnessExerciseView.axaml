@@ -1,0 +1,66 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:exerciseVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExerciseView"
+             x:DataType="exerciseVm:WellnessExerciseViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Lg}">
+
+        <!-- Description -->
+        <TextBlock Grid.Row="0" Classes="neutral fs4" TextWrapping="Wrap" TextAlignment="Left"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                   Text="{Binding Description}" />
+
+        <!-- Default cycles count -->
+        <TextBlock Grid.Row="1" Classes="neutral fs4" TextWrapping="Wrap" TextAlignment="Left"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"
+                   Text="DefaultCyclesCount" />
+
+        <!-- Instructions -->
+        <ItemsRepeater Grid.Row="2" ItemsSource="{Binding Instructions}">
+
+            <!-- Instruction template (read-only) -->
+            <ItemsRepeater.ItemTemplate>
+                <DataTemplate x:DataType="exerciseVm:WellnessExerciseInstructionViewModel">
+
+                    <Border Classes="elevated card">
+
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="{StaticResource Metrics.Spacing.Md}">
+
+                            <!-- Text -->
+                            <TextBlock Grid.Row="0" Classes="neutral fs4"
+                                       Text="{Binding Text}" />
+
+                            <!-- Duration -->
+                            <TextBlock Grid.Row="1" Classes="neutral fs4"
+                                       Text="{Binding DurationText}" />
+
+                            <!-- Breathing phase -->
+                            <TextBlock Grid.Row="2" Classes="neutral fs4"
+                                       IsVisible="{Binding BreathingPhase, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                       Text="{Binding BreathingPhase, Converter={StaticResource EnumToLocalizedConverter}}" />
+
+                        </Grid>
+
+                    </Border>
+
+                </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+
+            <ItemsRepeater.Layout>
+                <StackLayout Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}" />
+            </ItemsRepeater.Layout>
+
+        </ItemsRepeater>
+
+    </Grid>
+
+</UserControl>
