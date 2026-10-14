@@ -28,13 +28,13 @@ public class EnumToLocalizedConverter : IValueConverter
 
             RoutineState routineState => routineState switch
             {
-                RoutineState.Completed => LocalizationService.GetString("RoutineActivity.EntryState.Completed"),
-                RoutineState.NotCompleted => LocalizationService.GetString("RoutineActivity.EntryState.NotCompleted"),
-                RoutineState.None => LocalizationService.GetString("RoutineActivity.EntryState.None"),
+                RoutineState.Completed => LocalizationService.GetString("Activities.RoutineState.Completed"),
+                RoutineState.NotCompleted => LocalizationService.GetString("Activities.RoutineState.NotCompleted"),
+                RoutineState.None => LocalizationService.GetString("Activities.RoutineState.None"),
                 _ => string.Empty
             },
 
-            MoodLabelState moodLabelState => LocalizationService.GetString($"Mood.Label.{moodLabelState.ToString()}"),
+            MoodLabelState moodLabelState => LocalizationService.GetString($"Mood.Emotion.{moodLabelState.ToString()}"),
 
             TrendAggregation aggregation => aggregation switch
             {
@@ -47,20 +47,20 @@ public class EnumToLocalizedConverter : IValueConverter
 
             ChartTimeRange timeRange => timeRange switch
             {
-                ChartTimeRange.Year => LocalizationService.GetString("Common.Time.Year"),
-                ChartTimeRange.Week => LocalizationService.GetString("Common.Time.Week"),
-                ChartTimeRange.Month => LocalizationService.GetString("Common.Time.Month"),
-                ChartTimeRange.Day => LocalizationService.GetString("Common.Time.Day"),
-                _ => LocalizationService.GetString("Common.Time.All"),
+                ChartTimeRange.Year => LocalizationService.GetString("Common.TimeRange.Year"),
+                ChartTimeRange.Week => LocalizationService.GetString("Common.TimeRange.Week"),
+                ChartTimeRange.Month => LocalizationService.GetString("Common.TimeRange.Month"),
+                ChartTimeRange.Day => LocalizationService.GetString("Common.TimeRange.Day"),
+                _ => LocalizationService.GetString("Common.TimeRange.All"),
             },
             
             BreathingPhase breathingPhase => breathingPhase switch
             {
-                BreathingPhase.Inhale => LocalizationService.GetString("WellnessExercise.BreathingPhase.Inhale"),
-                BreathingPhase.HoldIn => LocalizationService.GetString("WellnessExercise.BreathingPhase.HoldIn"),
-                BreathingPhase.Exhale => LocalizationService.GetString("WellnessExercise.BreathingPhase.Exhale"),
-                BreathingPhase.HoldOut => LocalizationService.GetString("WellnessExercise.BreathingPhase.HoldOut"),
-                _ => LocalizationService.GetString("WellnessExercise.BreathingPhase.None")
+                BreathingPhase.Inhale => LocalizationService.GetString("Wellness.BreathingPhase.Inhale"),
+                BreathingPhase.HoldIn => LocalizationService.GetString("Wellness.BreathingPhase.HoldIn"),
+                BreathingPhase.Exhale => LocalizationService.GetString("Wellness.BreathingPhase.Exhale"),
+                BreathingPhase.HoldOut => LocalizationService.GetString("Wellness.BreathingPhase.HoldOut"),
+                _ => LocalizationService.GetString("Wellness.BreathingPhase.None")
             },
 
             _ => string.Empty

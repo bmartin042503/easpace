@@ -120,7 +120,7 @@ internal partial class TrendChart
             : $"{formattedTarget} {Unit}";
 
         var targetText = new TextLayout(
-            $"{LocalizationService.GetString("Activities.NumericActivity.Target")}: {targetValue}",
+            $"{LocalizationService.GetString("Activities.Trend.Target")}: {targetValue}",
             new Typeface(_fontFamily),
             12,
             axisPen.Brush

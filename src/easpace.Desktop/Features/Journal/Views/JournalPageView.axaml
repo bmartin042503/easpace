@@ -38,7 +38,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 <!-- Search box -->
                 <TextBox Grid.Column="0"
                          Text="{Binding SearchText, Mode=TwoWay}"
-                         PlaceholderText="{core:LocalizationService Key='Journal.Search.Placeholder'}"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Placeholder.Search'}"
                          MinWidth="140">
                     <TextBox.InnerRightContent>
                         <PathIcon Data="{StaticResource PhosphorIcons.MagnifyingGlass}" />
@@ -66,7 +66,7 @@ Licensed under the MIT License. See LICENSE file for details.
                           Width="{StaticResource Metrics.Icon.Size.Xl}"
                           Height="{StaticResource Metrics.Icon.Size.Xl}"
                           Foreground="{DynamicResource Sem.Foreground.Subtle}" />
-                <TextBlock Text="{core:LocalizationService Key='Journal.Empty.Message'}"
+                <TextBlock Text="{core:LocalizationService Key='Journal.Empty.List'}"
                            Classes="subtle neutral trm-ellipsis"
                            TextAlignment="Center"
                            TextWrapping="Wrap" />
@@ -172,7 +172,7 @@ Licensed under the MIT License. See LICENSE file for details.
                      Grid.Column="0"
                      Text="{Binding Editor.Title, Mode=TwoWay}"
                      Classes="journal-edit fs2"
-                     PlaceholderText="{core:LocalizationService Key='Journal.Input.TitlePlaceholder'}"
+                     PlaceholderText="{core:LocalizationService Key='Journal.Placeholder.Title'}"
                      VerticalAlignment="Center" />
 
             <StackPanel Grid.Row="0"
@@ -200,7 +200,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <TextBox Text="{Binding Editor.Content, Mode=TwoWay}"
                          Classes="journal-edit fs4" AcceptsReturn="True" TextWrapping="Wrap"
-                         PlaceholderText="{core:LocalizationService Key='Journal.Input.ContentPlaceholder'}"
+                         PlaceholderText="{core:LocalizationService Key='Journal.Placeholder.Content'}"
                          MaxLength="12800"
                          VerticalAlignment="Stretch" />
             </ScrollViewer>

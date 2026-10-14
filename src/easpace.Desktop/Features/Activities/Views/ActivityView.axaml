@@ -25,7 +25,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         <!-- Archived status -->
         <TextBlock Grid.Column="0" Grid.Row="1" IsVisible="{Binding IsArchived}"
-                   Text="{core:LocalizationService Key='Activities.Label.Archived'}"
+                   Text="{core:LocalizationService Key='Activities.Status.Archived'}"
                    Classes="muted neutral fs4 trm-ellipsis"
                    VerticalAlignment="Center" />
 
@@ -37,7 +37,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Add button -->
             <Button Classes="primary regular" IsVisible="{Binding !IsArchived}"
                     Command="{Binding AddDataEntryCommand}"
-                    ToolTip.Tip="{core:LocalizationService Key='Activities.Button.Add'}">
+                    ToolTip.Tip="{core:LocalizationService Key='Activities.Button.RecordValue'}">
 
                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xs}">
 
@@ -46,7 +46,7 @@ Licensed under the MIT License. See LICENSE file for details.
                               Height="{StaticResource Metrics.Icon.Size.Xxs}" />
 
                     <TextBlock Classes="fs6 medium"
-                               Text="{core:LocalizationService Key='Activities.Button.Add'}" />
+                               Text="{core:LocalizationService Key='Activities.Button.RecordValue'}" />
 
                 </StackPanel>
 

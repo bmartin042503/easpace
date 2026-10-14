@@ -111,7 +111,7 @@ internal partial class MainViewModel : ViewModelBase
             var currentVersion = App.Version.ToString();
             var newVersion = updateCheckResult.LatestVersion.ToString();
 
-            var dialogMessage = string.Format(LocalizationService.GetString("NewUpdate.Dialog.Description"),
+            var dialogMessage = string.Format(LocalizationService.GetString("Update.Dialog.Message"),
                 currentVersion, newVersion);
 
             dialogMessage += "\n\n------\n";
@@ -121,7 +121,7 @@ internal partial class MainViewModel : ViewModelBase
 
             var confirmDialog = new DetailedConfirmDialogViewModel
             {
-                Title = LocalizationService.GetString("NewUpdate.Dialog.Title"),
+                Title = LocalizationService.GetString("Update.Dialog.Title"),
                 Message = dialogMessage,
                 ConfirmText = LocalizationService.GetString("Common.Button.Download"),
                 CancelText = LocalizationService.GetString("Common.Button.Later")

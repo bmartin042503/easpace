@@ -16,7 +16,7 @@ public class ActivityEntryDialogViewModelTests
         dialog.HasErrors.Should().BeTrue();
         dialog.ConfirmCommand.CanExecute(null).Should().BeFalse();
         dialog.GetErrors(nameof(dialog.NumericValue)).Cast<ValidationIssue>().Should().Equal(
-            new ValidationIssue(nameof(dialog.NumericValue), "FormValidation.NumericValue.Required"));
+            new ValidationIssue(nameof(dialog.NumericValue), "Validation.Value.Required"));
 
         var notifications = 0;
         dialog.ConfirmCommand.CanExecuteChanged += (_, _) => notifications++;
@@ -79,9 +79,9 @@ public class ActivityEntryDialogViewModelTests
         dialog.IsOpen.Should().BeTrue();
         dialog.HasErrors.Should().BeTrue();
         dialog.GetErrors(nameof(dialog.SelectedDate)).Cast<ValidationIssue>().Should().Equal(
-            new ValidationIssue(nameof(dialog.SelectedDate), "FormValidation.Date.Required"));
+            new ValidationIssue(nameof(dialog.SelectedDate), "Validation.Date.Required"));
         dialog.GetErrors(nameof(dialog.NumericValue)).Cast<ValidationIssue>().Should().Equal(
-            new ValidationIssue(nameof(dialog.NumericValue), "FormValidation.NumericValue.Required"));
+            new ValidationIssue(nameof(dialog.NumericValue), "Validation.Value.Required"));
         dialog.ConfirmCommand.CanExecute(null).Should().BeFalse();
     }
 

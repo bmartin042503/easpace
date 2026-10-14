@@ -27,19 +27,19 @@ Licensed under the MIT License. See LICENSE file for details.
                     BorderBrush="{DynamicResource Sem.Border}">
                 <UniformGrid Rows="1" Margin="{StaticResource Metrics.Spacing.Thickness.Bottom.Xxs}">
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.MondayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Monday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.TuesdayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Tuesday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.WednesdayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Wednesday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.ThursdayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Thursday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.FridayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Friday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.SaturdayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Saturday'}" />
                     <TextBlock Classes="neutral fs5" TextAlignment="Center"
-                               Text="{core:LocalizationService Key='RoutineActivity.CalendarDay.SundayShort'}" />
+                               Text="{core:LocalizationService Key='Common.WeekdayShort.Sunday'}" />
                 </UniformGrid>
             </Border>
 
@@ -73,21 +73,21 @@ Licensed under the MIT License. See LICENSE file for details.
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Completed'}" />
+                           Text="{core:LocalizationService Key='Activities.RoutineState.Completed'}" />
             </StackPanel>
 
             <!-- Not completed legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box not-completed" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.NotCompleted'}" />
+                           Text="{core:LocalizationService Key='Activities.RoutineState.NotCompleted'}" />
             </StackPanel>
 
             <!-- Today legend -->
             <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
                 <Border Classes="calendar-legend-box today" />
                 <TextBlock Classes="neutral fs6"
-                           Text="{core:LocalizationService Key='RoutineActivity.CalendarLegend.Today'}" />
+                           Text="{core:LocalizationService Key='Activities.RoutineCalendar.Today'}" />
             </StackPanel>
 
         </StackPanel>

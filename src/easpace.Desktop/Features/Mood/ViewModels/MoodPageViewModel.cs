@@ -98,7 +98,7 @@ internal partial class MoodPageViewModel : PageViewModel
     {
         foreach (var labelState in Enum.GetValues<MoodLabelState>())
         {
-            var localizedName = LocalizationService.GetString($"Mood.Label.{labelState}");
+            var localizedName = LocalizationService.GetString($"Mood.Emotion.{labelState}");
             _allMoodLabels.Add(new MoodLabelViewModel(labelState, localizedName));
         }
     }
@@ -212,7 +212,7 @@ internal partial class MoodPageViewModel : PageViewModel
             ResetForm();
             
             _toastMessageService.ShowToastMessage(
-                LocalizationService.GetString("Mood.Entry.Saved"),
+                LocalizationService.GetString("Mood.Toast.Saved"),
                 ToastMessageType.Success);
         }
         catch (Exception ex)

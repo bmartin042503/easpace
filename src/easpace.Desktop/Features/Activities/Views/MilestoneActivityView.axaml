@@ -22,7 +22,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Start date -->
             <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
                        IsVisible="{Binding HasStartDate}">
-                <Run Text="{core:LocalizationService Key='Activities.NumericActivity.StartDate'}" />
+                <Run Text="{core:LocalizationService Key='Activities.Label.StartDate'}" />
                 <Run Text=": " />
                 <Run Text="{Binding StartDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
             </TextBlock>
@@ -30,7 +30,7 @@ Licensed under the MIT License. See LICENSE file for details.
             <!-- Target date -->
             <TextBlock Classes="neutral fs4" VerticalAlignment="Center"
                        IsVisible="{Binding HasTargetDate}">
-                <Run Text="{core:LocalizationService Key='Activities.NumericActivity.TargetDate'}" />
+                <Run Text="{core:LocalizationService Key='Activities.Milestone.TargetDate'}" />
                 <Run Text=": " />
                 <Run Text="{Binding TargetDate, StringFormat='{}{0:yyyy. MM. dd.}'}" />
             </TextBlock>

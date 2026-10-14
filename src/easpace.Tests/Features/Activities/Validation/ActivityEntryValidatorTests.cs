@@ -13,7 +13,7 @@ public class ActivityEntryValidatorTests
     public void Validate_RequiresOnlyADateForRoutineEntries()
     {
         ActivityEntryValidator.Validate(null).Should().Equal(
-            new ValidationIssue("SelectedDate", "FormValidation.Date.Required"));
+            new ValidationIssue("SelectedDate", "Validation.Date.Required"));
         ActivityEntryValidator.Validate(new DateTime(2026, 10, 9)).Should().BeEmpty();
     }
 
@@ -21,10 +21,10 @@ public class ActivityEntryValidatorTests
     public void Validate_RequiresBothDateAndValueForNumericEntries()
     {
         ActivityEntryValidator.Validate(null, null).Should().Equal(
-            new ValidationIssue("SelectedDate", "FormValidation.Date.Required"),
-            new ValidationIssue("NumericValue", "FormValidation.NumericValue.Required"));
+            new ValidationIssue("SelectedDate", "Validation.Date.Required"),
+            new ValidationIssue("NumericValue", "Validation.Value.Required"));
         ActivityEntryValidator.Validate(new DateTime(2026, 10, 9), null).Should().Equal(
-            new ValidationIssue("NumericValue", "FormValidation.NumericValue.Required"));
+            new ValidationIssue("NumericValue", "Validation.Value.Required"));
     }
 
     [Theory]

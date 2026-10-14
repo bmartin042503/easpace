@@ -14,8 +14,8 @@ internal class LegalInfoDialogViewModel : DetailedInfoDialogViewModel
     {
         Title = legalFileType switch
         {
-            LegalFileType.PrivacyPolicy => LocalizationService.GetString("Credits.Text.PrivacyPolicy"),
-            LegalFileType.TermsOfUse => LocalizationService.GetString("Credits.Text.TermsOfUse"),
+            LegalFileType.PrivacyPolicy => LocalizationService.GetString("Legal.Title.PrivacyPolicy"),
+            LegalFileType.TermsOfUse => LocalizationService.GetString("Legal.Title.TermsOfUse"),
             LegalFileType.EaspaceLicense => "easpace • MIT License",
             LegalFileType.AvaloniaLicense => "Avalonia UI • MIT License",
             LegalFileType.DotNetLicense => "CommunityToolkit.Mvvm / Entity Framework Core • MIT License",

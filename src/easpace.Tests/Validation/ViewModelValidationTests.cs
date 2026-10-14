@@ -22,7 +22,7 @@ public class ViewModelValidationTests
     {
         var viewModel = new TestPageViewModel();
         var validation = (INotifyDataErrorInfo)viewModel;
-        var issue = new ValidationIssue(nameof(viewModel.Name), "FormValidation.Name.Required");
+        var issue = new ValidationIssue(nameof(viewModel.Name), "Validation.Name.Required");
         var formIssue = new ValidationIssue(string.Empty, "Test.Validation.Invalid");
         var changedMembers = new List<string?>();
 
@@ -54,8 +54,8 @@ public class ViewModelValidationTests
         viewModel.ApplyErrors([]);
         changes.Should().BeEmpty();
 
-        viewModel.ApplyErrors([new ValidationIssue("Name", "FormValidation.Name.Required")]);
-        viewModel.ApplyErrors([new ValidationIssue("Name", "FormValidation.Name.MinLength")]);
+        viewModel.ApplyErrors([new ValidationIssue("Name", "Validation.Name.Required")]);
+        viewModel.ApplyErrors([new ValidationIssue("Name", "Validation.Name.MinLength")]);
         changes.Should().Equal(true);
 
         viewModel.ApplyErrors([]);
@@ -68,7 +68,7 @@ public class ViewModelValidationTests
     {
         var page = new TestPageViewModel();
         var dialog = new TestDialogViewModel();
-        var issue = new ValidationIssue("Name", "FormValidation.Name.Required");
+        var issue = new ValidationIssue("Name", "Validation.Name.Required");
         page.ApplyErrors([issue]);
 
         var pageTextBox = new TextBox();

@@ -11,14 +11,14 @@ namespace easpace.Tests.Validation;
 public class ValidationResultToLocalizedConverterTests
 {
     [Theory]
-    [InlineData("en", "FormValidation.Name.Required", "Please enter a name.")]
-    [InlineData("hu", "FormValidation.Name.Required", "Kérlek, adj meg egy nevet.")]
-    [InlineData("en", "FormValidation.Date.Required", "Please select a date.")]
-    [InlineData("hu", "FormValidation.Date.Required", "Kérlek, válassz egy dátumot.")]
-    [InlineData("en", "FormValidation.NumericValue.Required", "Please enter a value.")]
-    [InlineData("hu", "FormValidation.NumericValue.Required", "Kérlek, adj meg egy értéket.")]
-    [InlineData("en", "Mood.Validation.Range", "Mood value must be between 0 and 1.")]
-    [InlineData("hu", "Mood.Validation.Range", "A hangulat értékének 0 és 1 között kell lennie.")]
+    [InlineData("en", "Validation.Name.Required", "Please enter a name.")]
+    [InlineData("hu", "Validation.Name.Required", "Kérlek, adj meg egy nevet.")]
+    [InlineData("en", "Validation.Date.Required", "Please select a date.")]
+    [InlineData("hu", "Validation.Date.Required", "Kérlek, válassz egy dátumot.")]
+    [InlineData("en", "Validation.Value.Required", "Please enter a value.")]
+    [InlineData("hu", "Validation.Value.Required", "Kérlek, adj meg egy értéket.")]
+    [InlineData("en", "Validation.Mood.Range", "Mood value must be between 0 and 1.")]
+    [InlineData("hu", "Validation.Mood.Range", "A hangulat értékének 0 és 1 között kell lennie.")]
     public void Convert_LocalizesSharedIssuesAndRecognizedMessages(string language, string key, string expected)
     {
         var previousCulture = CultureInfo.CurrentUICulture;

@@ -29,7 +29,7 @@ public class ActivityEditorViewModelTests
 
         validation.HasErrors.Should().BeTrue();
         validation.GetErrors(nameof(editor.Name)).Cast<ValidationIssue>()
-            .Should().Equal(new ValidationIssue(nameof(editor.Name), "FormValidation.Name.Required"));
+            .Should().Equal(new ValidationIssue(nameof(editor.Name), "Validation.Name.Required"));
         editor.SaveCommand.CanExecute(null).Should().BeFalse();
 
         editor.Name = "Walking";
@@ -70,7 +70,7 @@ public class ActivityEditorViewModelTests
         notifications.Should().BeGreaterThan(0);
         editor.SaveCommand.CanExecute(null).Should().BeFalse();
         editor.GetErrors(nameof(editor.Target)).Cast<ValidationIssue>()
-            .Should().Equal(new ValidationIssue(nameof(editor.Target), "FormValidation.Target.Required"));
+            .Should().Equal(new ValidationIssue(nameof(editor.Target), "Validation.Target.Required"));
 
         editor.Unit = new string('a', 17);
         notifications = 0;

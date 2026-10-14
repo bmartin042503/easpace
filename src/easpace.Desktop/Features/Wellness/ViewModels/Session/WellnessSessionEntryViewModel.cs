@@ -37,7 +37,7 @@ internal class WellnessSessionEntryViewModel : ViewModelBase
         Exercise = wellnessSessionEntry.Exercise;
 
         CyclesText = wellnessSessionEntry.CycleCount == 1
-            ? LocalizationService.GetString("Wellness.Session.OneCycle")
-            : string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), wellnessSessionEntry.CycleCount);
+            ? LocalizationService.GetString("Wellness.CycleCount.One")
+            : string.Format(LocalizationService.GetString("Wellness.CycleCount.Many"), wellnessSessionEntry.CycleCount);
     }
 }

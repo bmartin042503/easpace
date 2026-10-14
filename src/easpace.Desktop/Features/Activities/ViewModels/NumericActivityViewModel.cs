@@ -55,7 +55,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
     {
         var numericEntryDialog = new NumericEntryDialogViewModel
         {
-            Title = LocalizationService.GetString("Activities.EntryDialog.Title"),
+            Title = LocalizationService.GetString("Activities.EntryDialog.AddTitle"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             SelectedDate = DateTime.Now
@@ -109,7 +109,7 @@ internal abstract partial class NumericActivityViewModel : ActivityViewModel
 
         var numericEntryDialog = new NumericEntryDialogViewModel
         {
-            Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
+            Title = LocalizationService.GetString("Activities.EntryDialog.EditTitle"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             NumericValue = entryVm.Value,

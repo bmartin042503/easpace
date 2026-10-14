@@ -72,7 +72,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- 'No exercises available' text -->
                 <TextBlock IsVisible="{Binding ShowNoExercises}"
-                           Text="{core:LocalizationService Key='WellnessExercise.Empty.Message'}"
+                           Text="{core:LocalizationService Key='Wellness.Empty.Exercises'}"
                            Classes="strong danger fs5" TextAlignment="Left" HorizontalAlignment="Left" />
 
             </StackPanel>

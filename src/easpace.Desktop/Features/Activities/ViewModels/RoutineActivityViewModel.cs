@@ -109,7 +109,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
     {
         var routineEntryDialog = new RoutineEntryDialogViewModel
         {
-            Title = LocalizationService.GetString("Activities.EntryDialog.Title"),
+            Title = LocalizationService.GetString("Activities.EntryDialog.AddTitle"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             SelectedDate = DateTime.Now,
@@ -223,7 +223,7 @@ internal partial class RoutineActivityViewModel : ActivityViewModel
 
         var routineEntryDialog = new RoutineEntryDialogViewModel
         {
-            Title = LocalizationService.GetString("Activities.EditEntryDialog.Title"),
+            Title = LocalizationService.GetString("Activities.EntryDialog.EditTitle"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Save"),
             SelectedState = entryVm.State,

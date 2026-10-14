@@ -67,10 +67,10 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Label'}"
+                                       Text="{core:LocalizationService Key='Settings.Appearance.Label'}"
                                        TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ColorSchemeAppearance.Description'}"
+                                       Text="{core:LocalizationService Key='Settings.Appearance.Description'}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
 
@@ -81,11 +81,11 @@ Licensed under the MIT License. See LICENSE file for details.
                                   Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeAppearanceIndex}">
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.System'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.Light'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.Dark'}" />
                         </ComboBox>
 
                         <!-- Color scheme label & description -->
@@ -105,9 +105,9 @@ Licensed under the MIT License. See LICENSE file for details.
                                   HorizontalAlignment="Right"
                                   Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeIndex}">
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
+                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeOption.HavenBlue'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeOption.AvallamaPurple'}" />
                         </ComboBox>
 
                         <!-- Translucency label & description -->
@@ -181,10 +181,10 @@ Licensed under the MIT License. See LICENSE file for details.
                         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Spacing="2"
                                     VerticalAlignment="Center">
                             <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Label'}"
+                                       Text="{core:LocalizationService Key='Settings.SessionTimer.Label'}"
                                        TextWrapping="Wrap" />
                             <TextBlock Classes="subtle neutral fs5 trm-ellipsis"
-                                       Text="{core:LocalizationService Key='Settings.ShowTimer.Description'}"
+                                       Text="{core:LocalizationService Key='Settings.SessionTimer.Description'}"
                                        TextWrapping="Wrap" />
                         </StackPanel>
 
@@ -284,7 +284,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                 <!-- Built with .NET and Avalonia UI -->
                                 <TextBlock Classes="strong brand fs5 trm-ellipsis"
-                                           Text="{core:LocalizationService Key='Credits.Text.BuiltWith'}" />
+                                           Text="{core:LocalizationService Key='Credits.Info.BuiltWith'}" />
 
                             </StackPanel>
 
@@ -297,12 +297,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
                                 <!-- Contact -->
                                 <TextBlock Classes="strong brand fs5 trm-ellipsis"
-                                           Text="{core:LocalizationService Key='Credits.Text.Contact'}" />
+                                           Text="{core:LocalizationService Key='Credits.Info.Contact'}" />
 
                                 <!-- Logo -->
                                 <Button Classes="tertiary" Padding="0"
                                         FontSize="{StaticResource Metrics.FontSize.Sm}"
-                                        Content="{core:LocalizationService Key='Credits.Text.Logo'}"
+                                        Content="{core:LocalizationService Key='Credits.Info.Logo'}"
                                         Command="{Binding OpenLogoCreatorPageCommand}" />
 
                             </StackPanel>
@@ -319,7 +319,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             <!-- Copyright button + easpace MIT license -->
                             <Button Classes="tertiary" Padding="0"
-                                    Content="{core:LocalizationService Key='Credits.Text.Copyright'}"
+                                    Content="{core:LocalizationService Key='Credits.Info.Copyright'}"
                                     Command="{Binding ShowLegalFileCommand}">
 
                                 <Button.CommandParameter>
@@ -378,7 +378,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}" />
+                                           Text="{core:LocalizationService Key='Legal.Title.PrivacyPolicy'}" />
 
                             </StackPanel>
 
@@ -400,7 +400,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                           Height="{StaticResource Metrics.Icon.Size.Xs}" />
 
                                 <TextBlock Classes="fs6 medium"
-                                           Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}" />
+                                           Text="{core:LocalizationService Key='Legal.Title.TermsOfUse'}" />
 
                             </StackPanel>
 
@@ -413,7 +413,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Classes="brand fs4 medium"
-                                   Text="{core:LocalizationService Key='Credits.Text.Licenses'}" />
+                                   Text="{core:LocalizationService Key='Legal.Title.Licenses'}" />
 
                         <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
                                    LineSpacing="{StaticResource Metrics.Spacing.Xs}">

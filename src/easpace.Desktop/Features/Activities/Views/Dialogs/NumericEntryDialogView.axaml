@@ -39,7 +39,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Date input -->
                     <CalendarDatePicker Grid.Column="0" SelectedDate="{Binding SelectedDate}"
                                         HorizontalAlignment="Stretch" Width="160"
-                                        PlaceholderText="{core:LocalizationService Key='Activities.EntryDialog.DatePlaceholder'}"
+                                        PlaceholderText="{core:LocalizationService Key='Common.Placeholder.Date'}"
                                         DisplayDateEnd="{Binding MaxAllowedDate}" />
 
                     <!-- Time picker -->
@@ -60,7 +60,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Numeric value input -->
                     <NumericUpDown Value="{Binding NumericValue}"
                                    HorizontalAlignment="Stretch" Increment="1" FormatString="0.##"
-                                   PlaceholderText="{core:LocalizationService Key='Activities.EntryDialog.NumericValuePlaceholder'}" />
+                                   PlaceholderText="{core:LocalizationService Key='Activities.Placeholder.Value'}" />
 
                 </DockPanel>
 

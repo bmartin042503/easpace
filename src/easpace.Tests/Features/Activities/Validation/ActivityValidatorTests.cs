@@ -11,10 +11,10 @@ namespace easpace.Tests.Features.Activities.Validation;
 public class ActivityValidatorTests
 {
     [Theory]
-    [InlineData(null, "FormValidation.Name.Required")]
-    [InlineData("", "FormValidation.Name.Required")]
-    [InlineData("   ", "FormValidation.Name.Required")]
-    [InlineData("ab", "FormValidation.Name.MinLength")]
+    [InlineData(null, "Validation.Name.Required")]
+    [InlineData("", "Validation.Name.Required")]
+    [InlineData("   ", "Validation.Name.Required")]
+    [InlineData("ab", "Validation.Name.MinLength")]
     public void Validate_RejectsMissingOrShortNames(string? name, string key)
     {
         var input = new ActivityValidationInput(name, ActivityType.Trend, null, null, false);
@@ -32,7 +32,7 @@ public class ActivityValidatorTests
         var errors = ActivityValidator.Validate(input).ToArray();
 
         if (valid) errors.Should().BeEmpty();
-        else errors.Should().Equal(new ValidationIssue("Name", "FormValidation.Name.MaxLength"));
+        else errors.Should().Equal(new ValidationIssue("Name", "Validation.Name.MaxLength"));
     }
 
     [Theory]
@@ -44,7 +44,7 @@ public class ActivityValidatorTests
 
         ActivityValidator.Validate(input).Should().BeEmpty();
         ActivityValidator.Validate(input with { Unit = new string('a', 17) })
-            .Should().Equal(new ValidationIssue("Unit", "FormValidation.Unit.MaxLength"));
+            .Should().Equal(new ValidationIssue("Unit", "Validation.Unit.MaxLength"));
         ActivityValidator.Validate(input with { Unit = null }).Should().BeEmpty();
     }
 
@@ -61,7 +61,7 @@ public class ActivityValidatorTests
         {
             var input = new ActivityValidationInput("Walking", type, target, null, true);
 
-            ActivityValidator.Validate(input).Should().Equal(new ValidationIssue("Target", "FormValidation.Target.Range"));
+            ActivityValidator.Validate(input).Should().Equal(new ValidationIssue("Target", "Validation.Target.Range"));
         }
     }
 
@@ -83,7 +83,7 @@ public class ActivityValidatorTests
     {
         var input = new ActivityValidationInput("Walking", ActivityType.Milestone, null, null, isTargetChecked);
 
-        ActivityValidator.Validate(input).Should().Equal(new ValidationIssue("Target", "FormValidation.Target.Required"));
+        ActivityValidator.Validate(input).Should().Equal(new ValidationIssue("Target", "Validation.Target.Required"));
     }
 
     [Theory]

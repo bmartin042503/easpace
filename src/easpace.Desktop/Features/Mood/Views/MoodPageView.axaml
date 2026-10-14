@@ -85,7 +85,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Load more button -->
                     <Button Grid.Row="1" Classes="regular tertiary"
-                            Content="{core:LocalizationService Key='Mood.Labels.More'}"
+                            Content="{core:LocalizationService Key='Mood.Button.MoreEmotions'}"
                             Command="{Binding LoadAllLabelsCommand}"
                             IsVisible="{Binding IsLoadMoreButtonVisible}"
                             HorizontalAlignment="Center" />
@@ -98,7 +98,7 @@ Licensed under the MIT License. See LICENSE file for details.
                          MaxWidth="400" MaxLength="512"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         PlaceholderText="{core:LocalizationService Key='Mood.Input.DescriptionPlaceholder'}" />
+                         PlaceholderText="{core:LocalizationService Key='Mood.Placeholder.Description'}" />
 
             </Grid>
 
@@ -160,7 +160,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     </StackPanel>
 
                     <!-- 'Add entries' message -->
-                    <TextBlock Text="{core:LocalizationService Key='Mood.Empty.Message'}"
+                    <TextBlock Text="{core:LocalizationService Key='Mood.Empty.History'}"
                                Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
                 </StackPanel>
 

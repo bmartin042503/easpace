@@ -37,7 +37,7 @@ public class MoodPageViewModelTests
         page.MoodLabels.Should().Equal(labels);
         page.HasErrors.Should().BeTrue();
         page.GetErrors(nameof(page.MoodSliderValue)).Cast<ValidationIssue>().Should().Equal(
-            new ValidationIssue(nameof(page.MoodSliderValue), "Mood.Validation.Range"));
+            new ValidationIssue(nameof(page.MoodSliderValue), "Validation.Mood.Range"));
 
         page.MoodSliderValue = 0.5;
 

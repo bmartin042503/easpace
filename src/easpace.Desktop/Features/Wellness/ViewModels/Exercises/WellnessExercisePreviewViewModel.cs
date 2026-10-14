@@ -77,11 +77,11 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
 
             var phaseKey = CurrentInstruction.BreathingPhase switch
             {
-                BreathingPhase.Inhale => "Wellness.Preview.PhaseInhale",
-                BreathingPhase.HoldIn => "Wellness.Preview.PhaseHoldIn",
-                BreathingPhase.Exhale => "Wellness.Preview.PhaseExhale",
-                BreathingPhase.HoldOut => "Wellness.Preview.PhaseHoldOut",
-                _ => "Wellness.Preview.PhaseNone"
+                BreathingPhase.Inhale => "Wellness.PreviewPhase.Inhale",
+                BreathingPhase.HoldIn => "Wellness.PreviewPhase.HoldIn",
+                BreathingPhase.Exhale => "Wellness.PreviewPhase.Exhale",
+                BreathingPhase.HoldOut => "Wellness.PreviewPhase.HoldOut",
+                _ => "Wellness.PreviewPhase.None"
             };
 
             return $"{positionText}{Environment.NewLine}{LocalizationService.GetString(phaseKey)}";

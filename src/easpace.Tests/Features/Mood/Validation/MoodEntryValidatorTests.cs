@@ -17,7 +17,7 @@ public class MoodEntryValidatorTests
     public void Validate_RejectsValuesOutsideTheExistingRange(double value)
     {
         MoodEntryValidator.Validate(value).Should().Equal(
-            new ValidationIssue("MoodSliderValue", "Mood.Validation.Range"));
+            new ValidationIssue("MoodSliderValue", "Validation.Mood.Range"));
     }
 
     [Theory]

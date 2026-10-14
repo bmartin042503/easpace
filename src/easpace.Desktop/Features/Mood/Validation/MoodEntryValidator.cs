@@ -12,7 +12,7 @@ internal static class MoodEntryValidator
     {
         if (value is < 0 or > 1)
         {
-            yield return new ValidationIssue("MoodSliderValue", "Mood.Validation.Range");
+            yield return new ValidationIssue("MoodSliderValue", "Validation.Mood.Range");
         }
     }
 }

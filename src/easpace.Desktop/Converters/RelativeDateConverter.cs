@@ -21,18 +21,18 @@ public class RelativeDateConverter : IValueConverter
 
         if (timeSince.TotalMinutes < 1)
         {
-            return LocalizationService.GetString("Common.Time.JustNow");
+            return LocalizationService.GetString("Common.RelativeTime.JustNow");
         }
 
         if (timeSince.TotalHours < 1)
         {
             var minutes = (int)timeSince.TotalMinutes;
-            var key = minutes == 1 ? "Common.Time.OneMinuteAgo" : "Common.Time.MinutesAgo";
+            var key = minutes == 1 ? "Common.RelativeTime.OneMinuteAgo" : "Common.RelativeTime.MinutesAgo";
             return string.Format(LocalizationService.GetString(key), minutes);
         }
 
         var hours = (int)timeSince.TotalHours;
-        var hourKey = hours == 1 ? "Common.Time.OneHourAgo" : "Common.Time.HoursAgo";
+        var hourKey = hours == 1 ? "Common.RelativeTime.OneHourAgo" : "Common.RelativeTime.HoursAgo";
         return string.Format(LocalizationService.GetString(hourKey), hours);
     }
 

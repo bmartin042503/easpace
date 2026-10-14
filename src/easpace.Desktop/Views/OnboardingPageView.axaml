@@ -76,7 +76,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Classes="strong brand fs1"
-                               Text="{core:LocalizationService Key='Credits.Text.TermsOfUse'}"
+                               Text="{core:LocalizationService Key='Legal.Title.TermsOfUse'}"
                                VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!-- Legal content -->
@@ -127,7 +127,7 @@ Licensed under the MIT License. See LICENSE file for details.
                     <!-- Title -->
                     <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"
                                Classes="strong brand fs1 trm-ellipsis"
-                               Text="{core:LocalizationService Key='Credits.Text.PrivacyPolicy'}"
+                               Text="{core:LocalizationService Key='Legal.Title.PrivacyPolicy'}"
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <!-- Legal content -->
@@ -194,11 +194,11 @@ Licensed under the MIT License. See LICENSE file for details.
                                   Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).SelectedColorSchemeAppearanceIndex}">
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.System'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.System'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Light'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.Light'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorSchemeAppearanceSetting.Dark'}" />
+                                Content="{core:LocalizationService Key='Settings.AppearanceOption.Dark'}" />
                         </ComboBox>
 
                         <!-- Color palette label -->
@@ -213,9 +213,9 @@ Licensed under the MIT License. See LICENSE file for details.
                                   Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding $parent[UserControl].((vm:OnboardingPageViewModel)DataContext).SelectedColorSchemeIndex}">
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorScheme.HavenBlue'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeOption.HavenBlue'}" />
                             <ComboBoxItem
-                                Content="{core:LocalizationService Key='Settings.ColorScheme.AvallamaPurple'}" />
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeOption.AvallamaPurple'}" />
                         </ComboBox>
                         
                         <!-- Translucency label -->
@@ -303,17 +303,17 @@ Licensed under the MIT License. See LICENSE file for details.
 
                     <!-- Title -->
                     <TextBlock Grid.Row="0" Classes="strong brand fs2 medium trm-ellipsis" MaxWidth="800"
-                               Text="{core:LocalizationService Key='Onboarding.ThankYou.Title'}" TextAlignment="Center"
+                               Text="{core:LocalizationService Key='Onboarding.ThankYou.Message'}" TextAlignment="Center"
                                TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <StackPanel Grid.Row="1" Orientation="Vertical" Spacing="2">
 
                         <TextBlock Classes="brand fs4 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Onboarding.Text.DeveloperName'}"
+                                   Text="{core:LocalizationService Key='Onboarding.ThankYou.DeveloperName'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
                         <TextBlock Classes="neutral fs5 trm-ellipsis"
-                                   Text="{core:LocalizationService Key='Onboarding.Text.Developer'}"
+                                   Text="{core:LocalizationService Key='Onboarding.ThankYou.DeveloperRole'}"
                                    TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
                     </StackPanel>

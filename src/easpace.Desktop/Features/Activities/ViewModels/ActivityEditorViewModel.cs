@@ -31,7 +31,7 @@ internal partial class ActivityEditorViewModel : ViewModelBase
 
     [ObservableProperty] private string _titleText = string.Empty;
 
-    [ObservableProperty] private string _name = LocalizationService.GetString("Activities.Input.NewActivityName");
+    [ObservableProperty] private string _name = LocalizationService.GetString("Activities.Editor.NewActivity");
 
     [ObservableProperty] private string? _unit;
 
@@ -58,8 +58,8 @@ internal partial class ActivityEditorViewModel : ViewModelBase
 
     public string DataEntriesLabel =>
         DataEntries.Count == 1
-            ? LocalizationService.GetString("Activities.Label.DataEntry")
-            : string.Format(LocalizationService.GetString("Activities.Label.DataEntries"), DataEntries.Count);
+            ? LocalizationService.GetString("Activities.EntryCount.One")
+            : string.Format(LocalizationService.GetString("Activities.EntryCount.Many"), DataEntries.Count);
 
     public ActivityType SelectedType
     {
@@ -82,7 +82,7 @@ internal partial class ActivityEditorViewModel : ViewModelBase
         IsCreatingNew = true;
         SelectedType = ActivityType.Trend;
         SelectedTrendAggregation = TrendAggregation.Average;
-        TitleText = LocalizationService.GetString("Activities.Input.NewActivityName");
+        TitleText = LocalizationService.GetString("Activities.Editor.NewActivity");
 
         DataEntries = [];
 
@@ -117,7 +117,7 @@ internal partial class ActivityEditorViewModel : ViewModelBase
 
         DataEntries.CollectionChanged += (_, _) => OnPropertyChanged(nameof(DataEntriesLabel));
 
-        TitleText = string.Format(LocalizationService.GetString("Activities.Title.Edit"), _activity.Name);
+        TitleText = string.Format(LocalizationService.GetString("Activities.Editor.EditActivity"), _activity.Name);
 
         Validate();
     }

@@ -13,7 +13,7 @@ internal static class ActivityEntryValidator
     {
         if (!selectedDate.HasValue)
         {
-            yield return new ValidationIssue("SelectedDate", "FormValidation.Date.Required");
+            yield return new ValidationIssue("SelectedDate", "Validation.Date.Required");
         }
     }
 
@@ -23,7 +23,7 @@ internal static class ActivityEntryValidator
 
         if (!numericValue.HasValue)
         {
-            yield return new ValidationIssue("NumericValue", "FormValidation.NumericValue.Required");
+            yield return new ValidationIssue("NumericValue", "Validation.Value.Required");
         }
     }
 }

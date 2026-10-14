@@ -13,22 +13,22 @@ internal static class ActivityValidator
     {
         if (string.IsNullOrWhiteSpace(input.Name))
         {
-            yield return new ValidationIssue(nameof(input.Name), "FormValidation.Name.Required");
+            yield return new ValidationIssue(nameof(input.Name), "Validation.Name.Required");
         }
         else if (input.Name.Length < 3)
         {
-            yield return new ValidationIssue(nameof(input.Name), "FormValidation.Name.MinLength");
+            yield return new ValidationIssue(nameof(input.Name), "Validation.Name.MinLength");
         }
         else if (input.Name.Length > 64)
         {
-            yield return new ValidationIssue(nameof(input.Name), "FormValidation.Name.MaxLength");
+            yield return new ValidationIssue(nameof(input.Name), "Validation.Name.MaxLength");
         }
 
         if (input.Type is not (ActivityType.Trend or ActivityType.Milestone)) yield break;
 
         if (input.Unit is { Length: > 16 })
         {
-            yield return new ValidationIssue(nameof(input.Unit), "FormValidation.Unit.MaxLength");
+            yield return new ValidationIssue(nameof(input.Unit), "Validation.Unit.MaxLength");
         }
 
         if (input.Type == ActivityType.Trend && !input.IsTargetChecked) yield break;
@@ -37,12 +37,12 @@ internal static class ActivityValidator
         {
             if (!(target > 0 && target <= 10_000_000))
             {
-                yield return new ValidationIssue(nameof(input.Target), "FormValidation.Target.Range");
+                yield return new ValidationIssue(nameof(input.Target), "Validation.Target.Range");
             }
         }
         else if (input.Type == ActivityType.Milestone)
         {
-            yield return new ValidationIssue(nameof(input.Target), "FormValidation.Target.Required");
+            yield return new ValidationIssue(nameof(input.Target), "Validation.Target.Required");
         }
     }
 }

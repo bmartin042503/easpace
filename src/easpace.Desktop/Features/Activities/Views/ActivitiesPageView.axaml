@@ -85,7 +85,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             SelectedIcon="{StaticResource PhosphorIcons.Target.Fill}"
                             Width="{StaticResource Metrics.Icon.Size.Sm}"
                             Height="{StaticResource Metrics.Icon.Size.Sm}"
-                            ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Active'}" />
+                            ToolTip.Tip="{core:LocalizationService Key='Activities.Status.Active'}" />
                     </ListBoxItem>
 
                     <!-- Archive -->
@@ -95,7 +95,7 @@ Licensed under the MIT License. See LICENSE file for details.
                             SelectedIcon="{StaticResource PhosphorIcons.Archive.Fill}"
                             Width="{StaticResource Metrics.Icon.Size.Sm}"
                             Height="{StaticResource Metrics.Icon.Size.Sm}"
-                            ToolTip.Tip="{core:LocalizationService Key='Activities.Filter.Archived'}" />
+                            ToolTip.Tip="{core:LocalizationService Key='Activities.Status.Archived'}" />
                     </ListBoxItem>
 
                     <ListBox.ItemsPanel>
@@ -167,7 +167,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 </StackPanel>
 
                 <!-- 'Add entries' message -->
-                <TextBlock Text="{core:LocalizationService Key='Activities.Empty.Message'}"
+                <TextBlock Text="{core:LocalizationService Key='Activities.Empty.List'}"
                            Classes="subtle neutral trm-ellipsis" TextAlignment="Center" TextWrapping="Wrap" />
             </StackPanel>
 

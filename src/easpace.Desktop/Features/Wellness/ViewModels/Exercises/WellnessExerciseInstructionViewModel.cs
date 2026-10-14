@@ -20,7 +20,7 @@ internal partial class WellnessExerciseInstructionViewModel : ViewModelBase
     private BreathingPhase? _breathingPhase;
 
     public string DurationText =>
-        string.Format(LocalizationService.GetString("WellnessExercise.Text.DurationSeconds"), DurationSeconds);
+        string.Format(LocalizationService.GetString("Wellness.Duration.Seconds"), DurationSeconds);
 
     public bool HasBreathingPhase => BreathingPhase != null;
 

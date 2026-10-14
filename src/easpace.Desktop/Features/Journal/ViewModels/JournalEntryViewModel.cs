@@ -23,8 +23,8 @@ internal partial class JournalEntryViewModel : ViewModelBase
 
     public string WordCountText =>
         Content.GetWordCount() == 1
-            ? LocalizationService.GetString("Journal.WordCount.OneWord")
-            : string.Format(LocalizationService.GetString("Journal.WordCount.Words"), Content.GetWordCount());
+            ? LocalizationService.GetString("Journal.WordCount.One")
+            : string.Format(LocalizationService.GetString("Journal.WordCount.Many"), Content.GetWordCount());
 
     public JournalEntryViewModel(JournalEntry entry)
     {

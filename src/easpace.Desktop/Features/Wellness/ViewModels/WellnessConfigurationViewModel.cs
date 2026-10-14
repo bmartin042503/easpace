@@ -99,11 +99,11 @@ internal partial class WellnessConfigurationViewModel : ViewModelBase
             // get localized cycle text based on cycle count
             if (SelectedCycles == 1)
             {
-                cyclesText = LocalizationService.GetString("Wellness.Session.OneCycle");
+                cyclesText = LocalizationService.GetString("Wellness.CycleCount.One");
             }
             else if (SelectedCycles > 1)
             {
-                cyclesText = string.Format(LocalizationService.GetString("Wellness.Session.Cycles"), SelectedCycles);
+                cyclesText = string.Format(LocalizationService.GetString("Wellness.CycleCount.Many"), SelectedCycles);
             }
 
             return $"{timeString} ({cyclesText})";

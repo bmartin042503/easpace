@@ -320,13 +320,13 @@ internal partial class ActivitiesPageViewModel : PageViewModel
             if (activityViewModel.IsArchived)
             {
                 _toastMessageService.ShowToastMessage(
-                    LocalizationService.GetString("Activities.ToastMessage.Archived"),
+                    LocalizationService.GetString("Activities.Toast.Archived"),
                     ToastMessageType.Success);
             }
             else
             {
                 _toastMessageService.ShowToastMessage(
-                    LocalizationService.GetString("Activities.ToastMessage.Restored"),
+                    LocalizationService.GetString("Activities.Toast.Restored"),
                     ToastMessageType.Success);
             }
         }

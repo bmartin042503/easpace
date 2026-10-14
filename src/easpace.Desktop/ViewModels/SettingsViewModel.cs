@@ -63,7 +63,7 @@ internal partial class SettingsViewModel : PageViewModel
         _logger = logger;
 
         VersionText =
-            $"{LocalizationService.GetString("Credits.Text.Version")}: {App.VersionName} (v{App.Version.ToString()})";
+            $"{LocalizationService.GetString("Credits.Info.Version")}: {App.VersionName} (v{App.Version.ToString()})";
 
         LoadSettings();
 
@@ -86,7 +86,7 @@ internal partial class SettingsViewModel : PageViewModel
         var confirmDeletionDialog = new ConfirmDialogViewModel
         {
             Title = string.Format(LocalizationService.GetString("Settings.DeleteAllDataDialog.Title")),
-            Message = LocalizationService.GetString("Settings.DeleteAllDataDialog.Description"),
+            Message = LocalizationService.GetString("Settings.DeleteAllDataDialog.Message"),
             CancelText = LocalizationService.GetString("Common.Button.Cancel"),
             ConfirmText = LocalizationService.GetString("Common.Button.Delete"),
             IsDestructive = true
@@ -221,7 +221,7 @@ internal partial class SettingsViewModel : PageViewModel
             var restartConfirmDialog = new ConfirmDialogViewModel
             {
                 Title = string.Format(LocalizationService.GetString("Settings.RestartDialog.Title")),
-                Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Description")),
+                Message = string.Format(LocalizationService.GetString("Settings.RestartDialog.Message")),
                 CancelText = LocalizationService.GetString("Common.Button.Later"),
                 ConfirmText = LocalizationService.GetString("Settings.RestartDialog.RestartNow")
             };
@@ -239,7 +239,7 @@ internal partial class SettingsViewModel : PageViewModel
         _translucencyService.SetTranslucencyEnabled(IsTranslucencyEnabled);
 
         _toastMessageService.ShowToastMessage(
-            LocalizationService.GetString("Settings.ToastMessage.SettingsSaved"),
+            LocalizationService.GetString("Settings.Toast.Saved"),
             ToastMessageType.Success);
     }
 

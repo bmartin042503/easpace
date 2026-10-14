@@ -58,7 +58,7 @@ internal partial class TrendActivityViewModel : NumericActivityViewModel
     }
 
     public string CurrentValueText => string.Format(
-        LocalizationService.GetString("TrendActivity.Details.CurrentValue"), TodayValue, Unit);
+        LocalizationService.GetString("Activities.Trend.CurrentValue"), TodayValue, Unit);
 
     public TrendActivityViewModel(
         TrendActivity trendActivity,
