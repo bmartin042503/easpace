@@ -11,4 +11,14 @@ public partial class WellnessExerciseView : UserControl
     {
         InitializeComponent();
     }
+    
+    private void OnInstructionElementPrepared(object? sender, ItemsRepeaterElementPreparedEventArgs e)
+    {
+        e.Element.Tag = e.Index + 1;
+    }
+
+    private void OnInstructionElementIndexChanged(object? sender, ItemsRepeaterElementIndexChangedEventArgs e)
+    {
+        e.Element.Tag = e.NewIndex + 1;
+    }
 }

@@ -531,6 +531,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Take a moment for yourself</value>
     </data>
+    <data name="Wellness.Title.Instructions" xml:space="preserve">
+        <value>Instructions</value>
+    </data>
     <data name="Wellness.Button.Exercises" xml:space="preserve">
         <value>Exercises</value>
     </data>
@@ -554,6 +557,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.CycleCount.Many" xml:space="preserve">
         <value>{0} cycles</value>
+    </data>
+    <data name="Wellness.CycleCount.Default" xml:space="preserve">
+        <value>Default cycles: {0} ({1})</value>
     </data>
     <data name="Wellness.Duration.Seconds" xml:space="preserve">
         <value>{0} s</value>
@@ -632,6 +638,105 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Error.DeleteSessionFailed" xml:space="preserve">
         <value>Failed to delete this session. Please try again.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Name" xml:space="preserve">
+        <value>Cyclic Sighing</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Description" xml:space="preserve">
+        <value>Two consecutive inhales through the nose followed by a long, slow exhale. Quickly eases internal tension and supports a calmer mood.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction1" xml:space="preserve">
+        <value>Breathe in slowly through your nose until your lungs feel comfortably full.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction2" xml:space="preserve">
+        <value>Take a second, short sip of air through your nose to top up your lungs.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction3" xml:space="preserve">
+        <value>Exhale slowly and completely through your mouth, letting your shoulders drop.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Name" xml:space="preserve">
+        <value>Box Breathing</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Description" xml:space="preserve">
+        <value>Steady four-part breathing with gentle pauses. Helps clear the mind and sharpen focus before demanding tasks.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction1" xml:space="preserve">
+        <value>Breathe in slowly and evenly through your nose.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction2" xml:space="preserve">
+        <value>Hold the air in gently, keeping your neck and shoulders soft.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction3" xml:space="preserve">
+        <value>Exhale smoothly and steadily at the same pace.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction4" xml:space="preserve">
+        <value>Rest quietly with empty lungs before the next inhale.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Name" xml:space="preserve">
+        <value>5-4-3-2-1 Sensory Grounding</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Description" xml:space="preserve">
+        <value>A five-sense awareness practice framed by slow breaths. Interrupts racing thoughts and anchors your attention in the present moment.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction1" xml:space="preserve">
+        <value>Settle into your seat and breathe in slowly through your nose.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction2" xml:space="preserve">
+        <value>Exhale gently, letting your shoulders sink down.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction3" xml:space="preserve">
+        <value>Look around and silently name 5 things you can see. Notice their colors, light, and shapes.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction4" xml:space="preserve">
+        <value>Notice 4 things you can physically feel right now, like your feet on the floor or the fabric of your clothes.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction5" xml:space="preserve">
+        <value>Listen closely and notice 3 sounds in your environment, whether near or far away.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction6" xml:space="preserve">
+        <value>Notice 2 scents in the air, or simply feel the temperature of the air moving in your nose.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction7" xml:space="preserve">
+        <value>Focus on 1 taste in your mouth right now, or recall a favorite soothing flavor.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction8" xml:space="preserve">
+        <value>Take one more slow breath in, feeling present in the room.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction9" xml:space="preserve">
+        <value>Exhale slowly and completely.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction10" xml:space="preserve">
+        <value>Take a quiet moment to notice how your body and mind feel before continuing your day.</value>
+    </data>
+    <data name="Wellness.BodyScan.Name" xml:space="preserve">
+        <value>Body Scan</value>
+    </data>
+    <data name="Wellness.BodyScan.Description" xml:space="preserve">
+        <value>A gentle head-to-toe awareness practice to release physical tension from the day and prepare your body for rest.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction1" xml:space="preserve">
+        <value>Find a comfortable position. Let your breathing settle into its own natural, unhurried rhythm.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction2" xml:space="preserve">
+        <value>Bring your attention to your forehead, eyes, and jaw. Allow any tightness in your face to soften.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction3" xml:space="preserve">
+        <value>Notice your neck and shoulders. With each natural out-breath, let your shoulders sink a little heavier.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction4" xml:space="preserve">
+        <value>Shift your awareness down your arms to your hands and fingers. Notice any warmth or tingling without changing a thing.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction5" xml:space="preserve">
+        <value>Feel the gentle rise and fall of your chest and belly. Let your back rest fully against the support beneath you.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction6" xml:space="preserve">
+        <value>Guide your attention to your hips, thighs, and knees. Allow the large muscles of your legs to let go of the day's effort.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction7" xml:space="preserve">
+        <value>Notice your calves, ankles, and feet down to your toes. Feel the quiet stillness in your lower body.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction8" xml:space="preserve">
+        <value>Sense your whole body resting as one. Stay with this quiet stillness as you transition toward rest.</value>
     </data>
 
     <!-- Settings -->
@@ -764,6 +869,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Legal.Title.Licenses" xml:space="preserve">
         <value>Licenses</value>
+    </data>
+    <data name="Legal.Title.Sources" xml:space="preserve">
+        <value>Sources</value>
     </data>
 
     <!-- Update -->

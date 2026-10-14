@@ -8,58 +8,111 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:exerciseVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExerciseView"
              x:DataType="exerciseVm:WellnessExerciseViewModel">
 
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Lg}">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="{StaticResource Metrics.Spacing.Xl}">
 
-        <!-- Description -->
-        <TextBlock Grid.Row="0" Classes="neutral fs4" TextWrapping="Wrap" TextAlignment="Left"
-                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                   Text="{Binding Description}" />
+        <StackPanel Grid.Row="0" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
-        <!-- Default cycles count -->
-        <TextBlock Grid.Row="1" Classes="neutral fs4" TextWrapping="Wrap" TextAlignment="Left"
-                   VerticalAlignment="Center" HorizontalAlignment="Left"
-                   Text="DefaultCyclesCount" />
+            <!-- Description -->
+            <TextBlock Classes="neutral fs4" TextWrapping="Wrap" TextAlignment="Left"
+                       Text="{Binding Description}" />
+
+            <!-- Default cycle count -->
+            <TextBlock Classes="neutral fs5" TextWrapping="Wrap" TextAlignment="Left"
+                       Text="{Binding DefaultCycleCountText}" />
+
+        </StackPanel>
+
+        <!-- Horizontal separator -->
+        <Separator Grid.Row="1" HorizontalAlignment="Stretch" Margin="0" />
 
         <!-- Instructions -->
-        <ItemsRepeater Grid.Row="2" ItemsSource="{Binding Instructions}">
+        <StackPanel Grid.Row="2" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
-            <!-- Instruction template (read-only) -->
-            <ItemsRepeater.ItemTemplate>
-                <DataTemplate x:DataType="exerciseVm:WellnessExerciseInstructionViewModel">
+            <TextBlock Classes="neutral fs3"
+                       Text="{core:LocalizationService Key='Wellness.Title.Instructions'}" />
 
-                    <Border Classes="elevated card">
+            <ItemsRepeater ItemsSource="{Binding Instructions}"
+                           ElementPrepared="OnInstructionElementPrepared"
+                           ElementIndexChanged="OnInstructionElementIndexChanged">
 
-                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="{StaticResource Metrics.Spacing.Md}">
+                <!-- Instruction template (read-only) -->
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="exerciseVm:WellnessExerciseInstructionViewModel">
 
-                            <!-- Text -->
-                            <TextBlock Grid.Row="0" Classes="neutral fs4"
-                                       Text="{Binding Text}" />
+                        <Border x:Name="InstructionCard" Classes="elevated card">
+                            <Grid ColumnDefinitions="Auto,*" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                  ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
+                                
+                                <!-- Index text -->
+                                <TextBlock Grid.Column="0" Classes="subtle neutral fs2"
+                                           TextAlignment="Left" VerticalAlignment="Top"
+                                           Text="{Binding #InstructionCard.Tag}"/>
 
-                            <!-- Duration -->
-                            <TextBlock Grid.Row="1" Classes="neutral fs4"
-                                       Text="{Binding DurationText}" />
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
 
-                            <!-- Breathing phase -->
-                            <TextBlock Grid.Row="2" Classes="neutral fs4"
-                                       IsVisible="{Binding BreathingPhase, Converter={x:Static ObjectConverters.IsNotNull}}"
-                                       Text="{Binding BreathingPhase, Converter={StaticResource EnumToLocalizedConverter}}" />
+                                    <!-- Text -->
+                                    <TextBlock Classes="neutral fs5" TextWrapping="Wrap"
+                                               IsVisible="{Binding Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                               Text="{Binding Text}" />
 
-                        </Grid>
+                                    <!-- Details -->
+                                    <WrapPanel Orientation="Horizontal"
+                                               ItemSpacing="{StaticResource Metrics.Spacing.Md}"
+                                               LineSpacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                    </Border>
+                                        <!-- Duration -->
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
-                </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
+                                            <PathIcon Data="{StaticResource PhosphorIcons.Timer.Fill}"
+                                                      Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                                      Height="{StaticResource Metrics.Icon.Size.Xs}"
+                                                      Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                                                      VerticalAlignment="Center" />
 
-            <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}" />
-            </ItemsRepeater.Layout>
+                                            <TextBlock Classes="subtle neutral fs6" VerticalAlignment="Center"
+                                                       Text="{Binding DurationText}" />
 
-        </ItemsRepeater>
+                                        </StackPanel>
+
+                                        <!-- Breathing phase -->
+                                        <StackPanel Orientation="Horizontal"
+                                                    Spacing="{StaticResource Metrics.Spacing.Xxs}"
+                                                    IsVisible="{Binding HasBreathingPhase}">
+
+                                            <!-- the wind glyph sits high in its box, the top margin lines it up with the text -->
+                                            <PathIcon Data="{StaticResource PhosphorIcons.Wind}"
+                                                      Width="{StaticResource Metrics.Icon.Size.Xs}"
+                                                      Height="{StaticResource Metrics.Icon.Size.Xs}"
+                                                      Foreground="{DynamicResource Sem.Brand}"
+                                                      VerticalAlignment="Center" />
+
+                                            <TextBlock Classes="brand fs6" VerticalAlignment="Center"
+                                                       Text="{Binding BreathingPhase, Converter={StaticResource EnumToLocalizedConverter}}" />
+
+                                        </StackPanel>
+
+                                    </WrapPanel>
+
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+
+                <ItemsRepeater.Layout>
+                    <StackLayout Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}" />
+                </ItemsRepeater.Layout>
+
+            </ItemsRepeater>
+
+        </StackPanel>
 
     </Grid>
 

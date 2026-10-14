@@ -17,4 +17,5 @@ internal static class PreferenceKey
     public const string WellnessAnimatedBackground = "wellness-animated-background";
     public const string WellnessShowTimer = "wellness-show-timer";
     public const string CheckForUpdates = "check-for-updates";
+    public const string DefaultWellnessExercisesSeeded = "default-wellness-exercises-seeded";
 }

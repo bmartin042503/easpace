@@ -105,7 +105,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                   HorizontalAlignment="Right"
                                   Width="{StaticResource Metrics.Input.Setting.MinWidth}"
                                   SelectedIndex="{Binding SelectedColorSchemeIndex}">
-                            <ComboBoxItem Content="{core:LocalizationService Key='Settings.ColorSchemeOption.HavenBlue'}" />
+                            <ComboBoxItem
+                                Content="{core:LocalizationService Key='Settings.ColorSchemeOption.HavenBlue'}" />
                             <ComboBoxItem
                                 Content="{core:LocalizationService Key='Settings.ColorSchemeOption.AvallamaPurple'}" />
                         </ComboBox>
@@ -303,7 +304,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                 <Button Classes="tertiary" Padding="0"
                                         FontSize="{StaticResource Metrics.FontSize.Sm}"
                                         Content="{core:LocalizationService Key='Credits.Info.Logo'}"
-                                        Command="{Binding OpenLogoCreatorPageCommand}" />
+                                        Command="{Binding LaunchUriCommand}"
+                                        CommandParameter="https://www.fiverr.com/l_nuge" />
 
                             </StackPanel>
 
@@ -331,7 +333,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         </StackPanel>
 
                         <!-- App logo -->
-                        <PathIcon Grid.Column="1" Height="100" Width="100" 
+                        <PathIcon Grid.Column="1" Height="100" Width="100"
                                   Margin="{StaticResource Metrics.Spacing.Thickness.Xs}"
                                   HorizontalAlignment="Right" VerticalAlignment="Top"
                                   Data="{StaticResource AppIcons.Easpace.V2}"
@@ -409,14 +411,12 @@ Licensed under the MIT License. See LICENSE file for details.
                     </WrapPanel>
 
                     <!-- Licenses -->
-
                     <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                         <TextBlock Classes="brand fs4 medium"
                                    Text="{core:LocalizationService Key='Legal.Title.Licenses'}" />
 
-                        <WrapPanel Orientation="Horizontal" ItemSpacing="{StaticResource Metrics.Spacing.Xs}"
-                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
 
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Metrics.FontSize.Xs}"
@@ -483,7 +483,7 @@ Licensed under the MIT License. See LICENSE file for details.
                                 </Button.CommandParameter>
 
                             </Button>
-                            
+
                             <Button Classes="tertiary" Padding="0"
                                     FontSize="{StaticResource Metrics.FontSize.Xs}"
                                     Content="Poppins • SIL Open Font License 1.1"
@@ -495,7 +495,63 @@ Licensed under the MIT License. See LICENSE file for details.
 
                             </Button>
 
-                        </WrapPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Sources -->
+                    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                        <TextBlock Classes="brand fs4 medium"
+                                   Text="{core:LocalizationService Key='Legal.Title.Sources'}" />
+
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                            <Button Classes="tertiary" Padding="0" HorizontalAlignment="Left"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Command="{Binding LaunchUriCommand}"
+                                    CommandParameter="https://med.stanford.edu/news/insights/2023/02/cyclic-sighing-can-help-breathe-away-anxiety.html">
+
+                                <TextBlock>
+                                    <Run Text="Stanford Medicine • " /><Run Text="{core:LocalizationService Key='Wellness.CyclicSighing.Name'}" />
+                                </TextBlock>
+
+                            </Button>
+
+                            <Button Classes="tertiary" Padding="0" HorizontalAlignment="Left"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Command="{Binding LaunchUriCommand}"
+                                    CommandParameter="https://health.clevelandclinic.org/box-breathing-benefits">
+
+                                <TextBlock>
+                                    <Run Text="Cleveland Clinic • " /><Run Text="{core:LocalizationService Key='Wellness.BoxBreathing.Name'}" />
+                                </TextBlock>
+
+                            </Button>
+
+                            <Button Classes="tertiary" Padding="0" HorizontalAlignment="Left"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Command="{Binding LaunchUriCommand}"
+                                    CommandParameter="https://www.urmc.rochester.edu/behavioral-health-partners/bhp-blog/april-2018/5-4-3-2-1-coping-technique-for-anxiety">
+
+                                <TextBlock>
+                                    <Run Text="URMC &amp; NHS Inform • " /><Run Text="{core:LocalizationService Key='Wellness.SensoryGrounding.Name'}" />
+                                </TextBlock>
+
+                            </Button>
+
+                            <Button Classes="tertiary" Padding="0" HorizontalAlignment="Left"
+                                    FontSize="{StaticResource Metrics.FontSize.Xs}"
+                                    Command="{Binding LaunchUriCommand}"
+                                    CommandParameter="https://newsinhealth.nih.gov/2021/06/mindfulness-your-health">
+
+                                <TextBlock>
+                                    <Run Text="National Institues of Health (NIH) • " /><Run Text="{core:LocalizationService Key='Wellness.BodyScan.Name'}" />
+                                </TextBlock>
+
+                            </Button>
+
+                        </StackPanel>
 
                     </StackPanel>
 

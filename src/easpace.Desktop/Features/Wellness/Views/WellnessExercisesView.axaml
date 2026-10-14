@@ -79,7 +79,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
         </Grid>
 
-        <ScrollViewer Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Hidden">
+        <ScrollViewer Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Disabled">
             
             <!-- Content (Selected exercise's reading/editing view) -->
             <ContentControl Content="{Binding ContentViewModel}" />

@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
@@ -15,6 +17,7 @@ internal class WellnessExerciseViewModel : ViewModelBase
     public string Name { get; }
     public string Description { get; }
     public int DefaultCycleCount { get; }
+    public string DefaultCycleCountText { get; }
     public IReadOnlyList<WellnessExerciseInstructionViewModel> Instructions { get; }
 
     public WellnessExercise Exercise { get; }
@@ -25,10 +28,20 @@ internal class WellnessExerciseViewModel : ViewModelBase
         Name = wellnessExercise.Name;
         Description = wellnessExercise.Description;
         DefaultCycleCount = wellnessExercise.DefaultCycleCount;
+
+        var oneCycleSeconds = wellnessExercise.Instructions.Sum(i => i.DurationSeconds);
+        var totalDuration = TimeSpan.FromSeconds((long)oneCycleSeconds * DefaultCycleCount);
+
+        DefaultCycleCountText = string.Format(
+            LocalizationService.GetString("Wellness.CycleCount.Default"),
+            DefaultCycleCount,
+            totalDuration.ToDurationText());
+
         Instructions = wellnessExercise.Instructions
             .OrderBy(i => i.Order)
             .Select(i => new WellnessExerciseInstructionViewModel(i))
             .ToList();
+
         Exercise = wellnessExercise;
     }
 }

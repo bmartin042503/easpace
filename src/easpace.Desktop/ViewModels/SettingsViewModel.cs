@@ -129,9 +129,9 @@ internal partial class SettingsViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private async Task OpenLogoCreatorPageAsync()
+    private async Task LaunchUri(string url)
     {
-        await _applicationService.LaunchUriAsync(new Uri("https://www.fiverr.com/l_nuge"));
+        await _applicationService.LaunchUriAsync(new Uri(url));
     }
 
     private void LoadSettings()

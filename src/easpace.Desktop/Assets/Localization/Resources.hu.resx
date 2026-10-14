@@ -531,6 +531,9 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Title.Start" xml:space="preserve">
         <value>Szánj egy percet magadra</value>
     </data>
+    <data name="Wellness.Title.Instructions" xml:space="preserve">
+        <value>Instrukciók</value>
+    </data>
     <data name="Wellness.Button.Exercises" xml:space="preserve">
         <value>Gyakorlatok</value>
     </data>
@@ -554,6 +557,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.CycleCount.Many" xml:space="preserve">
         <value>{0} ciklus</value>
+    </data>
+    <data name="Wellness.CycleCount.Default" xml:space="preserve">
+        <value>Alapértelmezett ciklusszám: {0} ({1})</value>
     </data>
     <data name="Wellness.Duration.Seconds" xml:space="preserve">
         <value>{0} mp</value>
@@ -632,6 +638,105 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Wellness.Error.DeleteSessionFailed" xml:space="preserve">
         <value>Nem sikerült törölni ezt az alkalmat. Kérlek, próbáld újra.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Name" xml:space="preserve">
+        <value>Ciklikus sóhaj</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Description" xml:space="preserve">
+        <value>Két egymást követő orrbelégzés és egy hosszan elnyújtott kilégzés. Gyorsan oldja a belső feszültséget és javítja a közérzetet.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction1" xml:space="preserve">
+        <value>Lélegezz be lassan az orrodon át, amíg a tüdőd kényelmesen megtelik.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction2" xml:space="preserve">
+        <value>Vegyél egy második, rövid levegővételt az orrodon keresztül, hogy teljesen megtöltsd a tüdődet.</value>
+    </data>
+    <data name="Wellness.CyclicSighing.Instruction3" xml:space="preserve">
+        <value>Engedd ki a levegőt lassan és teljesen a szádon át, ellazítva a válladat.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Name" xml:space="preserve">
+        <value>Dobozlégzés</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Description" xml:space="preserve">
+        <value>Egyenletes, négyütemű légzés rövid szünetekkel. Segít rendezni a gondolatokat és növeli a figyelmi fókuszt feladatok előtt.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction1" xml:space="preserve">
+        <value>Lélegezz be lassan és egyenletesen az orrodon át.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction2" xml:space="preserve">
+        <value>Tartsd bent a levegőt lágyan, feszítés nélkül.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction3" xml:space="preserve">
+        <value>Lélegezz ki nyugodtan és egyenletesen.</value>
+    </data>
+    <data name="Wellness.BoxBreathing.Instruction4" xml:space="preserve">
+        <value>Pihenj csendesen üres tüdővel a következő belégzésig.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Name" xml:space="preserve">
+        <value>5–4–3–2–1 Érzékszervi jelenlét</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Description" xml:space="preserve">
+        <value>Öt érzékszervre épülő figyelemirányítás nyugodt légzéssel keretezve. Segít megállítani a csapongó gondolatokat és visszatérni a jelenbe.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction1" xml:space="preserve">
+        <value>Helyezkedj el kényelmesen, és lélegezz be lassan az orrodon át.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction2" xml:space="preserve">
+        <value>Lélegezz ki finoman, és engedd le a vállaidat.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction3" xml:space="preserve">
+        <value>Nézz körül, és nevezz meg magadban 5 dolgot, amit látsz. Figyeld meg a színüket és a formájukat.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction4" xml:space="preserve">
+        <value>Tudatosíts 4 dolgot, amit fizikailag érzel, például a talpadat a padlón vagy a ruhád érintését.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction5" xml:space="preserve">
+        <value>Figyelj a környezetedre, és keress 3 hangot, akár közelről, akár távolabbról szűrődnek be.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction6" xml:space="preserve">
+        <value>Keress 2 illatot a levegőben, vagy egyszerűen figyeld meg a beáramló levegő hőmérsékletét az orrodban.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction7" xml:space="preserve">
+        <value>Figyelj meg 1 ízt a szádban, vagy idézd fel egy számodra kellemes étel vagy ital ízét.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction8" xml:space="preserve">
+        <value>Vegyél még egy lassú lélegzetet, megérkezve a jelen pillanatba.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction9" xml:space="preserve">
+        <value>Engedd ki lassan és nyugodtan a levegőt.</value>
+    </data>
+    <data name="Wellness.SensoryGrounding.Instruction10" xml:space="preserve">
+        <value>Figyeld meg egy csendes pillanatig, hogyan érzed most magad, mielőtt folytatod a napodat.</value>
+    </data>
+    <data name="Wellness.BodyScan.Name" xml:space="preserve">
+        <value>Testpásztázás</value>
+    </data>
+    <data name="Wellness.BodyScan.Description" xml:space="preserve">
+        <value>Fokozatos, tetőtől talpig haladó figyelemirányítás a napi testi feszültségek elengedésére és a pihenés előkészítésére.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction1" xml:space="preserve">
+        <value>Helyezkedj el kényelmesen. Hagyd, hogy a légzésed megtalálja a saját természetes, nyugodt ritmusát.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction2" xml:space="preserve">
+        <value>Irányítsd a figyelmedet a homlokodra, a szemed környékére és az állkapcsodra. Engedd elsimulni az arcod izmait.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction3" xml:space="preserve">
+        <value>Figyeld meg a nyakadat és a vállaidat. Minden természetes kilégzéssel engedd, hogy a vállad egy kicsit nehezebben süllyedjen le.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction4" xml:space="preserve">
+        <value>Vezesd végig a figyelmedet a karjaidon egészen a kézfejedig és az ujjaidig. Csak figyeld meg az érzeteket, anélkül hogy változtatnál rajtuk.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction5" xml:space="preserve">
+        <value>Érezd a mellkasod és a hasad finom emelkedését és süllyedését. Engedd, hogy a hátad biztonsággal megtámaszkodjon.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction6" xml:space="preserve">
+        <value>Vidd a figyelmedet a csípődre, a combodra és a térdedre. Engedd, hogy a lábad nagy izmai elengedjék a napi fáradtságot.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction7" xml:space="preserve">
+        <value>Figyeld meg a vádlidat, a bokádat és a lábfejedet egészen a lábujjakig. Tudatosítsd a nyugalmat az alsótestedben.</value>
+    </data>
+    <data name="Wellness.BodyScan.Instruction8" xml:space="preserve">
+        <value>Érezd a teljes testedet egységesen, nyugalomban pihenni. Maradj ebben a csendes jelenlétben, ahogy felkészülsz a pihenésre.</value>
     </data>
 
     <!-- Settings -->
@@ -764,6 +869,9 @@ Licensed under the MIT License. See LICENSE file for details.
     </data>
     <data name="Legal.Title.Licenses" xml:space="preserve">
         <value>Licencek</value>
+    </data>
+    <data name="Legal.Title.Sources" xml:space="preserve">
+        <value>Források</value>
     </data>
 
     <!-- Update -->
