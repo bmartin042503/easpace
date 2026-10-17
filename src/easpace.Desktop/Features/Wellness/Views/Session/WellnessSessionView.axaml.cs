@@ -3,11 +3,11 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Features.Wellness.Views;
+namespace easpace.Desktop.Features.Wellness.Views.Session;
 
-public partial class WellnessExercisePreviewView : UserControl
+internal partial class WellnessSessionView : UserControl
 {
-    public WellnessExercisePreviewView()
+    public WellnessSessionView()
     {
         InitializeComponent();
     }

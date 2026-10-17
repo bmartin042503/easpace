@@ -26,7 +26,7 @@ internal partial class WellnessPageViewModel : PageViewModel
     private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessConfigurationViewModel> _configurationLogger;
-    private readonly ILogger<WellnessExercisesViewModel> _exercisesLogger;
+    private readonly Func<WellnessExercisesViewModel> _exercisesViewModelFactory;
 
     [ObservableProperty] private ObservableObject? _contentViewModel;
     [ObservableProperty] private bool _isBlobBackgroundVisible;
@@ -42,7 +42,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
         ILogger<WellnessConfigurationViewModel> configurationLogger,
-        ILogger<WellnessExercisesViewModel> exercisesLogger)
+        Func<WellnessExercisesViewModel> exercisesViewModelFactory)
     {
         Page = ApplicationPage.Wellness;
         _messenger = messenger;
@@ -52,7 +52,7 @@ internal partial class WellnessPageViewModel : PageViewModel
         _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
         _configurationLogger = configurationLogger;
-        _exercisesLogger = exercisesLogger;
+        _exercisesViewModelFactory = exercisesViewModelFactory;
 
         LoadWellnessSettings();
         ShowConfiguration();
@@ -81,11 +81,7 @@ internal partial class WellnessPageViewModel : PageViewModel
 
     private void ShowExercises()
     {
-        var exercisesViewModel = new WellnessExercisesViewModel(
-            _wellnessExerciseRepository,
-            _dialogService,
-            _exercisesLogger
-        );
+        var exercisesViewModel = _exercisesViewModelFactory();
         exercisesViewModel.ConfigurationViewRequested += OnConfigurationViewRequested;
         NavigateTo(exercisesViewModel);
     }

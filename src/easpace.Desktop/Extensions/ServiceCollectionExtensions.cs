@@ -110,7 +110,12 @@ internal static class ServiceCollectionExtensions
             collection.AddSingleton<SettingsViewModel>();
 
             collection.AddTransient<IWellnessExercisePlayer, WellnessExercisePlayer>();
-            collection.AddTransient<WellnessExercisePreviewViewModel>();
+
+            // created outside the container, as the root provider would keep every disposable transient until exit
+            // the wellness page disposes the view model and its preview when navigating away
+            collection.AddSingleton<Func<WellnessExercisesViewModel>>(serviceProvider => () =>
+                ActivatorUtilities.CreateInstance<WellnessExercisesViewModel>(serviceProvider,
+                    ActivatorUtilities.CreateInstance<WellnessExercisePreviewViewModel>(serviceProvider)));
 
             collection.AddSingleton<Func<ApplicationPage, PageViewModel>>(serviceProvider => page => page switch
             {

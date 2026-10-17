@@ -15,6 +15,8 @@ using easpace.Desktop.Features.Wellness.ViewModels;
 using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 using easpace.Desktop.Features.Wellness.ViewModels.Session;
 using easpace.Desktop.Features.Wellness.Views;
+using easpace.Desktop.Features.Wellness.Views.Exercises;
+using easpace.Desktop.Features.Wellness.Views.Session;
 using easpace.Desktop.ViewModels;
 using easpace.Desktop.ViewModels.Dialogs;
 using easpace.Desktop.Views;

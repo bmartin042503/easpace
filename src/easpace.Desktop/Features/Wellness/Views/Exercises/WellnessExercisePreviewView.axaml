@@ -10,7 +10,7 @@ Licensed under the MIT License. See LICENSE file for details.
              xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
              xmlns:exerciseVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
-             x:Class="easpace.Desktop.Features.Wellness.Views.WellnessExercisePreviewView"
+             x:Class="easpace.Desktop.Features.Wellness.Views.Exercises.WellnessExercisePreviewView"
              x:DataType="exerciseVm:WellnessExercisePreviewViewModel"
              Background="Transparent">
 

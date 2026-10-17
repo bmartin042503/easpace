@@ -3,7 +3,7 @@
 
 using Avalonia.Controls;
 
-namespace easpace.Desktop.Features.Wellness.Views;
+namespace easpace.Desktop.Features.Wellness.Views.Exercises;
 
 public partial class WellnessExerciseView : UserControl
 {

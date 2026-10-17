@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 
-internal partial class WellnessExercisesViewModel : ViewModelBase
+internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
 {
     private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
@@ -28,11 +28,14 @@ internal partial class WellnessExercisesViewModel : ViewModelBase
 
     [ObservableProperty] private bool _isLoading = true;
     private bool _isInitializationRunning;
+    private bool _isDisposed;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(ShowNoExercises))]
     private bool _isInitialized;
-    
+
     [ObservableProperty] private string _title;
+
+    public WellnessExercisePreviewViewModel PreviewViewModel { get; }
 
     public AvaloniaList<WellnessExerciseViewModel> WellnessExercises { get; set; } = [];
 
@@ -44,14 +47,17 @@ internal partial class WellnessExercisesViewModel : ViewModelBase
     public WellnessExercisesViewModel(
         IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
+        WellnessExercisePreviewViewModel previewViewModel,
         ILogger<WellnessExercisesViewModel> logger)
     {
         _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
         _logger = logger;
-        
+
+        PreviewViewModel = previewViewModel;
+
         Title = LocalizationService.GetString("Wellness.Button.Exercises");
-        
+
         WellnessExercises.CollectionChanged += (_, _) =>
         {
             OnPropertyChanged(nameof(HasExercises));
@@ -63,7 +69,16 @@ internal partial class WellnessExercisesViewModel : ViewModelBase
 
     partial void OnSelectedExerciseViewModelChanged(WellnessExerciseViewModel? value)
     {
+        // loading may finish after the user has already navigated away
+        if (_isDisposed) return;
+
         ContentViewModel = value;
+
+        // an exercise that cannot be played must not leave the previous one in the preview
+        if (value == null || !PreviewViewModel.Load(value.Exercise, value.DefaultCycleCount))
+        {
+            PreviewViewModel.Clear();
+        }
     }
 
     [RelayCommand]
@@ -114,5 +129,13 @@ internal partial class WellnessExercisesViewModel : ViewModelBase
         var exerciseViewModels = exercises.Select(e => new WellnessExerciseViewModel(e));
         WellnessExercises.AddRange(exerciseViewModels);
         SelectedExerciseViewModel = WellnessExercises.FirstOrDefault();
+    }
+    
+    public void Dispose()
+    {
+        if (_isDisposed) return;
+
+        _isDisposed = true;
+        PreviewViewModel.Dispose();
     }
 }
