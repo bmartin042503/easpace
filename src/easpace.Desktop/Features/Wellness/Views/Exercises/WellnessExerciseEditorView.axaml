@@ -1,0 +1,259 @@
+<!--
+Copyright (c) 2026 Martin Bartos
+Licensed under the MIT License. See LICENSE file for details.
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:exerciseVm="clr-namespace:easpace.Desktop.Features.Wellness.ViewModels.Exercises"
+             xmlns:core="clr-namespace:easpace.Desktop.Services.Core"
+             xmlns:behaviors="clr-namespace:easpace.Desktop.Behaviors"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="easpace.Desktop.Features.Wellness.Views.Exercises.WellnessExerciseEditorView"
+             x:DataType="exerciseVm:WellnessExerciseEditorViewModel">
+
+    <UserControl.Styles>
+
+        <!-- Reordering feedback (classes set by ItemsReorderBehavior on the item containers) -->
+        <Style Selector="ContentPresenter.dragging">
+            <Setter Property="Opacity" Value="0.4" />
+        </Style>
+
+        <!-- the indicators sit in the gap between the cards, so showing them doesn't move the list -->
+        <Style Selector="Border.drop-indicator">
+            <Setter Property="Height" Value="2" />
+            <Setter Property="CornerRadius" Value="1" />
+            <Setter Property="Background" Value="{DynamicResource Sem.Brand}" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <Style Selector="Border.drop-indicator.top">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,-12,0,0" />
+        </Style>
+
+        <Style Selector="Border.drop-indicator.bottom">
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Margin" Value="0,0,0,-12" />
+        </Style>
+
+        <Style Selector="ContentPresenter.drop-before Border.drop-indicator.top">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+        <Style Selector="ContentPresenter.drop-after Border.drop-indicator.bottom">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+
+    </UserControl.Styles>
+
+    <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Lg}"
+                HorizontalAlignment="Stretch">
+
+        <!-- Name input -->
+        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+            <TextBlock Classes="neutral fs4"
+                       Text="{core:LocalizationService Key='Wellness.Label.Name'}" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="{StaticResource Metrics.Input.MaxWidth}" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Column="0" Text="{Binding Name}"
+                         HorizontalAlignment="Stretch"
+                         PlaceholderText="{core:LocalizationService Key='Wellness.Placeholder.Name'}"
+                         MaxLength="64" />
+            </Grid>
+
+        </StackPanel>
+
+        <!-- Description input -->
+        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+            <TextBlock Classes="neutral fs4"
+                       Text="{core:LocalizationService Key='Wellness.Label.Description'}" />
+
+            <TextBox Text="{Binding Description}"
+                     HorizontalAlignment="Stretch"
+                     TextWrapping="Wrap" AcceptsReturn="True" MinHeight="80"
+                     VerticalContentAlignment="Top"
+                     PlaceholderText="{core:LocalizationService Key='Wellness.Placeholder.Description'}"
+                     MaxLength="512" />
+
+        </StackPanel>
+
+        <!-- Default cycle count input -->
+        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+            <TextBlock Classes="neutral fs4"
+                       Text="{core:LocalizationService Key='Wellness.Label.DefaultCycles'}" />
+
+            <NumericUpDown Value="{Binding DefaultCycleCount}"
+                           HorizontalAlignment="Left" MinWidth="160"
+                           Increment="1" FormatString="0"
+                           Minimum="1" Maximum="99" />
+
+        </StackPanel>
+
+        <!-- Horizontal separator -->
+        <Separator HorizontalAlignment="Stretch" Margin="0" />
+
+        <!-- Instructions -->
+        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}">
+
+            <TextBlock Classes="neutral fs3"
+                       Text="{core:LocalizationService Key='Wellness.Title.Instructions'}" />
+
+            <!-- the index columns of the cards share one width, so the text boxes line up -->
+            <ItemsControl ItemsSource="{Binding Instructions}"
+                          Grid.IsSharedSizeScope="True"
+                          behaviors:ItemsReorderBehavior.MoveCommand="{Binding MoveInstructionCommand}"
+                          ContainerPrepared="OnInstructionContainerPrepared"
+                          ContainerIndexChanged="OnInstructionContainerIndexChanged">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Spacing="{StaticResource Metrics.Spacing.Md}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <!-- Instruction template (editable) -->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="exerciseVm:WellnessExerciseInstructionViewModel">
+
+                        <Panel>
+
+                            <Border Classes="card">
+                                <!-- the handle, index and remove button are as high as a single line text box,
+                                     so they line up with the first line of the instruction text -->
+                                <Grid ColumnSpacing="{StaticResource Metrics.Spacing.Md}">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="InstructionIndex" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top"
+                                                Height="{StaticResource Metrics.Input.Height}"
+                                                Spacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                        <!-- Drag handle -->
+                                        <Border Classes="drag-handle" Background="Transparent" Cursor="SizeNorthSouth"
+                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Button.MoveInstruction'}">
+                                            <PathIcon Data="{StaticResource PhosphorIcons.DotsSixVertical}"
+                                                      Foreground="{DynamicResource Sem.Foreground.Subtle}"
+                                                      VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <!-- Index text -->
+                                        <TextBlock Classes="subtle neutral fs2" VerticalAlignment="Center"
+                                                   Text="{Binding $parent[ContentPresenter].Tag}" />
+
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                Spacing="{StaticResource Metrics.Spacing.Sm}">
+
+                                        <!-- Text -->
+                                        <TextBox Text="{Binding Text}"
+                                                 TextWrapping="Wrap" MaxLength="256"
+                                                 PlaceholderText="{core:LocalizationService Key='Wellness.Placeholder.Instruction'}" />
+
+                                        <!-- Details -->
+                                        <WrapPanel Orientation="Horizontal"
+                                                   ItemSpacing="{StaticResource Metrics.Spacing.Md}"
+                                                   LineSpacing="{StaticResource Metrics.Spacing.Xs}">
+
+                                            <!-- Duration -->
+                                            <StackPanel Orientation="Vertical"
+                                                        Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                                <TextBlock Classes="subtle neutral fs6"
+                                                           Text="{core:LocalizationService Key='Wellness.Label.Duration'}" />
+
+                                                <NumericUpDown Value="{Binding DurationSeconds}"
+                                                               MinWidth="140" Increment="1" FormatString="0"
+                                                               Minimum="1" Maximum="600" />
+
+                                            </StackPanel>
+
+                                            <!-- Breathing phase -->
+                                            <StackPanel Orientation="Vertical"
+                                                        Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                                                <TextBlock Classes="subtle neutral fs6"
+                                                           Text="{core:LocalizationService Key='Wellness.Label.BreathingPhase'}" />
+
+                                                <ComboBox MinWidth="200"
+                                                          ItemsSource="{x:Static exerciseVm:WellnessExerciseInstructionViewModel.BreathingPhases}"
+                                                          SelectedItem="{Binding BreathingPhase}">
+
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Text="{Binding Converter={StaticResource EnumToLocalizedConverter}}" />
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+
+                                                </ComboBox>
+
+                                            </StackPanel>
+
+                                        </WrapPanel>
+
+                                    </StackPanel>
+
+                                    <!-- Remove button -->
+                                    <Panel Grid.Column="2" VerticalAlignment="Top"
+                                           Height="{StaticResource Metrics.Input.Height}">
+                                        <Button Classes="tertiary danger icon" VerticalAlignment="Center"
+                                                Command="{Binding $parent[UserControl].((exerciseVm:WellnessExerciseEditorViewModel)DataContext).RemoveInstructionCommand}"
+                                                CommandParameter="{Binding .}"
+                                                ToolTip.Tip="{core:LocalizationService Key='Wellness.Button.RemoveInstruction'}"
+                                                AutomationProperties.Name="{core:LocalizationService Key='Wellness.Button.RemoveInstruction'}">
+                                            <PathIcon Data="{StaticResource PhosphorIcons.Trash.Fill}" />
+                                        </Button>
+                                    </Panel>
+
+                                </Grid>
+                            </Border>
+
+                            <!-- Drop position indicators -->
+                            <Border Classes="drop-indicator top" />
+                            <Border Classes="drop-indicator bottom" />
+
+                        </Panel>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+            <!-- Add instruction button -->
+            <Button Classes="secondary regular" HorizontalAlignment="Left"
+                    Command="{Binding AddInstructionCommand}">
+
+                <StackPanel Orientation="Horizontal" Spacing="{StaticResource Metrics.Spacing.Xxs}">
+
+                    <PathIcon Data="{StaticResource PhosphorIcons.Plus.Bold}"
+                              Width="{StaticResource Metrics.Icon.Size.Xs}"
+                              Height="{StaticResource Metrics.Icon.Size.Xs}" />
+
+                    <TextBlock Classes="fs6 medium"
+                               Text="{core:LocalizationService Key='Wellness.Button.AddInstruction'}" />
+
+                </StackPanel>
+
+            </Button>
+
+        </StackPanel>
+
+    </StackPanel>
+
+</UserControl>

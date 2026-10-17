@@ -71,6 +71,63 @@ public class WellnessExercisesViewModelTests
         exercisesVm.PreviewViewModel.PlayCommand.CanExecute(null).Should().BeFalse();
     }
 
+    [AvaloniaFact]
+    public async Task EditExercise_ShowsUnsavedChangesInThePreview()
+    {
+        using var exercisesVm = CreateExercisesViewModel(CreateExercise("First", 1, 4));
+        await exercisesVm.InitializeCommand.ExecuteAsync(null);
+
+        exercisesVm.EditExerciseCommand.Execute(null);
+        var editor = exercisesVm.ContentViewModel.Should().BeOfType<WellnessExerciseEditorViewModel>().Subject;
+
+        editor.Instructions[0].Text = "Edited";
+        editor.DefaultCycleCount = 3;
+
+        exercisesVm.IsEditing.Should().BeTrue();
+        exercisesVm.CanSelectExercise.Should().BeFalse();
+        exercisesVm.EditExerciseCommand.CanExecute(null).Should().BeFalse();
+        exercisesVm.PreviewViewModel.CurrentInstruction!.Text.Should().Be("Edited");
+        exercisesVm.PreviewViewModel.TotalCycles.Should().Be(3);
+    }
+
+    [AvaloniaFact]
+    public async Task CancelEdit_RestoresTheReaderViewAndTheOriginalPreview()
+    {
+        using var exercisesVm = CreateExercisesViewModel(CreateExercise("First", 1, 4));
+        await exercisesVm.InitializeCommand.ExecuteAsync(null);
+        var selectedExercise = exercisesVm.SelectedExerciseViewModel;
+
+        exercisesVm.EditExerciseCommand.Execute(null);
+        var editor = (WellnessExerciseEditorViewModel)exercisesVm.ContentViewModel!;
+        editor.Instructions[0].Text = "Edited";
+        editor.CancelCommand.Execute(null);
+
+        // a change after closing must no longer reach the preview
+        editor.Instructions[0].Text = "Ignored";
+
+        exercisesVm.IsEditing.Should().BeFalse();
+        exercisesVm.ContentViewModel.Should().BeSameAs(selectedExercise);
+        exercisesVm.PreviewViewModel.CurrentInstruction!.Text.Should().Be("First");
+    }
+
+    [AvaloniaFact]
+    public async Task BreathingPhase_NoneTurnsOffTheBreathingAnimationOfThePreview()
+    {
+        using var exercisesVm = CreateExercisesViewModel(CreateExercise("First", 1, 4));
+        await exercisesVm.InitializeCommand.ExecuteAsync(null);
+        exercisesVm.EditExerciseCommand.Execute(null);
+        var instruction = exercisesVm.Editor!.Instructions[0];
+
+        instruction.BreathingPhase = BreathingPhase.Inhale;
+
+        exercisesVm.PreviewViewModel.IsBreathing.Should().BeTrue();
+
+        instruction.BreathingPhase = BreathingPhase.None;
+
+        instruction.HasBreathingPhase.Should().BeFalse();
+        exercisesVm.PreviewViewModel.IsBreathing.Should().BeFalse();
+    }
+
     private static WellnessExercisesViewModel CreateExercisesViewModel(params WellnessExercise[] exercises)
     {
         var mockRepository = new Mock<IWellnessExerciseRepository>();

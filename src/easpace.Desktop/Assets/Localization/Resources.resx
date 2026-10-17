@@ -549,8 +549,41 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.EndSession" xml:space="preserve">
         <value>End Session</value>
     </data>
+    <data name="Wellness.Button.AddInstruction" xml:space="preserve">
+        <value>Add instruction</value>
+    </data>
+    <data name="Wellness.Button.RemoveInstruction" xml:space="preserve">
+        <value>Remove instruction</value>
+    </data>
+    <data name="Wellness.Button.MoveInstruction" xml:space="preserve">
+        <value>Drag to reorder</value>
+    </data>
     <data name="Wellness.Warning.Breathing" xml:space="preserve">
         <value>If you feel dizzy, short of breath or uncomfortable, stop and return to your natural breathing.</value>
+    </data>
+    <data name="Wellness.Label.Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="Wellness.Label.Description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="Wellness.Label.DefaultCycles" xml:space="preserve">
+        <value>Default cycles</value>
+    </data>
+    <data name="Wellness.Label.Duration" xml:space="preserve">
+        <value>Duration (seconds)</value>
+    </data>
+    <data name="Wellness.Label.BreathingPhase" xml:space="preserve">
+        <value>Breathing phase</value>
+    </data>
+    <data name="Wellness.Placeholder.Name" xml:space="preserve">
+        <value>Enter exercise name...</value>
+    </data>
+    <data name="Wellness.Placeholder.Description" xml:space="preserve">
+        <value>Describe the exercise...</value>
+    </data>
+    <data name="Wellness.Placeholder.Instruction" xml:space="preserve">
+        <value>Enter instruction text...</value>
     </data>
     <data name="Wellness.CycleCount.One" xml:space="preserve">
         <value>1 cycle</value>
@@ -592,7 +625,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Hold after exhaling</value>
     </data>
     <data name="Wellness.BreathingPhase.None" xml:space="preserve">
-        <value>No breathing phase</value>
+        <value>None</value>
     </data>
     <data name="Wellness.Preview.Restart" xml:space="preserve">
         <value>Restart</value>

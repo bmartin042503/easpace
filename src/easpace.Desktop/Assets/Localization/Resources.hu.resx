@@ -549,8 +549,41 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Wellness.Button.EndSession" xml:space="preserve">
         <value>Befejezés</value>
     </data>
+    <data name="Wellness.Button.AddInstruction" xml:space="preserve">
+        <value>Instrukció hozzáadása</value>
+    </data>
+    <data name="Wellness.Button.RemoveInstruction" xml:space="preserve">
+        <value>Instrukció törlése</value>
+    </data>
+    <data name="Wellness.Button.MoveInstruction" xml:space="preserve">
+        <value>Húzd az átrendezéshez</value>
+    </data>
     <data name="Wellness.Warning.Breathing" xml:space="preserve">
         <value>Ha szédülést, légszomjat vagy kellemetlenséget érzel, állj meg és térj vissza a természetes légzésedhez.</value>
+    </data>
+    <data name="Wellness.Label.Name" xml:space="preserve">
+        <value>Név</value>
+    </data>
+    <data name="Wellness.Label.Description" xml:space="preserve">
+        <value>Leírás</value>
+    </data>
+    <data name="Wellness.Label.DefaultCycles" xml:space="preserve">
+        <value>Alapértelmezett ciklusszám</value>
+    </data>
+    <data name="Wellness.Label.Duration" xml:space="preserve">
+        <value>Időtartam (mp)</value>
+    </data>
+    <data name="Wellness.Label.BreathingPhase" xml:space="preserve">
+        <value>Légzési fázis</value>
+    </data>
+    <data name="Wellness.Placeholder.Name" xml:space="preserve">
+        <value>Adj meg egy nevet...</value>
+    </data>
+    <data name="Wellness.Placeholder.Description" xml:space="preserve">
+        <value>Írd le a gyakorlatot...</value>
+    </data>
+    <data name="Wellness.Placeholder.Instruction" xml:space="preserve">
+        <value>Add meg az instrukció szövegét...</value>
     </data>
     <data name="Wellness.CycleCount.One" xml:space="preserve">
         <value>1 ciklus</value>
@@ -592,7 +625,7 @@ Licensed under the MIT License. See LICENSE file for details.
         <value>Szünet kilégzés után</value>
     </data>
     <data name="Wellness.BreathingPhase.None" xml:space="preserve">
-        <value>Nincs légzési fázis</value>
+        <value>Nincs</value>
     </data>
     <data name="Wellness.Preview.Restart" xml:space="preserve">
         <value>Újraindítás</value>

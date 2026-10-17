@@ -22,9 +22,15 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
     private readonly IDialogService _dialogService;
     private readonly ILogger<WellnessExercisesViewModel> _logger;
 
-    [ObservableProperty] private ObservableObject? _contentViewModel;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Editor))]
+    [NotifyPropertyChangedFor(nameof(IsEditing))]
+    [NotifyPropertyChangedFor(nameof(CanSelectExercise))]
+    [NotifyCanExecuteChangedFor(nameof(EditExerciseCommand))]
+    private ObservableObject? _contentViewModel;
 
-    [ObservableProperty] private WellnessExerciseViewModel? _selectedExerciseViewModel;
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(EditExerciseCommand))]
+    private WellnessExerciseViewModel? _selectedExerciseViewModel;
 
     [ObservableProperty] private bool _isLoading = true;
     private bool _isInitializationRunning;
@@ -43,6 +49,13 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
 
     public bool HasExercises => WellnessExercises.Count > 0;
     public bool ShowNoExercises => IsInitialized && !HasExercises;
+    public WellnessExerciseEditorViewModel? Editor => ContentViewModel as WellnessExerciseEditorViewModel;
+    public bool IsEditing => Editor != null;
+
+    // the selection stays fixed while editing, so the edited exercise is the selected one
+    public bool CanSelectExercise => HasExercises && !IsEditing;
+
+    private bool CanEditExercise() => SelectedExerciseViewModel != null && !IsEditing;
 
     public WellnessExercisesViewModel(
         IWellnessExerciseRepository wellnessExerciseRepository,
@@ -62,6 +75,7 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         {
             OnPropertyChanged(nameof(HasExercises));
             OnPropertyChanged(nameof(ShowNoExercises));
+            OnPropertyChanged(nameof(CanSelectExercise));
         };
 
         ContentViewModel = SelectedExerciseViewModel;
@@ -72,13 +86,7 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         // loading may finish after the user has already navigated away
         if (_isDisposed) return;
 
-        ContentViewModel = value;
-
-        // an exercise that cannot be played must not leave the previous one in the preview
-        if (value == null || !PreviewViewModel.Load(value.Exercise, value.DefaultCycleCount))
-        {
-            PreviewViewModel.Clear();
-        }
+        ShowExercise(value);
     }
 
     [RelayCommand]
@@ -123,6 +131,51 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         ConfigurationViewRequested?.Invoke(this, EventArgs.Empty);
     }
 
+    [RelayCommand(CanExecute = nameof(CanEditExercise))]
+    private void EditExercise()
+    {
+        if (SelectedExerciseViewModel == null) return;
+
+        var editor = new WellnessExerciseEditorViewModel(SelectedExerciseViewModel.Exercise);
+        editor.Changed += OnEditorChanged;
+        editor.Canceled += OnEditorCanceled;
+
+        ContentViewModel = editor;
+    }
+
+    private void OnEditorChanged(object? sender, EventArgs e)
+    {
+        if (sender is not WellnessExerciseEditorViewModel editor) return;
+
+        // an unplayable state (e.g. an instruction without duration) keeps the last playable one in the preview
+        PreviewViewModel.UpdateExercise(editor.CreateRequest());
+    }
+
+    private void OnEditorCanceled(object? sender, EventArgs e)
+    {
+        CloseEditor();
+        ShowExercise(SelectedExerciseViewModel);
+    }
+
+    private void CloseEditor()
+    {
+        if (Editor is not { } editor) return;
+
+        editor.Changed -= OnEditorChanged;
+        editor.Canceled -= OnEditorCanceled;
+    }
+    
+    private void ShowExercise(WellnessExerciseViewModel? exercise)
+    {
+        ContentViewModel = exercise;
+
+        // an exercise that cannot be played must not leave the previous one in the preview
+        if (exercise == null || !PreviewViewModel.Load(exercise.Exercise, exercise.DefaultCycleCount))
+        {
+            PreviewViewModel.Clear();
+        }
+    }
+
     private async Task LoadWellnessExercises()
     {
         var exercises = await _wellnessExerciseRepository.GetWellnessExercisesAsync();
@@ -136,6 +189,7 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         if (_isDisposed) return;
 
         _isDisposed = true;
+        CloseEditor();
         PreviewViewModel.Dispose();
     }
 }

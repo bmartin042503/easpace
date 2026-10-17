@@ -60,7 +60,8 @@ public class EnumToLocalizedConverter : IValueConverter
                 BreathingPhase.HoldIn => LocalizationService.GetString("Wellness.BreathingPhase.HoldIn"),
                 BreathingPhase.Exhale => LocalizationService.GetString("Wellness.BreathingPhase.Exhale"),
                 BreathingPhase.HoldOut => LocalizationService.GetString("Wellness.BreathingPhase.HoldOut"),
-                _ => LocalizationService.GetString("Wellness.BreathingPhase.None")
+                BreathingPhase.None => LocalizationService.GetString("Wellness.BreathingPhase.None"),
+                _ => string.Empty
             },
 
             _ => string.Empty

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Extensions;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
@@ -88,7 +89,14 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         }
     }
 
-    public bool IsBreathing => CurrentInstruction?.BreathingPhase != null;
+    public bool IsBreathing => CurrentInstruction is { BreathingPhase: not BreathingPhase.None };
+
+    /// <summary>
+    /// Gets the elapsed and the total time of the current instruction, e.g. "00:07 / 00:30".
+    /// </summary>
+    public string InstructionTimeText => CurrentInstruction is { } instruction
+        ? $"{InstructionElapsed.ToDurationText()} / {TimeSpan.FromSeconds(instruction.DurationSeconds).ToDurationText()}"
+        : string.Empty;
 
     public string PhaseSecondsText => IsBreathing
         ? Math.Ceiling(InstructionRemaining.TotalSeconds).ToString("0")
@@ -404,6 +412,7 @@ internal partial class WellnessExercisePreviewViewModel : ViewModelBase, IDispos
         OnPropertyChanged(nameof(IsBreathing));
         OnPropertyChanged(nameof(PhaseSecondsText));
         OnPropertyChanged(nameof(InstructionProgress));
+        OnPropertyChanged(nameof(InstructionTimeText));
         OnPropertyChanged(nameof(BreathingCircleSize));
         OnPropertyChanged(nameof(PreviewStatusText));
     }

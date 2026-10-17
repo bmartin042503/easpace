@@ -50,6 +50,7 @@ internal class ViewLocator : IDataTemplate
             
             // Wellness
             WellnessExerciseViewModel vm => CreateView(new WellnessExerciseView(), vm),
+            WellnessExerciseEditorViewModel vm => CreateView(new WellnessExerciseEditorView(), vm),
             WellnessExercisePreviewViewModel vm => CreateView(new WellnessExercisePreviewView(), vm),
             WellnessExercisesViewModel vm => CreateView(new WellnessExercisesView(), vm),
             WellnessConfigurationViewModel vm => CreateView(new WellnessConfigurationView(), vm),

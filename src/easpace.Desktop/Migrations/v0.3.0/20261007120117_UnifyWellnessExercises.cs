@@ -69,7 +69,7 @@ namespace easpace.Desktop.Migrations
 
                     BreathingPhase = table.Column<int>(
                         type: "INTEGER",
-                        nullable: true)
+                        nullable: false)
                 },
                 constraints: table =>
                 {

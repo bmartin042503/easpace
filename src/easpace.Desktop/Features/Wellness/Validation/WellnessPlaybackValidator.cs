@@ -17,6 +17,6 @@ internal static class WellnessPlaybackValidator
     {
         return cycleCount > 0 && instructions.Count > 0 && instructions.All(instruction =>
             instruction.DurationSeconds > 0
-            && (!validateBreathingPhases || instruction.BreathingPhase is not { } phase || Enum.IsDefined(phase)));
+            && (!validateBreathingPhases || Enum.IsDefined(instruction.BreathingPhase)));
     }
 }

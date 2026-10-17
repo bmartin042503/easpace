@@ -35,18 +35,18 @@ public class WellnessPlaybackValidatorTests
     }
 
     [Theory]
-    [InlineData(null, true)]
     [InlineData(0, true)]
     [InlineData(1, true)]
     [InlineData(2, true)]
     [InlineData(3, true)]
+    [InlineData(4, true)]
     [InlineData(999, false)]
-    public void IsPlayable_PreservesOptionalPhaseAndCallerSpecificEnumChecks(int? phase,
+    public void IsPlayable_PreservesOptionalPhaseAndCallerSpecificEnumChecks(int phase,
         bool expectedWithPhaseValidation)
     {
         WellnessExerciseInstruction[] instructions =
         [
-            new() { DurationSeconds = 1, BreathingPhase = (BreathingPhase?)phase }
+            new() { DurationSeconds = 1, BreathingPhase = (BreathingPhase)phase }
         ];
 
         WellnessPlaybackValidator.IsPlayable(instructions, 1, validateBreathingPhases: false).Should().BeTrue();

@@ -45,6 +45,31 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </StackPanel>
 
+            <!-- Buttons (reader and editor share the place, like in the journal) -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal"
+                        Spacing="{StaticResource Metrics.Spacing.Xs}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                <!-- Edit button -->
+                <Button Classes="secondary icon"
+                        Command="{Binding EditExerciseCommand}"
+                        IsVisible="{Binding !IsEditing}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Edit'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Common.Button.Edit'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Pencil.Fill}" />
+                </Button>
+
+                <!-- Cancel editing button -->
+                <Button Classes="secondary icon"
+                        Command="{Binding Editor.CancelCommand}"
+                        IsVisible="{Binding IsEditing}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Cancel'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Common.Button.Cancel'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.X}" />
+                </Button>
+
+            </StackPanel>
+
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
@@ -57,7 +82,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
                 <!-- Exercise selector combo box -->
                 <ComboBox MaxWidth="{StaticResource Metrics.Input.MaxWidth}"
-                          IsEnabled="{Binding HasExercises}"
+                          IsEnabled="{Binding CanSelectExercise}"
                           SelectedItem="{Binding SelectedExerciseViewModel}"
                           ItemsSource="{Binding WellnessExercises}"
                           HorizontalAlignment="Stretch">

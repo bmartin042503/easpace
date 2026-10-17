@@ -9,6 +9,11 @@ namespace easpace.Desktop.Features.Wellness.Constants;
 internal enum BreathingPhase
 {
     /// <summary>
+    /// The instruction has no breathing phase, so no breathing animation is shown.
+    /// </summary>
+    None,
+
+    /// <summary>
     /// The phase where breath is drawn into the lungs.
     /// </summary>
     Inhale,

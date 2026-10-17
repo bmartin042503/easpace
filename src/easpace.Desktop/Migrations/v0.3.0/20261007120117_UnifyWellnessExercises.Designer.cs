@@ -162,7 +162,7 @@ namespace easpace.Desktop.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("BreathingPhase")
+                    b.Property<int>("BreathingPhase")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("DurationSeconds")

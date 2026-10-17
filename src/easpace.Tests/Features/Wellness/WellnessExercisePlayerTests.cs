@@ -290,7 +290,7 @@ public class WellnessExercisePlayerTests
 
         player.Start(invalidExercise, cycles);
         player.UpdateExercise(new UpsertWellnessExerciseRequest("", "", cycles,
-            empty ? [] : [new UpsertWellnessExerciseInstructionRequest("", duration, null)]));
+            empty ? [] : [new UpsertWellnessExerciseInstructionRequest("", duration, BreathingPhase.None)]));
 
         player.CurrentInstruction.Should().BeSameAs(currentInstruction);
         player.State.Should().Be(WellnessExercisePlaybackState.Paused);
@@ -324,10 +324,10 @@ public class WellnessExercisePlayerTests
         notifications.Should().Be(0);
 
         player.UpdateExercise(new UpsertWellnessExerciseRequest("", "", 3,
-            [new UpsertWellnessExerciseInstructionRequest("", 5, null)]));
+            [new UpsertWellnessExerciseInstructionRequest("", 5, BreathingPhase.None)]));
 
         player.TotalCycles.Should().Be(3);
-        player.CurrentInstruction!.BreathingPhase.Should().BeNull();
+        player.CurrentInstruction!.BreathingPhase.Should().Be(BreathingPhase.None);
         player.InstructionRemaining.Should().Be(TimeSpan.FromSeconds(5));
         notifications.Should().Be(1);
     }

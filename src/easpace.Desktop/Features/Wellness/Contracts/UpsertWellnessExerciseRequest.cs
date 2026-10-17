@@ -10,7 +10,7 @@ namespace easpace.Desktop.Features.Wellness.Contracts;
 internal sealed record UpsertWellnessExerciseInstructionRequest(
     string Text,
     int DurationSeconds,
-    BreathingPhase? BreathingPhase
+    BreathingPhase BreathingPhase
 );
 
 internal sealed record UpsertWellnessExerciseRequest(

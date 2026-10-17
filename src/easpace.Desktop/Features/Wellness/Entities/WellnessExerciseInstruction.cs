@@ -13,5 +13,5 @@ internal class WellnessExerciseInstruction
     public int Order { get; set; }
     public string Text { get; set; } = string.Empty;
     public int DurationSeconds { get; set; }
-    public BreathingPhase? BreathingPhase { get; set; }
+    public BreathingPhase BreathingPhase { get; set; }
 }

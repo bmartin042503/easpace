@@ -26,13 +26,13 @@ public class WellnessExercisePreviewViewModelTests
         var notifications = 0;
         player.PlaybackChanged += (_, _) => notifications++;
 
-        (int Cycles, int Duration, BreathingPhase? Phase, bool Empty)[] invalidInputs =
+        (int Cycles, int Duration, BreathingPhase Phase, bool Empty)[] invalidInputs =
         [
-            (0, 4, null, false),
-            (-1, 4, null, false),
-            (1, 0, null, false),
-            (1, -1, null, false),
-            (1, 4, null, true),
+            (0, 4, BreathingPhase.None, false),
+            (-1, 4, BreathingPhase.None, false),
+            (1, 0, BreathingPhase.None, false),
+            (1, -1, BreathingPhase.None, false),
+            (1, 4, BreathingPhase.None, true),
             (1, 4, (BreathingPhase)999, false)
         ];
 
@@ -67,10 +67,27 @@ public class WellnessExercisePreviewViewModelTests
         preview.State.Should().Be(WellnessExercisePlaybackState.Paused);
 
         preview.UpdateExercise(new UpsertWellnessExerciseRequest("", "", 3,
-            [new UpsertWellnessExerciseInstructionRequest("", 5, null)])).Should().BeTrue();
+            [new UpsertWellnessExerciseInstructionRequest("", 5, BreathingPhase.None)])).Should().BeTrue();
         preview.TotalCycles.Should().Be(3);
         preview.InstructionRemaining.Should().Be(TimeSpan.FromSeconds(5));
         preview.CurrentInstruction!.Text.Should().BeEmpty();
-        preview.CurrentInstruction.BreathingPhase.Should().BeNull();
+        preview.CurrentInstruction.BreathingPhase.Should().Be(BreathingPhase.None);
+    }
+
+    [AvaloniaFact]
+    public void InstructionTimeText_ShowsElapsedAndTotalTimeOfTheCurrentInstruction()
+    {
+        var player = new WellnessExercisePlayer();
+        using var preview = new WellnessExercisePreviewViewModel(player, TimeProvider.System);
+        preview.InstructionTimeText.Should().BeEmpty();
+
+        preview.Load(new WellnessExercise
+        {
+            Instructions = [new WellnessExerciseInstruction { DurationSeconds = 30 }]
+        }, 1);
+        preview.PlayCommand.Execute(null);
+        player.Advance(TimeSpan.FromSeconds(7.6));
+
+        preview.InstructionTimeText.Should().Be("00:07 / 00:30");
     }
 }
