@@ -2,12 +2,15 @@
 // Licensed under the MIT License. See LICENSE file for details.
 
 using Avalonia.Headless.XUnit;
+using easpace.Desktop.Constants;
 using easpace.Desktop.Features.Wellness.Constants;
+using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.Services;
 using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
 using easpace.Desktop.Services.Presentation;
+using easpace.Desktop.ViewModels.Dialogs;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -128,16 +131,91 @@ public class WellnessExercisesViewModelTests
         exercisesVm.PreviewViewModel.IsBreathing.Should().BeFalse();
     }
 
+    [AvaloniaFact]
+    public async Task SaveEdit_UpdatesTheExerciseAndReturnsToTheReaderView()
+    {
+        var first = CreateExercise("First", 1, 4);
+        var savedExercise = CreateExercise("Edited", 2, 6);
+        savedExercise.Id = first.Id;
+
+        var mockRepository = CreateRepository(first, CreateExercise("Second", 1, 4));
+        mockRepository
+            .Setup(r => r.UpdateWellnessExerciseAsync(first.Id, It.IsAny<UpsertWellnessExerciseRequest>()))
+            .ReturnsAsync(savedExercise);
+        var mockToastMessageService = new Mock<IToastMessageService>();
+
+        using var exercisesVm =
+            CreateExercisesViewModel(mockRepository, new Mock<IDialogService>(), mockToastMessageService);
+        await exercisesVm.InitializeCommand.ExecuteAsync(null);
+        exercisesVm.EditExerciseCommand.Execute(null);
+        exercisesVm.Editor!.Name = "Edited";
+
+        await exercisesVm.Editor.SaveCommand.ExecuteAsync(null);
+
+        mockRepository.Verify(r => r.UpdateWellnessExerciseAsync(first.Id,
+            It.Is<UpsertWellnessExerciseRequest>(request => request.Name == "Edited")), Times.Once);
+        exercisesVm.WellnessExercises.Select(e => e.Name).Should().Equal("Edited", "Second");
+        exercisesVm.IsEditing.Should().BeFalse();
+        exercisesVm.SelectedExerciseViewModel.Should().BeSameAs(exercisesVm.WellnessExercises[0]);
+        exercisesVm.ContentViewModel.Should().BeSameAs(exercisesVm.WellnessExercises[0]);
+        exercisesVm.PreviewViewModel.CurrentInstruction!.Text.Should().Be("Edited");
+        exercisesVm.PreviewViewModel.TotalCycles.Should().Be(2);
+        mockToastMessageService.Verify(
+            t => t.ShowToastMessage(It.IsAny<string>(), ToastMessageType.Success), Times.Once);
+    }
+
+    [AvaloniaFact]
+    public async Task SaveEdit_KeepsTheEditorOpenWhenSavingFails()
+    {
+        var first = CreateExercise("First", 1, 4);
+        var mockRepository = CreateRepository(first);
+        mockRepository
+            .Setup(r => r.UpdateWellnessExerciseAsync(first.Id, It.IsAny<UpsertWellnessExerciseRequest>()))
+            .ThrowsAsync(new InvalidOperationException());
+        var mockDialogService = new Mock<IDialogService>();
+        var mockToastMessageService = new Mock<IToastMessageService>();
+
+        using var exercisesVm = CreateExercisesViewModel(mockRepository, mockDialogService, mockToastMessageService);
+        await exercisesVm.InitializeCommand.ExecuteAsync(null);
+        exercisesVm.EditExerciseCommand.Execute(null);
+        var editor = exercisesVm.Editor!;
+
+        await editor.SaveCommand.ExecuteAsync(null);
+
+        mockDialogService.Verify(d => d.ShowDialogAsync(It.IsAny<ErrorDialogViewModel>()), Times.Once);
+        mockToastMessageService.Verify(
+            t => t.ShowToastMessage(It.IsAny<string>(), It.IsAny<ToastMessageType>()), Times.Never);
+        exercisesVm.ContentViewModel.Should().BeSameAs(editor);
+        exercisesVm.WellnessExercises[0].Name.Should().Be("First");
+    }
+
     private static WellnessExercisesViewModel CreateExercisesViewModel(params WellnessExercise[] exercises)
+    {
+        return CreateExercisesViewModel(
+            CreateRepository(exercises),
+            new Mock<IDialogService>(),
+            new Mock<IToastMessageService>());
+    }
+
+    private static WellnessExercisesViewModel CreateExercisesViewModel(
+        Mock<IWellnessExerciseRepository> mockRepository,
+        Mock<IDialogService> mockDialogService,
+        Mock<IToastMessageService> mockToastMessageService)
+    {
+        return new WellnessExercisesViewModel(
+            mockRepository.Object,
+            mockDialogService.Object,
+            mockToastMessageService.Object,
+            new WellnessExercisePreviewViewModel(new WellnessExercisePlayer(), TimeProvider.System),
+            new Mock<ILogger<WellnessExercisesViewModel>>().Object,
+            new Mock<ILogger<WellnessExerciseEditorViewModel>>().Object);
+    }
+
+    private static Mock<IWellnessExerciseRepository> CreateRepository(params WellnessExercise[] exercises)
     {
         var mockRepository = new Mock<IWellnessExerciseRepository>();
         mockRepository.Setup(r => r.GetWellnessExercisesAsync()).ReturnsAsync(exercises);
-
-        return new WellnessExercisesViewModel(
-            mockRepository.Object,
-            new Mock<IDialogService>().Object,
-            new WellnessExercisePreviewViewModel(new WellnessExercisePlayer(), TimeProvider.System),
-            new Mock<ILogger<WellnessExercisesViewModel>>().Object);
+        return mockRepository;
     }
 
     private static WellnessExercise CreateExercise(string text, int cycleCount, int durationSeconds)

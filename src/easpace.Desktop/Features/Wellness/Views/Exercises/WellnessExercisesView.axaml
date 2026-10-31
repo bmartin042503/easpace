@@ -68,6 +68,15 @@ Licensed under the MIT License. See LICENSE file for details.
                     <PathIcon Data="{StaticResource PhosphorIcons.X}" />
                 </Button>
 
+                <!-- Save button -->
+                <Button Classes="primary icon"
+                        Command="{Binding Editor.SaveCommand}"
+                        IsVisible="{Binding IsEditing}"
+                        ToolTip.Tip="{core:LocalizationService Key='Common.Button.Save'}"
+                        AutomationProperties.Name="{core:LocalizationService Key='Common.Button.Save'}">
+                    <PathIcon Data="{StaticResource PhosphorIcons.Check}" />
+                </Button>
+
             </StackPanel>
 
         </Grid>

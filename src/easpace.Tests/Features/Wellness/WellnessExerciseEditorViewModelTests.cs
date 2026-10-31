@@ -3,9 +3,13 @@
 
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Features.Wellness.ViewModels.Exercises;
+using easpace.Desktop.Services.Presentation;
 using easpace.Desktop.Validation;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace easpace.Tests.Features.Wellness;
 
@@ -14,7 +18,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public void Constructor_AllowsSavingAValidExercise()
     {
-        var editor = new WellnessExerciseEditorViewModel(CreateExercise());
+        var editor = CreateEditor();
 
         editor.HasErrors.Should().BeFalse();
         editor.HasInstructions.Should().BeTrue();
@@ -24,7 +28,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public void Name_DisablesSavingWhileInvalid()
     {
-        var editor = new WellnessExerciseEditorViewModel(CreateExercise());
+        var editor = CreateEditor();
 
         editor.Name = "ab";
 
@@ -42,7 +46,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public void Instruction_DisablesSavingWhileInvalid()
     {
-        var editor = new WellnessExerciseEditorViewModel(CreateExercise());
+        var editor = CreateEditor();
         var instruction = editor.Instructions[0];
 
         instruction.Text = string.Empty;
@@ -60,7 +64,7 @@ public class WellnessExerciseEditorViewModelTests
     [Fact]
     public void RemoveInstruction_DisablesSavingWhenNoInstructionIsLeft()
     {
-        var editor = new WellnessExerciseEditorViewModel(CreateExercise());
+        var editor = CreateEditor();
 
         editor.RemoveInstructionCommand.Execute(editor.Instructions[0]);
 
@@ -81,13 +85,19 @@ public class WellnessExerciseEditorViewModelTests
         editor.SaveCommand.CanExecute(null).Should().BeTrue();
     }
 
-    private static WellnessExercise CreateExercise()
+    private static WellnessExerciseEditorViewModel CreateEditor()
     {
-        return new WellnessExercise
+        var exercise = new WellnessExercise
         {
             Name = "Box Breathing",
             DefaultCycleCount = 4,
             Instructions = [new WellnessExerciseInstruction { Text = "Breathe in", DurationSeconds = 4 }]
         };
+
+        return new WellnessExerciseEditorViewModel(
+            exercise,
+            new Mock<IWellnessExerciseRepository>().Object,
+            new Mock<IDialogService>().Object,
+            new Mock<ILogger<WellnessExerciseEditorViewModel>>().Object);
     }
 }

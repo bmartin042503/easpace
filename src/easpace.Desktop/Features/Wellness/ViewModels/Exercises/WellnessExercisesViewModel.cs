@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using easpace.Desktop.Constants;
+using easpace.Desktop.Features.Wellness.Entities;
 using easpace.Desktop.Features.Wellness.Repositories;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.Services.Presentation;
@@ -20,7 +22,9 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
 {
     private readonly IWellnessExerciseRepository _wellnessExerciseRepository;
     private readonly IDialogService _dialogService;
+    private readonly IToastMessageService _toastMessageService;
     private readonly ILogger<WellnessExercisesViewModel> _logger;
+    private readonly ILogger<WellnessExerciseEditorViewModel> _editorLogger;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Editor))]
@@ -60,12 +64,16 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
     public WellnessExercisesViewModel(
         IWellnessExerciseRepository wellnessExerciseRepository,
         IDialogService dialogService,
+        IToastMessageService toastMessageService,
         WellnessExercisePreviewViewModel previewViewModel,
-        ILogger<WellnessExercisesViewModel> logger)
+        ILogger<WellnessExercisesViewModel> logger,
+        ILogger<WellnessExerciseEditorViewModel> editorLogger)
     {
         _wellnessExerciseRepository = wellnessExerciseRepository;
         _dialogService = dialogService;
+        _toastMessageService = toastMessageService;
         _logger = logger;
+        _editorLogger = editorLogger;
 
         PreviewViewModel = previewViewModel;
 
@@ -136,8 +144,13 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
     {
         if (SelectedExerciseViewModel == null) return;
 
-        var editor = new WellnessExerciseEditorViewModel(SelectedExerciseViewModel.Exercise);
+        var editor = new WellnessExerciseEditorViewModel(
+            SelectedExerciseViewModel.Exercise,
+            _wellnessExerciseRepository,
+            _dialogService,
+            _editorLogger);
         editor.Changed += OnEditorChanged;
+        editor.Saved += OnEditorSaved;
         editor.Canceled += OnEditorCanceled;
 
         ContentViewModel = editor;
@@ -151,6 +164,27 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         PreviewViewModel.UpdateExercise(editor.CreateRequest());
     }
 
+    private void OnEditorSaved(object? sender, WellnessExercise savedExercise)
+    {
+        CloseEditor();
+
+        var savedExerciseVm = new WellnessExerciseViewModel(savedExercise);
+        var index = SelectedExerciseViewModel != null ? WellnessExercises.IndexOf(SelectedExerciseViewModel) : -1;
+
+        if (index >= 0)
+        {
+            WellnessExercises[index] = savedExerciseVm;
+        }
+
+        // replacing the item may make the combo box clear the selection, so it is set explicitly,
+        // which shows the saved exercise in the reader view and the preview
+        SelectedExerciseViewModel = savedExerciseVm;
+
+        _toastMessageService.ShowToastMessage(
+            LocalizationService.GetString("Wellness.Toast.ExerciseSaved"),
+            ToastMessageType.Success);
+    }
+
     private void OnEditorCanceled(object? sender, EventArgs e)
     {
         CloseEditor();
@@ -162,6 +196,7 @@ internal partial class WellnessExercisesViewModel : ViewModelBase, IDisposable
         if (Editor is not { } editor) return;
 
         editor.Changed -= OnEditorChanged;
+        editor.Saved -= OnEditorSaved;
         editor.Canceled -= OnEditorCanceled;
     }
     
