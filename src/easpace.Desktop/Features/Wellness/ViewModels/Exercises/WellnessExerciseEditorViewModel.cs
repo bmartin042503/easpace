@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using easpace.Desktop.Behaviors;
 using easpace.Desktop.Features.Wellness.Contracts;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Features.Wellness.Validation;
 using easpace.Desktop.ViewModels;
 
 namespace easpace.Desktop.Features.Wellness.ViewModels.Exercises;
@@ -24,7 +25,9 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     [ObservableProperty] private int _defaultCycleCount;
 
     public AvaloniaList<WellnessExerciseInstructionViewModel> Instructions { get; } = [];
-    
+
+    public bool HasInstructions => Instructions.Count > 0;
+
     public event EventHandler? Changed;
     public event EventHandler? Canceled;
 
@@ -40,6 +43,8 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
         Instructions.AddRange(wellnessExercise.Instructions
             .OrderBy(i => i.Order)
             .Select(i => new WellnessExerciseInstructionViewModel(i)));
+
+        Validate();
     }
     
     public UpsertWellnessExerciseRequest CreateRequest()
@@ -57,11 +62,13 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
     partial void OnDescriptionChanged(string value) => OnChanged();
     partial void OnDefaultCycleCountChanged(int value) => OnChanged();
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private void Save()
     {
-        // TODO: validate the exercise and save it
+        // TODO: save the exercise
     }
+
+    private bool CanSave() => !HasErrors && Instructions.All(i => !i.HasErrors);
 
     [RelayCommand]
     private void Cancel()
@@ -114,6 +121,7 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
             }
         }
 
+        OnPropertyChanged(nameof(HasInstructions));
         OnChanged();
     }
 
@@ -130,6 +138,15 @@ internal partial class WellnessExerciseEditorViewModel : ViewModelBase
 
     private void OnChanged()
     {
+        Validate();
         Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Validate()
+    {
+        SetValidationErrors(WellnessExerciseValidator.Validate(Name, DefaultCycleCount, Instructions.Count));
+
+        // the instructions validate themselves before reporting a change, so their errors are up to date here
+        SaveCommand.NotifyCanExecuteChanged();
     }
 }

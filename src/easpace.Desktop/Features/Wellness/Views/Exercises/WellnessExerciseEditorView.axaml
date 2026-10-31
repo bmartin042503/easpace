@@ -235,6 +235,11 @@ Licensed under the MIT License. See LICENSE file for details.
 
             </ItemsControl>
 
+            <!-- Missing instructions error (the list has no input to show it under) -->
+            <TextBlock Classes="strong danger" TextWrapping="Wrap"
+                       IsVisible="{Binding !HasInstructions}"
+                       Text="{core:LocalizationService Key='Validation.Instructions.Required'}" />
+
             <!-- Add instruction button -->
             <Button Classes="secondary regular" HorizontalAlignment="Left"
                     Command="{Binding AddInstructionCommand}">

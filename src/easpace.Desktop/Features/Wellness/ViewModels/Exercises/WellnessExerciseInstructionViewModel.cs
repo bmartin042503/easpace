@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using easpace.Desktop.Features.Wellness.Constants;
 using easpace.Desktop.Features.Wellness.Entities;
+using easpace.Desktop.Features.Wellness.Validation;
 using easpace.Desktop.Services.Core;
 using easpace.Desktop.ViewModels;
 
@@ -33,6 +34,7 @@ internal partial class WellnessExerciseInstructionViewModel : ViewModelBase
         Text = instruction.Text;
         DurationSeconds = instruction.DurationSeconds;
         BreathingPhase = instruction.BreathingPhase;
+        Validate();
     }
 
     public WellnessExerciseInstructionViewModel()
@@ -40,5 +42,15 @@ internal partial class WellnessExerciseInstructionViewModel : ViewModelBase
         Text = string.Empty;
         DurationSeconds = 0;
         BreathingPhase = BreathingPhase.None;
+        Validate();
+    }
+
+    partial void OnTextChanged(string value) => Validate();
+    partial void OnDurationSecondsChanged(int value) => Validate();
+    partial void OnBreathingPhaseChanged(BreathingPhase value) => Validate();
+
+    private void Validate()
+    {
+        SetValidationErrors(WellnessExerciseValidator.ValidateInstruction(Text, DurationSeconds, BreathingPhase));
     }
 }
