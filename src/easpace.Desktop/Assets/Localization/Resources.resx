@@ -181,6 +181,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Validation.Mood.Range" xml:space="preserve">
         <value>Mood value must be between 0 and 1.</value>
     </data>
+    <data name="Validation.CycleCount.Range" xml:space="preserve">
+        <value>The number of cycles must be between 1 and 99.</value>
+    </data>
+    <data name="Validation.Instructions.Required" xml:space="preserve">
+        <value>Add at least one instruction.</value>
+    </data>
+    <data name="Validation.Duration.Range" xml:space="preserve">
+        <value>The duration must be between 1 and 600 seconds.</value>
+    </data>
+    <data name="Validation.Instruction.ContentRequired" xml:space="preserve">
+        <value>Enter a text or choose a breathing phase.</value>
+    </data>
 
     <!-- Journal -->
     <data name="Journal.Placeholder.Search" xml:space="preserve">

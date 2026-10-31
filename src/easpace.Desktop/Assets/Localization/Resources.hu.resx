@@ -181,6 +181,18 @@ Licensed under the MIT License. See LICENSE file for details.
     <data name="Validation.Mood.Range" xml:space="preserve">
         <value>A hangulat értékének 0 és 1 között kell lennie.</value>
     </data>
+    <data name="Validation.CycleCount.Range" xml:space="preserve">
+        <value>A ciklusszámnak 1 és 99 között kell lennie.</value>
+    </data>
+    <data name="Validation.Instructions.Required" xml:space="preserve">
+        <value>Adj hozzá legalább egy instrukciót.</value>
+    </data>
+    <data name="Validation.Duration.Range" xml:space="preserve">
+        <value>Az időtartamnak 1 és 600 másodperc között kell lennie.</value>
+    </data>
+    <data name="Validation.Instruction.ContentRequired" xml:space="preserve">
+        <value>Adj meg egy szöveget, vagy válassz légzési fázist.</value>
+    </data>
 
     <!-- Journal -->
     <data name="Journal.Placeholder.Search" xml:space="preserve">
